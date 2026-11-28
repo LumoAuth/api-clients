@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **WebhookId** | Pointer to **int32** |  | [optional] 
 **SessionId** | Pointer to **string** |  | [optional] 
 **TunnelUrl** | Pointer to **string** |  | [optional] 
+**SigningSecret** | Pointer to **string** | The secret that signs the tunnel&#39;s deliveries (X-LumoAuth-Signature). Shown once. | [optional] 
 
 ## Methods
 
@@ -101,6 +102,31 @@ SetTunnelUrl sets TunnelUrl field to given value.
 `func (o *AdminWebhooksTunnelStartResponseData) HasTunnelUrl() bool`
 
 HasTunnelUrl returns a boolean if a field has been set.
+
+### GetSigningSecret
+
+`func (o *AdminWebhooksTunnelStartResponseData) GetSigningSecret() string`
+
+GetSigningSecret returns the SigningSecret field if non-nil, zero value otherwise.
+
+### GetSigningSecretOk
+
+`func (o *AdminWebhooksTunnelStartResponseData) GetSigningSecretOk() (*string, bool)`
+
+GetSigningSecretOk returns a tuple with the SigningSecret field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSigningSecret
+
+`func (o *AdminWebhooksTunnelStartResponseData) SetSigningSecret(v string)`
+
+SetSigningSecret sets SigningSecret field to given value.
+
+### HasSigningSecret
+
+`func (o *AdminWebhooksTunnelStartResponseData) HasSigningSecret() bool`
+
+HasSigningSecret returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

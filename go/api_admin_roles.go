@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -26,7 +26,7 @@ type AdminRolesAPI interface {
 	/*
 	AdminRolesAddPermissions Add permission(s) to a role
 
-	Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+	Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization's own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -56,7 +56,7 @@ type AdminRolesAPI interface {
 	/*
 	AdminRolesCreate Create a new role
 
-	Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+	Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization's own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -125,7 +125,7 @@ type AdminRolesAPI interface {
 	AdminRolesGetUsersExecute(r ApiAdminRolesGetUsersRequest) (*AdminRolesGetUsersResponse, *http.Response, error)
 
 	/*
-	AdminRolesList List all roles in the tenant
+	AdminRolesList List all roles in the organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -172,7 +172,7 @@ type AdminRolesAPI interface {
 	/*
 	AdminRolesUpdatePermissions Update role permissions (replaces all)
 
-	Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+	Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization's own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -222,6 +222,12 @@ type ApiAdminRolesAddPermissionsRequest struct {
 	ApiService AdminRolesAPI
 	orgId string
 	roleId string
+	adminRolesAddPermissionsRequest *AdminRolesAddPermissionsRequest
+}
+
+func (r ApiAdminRolesAddPermissionsRequest) AdminRolesAddPermissionsRequest(adminRolesAddPermissionsRequest AdminRolesAddPermissionsRequest) ApiAdminRolesAddPermissionsRequest {
+	r.adminRolesAddPermissionsRequest = &adminRolesAddPermissionsRequest
+	return r
 }
 
 func (r ApiAdminRolesAddPermissionsRequest) Execute() (*MessageResponse, *http.Response, error) {
@@ -231,7 +237,7 @@ func (r ApiAdminRolesAddPermissionsRequest) Execute() (*MessageResponse, *http.R
 /*
 AdminRolesAddPermissions Add permission(s) to a role
 
-Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization's own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -269,9 +275,12 @@ func (a *AdminRolesAPIService) AdminRolesAddPermissionsExecute(r ApiAdminRolesAd
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminRolesAddPermissionsRequest == nil {
+		return localVarReturnValue, nil, reportError("adminRolesAddPermissionsRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -287,6 +296,8 @@ func (a *AdminRolesAPIService) AdminRolesAddPermissionsExecute(r ApiAdminRolesAd
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminRolesAddPermissionsRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -343,6 +354,12 @@ type ApiAdminRolesAddUserRequest struct {
 	ApiService AdminRolesAPI
 	orgId string
 	roleId string
+	adminRolesAddUserRequest *AdminRolesAddUserRequest
+}
+
+func (r ApiAdminRolesAddUserRequest) AdminRolesAddUserRequest(adminRolesAddUserRequest AdminRolesAddUserRequest) ApiAdminRolesAddUserRequest {
+	r.adminRolesAddUserRequest = &adminRolesAddUserRequest
+	return r
 }
 
 func (r ApiAdminRolesAddUserRequest) Execute() (*MessageResponse, *http.Response, error) {
@@ -388,9 +405,12 @@ func (a *AdminRolesAPIService) AdminRolesAddUserExecute(r ApiAdminRolesAddUserRe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminRolesAddUserRequest == nil {
+		return localVarReturnValue, nil, reportError("adminRolesAddUserRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -406,6 +426,8 @@ func (a *AdminRolesAPIService) AdminRolesAddUserExecute(r ApiAdminRolesAddUserRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminRolesAddUserRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -461,6 +483,12 @@ type ApiAdminRolesCreateRequest struct {
 	ctx context.Context
 	ApiService AdminRolesAPI
 	orgId string
+	adminRolesCreateRequest *AdminRolesCreateRequest
+}
+
+func (r ApiAdminRolesCreateRequest) AdminRolesCreateRequest(adminRolesCreateRequest AdminRolesCreateRequest) ApiAdminRolesCreateRequest {
+	r.adminRolesCreateRequest = &adminRolesCreateRequest
+	return r
 }
 
 func (r ApiAdminRolesCreateRequest) Execute() (*AdminRolesCreateResponse, *http.Response, error) {
@@ -470,7 +498,7 @@ func (r ApiAdminRolesCreateRequest) Execute() (*AdminRolesCreateResponse, *http.
 /*
 AdminRolesCreate Create a new role
 
-Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization's own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -505,9 +533,12 @@ func (a *AdminRolesAPIService) AdminRolesCreateExecute(r ApiAdminRolesCreateRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminRolesCreateRequest == nil {
+		return localVarReturnValue, nil, reportError("adminRolesCreateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -523,6 +554,8 @@ func (a *AdminRolesAPIService) AdminRolesCreateExecute(r ApiAdminRolesCreateRequ
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminRolesCreateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1061,7 +1094,7 @@ func (r ApiAdminRolesListRequest) Execute() (*AdminRolesListResponse, *http.Resp
 }
 
 /*
-AdminRolesList List all roles in the tenant
+AdminRolesList List all roles in the organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1418,6 +1451,12 @@ type ApiAdminRolesUpdatePermissionsRequest struct {
 	ApiService AdminRolesAPI
 	orgId string
 	roleId string
+	adminRolesUpdatePermissionsRequest *AdminRolesUpdatePermissionsRequest
+}
+
+func (r ApiAdminRolesUpdatePermissionsRequest) AdminRolesUpdatePermissionsRequest(adminRolesUpdatePermissionsRequest AdminRolesUpdatePermissionsRequest) ApiAdminRolesUpdatePermissionsRequest {
+	r.adminRolesUpdatePermissionsRequest = &adminRolesUpdatePermissionsRequest
+	return r
 }
 
 func (r ApiAdminRolesUpdatePermissionsRequest) Execute() (*AdminRolesCreateResponse, *http.Response, error) {
@@ -1427,7 +1466,7 @@ func (r ApiAdminRolesUpdatePermissionsRequest) Execute() (*AdminRolesCreateRespo
 /*
 AdminRolesUpdatePermissions Update role permissions (replaces all)
 
-Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization's own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1465,9 +1504,12 @@ func (a *AdminRolesAPIService) AdminRolesUpdatePermissionsExecute(r ApiAdminRole
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminRolesUpdatePermissionsRequest == nil {
+		return localVarReturnValue, nil, reportError("adminRolesUpdatePermissionsRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1483,6 +1525,8 @@ func (a *AdminRolesAPIService) AdminRolesUpdatePermissionsExecute(r ApiAdminRole
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminRolesUpdatePermissionsRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1539,6 +1583,12 @@ type ApiPatchAdminRolesUpdateRequest struct {
 	ApiService AdminRolesAPI
 	orgId string
 	roleId string
+	putAdminOrgRolesUpdateRequest *PutAdminOrgRolesUpdateRequest
+}
+
+func (r ApiPatchAdminRolesUpdateRequest) PutAdminOrgRolesUpdateRequest(putAdminOrgRolesUpdateRequest PutAdminOrgRolesUpdateRequest) ApiPatchAdminRolesUpdateRequest {
+	r.putAdminOrgRolesUpdateRequest = &putAdminOrgRolesUpdateRequest
+	return r
 }
 
 func (r ApiPatchAdminRolesUpdateRequest) Execute() (*AdminRolesCreateResponse, *http.Response, error) {
@@ -1584,9 +1634,12 @@ func (a *AdminRolesAPIService) PatchAdminRolesUpdateExecute(r ApiPatchAdminRoles
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminOrgRolesUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminOrgRolesUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1602,6 +1655,8 @@ func (a *AdminRolesAPIService) PatchAdminRolesUpdateExecute(r ApiPatchAdminRoles
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminOrgRolesUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1658,6 +1713,12 @@ type ApiPutAdminRolesUpdateRequest struct {
 	ApiService AdminRolesAPI
 	orgId string
 	roleId string
+	putAdminOrgRolesUpdateRequest *PutAdminOrgRolesUpdateRequest
+}
+
+func (r ApiPutAdminRolesUpdateRequest) PutAdminOrgRolesUpdateRequest(putAdminOrgRolesUpdateRequest PutAdminOrgRolesUpdateRequest) ApiPutAdminRolesUpdateRequest {
+	r.putAdminOrgRolesUpdateRequest = &putAdminOrgRolesUpdateRequest
+	return r
 }
 
 func (r ApiPutAdminRolesUpdateRequest) Execute() (*AdminRolesCreateResponse, *http.Response, error) {
@@ -1703,9 +1764,12 @@ func (a *AdminRolesAPIService) PutAdminRolesUpdateExecute(r ApiPutAdminRolesUpda
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminOrgRolesUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminOrgRolesUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1721,6 +1785,8 @@ func (a *AdminRolesAPIService) PutAdminRolesUpdateExecute(r ApiPutAdminRolesUpda
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminOrgRolesUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

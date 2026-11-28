@@ -9,9 +9,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**adminSessionsCount**](#adminsessionscount) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Active session count|
 |[**adminSessionsList**](#adminsessionslist) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions|
 |[**adminSessionsRevoke**](#adminsessionsrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a session|
-|[**adminSessionsRevokeAll**](#adminsessionsrevokeall) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the tenant|
+|[**adminSessionsRevokeAll**](#adminsessionsrevokeall) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the organization|
 |[**adminSessionsStats**](#adminsessionsstats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Session statistics|
-|[**adminTokensList**](#admintokenslist) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens|
+|[**adminTokensList**](#admintokenslist) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List stored (opaque) access tokens|
 |[**adminTokensRevoke**](#admintokensrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/tokens/{tokenId} | Revoke a token|
 |[**adminUserSessionsList**](#adminusersessionslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | List a user\&#39;s active sessions|
 |[**adminUserSessionsRevokeAll**](#adminusersessionsrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions of a user|
@@ -180,7 +180,7 @@ const { status, data } = await apiInstance.adminSessionsCount(
 # **adminSessionsList**
 > AdminSessionsListResponse adminSessionsList()
 
-Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
 ### Example
 
@@ -392,7 +392,7 @@ const { status, data } = await apiInstance.adminSessionsStats(
 # **adminTokensList**
 > AdminTokensListResponse adminTokensList()
 
-Paginated OAuth access tokens issued by the tenant\'s clients. Filters: `revoked` (bool), `clientId`, `userId`.
+Paginated OPAQUE access tokens issued by the organization\'s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user\'s or a client\'s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
 
 ### Example
 
@@ -663,6 +663,7 @@ const { status, data } = await apiInstance.adminUserSessionsRevokePost(
 # **adminUserTokensRevokeAll**
 > AdminUserTokensRevokeAllResponse adminUserTokensRevokeAll()
 
+Revokes the user\'s opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
 ### Example
 
@@ -718,6 +719,7 @@ const { status, data } = await apiInstance.adminUserTokensRevokeAll(
 # **adminUserTokensRevokePost**
 > AdminUserTokensRevokePostResponse adminUserTokensRevokePost()
 
+Revokes the user\'s opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
 ### Example
 

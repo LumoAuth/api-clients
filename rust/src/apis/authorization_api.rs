@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -149,9 +149,10 @@ pub enum SetUserAttributeError {
 
 
 /// POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
-pub async fn check_abac(configuration: &configuration::Configuration, org_id: &str) -> Result<models::CheckAbacResponse, Error<CheckAbacError>> {
+pub async fn check_abac(configuration: &configuration::Configuration, org_id: &str, check_abac_request: models::CheckAbacRequest) -> Result<models::CheckAbacResponse, Error<CheckAbacError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_check_abac_request = check_abac_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/abac/check", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -162,6 +163,7 @@ pub async fn check_abac(configuration: &configuration::Configuration, org_id: &s
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_check_abac_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -189,9 +191,10 @@ pub async fn check_abac(configuration: &configuration::Configuration, org_id: &s
 }
 
 /// POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
-pub async fn check_abac_bulk(configuration: &configuration::Configuration, org_id: &str) -> Result<models::CheckAbacBulkResponse, Error<CheckAbacBulkError>> {
+pub async fn check_abac_bulk(configuration: &configuration::Configuration, org_id: &str, check_abac_bulk_request: models::CheckAbacBulkRequest) -> Result<models::CheckAbacBulkResponse, Error<CheckAbacBulkError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_check_abac_bulk_request = check_abac_bulk_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/abac/check-bulk", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -202,6 +205,7 @@ pub async fn check_abac_bulk(configuration: &configuration::Configuration, org_i
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_check_abac_bulk_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -229,7 +233,9 @@ pub async fn check_abac_bulk(configuration: &configuration::Configuration, org_i
 }
 
 /// POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-pub async fn check_all_permissions(configuration: &configuration::Configuration, ) -> Result<models::CheckAnyPermissionResponse, Error<CheckAllPermissionsError>> {
+pub async fn check_all_permissions(configuration: &configuration::Configuration, check_permissions_bulk_request: models::CheckPermissionsBulkRequest) -> Result<models::CheckAnyPermissionResponse, Error<CheckAllPermissionsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_check_permissions_bulk_request = check_permissions_bulk_request;
 
     let uri_str = format!("{}/api/v1/authz/check-all", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -248,6 +254,7 @@ pub async fn check_all_permissions(configuration: &configuration::Configuration,
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_check_permissions_bulk_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -275,7 +282,9 @@ pub async fn check_all_permissions(configuration: &configuration::Configuration,
 }
 
 /// POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-pub async fn check_any_permission(configuration: &configuration::Configuration, ) -> Result<models::CheckAnyPermissionResponse, Error<CheckAnyPermissionError>> {
+pub async fn check_any_permission(configuration: &configuration::Configuration, check_permissions_bulk_request: models::CheckPermissionsBulkRequest) -> Result<models::CheckAnyPermissionResponse, Error<CheckAnyPermissionError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_check_permissions_bulk_request = check_permissions_bulk_request;
 
     let uri_str = format!("{}/api/v1/authz/check-any", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -294,6 +303,7 @@ pub async fn check_any_permission(configuration: &configuration::Configuration, 
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_check_permissions_bulk_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -321,7 +331,9 @@ pub async fn check_any_permission(configuration: &configuration::Configuration, 
 }
 
 /// POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
-pub async fn check_permission(configuration: &configuration::Configuration, ) -> Result<models::CheckPermissionResponse, Error<CheckPermissionError>> {
+pub async fn check_permission(configuration: &configuration::Configuration, check_permission_request: models::CheckPermissionRequest) -> Result<models::CheckPermissionResponse, Error<CheckPermissionError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_check_permission_request = check_permission_request;
 
     let uri_str = format!("{}/api/v1/authz/check", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -340,6 +352,7 @@ pub async fn check_permission(configuration: &configuration::Configuration, ) ->
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_check_permission_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -367,7 +380,9 @@ pub async fn check_permission(configuration: &configuration::Configuration, ) ->
 }
 
 /// POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-pub async fn check_permissions_bulk(configuration: &configuration::Configuration, ) -> Result<models::CheckPermissionsBulkResponse, Error<CheckPermissionsBulkError>> {
+pub async fn check_permissions_bulk(configuration: &configuration::Configuration, check_permissions_bulk_request: models::CheckPermissionsBulkRequest) -> Result<models::CheckPermissionsBulkResponse, Error<CheckPermissionsBulkError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_check_permissions_bulk_request = check_permissions_bulk_request;
 
     let uri_str = format!("{}/api/v1/authz/check-bulk", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -386,6 +401,7 @@ pub async fn check_permissions_bulk(configuration: &configuration::Configuration
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_check_permissions_bulk_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -413,7 +429,9 @@ pub async fn check_permissions_bulk(configuration: &configuration::Configuration
 }
 
 /// POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
-pub async fn check_relation(configuration: &configuration::Configuration, ) -> Result<models::CheckRelationResponse, Error<CheckRelationError>> {
+pub async fn check_relation(configuration: &configuration::Configuration, check_relation_request: models::CheckRelationRequest) -> Result<models::CheckRelationResponse, Error<CheckRelationError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_check_relation_request = check_relation_request;
 
     let uri_str = format!("{}/api/v1/authz/zanzibar/check", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -432,6 +450,7 @@ pub async fn check_relation(configuration: &configuration::Configuration, ) -> R
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_check_relation_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -458,9 +477,10 @@ pub async fn check_relation(configuration: &configuration::Configuration, ) -> R
     }
 }
 
-pub async fn check_relation_scoped(configuration: &configuration::Configuration, org_id: &str) -> Result<models::CheckRelationScopedResponse, Error<CheckRelationScopedError>> {
+pub async fn check_relation_scoped(configuration: &configuration::Configuration, org_id: &str, check_relation_scoped_request: models::CheckRelationScopedRequest) -> Result<models::CheckRelationScopedResponse, Error<CheckRelationScopedError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_check_relation_scoped_request = check_relation_scoped_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/zanzibar/check", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -479,6 +499,7 @@ pub async fn check_relation_scoped(configuration: &configuration::Configuration,
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_check_relation_scoped_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -506,7 +527,9 @@ pub async fn check_relation_scoped(configuration: &configuration::Configuration,
 }
 
 /// POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
-pub async fn evaluate(configuration: &configuration::Configuration, ) -> Result<models::AuthZenDecision, Error<EvaluateError>> {
+pub async fn evaluate(configuration: &configuration::Configuration, evaluate_request: models::EvaluateRequest) -> Result<models::AuthZenDecision, Error<EvaluateError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_evaluate_request = evaluate_request;
 
     let uri_str = format!("{}/api/v1/authz/v1/evaluation", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -525,6 +548,7 @@ pub async fn evaluate(configuration: &configuration::Configuration, ) -> Result<
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_evaluate_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -552,7 +576,9 @@ pub async fn evaluate(configuration: &configuration::Configuration, ) -> Result<
 }
 
 /// POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
-pub async fn evaluate_batch(configuration: &configuration::Configuration, ) -> Result<models::EvaluateBatchResponse, Error<EvaluateBatchError>> {
+pub async fn evaluate_batch(configuration: &configuration::Configuration, evaluate_batch_request: models::EvaluateBatchRequest) -> Result<models::EvaluateBatchResponse, Error<EvaluateBatchError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_evaluate_batch_request = evaluate_batch_request;
 
     let uri_str = format!("{}/api/v1/authz/v1/evaluations", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -571,6 +597,7 @@ pub async fn evaluate_batch(configuration: &configuration::Configuration, ) -> R
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_evaluate_batch_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -869,12 +896,13 @@ pub async fn list_permissions(configuration: &configuration::Configuration, ) ->
 }
 
 /// PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
-pub async fn set_resource_attribute(configuration: &configuration::Configuration, org_id: &str, resource_type: &str, resource_id: &str, attribute_slug: &str) -> Result<models::SetResourceAttributeResponse, Error<SetResourceAttributeError>> {
+pub async fn set_resource_attribute(configuration: &configuration::Configuration, org_id: &str, resource_type: &str, resource_id: &str, attribute_slug: &str, set_resource_attribute_request: models::SetResourceAttributeRequest) -> Result<models::SetResourceAttributeResponse, Error<SetResourceAttributeError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_resource_type = resource_type;
     let p_resource_id = resource_id;
     let p_attribute_slug = attribute_slug;
+    let p_set_resource_attribute_request = set_resource_attribute_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), resourceType=crate::apis::urlencode(p_resource_type), resourceId=crate::apis::urlencode(p_resource_id), attributeSlug=crate::apis::urlencode(p_attribute_slug));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -885,6 +913,7 @@ pub async fn set_resource_attribute(configuration: &configuration::Configuration
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_set_resource_attribute_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -912,11 +941,12 @@ pub async fn set_resource_attribute(configuration: &configuration::Configuration
 }
 
 /// PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
-pub async fn set_user_attribute(configuration: &configuration::Configuration, org_id: &str, user_id: &str, attribute_slug: &str) -> Result<models::SetUserAttributeResponse, Error<SetUserAttributeError>> {
+pub async fn set_user_attribute(configuration: &configuration::Configuration, org_id: &str, user_id: &str, attribute_slug: &str, set_resource_attribute_request: models::SetResourceAttributeRequest) -> Result<models::SetUserAttributeResponse, Error<SetUserAttributeError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
     let p_attribute_slug = attribute_slug;
+    let p_set_resource_attribute_request = set_resource_attribute_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id), attributeSlug=crate::apis::urlencode(p_attribute_slug));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -927,6 +957,7 @@ pub async fn set_user_attribute(configuration: &configuration::Configuration, or
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_set_resource_attribute_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

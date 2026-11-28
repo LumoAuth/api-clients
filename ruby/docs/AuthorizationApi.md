@@ -26,7 +26,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 ## check_abac
 
-> <CheckAbacResponse> check_abac(org_id)
+> <CheckAbacResponse> check_abac(org_id, check_abac_request)
 
 Evaluate an ABAC policy decision for the caller
 
@@ -45,10 +45,11 @@ end
 
 api_instance = LumoAuthApiClient::AuthorizationApi.new
 org_id = 'org_id_example' # String | 
+check_abac_request = LumoAuthApiClient::CheckAbacRequest.new({resource_type: 'resource_type_example', action: 'action_example'}) # CheckAbacRequest | 
 
 begin
   # Evaluate an ABAC policy decision for the caller
-  result = api_instance.check_abac(org_id)
+  result = api_instance.check_abac(org_id, check_abac_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AuthorizationApi->check_abac: #{e}"
@@ -59,12 +60,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<CheckAbacResponse>, Integer, Hash)> check_abac_with_http_info(org_id)
+> <Array(<CheckAbacResponse>, Integer, Hash)> check_abac_with_http_info(org_id, check_abac_request)
 
 ```ruby
 begin
   # Evaluate an ABAC policy decision for the caller
-  data, status_code, headers = api_instance.check_abac_with_http_info(org_id)
+  data, status_code, headers = api_instance.check_abac_with_http_info(org_id, check_abac_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <CheckAbacResponse>
@@ -78,6 +79,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **check_abac_request** | [**CheckAbacRequest**](CheckAbacRequest.md) |  |  |
 
 ### Return type
 
@@ -89,13 +91,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## check_abac_bulk
 
-> <CheckAbacBulkResponse> check_abac_bulk(org_id)
+> <CheckAbacBulkResponse> check_abac_bulk(org_id, check_abac_bulk_request)
 
 Evaluate up to 100 ABAC checks for the caller in one call
 
@@ -114,10 +116,11 @@ end
 
 api_instance = LumoAuthApiClient::AuthorizationApi.new
 org_id = 'org_id_example' # String | 
+check_abac_bulk_request = LumoAuthApiClient::CheckAbacBulkRequest.new({checks: [{ key: 3.56}]}) # CheckAbacBulkRequest | 
 
 begin
   # Evaluate up to 100 ABAC checks for the caller in one call
-  result = api_instance.check_abac_bulk(org_id)
+  result = api_instance.check_abac_bulk(org_id, check_abac_bulk_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AuthorizationApi->check_abac_bulk: #{e}"
@@ -128,12 +131,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<CheckAbacBulkResponse>, Integer, Hash)> check_abac_bulk_with_http_info(org_id)
+> <Array(<CheckAbacBulkResponse>, Integer, Hash)> check_abac_bulk_with_http_info(org_id, check_abac_bulk_request)
 
 ```ruby
 begin
   # Evaluate up to 100 ABAC checks for the caller in one call
-  data, status_code, headers = api_instance.check_abac_bulk_with_http_info(org_id)
+  data, status_code, headers = api_instance.check_abac_bulk_with_http_info(org_id, check_abac_bulk_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <CheckAbacBulkResponse>
@@ -147,6 +150,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **check_abac_bulk_request** | [**CheckAbacBulkRequest**](CheckAbacBulkRequest.md) |  |  |
 
 ### Return type
 
@@ -158,13 +162,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## check_all_permissions
 
-> <CheckAnyPermissionResponse> check_all_permissions
+> <CheckAnyPermissionResponse> check_all_permissions(check_permissions_bulk_request)
 
 Check whether the subject holds all of the permissions
 
@@ -187,10 +191,11 @@ LumoAuthApiClient.configure do |config|
 end
 
 api_instance = LumoAuthApiClient::AuthorizationApi.new
+check_permissions_bulk_request = LumoAuthApiClient::CheckPermissionsBulkRequest.new({permissions: ['permissions_example']}) # CheckPermissionsBulkRequest | 
 
 begin
   # Check whether the subject holds all of the permissions
-  result = api_instance.check_all_permissions
+  result = api_instance.check_all_permissions(check_permissions_bulk_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AuthorizationApi->check_all_permissions: #{e}"
@@ -201,12 +206,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<CheckAnyPermissionResponse>, Integer, Hash)> check_all_permissions_with_http_info
+> <Array(<CheckAnyPermissionResponse>, Integer, Hash)> check_all_permissions_with_http_info(check_permissions_bulk_request)
 
 ```ruby
 begin
   # Check whether the subject holds all of the permissions
-  data, status_code, headers = api_instance.check_all_permissions_with_http_info
+  data, status_code, headers = api_instance.check_all_permissions_with_http_info(check_permissions_bulk_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <CheckAnyPermissionResponse>
@@ -217,7 +222,9 @@ end
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **check_permissions_bulk_request** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  |  |
 
 ### Return type
 
@@ -229,13 +236,13 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## check_any_permission
 
-> <CheckAnyPermissionResponse> check_any_permission
+> <CheckAnyPermissionResponse> check_any_permission(check_permissions_bulk_request)
 
 Check whether the subject holds any of the permissions
 
@@ -258,10 +265,11 @@ LumoAuthApiClient.configure do |config|
 end
 
 api_instance = LumoAuthApiClient::AuthorizationApi.new
+check_permissions_bulk_request = LumoAuthApiClient::CheckPermissionsBulkRequest.new({permissions: ['permissions_example']}) # CheckPermissionsBulkRequest | 
 
 begin
   # Check whether the subject holds any of the permissions
-  result = api_instance.check_any_permission
+  result = api_instance.check_any_permission(check_permissions_bulk_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AuthorizationApi->check_any_permission: #{e}"
@@ -272,12 +280,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<CheckAnyPermissionResponse>, Integer, Hash)> check_any_permission_with_http_info
+> <Array(<CheckAnyPermissionResponse>, Integer, Hash)> check_any_permission_with_http_info(check_permissions_bulk_request)
 
 ```ruby
 begin
   # Check whether the subject holds any of the permissions
-  data, status_code, headers = api_instance.check_any_permission_with_http_info
+  data, status_code, headers = api_instance.check_any_permission_with_http_info(check_permissions_bulk_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <CheckAnyPermissionResponse>
@@ -288,7 +296,9 @@ end
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **check_permissions_bulk_request** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  |  |
 
 ### Return type
 
@@ -300,13 +310,13 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## check_permission
 
-> <CheckPermissionResponse> check_permission
+> <CheckPermissionResponse> check_permission(check_permission_request)
 
 Check one permission
 
@@ -329,10 +339,11 @@ LumoAuthApiClient.configure do |config|
 end
 
 api_instance = LumoAuthApiClient::AuthorizationApi.new
+check_permission_request = LumoAuthApiClient::CheckPermissionRequest.new({permission: 'document.edit'}) # CheckPermissionRequest | 
 
 begin
   # Check one permission
-  result = api_instance.check_permission
+  result = api_instance.check_permission(check_permission_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AuthorizationApi->check_permission: #{e}"
@@ -343,12 +354,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<CheckPermissionResponse>, Integer, Hash)> check_permission_with_http_info
+> <Array(<CheckPermissionResponse>, Integer, Hash)> check_permission_with_http_info(check_permission_request)
 
 ```ruby
 begin
   # Check one permission
-  data, status_code, headers = api_instance.check_permission_with_http_info
+  data, status_code, headers = api_instance.check_permission_with_http_info(check_permission_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <CheckPermissionResponse>
@@ -359,7 +370,9 @@ end
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **check_permission_request** | [**CheckPermissionRequest**](CheckPermissionRequest.md) |  |  |
 
 ### Return type
 
@@ -371,13 +384,13 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## check_permissions_bulk
 
-> <CheckPermissionsBulkResponse> check_permissions_bulk
+> <CheckPermissionsBulkResponse> check_permissions_bulk(check_permissions_bulk_request)
 
 Check up to 100 permissions in one call
 
@@ -400,10 +413,11 @@ LumoAuthApiClient.configure do |config|
 end
 
 api_instance = LumoAuthApiClient::AuthorizationApi.new
+check_permissions_bulk_request = LumoAuthApiClient::CheckPermissionsBulkRequest.new({permissions: ['permissions_example']}) # CheckPermissionsBulkRequest | 
 
 begin
   # Check up to 100 permissions in one call
-  result = api_instance.check_permissions_bulk
+  result = api_instance.check_permissions_bulk(check_permissions_bulk_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AuthorizationApi->check_permissions_bulk: #{e}"
@@ -414,12 +428,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<CheckPermissionsBulkResponse>, Integer, Hash)> check_permissions_bulk_with_http_info
+> <Array(<CheckPermissionsBulkResponse>, Integer, Hash)> check_permissions_bulk_with_http_info(check_permissions_bulk_request)
 
 ```ruby
 begin
   # Check up to 100 permissions in one call
-  data, status_code, headers = api_instance.check_permissions_bulk_with_http_info
+  data, status_code, headers = api_instance.check_permissions_bulk_with_http_info(check_permissions_bulk_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <CheckPermissionsBulkResponse>
@@ -430,7 +444,9 @@ end
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **check_permissions_bulk_request** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  |  |
 
 ### Return type
 
@@ -442,13 +458,13 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## check_relation
 
-> <CheckRelationResponse> check_relation
+> <CheckRelationResponse> check_relation(check_relation_request)
 
 Zanzibar relationship check
 
@@ -471,10 +487,11 @@ LumoAuthApiClient.configure do |config|
 end
 
 api_instance = LumoAuthApiClient::AuthorizationApi.new
+check_relation_request = LumoAuthApiClient::CheckRelationRequest.new({object: 'document:123', relation: 'viewer', subject: 'user:456'}) # CheckRelationRequest | 
 
 begin
   # Zanzibar relationship check
-  result = api_instance.check_relation
+  result = api_instance.check_relation(check_relation_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AuthorizationApi->check_relation: #{e}"
@@ -485,12 +502,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<CheckRelationResponse>, Integer, Hash)> check_relation_with_http_info
+> <Array(<CheckRelationResponse>, Integer, Hash)> check_relation_with_http_info(check_relation_request)
 
 ```ruby
 begin
   # Zanzibar relationship check
-  data, status_code, headers = api_instance.check_relation_with_http_info
+  data, status_code, headers = api_instance.check_relation_with_http_info(check_relation_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <CheckRelationResponse>
@@ -501,7 +518,9 @@ end
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **check_relation_request** | [**CheckRelationRequest**](CheckRelationRequest.md) |  |  |
 
 ### Return type
 
@@ -513,13 +532,13 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## check_relation_scoped
 
-> <CheckRelationScopedResponse> check_relation_scoped(org_id)
+> <CheckRelationScopedResponse> check_relation_scoped(org_id, check_relation_scoped_request)
 
 Zanzibar relationship check
 
@@ -541,10 +560,11 @@ end
 
 api_instance = LumoAuthApiClient::AuthorizationApi.new
 org_id = 'org_id_example' # String | 
+check_relation_scoped_request = LumoAuthApiClient::CheckRelationScopedRequest.new({object: 'document:123', relation: 'viewer', user: 'user:456'}) # CheckRelationScopedRequest | 
 
 begin
   # Zanzibar relationship check
-  result = api_instance.check_relation_scoped(org_id)
+  result = api_instance.check_relation_scoped(org_id, check_relation_scoped_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AuthorizationApi->check_relation_scoped: #{e}"
@@ -555,12 +575,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<CheckRelationScopedResponse>, Integer, Hash)> check_relation_scoped_with_http_info(org_id)
+> <Array(<CheckRelationScopedResponse>, Integer, Hash)> check_relation_scoped_with_http_info(org_id, check_relation_scoped_request)
 
 ```ruby
 begin
   # Zanzibar relationship check
-  data, status_code, headers = api_instance.check_relation_scoped_with_http_info(org_id)
+  data, status_code, headers = api_instance.check_relation_scoped_with_http_info(org_id, check_relation_scoped_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <CheckRelationScopedResponse>
@@ -574,6 +594,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **check_relation_scoped_request** | [**CheckRelationScopedRequest**](CheckRelationScopedRequest.md) |  |  |
 
 ### Return type
 
@@ -585,13 +606,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## evaluate
 
-> <AuthZenDecision> evaluate
+> <AuthZenDecision> evaluate(evaluate_request)
 
 AuthZEN 1.0 access evaluation
 
@@ -614,10 +635,11 @@ LumoAuthApiClient.configure do |config|
 end
 
 api_instance = LumoAuthApiClient::AuthorizationApi.new
+evaluate_request = LumoAuthApiClient::EvaluateRequest.new({subject: { key: 3.56}, action: { key: 3.56}, resource: { key: 3.56}}) # EvaluateRequest | AuthZEN Authorization API 1.0 evaluation request.
 
 begin
   # AuthZEN 1.0 access evaluation
-  result = api_instance.evaluate
+  result = api_instance.evaluate(evaluate_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AuthorizationApi->evaluate: #{e}"
@@ -628,12 +650,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AuthZenDecision>, Integer, Hash)> evaluate_with_http_info
+> <Array(<AuthZenDecision>, Integer, Hash)> evaluate_with_http_info(evaluate_request)
 
 ```ruby
 begin
   # AuthZEN 1.0 access evaluation
-  data, status_code, headers = api_instance.evaluate_with_http_info
+  data, status_code, headers = api_instance.evaluate_with_http_info(evaluate_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AuthZenDecision>
@@ -644,7 +666,9 @@ end
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **evaluate_request** | [**EvaluateRequest**](EvaluateRequest.md) | AuthZEN Authorization API 1.0 evaluation request. |  |
 
 ### Return type
 
@@ -656,13 +680,13 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## evaluate_batch
 
-> <EvaluateBatchResponse> evaluate_batch
+> <EvaluateBatchResponse> evaluate_batch(evaluate_batch_request)
 
 AuthZEN 1.0 boxcarred access evaluations
 
@@ -685,10 +709,11 @@ LumoAuthApiClient.configure do |config|
 end
 
 api_instance = LumoAuthApiClient::AuthorizationApi.new
+evaluate_batch_request = LumoAuthApiClient::EvaluateBatchRequest.new({evaluations: [{ key: 3.56}]}) # EvaluateBatchRequest | AuthZEN Authorization API 1.0 batch evaluation request.
 
 begin
   # AuthZEN 1.0 boxcarred access evaluations
-  result = api_instance.evaluate_batch
+  result = api_instance.evaluate_batch(evaluate_batch_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AuthorizationApi->evaluate_batch: #{e}"
@@ -699,12 +724,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<EvaluateBatchResponse>, Integer, Hash)> evaluate_batch_with_http_info
+> <Array(<EvaluateBatchResponse>, Integer, Hash)> evaluate_batch_with_http_info(evaluate_batch_request)
 
 ```ruby
 begin
   # AuthZEN 1.0 boxcarred access evaluations
-  data, status_code, headers = api_instance.evaluate_batch_with_http_info
+  data, status_code, headers = api_instance.evaluate_batch_with_http_info(evaluate_batch_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <EvaluateBatchResponse>
@@ -715,7 +740,9 @@ end
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **evaluate_batch_request** | [**EvaluateBatchRequest**](EvaluateBatchRequest.md) | AuthZEN Authorization API 1.0 batch evaluation request. |  |
 
 ### Return type
 
@@ -727,7 +754,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -1169,7 +1196,7 @@ This endpoint does not need any parameter.
 
 ## set_resource_attribute
 
-> <SetResourceAttributeResponse> set_resource_attribute(org_id, resource_type, resource_id, attribute_slug)
+> <SetResourceAttributeResponse> set_resource_attribute(org_id, resource_type, resource_id, attribute_slug, set_resource_attribute_request)
 
 Set a resource attribute
 
@@ -1191,10 +1218,11 @@ org_id = 'org_id_example' # String |
 resource_type = 'resource_type_example' # String | 
 resource_id = 'resource_id_example' # String | 
 attribute_slug = 'attribute_slug_example' # String | 
+set_resource_attribute_request = LumoAuthApiClient::SetResourceAttributeRequest.new({value: 3.56}) # SetResourceAttributeRequest | 
 
 begin
   # Set a resource attribute
-  result = api_instance.set_resource_attribute(org_id, resource_type, resource_id, attribute_slug)
+  result = api_instance.set_resource_attribute(org_id, resource_type, resource_id, attribute_slug, set_resource_attribute_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AuthorizationApi->set_resource_attribute: #{e}"
@@ -1205,12 +1233,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<SetResourceAttributeResponse>, Integer, Hash)> set_resource_attribute_with_http_info(org_id, resource_type, resource_id, attribute_slug)
+> <Array(<SetResourceAttributeResponse>, Integer, Hash)> set_resource_attribute_with_http_info(org_id, resource_type, resource_id, attribute_slug, set_resource_attribute_request)
 
 ```ruby
 begin
   # Set a resource attribute
-  data, status_code, headers = api_instance.set_resource_attribute_with_http_info(org_id, resource_type, resource_id, attribute_slug)
+  data, status_code, headers = api_instance.set_resource_attribute_with_http_info(org_id, resource_type, resource_id, attribute_slug, set_resource_attribute_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <SetResourceAttributeResponse>
@@ -1227,6 +1255,7 @@ end
 | **resource_type** | **String** |  |  |
 | **resource_id** | **String** |  |  |
 | **attribute_slug** | **String** |  |  |
+| **set_resource_attribute_request** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md) |  |  |
 
 ### Return type
 
@@ -1238,13 +1267,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## set_user_attribute
 
-> <SetUserAttributeResponse> set_user_attribute(org_id, user_id, attribute_slug)
+> <SetUserAttributeResponse> set_user_attribute(org_id, user_id, attribute_slug, set_resource_attribute_request)
 
 Set a user attribute
 
@@ -1265,10 +1294,11 @@ api_instance = LumoAuthApiClient::AuthorizationApi.new
 org_id = 'org_id_example' # String | 
 user_id = 'user_id_example' # String | 
 attribute_slug = 'attribute_slug_example' # String | 
+set_resource_attribute_request = LumoAuthApiClient::SetResourceAttributeRequest.new({value: 3.56}) # SetResourceAttributeRequest | 
 
 begin
   # Set a user attribute
-  result = api_instance.set_user_attribute(org_id, user_id, attribute_slug)
+  result = api_instance.set_user_attribute(org_id, user_id, attribute_slug, set_resource_attribute_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AuthorizationApi->set_user_attribute: #{e}"
@@ -1279,12 +1309,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<SetUserAttributeResponse>, Integer, Hash)> set_user_attribute_with_http_info(org_id, user_id, attribute_slug)
+> <Array(<SetUserAttributeResponse>, Integer, Hash)> set_user_attribute_with_http_info(org_id, user_id, attribute_slug, set_resource_attribute_request)
 
 ```ruby
 begin
   # Set a user attribute
-  data, status_code, headers = api_instance.set_user_attribute_with_http_info(org_id, user_id, attribute_slug)
+  data, status_code, headers = api_instance.set_user_attribute_with_http_info(org_id, user_id, attribute_slug, set_resource_attribute_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <SetUserAttributeResponse>
@@ -1300,6 +1330,7 @@ end
 | **org_id** | **String** |  |  |
 | **user_id** | **String** |  |  |
 | **attribute_slug** | **String** |  |  |
+| **set_resource_attribute_request** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md) |  |  |
 
 ### Return type
 
@@ -1311,6 +1342,6 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 

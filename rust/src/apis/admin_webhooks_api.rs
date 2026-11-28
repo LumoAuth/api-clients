@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -153,9 +153,10 @@ pub enum PutAdminWebhooksUpdateError {
 
 
 /// Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
-pub async fn admin_webhooks_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminWebhooksCreateResponse, Error<AdminWebhooksCreateError>> {
+pub async fn admin_webhooks_create(configuration: &configuration::Configuration, org_id: &str, admin_webhooks_create_request: models::AdminWebhooksCreateRequest) -> Result<models::AdminWebhooksCreateResponse, Error<AdminWebhooksCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_admin_webhooks_create_request = admin_webhooks_create_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/webhooks", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -174,6 +175,7 @@ pub async fn admin_webhooks_create(configuration: &configuration::Configuration,
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_webhooks_create_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -492,7 +494,7 @@ pub async fn admin_webhooks_get(configuration: &configuration::Configuration, or
     }
 }
 
-/// Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+/// Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 pub async fn admin_webhooks_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminWebhooksListResponse, Error<AdminWebhooksListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -638,7 +640,7 @@ pub async fn admin_webhooks_test(configuration: &configuration::Configuration, o
     }
 }
 
-/// Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+/// Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 pub async fn admin_webhooks_tunnel_start(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminWebhooksTunnelStartResponse, Error<AdminWebhooksTunnelStartError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -880,10 +882,11 @@ pub async fn admin_webhooks_webhooks_enable(configuration: &configuration::Confi
     }
 }
 
-pub async fn patch_admin_webhooks_update(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::PutAdminWebhooksUpdateResponse, Error<PatchAdminWebhooksUpdateError>> {
+pub async fn patch_admin_webhooks_update(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str, put_admin_webhooks_update_request: models::PutAdminWebhooksUpdateRequest) -> Result<models::PutAdminWebhooksUpdateResponse, Error<PatchAdminWebhooksUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
+    let p_put_admin_webhooks_update_request = put_admin_webhooks_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), webhookId=crate::apis::urlencode(p_webhook_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -902,6 +905,7 @@ pub async fn patch_admin_webhooks_update(configuration: &configuration::Configur
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_webhooks_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -929,10 +933,11 @@ pub async fn patch_admin_webhooks_update(configuration: &configuration::Configur
 }
 
 /// Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.
-pub async fn put_admin_webhooks_update(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::PutAdminWebhooksUpdateResponse, Error<PutAdminWebhooksUpdateError>> {
+pub async fn put_admin_webhooks_update(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str, put_admin_webhooks_update_request: models::PutAdminWebhooksUpdateRequest) -> Result<models::PutAdminWebhooksUpdateResponse, Error<PutAdminWebhooksUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
+    let p_put_admin_webhooks_update_request = put_admin_webhooks_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), webhookId=crate::apis::urlencode(p_webhook_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -951,6 +956,7 @@ pub async fn put_admin_webhooks_update(configuration: &configuration::Configurat
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_webhooks_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

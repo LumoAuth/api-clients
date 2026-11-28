@@ -7,7 +7,10 @@ Method | HTTP request | Description
 [**admin_analytics_dashboard**](AdminSettingsApi.md#admin_analytics_dashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics
 [**admin_analytics_logins**](AdminSettingsApi.md#admin_analytics_logins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics
 [**admin_analytics_users**](AdminSettingsApi.md#admin_analytics_users) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics
-[**admin_organization_get**](AdminSettingsApi.md#admin_organization_get) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile
+[**admin_initial_access_tokens_create**](AdminSettingsApi.md#admin_initial_access_tokens_create) | **POST** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | Create an initial access token for dynamic client registration
+[**admin_initial_access_tokens_delete**](AdminSettingsApi.md#admin_initial_access_tokens_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId} | Delete an initial access token of dynamic client registration
+[**admin_initial_access_tokens_list**](AdminSettingsApi.md#admin_initial_access_tokens_list) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | List the initial access tokens of dynamic client registration
+[**admin_organization_get**](AdminSettingsApi.md#admin_organization_get) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization profile
 [**admin_settings_all**](AdminSettingsApi.md#admin_settings_all) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined)
 [**admin_settings_auth_get**](AdminSettingsApi.md#admin_settings_auth_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings
 [**admin_settings_authentication_get**](AdminSettingsApi.md#admin_settings_authentication_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth)
@@ -16,8 +19,8 @@ Method | HTTP request | Description
 [**admin_settings_general_get**](AdminSettingsApi.md#admin_settings_general_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings
 [**admin_settings_scim_get**](AdminSettingsApi.md#admin_settings_scim_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings
 [**admin_settings_security_get**](AdminSettingsApi.md#admin_settings_security_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings
-[**admin_tenant_get**](AdminSettingsApi.md#admin_tenant_get) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile
-[**patch_admin_organization_update**](AdminSettingsApi.md#patch_admin_organization_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
+[**admin_tenant_get**](AdminSettingsApi.md#admin_tenant_get) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization profile
+[**patch_admin_organization_update**](AdminSettingsApi.md#patch_admin_organization_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update the organization's name and settings
 [**patch_admin_settings_auth_update**](AdminSettingsApi.md#patch_admin_settings_auth_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 [**patch_admin_settings_authentication_update**](AdminSettingsApi.md#patch_admin_settings_authentication_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 [**patch_admin_settings_branding_update**](AdminSettingsApi.md#patch_admin_settings_branding_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -25,8 +28,8 @@ Method | HTTP request | Description
 [**patch_admin_settings_general_update**](AdminSettingsApi.md#patch_admin_settings_general_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 [**patch_admin_settings_scim_update**](AdminSettingsApi.md#patch_admin_settings_scim_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 [**patch_admin_settings_security_update**](AdminSettingsApi.md#patch_admin_settings_security_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-[**patch_admin_tenant_update**](AdminSettingsApi.md#patch_admin_tenant_update) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
-[**put_admin_organization_update**](AdminSettingsApi.md#put_admin_organization_update) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
+[**patch_admin_tenant_update**](AdminSettingsApi.md#patch_admin_tenant_update) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update the organization's name and settings
+[**put_admin_organization_update**](AdminSettingsApi.md#put_admin_organization_update) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update the organization's name and settings
 [**put_admin_settings_auth_update**](AdminSettingsApi.md#put_admin_settings_auth_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 [**put_admin_settings_authentication_update**](AdminSettingsApi.md#put_admin_settings_authentication_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 [**put_admin_settings_branding_update**](AdminSettingsApi.md#put_admin_settings_branding_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -34,7 +37,7 @@ Method | HTTP request | Description
 [**put_admin_settings_general_update**](AdminSettingsApi.md#put_admin_settings_general_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 [**put_admin_settings_scim_update**](AdminSettingsApi.md#put_admin_settings_scim_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 [**put_admin_settings_security_update**](AdminSettingsApi.md#put_admin_settings_security_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-[**put_admin_tenant_update**](AdminSettingsApi.md#put_admin_tenant_update) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
+[**put_admin_tenant_update**](AdminSettingsApi.md#put_admin_tenant_update) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update the organization's name and settings
 
 
 
@@ -124,10 +127,101 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## admin_initial_access_tokens_create
+
+> models::AdminInitialAccessTokensCreateResponse admin_initial_access_tokens_create(org_id)
+Create an initial access token for dynamic client registration
+
+Generates a token and adds it to the organization's list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**org_id** | **String** |  | [required] |
+
+### Return type
+
+[**models::AdminInitialAccessTokensCreateResponse**](AdminInitialAccessTokensCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## admin_initial_access_tokens_delete
+
+> models::MessageResponse admin_initial_access_tokens_delete(org_id, token_id)
+Delete an initial access token of dynamic client registration
+
+The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**org_id** | **String** |  | [required] |
+**token_id** | **String** |  | [required] |
+
+### Return type
+
+[**models::MessageResponse**](MessageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## admin_initial_access_tokens_list
+
+> models::AdminInitialAccessTokensListResponse admin_initial_access_tokens_list(org_id)
+List the initial access tokens of dynamic client registration
+
+Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**org_id** | **String** |  | [required] |
+
+### Return type
+
+[**models::AdminInitialAccessTokensListResponse**](AdminInitialAccessTokensListResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## admin_organization_get
 
 > models::AdminTenantGetResponse admin_organization_get(org_id)
-Get organization (tenant) profile
+Get organization profile
 
 ### Parameters
 
@@ -383,7 +477,7 @@ Name | Type | Description  | Required | Notes
 ## admin_tenant_get
 
 > models::AdminTenantGetResponse admin_tenant_get(org_id)
-Get organization (tenant) profile
+Get organization profile
 
 ### Parameters
 
@@ -410,8 +504,8 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_organization_update
 
-> models::PutAdminTenantUpdateResponse patch_admin_organization_update(org_id)
-Update organization (tenant) name and settings
+> models::PutAdminTenantUpdateResponse patch_admin_organization_update(org_id, put_admin_tenant_update_request)
+Update the organization's name and settings
 
 ### Parameters
 
@@ -419,6 +513,7 @@ Update organization (tenant) name and settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**put_admin_tenant_update_request** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -430,7 +525,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -438,8 +533,10 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_settings_auth_update
 
-> models::PutAdminSettingsAuthenticationUpdateResponse patch_admin_settings_auth_update(org_id)
+> models::PutAdminSettingsAuthenticationUpdateResponse patch_admin_settings_auth_update(org_id, authentication_settings)
 Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Parameters
 
@@ -447,6 +544,7 @@ Update authentication settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**authentication_settings** | [**AuthenticationSettings**](AuthenticationSettings.md) |  | [required] |
 
 ### Return type
 
@@ -458,7 +556,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -466,8 +564,10 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_settings_authentication_update
 
-> models::PutAdminSettingsAuthenticationUpdateResponse patch_admin_settings_authentication_update(org_id)
+> models::PutAdminSettingsAuthenticationUpdateResponse patch_admin_settings_authentication_update(org_id, authentication_settings)
 Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Parameters
 
@@ -475,6 +575,7 @@ Update authentication settings (alias for settings/auth)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**authentication_settings** | [**AuthenticationSettings**](AuthenticationSettings.md) |  | [required] |
 
 ### Return type
 
@@ -486,7 +587,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -494,7 +595,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_settings_branding_update
 
-> models::PutAdminSettingsBrandingUpdateResponse patch_admin_settings_branding_update(org_id)
+> models::PutAdminSettingsBrandingUpdateResponse patch_admin_settings_branding_update(org_id, branding_settings)
 Update branding/login page settings
 
 Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
@@ -505,6 +606,7 @@ Changes the login page settings that are live on the hosted pages. Values go thr
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**branding_settings** | [**BrandingSettings**](BrandingSettings.md) |  | [required] |
 
 ### Return type
 
@@ -516,7 +618,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -586,7 +688,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_settings_scim_update
 
-> models::PutAdminSettingsScimUpdateResponse patch_admin_settings_scim_update(org_id)
+> models::PutAdminSettingsScimUpdateResponse patch_admin_settings_scim_update(org_id, scim_settings)
 Update SCIM settings
 
 ### Parameters
@@ -595,6 +697,7 @@ Update SCIM settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**scim_settings** | [**ScimSettings**](ScimSettings.md) |  | [required] |
 
 ### Return type
 
@@ -606,7 +709,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -614,7 +717,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_settings_security_update
 
-> models::PutAdminSettingsSecurityUpdateResponse patch_admin_settings_security_update(org_id)
+> models::PutAdminSettingsSecurityUpdateResponse patch_admin_settings_security_update(org_id, put_admin_settings_security_update_request)
 Update security settings
 
 ### Parameters
@@ -623,6 +726,7 @@ Update security settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**put_admin_settings_security_update_request** | [**PutAdminSettingsSecurityUpdateRequest**](PutAdminSettingsSecurityUpdateRequest.md) | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. | [required] |
 
 ### Return type
 
@@ -634,7 +738,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -642,8 +746,8 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_tenant_update
 
-> models::PutAdminTenantUpdateResponse patch_admin_tenant_update(org_id)
-Update organization (tenant) name and settings
+> models::PutAdminTenantUpdateResponse patch_admin_tenant_update(org_id, put_admin_tenant_update_request)
+Update the organization's name and settings
 
 ### Parameters
 
@@ -651,6 +755,7 @@ Update organization (tenant) name and settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**put_admin_tenant_update_request** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -662,7 +767,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -670,8 +775,8 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_organization_update
 
-> models::PutAdminTenantUpdateResponse put_admin_organization_update(org_id)
-Update organization (tenant) name and settings
+> models::PutAdminTenantUpdateResponse put_admin_organization_update(org_id, put_admin_tenant_update_request)
+Update the organization's name and settings
 
 ### Parameters
 
@@ -679,6 +784,7 @@ Update organization (tenant) name and settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**put_admin_tenant_update_request** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -690,7 +796,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -698,8 +804,10 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_settings_auth_update
 
-> models::PutAdminSettingsAuthenticationUpdateResponse put_admin_settings_auth_update(org_id)
+> models::PutAdminSettingsAuthenticationUpdateResponse put_admin_settings_auth_update(org_id, authentication_settings)
 Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Parameters
 
@@ -707,6 +815,7 @@ Update authentication settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**authentication_settings** | [**AuthenticationSettings**](AuthenticationSettings.md) |  | [required] |
 
 ### Return type
 
@@ -718,7 +827,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -726,8 +835,10 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_settings_authentication_update
 
-> models::PutAdminSettingsAuthenticationUpdateResponse put_admin_settings_authentication_update(org_id)
+> models::PutAdminSettingsAuthenticationUpdateResponse put_admin_settings_authentication_update(org_id, authentication_settings)
 Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Parameters
 
@@ -735,6 +846,7 @@ Update authentication settings (alias for settings/auth)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**authentication_settings** | [**AuthenticationSettings**](AuthenticationSettings.md) |  | [required] |
 
 ### Return type
 
@@ -746,7 +858,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -754,7 +866,7 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_settings_branding_update
 
-> models::PutAdminSettingsBrandingUpdateResponse put_admin_settings_branding_update(org_id)
+> models::PutAdminSettingsBrandingUpdateResponse put_admin_settings_branding_update(org_id, branding_settings)
 Update branding/login page settings
 
 Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
@@ -765,6 +877,7 @@ Changes the login page settings that are live on the hosted pages. Values go thr
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**branding_settings** | [**BrandingSettings**](BrandingSettings.md) |  | [required] |
 
 ### Return type
 
@@ -776,7 +889,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -846,7 +959,7 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_settings_scim_update
 
-> models::PutAdminSettingsScimUpdateResponse put_admin_settings_scim_update(org_id)
+> models::PutAdminSettingsScimUpdateResponse put_admin_settings_scim_update(org_id, scim_settings)
 Update SCIM settings
 
 ### Parameters
@@ -855,6 +968,7 @@ Update SCIM settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**scim_settings** | [**ScimSettings**](ScimSettings.md) |  | [required] |
 
 ### Return type
 
@@ -866,7 +980,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -874,7 +988,7 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_settings_security_update
 
-> models::PutAdminSettingsSecurityUpdateResponse put_admin_settings_security_update(org_id)
+> models::PutAdminSettingsSecurityUpdateResponse put_admin_settings_security_update(org_id, put_admin_settings_security_update_request)
 Update security settings
 
 ### Parameters
@@ -883,6 +997,7 @@ Update security settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**put_admin_settings_security_update_request** | [**PutAdminSettingsSecurityUpdateRequest**](PutAdminSettingsSecurityUpdateRequest.md) | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. | [required] |
 
 ### Return type
 
@@ -894,7 +1009,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -902,8 +1017,8 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_tenant_update
 
-> models::PutAdminTenantUpdateResponse put_admin_tenant_update(org_id)
-Update organization (tenant) name and settings
+> models::PutAdminTenantUpdateResponse put_admin_tenant_update(org_id, put_admin_tenant_update_request)
+Update the organization's name and settings
 
 ### Parameters
 
@@ -911,6 +1026,7 @@ Update organization (tenant) name and settings
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**put_admin_tenant_update_request** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -922,7 +1038,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

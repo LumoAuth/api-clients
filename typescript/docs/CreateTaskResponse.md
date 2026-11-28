@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **task_id** | **string** |  | [optional] [default to undefined]
+**parent_task_id** | **string** | The parent task, or null for a task without one. | [optional] [default to undefined]
 **caep_session_id** | **string** |  | [optional] [default to undefined]
 **expires_at** | **string** |  | [optional] [default to undefined]
 **agent_id** | **string** |  | [optional] [default to undefined]
@@ -19,6 +20,7 @@ import { CreateTaskResponse } from '@lumoauth/api-client';
 
 const instance: CreateTaskResponse = {
     task_id,
+    parent_task_id,
     caep_session_id,
     expires_at,
     agent_id,

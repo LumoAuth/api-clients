@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -24,7 +24,7 @@ import (
 type AdminSandboxAPI interface {
 
 	/*
-	AdminSandboxDestroy Destroy a sandbox tenant
+	AdminSandboxDestroy Destroy a sandbox organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -38,7 +38,7 @@ type AdminSandboxAPI interface {
 	AdminSandboxDestroyExecute(r ApiAdminSandboxDestroyRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	AdminSandboxList List the caller's sandbox tenants
+	AdminSandboxList List the caller's sandbox organizations
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -51,7 +51,7 @@ type AdminSandboxAPI interface {
 	AdminSandboxListExecute(r ApiAdminSandboxListRequest) (*AdminSandboxListResponse, *http.Response, error)
 
 	/*
-	AdminSandboxSpawn Spawn a sandbox tenant
+	AdminSandboxSpawn Spawn a sandbox organization
 
 	Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
 
@@ -81,7 +81,7 @@ func (r ApiAdminSandboxDestroyRequest) Execute() (*MessageResponse, *http.Respon
 }
 
 /*
-AdminSandboxDestroy Destroy a sandbox tenant
+AdminSandboxDestroy Destroy a sandbox organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -199,7 +199,7 @@ func (r ApiAdminSandboxListRequest) Execute() (*AdminSandboxListResponse, *http.
 }
 
 /*
-AdminSandboxList List the caller's sandbox tenants
+AdminSandboxList List the caller's sandbox organizations
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -320,7 +320,7 @@ func (r ApiAdminSandboxSpawnRequest) Execute() (*AdminSandboxSpawnResponse, *htt
 }
 
 /*
-AdminSandboxSpawn Spawn a sandbox tenant
+AdminSandboxSpawn Spawn a sandbox organization
 
 Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
 

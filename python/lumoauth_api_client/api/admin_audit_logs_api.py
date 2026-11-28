@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -17,13 +17,16 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
+from datetime import datetime
 from pydantic import Field, StrictStr, field_validator
+from typing import Optional
 from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_audit_logs_actions_response import AdminAuditLogsActionsResponse
 from lumoauth_api_client.models.admin_audit_logs_get_response import AdminAuditLogsGetResponse
 from lumoauth_api_client.models.admin_audit_logs_list_response import AdminAuditLogsListResponse
 from lumoauth_api_client.models.admin_audit_logs_retention_response import AdminAuditLogsRetentionResponse
 from lumoauth_api_client.models.admin_audit_logs_stats_response import AdminAuditLogsStatsResponse
+from lumoauth_api_client.models.put_admin_audit_logs_retention_update_request import PutAdminAuditLogsRetentionUpdateRequest
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -60,7 +63,7 @@ class AdminAuditLogsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> AdminAuditLogsActionsResponse:
-        """List the distinct audit action types recorded for the tenant
+        """List the distinct audit action types recorded for the organization
 
 
         :param org_id: (required)
@@ -126,7 +129,7 @@ class AdminAuditLogsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[AdminAuditLogsActionsResponse]:
-        """List the distinct audit action types recorded for the tenant
+        """List the distinct audit action types recorded for the organization
 
 
         :param org_id: (required)
@@ -192,7 +195,7 @@ class AdminAuditLogsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List the distinct audit action types recorded for the tenant
+        """List the distinct audit action types recorded for the organization
 
 
         :param org_id: (required)
@@ -306,6 +309,19 @@ class AdminAuditLogsApi:
     def admin_audit_logs_export(
         self,
         org_id: StrictStr,
+        format: Annotated[Optional[StrictStr], Field(description="csv (default) or json.")] = None,
+        event_type: Annotated[Optional[StrictStr], Field(description="Exact event type, for example user.login.")] = None,
+        action: Annotated[Optional[StrictStr], Field(description="The short verb of the event (as GET /audit-logs/actions lists them).")] = None,
+        actor_id: Annotated[Optional[StrictStr], Field(description="Who acted: a user, API key or agent id. Also accepted as userId.")] = None,
+        target_type: Annotated[Optional[StrictStr], Field(description="Kind of the subject of the event. Also accepted as resourceType.")] = None,
+        target_id: Annotated[Optional[StrictStr], Field(description="The subject of the event, for example the user of a login.failed entry.")] = None,
+        severity: Optional[StrictStr] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Result of the event.")] = None,
+        ip_address: Optional[StrictStr] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Text in the message, error message, event type, actor id or name, target name, client id or trace ID.")] = None,
+        trace_id: Annotated[Optional[Annotated[str, Field(strict=True)]], Field(description="Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).")] = None,
+        var_from: Annotated[Optional[datetime], Field(description="Entries at or after this time (ISO 8601). Also accepted as startDate.")] = None,
+        to: Annotated[Optional[datetime], Field(description="Entries at or before this time (ISO 8601). Also accepted as endDate.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -325,6 +341,32 @@ class AdminAuditLogsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param format: csv (default) or json.
+        :type format: str
+        :param event_type: Exact event type, for example user.login.
+        :type event_type: str
+        :param action: The short verb of the event (as GET /audit-logs/actions lists them).
+        :type action: str
+        :param actor_id: Who acted: a user, API key or agent id. Also accepted as userId.
+        :type actor_id: str
+        :param target_type: Kind of the subject of the event. Also accepted as resourceType.
+        :type target_type: str
+        :param target_id: The subject of the event, for example the user of a login.failed entry.
+        :type target_id: str
+        :param severity:
+        :type severity: str
+        :param status: Result of the event.
+        :type status: str
+        :param ip_address:
+        :type ip_address: str
+        :param search: Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+        :type search: str
+        :param trace_id: Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+        :type trace_id: str
+        :param var_from: Entries at or after this time (ISO 8601). Also accepted as startDate.
+        :type var_from: datetime
+        :param to: Entries at or before this time (ISO 8601). Also accepted as endDate.
+        :type to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -349,6 +391,19 @@ class AdminAuditLogsApi:
 
         _param = self._admin_audit_logs_export_serialize(
             org_id=org_id,
+            format=format,
+            event_type=event_type,
+            action=action,
+            actor_id=actor_id,
+            target_type=target_type,
+            target_id=target_id,
+            severity=severity,
+            status=status,
+            ip_address=ip_address,
+            search=search,
+            trace_id=trace_id,
+            var_from=var_from,
+            to=to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -373,6 +428,19 @@ class AdminAuditLogsApi:
     def admin_audit_logs_export_with_http_info(
         self,
         org_id: StrictStr,
+        format: Annotated[Optional[StrictStr], Field(description="csv (default) or json.")] = None,
+        event_type: Annotated[Optional[StrictStr], Field(description="Exact event type, for example user.login.")] = None,
+        action: Annotated[Optional[StrictStr], Field(description="The short verb of the event (as GET /audit-logs/actions lists them).")] = None,
+        actor_id: Annotated[Optional[StrictStr], Field(description="Who acted: a user, API key or agent id. Also accepted as userId.")] = None,
+        target_type: Annotated[Optional[StrictStr], Field(description="Kind of the subject of the event. Also accepted as resourceType.")] = None,
+        target_id: Annotated[Optional[StrictStr], Field(description="The subject of the event, for example the user of a login.failed entry.")] = None,
+        severity: Optional[StrictStr] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Result of the event.")] = None,
+        ip_address: Optional[StrictStr] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Text in the message, error message, event type, actor id or name, target name, client id or trace ID.")] = None,
+        trace_id: Annotated[Optional[Annotated[str, Field(strict=True)]], Field(description="Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).")] = None,
+        var_from: Annotated[Optional[datetime], Field(description="Entries at or after this time (ISO 8601). Also accepted as startDate.")] = None,
+        to: Annotated[Optional[datetime], Field(description="Entries at or before this time (ISO 8601). Also accepted as endDate.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -392,6 +460,32 @@ class AdminAuditLogsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param format: csv (default) or json.
+        :type format: str
+        :param event_type: Exact event type, for example user.login.
+        :type event_type: str
+        :param action: The short verb of the event (as GET /audit-logs/actions lists them).
+        :type action: str
+        :param actor_id: Who acted: a user, API key or agent id. Also accepted as userId.
+        :type actor_id: str
+        :param target_type: Kind of the subject of the event. Also accepted as resourceType.
+        :type target_type: str
+        :param target_id: The subject of the event, for example the user of a login.failed entry.
+        :type target_id: str
+        :param severity:
+        :type severity: str
+        :param status: Result of the event.
+        :type status: str
+        :param ip_address:
+        :type ip_address: str
+        :param search: Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+        :type search: str
+        :param trace_id: Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+        :type trace_id: str
+        :param var_from: Entries at or after this time (ISO 8601). Also accepted as startDate.
+        :type var_from: datetime
+        :param to: Entries at or before this time (ISO 8601). Also accepted as endDate.
+        :type to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -416,6 +510,19 @@ class AdminAuditLogsApi:
 
         _param = self._admin_audit_logs_export_serialize(
             org_id=org_id,
+            format=format,
+            event_type=event_type,
+            action=action,
+            actor_id=actor_id,
+            target_type=target_type,
+            target_id=target_id,
+            severity=severity,
+            status=status,
+            ip_address=ip_address,
+            search=search,
+            trace_id=trace_id,
+            var_from=var_from,
+            to=to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -440,6 +547,19 @@ class AdminAuditLogsApi:
     def admin_audit_logs_export_without_preload_content(
         self,
         org_id: StrictStr,
+        format: Annotated[Optional[StrictStr], Field(description="csv (default) or json.")] = None,
+        event_type: Annotated[Optional[StrictStr], Field(description="Exact event type, for example user.login.")] = None,
+        action: Annotated[Optional[StrictStr], Field(description="The short verb of the event (as GET /audit-logs/actions lists them).")] = None,
+        actor_id: Annotated[Optional[StrictStr], Field(description="Who acted: a user, API key or agent id. Also accepted as userId.")] = None,
+        target_type: Annotated[Optional[StrictStr], Field(description="Kind of the subject of the event. Also accepted as resourceType.")] = None,
+        target_id: Annotated[Optional[StrictStr], Field(description="The subject of the event, for example the user of a login.failed entry.")] = None,
+        severity: Optional[StrictStr] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Result of the event.")] = None,
+        ip_address: Optional[StrictStr] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Text in the message, error message, event type, actor id or name, target name, client id or trace ID.")] = None,
+        trace_id: Annotated[Optional[Annotated[str, Field(strict=True)]], Field(description="Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).")] = None,
+        var_from: Annotated[Optional[datetime], Field(description="Entries at or after this time (ISO 8601). Also accepted as startDate.")] = None,
+        to: Annotated[Optional[datetime], Field(description="Entries at or before this time (ISO 8601). Also accepted as endDate.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -459,6 +579,32 @@ class AdminAuditLogsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param format: csv (default) or json.
+        :type format: str
+        :param event_type: Exact event type, for example user.login.
+        :type event_type: str
+        :param action: The short verb of the event (as GET /audit-logs/actions lists them).
+        :type action: str
+        :param actor_id: Who acted: a user, API key or agent id. Also accepted as userId.
+        :type actor_id: str
+        :param target_type: Kind of the subject of the event. Also accepted as resourceType.
+        :type target_type: str
+        :param target_id: The subject of the event, for example the user of a login.failed entry.
+        :type target_id: str
+        :param severity:
+        :type severity: str
+        :param status: Result of the event.
+        :type status: str
+        :param ip_address:
+        :type ip_address: str
+        :param search: Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+        :type search: str
+        :param trace_id: Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+        :type trace_id: str
+        :param var_from: Entries at or after this time (ISO 8601). Also accepted as startDate.
+        :type var_from: datetime
+        :param to: Entries at or before this time (ISO 8601). Also accepted as endDate.
+        :type to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -483,6 +629,19 @@ class AdminAuditLogsApi:
 
         _param = self._admin_audit_logs_export_serialize(
             org_id=org_id,
+            format=format,
+            event_type=event_type,
+            action=action,
+            actor_id=actor_id,
+            target_type=target_type,
+            target_id=target_id,
+            severity=severity,
+            status=status,
+            ip_address=ip_address,
+            search=search,
+            trace_id=trace_id,
+            var_from=var_from,
+            to=to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -502,6 +661,19 @@ class AdminAuditLogsApi:
     def _admin_audit_logs_export_serialize(
         self,
         org_id,
+        format,
+        event_type,
+        action,
+        actor_id,
+        target_type,
+        target_id,
+        severity,
+        status,
+        ip_address,
+        search,
+        trace_id,
+        var_from,
+        to,
         _request_auth,
         _content_type,
         _headers,
@@ -526,6 +698,76 @@ class AdminAuditLogsApi:
         if org_id is not None:
             _path_params['orgId'] = org_id
         # process the query parameters
+        if format is not None:
+            
+            _query_params.append(('format', format))
+            
+        if event_type is not None:
+            
+            _query_params.append(('eventType', event_type))
+            
+        if action is not None:
+            
+            _query_params.append(('action', action))
+            
+        if actor_id is not None:
+            
+            _query_params.append(('actorId', actor_id))
+            
+        if target_type is not None:
+            
+            _query_params.append(('targetType', target_type))
+            
+        if target_id is not None:
+            
+            _query_params.append(('targetId', target_id))
+            
+        if severity is not None:
+            
+            _query_params.append(('severity', severity))
+            
+        if status is not None:
+            
+            _query_params.append(('status', status))
+            
+        if ip_address is not None:
+            
+            _query_params.append(('ipAddress', ip_address))
+            
+        if search is not None:
+            
+            _query_params.append(('search', search))
+            
+        if trace_id is not None:
+            
+            _query_params.append(('traceId', trace_id))
+            
+        if var_from is not None:
+            if isinstance(var_from, datetime):
+                _query_params.append(
+                    (
+                        'from',
+                        var_from.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('from', var_from))
+            
+        if to is not None:
+            if isinstance(to, datetime):
+                _query_params.append(
+                    (
+                        'to',
+                        to.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('to', to))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -846,6 +1088,20 @@ class AdminAuditLogsApi:
     def admin_audit_logs_list(
         self,
         org_id: StrictStr,
+        page: Optional[Annotated[int, Field(strict=True, ge=1)]] = None,
+        limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
+        event_type: Annotated[Optional[StrictStr], Field(description="Exact event type, for example user.login.")] = None,
+        action: Annotated[Optional[StrictStr], Field(description="The short verb of the event (as GET /audit-logs/actions lists them).")] = None,
+        actor_id: Annotated[Optional[StrictStr], Field(description="Who acted: a user, API key or agent id. Also accepted as userId.")] = None,
+        target_type: Annotated[Optional[StrictStr], Field(description="Kind of the subject of the event. Also accepted as resourceType.")] = None,
+        target_id: Annotated[Optional[StrictStr], Field(description="The subject of the event, for example the user of a login.failed entry.")] = None,
+        severity: Optional[StrictStr] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Result of the event.")] = None,
+        ip_address: Optional[StrictStr] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Text in the message, error message, event type, actor id or name, target name, client id or trace ID.")] = None,
+        trace_id: Annotated[Optional[Annotated[str, Field(strict=True)]], Field(description="Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).")] = None,
+        var_from: Annotated[Optional[datetime], Field(description="Entries at or after this time (ISO 8601). Also accepted as startDate.")] = None,
+        to: Annotated[Optional[datetime], Field(description="Entries at or before this time (ISO 8601). Also accepted as endDate.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -864,6 +1120,34 @@ class AdminAuditLogsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param page:
+        :type page: int
+        :param limit:
+        :type limit: int
+        :param event_type: Exact event type, for example user.login.
+        :type event_type: str
+        :param action: The short verb of the event (as GET /audit-logs/actions lists them).
+        :type action: str
+        :param actor_id: Who acted: a user, API key or agent id. Also accepted as userId.
+        :type actor_id: str
+        :param target_type: Kind of the subject of the event. Also accepted as resourceType.
+        :type target_type: str
+        :param target_id: The subject of the event, for example the user of a login.failed entry.
+        :type target_id: str
+        :param severity:
+        :type severity: str
+        :param status: Result of the event.
+        :type status: str
+        :param ip_address:
+        :type ip_address: str
+        :param search: Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+        :type search: str
+        :param trace_id: Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+        :type trace_id: str
+        :param var_from: Entries at or after this time (ISO 8601). Also accepted as startDate.
+        :type var_from: datetime
+        :param to: Entries at or before this time (ISO 8601). Also accepted as endDate.
+        :type to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -888,6 +1172,20 @@ class AdminAuditLogsApi:
 
         _param = self._admin_audit_logs_list_serialize(
             org_id=org_id,
+            page=page,
+            limit=limit,
+            event_type=event_type,
+            action=action,
+            actor_id=actor_id,
+            target_type=target_type,
+            target_id=target_id,
+            severity=severity,
+            status=status,
+            ip_address=ip_address,
+            search=search,
+            trace_id=trace_id,
+            var_from=var_from,
+            to=to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -912,6 +1210,20 @@ class AdminAuditLogsApi:
     def admin_audit_logs_list_with_http_info(
         self,
         org_id: StrictStr,
+        page: Optional[Annotated[int, Field(strict=True, ge=1)]] = None,
+        limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
+        event_type: Annotated[Optional[StrictStr], Field(description="Exact event type, for example user.login.")] = None,
+        action: Annotated[Optional[StrictStr], Field(description="The short verb of the event (as GET /audit-logs/actions lists them).")] = None,
+        actor_id: Annotated[Optional[StrictStr], Field(description="Who acted: a user, API key or agent id. Also accepted as userId.")] = None,
+        target_type: Annotated[Optional[StrictStr], Field(description="Kind of the subject of the event. Also accepted as resourceType.")] = None,
+        target_id: Annotated[Optional[StrictStr], Field(description="The subject of the event, for example the user of a login.failed entry.")] = None,
+        severity: Optional[StrictStr] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Result of the event.")] = None,
+        ip_address: Optional[StrictStr] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Text in the message, error message, event type, actor id or name, target name, client id or trace ID.")] = None,
+        trace_id: Annotated[Optional[Annotated[str, Field(strict=True)]], Field(description="Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).")] = None,
+        var_from: Annotated[Optional[datetime], Field(description="Entries at or after this time (ISO 8601). Also accepted as startDate.")] = None,
+        to: Annotated[Optional[datetime], Field(description="Entries at or before this time (ISO 8601). Also accepted as endDate.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -930,6 +1242,34 @@ class AdminAuditLogsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param page:
+        :type page: int
+        :param limit:
+        :type limit: int
+        :param event_type: Exact event type, for example user.login.
+        :type event_type: str
+        :param action: The short verb of the event (as GET /audit-logs/actions lists them).
+        :type action: str
+        :param actor_id: Who acted: a user, API key or agent id. Also accepted as userId.
+        :type actor_id: str
+        :param target_type: Kind of the subject of the event. Also accepted as resourceType.
+        :type target_type: str
+        :param target_id: The subject of the event, for example the user of a login.failed entry.
+        :type target_id: str
+        :param severity:
+        :type severity: str
+        :param status: Result of the event.
+        :type status: str
+        :param ip_address:
+        :type ip_address: str
+        :param search: Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+        :type search: str
+        :param trace_id: Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+        :type trace_id: str
+        :param var_from: Entries at or after this time (ISO 8601). Also accepted as startDate.
+        :type var_from: datetime
+        :param to: Entries at or before this time (ISO 8601). Also accepted as endDate.
+        :type to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -954,6 +1294,20 @@ class AdminAuditLogsApi:
 
         _param = self._admin_audit_logs_list_serialize(
             org_id=org_id,
+            page=page,
+            limit=limit,
+            event_type=event_type,
+            action=action,
+            actor_id=actor_id,
+            target_type=target_type,
+            target_id=target_id,
+            severity=severity,
+            status=status,
+            ip_address=ip_address,
+            search=search,
+            trace_id=trace_id,
+            var_from=var_from,
+            to=to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -978,6 +1332,20 @@ class AdminAuditLogsApi:
     def admin_audit_logs_list_without_preload_content(
         self,
         org_id: StrictStr,
+        page: Optional[Annotated[int, Field(strict=True, ge=1)]] = None,
+        limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = None,
+        event_type: Annotated[Optional[StrictStr], Field(description="Exact event type, for example user.login.")] = None,
+        action: Annotated[Optional[StrictStr], Field(description="The short verb of the event (as GET /audit-logs/actions lists them).")] = None,
+        actor_id: Annotated[Optional[StrictStr], Field(description="Who acted: a user, API key or agent id. Also accepted as userId.")] = None,
+        target_type: Annotated[Optional[StrictStr], Field(description="Kind of the subject of the event. Also accepted as resourceType.")] = None,
+        target_id: Annotated[Optional[StrictStr], Field(description="The subject of the event, for example the user of a login.failed entry.")] = None,
+        severity: Optional[StrictStr] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Result of the event.")] = None,
+        ip_address: Optional[StrictStr] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Text in the message, error message, event type, actor id or name, target name, client id or trace ID.")] = None,
+        trace_id: Annotated[Optional[Annotated[str, Field(strict=True)]], Field(description="Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).")] = None,
+        var_from: Annotated[Optional[datetime], Field(description="Entries at or after this time (ISO 8601). Also accepted as startDate.")] = None,
+        to: Annotated[Optional[datetime], Field(description="Entries at or before this time (ISO 8601). Also accepted as endDate.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -996,6 +1364,34 @@ class AdminAuditLogsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param page:
+        :type page: int
+        :param limit:
+        :type limit: int
+        :param event_type: Exact event type, for example user.login.
+        :type event_type: str
+        :param action: The short verb of the event (as GET /audit-logs/actions lists them).
+        :type action: str
+        :param actor_id: Who acted: a user, API key or agent id. Also accepted as userId.
+        :type actor_id: str
+        :param target_type: Kind of the subject of the event. Also accepted as resourceType.
+        :type target_type: str
+        :param target_id: The subject of the event, for example the user of a login.failed entry.
+        :type target_id: str
+        :param severity:
+        :type severity: str
+        :param status: Result of the event.
+        :type status: str
+        :param ip_address:
+        :type ip_address: str
+        :param search: Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+        :type search: str
+        :param trace_id: Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+        :type trace_id: str
+        :param var_from: Entries at or after this time (ISO 8601). Also accepted as startDate.
+        :type var_from: datetime
+        :param to: Entries at or before this time (ISO 8601). Also accepted as endDate.
+        :type to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1020,6 +1416,20 @@ class AdminAuditLogsApi:
 
         _param = self._admin_audit_logs_list_serialize(
             org_id=org_id,
+            page=page,
+            limit=limit,
+            event_type=event_type,
+            action=action,
+            actor_id=actor_id,
+            target_type=target_type,
+            target_id=target_id,
+            severity=severity,
+            status=status,
+            ip_address=ip_address,
+            search=search,
+            trace_id=trace_id,
+            var_from=var_from,
+            to=to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1039,6 +1449,20 @@ class AdminAuditLogsApi:
     def _admin_audit_logs_list_serialize(
         self,
         org_id,
+        page,
+        limit,
+        event_type,
+        action,
+        actor_id,
+        target_type,
+        target_id,
+        severity,
+        status,
+        ip_address,
+        search,
+        trace_id,
+        var_from,
+        to,
         _request_auth,
         _content_type,
         _headers,
@@ -1063,6 +1487,80 @@ class AdminAuditLogsApi:
         if org_id is not None:
             _path_params['orgId'] = org_id
         # process the query parameters
+        if page is not None:
+            
+            _query_params.append(('page', page))
+            
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
+        if event_type is not None:
+            
+            _query_params.append(('eventType', event_type))
+            
+        if action is not None:
+            
+            _query_params.append(('action', action))
+            
+        if actor_id is not None:
+            
+            _query_params.append(('actorId', actor_id))
+            
+        if target_type is not None:
+            
+            _query_params.append(('targetType', target_type))
+            
+        if target_id is not None:
+            
+            _query_params.append(('targetId', target_id))
+            
+        if severity is not None:
+            
+            _query_params.append(('severity', severity))
+            
+        if status is not None:
+            
+            _query_params.append(('status', status))
+            
+        if ip_address is not None:
+            
+            _query_params.append(('ipAddress', ip_address))
+            
+        if search is not None:
+            
+            _query_params.append(('search', search))
+            
+        if trace_id is not None:
+            
+            _query_params.append(('traceId', trace_id))
+            
+        if var_from is not None:
+            if isinstance(var_from, datetime):
+                _query_params.append(
+                    (
+                        'from',
+                        var_from.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('from', var_from))
+            
+        if to is not None:
+            if isinstance(to, datetime):
+                _query_params.append(
+                    (
+                        'to',
+                        to.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('to', to))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -1623,6 +2121,7 @@ class AdminAuditLogsApi:
     def patch_admin_audit_logs_retention_update(
         self,
         org_id: StrictStr,
+        put_admin_audit_logs_retention_update_request: PutAdminAuditLogsRetentionUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1642,6 +2141,8 @@ class AdminAuditLogsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_audit_logs_retention_update_request: (required)
+        :type put_admin_audit_logs_retention_update_request: PutAdminAuditLogsRetentionUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1666,6 +2167,7 @@ class AdminAuditLogsApi:
 
         _param = self._patch_admin_audit_logs_retention_update_serialize(
             org_id=org_id,
+            put_admin_audit_logs_retention_update_request=put_admin_audit_logs_retention_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1690,6 +2192,7 @@ class AdminAuditLogsApi:
     def patch_admin_audit_logs_retention_update_with_http_info(
         self,
         org_id: StrictStr,
+        put_admin_audit_logs_retention_update_request: PutAdminAuditLogsRetentionUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1709,6 +2212,8 @@ class AdminAuditLogsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_audit_logs_retention_update_request: (required)
+        :type put_admin_audit_logs_retention_update_request: PutAdminAuditLogsRetentionUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1733,6 +2238,7 @@ class AdminAuditLogsApi:
 
         _param = self._patch_admin_audit_logs_retention_update_serialize(
             org_id=org_id,
+            put_admin_audit_logs_retention_update_request=put_admin_audit_logs_retention_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1757,6 +2263,7 @@ class AdminAuditLogsApi:
     def patch_admin_audit_logs_retention_update_without_preload_content(
         self,
         org_id: StrictStr,
+        put_admin_audit_logs_retention_update_request: PutAdminAuditLogsRetentionUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1776,6 +2283,8 @@ class AdminAuditLogsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_audit_logs_retention_update_request: (required)
+        :type put_admin_audit_logs_retention_update_request: PutAdminAuditLogsRetentionUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1800,6 +2309,7 @@ class AdminAuditLogsApi:
 
         _param = self._patch_admin_audit_logs_retention_update_serialize(
             org_id=org_id,
+            put_admin_audit_logs_retention_update_request=put_admin_audit_logs_retention_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1819,6 +2329,7 @@ class AdminAuditLogsApi:
     def _patch_admin_audit_logs_retention_update_serialize(
         self,
         org_id,
+        put_admin_audit_logs_retention_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1846,6 +2357,8 @@ class AdminAuditLogsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_audit_logs_retention_update_request is not None:
+            _body_params = put_admin_audit_logs_retention_update_request
 
 
         # set the HTTP header `Accept`
@@ -1856,6 +2369,19 @@ class AdminAuditLogsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1885,6 +2411,7 @@ class AdminAuditLogsApi:
     def put_admin_audit_logs_retention_update(
         self,
         org_id: StrictStr,
+        put_admin_audit_logs_retention_update_request: PutAdminAuditLogsRetentionUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1904,6 +2431,8 @@ class AdminAuditLogsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_audit_logs_retention_update_request: (required)
+        :type put_admin_audit_logs_retention_update_request: PutAdminAuditLogsRetentionUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1928,6 +2457,7 @@ class AdminAuditLogsApi:
 
         _param = self._put_admin_audit_logs_retention_update_serialize(
             org_id=org_id,
+            put_admin_audit_logs_retention_update_request=put_admin_audit_logs_retention_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1952,6 +2482,7 @@ class AdminAuditLogsApi:
     def put_admin_audit_logs_retention_update_with_http_info(
         self,
         org_id: StrictStr,
+        put_admin_audit_logs_retention_update_request: PutAdminAuditLogsRetentionUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1971,6 +2502,8 @@ class AdminAuditLogsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_audit_logs_retention_update_request: (required)
+        :type put_admin_audit_logs_retention_update_request: PutAdminAuditLogsRetentionUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1995,6 +2528,7 @@ class AdminAuditLogsApi:
 
         _param = self._put_admin_audit_logs_retention_update_serialize(
             org_id=org_id,
+            put_admin_audit_logs_retention_update_request=put_admin_audit_logs_retention_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2019,6 +2553,7 @@ class AdminAuditLogsApi:
     def put_admin_audit_logs_retention_update_without_preload_content(
         self,
         org_id: StrictStr,
+        put_admin_audit_logs_retention_update_request: PutAdminAuditLogsRetentionUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2038,6 +2573,8 @@ class AdminAuditLogsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_audit_logs_retention_update_request: (required)
+        :type put_admin_audit_logs_retention_update_request: PutAdminAuditLogsRetentionUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2062,6 +2599,7 @@ class AdminAuditLogsApi:
 
         _param = self._put_admin_audit_logs_retention_update_serialize(
             org_id=org_id,
+            put_admin_audit_logs_retention_update_request=put_admin_audit_logs_retention_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2081,6 +2619,7 @@ class AdminAuditLogsApi:
     def _put_admin_audit_logs_retention_update_serialize(
         self,
         org_id,
+        put_admin_audit_logs_retention_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -2108,6 +2647,8 @@ class AdminAuditLogsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_audit_logs_retention_update_request is not None:
+            _body_params = put_admin_audit_logs_retention_update_request
 
 
         # set the HTTP header `Accept`
@@ -2118,6 +2659,19 @@ class AdminAuditLogsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

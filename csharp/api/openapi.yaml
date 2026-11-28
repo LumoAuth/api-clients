@@ -6,8 +6,8 @@ info:
     url: https://lumoauth.dev
   description: |
     LumoAuth REST API — authentication, authorization, agent registry,
-    MCP server authorization, and tenant administration. Multi-tenant:
-    most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+    MCP server authorization, and organization administration. Most
+    paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
@@ -50,8 +50,8 @@ tags:
   name: Token Vault
 - description: CRUD on users; block/unblock; password reset.
   name: "Admin: Users"
-- description: "Per-user authenticators, temporary access codes, the tenant MFA policy\
-    \ and the enrollment coverage report."
+- description: "Per-user authenticators, temporary access codes, the organization's\
+    \ MFA policy and the enrollment coverage report."
   name: "Admin: Mfa"
   x-displayName: "Admin: MFA"
 - description: "Self-service authenticators (enroll, verify, rename, set default,\
@@ -71,7 +71,7 @@ tags:
   name: "Admin: Permissions"
 - description: List + revoke user sessions.
   name: "Admin: Sessions"
-- description: Tenant-wide auth settings.
+- description: Authentication settings of the organization.
   name: "Admin: Settings"
 - description: "Webhook CRUD, delivery log, replay."
   name: "Admin: Webhooks"
@@ -82,14 +82,14 @@ tags:
 - description: ABAC attribute and policy management.
   name: "Admin: Abac"
   x-displayName: "Admin: ABAC"
-- description: Tenant email template editor.
+- description: Email templates of the organization.
   name: "Admin: Email"
-- description: Per-tenant social login config.
+- description: Social login providers of the organization.
   name: "Admin: Identity Providers"
 - description: Admin-side MCP server registry.
   name: "Admin: Mcp"
   x-displayName: "Admin: MCP"
-- description: Ephemeral sandbox tenant lifecycle.
+- description: Short-lived sandbox organizations.
   name: "Admin: Sandbox"
 - description: "Personal Agent Protocol 1.0 for your users' personal agents — discovery\
     \ documents of your domains, Session verification for your own APIs, and the hosted\
@@ -161,8 +161,8 @@ paths:
         style: simple
       responses:
         "302":
-          description: Redirect to the tenant portal AAuth consent page for the given
-            request_token.
+          description: Redirect to the AAuth consent page of the organization's portal
+            for the given request_token.
           headers:
             Location:
               description: "/orgs/{orgId}/portal/aauth/authorize?request_token=…"
@@ -324,8 +324,8 @@ paths:
                 items:
                   type: object
                 type: array
-          description: Metadata documents for all active agents of this tenant (Section
-            8.1).
+          description: Metadata documents for all active agents of this organization
+            (Section 8.1).
       security: []
       summary: |-
         Agent Metadata (Section 8.1)
@@ -416,7 +416,7 @@ paths:
                 items:
                   type: object
                 type: array
-          description: Metadata documents for all active resources of this tenant
+          description: Metadata documents for all active resources of this organization
             (Section 8.3).
       security: []
       summary: Resource Metadata (Section 8.3)
@@ -561,8 +561,8 @@ paths:
           description: A resource token binding the agent request to the resource
             identity.
         "400":
-          description: "Invalid JSON body, missing agent/agent_jkt, or unsupported\
-            \ scope."
+          description: "Invalid JSON body, missing resource, agent or agent_jkt, or\
+            \ unsupported scope."
         "401":
           description: Resource authentication (HTTP message signature) failed.
         "429":
@@ -600,7 +600,7 @@ paths:
           description: Introspection result; active=false with an error when the token
             is invalid.
         "400":
-          description: "Missing resource_token, agent, or agent_jkt."
+          description: "Missing resource, resource_token, agent, or agent_jkt."
         "401":
           description: Resource authentication failed.
         "403":
@@ -691,6 +691,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckAbacRequest"
+        required: true
       responses:
         "200":
           content:
@@ -724,6 +730,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckAbacBulkRequest"
+        required: true
       responses:
         "200":
           content:
@@ -755,8 +767,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetMyAttributesResponse"
-          description: Built-in identity attributes plus trait_<key> entries and tenant-defined
-            custom attributes
+          description: Built-in identity attributes plus trait_<key> entries and custom
+            attributes that the organization defined
       security:
       - BearerAuth: []
       summary: The caller's ABAC subject attributes
@@ -837,6 +849,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetResourceAttributeRequest"
+        required: true
       responses:
         "200":
           content:
@@ -884,6 +902,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetResourceAttributeRequest"
+        required: true
       responses:
         "200":
           content:
@@ -933,7 +957,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListAttributeDefinitionsResponse"
-          description: Definitions (tenant-defined and global)
+          description: Definitions (the organization's own and the built-in ones)
       security:
       - BearerAuth: []
       summary: Attribute definitions available to the organization
@@ -972,6 +996,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AbacAttributesCreateRequest"
+        required: true
       responses:
         "201":
           content:
@@ -1081,6 +1111,12 @@ paths:
             d|214748364[0-7]"
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAbacAttributesUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -1120,6 +1156,12 @@ paths:
             d|214748364[0-7]"
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAbacAttributesUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -1180,6 +1222,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AbacPoliciesCreateRequest"
+        required: true
       responses:
         "201":
           content:
@@ -1291,6 +1339,12 @@ paths:
             d|214748364[0-7]"
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAbacPoliciesUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -1333,6 +1387,12 @@ paths:
             d|214748364[0-7]"
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAbacPoliciesUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -1444,7 +1504,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant not found.
+          description: Organization not found.
       summary: List all agents in the tenant
       tags:
       - "Admin: Agents"
@@ -1481,7 +1541,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant not found.
+          description: Organization not found.
       summary: Create a new agent
       tags:
       - "Admin: Agents"
@@ -1516,7 +1576,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Delete an agent
       tags:
       - "Admin: Agents"
@@ -1550,7 +1610,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Get a single agent by ID or agentId
       tags:
       - "Admin: Agents"
@@ -1597,7 +1657,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Update an existing agent
       tags:
       - "Admin: Agents"
@@ -1644,7 +1704,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Update an existing agent
       tags:
       - "Admin: Agents"
@@ -1692,7 +1752,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Rotate agent API key
       tags:
       - "Admin: Agents"
@@ -1732,7 +1792,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Enable agent
       tags:
       - "Admin: Agents"
@@ -1767,7 +1827,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Disable agent
       tags:
       - "Admin: Agents"
@@ -1802,7 +1862,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Revoke agent API key (nullify it so it can no longer authenticate)
       tags:
       - "Admin: Agents"
@@ -1837,7 +1897,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Get agent scopes/capabilities
       tags:
       - "Admin: Agents"
@@ -1879,7 +1939,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Update agent scopes/capabilities
       tags:
       - "Admin: Agents"
@@ -1927,7 +1987,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Rotate agent credentials
       tags:
       - "Admin: Agents"
@@ -1967,7 +2027,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Activate an agent
       tags:
       - "Admin: Agents"
@@ -2002,7 +2062,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Deactivate an agent
       tags:
       - "Admin: Agents"
@@ -2051,7 +2111,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
       summary: Report model tokens and cost for an agent
       tags:
       - "Admin: Agents"
@@ -2097,7 +2157,7 @@ paths:
         "403":
           description: Admin privileges required.
         "404":
-          description: Tenant or agent not found.
+          description: Organization or agent not found.
         "429":
           description: "budget_exceeded: the agent budget is spent. A token mint counts\
             \ as one call. Retry-After holds the seconds until the spent window starts\
@@ -2110,6 +2170,138 @@ paths:
     get:
       operationId: adminAuditLogsList
       parameters:
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Exact event type, for example user.login."
+        explode: true
+        in: query
+        name: eventType
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The short verb of the event (as GET /audit-logs/actions lists
+          them).
+        explode: true
+        in: query
+        name: action
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Who acted: a user, API key or agent id. Also accepted as userId."
+        explode: true
+        in: query
+        name: actorId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Kind of the subject of the event. Also accepted as resourceType.
+        explode: true
+        in: query
+        name: targetType
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The subject of the event, for example the user of a login.failed\
+          \ entry."
+        explode: true
+        in: query
+        name: targetId
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: severity
+        required: false
+        schema:
+          enum:
+          - debug
+          - info
+          - notice
+          - warning
+          - error
+          - critical
+          type: string
+        style: form
+      - description: Result of the event.
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - success
+          - failure
+          - pending
+          - partial
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: ipAddress
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Text in the message, error message, event type, actor id or\
+          \ name, target name, client id or trace ID."
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Entries written by requests of this W3C trace (the 32 hex characters
+          of a traceparent header).
+        explode: true
+        in: query
+        name: traceId
+        required: false
+        schema:
+          pattern: "^[0-9a-fA-F]{32}$"
+          type: string
+        style: form
+      - description: Entries at or after this time (ISO 8601). Also accepted as startDate.
+        explode: true
+        in: query
+        name: from
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Entries at or before this time (ISO 8601). Also accepted as endDate.
+        explode: true
+        in: query
+        name: to
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
       - explode: false
         in: path
         name: orgId
@@ -2202,7 +2394,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminAuditLogsActionsResponse"
           description: Action names
-      summary: List the distinct audit action types recorded for the tenant
+      summary: List the distinct audit action types recorded for the organization
       tags:
       - "Admin: Audit Logs"
       x-symfony-route: api_admin_audit_logs_actions
@@ -2240,6 +2432,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminAuditLogsRetentionUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -2263,6 +2461,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminAuditLogsRetentionUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -2280,6 +2484,131 @@ paths:
         \ audit log page does."
       operationId: adminAuditLogsExport
       parameters:
+      - description: csv (default) or json.
+        explode: true
+        in: query
+        name: format
+        required: false
+        schema:
+          default: csv
+          enum:
+          - csv
+          - json
+          type: string
+        style: form
+      - description: "Exact event type, for example user.login."
+        explode: true
+        in: query
+        name: eventType
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The short verb of the event (as GET /audit-logs/actions lists
+          them).
+        explode: true
+        in: query
+        name: action
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Who acted: a user, API key or agent id. Also accepted as userId."
+        explode: true
+        in: query
+        name: actorId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Kind of the subject of the event. Also accepted as resourceType.
+        explode: true
+        in: query
+        name: targetType
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The subject of the event, for example the user of a login.failed\
+          \ entry."
+        explode: true
+        in: query
+        name: targetId
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: severity
+        required: false
+        schema:
+          enum:
+          - debug
+          - info
+          - notice
+          - warning
+          - error
+          - critical
+          type: string
+        style: form
+      - description: Result of the event.
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - success
+          - failure
+          - pending
+          - partial
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: ipAddress
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Text in the message, error message, event type, actor id or\
+          \ name, target name, client id or trace ID."
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Entries written by requests of this W3C trace (the 32 hex characters
+          of a traceparent header).
+        explode: true
+        in: query
+        name: traceId
+        required: false
+        schema:
+          pattern: "^[0-9a-fA-F]{32}$"
+          type: string
+        style: form
+      - description: Entries at or after this time (ISO 8601). Also accepted as startDate.
+        explode: true
+        in: query
+        name: from
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Entries at or before this time (ISO 8601). Also accepted as endDate.
+        explode: true
+        in: query
+        name: to
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
       - explode: false
         in: path
         name: orgId
@@ -2481,6 +2810,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OAuthClientWrite"
+        required: true
       responses:
         "201":
           content:
@@ -2589,6 +2924,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OAuthClientWrite"
+        required: true
       responses:
         "200":
           content:
@@ -2627,6 +2968,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OAuthClientWrite"
+        required: true
       responses:
         "200":
           content:
@@ -2766,6 +3113,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetClientScopesRequest"
+        required: true
       responses:
         "403":
           description: "A privileged scope is added, or the client holds one, and\
@@ -2962,6 +3315,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminEmailTemplatesUpsertRequest"
+        required: true
       responses:
         "200":
           content:
@@ -2995,6 +3354,11 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminEmailTemplatesPreviewRequest"
       responses:
         "200":
           content:
@@ -3059,19 +3423,21 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminGroupsListResponse"
           description: Groups
-      summary: List all groups in the tenant
+      summary: List all groups in the organization
       tags:
       - "Admin: Groups"
       x-symfony-route: api_admin_groups_list
     post:
       description: "Optional `roles` is a list of role slugs. An unknown slug is 400.\
         \ A role can be given to a group only when it belongs to this organization\
-        \ and the caller holds every permission in it; otherwise the answer is 403\
-        \ and nothing is stored. The built-in administrator role follows the same\
-        \ rule. When a role opens the admin portal (the built-in one or any role with\
-        \ a portal permission), each active member of the group who is not an administrator\
-        \ yet takes an admin seat (403 `plan_limit_reached` when the plan has too\
-        \ few left)."
+        \ and the caller may grant every permission in it (every built-in one the\
+        \ caller holds; the organization's own ones need `roles.assign-permissions`,\
+        \ and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`);\
+        \ otherwise the answer is 403 and nothing is stored. The built-in administrator\
+        \ role follows the same rule. When a role opens the admin portal (the built-in\
+        \ one or any role with a portal permission), each active member of the group\
+        \ who is not an administrator yet takes an admin seat (403 `plan_limit_reached`\
+        \ when the plan has too few left)."
       operationId: adminGroupsCreate
       parameters:
       - explode: false
@@ -3081,6 +3447,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminGroupsCreateRequest"
+        required: true
       responses:
         "201":
           content:
@@ -3166,6 +3538,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminGroupsUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -3194,6 +3572,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminGroupsUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -3251,6 +3635,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminGroupsAddMembersRequest"
+        required: true
       responses:
         "200":
           content:
@@ -3329,12 +3719,14 @@ paths:
       x-symfony-route: api_admin_groups_groups_get_roles
     post:
       description: "A role can be given to a group only when it belongs to this organization\
-        \ and the caller holds every permission in it; otherwise the answer is 403\
-        \ and nothing is stored. The built-in administrator role follows the same\
-        \ rule. When a role opens the admin portal (the built-in one or any role with\
-        \ a portal permission), each active member of the group who is not an administrator\
-        \ yet takes an admin seat (403 `plan_limit_reached` when the plan has too\
-        \ few left)."
+        \ and the caller may grant every permission in it (every built-in one the\
+        \ caller holds; the organization's own ones need `roles.assign-permissions`,\
+        \ and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`);\
+        \ otherwise the answer is 403 and nothing is stored. The built-in administrator\
+        \ role follows the same rule. When a role opens the admin portal (the built-in\
+        \ one or any role with a portal permission), each active member of the group\
+        \ who is not an administrator yet takes an admin seat (403 `plan_limit_reached`\
+        \ when the plan has too few left)."
       operationId: adminGroupsAddRole
       parameters:
       - explode: false
@@ -3351,6 +3743,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminGroupsAddRoleRequest"
+        required: true
       responses:
         "200":
           content:
@@ -3365,13 +3763,15 @@ paths:
     put:
       description: "`roles` is the full list of role slugs. An unknown slug is 400.\
         \ A role can be given to a group only when it belongs to this organization\
-        \ and the caller holds every permission in it; otherwise the answer is 403\
-        \ and nothing is stored. The built-in administrator role follows the same\
-        \ rule. When a role opens the admin portal (the built-in one or any role with\
-        \ a portal permission), each active member of the group who is not an administrator\
-        \ yet takes an admin seat (403 `plan_limit_reached` when the plan has too\
-        \ few left). Roles already on the group that the caller could not grant stay\
-        \ on it whatever the list says."
+        \ and the caller may grant every permission in it (every built-in one the\
+        \ caller holds; the organization's own ones need `roles.assign-permissions`,\
+        \ and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`);\
+        \ otherwise the answer is 403 and nothing is stored. The built-in administrator\
+        \ role follows the same rule. When a role opens the admin portal (the built-in\
+        \ one or any role with a portal permission), each active member of the group\
+        \ who is not an administrator yet takes an admin seat (403 `plan_limit_reached`\
+        \ when the plan has too few left). Roles already on the group that the caller\
+        \ could not grant stay on it whatever the list says."
       operationId: adminGroupsUpdateRoles
       parameters:
       - explode: false
@@ -3388,6 +3788,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminGroupsUpdateRolesRequest"
+        required: true
       responses:
         "200":
           content:
@@ -3658,6 +4064,88 @@ paths:
       tags:
       - "Admin: Users"
       x-symfony-route: api_admin_identities_legacy_saml_relink
+  /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens:
+    get:
+      description: "Ids only; a token is shown once, when it is created. Needs `settings.manage`."
+      operationId: adminInitialAccessTokensList
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminInitialAccessTokensListResponse"
+          description: Tokens
+      summary: List the initial access tokens of dynamic client registration
+      tags:
+      - "Admin: Settings"
+      x-symfony-route: api_admin_initial_access_tokens_list
+    post:
+      description: "Generates a token and adds it to the organization's list; the\
+        \ other tokens stay valid. The token is returned once, in this answer. A client\
+        \ presents it as `Authorization: Bearer <token>` at the registration endpoint.\
+        \ Needs `settings.manage`."
+      operationId: adminInitialAccessTokensCreate
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminInitialAccessTokensCreateResponse"
+          description: Token created
+      summary: Create an initial access token for dynamic client registration
+      tags:
+      - "Admin: Settings"
+      x-symfony-route: api_admin_initial_access_tokens_create
+  /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId}:
+    delete:
+      description: The token stops working at once; clients that it registered stay.
+        Needs `settings.manage`.
+      operationId: adminInitialAccessTokensDelete
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: tokenId
+        required: true
+        schema:
+          pattern: "[0-9a-f]{12}"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+          description: Deleted
+        "404":
+          description: No token with this id
+      summary: Delete an initial access token of dynamic client registration
+      tags:
+      - "Admin: Settings"
+      x-symfony-route: api_admin_initial_access_tokens_delete
   /orgs/{orgId}/api/v1/admin/mcp/servers:
     get:
       operationId: adminMcpServersList
@@ -3693,6 +4181,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/McpServerWrite"
+        required: true
       responses:
         "201":
           content:
@@ -3772,6 +4266,91 @@ paths:
       tags:
       - "Admin: Mcp"
       x-symfony-route: api_admin_mcp_servers_get
+    patch:
+      description: "Only the fields that are sent change; each is judged as on create.\
+        \ `resource_uri` cannot be changed (400): register a new server for another\
+        \ address. Changes apply to the next token request."
+      operationId: patchAdminMcpServersUpdate
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: serverId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/McpServerWrite"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminMcpServersCreateResponse"
+          description: Updated MCP server
+        "400":
+          description: "resource_uri changed, a switch that is not a JSON boolean,\
+            \ or a field that cannot be set (include_scope_in_challenge, bearer_methods_supported)"
+        "404":
+          description: MCP server not found
+        "422":
+          description: validation_error
+      summary: Update an MCP server
+      tags:
+      - "Admin: Mcp"
+      x-symfony-route: api_admin_mcp_servers_update
+    put:
+      operationId: putAdminMcpServersUpdate
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: serverId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/McpServerWrite"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminMcpServersCreateResponse"
+          description: Updated MCP server
+        "400":
+          description: "resource_uri changed, or a field that cannot be set"
+        "404":
+          description: MCP server not found
+        "422":
+          description: validation_error
+      summary: "Update an MCP server (same as PATCH: only the fields that are sent\
+        \ change)"
+      tags:
+      - "Admin: Mcp"
+      x-symfony-route: api_admin_mcp_servers_update
   /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants:
     get:
       operationId: adminMcpServersGrantsList
@@ -3934,10 +4513,10 @@ paths:
   /orgs/{orgId}/api/v1/admin/users/{userId}/authenticators/{authenticatorId}:
     delete:
       description: "Revokes a single authenticator (e.g. a lost phone). Trusted devices\
-        \ are revoked and the user is notified. Does not bypass the tenant MFA requirement:\
-        \ the user is prompted to enroll again at next sign-in. A signed-in administrator\
-        \ must have signed in or passed MFA within the last 10 minutes: a Bearer token\
-        \ needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`),\
+        \ are revoked and the user is notified. Does not bypass the organization's\
+        \ MFA requirement: the user is prompted to enroll again at next sign-in. A\
+        \ signed-in administrator must have signed in or passed MFA within the last\
+        \ 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`),\
         \ and an administrator who holds a second factor sends `X-MFA-Challenge` with\
         \ an approved step_up challenge (otherwise 403 `step_up_required`). Organization\
         \ API keys are not subject to this check."
@@ -4139,6 +4718,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminOrganizationsCreateRequest"
+        required: true
       responses:
         "201":
           content:
@@ -4236,6 +4821,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminOrganizationsUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -4271,6 +4862,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminOrganizationsUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -4337,6 +4934,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminOrgMembersAddRequest"
+        required: true
       responses:
         "201":
           content:
@@ -4416,6 +5019,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminOrgMembersUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -4455,6 +5064,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminOrgMembersUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -4518,6 +5133,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminOrgRolesCreateRequest"
+        required: true
       responses:
         "201":
           content:
@@ -4607,6 +5228,12 @@ paths:
             d|214748364[0-7]"
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminOrgRolesUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -4649,6 +5276,12 @@ paths:
             d|214748364[0-7]"
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminOrgRolesUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -4712,6 +5345,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminOrgInvitationsCreateRequest"
+        required: true
       responses:
         "201":
           content:
@@ -4841,7 +5480,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminPermissionsListResponse"
           description: Permissions
-      summary: List all available permissions for the tenant
+      summary: List all available permissions for the organization
       tags:
       - "Admin: Permissions"
       x-symfony-route: api_admin_permissions_list
@@ -4855,6 +5494,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminPermissionsCreateRequest"
+        required: true
       responses:
         "201":
           content:
@@ -4862,7 +5507,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminPermissionsCreateResponse"
           description: Created permission
-      summary: Create a custom permission for the tenant
+      summary: Create a custom permission for the organization
       tags:
       - "Admin: Permissions"
       x-symfony-route: api_admin_permissions_create
@@ -4940,6 +5585,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminPermissionsUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -5012,6 +5663,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminScopesCreateRequest"
+        required: true
       responses:
         "201":
           content:
@@ -5313,15 +5970,16 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminRolesListResponse"
           description: Roles
-      summary: List all roles in the tenant
+      summary: List all roles in the organization
       tags:
       - "Admin: Roles"
       x-symfony-route: api_admin_roles_list
     post:
       description: "Optional `permissions` is a list of permission slugs. Giving it\
-        \ needs `roles.assign-permissions` as well as `roles.create`, and every permission\
-        \ must be one that the caller holds; otherwise the answer is 403 and no role\
-        \ is created. An unknown slug is 400."
+        \ needs `roles.assign-permissions` as well as `roles.create`, and every built-in\
+        \ permission must be one that the caller holds (the organization's own permissions\
+        \ need nothing more); otherwise the answer is 403 and no role is created.\
+        \ An unknown slug is 400."
       operationId: adminRolesCreate
       parameters:
       - explode: false
@@ -5331,6 +5989,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminRolesCreateRequest"
+        required: true
       responses:
         "201":
           content:
@@ -5416,6 +6080,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminOrgRolesUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -5444,6 +6114,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminOrgRolesUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -5487,11 +6163,12 @@ paths:
     post:
       description: "Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId`\
         \ or a list `permissionIds`. Every id is judged before anything changes: an\
-        \ unknown id is 400 (`Unknown permission: <id>`), and a permission that the\
-        \ caller does not hold is 403. Either refusal adds nothing. A permission that\
-        \ the role already holds is left as it is. When the role starts to open the\
-        \ admin portal, each active holder that is not an administrator yet takes\
-        \ an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`,\
+        \ unknown id is 400 (`Unknown permission: <id>`), and a built-in permission\
+        \ that the caller does not hold is 403 (the organization's own permissions\
+        \ need nothing more). Either refusal adds nothing. A permission that the role\
+        \ already holds is left as it is. When the role starts to open the admin portal,\
+        \ each active holder that is not an administrator yet takes an admin seat;\
+        \ too few free seats refuse the whole request with 403 `plan_limit_reached`,\
         \ and `requested` says how many seats it needs."
       operationId: adminRolesAddPermissions
       parameters:
@@ -5509,6 +6186,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminRolesAddPermissionsRequest"
+        required: true
       responses:
         "200":
           content:
@@ -5520,9 +6203,9 @@ paths:
           description: "No permissionId / permissionIds, an id that is not a whole\
             \ number, an unknown id, or a permission reserved for the platform"
         "403":
-          description: "A permission that the caller does not hold, a system role,\
-            \ or too few admin seats for the holders that the role would make administrators\
-            \ (`plan_limit_reached`)"
+          description: "A built-in permission that the caller does not hold, a system\
+            \ role, or too few admin seats for the holders that the role would make\
+            \ administrators (`plan_limit_reached`)"
         "404":
           description: Role not found
       summary: Add permission(s) to a role
@@ -5533,9 +6216,10 @@ paths:
       description: "Needs `roles.assign-permissions` and `roles.edit`. `permissions`\
         \ is the full list of permission slugs that the role should grant. The whole\
         \ list is judged before anything changes: an unknown slug is 400 (`Unknown\
-        \ permission: <slug>`), and a permission that the role does not hold yet must\
-        \ be one that the caller holds, otherwise 403. Either refusal changes nothing.\
-        \ Permissions on the role that the caller does not hold are kept, whether\
+        \ permission: <slug>`), and a built-in permission that the role does not hold\
+        \ yet must be one that the caller holds, otherwise 403. The organization's\
+        \ own permissions need nothing more. Either refusal changes nothing. Built-in\
+        \ permissions on the role that the caller does not hold are kept, whether\
         \ or not the list names them. When the role starts to open the admin portal,\
         \ each active holder that is not an administrator yet takes an admin seat;\
         \ too few free seats refuse the whole change with 403 `plan_limit_reached`,\
@@ -5556,6 +6240,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminRolesUpdatePermissionsRequest"
+        required: true
       responses:
         "200":
           content:
@@ -5567,9 +6257,9 @@ paths:
           description: "permissions is missing or not a list, names an unknown slug,\
             \ or names a permission reserved for the platform"
         "403":
-          description: "A new permission that the caller does not hold, a system role,\
-            \ or too few admin seats for the holders that the role would make administrators\
-            \ (`plan_limit_reached`)"
+          description: "A new built-in permission that the caller does not hold, a\
+            \ system role, or too few admin seats for the holders that the role would\
+            \ make administrators (`plan_limit_reached`)"
         "404":
           description: Role not found
       summary: Update role permissions (replaces all)
@@ -5662,6 +6352,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminRolesAddUserRequest"
+        required: true
       responses:
         "200":
           content:
@@ -5747,7 +6443,7 @@ paths:
             \ or it is itself a sandbox"
         "429":
           description: Per-owner active-sandbox cap reached
-      summary: Spawn a sandbox tenant
+      summary: Spawn a sandbox organization
       tags:
       - "Admin: Sandbox"
       x-symfony-route: api_admin_sandbox_spawn
@@ -5769,7 +6465,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminSandboxListResponse"
           description: Sandboxes
-      summary: List the caller's sandbox tenants
+      summary: List the caller's sandbox organizations
       tags:
       - "Admin: Sandbox"
       x-symfony-route: api_admin_sandbox_list
@@ -5800,13 +6496,13 @@ paths:
           description: Sandbox destroyed
         "404":
           description: Sandbox not found
-      summary: Destroy a sandbox tenant
+      summary: Destroy a sandbox organization
       tags:
       - "Admin: Sandbox"
       x-symfony-route: api_admin_sandbox_destroy
   /orgs/{orgId}/api/v1/admin/sessions:
     get:
-      description: Paginated active sessions for the tenant (expired and idle-timed-out
+      description: Paginated active sessions for the organization (expired and idle-timed-out
         sessions are invalidated first). Optional `userId` filter accepts a user UUID
         or email.
       operationId: adminSessionsList
@@ -5932,7 +6628,12 @@ paths:
       x-symfony-route: api_admin_sessions_revoke
   /orgs/{orgId}/api/v1/admin/tokens:
     get:
-      description: "Paginated OAuth access tokens issued by the tenant's clients.\
+      description: "Paginated OPAQUE access tokens issued by the organization's clients:\
+        \ the ones that LumoAuth stores. JWT access tokens (the default format of\
+        \ a new application) are not stored and never appear here, and neither do\
+        \ refresh tokens. To end a user's or a client's tokens of every kind, use\
+        \ POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke;\
+        \ a single token is revoked with the OAuth revocation endpoint (RFC 7009).\
         \ Filters: `revoked` (bool), `clientId`, `userId`."
       operationId: adminTokensList
       parameters:
@@ -5950,7 +6651,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminTokensListResponse"
           description: Tokens
-      summary: List access tokens
+      summary: List stored (opaque) access tokens
       tags:
       - "Admin: Sessions"
       x-symfony-route: api_admin_tokens_list
@@ -5992,6 +6693,8 @@ paths:
       x-symfony-route: api_admin_tokens_revoke
   /orgs/{orgId}/api/v1/admin/users/{userId}/tokens:
     delete:
+      description: "Revokes the user's opaque access tokens, JWT access tokens (deny-listed\
+        \ by their `jti`) and refresh tokens. The message counts the access tokens."
       operationId: adminUserTokensRevokeAll
       parameters:
       - explode: false
@@ -6083,12 +6786,14 @@ paths:
           description: Sessions revoked; the message carries the count
         "400":
           description: "confirm: true is required"
-      summary: Revoke every session in the tenant
+      summary: Revoke every session in the organization
       tags:
       - "Admin: Sessions"
       x-symfony-route: api_admin_sessions_revoke_all
   /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke:
     post:
+      description: "Revokes the user's opaque access tokens, JWT access tokens (deny-listed\
+        \ by their `jti`) and refresh tokens. The message counts the access tokens."
       operationId: adminUserTokensRevokePost
       parameters:
       - explode: false
@@ -6377,6 +7082,9 @@ paths:
       - "Admin: Settings"
       x-symfony-route: api_admin_settings_authentication_get
     patch:
+      description: "The login flow switches of the sign-in settings page (magic_link_enabled,\
+        \ magic_link_only, magic_link_expiry, email_first_mode) are stored with the\
+        \ sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding."
       operationId: patchAdminSettingsAuthenticationUpdate
       parameters:
       - explode: false
@@ -6386,6 +7094,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthenticationSettings"
+        required: true
       responses:
         "200":
           content:
@@ -6404,6 +7118,9 @@ paths:
       - "Admin: Settings"
       x-symfony-route: api_admin_settings_authentication_update
     put:
+      description: "The login flow switches of the sign-in settings page (magic_link_enabled,\
+        \ magic_link_only, magic_link_expiry, email_first_mode) are stored with the\
+        \ sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding."
       operationId: putAdminSettingsAuthenticationUpdate
       parameters:
       - explode: false
@@ -6413,6 +7130,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthenticationSettings"
+        required: true
       responses:
         "200":
           content:
@@ -6462,6 +7185,14 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminSettingsSecurityUpdateRequest"
+        description: Free-form dictionary; keys merge with the stored ones. dpop_require_nonce
+          is the only key that the server reads.
+        required: true
       responses:
         "200":
           content:
@@ -6483,6 +7214,14 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminSettingsSecurityUpdateRequest"
+        description: Free-form dictionary; keys merge with the stored ones. dpop_require_nonce
+          is the only key that the server reads.
+        required: true
       responses:
         "200":
           content:
@@ -6615,7 +7354,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminTenantGetResponse"
           description: Organization profile
-      summary: Get organization (tenant) profile
+      summary: Get organization profile
       tags:
       - "Admin: Settings"
       x-symfony-route: api_admin_tenant_get
@@ -6629,6 +7368,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminTenantUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -6640,7 +7385,7 @@ paths:
           description: "The caller does not hold settings.manage, or settings.audit_log_retention_days\
             \ or settings.audit_log_auto_delete would change and the caller does not\
             \ hold gdpr.manage. Nothing is stored."
-      summary: Update organization (tenant) name and settings
+      summary: Update the organization's name and settings
       tags:
       - "Admin: Settings"
       x-symfony-route: api_admin_tenant_update
@@ -6654,6 +7399,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminTenantUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -6665,7 +7416,7 @@ paths:
           description: "The caller does not hold settings.manage, or settings.audit_log_retention_days\
             \ or settings.audit_log_auto_delete would change and the caller does not\
             \ hold gdpr.manage. Nothing is stored."
-      summary: Update organization (tenant) name and settings
+      summary: Update the organization's name and settings
       tags:
       - "Admin: Settings"
       x-symfony-route: api_admin_tenant_update
@@ -6687,7 +7438,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminTenantGetResponse"
           description: Organization profile
-      summary: Get organization (tenant) profile
+      summary: Get organization profile
       tags:
       - "Admin: Settings"
       x-symfony-route: api_admin_organization_get
@@ -6701,6 +7452,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminTenantUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -6712,7 +7469,7 @@ paths:
           description: "The caller does not hold settings.manage, or settings.audit_log_retention_days\
             \ or settings.audit_log_auto_delete would change and the caller does not\
             \ hold gdpr.manage. Nothing is stored."
-      summary: Update organization (tenant) name and settings
+      summary: Update the organization's name and settings
       tags:
       - "Admin: Settings"
       x-symfony-route: api_admin_organization_update
@@ -6726,6 +7483,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminTenantUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -6737,7 +7500,7 @@ paths:
           description: "The caller does not hold settings.manage, or settings.audit_log_retention_days\
             \ or settings.audit_log_auto_delete would change and the caller does not\
             \ hold gdpr.manage. Nothing is stored."
-      summary: Update organization (tenant) name and settings
+      summary: Update the organization's name and settings
       tags:
       - "Admin: Settings"
       x-symfony-route: api_admin_organization_update
@@ -6764,6 +7527,9 @@ paths:
       - "Admin: Settings"
       x-symfony-route: api_admin_settings_auth_get
     patch:
+      description: "The login flow switches of the sign-in settings page (magic_link_enabled,\
+        \ magic_link_only, magic_link_expiry, email_first_mode) are stored with the\
+        \ sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding."
       operationId: patchAdminSettingsAuthUpdate
       parameters:
       - explode: false
@@ -6773,6 +7539,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthenticationSettings"
+        required: true
       responses:
         "200":
           content:
@@ -6791,6 +7563,9 @@ paths:
       - "Admin: Settings"
       x-symfony-route: api_admin_settings_auth_update
     put:
+      description: "The login flow switches of the sign-in settings page (magic_link_enabled,\
+        \ magic_link_only, magic_link_expiry, email_first_mode) are stored with the\
+        \ sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding."
       operationId: putAdminSettingsAuthUpdate
       parameters:
       - explode: false
@@ -6800,6 +7575,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthenticationSettings"
+        required: true
       responses:
         "200":
           content:
@@ -6858,6 +7639,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BrandingSettings"
+        required: true
       responses:
         "200":
           content:
@@ -6892,6 +7679,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BrandingSettings"
+        required: true
       responses:
         "200":
           content:
@@ -6939,6 +7732,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScimSettings"
+        required: true
       responses:
         "200":
           content:
@@ -6960,6 +7759,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScimSettings"
+        required: true
       responses:
         "200":
           content:
@@ -7091,6 +7896,13 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminSocialProvidersCreateRequest"
+        description: An unknown field is refused with 400.
+        required: true
       responses:
         "201":
           content:
@@ -7248,6 +8060,14 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminSocialProvidersUpdateRequest"
+        description: Only the fields that are sent change. An unknown field is refused
+          with 400.
+        required: true
       responses:
         "200":
           content:
@@ -7278,6 +8098,14 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminSocialProvidersUpdateRequest"
+        description: Only the fields that are sent change. An unknown field is refused
+          with 400.
+        required: true
       responses:
         "200":
           content:
@@ -7411,7 +8239,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/getStreamConfig_200_response"
-          description: A single stream (with stream_id) or all of the tenant's streams
+          description: A single stream (with stream_id) or all of the organization's
+            streams
         "404":
           description: Stream not found
       summary: Read SSF stream configuration(s)
@@ -7428,6 +8257,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateStreamConfigRequest"
+        required: true
       responses:
         "201":
           content:
@@ -7453,6 +8288,11 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerifyStreamRequest"
       responses:
         "204":
           description: Verification event queued
@@ -7613,6 +8453,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+        required: true
       responses:
         "201":
           content:
@@ -7713,6 +8559,14 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserRequest"
+        description: "Only the fields that are sent change. The password is set with\
+          \ PUT /users/{userId}/password, never here."
+        required: true
       responses:
         "200":
           content:
@@ -7760,6 +8614,14 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserRequest"
+        description: "Only the fields that are sent change. The password is set with\
+          \ PUT /users/{userId}/password, never here."
+        required: true
       responses:
         "200":
           content:
@@ -7954,6 +8816,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddUserRoleRequest"
+        required: true
       responses:
         "200":
           content:
@@ -7982,6 +8850,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminGroupsUpdateRolesRequest"
+        required: true
       responses:
         "200":
           content:
@@ -8078,6 +8952,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddUserGroupRequest"
+        required: true
       responses:
         "200":
           content:
@@ -8106,6 +8986,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserGroupsRequest"
+        required: true
       responses:
         "200":
           content:
@@ -8187,12 +9073,15 @@ paths:
       x-symfony-route: api_admin_users_get_permissions
     post:
       description: "Grants one permission to the user directly. The caller must hold\
-        \ the permission (403 otherwise). A permission that opens the admin portal\
-        \ makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached`\
-        \ (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard\
-        \ monthly-active-user cap, an administrator also has a place kept inside the\
-        \ limit, so a user who has not been active this month needs a free place (`limit`:\
-        \ `mau`). A user or permission outside this organization is 404."
+        \ a built-in permission; one of the organization's own permissions needs `roles.assign-permissions`\
+        \ instead, and an API key or access token also needs `admin:roles:write` or\
+        \ `admin:permissions:write` (403 otherwise). A permission that opens the admin\
+        \ portal makes an active user an administrator, who takes an admin seat: 403\
+        \ `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free.\
+        \ On a plan with a hard monthly-active-user cap, an administrator also has\
+        \ a place kept inside the limit, so a user who has not been active this month\
+        \ needs a free place (`limit`: `mau`). A user or permission outside this organization\
+        \ is 404."
       operationId: addUserPermission
       parameters:
       - explode: false
@@ -8209,6 +9098,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddUserPermissionRequest"
+        required: true
       responses:
         "200":
           content:
@@ -8371,6 +9266,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetUserPasswordPostRequest"
+        required: true
       responses:
         "200":
           content:
@@ -8411,6 +9312,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetUserPasswordPostRequest"
+        required: true
       responses:
         "200":
           content:
@@ -8429,9 +9336,9 @@ paths:
       x-symfony-route: api_admin_users_set_password
   /orgs/{orgId}/api/v1/admin/webhooks:
     get:
-      description: "Paginated list of the tenant's webhooks (summary shape, without\
-        \ `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive)\
-        \ and `sortDir`."
+      description: "Paginated list of the organization's webhooks (summary shape,\
+        \ without `configuration`). Filter with `isActive`, `event`; sort with `sortBy`\
+        \ (createdAt|isActive) and `sortDir`."
       operationId: adminWebhooksList
       parameters:
       - explode: false
@@ -8466,6 +9373,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminWebhooksCreateRequest"
+        required: true
       responses:
         "201":
           content:
@@ -8586,6 +9499,12 @@ paths:
             d|214748364[0-7]"
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminWebhooksUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -8625,6 +9544,12 @@ paths:
             d|214748364[0-7]"
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PutAdminWebhooksUpdateRequest"
+        required: true
       responses:
         "200":
           content:
@@ -8914,8 +9839,9 @@ paths:
   /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start:
     post:
       description: "Creates a transient `tunnel://` webhook subscribed to every event\
-        \ (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can\
-        \ be consumed from the stream endpoint."
+        \ (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`.\
+        \ Deliveries are not sent: each one keeps the signed request that a real delivery\
+        \ sends, and the stream endpoint hands it out."
       operationId: adminWebhooksTunnelStart
       parameters:
       - explode: false
@@ -9005,14 +9931,20 @@ paths:
               schema:
                 example: |+
                   event: webhook
-                  data: {"delivery_id":"3f1c...","event_name":"user.created","payload":{},"received_at":"2026-10-06T12:00:00+00:00"}
+                  data: {"delivery_id":"3f1c...","event_name":"user.created","payload":{},"received_at":"2026-10-06T12:00:00+00:00","body":"{\"event\":\"user.created\",\"timestamp\":\"2026-10-06T12:00:00+00:00\",\"tenant\":\"acme-corp\",\"data\":{}}","headers":{"Content-Type":"application/json","X-LumoAuth-Event":"user.created","X-LumoAuth-Timestamp":"1791288000","X-LumoAuth-Delivery":"3f1c...","User-Agent":"LumoAuth-Webhook/1.0","X-LumoAuth-Signature":"kid=...,t=1791288000,id=3f1c...,v1=..."}}
 
                 type: string
           description: "Server-Sent Events stream. Opens with the comment line `:\
-            \ connected`, then emits one `event: webhook` message per delivery whose\
-            \ `data:` line is a JSON object `{delivery_id, event_name, payload, received_at}`\
-            \ (`received_at` is RFC 3339). A `: heartbeat` comment is sent roughly\
-            \ every 15 seconds while idle."
+            \ connected`, then emits one `event: webhook` message per delivery, in\
+            \ order, whose `data:` line is a JSON object `{delivery_id, event_name,\
+            \ payload, received_at, body, headers}`. `payload` is the event data and\
+            \ `received_at` is RFC 3339. `body` is the signed request body as a string\
+            \ (the envelope `{event, timestamp, tenant, data}`, exactly the bytes\
+            \ that the signature covers: send it unchanged) and `headers` the request\
+            \ headers of a real delivery (`X-LumoAuth-Signature`, `X-LumoAuth-Timestamp`,\
+            \ `X-LumoAuth-Delivery`, `X-LumoAuth-Event`, `Content-Type`, `User-Agent`);\
+            \ both are null for a delivery without a stored request. A `: heartbeat`\
+            \ comment is sent roughly every 15 seconds while idle."
         "400":
           description: Not a tunnel webhook
         "404":
@@ -9267,15 +10199,15 @@ paths:
           description: "Invalid JSON, task_id, reason, impact, expires_in or meta\
             \ (invalid_meta names the field), or missing on_behalf_of."
         "403":
-          description: "Caller is not an agent, is cross-tenant, presents a scope-narrowed\
-            \ token (insufficient_scope), or lacks delegation permission."
+          description: "Caller is not an agent, belongs to another organization, presents\
+            \ a scope-narrowed token (insufficient_scope), or lacks delegation permission."
         "404":
-          description: Tenant or target user not found.
+          description: Organization or target user not found.
         "428":
           description: "User has no enrolled push device, no approval channel receives\
             \ the request, and the email fallback could not be sent."
         "429":
-          description: Rate limited (per tenant/agent/user).
+          description: "Rate limited (per organization, agent and user)."
       tags:
       - Agents
       x-symfony-route: agent_approval_create
@@ -9308,7 +10240,7 @@ paths:
           description: "Caller is not an agent, or the request belongs to another\
             \ agent."
         "404":
-          description: Tenant or approval request not found.
+          description: Organization or approval request not found.
       tags:
       - Agents
       x-symfony-route: agent_approval_status
@@ -9362,7 +10294,9 @@ paths:
         "404":
           description: tenant_not_found.
         "429":
-          description: "rate_limit_exceeded (Retry-After: 60)."
+          description: "rate_limit_exceeded (Retry-After: 60), or budget_exceeded:\
+            \ the agent's budget is spent (Retry-After: seconds until the spent window\
+            \ ends)."
       summary: "Workload attestation: exchange a cloud OIDC token for an agent access\
         \ token"
       tags:
@@ -9640,6 +10574,13 @@ paths:
         }
         Response: {"decision": true|false, "context": {...}?}
       operationId: evaluate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EvaluateRequest"
+        description: AuthZEN Authorization API 1.0 evaluation request.
+        required: true
       responses:
         "200":
           content:
@@ -9664,6 +10605,13 @@ paths:
         }
         Response: {"evaluations": [{"decision": ...}, ...]} preserving order.
       operationId: evaluateBatch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EvaluateBatchRequest"
+        description: AuthZEN Authorization API 1.0 batch evaluation request.
+        required: true
       responses:
         "200":
           content:
@@ -9690,6 +10638,12 @@ paths:
         `authz:check` scope (403 `insufficient_permissions` otherwise) — see
         ThirdPartySubjectGuard.
       operationId: checkPermission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckPermissionRequest"
+        required: true
       responses:
         "200":
           content:
@@ -9711,6 +10665,12 @@ paths:
           "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
         }
       operationId: checkPermissionsBulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckPermissionsBulkRequest"
+        required: true
       responses:
         "200":
           content:
@@ -9732,6 +10692,12 @@ paths:
           "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
         }
       operationId: checkAnyPermission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckPermissionsBulkRequest"
+        required: true
       responses:
         "200":
           content:
@@ -9753,6 +10719,12 @@ paths:
           "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
         }
       operationId: checkAllPermissions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckPermissionsBulkRequest"
+        required: true
       responses:
         "200":
           content:
@@ -9774,6 +10746,12 @@ paths:
           "subject": "user:456"
         }
       operationId: checkRelation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckRelationRequest"
+        required: true
       responses:
         "200":
           content:
@@ -9862,7 +10840,7 @@ paths:
         {
           "name": "Research Task #123",           // Optional: human-readable name
           "type": "research",                     // Optional: task type for categorization
-          "parent_task_id": "task_abc123",        // Optional: for nested agent chains
+          "parent_task_id": "task_abc123",        // Optional: an open task of this organization that the new task is a step of
           "on_behalf_of": "user@example.com"      // Optional: delegation context
         }
       operationId: createTask
@@ -9888,13 +10866,15 @@ paths:
                 $ref: "#/components/schemas/CreateTaskResponse"
           description: Ephemeral task/persona created.
         "400":
-          description: Delegation user not found or not authorized.
+          description: "Delegation user not found or not authorized, or parent_task_id\
+            \ does not name an open task of this organization, or the chain of tasks\
+            \ is already 5 tasks deep."
         "401":
           description: Invalid or missing agent token.
         "403":
           description: Agent is not authorized to act on behalf of users.
         "404":
-          description: Tenant not found.
+          description: Organization not found.
         "429":
           description: Rate limit exceeded.
       security:
@@ -9954,7 +10934,7 @@ paths:
           description: "Task belongs to a different agent, or task_suspended: continuous\
             \ access evaluation suspended the task on this request."
         "404":
-          description: Tenant or task not found.
+          description: Organization or task not found.
         "429":
           description: Rate limit exceeded.
       security:
@@ -9995,7 +10975,7 @@ paths:
           description: "Request belongs to a different agent, or a JIT token of another\
             \ task was used."
         "404":
-          description: Tenant or request not found.
+          description: Organization or request not found.
         "429":
           description: Rate limit exceeded.
       security:
@@ -10037,7 +11017,7 @@ paths:
             \ is no longer redeemable (expired window, ended task, inactive agent/organization),\
             \ or a JIT token was used."
         "404":
-          description: Tenant or request not found.
+          description: Organization or request not found.
         "429":
           description: "rate_limit_exceeded, or budget_exceeded when the agent budget\
             \ is spent (Retry-After holds the seconds until the spent window starts\
@@ -10079,7 +11059,7 @@ paths:
           description: "Task belongs to a different agent, or a JIT token of another\
             \ task was used."
         "404":
-          description: Tenant or task not found.
+          description: Organization or task not found.
         "429":
           description: Rate limit exceeded.
       security:
@@ -10124,10 +11104,10 @@ paths:
         "401":
           description: Authentication required.
         "403":
-          description: "Cross-tenant, missing jit.approve permission, or agent access\
-            \ denied."
+          description: "The caller belongs to another organization, lacks jit.approve,\
+            \ or may not act on the agent."
         "404":
-          description: Tenant or request not found.
+          description: Organization or request not found.
       security:
       - BearerAuth: []
       summary: "HITL: Approve a pending JIT request (requires user auth)."
@@ -10170,10 +11150,10 @@ paths:
         "401":
           description: Authentication required.
         "403":
-          description: "Cross-tenant, missing jit.approve permission, or agent access\
-            \ denied."
+          description: "The caller belongs to another organization, lacks jit.approve,\
+            \ or may not act on the agent."
         "404":
-          description: Tenant or request not found.
+          description: Organization or request not found.
       security:
       - BearerAuth: []
       summary: "HITL: Deny a pending JIT request (requires user auth)."
@@ -10201,9 +11181,9 @@ paths:
         "401":
           description: Authentication required.
         "403":
-          description: Cross-tenant or missing jit.approve permission.
+          description: The caller belongs to another organization or lacks jit.approve.
         "404":
-          description: Tenant not found.
+          description: Organization not found.
       security:
       - BearerAuth: []
       summary: Get pending HITL requests for the tenant.
@@ -10242,7 +11222,7 @@ paths:
           description: "The caller is not a user of this organization with the `jit.approve`\
             \ permission, or the access token lacks the `jit:approve` scope."
         "404":
-          description: Tenant or task not found.
+          description: Organization or task not found.
         "415":
           description: "A session caller must send Content-Type: application/json\
             \ or an X-CSRF-Token / X-Requested-With header."
@@ -10520,11 +11500,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListServersResponse"
-          description: List of active MCP servers for the tenant.
+          description: List of active MCP servers for the organization.
         "403":
           description: Caller lacks the agents.view permission.
         "404":
-          description: Tenant not found.
+          description: Organization not found.
       summary: "REST API: List MCP servers for a tenant."
       tags:
       - Mcp
@@ -10558,7 +11538,7 @@ paths:
         "403":
           description: Caller lacks the agents.view permission.
         "404":
-          description: Tenant or MCP server not found.
+          description: Organization or MCP server not found.
       summary: "REST API: Get a specific MCP server."
       tags:
       - Mcp
@@ -11022,7 +12002,7 @@ paths:
                 $ref: "#/components/schemas/GetSsfConfigurationResponse"
           description: Transmitter configuration
         "404":
-          description: Tenant not found
+          description: Organization not found
       security: []
       summary: SSF transmitter configuration metadata
       tags:
@@ -11274,6 +12254,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitLoginJsonRequest"
+        required: true
       responses:
         "200":
           content:
@@ -11390,6 +12376,13 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/BackchannelAuthorizeRequest"
+        description: OpenID Connect CIBA authentication request (poll mode).
+        required: true
       responses:
         "200":
           content:
@@ -11435,6 +12428,13 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/DeviceAuthorizationRequest"
+        description: RFC 8628 device authorization request.
+        required: true
       responses:
         "200":
           content:
@@ -11600,6 +12600,13 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/IntrospectRequest"
+        description: RFC 7662 introspection request.
+        required: true
       responses:
         "200":
           content:
@@ -11688,6 +12695,14 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/ParRequest"
+        description: "RFC 9126 pushed authorization request: the parameters of an\
+          \ authorization request."
+        required: true
       responses:
         "201":
           content:
@@ -11724,6 +12739,13 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/IntrospectRequest"
+        description: RFC 7009 revocation request.
+        required: true
       responses:
         "200":
           content:
@@ -11731,10 +12753,13 @@ paths:
               schema:
                 description: "Empty object: {}"
                 type: object
-          description: "Revocation acknowledged — always 200 with an empty JSON object,\
-            \ whether or not the token existed (RFC 7009 §2.2)."
+          description: "The token of the calling client was revoked, or the token\
+            \ is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an\
+            \ empty JSON object."
         "400":
-          description: invalid_request (token parameter missing) or unsupported_token_type.
+          description: "invalid_request (token parameter missing), unsupported_token_type,\
+            \ or invalid_grant: a live token that was issued to another client or\
+            \ agent is not revoked (RFC 7009 §2.1)."
         "401":
           description: invalid_client — client authentication failed.
         "429":
@@ -11763,6 +12788,13 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/TokenRequest"
+        description: RFC 6749 token request.
+        required: true
       responses:
         "200":
           content:
@@ -11827,13 +12859,14 @@ paths:
           description: "Claims for the token's principal. The shape depends on the\
             \ identity type: a user token yields standard OIDC claims gated by scope\
             \ (profile, email, phone, address), roles only when the client enabled\
-            \ the roles claim, plus tenant — null-valued claims are omitted; an agent\
-            \ token (no openid scope needed: an agent is not an End-User and reads\
-            \ only its own record) yields sub=agent_<id>, name, agent_id, workload_identity,\
-            \ capabilities, budget_policy, tenant, identity_type=agent. A token from\
-            \ the client credentials grant of an OAuth client names neither and is\
-            \ refused with 401 invalid_token, as a JWT and as an opaque token. Sent\
-            \ with Cache-Control: no-store."
+            \ the roles claim, plus `tenant` (the organization slug) — null-valued\
+            \ claims are omitted; an agent token (no openid scope needed: an agent\
+            \ is not an End-User and reads only its own record) yields sub=agent_<id>,\
+            \ name, agent_id, workload_identity, capabilities, budget_policy, `tenant`\
+            \ (the organization slug), identity_type=agent. A token from the client\
+            \ credentials grant of an OAuth client names neither and is refused with\
+            \ 401 invalid_token, as a JWT and as an opaque token. Sent with Cache-Control:\
+            \ no-store."
         "400":
           description: invalid_request — Authorization header missing or malformed.
         "401":
@@ -11867,13 +12900,14 @@ paths:
           description: "Claims for the token's principal. The shape depends on the\
             \ identity type: a user token yields standard OIDC claims gated by scope\
             \ (profile, email, phone, address), roles only when the client enabled\
-            \ the roles claim, plus tenant — null-valued claims are omitted; an agent\
-            \ token (no openid scope needed: an agent is not an End-User and reads\
-            \ only its own record) yields sub=agent_<id>, name, agent_id, workload_identity,\
-            \ capabilities, budget_policy, tenant, identity_type=agent. A token from\
-            \ the client credentials grant of an OAuth client names neither and is\
-            \ refused with 401 invalid_token, as a JWT and as an opaque token. Sent\
-            \ with Cache-Control: no-store."
+            \ the roles claim, plus `tenant` (the organization slug) — null-valued\
+            \ claims are omitted; an agent token (no openid scope needed: an agent\
+            \ is not an End-User and reads only its own record) yields sub=agent_<id>,\
+            \ name, agent_id, workload_identity, capabilities, budget_policy, `tenant`\
+            \ (the organization slug), identity_type=agent. A token from the client\
+            \ credentials grant of an OAuth client names neither and is refused with\
+            \ 401 invalid_token, as a JWT and as an opaque token. Sent with Cache-Control:\
+            \ no-store."
         "400":
           description: invalid_request — Authorization header missing or malformed.
         "401":
@@ -11907,6 +12941,13 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterClientRequest"
+        description: RFC 7591 client metadata.
+        required: true
       responses:
         "201":
           content:
@@ -12049,7 +13090,7 @@ paths:
       x-symfony-route: oauth_metadata
   /orgs/{orgId}/api/v1/.well-known/jwks.json:
     get:
-      description: "Public signing keys of the organization (its tenant signing keys\
+      description: "Public signing keys of the organization (its own signing keys\
         \ plus any platform keys kept for backward compatibility). Public, CORS-enabled\
         \ and cacheable (Cache-Control: public, max-age=3600)."
       operationId: getJwks
@@ -12416,8 +13457,11 @@ paths:
           description: "insufficient_scope: the calling application may not verify\
             \ Session headers."
         "404":
-          description: "not_found: unknown organization, or the protocol is switched\
-            \ off."
+          description: "not_found: unknown organization."
+        "409":
+          description: "protocol_disabled: the Personal Agent Protocol is switched\
+            \ off for this organization (or not in its plan). Answered after the calling\
+            \ application authenticated."
         "429":
           description: "too_many_requests, with Retry-After."
       security:
@@ -12460,6 +13504,9 @@ paths:
           description: insufficient_scope.
         "404":
           description: "not_found: unknown organization or Session."
+        "409":
+          description: "protocol_disabled: the Personal Agent Protocol is switched\
+            \ off for this organization (or not in its plan)."
       security:
       - ClientAuth: []
       summary: End a Session
@@ -12503,8 +13550,11 @@ paths:
         "403":
           description: insufficient_scope.
         "404":
-          description: "not_found: unknown organization, or the protocol is switched\
-            \ off."
+          description: "not_found: unknown organization."
+        "409":
+          description: "protocol_disabled: the Personal Agent Protocol is switched\
+            \ off for this organization (or not in its plan). Answered after the calling\
+            \ application authenticated."
       security:
       - ClientAuth: []
       summary: Look up a Session
@@ -12522,6 +13572,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterAgentRequest"
+        required: true
       responses:
         "200":
           content:
@@ -12544,6 +13600,12 @@ paths:
         schema:
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckRelationScopedRequest"
+        required: true
       responses:
         "200":
           content:
@@ -14085,24 +15147,44 @@ components:
       type: object
     OAuthClient:
       example:
-        createdAt: 2000-01-23T04:56:07.000+00:00
         cibaEnabled: true
-        grantTypes:
-        - grantTypes
-        - grantTypes
-        clientId: clientId
-        isConfidential: true
+        accessTokenFormat: opaque
+        jwks:
+          key: ""
+        fapiMode: disabled
+        requirePar: true
+        jwksUri: jwksUri
+        tokenExchangeEnabled: true
+        isActive: true
+        attesterIssuer: attesterIssuer
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        allowedOrigins:
+        - allowedOrigins
+        - allowedOrigins
         requiresPkce: true
-        name: name
+        postLogoutRedirectUris:
+        - postLogoutRedirectUris
+        - postLogoutRedirectUris
         isPublic: true
         id: 0
-        scopes:
-        - scopes
-        - scopes
-        isActive: true
+        clientId: clientId
+        isConfidential: true
+        backchannelLogoutUri: backchannelLogoutUri
         redirectUris:
         - redirectUris
         - redirectUris
+        attestationBasedAuthEnabled: true
+        grantTypes:
+        - grantTypes
+        - grantTypes
+        dpopBoundAccessTokens: true
+        frontchannelLogoutUri: frontchannelLogoutUri
+        tokenEndpointAuthMethod: client_secret_basic
+        name: name
+        scopes:
+        - scopes
+        - scopes
+        attesterJwksUri: attesterJwksUri
       properties:
         id:
           type: integer
@@ -14140,6 +15222,80 @@ components:
           description: Detailed responses only. Whether the client may use CIBA (backchannel
             authentication).
           type: boolean
+        allowedOrigins:
+          description: "Detailed responses only. Browser CORS origins (scheme://host[:port])."
+          items:
+            type: string
+          type: array
+        postLogoutRedirectUris:
+          description: Detailed responses only. Addresses that the end-session endpoint
+            may return to.
+          items:
+            type: string
+          type: array
+        frontchannelLogoutUri:
+          description: Detailed responses only. OIDC Front-Channel Logout address.
+          nullable: true
+          type: string
+        backchannelLogoutUri:
+          description: Detailed responses only. OIDC Back-Channel Logout address.
+          nullable: true
+          type: string
+        accessTokenFormat:
+          description: Detailed responses only. Format of the access tokens that the
+            client receives.
+          enum:
+          - opaque
+          - jwt
+          type: string
+        tokenEndpointAuthMethod:
+          description: Detailed responses only.
+          enum:
+          - client_secret_basic
+          - private_key_jwt
+          - none
+          - attest_jwt_client_auth
+          type: string
+        jwksUri:
+          description: Detailed responses only. https address of the client's public
+            keys.
+          nullable: true
+          type: string
+        jwks:
+          additionalProperties: true
+          description: "Detailed responses only. The client's public keys, inline."
+          nullable: true
+          type: object
+        fapiMode:
+          description: Detailed responses only. FAPI 2.0 security profile.
+          enum:
+          - disabled
+          - fapi2_baseline
+          - fapi2_advanced
+          type: string
+        requirePar:
+          description: Detailed responses only. The stored switch; a FAPI profile
+            requires PAR whatever it says.
+          type: boolean
+        dpopBoundAccessTokens:
+          description: Detailed responses only. The stored switch; a FAPI profile
+            requires DPoP whatever it says.
+          type: boolean
+        attestationBasedAuthEnabled:
+          description: Detailed responses only.
+          type: boolean
+        attesterIssuer:
+          description: Detailed responses only.
+          nullable: true
+          type: string
+        attesterJwksUri:
+          description: Detailed responses only.
+          nullable: true
+          type: string
+        tokenExchangeEnabled:
+          description: Detailed responses only. Whether the client may use token exchange
+            (RFC 8693).
+          type: boolean
       required:
       - clientId
       - createdAt
@@ -14149,6 +15305,268 @@ components:
       - isPublic
       - name
       - requiresPkce
+      type: object
+    McpServerWrite:
+      description: "Fields of POST /admin/mcp/servers (name and resource_uri are required\
+        \ there) and PATCH|PUT /admin/mcp/servers/{serverId} (only the fields that\
+        \ are sent change; resource_uri cannot change). The same rules as the portal."
+      example:
+        require_pkce: true
+        resource_uri: https://openapi-generator.tech
+        description: description
+        auth_mode: oauth
+        require_resource_param: true
+        transport: http_streamable
+        require_dpop: false
+        scopes_supported:
+        - McpServerWrite_scopes_supported
+        - McpServerWrite_scopes_supported
+        tool_authorizer_client_ids:
+        - tool_authorizer_client_ids
+        - tool_authorizer_client_ids
+        scope_descriptions:
+          key: scope_descriptions
+        basic_scopes:
+        - McpServerWrite_basic_scopes
+        - McpServerWrite_basic_scopes
+        token_lifetime: 6974
+        endpoint_url: endpoint_url
+        name: name
+        allowed_client_ids:
+        - allowed_client_ids
+        - allowed_client_ids
+        status: active
+      properties:
+        name:
+          type: string
+        resource_uri:
+          description: "RFC 8707 resource: https (http only for loopback), no fragment\
+            \ or user info, unique in the organization. Stored in canonical form."
+          format: uri
+          type: string
+        description:
+          nullable: true
+          type: string
+        endpoint_url:
+          description: "Address that the server is reached at, when it differs from\
+            \ resource_uri."
+          nullable: true
+          type: string
+        transport:
+          default: http_streamable
+          enum:
+          - http_streamable
+          - http_sse
+          - stdio
+          type: string
+        auth_mode:
+          default: oauth
+          enum:
+          - oauth
+          - none
+          type: string
+        status:
+          description: Update only; a new server is active.
+          enum:
+          - active
+          - inactive
+          - suspended
+          type: string
+        scopes_supported:
+          $ref: "#/components/schemas/McpServerWrite_scopes_supported"
+        basic_scopes:
+          $ref: "#/components/schemas/McpServerWrite_basic_scopes"
+        scope_descriptions:
+          additionalProperties:
+            maxLength: 200
+            type: string
+          description: "Text per scope of scopes_supported, for the portal and the\
+            \ consent page."
+          type: object
+        allowed_client_ids:
+          description: Clients of this organization that may get tokens for the server;
+            every client when empty.
+          items:
+            type: string
+          type: array
+        tool_authorizer_client_ids:
+          description: The server's own clients that may call the per-tool authorization
+            endpoint.
+          items:
+            type: string
+          type: array
+        token_lifetime:
+          default: 3600
+          maximum: 86400
+          minimum: 60
+          type: integer
+        require_pkce:
+          default: true
+          type: boolean
+        require_resource_param:
+          default: true
+          type: boolean
+        require_dpop:
+          default: false
+          type: boolean
+      type: object
+    OAuthClientWrite:
+      description: "Fields of POST /admin/clients (name is required there) and PUT|PATCH\
+        \ /admin/clients/{clientId} (only the fields that are sent change). The browser\
+        \ and sign-out fields follow the rules of the portal forms; null clears one."
+      example:
+        cibaEnabled: true
+        accessTokenFormat: opaque
+        isConfidential: true
+        jwks:
+          key: ""
+        backchannelLogoutUri: https://shop.example.com/logout/backchannel
+        fapiMode: disabled
+        requirePar: true
+        jwksUri: jwksUri
+        tokenExchangeEnabled: true
+        redirectUris:
+        - https://shop.example.com/callback
+        attestationBasedAuthEnabled: true
+        attesterIssuer: attesterIssuer
+        grantTypes:
+        - authorization_code
+        - refresh_token
+        allowedOrigins:
+        - https://shop.example.com
+        dpopBoundAccessTokens: true
+        requiresPkce: true
+        frontchannelLogoutUri: https://shop.example.com/logout/frontchannel
+        tokenEndpointAuthMethod: client_secret_basic
+        postLogoutRedirectUris:
+        - https://shop.example.com/
+        name: Acme Shop
+        scopes:
+        - openid
+        - profile
+        - email
+        attesterJwksUri: attesterJwksUri
+      properties:
+        name:
+          example: Acme Shop
+          type: string
+        redirectUris:
+          description: "https, an http loopback address, or a custom native scheme."
+          example:
+          - https://shop.example.com/callback
+          items:
+            type: string
+          type: array
+        scopes:
+          example:
+          - openid
+          - profile
+          - email
+          items:
+            type: string
+          type: array
+        grantTypes:
+          description: At least one grant type.
+          example:
+          - authorization_code
+          - refresh_token
+          items:
+            type: string
+          type: array
+        isConfidential:
+          description: "false makes a public client (no secret, PKCE)."
+          type: boolean
+        requiresPkce:
+          type: boolean
+        cibaEnabled:
+          description: Needs a confidential client and the ciba plan feature.
+          type: boolean
+        allowedOrigins:
+          description: "Browser CORS origins: http or https, a host, no path, query\
+            \ or fragment. Stored as scheme://host[:port]."
+          example:
+          - https://shop.example.com
+          items:
+            type: string
+          nullable: true
+          type: array
+        postLogoutRedirectUris:
+          description: Addresses that the end-session endpoint may return to (post_logout_redirect_uri).
+            Same schemes as redirectUris.
+          example:
+          - https://shop.example.com/
+          items:
+            type: string
+          nullable: true
+          type: array
+        frontchannelLogoutUri:
+          description: "OIDC Front-Channel Logout 1.0: scheme, host and port of a\
+            \ redirect URI, no fragment."
+          example: https://shop.example.com/logout/frontchannel
+          nullable: true
+          type: string
+        backchannelLogoutUri:
+          description: "OIDC Back-Channel Logout 1.0: an https address without a fragment.\
+            \ Logout tokens are sent only to public addresses."
+          example: https://shop.example.com/logout/backchannel
+          nullable: true
+          type: string
+        accessTokenFormat:
+          description: Format of the access tokens that the client receives.
+          enum:
+          - opaque
+          - jwt
+          type: string
+        tokenEndpointAuthMethod:
+          description: How the client authenticates at the token endpoint. client_secret_post
+            is stored as client_secret_basic (both are accepted). A public client
+            cannot use private_key_jwt; with a secret method it is stored as none.
+            private_key_jwt needs jwksUri or jwks.
+          enum:
+          - client_secret_basic
+          - client_secret_post
+          - private_key_jwt
+          - none
+          type: string
+        jwksUri:
+          description: https address of the client's public keys.
+          nullable: true
+          type: string
+        jwks:
+          additionalProperties: true
+          description: "The client's public keys, inline (a JWKS with public keys\
+            \ only)."
+          nullable: true
+          type: object
+        fapiMode:
+          description: "FAPI 2.0 security profile (plan feature fapi). A profile needs\
+            \ private_key_jwt with keys, or attestation-based client authentication,\
+            \ and requires PAR and DPoP."
+          enum:
+          - disabled
+          - fapi2_baseline
+          - fapi2_advanced
+          type: string
+        requirePar:
+          description: Require pushed authorization requests (RFC 9126).
+          type: boolean
+        dpopBoundAccessTokens:
+          description: Require DPoP-bound access tokens (RFC 9449; plan feature dpop).
+          type: boolean
+        attestationBasedAuthEnabled:
+          description: Attestation-based client authentication; needs attesterIssuer
+            and attesterJwksUri.
+          type: boolean
+        attesterIssuer:
+          nullable: true
+          type: string
+        attesterJwksUri:
+          description: https address of the attester's public keys.
+          nullable: true
+          type: string
+        tokenExchangeEnabled:
+          description: Allow token exchange (RFC 8693) for this client.
+          type: boolean
       type: object
     Webhook:
       example:
@@ -14356,6 +15774,7 @@ components:
           key: ""
         initiatedBy: initiatedBy
         severity: severity
+        traceId: traceId
         newValue:
           key: ""
         actorType: actorType
@@ -14413,6 +15832,12 @@ components:
           nullable: true
           type: string
         ipAddress:
+          nullable: true
+          type: string
+        traceId:
+          description: "W3C trace ID (32 hex characters) of the request that wrote\
+            \ the entry, from its traceparent header; null when the request carried\
+            \ none"
           nullable: true
           type: string
         eventTime:
@@ -15166,7 +16591,7 @@ components:
           type: string
       type: object
     TenantProfile:
-      description: The organization (tenant) record as returned by the settings endpoints.
+      description: The organization record as returned by the settings endpoints.
       example:
         settings:
           key: ""
@@ -15426,11 +16851,17 @@ components:
     IssueResourceTokenRequest:
       example:
         agent: agent
+        resource: resource
         scope: scope
         agent_jkt: agent_jkt
         auth_request_url: auth_request_url
         auth_server: auth_server
       properties:
+        resource:
+          description: Required. The resource identifier of the calling resource (`resource_identifier`
+            is accepted as well). The HTTP message signature is checked with the registered
+            keys of this resource.
+          type: string
         agent:
           description: Agent identifier the resource token is bound to.
           type: string
@@ -15447,6 +16878,10 @@ components:
           description: Optional auth server URL for the aud claim; defaults to this
             issuer.
           type: string
+      required:
+      - agent
+      - agent_jkt
+      - resource
       type: object
     IssueResourceTokenResponse:
       example:
@@ -15466,9 +16901,15 @@ components:
     VerifyResourceTokenRequest:
       example:
         agent: agent
+        resource: resource
         agent_jkt: agent_jkt
         resource_token: resource_token
       properties:
+        resource:
+          description: Required. The resource identifier of the calling resource (`resource_identifier`
+            is accepted as well). The HTTP message signature is checked with the registered
+            keys of this resource.
+          type: string
         resource_token:
           description: The resource token to validate.
           type: string
@@ -15478,6 +16919,11 @@ components:
         agent_jkt:
           description: JWK thumbprint of the agent key.
           type: string
+      required:
+      - agent
+      - agent_jkt
+      - resource
+      - resource_token
       type: object
     VerifyResourceTokenResponse:
       example:
@@ -15508,8 +16954,13 @@ components:
           description: The auth token presented by the agent.
           type: string
         resource:
-          description: Resource identifier; defaults to the authenticated resource.
+          description: Required. The resource identifier of the calling resource (`resource_identifier`
+            is accepted as well). The HTTP message signature is checked with the registered
+            keys of this resource.
           type: string
+      required:
+      - auth_token
+      - resource
       type: object
     VerifyAuthTokenResponse:
       example:
@@ -15546,6 +16997,28 @@ components:
           type: boolean
         error:
           type: string
+      type: object
+    CheckAbacRequest:
+      example:
+        resourceId: resourceId
+        environment:
+          key: ""
+        action: action
+        resourceType: resourceType
+      properties:
+        resourceType:
+          type: string
+        action:
+          type: string
+        resourceId:
+          type: string
+        environment:
+          additionalProperties: true
+          description: Values of defined environment attributes.
+          type: object
+      required:
+      - action
+      - resourceType
       type: object
     CheckAbacResponseMatchedPoliciesItem:
       example:
@@ -15594,6 +17067,26 @@ components:
         resourceId:
           nullable: true
           type: string
+      type: object
+    CheckAbacBulkRequest:
+      example:
+        environment:
+          key: ""
+        checks:
+        - key: ""
+        - key: ""
+      properties:
+        checks:
+          description: "Each {\"resourceType\", \"action\", \"resourceId\"}."
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        environment:
+          additionalProperties: true
+          type: object
+      required:
+      - checks
       type: object
     CheckAbacBulkResponseResultsItem:
       description: "A check missing resourceType/action yields only index, allowed=false\
@@ -15802,6 +17295,15 @@ components:
         attributes:
           $ref: "#/components/schemas/GetResourceAttributesResponseAttributes"
       type: object
+    SetResourceAttributeRequest:
+      example:
+        value: ""
+      properties:
+        value:
+          description: A value of the attribute's data type.
+      required:
+      - value
+      type: object
     SetResourceAttributeResponse:
       example:
         data:
@@ -15954,6 +17456,51 @@ components:
           example: abac_attributes
           type: string
       type: object
+    AbacAttributesCreateRequest:
+      example:
+        validationRules:
+          key: ""
+        attributeType: user
+        defaultValue: ""
+        dataType: string
+        name: name
+        description: description
+        slug: slug
+      properties:
+        name:
+          type: string
+        slug:
+          type: string
+        attributeType:
+          description: Also accepted as attribute_type.
+          enum:
+          - user
+          - resource
+          - environment
+          type: string
+        dataType:
+          description: Also accepted as data_type.
+          enum:
+          - string
+          - number
+          - boolean
+          - array
+          - date
+          - datetime
+          type: string
+        description:
+          nullable: true
+          type: string
+        defaultValue: {}
+        validationRules:
+          additionalProperties: true
+          type: object
+      required:
+      - attributeType
+      - dataType
+      - name
+      - slug
+      type: object
     AbacAttributesCreateResponse:
       example:
         data:
@@ -15999,6 +17546,24 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/AbacAttributeDefinition"
+      type: object
+    PutAbacAttributesUpdateRequest:
+      example:
+        validationRules:
+          key: ""
+        defaultValue: ""
+        name: name
+        description: description
+      properties:
+        name:
+          type: string
+        description:
+          nullable: true
+          type: string
+        defaultValue: {}
+        validationRules:
+          additionalProperties: true
+          type: object
       type: object
     PutAbacAttributesUpdateResponse:
       example:
@@ -16086,6 +17651,49 @@ components:
           example: abac_policies
           type: string
       type: object
+    AbacPoliciesCreateRequest:
+      example:
+        effect: allow
+        name: name
+        description: description
+        action: action
+        priority: 0
+        conditions:
+          key: ""
+        slug: slug
+        resourceType: resourceType
+      properties:
+        name:
+          type: string
+        slug:
+          type: string
+        description:
+          nullable: true
+          type: string
+        resourceType:
+          type: string
+        action:
+          description: "One action, a comma-separated list of actions, or *."
+          type: string
+        effect:
+          enum:
+          - allow
+          - deny
+          type: string
+        priority:
+          type: integer
+        conditions:
+          additionalProperties: true
+          description: "A condition group: {\"operator\": \"AND\"|\"OR\", \"conditions\"\
+            : [...]}."
+          type: object
+      required:
+      - action
+      - conditions
+      - effect
+      - name
+      - resourceType
+      type: object
     AbacPoliciesCreateResponse:
       example:
         data:
@@ -16133,6 +17741,37 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/AbacPolicy"
+      type: object
+    PutAbacPoliciesUpdateRequest:
+      example:
+        effect: allow
+        name: name
+        description: description
+        action: action
+        priority: 0
+        conditions:
+          key: ""
+        resourceType: resourceType
+      properties:
+        name:
+          type: string
+        description:
+          nullable: true
+          type: string
+        resourceType:
+          type: string
+        action:
+          type: string
+        effect:
+          enum:
+          - allow
+          - deny
+          type: string
+        priority:
+          type: integer
+        conditions:
+          additionalProperties: true
+          type: object
       type: object
     PutAbacPoliciesUpdateResponse:
       example:
@@ -16684,6 +18323,7 @@ components:
             key: ""
           initiatedBy: initiatedBy
           severity: severity
+          traceId: traceId
           newValue:
             key: ""
           actorType: actorType
@@ -16717,6 +18357,7 @@ components:
             key: ""
           initiatedBy: initiatedBy
           severity: severity
+          traceId: traceId
           newValue:
             key: ""
           actorType: actorType
@@ -16774,6 +18415,7 @@ components:
             key: ""
           initiatedBy: initiatedBy
           severity: severity
+          traceId: traceId
           newValue:
             key: ""
           actorType: actorType
@@ -16920,6 +18562,17 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/AdminAuditLogsRetentionResponseData"
+      type: object
+    PutAdminAuditLogsRetentionUpdateRequest:
+      example:
+        retentionDays: 0
+      properties:
+        retentionDays:
+          description: "Days to keep audit entries: at least the shorter of 90 days\
+            \ and the plan window, at most the plan window."
+          type: integer
+      required:
+      - retentionDays
       type: object
     AdminAuditLogsExportResponseMeta:
       properties:
@@ -17094,42 +18747,82 @@ components:
           hasPreviousPage: true
           page: 1
         data:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          cibaEnabled: true
-          grantTypes:
-          - grantTypes
-          - grantTypes
-          clientId: clientId
-          isConfidential: true
+        - cibaEnabled: true
+          accessTokenFormat: opaque
+          jwks:
+            key: ""
+          fapiMode: disabled
+          requirePar: true
+          jwksUri: jwksUri
+          tokenExchangeEnabled: true
+          isActive: true
+          attesterIssuer: attesterIssuer
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          allowedOrigins:
+          - allowedOrigins
+          - allowedOrigins
           requiresPkce: true
-          name: name
+          postLogoutRedirectUris:
+          - postLogoutRedirectUris
+          - postLogoutRedirectUris
           isPublic: true
           id: 0
-          scopes:
-          - scopes
-          - scopes
-          isActive: true
+          clientId: clientId
+          isConfidential: true
+          backchannelLogoutUri: backchannelLogoutUri
           redirectUris:
           - redirectUris
           - redirectUris
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          cibaEnabled: true
+          attestationBasedAuthEnabled: true
           grantTypes:
           - grantTypes
           - grantTypes
-          clientId: clientId
-          isConfidential: true
-          requiresPkce: true
+          dpopBoundAccessTokens: true
+          frontchannelLogoutUri: frontchannelLogoutUri
+          tokenEndpointAuthMethod: client_secret_basic
           name: name
-          isPublic: true
-          id: 0
           scopes:
           - scopes
           - scopes
+          attesterJwksUri: attesterJwksUri
+        - cibaEnabled: true
+          accessTokenFormat: opaque
+          jwks:
+            key: ""
+          fapiMode: disabled
+          requirePar: true
+          jwksUri: jwksUri
+          tokenExchangeEnabled: true
           isActive: true
+          attesterIssuer: attesterIssuer
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          allowedOrigins:
+          - allowedOrigins
+          - allowedOrigins
+          requiresPkce: true
+          postLogoutRedirectUris:
+          - postLogoutRedirectUris
+          - postLogoutRedirectUris
+          isPublic: true
+          id: 0
+          clientId: clientId
+          isConfidential: true
+          backchannelLogoutUri: backchannelLogoutUri
           redirectUris:
           - redirectUris
           - redirectUris
+          attestationBasedAuthEnabled: true
+          grantTypes:
+          - grantTypes
+          - grantTypes
+          dpopBoundAccessTokens: true
+          frontchannelLogoutUri: frontchannelLogoutUri
+          tokenEndpointAuthMethod: client_secret_basic
+          name: name
+          scopes:
+          - scopes
+          - scopes
+          attesterJwksUri: attesterJwksUri
         meta:
           total: 6
           hasNextPage: true
@@ -17165,24 +18858,44 @@ components:
       example:
         data:
           cibaEnabled: true
-          clientId: clientId
-          isConfidential: true
+          accessTokenFormat: opaque
+          jwks:
+            key: ""
+          fapiMode: disabled
+          requirePar: true
+          jwksUri: jwksUri
+          tokenExchangeEnabled: true
           secret: secret
           isActive: true
+          attesterIssuer: attesterIssuer
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          allowedOrigins:
+          - allowedOrigins
+          - allowedOrigins
+          requiresPkce: true
+          postLogoutRedirectUris:
+          - postLogoutRedirectUris
+          - postLogoutRedirectUris
+          isPublic: true
+          id: 0
+          clientId: clientId
+          isConfidential: true
+          backchannelLogoutUri: backchannelLogoutUri
           redirectUris:
           - redirectUris
           - redirectUris
-          createdAt: 2000-01-23T04:56:07.000+00:00
+          attestationBasedAuthEnabled: true
           grantTypes:
           - grantTypes
           - grantTypes
-          requiresPkce: true
+          dpopBoundAccessTokens: true
+          frontchannelLogoutUri: frontchannelLogoutUri
+          tokenEndpointAuthMethod: client_secret_basic
           name: name
-          isPublic: true
-          id: 0
           scopes:
           - scopes
           - scopes
+          attesterJwksUri: attesterJwksUri
           _note: Store the secret securely. It will not be shown again.
         message: message
       properties:
@@ -17194,24 +18907,44 @@ components:
     GetClientResponse:
       example:
         data:
-          createdAt: 2000-01-23T04:56:07.000+00:00
           cibaEnabled: true
-          grantTypes:
-          - grantTypes
-          - grantTypes
-          clientId: clientId
-          isConfidential: true
+          accessTokenFormat: opaque
+          jwks:
+            key: ""
+          fapiMode: disabled
+          requirePar: true
+          jwksUri: jwksUri
+          tokenExchangeEnabled: true
+          isActive: true
+          attesterIssuer: attesterIssuer
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          allowedOrigins:
+          - allowedOrigins
+          - allowedOrigins
           requiresPkce: true
-          name: name
+          postLogoutRedirectUris:
+          - postLogoutRedirectUris
+          - postLogoutRedirectUris
           isPublic: true
           id: 0
-          scopes:
-          - scopes
-          - scopes
-          isActive: true
+          clientId: clientId
+          isConfidential: true
+          backchannelLogoutUri: backchannelLogoutUri
           redirectUris:
           - redirectUris
           - redirectUris
+          attestationBasedAuthEnabled: true
+          grantTypes:
+          - grantTypes
+          - grantTypes
+          dpopBoundAccessTokens: true
+          frontchannelLogoutUri: frontchannelLogoutUri
+          tokenEndpointAuthMethod: client_secret_basic
+          name: name
+          scopes:
+          - scopes
+          - scopes
+          attesterJwksUri: attesterJwksUri
       properties:
         data:
           $ref: "#/components/schemas/OAuthClient"
@@ -17219,24 +18952,44 @@ components:
     UpdateClientResponse:
       example:
         data:
-          createdAt: 2000-01-23T04:56:07.000+00:00
           cibaEnabled: true
-          grantTypes:
-          - grantTypes
-          - grantTypes
-          clientId: clientId
-          isConfidential: true
+          accessTokenFormat: opaque
+          jwks:
+            key: ""
+          fapiMode: disabled
+          requirePar: true
+          jwksUri: jwksUri
+          tokenExchangeEnabled: true
+          isActive: true
+          attesterIssuer: attesterIssuer
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          allowedOrigins:
+          - allowedOrigins
+          - allowedOrigins
           requiresPkce: true
-          name: name
+          postLogoutRedirectUris:
+          - postLogoutRedirectUris
+          - postLogoutRedirectUris
           isPublic: true
           id: 0
-          scopes:
-          - scopes
-          - scopes
-          isActive: true
+          clientId: clientId
+          isConfidential: true
+          backchannelLogoutUri: backchannelLogoutUri
           redirectUris:
           - redirectUris
           - redirectUris
+          attestationBasedAuthEnabled: true
+          grantTypes:
+          - grantTypes
+          - grantTypes
+          dpopBoundAccessTokens: true
+          frontchannelLogoutUri: frontchannelLogoutUri
+          tokenEndpointAuthMethod: client_secret_basic
+          name: name
+          scopes:
+          - scopes
+          - scopes
+          attesterJwksUri: attesterJwksUri
         message: message
       properties:
         data:
@@ -17268,6 +19021,20 @@ components:
           type: array
         pagination:
           $ref: "#/components/schemas/PaginationMeta"
+      type: object
+    SetClientScopesRequest:
+      example:
+        scopes:
+        - scopes
+        - scopes
+      properties:
+        scopes:
+          description: The full list of scopes that the client may request.
+          items:
+            type: string
+          type: array
+      required:
+      - scopes
       type: object
     SetClientScopesResponse:
       example:
@@ -17374,6 +19141,30 @@ components:
           type: array
         pagination:
           $ref: "#/components/schemas/PaginationMeta"
+      type: object
+    AdminEmailTemplatesUpsertRequest:
+      example:
+        body_html: body_html
+        subject: subject
+      properties:
+        subject:
+          type: string
+        body_html:
+          description: HTML body; placeholders as on the portal page.
+          type: string
+      required:
+      - body_html
+      - subject
+      type: object
+    AdminEmailTemplatesPreviewRequest:
+      example:
+        body_html: body_html
+        subject: subject
+      properties:
+        subject:
+          type: string
+        body_html:
+          type: string
       type: object
     AdminEmailTemplatesPreviewResponse:
       example:
@@ -17484,6 +19275,31 @@ components:
           example: groups
           type: string
       type: object
+    AdminGroupsCreateRequest:
+      example:
+        roles:
+        - roles
+        - roles
+        name: name
+        description: description
+        slug: slug
+      properties:
+        name:
+          type: string
+        slug:
+          description: Optional; derived from the name when left out.
+          type: string
+        description:
+          nullable: true
+          type: string
+        roles:
+          description: Optional role slugs.
+          items:
+            type: string
+          type: array
+      required:
+      - name
+      type: object
     AdminGroupsCreateResponse:
       example:
         data:
@@ -17547,6 +19363,16 @@ components:
         data:
           $ref: "#/components/schemas/Group"
       type: object
+    PutAdminGroupsUpdateRequest:
+      example:
+        name: name
+        description: description
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      type: object
     AdminGroupsGetMembersResponseDataItem:
       example:
         name: name
@@ -17606,6 +19432,23 @@ components:
           example: users
           type: string
       type: object
+    AdminGroupsAddMembersRequest:
+      example:
+        userIds:
+        - userIds
+        - userIds
+        userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        userId:
+          description: One user (or use userIds).
+          format: uuid
+          type: string
+        userIds:
+          description: Several users.
+          items:
+            type: string
+          type: array
+      type: object
     AdminGroupsGroupsGetRolesResponseDataItem:
       example:
         name: name
@@ -17648,6 +19491,29 @@ components:
           type: array
         pagination:
           $ref: "#/components/schemas/PaginationMeta"
+      type: object
+    AdminGroupsAddRoleRequest:
+      example:
+        roleId: 0
+      properties:
+        roleId:
+          type: integer
+      required:
+      - roleId
+      type: object
+    AdminGroupsUpdateRolesRequest:
+      example:
+        roles:
+        - roles
+        - roles
+      properties:
+        roles:
+          description: The full list of role slugs.
+          items:
+            type: string
+          type: array
+      required:
+      - roles
       type: object
     AdminIdentitiesListResponseDataBindingsItem:
       example:
@@ -17939,6 +19805,45 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/AdminIdentitiesLegacySamlRelinkResponseData"
+      type: object
+    AdminInitialAccessTokensListResponseDataItem:
+      example:
+        id: 3f2a9c1b7d4e
+      properties:
+        id:
+          example: 3f2a9c1b7d4e
+          type: string
+      type: object
+    AdminInitialAccessTokensListResponse:
+      example:
+        data:
+        - id: 3f2a9c1b7d4e
+        - id: 3f2a9c1b7d4e
+      properties:
+        data:
+          items:
+            $ref: "#/components/schemas/AdminInitialAccessTokensListResponseDataItem"
+          type: array
+      type: object
+    AdminInitialAccessTokensCreateResponseData:
+      example:
+        id: id
+        token: token
+      properties:
+        id:
+          type: string
+        token:
+          description: Shown only in this answer.
+          type: string
+      type: object
+    AdminInitialAccessTokensCreateResponse:
+      example:
+        data:
+          id: id
+          token: token
+      properties:
+        data:
+          $ref: "#/components/schemas/AdminInitialAccessTokensCreateResponseData"
       type: object
     AdminMcpServersListResponse:
       example:
@@ -18631,6 +20536,47 @@ components:
           example: organizations
           type: string
       type: object
+    AdminOrganizationsCreateRequest:
+      example:
+        metadata:
+          key: ""
+        displayName: displayName
+        name: Northwind Traders
+        description: description
+        isActive: true
+        slug: slug
+        logoUrl: https://openapi-generator.tech
+      properties:
+        name:
+          description: At most 100 characters.
+          example: Northwind Traders
+          type: string
+        slug:
+          description: "Optional; derived from the name when left out. Lowercase letters,\
+            \ digits and hyphens."
+          type: string
+        displayName:
+          description: At most 255 characters.
+          nullable: true
+          type: string
+        description:
+          nullable: true
+          type: string
+        logoUrl:
+          description: Absolute https URL.
+          format: uri
+          nullable: true
+          type: string
+        metadata:
+          additionalProperties: true
+          nullable: true
+          type: object
+        isActive:
+          default: true
+          type: boolean
+      required:
+      - name
+      type: object
     AdminOrganizationsCreateResponse:
       example:
         data:
@@ -18671,6 +20617,39 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/Organization"
+      type: object
+    PutAdminOrganizationsUpdateRequest:
+      example:
+        metadata:
+          key: ""
+        displayName: displayName
+        name: name
+        description: description
+        isActive: true
+        slug: slug
+        logoUrl: https://openapi-generator.tech
+      properties:
+        name:
+          type: string
+        slug:
+          description: Leave it out to keep the slug; an empty slug is refused.
+          type: string
+        displayName:
+          nullable: true
+          type: string
+        description:
+          nullable: true
+          type: string
+        logoUrl:
+          format: uri
+          nullable: true
+          type: string
+        metadata:
+          additionalProperties: true
+          nullable: true
+          type: object
+        isActive:
+          type: boolean
       type: object
     AdminOrgMembersListResponse:
       example:
@@ -18725,6 +20704,22 @@ components:
           example: members
           type: string
       type: object
+    AdminOrgMembersAddRequest:
+      example:
+        roleId: 0
+        userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        userId:
+          description: ID of a user of this organization.
+          format: uuid
+          type: string
+        roleId:
+          description: "Optional: a role of the customer organization; its default\
+            \ role otherwise."
+          type: integer
+      required:
+      - userId
+      type: object
     AdminOrgMembersAddResponse:
       example:
         data:
@@ -18744,6 +20739,20 @@ components:
         data:
           $ref: "#/components/schemas/OrganizationMember"
         message:
+          type: string
+      type: object
+    PutAdminOrgMembersUpdateRequest:
+      example:
+        roleId: 0
+        status: active
+      properties:
+        roleId:
+          description: A role of the customer organization.
+          type: integer
+        status:
+          enum:
+          - active
+          - suspended
           type: string
       type: object
     PutAdminOrgMembersUpdateResponse:
@@ -18796,6 +20805,28 @@ components:
         pagination:
           $ref: "#/components/schemas/PaginationMeta"
       type: object
+    AdminOrgRolesCreateRequest:
+      example:
+        isDefault: false
+        name: name
+        description: description
+        slug: slug
+      properties:
+        name:
+          type: string
+        slug:
+          description: Optional; derived from the name when left out.
+          type: string
+        description:
+          nullable: true
+          type: string
+        isDefault:
+          default: false
+          description: The role that new members get.
+          type: boolean
+      required:
+      - name
+      type: object
     AdminOrgRolesCreateResponse:
       example:
         data:
@@ -18809,6 +20840,17 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/OrganizationRole"
+      type: object
+    PutAdminOrgRolesUpdateRequest:
+      example:
+        name: name
+        description: description
+      properties:
+        name:
+          type: string
+        description:
+          nullable: true
+          type: string
       type: object
     AdminOrgInvitationsListResponse:
       example:
@@ -18845,6 +20887,29 @@ components:
           type: array
         pagination:
           $ref: "#/components/schemas/PaginationMeta"
+      type: object
+    AdminOrgInvitationsCreateRequest:
+      example:
+        skipEmail: false
+        roleId: 0
+        message: message
+        email: email
+      properties:
+        email:
+          format: email
+          type: string
+        roleId:
+          description: "Optional: a role of the customer organization."
+          type: integer
+        message:
+          description: Optional text for the invitation email.
+          type: string
+        skipEmail:
+          default: false
+          description: true creates the invitation without sending the email.
+          type: boolean
+      required:
+      - email
       type: object
     AdminOrgInvitationsCreateResponse:
       example:
@@ -18916,6 +20981,33 @@ components:
         pagination:
           $ref: "#/components/schemas/PaginationMeta"
       type: object
+    AdminPermissionsCreateRequest:
+      example:
+        resource: resource
+        name: name
+        description: description
+        action: action
+        slug: slug
+      properties:
+        name:
+          type: string
+        slug:
+          description: "Lowercase letters, digits, dots, hyphens and underscores (for\
+            \ example invoices.approve). Built-in and reserved slugs are refused."
+          type: string
+        description:
+          nullable: true
+          type: string
+        resource:
+          nullable: true
+          type: string
+        action:
+          nullable: true
+          type: string
+      required:
+      - name
+      - slug
+      type: object
     AdminPermissionsCreateResponse:
       example:
         data:
@@ -18952,6 +21044,22 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/Permission"
+      type: object
+    AdminPermissionsUpdateRequest:
+      example:
+        resource: resource
+        name: name
+        description: description
+        action: action
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        resource:
+          type: string
+        action:
+          type: string
       type: object
     AdminPermissionsUsageResponseData:
       example:
@@ -19024,6 +21132,20 @@ components:
           $ref: "#/components/schemas/AdminScopesListResponseMeta"
         pagination:
           $ref: "#/components/schemas/PaginationMeta"
+      type: object
+    AdminScopesCreateRequest:
+      example:
+        name: name
+        description: description
+      properties:
+        name:
+          description: The scope value.
+          type: string
+        description:
+          type: string
+      required:
+      - description
+      - name
       type: object
     AdminScopesCreateResponse:
       example:
@@ -19829,6 +21951,33 @@ components:
           example: roles
           type: string
       type: object
+    AdminRolesCreateRequest:
+      example:
+        permissions:
+        - permissions
+        - permissions
+        name: name
+        description: description
+        slug: slug
+      properties:
+        name:
+          type: string
+        slug:
+          description: "Optional; derived from the name when left out. 1 to 100 lowercase\
+            \ letters, digits and underscores, in parts joined by \".\" or \"-\".\
+            \ Reserved slugs (admin, root, ...) are refused."
+          type: string
+        description:
+          nullable: true
+          type: string
+        permissions:
+          description: Optional permission slugs (needs roles.assign-permissions).
+          items:
+            type: string
+          type: array
+      required:
+      - name
+      type: object
     AdminRolesCreateResponse:
       example:
         data:
@@ -19927,6 +22076,36 @@ components:
         pagination:
           $ref: "#/components/schemas/PaginationMeta"
       type: object
+    AdminRolesAddPermissionsRequest:
+      example:
+        permissionId: 0
+        permissionIds:
+        - 6
+        - 6
+      properties:
+        permissionId:
+          description: One permission id (or use permissionIds).
+          type: integer
+        permissionIds:
+          description: Several permission ids.
+          items:
+            type: integer
+          type: array
+      type: object
+    AdminRolesUpdatePermissionsRequest:
+      example:
+        permissions:
+        - permissions
+        - permissions
+      properties:
+        permissions:
+          description: The full list of permission slugs that the role should grant.
+          items:
+            type: string
+          type: array
+      required:
+      - permissions
+      type: object
     AdminRolesGetUsersResponse:
       example:
         pagination:
@@ -19963,6 +22142,16 @@ components:
         resourceType:
           example: users
           type: string
+      type: object
+    AdminRolesAddUserRequest:
+      example:
+        userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        userId:
+          format: uuid
+          type: string
+      required:
+      - userId
       type: object
     AdminSandboxSpawnRequest:
       example:
@@ -20825,6 +23014,14 @@ components:
         data:
           $ref: "#/components/schemas/AdminSettingsAllResponseDataSecurity"
       type: object
+    PutAdminSettingsSecurityUpdateRequest:
+      example:
+        dpop_require_nonce: true
+      properties:
+        dpop_require_nonce:
+          description: Require a server nonce in DPoP proofs.
+          type: boolean
+      type: object
     PutAdminSettingsSecurityUpdateResponse:
       example:
         data:
@@ -20903,6 +23100,26 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/TenantProfile"
+      type: object
+    PutAdminTenantUpdateRequest:
+      example:
+        settings:
+          key: ""
+        name: name
+      properties:
+        name:
+          description: Name of the organization.
+          type: string
+        settings:
+          additionalProperties: true
+          description: "General settings; keys merge with the stored ones and null\
+            \ clears a key. Writable keys: security, audit_log_retention_days, audit_log_auto_delete,\
+            \ agent_governance, b2b_org_admins_may_invite_new_accounts (boolean) and\
+            \ authz, whose only key is audit_allow_decisions (boolean: also write\
+            \ an audit entry, authzen.evaluation_allowed, for every ALLOW of the AuthZEN\
+            \ evaluation endpoints; denials are always audited). Any other key is\
+            \ refused with 400."
+          type: object
       type: object
     PutAdminTenantUpdateResponse:
       example:
@@ -21485,6 +23702,100 @@ components:
           example: social_providers
           type: string
       type: object
+    AdminSocialProvidersCreateRequest:
+      example:
+        userInfoUrl: https://openapi-generator.tech
+        clientId: clientId
+        brandColor: brandColor
+        tokenUrl: https://openapi-generator.tech
+        displayName: displayName
+        issuerUrl: https://openapi-generator.tech
+        keyId: keyId
+        claimMapping:
+          key: ""
+        requestedScopes:
+        - requestedScopes
+        - requestedScopes
+        enabled: true
+        privateKey: privateKey
+        enableForOAuthApps: true
+        authorizationUrl: https://openapi-generator.tech
+        provider: provider
+        teamId: teamId
+        defaultRoles:
+        - defaultRoles
+        - defaultRoles
+        hostedDomain: hostedDomain
+        tenantId: tenantId
+        clientSecret: clientSecret
+        iconUrl: https://openapi-generator.tech
+        providerConfig:
+          key: ""
+      properties:
+        provider:
+          description: "The provider key, for example google, microsoft, github or\
+            \ apple."
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        displayName:
+          type: string
+        enabled:
+          type: boolean
+        enableForOAuthApps:
+          type: boolean
+        requestedScopes:
+          items:
+            type: string
+          type: array
+        claimMapping:
+          additionalProperties: true
+          type: object
+        providerConfig:
+          additionalProperties: true
+          type: object
+        defaultRoles:
+          description: Role slugs; roles that open the portal are refused.
+          items:
+            type: string
+          type: array
+        brandColor:
+          type: string
+        iconUrl:
+          format: uri
+          type: string
+        authorizationUrl:
+          format: uri
+          type: string
+        tokenUrl:
+          format: uri
+          type: string
+        userInfoUrl:
+          format: uri
+          type: string
+        hostedDomain:
+          description: "Google: Workspace domain."
+          type: string
+        tenantId:
+          description: "Microsoft: Entra tenant."
+          type: string
+        issuerUrl:
+          format: uri
+          type: string
+        teamId:
+          description: Apple.
+          type: string
+        keyId:
+          description: Apple.
+          type: string
+        privateKey:
+          description: "Apple: the .p8 key."
+          type: string
+      required:
+      - provider
+      type: object
     AdminSocialProvidersCreateResponse:
       example:
         data:
@@ -21635,12 +23946,126 @@ components:
         data:
           $ref: "#/components/schemas/SocialLoginProvider"
       type: object
+    PutAdminSocialProvidersUpdateRequest:
+      example:
+        userInfoUrl: https://openapi-generator.tech
+        clientId: clientId
+        brandColor: brandColor
+        tokenUrl: https://openapi-generator.tech
+        displayName: displayName
+        issuerUrl: https://openapi-generator.tech
+        keyId: keyId
+        claimMapping:
+          key: ""
+        requestedScopes:
+        - requestedScopes
+        - requestedScopes
+        enabled: true
+        privateKey: privateKey
+        enableForOAuthApps: true
+        authorizationUrl: https://openapi-generator.tech
+        teamId: teamId
+        defaultRoles:
+        - defaultRoles
+        - defaultRoles
+        hostedDomain: hostedDomain
+        tenantId: tenantId
+        clientSecret: clientSecret
+        iconUrl: https://openapi-generator.tech
+        providerConfig:
+          key: ""
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        displayName:
+          type: string
+        enabled:
+          type: boolean
+        enableForOAuthApps:
+          type: boolean
+        requestedScopes:
+          items:
+            type: string
+          type: array
+        claimMapping:
+          additionalProperties: true
+          type: object
+        providerConfig:
+          additionalProperties: true
+          type: object
+        defaultRoles:
+          items:
+            type: string
+          type: array
+        brandColor:
+          type: string
+        iconUrl:
+          format: uri
+          type: string
+        authorizationUrl:
+          format: uri
+          type: string
+        tokenUrl:
+          format: uri
+          type: string
+        userInfoUrl:
+          format: uri
+          type: string
+        hostedDomain:
+          type: string
+        tenantId:
+          type: string
+        issuerUrl:
+          format: uri
+          type: string
+        teamId:
+          type: string
+        keyId:
+          type: string
+        privateKey:
+          type: string
+      type: object
     SsfStreamList:
       properties:
         streams:
           items:
             $ref: "#/components/schemas/SsfStream"
           type: array
+      type: object
+    CreateStreamConfigRequest:
+      example:
+        delivery:
+          key: ""
+        audience: audience
+        events_requested:
+        - events_requested
+        - events_requested
+      properties:
+        delivery:
+          additionalProperties: true
+          description: "RFC 8935 push ({\"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\"\
+            : \"https://...\"}) or RFC 8936 poll."
+          type: object
+        events_requested:
+          description: Event type URIs.
+          items:
+            type: string
+          type: array
+        audience:
+          type: string
+      type: object
+    VerifyStreamRequest:
+      example:
+        stream_id: stream_id
+        state: state
+      properties:
+        stream_id:
+          type: string
+        state:
+          description: Echoed in the verification event.
+          type: string
       type: object
     ListUsersResponse:
       example:
@@ -21755,6 +24180,64 @@ components:
           example: users
           type: string
       type: object
+    CreateUserRequest:
+      example:
+        emailVerified: false
+        password: password
+        metadata:
+          key: ""
+        phoneNumber: phoneNumber
+        givenName: givenName
+        familyName: familyName
+        roles:
+        - roles
+        - roles
+        name: name
+        groups:
+        - groups
+        - groups
+        isActive: true
+        email: email
+        username: username
+      properties:
+        email:
+          format: email
+          type: string
+        password:
+          description: Optional; must meet the organization's password policy.
+          type: string
+        username:
+          type: string
+        name:
+          type: string
+        givenName:
+          type: string
+        familyName:
+          type: string
+        phoneNumber:
+          type: string
+        emailVerified:
+          default: false
+          type: boolean
+        isActive:
+          default: true
+          type: boolean
+        metadata:
+          additionalProperties: true
+          type: object
+        roles:
+          description: Role slugs or ids of this organization.
+          items:
+            type: string
+          type: array
+        groups:
+          description: Group slugs or ids of this organization.
+          items:
+            type: string
+          type: array
+      required:
+      - email
+      type: object
     CreateUserResponse:
       example:
         data:
@@ -21854,6 +24337,52 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/User"
+      type: object
+    UpdateUserRequest:
+      example:
+        emailVerified: true
+        zoneinfo: zoneinfo
+        metadata:
+          key: ""
+        phoneNumber: phoneNumber
+        givenName: givenName
+        familyName: familyName
+        name: name
+        staff: true
+        locale: locale
+        isActive: true
+        email: email
+        picture: https://openapi-generator.tech
+      properties:
+        email:
+          description: A change needs a caller who outranks the user (and a fresh
+            sign-in for a person).
+          format: email
+          type: string
+        name:
+          type: string
+        givenName:
+          type: string
+        familyName:
+          type: string
+        phoneNumber:
+          type: string
+        picture:
+          format: uri
+          type: string
+        locale:
+          type: string
+        zoneinfo:
+          type: string
+        emailVerified:
+          type: boolean
+        isActive:
+          type: boolean
+        staff:
+          type: boolean
+        metadata:
+          additionalProperties: true
+          type: object
       type: object
     UpdateUserResponse:
       example:
@@ -22071,6 +24600,17 @@ components:
           example: User restored successfully
           type: string
       type: object
+    AddUserRoleRequest:
+      example:
+        roleId: 0
+        roleSlug: roleSlug
+      properties:
+        roleId:
+          description: Role id (or use roleSlug).
+          type: integer
+        roleSlug:
+          type: string
+      type: object
     AddUserRoleResponse:
       example:
         data:
@@ -22227,6 +24767,17 @@ components:
           example: Role removed from user
           type: string
       type: object
+    AddUserGroupRequest:
+      example:
+        groupSlug: groupSlug
+        groupId: 0
+      properties:
+        groupId:
+          description: Group id (or use groupSlug).
+          type: integer
+        groupSlug:
+          type: string
+      type: object
     AddUserGroupResponse:
       example:
         data:
@@ -22278,6 +24829,20 @@ components:
         message:
           example: Group assigned to user
           type: string
+      type: object
+    UpdateUserGroupsRequest:
+      example:
+        groups:
+        - groups
+        - groups
+      properties:
+        groups:
+          description: The full list of group slugs.
+          items:
+            type: string
+          type: array
+      required:
+      - groups
       type: object
     UpdateUserGroupsResponse:
       example:
@@ -22383,6 +24948,15 @@ components:
           example: Group removed from user
           type: string
       type: object
+    AddUserPermissionRequest:
+      example:
+        permissionId: 0
+      properties:
+        permissionId:
+          type: integer
+      required:
+      - permissionId
+      type: object
     AddUserPermissionResponse:
       example:
         message: Permission assigned to user
@@ -22467,6 +25041,21 @@ components:
           example: Password reset email sent successfully
           type: string
       type: object
+    SetUserPasswordPostRequest:
+      example:
+        password: password
+        requireChange: false
+      properties:
+        password:
+          description: Must meet the organization's password policy.
+          type: string
+        requireChange:
+          default: false
+          description: Ask the user to choose a new password at the next sign-in.
+          type: boolean
+      required:
+      - password
+      type: object
     SetUserPasswordPostResponse:
       example:
         message: Password updated successfully
@@ -22529,6 +25118,40 @@ components:
         resourceType:
           example: webhooks
           type: string
+      type: object
+    AdminWebhooksCreateRequest:
+      example:
+        configuration:
+          key: ""
+        isActive: true
+        type: type
+        url: https://openapi-generator.tech
+        events:
+        - events
+        - events
+      properties:
+        url:
+          description: Public https URL.
+          format: uri
+          type: string
+        events:
+          description: Event names from the catalogue.
+          items:
+            type: string
+          type: array
+        isActive:
+          default: true
+          description: Also accepted as active or enabled.
+          type: boolean
+        type:
+          description: "custom (default), slack, discord or teams."
+          type: string
+        configuration:
+          additionalProperties: true
+          type: object
+      required:
+      - events
+      - url
       type: object
     WebhookSecretIssued:
       properties:
@@ -22596,6 +25219,39 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/Webhook"
+      type: object
+    PutAdminWebhooksUpdateRequest:
+      example:
+        rotateSecret: true
+        configuration:
+          key: ""
+        isActive: true
+        type: type
+        url: https://openapi-generator.tech
+        events:
+        - events
+        - events
+      properties:
+        url:
+          description: "A new URL for a webhook that has a signing secret needs rotateSecret:\
+            \ true."
+          format: uri
+          type: string
+        events:
+          items:
+            type: string
+          type: array
+        isActive:
+          description: Also accepted as active or enabled.
+          type: boolean
+        type:
+          type: string
+        configuration:
+          additionalProperties: true
+          type: object
+        rotateSecret:
+          description: Issue a new signing secret (returned once).
+          type: boolean
       type: object
     PutAdminWebhooksUpdateResponse:
       example:
@@ -22874,6 +25530,7 @@ components:
       type: object
     AdminWebhooksTunnelStartResponseData:
       example:
+        signing_secret: signing_secret
         webhook_id: 0
         session_id: 1f3a9c2b7e4d5a60
         tunnel_url: tunnel://1f3a9c2b7e4d5a60
@@ -22886,10 +25543,15 @@ components:
         tunnel_url:
           example: tunnel://1f3a9c2b7e4d5a60
           type: string
+        signing_secret:
+          description: The secret that signs the tunnel's deliveries (X-LumoAuth-Signature).
+            Shown once.
+          type: string
       type: object
     AdminWebhooksTunnelStartResponse:
       example:
         data:
+          signing_secret: signing_secret
           webhook_id: 0
           session_id: 1f3a9c2b7e4d5a60
           tunnel_url: tunnel://1f3a9c2b7e4d5a60
@@ -23377,11 +26039,14 @@ components:
       type: object
     AttestRequest:
       example:
+        scope: invoices:read reports:read
         attestation_token: attestation_token
       properties:
         attestation_token:
           description: The workload OIDC token (JWT).
           type: string
+        scope:
+          $ref: "#/components/schemas/AttestRequest_scope"
       required:
       - attestation_token
       type: object
@@ -24121,6 +26786,37 @@ components:
       - issuer
       - token_endpoint
       type: object
+    EvaluateRequest:
+      example:
+        resource:
+          key: ""
+        subject:
+          key: ""
+        context:
+          key: ""
+        action:
+          key: ""
+      properties:
+        subject:
+          additionalProperties: true
+          description: "{\"type\", \"id\", \"properties\"}"
+          type: object
+        action:
+          additionalProperties: true
+          description: "{\"name\", \"properties\"}"
+          type: object
+        resource:
+          additionalProperties: true
+          description: "{\"type\", \"id\", \"properties\"}"
+          type: object
+        context:
+          additionalProperties: true
+          type: object
+      required:
+      - action
+      - resource
+      - subject
+      type: object
     EvaluateResponseContextReasonAdmin:
       example:
         en: subject_not_found
@@ -24155,6 +26851,42 @@ components:
         context:
           $ref: "#/components/schemas/EvaluateResponseContext"
       type: object
+    EvaluateBatchRequest:
+      example:
+        evaluations:
+        - key: ""
+        - key: ""
+        resource:
+          key: ""
+        subject:
+          key: ""
+        context:
+          key: ""
+        action:
+          key: ""
+      properties:
+        subject:
+          additionalProperties: true
+          description: Default for every evaluation.
+          type: object
+        action:
+          additionalProperties: true
+          type: object
+        resource:
+          additionalProperties: true
+          type: object
+        context:
+          additionalProperties: true
+          type: object
+        evaluations:
+          description: Evaluation requests; each member overrides the defaults.
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+      required:
+      - evaluations
+      type: object
     EvaluateBatchResponse:
       example:
         evaluations:
@@ -24173,6 +26905,32 @@ components:
           items:
             $ref: "#/components/schemas/AuthZenDecision"
           type: array
+      type: object
+    CheckPermissionRequest:
+      example:
+        subject:
+          key: ""
+        context:
+          key: ""
+        permission: document.edit
+      properties:
+        permission:
+          example: document.edit
+          type: string
+        context:
+          additionalProperties: true
+          description: "Optional: resource_id and the slugs of defined environment\
+            \ attributes."
+          type: object
+        subject:
+          additionalProperties: true
+          description: "Optional: the user or agent to ask about ({\"type\": \"user\"\
+            |\"agent\", \"id\": \"<id>\"}). Without it the check is about the caller.\
+            \ Another subject needs the authz.check permission or the authz:check\
+            \ scope."
+          type: object
+      required:
+      - permission
       type: object
     CheckPermissionResponse:
       example:
@@ -24204,6 +26962,35 @@ components:
           additionalProperties: true
           description: The request context echoed back
           type: object
+      type: object
+    CheckPermissionsBulkRequest:
+      example:
+        permissions:
+        - permissions
+        - permissions
+        subject:
+          key: ""
+        context:
+          key: ""
+      properties:
+        permissions:
+          items:
+            type: string
+          type: array
+        context:
+          additionalProperties: true
+          description: "Optional: resource_id and the slugs of defined environment\
+            \ attributes."
+          type: object
+        subject:
+          additionalProperties: true
+          description: "Optional: the user or agent to ask about ({\"type\": \"user\"\
+            |\"agent\", \"id\": \"<id>\"}). Without it the check is about the caller.\
+            \ Another subject needs the authz.check permission or the authz:check\
+            \ scope."
+          type: object
+      required:
+      - permissions
       type: object
     CheckPermissionsBulkResponse:
       example:
@@ -24274,6 +27061,27 @@ components:
           additionalProperties: true
           description: The request context echoed back
           type: object
+      type: object
+    CheckRelationRequest:
+      example:
+        subject: user:456
+        object: document:123
+        relation: viewer
+      properties:
+        object:
+          example: document:123
+          type: string
+        relation:
+          example: viewer
+          type: string
+        subject:
+          description: "namespace:id, optionally with #relation."
+          example: user:456
+          type: string
+      required:
+      - object
+      - relation
+      - subject
       type: object
     CheckRelationResponse:
       example:
@@ -24458,7 +27266,10 @@ components:
           example: research
           type: string
         parent_task_id:
-          description: Optional parent task id for nested agent chains.
+          description: "Optional. The task_id of an open task of this organization,\
+            \ for a task that is one step of that task. The new task expires no later\
+            \ than its parent and ends when the parent ends. A chain holds at most\
+            \ 5 tasks."
           type: string
         on_behalf_of:
           description: Optional delegation user email (requires delegation permission).
@@ -24467,6 +27278,7 @@ components:
     CreateTaskResponse:
       example:
         agent: "{}"
+        parent_task_id: parent_task_id
         caep_session_id: caep_session_id
         expires_at: 2000-01-23T04:56:07.000+00:00
         agent_id: agent_id
@@ -24474,6 +27286,10 @@ components:
         task_id: task_id
       properties:
         task_id:
+          type: string
+        parent_task_id:
+          description: "The parent task, or null for a task without one."
+          nullable: true
           type: string
         caep_session_id:
           type: string
@@ -25503,6 +28319,24 @@ components:
             type: string
           type: array
       type: object
+    SubmitLoginJsonRequest:
+      example:
+        password: password
+        captcha_token: captcha_token
+        email: email
+      properties:
+        email:
+          format: email
+          type: string
+        password:
+          type: string
+        captcha_token:
+          description: Needed when the organization has a CAPTCHA for sign-in.
+          type: string
+      required:
+      - email
+      - password
+      type: object
     SubmitLoginJsonResponse:
       example:
         status: complete
@@ -25518,6 +28352,42 @@ components:
           type: string
       required:
       - status
+      type: object
+    BackchannelAuthorizeRequest:
+      properties:
+        scope:
+          type: string
+        login_hint:
+          type: string
+        login_hint_token:
+          type: string
+        id_token_hint:
+          type: string
+        binding_message:
+          type: string
+        acr_values:
+          type: string
+        requested_expiry:
+          type: integer
+        client_notification_token:
+          type: string
+        authorization_details:
+          type: string
+        client_id:
+          description: Required for a public client; a confidential client may authenticate
+            with HTTP Basic instead.
+          type: string
+        client_secret:
+          description: client_secret_post
+          type: string
+        client_assertion_type:
+          example: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+          type: string
+        client_assertion:
+          description: private_key_jwt (RFC 7523)
+          type: string
+      required:
+      - scope
       type: object
     BackchannelAuthorizeResponse:
       example:
@@ -25538,6 +28408,33 @@ components:
       required:
       - auth_req_id
       - expires_in
+      type: object
+    DeviceAuthorizationRequest:
+      properties:
+        client_id:
+          description: Required for a public client; a confidential client may authenticate
+            with HTTP Basic instead.
+          type: string
+        client_secret:
+          description: client_secret_post
+          type: string
+        client_assertion_type:
+          example: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+          type: string
+        client_assertion:
+          description: private_key_jwt (RFC 7523)
+          type: string
+        scope:
+          description: Space-separated scopes.
+          example: openid profile offline_access
+          type: string
+        resource:
+          description: RFC 8707 resource indicator.
+          format: uri
+          type: string
+        authorization_details:
+          description: "RFC 9396, a JSON array as text."
+          type: string
       type: object
     DeviceAuthorizationResponse:
       example:
@@ -25620,6 +28517,31 @@ components:
       - magic_link_enabled
       - passkey_enabled
       - password_enabled
+      type: object
+    IntrospectRequest:
+      properties:
+        token:
+          type: string
+        token_type_hint:
+          enum:
+          - access_token
+          - refresh_token
+          type: string
+        client_id:
+          description: Required for a public client; a confidential client may authenticate
+            with HTTP Basic instead.
+          type: string
+        client_secret:
+          description: client_secret_post
+          type: string
+        client_assertion_type:
+          example: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+          type: string
+        client_assertion:
+          description: private_key_jwt (RFC 7523)
+          type: string
+      required:
+      - token
       type: object
     IntrospectResponse:
       example:
@@ -25722,6 +28644,51 @@ components:
       required:
       - status
       type: object
+    ParRequest:
+      properties:
+        response_type:
+          example: code
+          type: string
+        redirect_uri:
+          format: uri
+          type: string
+        scope:
+          type: string
+        state:
+          type: string
+        nonce:
+          type: string
+        code_challenge:
+          type: string
+        code_challenge_method:
+          example: S256
+          type: string
+        request:
+          description: "A signed request object (JAR, RFC 9101)."
+          type: string
+        resource:
+          format: uri
+          type: string
+        authorization_details:
+          type: string
+        prompt:
+          type: string
+        login_hint:
+          type: string
+        client_id:
+          description: Required for a public client; a confidential client may authenticate
+            with HTTP Basic instead.
+          type: string
+        client_secret:
+          description: client_secret_post
+          type: string
+        client_assertion_type:
+          example: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+          type: string
+        client_assertion:
+          description: private_key_jwt (RFC 7523)
+          type: string
+      type: object
     ParResponse:
       example:
         expires_in: 600
@@ -25737,6 +28704,60 @@ components:
       required:
       - expires_in
       - request_uri
+      type: object
+    TokenRequest:
+      properties:
+        grant_type:
+          example: authorization_code
+          type: string
+        code:
+          type: string
+        redirect_uri:
+          format: uri
+          type: string
+        code_verifier:
+          type: string
+        refresh_token:
+          type: string
+        device_code:
+          type: string
+        auth_req_id:
+          description: CIBA
+          type: string
+        scope:
+          type: string
+        resource:
+          format: uri
+          type: string
+        subject_token:
+          description: Token exchange (RFC 8693)
+          type: string
+        subject_token_type:
+          type: string
+        actor_token:
+          type: string
+        actor_token_type:
+          type: string
+        requested_token_type:
+          type: string
+        assertion:
+          description: JWT bearer / ID-JAG grant
+          type: string
+        client_id:
+          description: Required for a public client; a confidential client may authenticate
+            with HTTP Basic instead.
+          type: string
+        client_secret:
+          description: client_secret_post
+          type: string
+        client_assertion_type:
+          example: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+          type: string
+        client_assertion:
+          description: private_key_jwt (RFC 7523)
+          type: string
+      required:
+      - grant_type
       type: object
     TokenResponse:
       example:
@@ -25938,6 +28959,93 @@ components:
           type: object
       required:
       - sub
+      type: object
+    RegisterClientRequest:
+      example:
+        post_logout_redirect_uris:
+        - post_logout_redirect_uris
+        - post_logout_redirect_uris
+        client_uri: https://openapi-generator.tech
+        grant_types:
+        - grant_types
+        - grant_types
+        jwks:
+          key: ""
+        application_type: web
+        logo_uri: https://openapi-generator.tech
+        redirect_uris:
+        - redirect_uris
+        - redirect_uris
+        token_endpoint_auth_method: token_endpoint_auth_method
+        frontchannel_logout_uri: https://openapi-generator.tech
+        scope: scope
+        jwks_uri: https://openapi-generator.tech
+        tos_uri: https://openapi-generator.tech
+        backchannel_logout_uri: https://openapi-generator.tech
+        client_name: client_name
+        contacts:
+        - contacts
+        - contacts
+        response_types:
+        - response_types
+        - response_types
+        policy_uri: https://openapi-generator.tech
+      properties:
+        redirect_uris:
+          items:
+            type: string
+          type: array
+        client_name:
+          type: string
+        grant_types:
+          items:
+            type: string
+          type: array
+        response_types:
+          items:
+            type: string
+          type: array
+        token_endpoint_auth_method:
+          type: string
+        scope:
+          type: string
+        jwks_uri:
+          format: uri
+          type: string
+        jwks:
+          additionalProperties: true
+          type: object
+        application_type:
+          enum:
+          - web
+          - native
+          type: string
+        post_logout_redirect_uris:
+          items:
+            type: string
+          type: array
+        backchannel_logout_uri:
+          format: uri
+          type: string
+        frontchannel_logout_uri:
+          format: uri
+          type: string
+        client_uri:
+          format: uri
+          type: string
+        logo_uri:
+          format: uri
+          type: string
+        policy_uri:
+          format: uri
+          type: string
+        tos_uri:
+          format: uri
+          type: string
+        contacts:
+          items:
+            type: string
+          type: array
       type: object
     RegisterClientResponse:
       example:
@@ -27008,6 +30116,25 @@ components:
       - signed_in
       - status
       type: object
+    RegisterAgentRequest:
+      example:
+        agent:
+          key: ""
+        password: password
+        email: email
+      properties:
+        agent:
+          additionalProperties: true
+          description: "The agent to register or update (name, description, identity,\
+            \ capabilities, ...). The same fields may also be sent at the top level."
+          type: object
+        email:
+          description: Optional inline sign-in of the person who registers the agent;
+            a session or access token is preferred.
+          type: string
+        password:
+          type: string
+      type: object
     RegisterAgentResponse:
       example:
         agent_id: agent_id
@@ -27025,6 +30152,26 @@ components:
         workload_identity:
           nullable: true
           type: string
+      type: object
+    CheckRelationScopedRequest:
+      example:
+        user: user:456
+        object: document:123
+        relation: viewer
+      properties:
+        object:
+          example: document:123
+          type: string
+        relation:
+          example: viewer
+          type: string
+        user:
+          example: user:456
+          type: string
+      required:
+      - object
+      - relation
+      - user
       type: object
     CheckRelationScopedResponse:
       example:
@@ -27855,6 +31002,22 @@ components:
           nullable: true
           type: string
       type: object
+    McpServerWrite_scopes_supported:
+      description: "A list, or a string of scopes separated by spaces or commas. Omnibus\
+        \ scopes, offline_access and admin or SCIM scopes are refused."
+      oneOf:
+      - items:
+          type: string
+        type: array
+      - type: string
+    McpServerWrite_basic_scopes:
+      description: Scopes of scopes_supported that the 401 challenge and the metadata
+        advertise; no wildcards.
+      oneOf:
+      - items:
+          type: string
+        type: array
+      - type: string
     OrganizationMember_role:
       example:
         name: name
@@ -27961,24 +31124,44 @@ components:
       - $ref: "#/components/schemas/OAuthClientSecretIssued"
       example:
         cibaEnabled: true
-        clientId: clientId
-        isConfidential: true
+        accessTokenFormat: opaque
+        jwks:
+          key: ""
+        fapiMode: disabled
+        requirePar: true
+        jwksUri: jwksUri
+        tokenExchangeEnabled: true
         secret: secret
         isActive: true
+        attesterIssuer: attesterIssuer
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        allowedOrigins:
+        - allowedOrigins
+        - allowedOrigins
+        requiresPkce: true
+        postLogoutRedirectUris:
+        - postLogoutRedirectUris
+        - postLogoutRedirectUris
+        isPublic: true
+        id: 0
+        clientId: clientId
+        isConfidential: true
+        backchannelLogoutUri: backchannelLogoutUri
         redirectUris:
         - redirectUris
         - redirectUris
-        createdAt: 2000-01-23T04:56:07.000+00:00
+        attestationBasedAuthEnabled: true
         grantTypes:
         - grantTypes
         - grantTypes
-        requiresPkce: true
+        dpopBoundAccessTokens: true
+        frontchannelLogoutUri: frontchannelLogoutUri
+        tokenEndpointAuthMethod: client_secret_basic
         name: name
-        isPublic: true
-        id: 0
         scopes:
         - scopes
         - scopes
+        attesterJwksUri: attesterJwksUri
         _note: Store the secret securely. It will not be shown again.
     AdminPoppyUpdateRequest_scopes_value:
       example:
@@ -28059,6 +31242,17 @@ components:
         - at: 2000-01-23T04:56:07.000+00:00
           status_code: 5
           error: error
+    AttestRequest_scope:
+      description: "Optional: narrows the token to these of the agent's capabilities,\
+        \ in their stored `<resource>:<action>` form. A space-separated string or\
+        \ a list of strings. A value that the agent does not hold, or that is not\
+        \ a scope token, is `400 invalid_scope`."
+      oneOf:
+      - example: invoices:read reports:read
+        type: string
+      - items:
+          type: string
+        type: array
     IntrospectResponse_aud:
       description: "Audience: a single resource URI / client_id as a string, or an\
         \ array when the token was issued for several resources (RFC 8707)."

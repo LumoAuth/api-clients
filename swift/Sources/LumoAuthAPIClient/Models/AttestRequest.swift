@@ -14,13 +14,16 @@ public struct AttestRequest: Codable, JSONEncodable, Hashable {
 
     /** The workload OIDC token (JWT). */
     public var attestationToken: String
+    public var scope: AttestRequestScope?
 
-    public init(attestationToken: String) {
+    public init(attestationToken: String, scope: AttestRequestScope? = nil) {
         self.attestationToken = attestationToken
+        self.scope = scope
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case attestationToken = "attestation_token"
+        case scope
     }
 
     // Encodable protocol methods
@@ -28,6 +31,7 @@ public struct AttestRequest: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(attestationToken, forKey: .attestationToken)
+        try container.encodeIfPresent(scope, forKey: .scope)
     }
 }
 

@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -96,6 +96,12 @@ class AdminMcpApi
         'adminMcpServersList' => [
             'application/json',
         ],
+        'patchAdminMcpServersUpdate' => [
+            'application/json',
+        ],
+        'putAdminMcpServersUpdate' => [
+            'application/json',
+        ],
     ];
 
     /**
@@ -150,15 +156,16 @@ class AdminMcpApi
      * Register an MCP server
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite mcpServerWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse
      */
-    public function adminMcpServersCreate($orgId, string $contentType = self::contentTypes['adminMcpServersCreate'][0])
+    public function adminMcpServersCreate($orgId, $mcpServerWrite, string $contentType = self::contentTypes['adminMcpServersCreate'][0])
     {
-        list($response) = $this->adminMcpServersCreateWithHttpInfo($orgId, $contentType);
+        list($response) = $this->adminMcpServersCreateWithHttpInfo($orgId, $mcpServerWrite, $contentType);
         return $response;
     }
 
@@ -168,15 +175,16 @@ class AdminMcpApi
      * Register an MCP server
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminMcpServersCreateWithHttpInfo($orgId, string $contentType = self::contentTypes['adminMcpServersCreate'][0])
+    public function adminMcpServersCreateWithHttpInfo($orgId, $mcpServerWrite, string $contentType = self::contentTypes['adminMcpServersCreate'][0])
     {
-        $request = $this->adminMcpServersCreateRequest($orgId, $contentType);
+        $request = $this->adminMcpServersCreateRequest($orgId, $mcpServerWrite, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -253,14 +261,15 @@ class AdminMcpApi
      * Register an MCP server
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminMcpServersCreateAsync($orgId, string $contentType = self::contentTypes['adminMcpServersCreate'][0])
+    public function adminMcpServersCreateAsync($orgId, $mcpServerWrite, string $contentType = self::contentTypes['adminMcpServersCreate'][0])
     {
-        return $this->adminMcpServersCreateAsyncWithHttpInfo($orgId, $contentType)
+        return $this->adminMcpServersCreateAsyncWithHttpInfo($orgId, $mcpServerWrite, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -274,15 +283,16 @@ class AdminMcpApi
      * Register an MCP server
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminMcpServersCreateAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['adminMcpServersCreate'][0])
+    public function adminMcpServersCreateAsyncWithHttpInfo($orgId, $mcpServerWrite, string $contentType = self::contentTypes['adminMcpServersCreate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse';
-        $request = $this->adminMcpServersCreateRequest($orgId, $contentType);
+        $request = $this->adminMcpServersCreateRequest($orgId, $mcpServerWrite, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -324,18 +334,26 @@ class AdminMcpApi
      * Create request for operation 'adminMcpServersCreate'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminMcpServersCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminMcpServersCreateRequest($orgId, string $contentType = self::contentTypes['adminMcpServersCreate'][0])
+    public function adminMcpServersCreateRequest($orgId, $mcpServerWrite, string $contentType = self::contentTypes['adminMcpServersCreate'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling adminMcpServersCreate'
+            );
+        }
+
+        // verify the required parameter 'mcpServerWrite' is set
+        if ($mcpServerWrite === null || (is_array($mcpServerWrite) && count($mcpServerWrite) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $mcpServerWrite when calling adminMcpServersCreate'
             );
         }
 
@@ -366,7 +384,14 @@ class AdminMcpApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($mcpServerWrite)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($mcpServerWrite));
+            } else {
+                $httpBody = $mcpServerWrite;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -2251,6 +2276,638 @@ class AdminMcpApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation patchAdminMcpServersUpdate
+     *
+     * Update an MCP server
+     *
+     * @param  string $orgId orgId (required)
+     * @param  string $serverId serverId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite mcpServerWrite (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminMcpServersUpdate'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse
+     */
+    public function patchAdminMcpServersUpdate($orgId, $serverId, $mcpServerWrite, string $contentType = self::contentTypes['patchAdminMcpServersUpdate'][0])
+    {
+        list($response) = $this->patchAdminMcpServersUpdateWithHttpInfo($orgId, $serverId, $mcpServerWrite, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation patchAdminMcpServersUpdateWithHttpInfo
+     *
+     * Update an MCP server
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminMcpServersUpdate'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function patchAdminMcpServersUpdateWithHttpInfo($orgId, $serverId, $mcpServerWrite, string $contentType = self::contentTypes['patchAdminMcpServersUpdate'][0])
+    {
+        $request = $this->patchAdminMcpServersUpdateRequest($orgId, $serverId, $mcpServerWrite, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation patchAdminMcpServersUpdateAsync
+     *
+     * Update an MCP server
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminMcpServersUpdate'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function patchAdminMcpServersUpdateAsync($orgId, $serverId, $mcpServerWrite, string $contentType = self::contentTypes['patchAdminMcpServersUpdate'][0])
+    {
+        return $this->patchAdminMcpServersUpdateAsyncWithHttpInfo($orgId, $serverId, $mcpServerWrite, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation patchAdminMcpServersUpdateAsyncWithHttpInfo
+     *
+     * Update an MCP server
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminMcpServersUpdate'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function patchAdminMcpServersUpdateAsyncWithHttpInfo($orgId, $serverId, $mcpServerWrite, string $contentType = self::contentTypes['patchAdminMcpServersUpdate'][0])
+    {
+        $returnType = '\LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse';
+        $request = $this->patchAdminMcpServersUpdateRequest($orgId, $serverId, $mcpServerWrite, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'patchAdminMcpServersUpdate'
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminMcpServersUpdate'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function patchAdminMcpServersUpdateRequest($orgId, $serverId, $mcpServerWrite, string $contentType = self::contentTypes['patchAdminMcpServersUpdate'][0])
+    {
+
+        // verify the required parameter 'orgId' is set
+        if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $orgId when calling patchAdminMcpServersUpdate'
+            );
+        }
+
+        // verify the required parameter 'serverId' is set
+        if ($serverId === null || (is_array($serverId) && count($serverId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $serverId when calling patchAdminMcpServersUpdate'
+            );
+        }
+
+        // verify the required parameter 'mcpServerWrite' is set
+        if ($mcpServerWrite === null || (is_array($mcpServerWrite) && count($mcpServerWrite) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $mcpServerWrite when calling patchAdminMcpServersUpdate'
+            );
+        }
+
+
+        $resourcePath = '/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($orgId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'orgId' . '}',
+                ObjectSerializer::toPathValue($orgId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($serverId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'serverId' . '}',
+                ObjectSerializer::toPathValue($serverId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($mcpServerWrite)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($mcpServerWrite));
+            } else {
+                $httpBody = $mcpServerWrite;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-API-Key');
+        if ($apiKey !== null) {
+            $headers['X-API-Key'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PATCH',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation putAdminMcpServersUpdate
+     *
+     * Update an MCP server (same as PATCH: only the fields that are sent change)
+     *
+     * @param  string $orgId orgId (required)
+     * @param  string $serverId serverId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite mcpServerWrite (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminMcpServersUpdate'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse
+     */
+    public function putAdminMcpServersUpdate($orgId, $serverId, $mcpServerWrite, string $contentType = self::contentTypes['putAdminMcpServersUpdate'][0])
+    {
+        list($response) = $this->putAdminMcpServersUpdateWithHttpInfo($orgId, $serverId, $mcpServerWrite, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation putAdminMcpServersUpdateWithHttpInfo
+     *
+     * Update an MCP server (same as PATCH: only the fields that are sent change)
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminMcpServersUpdate'] to see the possible values for this operation
+     *
+     * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function putAdminMcpServersUpdateWithHttpInfo($orgId, $serverId, $mcpServerWrite, string $contentType = self::contentTypes['putAdminMcpServersUpdate'][0])
+    {
+        $request = $this->putAdminMcpServersUpdateRequest($orgId, $serverId, $mcpServerWrite, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation putAdminMcpServersUpdateAsync
+     *
+     * Update an MCP server (same as PATCH: only the fields that are sent change)
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminMcpServersUpdate'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function putAdminMcpServersUpdateAsync($orgId, $serverId, $mcpServerWrite, string $contentType = self::contentTypes['putAdminMcpServersUpdate'][0])
+    {
+        return $this->putAdminMcpServersUpdateAsyncWithHttpInfo($orgId, $serverId, $mcpServerWrite, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation putAdminMcpServersUpdateAsyncWithHttpInfo
+     *
+     * Update an MCP server (same as PATCH: only the fields that are sent change)
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminMcpServersUpdate'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function putAdminMcpServersUpdateAsyncWithHttpInfo($orgId, $serverId, $mcpServerWrite, string $contentType = self::contentTypes['putAdminMcpServersUpdate'][0])
+    {
+        $returnType = '\LumoAuth\ApiClient\Model\AdminMcpServersCreateResponse';
+        $request = $this->putAdminMcpServersUpdateRequest($orgId, $serverId, $mcpServerWrite, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'putAdminMcpServersUpdate'
+     *
+     * @param  string $orgId (required)
+     * @param  string $serverId (required)
+     * @param  \LumoAuth\ApiClient\Model\McpServerWrite $mcpServerWrite (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminMcpServersUpdate'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function putAdminMcpServersUpdateRequest($orgId, $serverId, $mcpServerWrite, string $contentType = self::contentTypes['putAdminMcpServersUpdate'][0])
+    {
+
+        // verify the required parameter 'orgId' is set
+        if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $orgId when calling putAdminMcpServersUpdate'
+            );
+        }
+
+        // verify the required parameter 'serverId' is set
+        if ($serverId === null || (is_array($serverId) && count($serverId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $serverId when calling putAdminMcpServersUpdate'
+            );
+        }
+
+        // verify the required parameter 'mcpServerWrite' is set
+        if ($mcpServerWrite === null || (is_array($mcpServerWrite) && count($mcpServerWrite) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $mcpServerWrite when calling putAdminMcpServersUpdate'
+            );
+        }
+
+
+        $resourcePath = '/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($orgId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'orgId' . '}',
+                ObjectSerializer::toPathValue($orgId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($serverId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'serverId' . '}',
+                ObjectSerializer::toPathValue($serverId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($mcpServerWrite)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($mcpServerWrite));
+            } else {
+                $httpBody = $mcpServerWrite;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-API-Key');
+        if ($apiKey !== null) {
+            $headers['X-API-Key'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PUT',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

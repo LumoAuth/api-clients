@@ -26,7 +26,7 @@ Method | HTTP request | Description
 
 ## AdminWebhooksCreate
 
-> AdminWebhooksCreateResponse AdminWebhooksCreate(ctx, orgId).Execute()
+> AdminWebhooksCreateResponse AdminWebhooksCreate(ctx, orgId).AdminWebhooksCreateRequest(adminWebhooksCreateRequest).Execute()
 
 Create a webhook
 
@@ -46,10 +46,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	adminWebhooksCreateRequest := *openapiclient.NewAdminWebhooksCreateRequest("Url_example", []string{"Events_example"}) // AdminWebhooksCreateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksCreate(context.Background(), orgId).AdminWebhooksCreateRequest(adminWebhooksCreateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -75,6 +76,7 @@ Other parameters are passed through a pointer to a apiAdminWebhooksCreateRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **adminWebhooksCreateRequest** | [**AdminWebhooksCreateRequest**](AdminWebhooksCreateRequest.md) |  | 
 
 ### Return type
 
@@ -86,7 +88,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1105,7 +1107,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminWebhooksUpdate
 
-> PutAdminWebhooksUpdateResponse PatchAdminWebhooksUpdate(ctx, orgId, webhookId).Execute()
+> PutAdminWebhooksUpdateResponse PatchAdminWebhooksUpdate(ctx, orgId, webhookId).PutAdminWebhooksUpdateRequest(putAdminWebhooksUpdateRequest).Execute()
 
 Partially update a webhook
 
@@ -1124,10 +1126,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	webhookId := "webhookId_example" // string | 
+	putAdminWebhooksUpdateRequest := *openapiclient.NewPutAdminWebhooksUpdateRequest() // PutAdminWebhooksUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminWebhooksAPI.PatchAdminWebhooksUpdate(context.Background(), orgId, webhookId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.PatchAdminWebhooksUpdate(context.Background(), orgId, webhookId).PutAdminWebhooksUpdateRequest(putAdminWebhooksUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.PatchAdminWebhooksUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1155,6 +1158,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **putAdminWebhooksUpdateRequest** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -1166,7 +1170,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1176,7 +1180,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminWebhooksUpdate
 
-> PutAdminWebhooksUpdateResponse PutAdminWebhooksUpdate(ctx, orgId, webhookId).Execute()
+> PutAdminWebhooksUpdateResponse PutAdminWebhooksUpdate(ctx, orgId, webhookId).PutAdminWebhooksUpdateRequest(putAdminWebhooksUpdateRequest).Execute()
 
 Update a webhook
 
@@ -1197,10 +1201,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	webhookId := "webhookId_example" // string | 
+	putAdminWebhooksUpdateRequest := *openapiclient.NewPutAdminWebhooksUpdateRequest() // PutAdminWebhooksUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminWebhooksAPI.PutAdminWebhooksUpdate(context.Background(), orgId, webhookId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.PutAdminWebhooksUpdate(context.Background(), orgId, webhookId).PutAdminWebhooksUpdateRequest(putAdminWebhooksUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.PutAdminWebhooksUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1228,6 +1233,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **putAdminWebhooksUpdateRequest** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -1239,7 +1245,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

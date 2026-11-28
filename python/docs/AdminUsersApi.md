@@ -38,7 +38,7 @@ Method | HTTP request | Description
 
 
 # **add_user_group**
-> AddUserGroupResponse add_user_group(org_id, user_id)
+> AddUserGroupResponse add_user_group(org_id, user_id, add_user_group_request)
 
 Add a user to a group
 
@@ -49,6 +49,7 @@ Add a user to a group
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.add_user_group_request import AddUserGroupRequest
 from lumoauth_api_client.models.add_user_group_response import AddUserGroupResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -81,10 +82,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminUsersApi(api_client)
     org_id = 'org_id_example' # str | 
     user_id = 'user_id_example' # str | 
+    add_user_group_request = lumoauth_api_client.AddUserGroupRequest() # AddUserGroupRequest | 
 
     try:
         # Add a user to a group
-        api_response = api_instance.add_user_group(org_id, user_id)
+        api_response = api_instance.add_user_group(org_id, user_id, add_user_group_request)
         print("The response of AdminUsersApi->add_user_group:\n")
         pprint(api_response)
     except Exception as e:
@@ -100,6 +102,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **user_id** | **str**|  | 
+ **add_user_group_request** | [**AddUserGroupRequest**](AddUserGroupRequest.md)|  | 
 
 ### Return type
 
@@ -111,7 +114,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -123,11 +126,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **add_user_permission**
-> AddUserPermissionResponse add_user_permission(org_id, user_id)
+> AddUserPermissionResponse add_user_permission(org_id, user_id, add_user_permission_request)
 
 Assign a permission to a user
 
-Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 ### Example
 
@@ -136,6 +139,7 @@ Grants one permission to the user directly. The caller must hold the permission 
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.add_user_permission_request import AddUserPermissionRequest
 from lumoauth_api_client.models.add_user_permission_response import AddUserPermissionResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -168,10 +172,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminUsersApi(api_client)
     org_id = 'org_id_example' # str | 
     user_id = 'user_id_example' # str | 
+    add_user_permission_request = lumoauth_api_client.AddUserPermissionRequest() # AddUserPermissionRequest | 
 
     try:
         # Assign a permission to a user
-        api_response = api_instance.add_user_permission(org_id, user_id)
+        api_response = api_instance.add_user_permission(org_id, user_id, add_user_permission_request)
         print("The response of AdminUsersApi->add_user_permission:\n")
         pprint(api_response)
     except Exception as e:
@@ -187,6 +192,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **user_id** | **str**|  | 
+ **add_user_permission_request** | [**AddUserPermissionRequest**](AddUserPermissionRequest.md)|  | 
 
 ### Return type
 
@@ -198,7 +204,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -210,7 +216,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **add_user_role**
-> AddUserRoleResponse add_user_role(org_id, user_id)
+> AddUserRoleResponse add_user_role(org_id, user_id, add_user_role_request)
 
 Assign a role to a user
 
@@ -221,6 +227,7 @@ Assign a role to a user
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.add_user_role_request import AddUserRoleRequest
 from lumoauth_api_client.models.add_user_role_response import AddUserRoleResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -253,10 +260,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminUsersApi(api_client)
     org_id = 'org_id_example' # str | 
     user_id = 'user_id_example' # str | 
+    add_user_role_request = lumoauth_api_client.AddUserRoleRequest() # AddUserRoleRequest | 
 
     try:
         # Assign a role to a user
-        api_response = api_instance.add_user_role(org_id, user_id)
+        api_response = api_instance.add_user_role(org_id, user_id, add_user_role_request)
         print("The response of AdminUsersApi->add_user_role:\n")
         pprint(api_response)
     except Exception as e:
@@ -272,6 +280,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **user_id** | **str**|  | 
+ **add_user_role_request** | [**AddUserRoleRequest**](AddUserRoleRequest.md)|  | 
 
 ### Return type
 
@@ -283,7 +292,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -923,7 +932,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_user**
-> CreateUserResponse create_user(org_id)
+> CreateUserResponse create_user(org_id, create_user_request)
 
 Create a user
 
@@ -934,6 +943,7 @@ Create a user
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.create_user_request import CreateUserRequest
 from lumoauth_api_client.models.create_user_response import CreateUserResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -965,10 +975,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminUsersApi(api_client)
     org_id = 'org_id_example' # str | 
+    create_user_request = lumoauth_api_client.CreateUserRequest() # CreateUserRequest | 
 
     try:
         # Create a user
-        api_response = api_instance.create_user(org_id)
+        api_response = api_instance.create_user(org_id, create_user_request)
         print("The response of AdminUsersApi->create_user:\n")
         pprint(api_response)
     except Exception as e:
@@ -983,6 +994,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **create_user_request** | [**CreateUserRequest**](CreateUserRequest.md)|  | 
 
 ### Return type
 
@@ -994,7 +1006,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1624,7 +1636,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_user**
-> UpdateUserResponse patch_user(org_id, user_id)
+> UpdateUserResponse patch_user(org_id, user_id, update_user_request)
 
 Update a user
 
@@ -1637,6 +1649,7 @@ Changes the fields that the request sends. `password` is not accepted here (400)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.update_user_request import UpdateUserRequest
 from lumoauth_api_client.models.update_user_response import UpdateUserResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1669,10 +1682,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminUsersApi(api_client)
     org_id = 'org_id_example' # str | 
     user_id = 'user_id_example' # str | 
+    update_user_request = lumoauth_api_client.UpdateUserRequest() # UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
     try:
         # Update a user
-        api_response = api_instance.patch_user(org_id, user_id)
+        api_response = api_instance.patch_user(org_id, user_id, update_user_request)
         print("The response of AdminUsersApi->patch_user:\n")
         pprint(api_response)
     except Exception as e:
@@ -1688,6 +1702,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **user_id** | **str**|  | 
+ **update_user_request** | [**UpdateUserRequest**](UpdateUserRequest.md)| Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | 
 
 ### Return type
 
@@ -1699,7 +1714,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2144,7 +2159,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **set_user_password**
-> SetUserPasswordPostResponse set_user_password(org_id, user_id)
+> SetUserPasswordPostResponse set_user_password(org_id, user_id, set_user_password_post_request)
 
 Set a user's password
 
@@ -2157,6 +2172,7 @@ Needs `users.edit`, and the caller must hold every permission of the user. A sig
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.set_user_password_post_request import SetUserPasswordPostRequest
 from lumoauth_api_client.models.set_user_password_post_response import SetUserPasswordPostResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -2189,10 +2205,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminUsersApi(api_client)
     org_id = 'org_id_example' # str | 
     user_id = 'user_id_example' # str | 
+    set_user_password_post_request = lumoauth_api_client.SetUserPasswordPostRequest() # SetUserPasswordPostRequest | 
 
     try:
         # Set a user's password
-        api_response = api_instance.set_user_password(org_id, user_id)
+        api_response = api_instance.set_user_password(org_id, user_id, set_user_password_post_request)
         print("The response of AdminUsersApi->set_user_password:\n")
         pprint(api_response)
     except Exception as e:
@@ -2208,6 +2225,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **user_id** | **str**|  | 
+ **set_user_password_post_request** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md)|  | 
 
 ### Return type
 
@@ -2219,7 +2237,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2233,7 +2251,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **set_user_password_post**
-> SetUserPasswordPostResponse set_user_password_post(org_id, user_id)
+> SetUserPasswordPostResponse set_user_password_post(org_id, user_id, set_user_password_post_request)
 
 Set a user's password
 
@@ -2246,6 +2264,7 @@ Needs `users.edit`, and the caller must hold every permission of the user. A sig
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.set_user_password_post_request import SetUserPasswordPostRequest
 from lumoauth_api_client.models.set_user_password_post_response import SetUserPasswordPostResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -2278,10 +2297,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminUsersApi(api_client)
     org_id = 'org_id_example' # str | 
     user_id = 'user_id_example' # str | 
+    set_user_password_post_request = lumoauth_api_client.SetUserPasswordPostRequest() # SetUserPasswordPostRequest | 
 
     try:
         # Set a user's password
-        api_response = api_instance.set_user_password_post(org_id, user_id)
+        api_response = api_instance.set_user_password_post(org_id, user_id, set_user_password_post_request)
         print("The response of AdminUsersApi->set_user_password_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -2297,6 +2317,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **user_id** | **str**|  | 
+ **set_user_password_post_request** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md)|  | 
 
 ### Return type
 
@@ -2308,7 +2329,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2492,7 +2513,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_user**
-> UpdateUserResponse update_user(org_id, user_id)
+> UpdateUserResponse update_user(org_id, user_id, update_user_request)
 
 Update a user
 
@@ -2505,6 +2526,7 @@ Changes the fields that the request sends. `password` is not accepted here (400)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.update_user_request import UpdateUserRequest
 from lumoauth_api_client.models.update_user_response import UpdateUserResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -2537,10 +2559,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminUsersApi(api_client)
     org_id = 'org_id_example' # str | 
     user_id = 'user_id_example' # str | 
+    update_user_request = lumoauth_api_client.UpdateUserRequest() # UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
     try:
         # Update a user
-        api_response = api_instance.update_user(org_id, user_id)
+        api_response = api_instance.update_user(org_id, user_id, update_user_request)
         print("The response of AdminUsersApi->update_user:\n")
         pprint(api_response)
     except Exception as e:
@@ -2556,6 +2579,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **user_id** | **str**|  | 
+ **update_user_request** | [**UpdateUserRequest**](UpdateUserRequest.md)| Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | 
 
 ### Return type
 
@@ -2567,7 +2591,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2582,7 +2606,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_user_groups**
-> UpdateUserGroupsResponse update_user_groups(org_id, user_id)
+> UpdateUserGroupsResponse update_user_groups(org_id, user_id, update_user_groups_request)
 
 Replace a user's groups
 
@@ -2593,6 +2617,7 @@ Replace a user's groups
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.update_user_groups_request import UpdateUserGroupsRequest
 from lumoauth_api_client.models.update_user_groups_response import UpdateUserGroupsResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -2625,10 +2650,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminUsersApi(api_client)
     org_id = 'org_id_example' # str | 
     user_id = 'user_id_example' # str | 
+    update_user_groups_request = lumoauth_api_client.UpdateUserGroupsRequest() # UpdateUserGroupsRequest | 
 
     try:
         # Replace a user's groups
-        api_response = api_instance.update_user_groups(org_id, user_id)
+        api_response = api_instance.update_user_groups(org_id, user_id, update_user_groups_request)
         print("The response of AdminUsersApi->update_user_groups:\n")
         pprint(api_response)
     except Exception as e:
@@ -2644,6 +2670,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **user_id** | **str**|  | 
+ **update_user_groups_request** | [**UpdateUserGroupsRequest**](UpdateUserGroupsRequest.md)|  | 
 
 ### Return type
 
@@ -2655,7 +2682,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2667,7 +2694,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_user_roles**
-> UpdateUserRolesResponse update_user_roles(org_id, user_id)
+> UpdateUserRolesResponse update_user_roles(org_id, user_id, admin_groups_update_roles_request)
 
 Replace a user's roles
 
@@ -2678,6 +2705,7 @@ Replace a user's roles
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_groups_update_roles_request import AdminGroupsUpdateRolesRequest
 from lumoauth_api_client.models.update_user_roles_response import UpdateUserRolesResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -2710,10 +2738,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminUsersApi(api_client)
     org_id = 'org_id_example' # str | 
     user_id = 'user_id_example' # str | 
+    admin_groups_update_roles_request = lumoauth_api_client.AdminGroupsUpdateRolesRequest() # AdminGroupsUpdateRolesRequest | 
 
     try:
         # Replace a user's roles
-        api_response = api_instance.update_user_roles(org_id, user_id)
+        api_response = api_instance.update_user_roles(org_id, user_id, admin_groups_update_roles_request)
         print("The response of AdminUsersApi->update_user_roles:\n")
         pprint(api_response)
     except Exception as e:
@@ -2729,6 +2758,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **user_id** | **str**|  | 
+ **admin_groups_update_roles_request** | [**AdminGroupsUpdateRolesRequest**](AdminGroupsUpdateRolesRequest.md)|  | 
 
 ### Return type
 
@@ -2740,7 +2770,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

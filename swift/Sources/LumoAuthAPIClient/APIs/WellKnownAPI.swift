@@ -65,7 +65,7 @@ open class WellKnownAPI {
     /**
      JSON Web Key Set (RFC 7517)
      - GET /orgs/{orgId}/api/v1/.well-known/jwks.json
-     - Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
+     - Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
      - parameter orgId: (path)  
      - returns: RequestBuilder<JsonWebKeySet> 
      */

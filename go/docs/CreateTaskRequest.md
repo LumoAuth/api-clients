@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | Pointer to **string** | Optional human-readable task name. | [optional] 
 **Type** | Pointer to **string** | Optional task type for categorization. | [optional] 
-**ParentTaskId** | Pointer to **string** | Optional parent task id for nested agent chains. | [optional] 
+**ParentTaskId** | Pointer to **string** | Optional. The task_id of an open task of this organization, for a task that is one step of that task. The new task expires no later than its parent and ends when the parent ends. A chain holds at most 5 tasks. | [optional] 
 **OnBehalfOf** | Pointer to **string** | Optional delegation user email (requires delegation permission). | [optional] 
 
 ## Methods

@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -17,18 +17,21 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
-from typing import Any, Dict
+from pydantic import Field, StrictInt, StrictStr, field_validator
+from typing import Any, Dict, Optional
+from typing_extensions import Annotated
 from lumoauth_api_client.models.backchannel_authorize_response import BackchannelAuthorizeResponse
 from lumoauth_api_client.models.check_email_first_request import CheckEmailFirstRequest
 from lumoauth_api_client.models.check_email_first_response import CheckEmailFirstResponse
 from lumoauth_api_client.models.device_authorization_response import DeviceAuthorizationResponse
 from lumoauth_api_client.models.introspect_response import IntrospectResponse
 from lumoauth_api_client.models.par_response import ParResponse
+from lumoauth_api_client.models.register_client_request import RegisterClientRequest
 from lumoauth_api_client.models.register_client_response import RegisterClientResponse
 from lumoauth_api_client.models.registered_client_metadata import RegisteredClientMetadata
 from lumoauth_api_client.models.request_magic_link_request import RequestMagicLinkRequest
 from lumoauth_api_client.models.request_magic_link_response import RequestMagicLinkResponse
+from lumoauth_api_client.models.submit_login_json_request import SubmitLoginJsonRequest
 from lumoauth_api_client.models.submit_login_json_response import SubmitLoginJsonResponse
 from lumoauth_api_client.models.token_response import TokenResponse
 
@@ -326,6 +329,19 @@ class OAuthApi:
     def backchannel_authorize(
         self,
         org_id: StrictStr,
+        scope: StrictStr,
+        login_hint: Optional[StrictStr] = None,
+        login_hint_token: Optional[StrictStr] = None,
+        id_token_hint: Optional[StrictStr] = None,
+        binding_message: Optional[StrictStr] = None,
+        acr_values: Optional[StrictStr] = None,
+        requested_expiry: Optional[StrictInt] = None,
+        client_notification_token: Optional[StrictStr] = None,
+        authorization_details: Optional[StrictStr] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -345,6 +361,32 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param scope: (required)
+        :type scope: str
+        :param login_hint:
+        :type login_hint: str
+        :param login_hint_token:
+        :type login_hint_token: str
+        :param id_token_hint:
+        :type id_token_hint: str
+        :param binding_message:
+        :type binding_message: str
+        :param acr_values:
+        :type acr_values: str
+        :param requested_expiry:
+        :type requested_expiry: int
+        :param client_notification_token:
+        :type client_notification_token: str
+        :param authorization_details:
+        :type authorization_details: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -369,6 +411,19 @@ class OAuthApi:
 
         _param = self._backchannel_authorize_serialize(
             org_id=org_id,
+            scope=scope,
+            login_hint=login_hint,
+            login_hint_token=login_hint_token,
+            id_token_hint=id_token_hint,
+            binding_message=binding_message,
+            acr_values=acr_values,
+            requested_expiry=requested_expiry,
+            client_notification_token=client_notification_token,
+            authorization_details=authorization_details,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -397,6 +452,19 @@ class OAuthApi:
     def backchannel_authorize_with_http_info(
         self,
         org_id: StrictStr,
+        scope: StrictStr,
+        login_hint: Optional[StrictStr] = None,
+        login_hint_token: Optional[StrictStr] = None,
+        id_token_hint: Optional[StrictStr] = None,
+        binding_message: Optional[StrictStr] = None,
+        acr_values: Optional[StrictStr] = None,
+        requested_expiry: Optional[StrictInt] = None,
+        client_notification_token: Optional[StrictStr] = None,
+        authorization_details: Optional[StrictStr] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -416,6 +484,32 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param scope: (required)
+        :type scope: str
+        :param login_hint:
+        :type login_hint: str
+        :param login_hint_token:
+        :type login_hint_token: str
+        :param id_token_hint:
+        :type id_token_hint: str
+        :param binding_message:
+        :type binding_message: str
+        :param acr_values:
+        :type acr_values: str
+        :param requested_expiry:
+        :type requested_expiry: int
+        :param client_notification_token:
+        :type client_notification_token: str
+        :param authorization_details:
+        :type authorization_details: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -440,6 +534,19 @@ class OAuthApi:
 
         _param = self._backchannel_authorize_serialize(
             org_id=org_id,
+            scope=scope,
+            login_hint=login_hint,
+            login_hint_token=login_hint_token,
+            id_token_hint=id_token_hint,
+            binding_message=binding_message,
+            acr_values=acr_values,
+            requested_expiry=requested_expiry,
+            client_notification_token=client_notification_token,
+            authorization_details=authorization_details,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -468,6 +575,19 @@ class OAuthApi:
     def backchannel_authorize_without_preload_content(
         self,
         org_id: StrictStr,
+        scope: StrictStr,
+        login_hint: Optional[StrictStr] = None,
+        login_hint_token: Optional[StrictStr] = None,
+        id_token_hint: Optional[StrictStr] = None,
+        binding_message: Optional[StrictStr] = None,
+        acr_values: Optional[StrictStr] = None,
+        requested_expiry: Optional[StrictInt] = None,
+        client_notification_token: Optional[StrictStr] = None,
+        authorization_details: Optional[StrictStr] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -487,6 +607,32 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param scope: (required)
+        :type scope: str
+        :param login_hint:
+        :type login_hint: str
+        :param login_hint_token:
+        :type login_hint_token: str
+        :param id_token_hint:
+        :type id_token_hint: str
+        :param binding_message:
+        :type binding_message: str
+        :param acr_values:
+        :type acr_values: str
+        :param requested_expiry:
+        :type requested_expiry: int
+        :param client_notification_token:
+        :type client_notification_token: str
+        :param authorization_details:
+        :type authorization_details: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -511,6 +657,19 @@ class OAuthApi:
 
         _param = self._backchannel_authorize_serialize(
             org_id=org_id,
+            scope=scope,
+            login_hint=login_hint,
+            login_hint_token=login_hint_token,
+            id_token_hint=id_token_hint,
+            binding_message=binding_message,
+            acr_values=acr_values,
+            requested_expiry=requested_expiry,
+            client_notification_token=client_notification_token,
+            authorization_details=authorization_details,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -534,6 +693,19 @@ class OAuthApi:
     def _backchannel_authorize_serialize(
         self,
         org_id,
+        scope,
+        login_hint,
+        login_hint_token,
+        id_token_hint,
+        binding_message,
+        acr_values,
+        requested_expiry,
+        client_notification_token,
+        authorization_details,
+        client_id,
+        client_secret,
+        client_assertion_type,
+        client_assertion,
         _request_auth,
         _content_type,
         _headers,
@@ -560,6 +732,32 @@ class OAuthApi:
         # process the query parameters
         # process the header parameters
         # process the form parameters
+        if scope is not None:
+            _form_params.append(('scope', scope))
+        if login_hint is not None:
+            _form_params.append(('login_hint', login_hint))
+        if login_hint_token is not None:
+            _form_params.append(('login_hint_token', login_hint_token))
+        if id_token_hint is not None:
+            _form_params.append(('id_token_hint', id_token_hint))
+        if binding_message is not None:
+            _form_params.append(('binding_message', binding_message))
+        if acr_values is not None:
+            _form_params.append(('acr_values', acr_values))
+        if requested_expiry is not None:
+            _form_params.append(('requested_expiry', requested_expiry))
+        if client_notification_token is not None:
+            _form_params.append(('client_notification_token', client_notification_token))
+        if authorization_details is not None:
+            _form_params.append(('authorization_details', authorization_details))
+        if client_id is not None:
+            _form_params.append(('client_id', client_id))
+        if client_secret is not None:
+            _form_params.append(('client_secret', client_secret))
+        if client_assertion_type is not None:
+            _form_params.append(('client_assertion_type', client_assertion_type))
+        if client_assertion is not None:
+            _form_params.append(('client_assertion', client_assertion))
         # process the body parameter
 
 
@@ -571,6 +769,19 @@ class OAuthApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -899,6 +1110,13 @@ class OAuthApi:
     def device_authorization(
         self,
         org_id: StrictStr,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
+        scope: Annotated[Optional[StrictStr], Field(description="Space-separated scopes.")] = None,
+        resource: Annotated[Optional[StrictStr], Field(description="RFC 8707 resource indicator.")] = None,
+        authorization_details: Annotated[Optional[StrictStr], Field(description="RFC 9396, a JSON array as text.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -918,6 +1136,20 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
+        :param scope: Space-separated scopes.
+        :type scope: str
+        :param resource: RFC 8707 resource indicator.
+        :type resource: str
+        :param authorization_details: RFC 9396, a JSON array as text.
+        :type authorization_details: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -942,6 +1174,13 @@ class OAuthApi:
 
         _param = self._device_authorization_serialize(
             org_id=org_id,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
+            scope=scope,
+            resource=resource,
+            authorization_details=authorization_details,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -969,6 +1208,13 @@ class OAuthApi:
     def device_authorization_with_http_info(
         self,
         org_id: StrictStr,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
+        scope: Annotated[Optional[StrictStr], Field(description="Space-separated scopes.")] = None,
+        resource: Annotated[Optional[StrictStr], Field(description="RFC 8707 resource indicator.")] = None,
+        authorization_details: Annotated[Optional[StrictStr], Field(description="RFC 9396, a JSON array as text.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -988,6 +1234,20 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
+        :param scope: Space-separated scopes.
+        :type scope: str
+        :param resource: RFC 8707 resource indicator.
+        :type resource: str
+        :param authorization_details: RFC 9396, a JSON array as text.
+        :type authorization_details: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1012,6 +1272,13 @@ class OAuthApi:
 
         _param = self._device_authorization_serialize(
             org_id=org_id,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
+            scope=scope,
+            resource=resource,
+            authorization_details=authorization_details,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1039,6 +1306,13 @@ class OAuthApi:
     def device_authorization_without_preload_content(
         self,
         org_id: StrictStr,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
+        scope: Annotated[Optional[StrictStr], Field(description="Space-separated scopes.")] = None,
+        resource: Annotated[Optional[StrictStr], Field(description="RFC 8707 resource indicator.")] = None,
+        authorization_details: Annotated[Optional[StrictStr], Field(description="RFC 9396, a JSON array as text.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1058,6 +1332,20 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
+        :param scope: Space-separated scopes.
+        :type scope: str
+        :param resource: RFC 8707 resource indicator.
+        :type resource: str
+        :param authorization_details: RFC 9396, a JSON array as text.
+        :type authorization_details: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1082,6 +1370,13 @@ class OAuthApi:
 
         _param = self._device_authorization_serialize(
             org_id=org_id,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
+            scope=scope,
+            resource=resource,
+            authorization_details=authorization_details,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1104,6 +1399,13 @@ class OAuthApi:
     def _device_authorization_serialize(
         self,
         org_id,
+        client_id,
+        client_secret,
+        client_assertion_type,
+        client_assertion,
+        scope,
+        resource,
+        authorization_details,
         _request_auth,
         _content_type,
         _headers,
@@ -1130,6 +1432,20 @@ class OAuthApi:
         # process the query parameters
         # process the header parameters
         # process the form parameters
+        if client_id is not None:
+            _form_params.append(('client_id', client_id))
+        if client_secret is not None:
+            _form_params.append(('client_secret', client_secret))
+        if client_assertion_type is not None:
+            _form_params.append(('client_assertion_type', client_assertion_type))
+        if client_assertion is not None:
+            _form_params.append(('client_assertion', client_assertion))
+        if scope is not None:
+            _form_params.append(('scope', scope))
+        if resource is not None:
+            _form_params.append(('resource', resource))
+        if authorization_details is not None:
+            _form_params.append(('authorization_details', authorization_details))
         # process the body parameter
 
 
@@ -1141,6 +1457,19 @@ class OAuthApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1981,6 +2310,12 @@ class OAuthApi:
     def introspect(
         self,
         org_id: StrictStr,
+        token: StrictStr,
+        token_type_hint: Optional[StrictStr] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2000,6 +2335,18 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param token: (required)
+        :type token: str
+        :param token_type_hint:
+        :type token_type_hint: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2024,6 +2371,12 @@ class OAuthApi:
 
         _param = self._introspect_serialize(
             org_id=org_id,
+            token=token,
+            token_type_hint=token_type_hint,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2051,6 +2404,12 @@ class OAuthApi:
     def introspect_with_http_info(
         self,
         org_id: StrictStr,
+        token: StrictStr,
+        token_type_hint: Optional[StrictStr] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2070,6 +2429,18 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param token: (required)
+        :type token: str
+        :param token_type_hint:
+        :type token_type_hint: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2094,6 +2465,12 @@ class OAuthApi:
 
         _param = self._introspect_serialize(
             org_id=org_id,
+            token=token,
+            token_type_hint=token_type_hint,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2121,6 +2498,12 @@ class OAuthApi:
     def introspect_without_preload_content(
         self,
         org_id: StrictStr,
+        token: StrictStr,
+        token_type_hint: Optional[StrictStr] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2140,6 +2523,18 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param token: (required)
+        :type token: str
+        :param token_type_hint:
+        :type token_type_hint: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2164,6 +2559,12 @@ class OAuthApi:
 
         _param = self._introspect_serialize(
             org_id=org_id,
+            token=token,
+            token_type_hint=token_type_hint,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2186,6 +2587,12 @@ class OAuthApi:
     def _introspect_serialize(
         self,
         org_id,
+        token,
+        token_type_hint,
+        client_id,
+        client_secret,
+        client_assertion_type,
+        client_assertion,
         _request_auth,
         _content_type,
         _headers,
@@ -2212,6 +2619,18 @@ class OAuthApi:
         # process the query parameters
         # process the header parameters
         # process the form parameters
+        if token is not None:
+            _form_params.append(('token', token))
+        if token_type_hint is not None:
+            _form_params.append(('token_type_hint', token_type_hint))
+        if client_id is not None:
+            _form_params.append(('client_id', client_id))
+        if client_secret is not None:
+            _form_params.append(('client_secret', client_secret))
+        if client_assertion_type is not None:
+            _form_params.append(('client_assertion_type', client_assertion_type))
+        if client_assertion is not None:
+            _form_params.append(('client_assertion', client_assertion))
         # process the body parameter
 
 
@@ -2223,6 +2642,19 @@ class OAuthApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2251,6 +2683,22 @@ class OAuthApi:
     def par(
         self,
         org_id: StrictStr,
+        response_type: Optional[StrictStr] = None,
+        redirect_uri: Optional[StrictStr] = None,
+        scope: Optional[StrictStr] = None,
+        state: Optional[StrictStr] = None,
+        nonce: Optional[StrictStr] = None,
+        code_challenge: Optional[StrictStr] = None,
+        code_challenge_method: Optional[StrictStr] = None,
+        request: Annotated[Optional[StrictStr], Field(description="A signed request object (JAR, RFC 9101).")] = None,
+        resource: Optional[StrictStr] = None,
+        authorization_details: Optional[StrictStr] = None,
+        prompt: Optional[StrictStr] = None,
+        login_hint: Optional[StrictStr] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2270,6 +2718,38 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param response_type:
+        :type response_type: str
+        :param redirect_uri:
+        :type redirect_uri: str
+        :param scope:
+        :type scope: str
+        :param state:
+        :type state: str
+        :param nonce:
+        :type nonce: str
+        :param code_challenge:
+        :type code_challenge: str
+        :param code_challenge_method:
+        :type code_challenge_method: str
+        :param request: A signed request object (JAR, RFC 9101).
+        :type request: str
+        :param resource:
+        :type resource: str
+        :param authorization_details:
+        :type authorization_details: str
+        :param prompt:
+        :type prompt: str
+        :param login_hint:
+        :type login_hint: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2294,6 +2774,22 @@ class OAuthApi:
 
         _param = self._par_serialize(
             org_id=org_id,
+            response_type=response_type,
+            redirect_uri=redirect_uri,
+            scope=scope,
+            state=state,
+            nonce=nonce,
+            code_challenge=code_challenge,
+            code_challenge_method=code_challenge_method,
+            request=request,
+            resource=resource,
+            authorization_details=authorization_details,
+            prompt=prompt,
+            login_hint=login_hint,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2321,6 +2817,22 @@ class OAuthApi:
     def par_with_http_info(
         self,
         org_id: StrictStr,
+        response_type: Optional[StrictStr] = None,
+        redirect_uri: Optional[StrictStr] = None,
+        scope: Optional[StrictStr] = None,
+        state: Optional[StrictStr] = None,
+        nonce: Optional[StrictStr] = None,
+        code_challenge: Optional[StrictStr] = None,
+        code_challenge_method: Optional[StrictStr] = None,
+        request: Annotated[Optional[StrictStr], Field(description="A signed request object (JAR, RFC 9101).")] = None,
+        resource: Optional[StrictStr] = None,
+        authorization_details: Optional[StrictStr] = None,
+        prompt: Optional[StrictStr] = None,
+        login_hint: Optional[StrictStr] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2340,6 +2852,38 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param response_type:
+        :type response_type: str
+        :param redirect_uri:
+        :type redirect_uri: str
+        :param scope:
+        :type scope: str
+        :param state:
+        :type state: str
+        :param nonce:
+        :type nonce: str
+        :param code_challenge:
+        :type code_challenge: str
+        :param code_challenge_method:
+        :type code_challenge_method: str
+        :param request: A signed request object (JAR, RFC 9101).
+        :type request: str
+        :param resource:
+        :type resource: str
+        :param authorization_details:
+        :type authorization_details: str
+        :param prompt:
+        :type prompt: str
+        :param login_hint:
+        :type login_hint: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2364,6 +2908,22 @@ class OAuthApi:
 
         _param = self._par_serialize(
             org_id=org_id,
+            response_type=response_type,
+            redirect_uri=redirect_uri,
+            scope=scope,
+            state=state,
+            nonce=nonce,
+            code_challenge=code_challenge,
+            code_challenge_method=code_challenge_method,
+            request=request,
+            resource=resource,
+            authorization_details=authorization_details,
+            prompt=prompt,
+            login_hint=login_hint,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2391,6 +2951,22 @@ class OAuthApi:
     def par_without_preload_content(
         self,
         org_id: StrictStr,
+        response_type: Optional[StrictStr] = None,
+        redirect_uri: Optional[StrictStr] = None,
+        scope: Optional[StrictStr] = None,
+        state: Optional[StrictStr] = None,
+        nonce: Optional[StrictStr] = None,
+        code_challenge: Optional[StrictStr] = None,
+        code_challenge_method: Optional[StrictStr] = None,
+        request: Annotated[Optional[StrictStr], Field(description="A signed request object (JAR, RFC 9101).")] = None,
+        resource: Optional[StrictStr] = None,
+        authorization_details: Optional[StrictStr] = None,
+        prompt: Optional[StrictStr] = None,
+        login_hint: Optional[StrictStr] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2410,6 +2986,38 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param response_type:
+        :type response_type: str
+        :param redirect_uri:
+        :type redirect_uri: str
+        :param scope:
+        :type scope: str
+        :param state:
+        :type state: str
+        :param nonce:
+        :type nonce: str
+        :param code_challenge:
+        :type code_challenge: str
+        :param code_challenge_method:
+        :type code_challenge_method: str
+        :param request: A signed request object (JAR, RFC 9101).
+        :type request: str
+        :param resource:
+        :type resource: str
+        :param authorization_details:
+        :type authorization_details: str
+        :param prompt:
+        :type prompt: str
+        :param login_hint:
+        :type login_hint: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2434,6 +3042,22 @@ class OAuthApi:
 
         _param = self._par_serialize(
             org_id=org_id,
+            response_type=response_type,
+            redirect_uri=redirect_uri,
+            scope=scope,
+            state=state,
+            nonce=nonce,
+            code_challenge=code_challenge,
+            code_challenge_method=code_challenge_method,
+            request=request,
+            resource=resource,
+            authorization_details=authorization_details,
+            prompt=prompt,
+            login_hint=login_hint,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2456,6 +3080,22 @@ class OAuthApi:
     def _par_serialize(
         self,
         org_id,
+        response_type,
+        redirect_uri,
+        scope,
+        state,
+        nonce,
+        code_challenge,
+        code_challenge_method,
+        request,
+        resource,
+        authorization_details,
+        prompt,
+        login_hint,
+        client_id,
+        client_secret,
+        client_assertion_type,
+        client_assertion,
         _request_auth,
         _content_type,
         _headers,
@@ -2482,6 +3122,38 @@ class OAuthApi:
         # process the query parameters
         # process the header parameters
         # process the form parameters
+        if response_type is not None:
+            _form_params.append(('response_type', response_type))
+        if redirect_uri is not None:
+            _form_params.append(('redirect_uri', redirect_uri))
+        if scope is not None:
+            _form_params.append(('scope', scope))
+        if state is not None:
+            _form_params.append(('state', state))
+        if nonce is not None:
+            _form_params.append(('nonce', nonce))
+        if code_challenge is not None:
+            _form_params.append(('code_challenge', code_challenge))
+        if code_challenge_method is not None:
+            _form_params.append(('code_challenge_method', code_challenge_method))
+        if request is not None:
+            _form_params.append(('request', request))
+        if resource is not None:
+            _form_params.append(('resource', resource))
+        if authorization_details is not None:
+            _form_params.append(('authorization_details', authorization_details))
+        if prompt is not None:
+            _form_params.append(('prompt', prompt))
+        if login_hint is not None:
+            _form_params.append(('login_hint', login_hint))
+        if client_id is not None:
+            _form_params.append(('client_id', client_id))
+        if client_secret is not None:
+            _form_params.append(('client_secret', client_secret))
+        if client_assertion_type is not None:
+            _form_params.append(('client_assertion_type', client_assertion_type))
+        if client_assertion is not None:
+            _form_params.append(('client_assertion', client_assertion))
         # process the body parameter
 
 
@@ -2493,6 +3165,19 @@ class OAuthApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2521,6 +3206,7 @@ class OAuthApi:
     def register_client(
         self,
         org_id: StrictStr,
+        register_client_request: Annotated[RegisterClientRequest, Field(description="RFC 7591 client metadata.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2540,6 +3226,8 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param register_client_request: RFC 7591 client metadata. (required)
+        :type register_client_request: RegisterClientRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2564,6 +3252,7 @@ class OAuthApi:
 
         _param = self._register_client_serialize(
             org_id=org_id,
+            register_client_request=register_client_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2592,6 +3281,7 @@ class OAuthApi:
     def register_client_with_http_info(
         self,
         org_id: StrictStr,
+        register_client_request: Annotated[RegisterClientRequest, Field(description="RFC 7591 client metadata.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2611,6 +3301,8 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param register_client_request: RFC 7591 client metadata. (required)
+        :type register_client_request: RegisterClientRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2635,6 +3327,7 @@ class OAuthApi:
 
         _param = self._register_client_serialize(
             org_id=org_id,
+            register_client_request=register_client_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2663,6 +3356,7 @@ class OAuthApi:
     def register_client_without_preload_content(
         self,
         org_id: StrictStr,
+        register_client_request: Annotated[RegisterClientRequest, Field(description="RFC 7591 client metadata.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2682,6 +3376,8 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param register_client_request: RFC 7591 client metadata. (required)
+        :type register_client_request: RegisterClientRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2706,6 +3402,7 @@ class OAuthApi:
 
         _param = self._register_client_serialize(
             org_id=org_id,
+            register_client_request=register_client_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2729,6 +3426,7 @@ class OAuthApi:
     def _register_client_serialize(
         self,
         org_id,
+        register_client_request,
         _request_auth,
         _content_type,
         _headers,
@@ -2756,6 +3454,8 @@ class OAuthApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if register_client_request is not None:
+            _body_params = register_client_request
 
 
         # set the HTTP header `Accept`
@@ -2766,6 +3466,19 @@ class OAuthApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -3095,6 +3808,12 @@ class OAuthApi:
     def revoke(
         self,
         org_id: StrictStr,
+        token: StrictStr,
+        token_type_hint: Optional[StrictStr] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3114,6 +3833,18 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param token: (required)
+        :type token: str
+        :param token_type_hint:
+        :type token_type_hint: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3138,6 +3869,12 @@ class OAuthApi:
 
         _param = self._revoke_serialize(
             org_id=org_id,
+            token=token,
+            token_type_hint=token_type_hint,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3165,6 +3902,12 @@ class OAuthApi:
     def revoke_with_http_info(
         self,
         org_id: StrictStr,
+        token: StrictStr,
+        token_type_hint: Optional[StrictStr] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3184,6 +3927,18 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param token: (required)
+        :type token: str
+        :param token_type_hint:
+        :type token_type_hint: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3208,6 +3963,12 @@ class OAuthApi:
 
         _param = self._revoke_serialize(
             org_id=org_id,
+            token=token,
+            token_type_hint=token_type_hint,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3235,6 +3996,12 @@ class OAuthApi:
     def revoke_without_preload_content(
         self,
         org_id: StrictStr,
+        token: StrictStr,
+        token_type_hint: Optional[StrictStr] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3254,6 +4021,18 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param token: (required)
+        :type token: str
+        :param token_type_hint:
+        :type token_type_hint: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3278,6 +4057,12 @@ class OAuthApi:
 
         _param = self._revoke_serialize(
             org_id=org_id,
+            token=token,
+            token_type_hint=token_type_hint,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3300,6 +4085,12 @@ class OAuthApi:
     def _revoke_serialize(
         self,
         org_id,
+        token,
+        token_type_hint,
+        client_id,
+        client_secret,
+        client_assertion_type,
+        client_assertion,
         _request_auth,
         _content_type,
         _headers,
@@ -3326,6 +4117,18 @@ class OAuthApi:
         # process the query parameters
         # process the header parameters
         # process the form parameters
+        if token is not None:
+            _form_params.append(('token', token))
+        if token_type_hint is not None:
+            _form_params.append(('token_type_hint', token_type_hint))
+        if client_id is not None:
+            _form_params.append(('client_id', client_id))
+        if client_secret is not None:
+            _form_params.append(('client_secret', client_secret))
+        if client_assertion_type is not None:
+            _form_params.append(('client_assertion_type', client_assertion_type))
+        if client_assertion is not None:
+            _form_params.append(('client_assertion', client_assertion))
         # process the body parameter
 
 
@@ -3337,6 +4140,19 @@ class OAuthApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -4707,6 +5523,7 @@ class OAuthApi:
     def submit_login_json(
         self,
         org_id: StrictStr,
+        submit_login_json_request: SubmitLoginJsonRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4726,6 +5543,8 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param submit_login_json_request: (required)
+        :type submit_login_json_request: SubmitLoginJsonRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4750,6 +5569,7 @@ class OAuthApi:
 
         _param = self._submit_login_json_serialize(
             org_id=org_id,
+            submit_login_json_request=submit_login_json_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4779,6 +5599,7 @@ class OAuthApi:
     def submit_login_json_with_http_info(
         self,
         org_id: StrictStr,
+        submit_login_json_request: SubmitLoginJsonRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4798,6 +5619,8 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param submit_login_json_request: (required)
+        :type submit_login_json_request: SubmitLoginJsonRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4822,6 +5645,7 @@ class OAuthApi:
 
         _param = self._submit_login_json_serialize(
             org_id=org_id,
+            submit_login_json_request=submit_login_json_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4851,6 +5675,7 @@ class OAuthApi:
     def submit_login_json_without_preload_content(
         self,
         org_id: StrictStr,
+        submit_login_json_request: SubmitLoginJsonRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4870,6 +5695,8 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param submit_login_json_request: (required)
+        :type submit_login_json_request: SubmitLoginJsonRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4894,6 +5721,7 @@ class OAuthApi:
 
         _param = self._submit_login_json_serialize(
             org_id=org_id,
+            submit_login_json_request=submit_login_json_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4918,6 +5746,7 @@ class OAuthApi:
     def _submit_login_json_serialize(
         self,
         org_id,
+        submit_login_json_request,
         _request_auth,
         _content_type,
         _headers,
@@ -4945,6 +5774,8 @@ class OAuthApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if submit_login_json_request is not None:
+            _body_params = submit_login_json_request
 
 
         # set the HTTP header `Accept`
@@ -4955,6 +5786,19 @@ class OAuthApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -5248,6 +6092,25 @@ class OAuthApi:
     def token(
         self,
         org_id: StrictStr,
+        grant_type: StrictStr,
+        code: Optional[StrictStr] = None,
+        redirect_uri: Optional[StrictStr] = None,
+        code_verifier: Optional[StrictStr] = None,
+        refresh_token: Optional[StrictStr] = None,
+        device_code: Optional[StrictStr] = None,
+        auth_req_id: Annotated[Optional[StrictStr], Field(description="CIBA")] = None,
+        scope: Optional[StrictStr] = None,
+        resource: Optional[StrictStr] = None,
+        subject_token: Annotated[Optional[StrictStr], Field(description="Token exchange (RFC 8693)")] = None,
+        subject_token_type: Optional[StrictStr] = None,
+        actor_token: Optional[StrictStr] = None,
+        actor_token_type: Optional[StrictStr] = None,
+        requested_token_type: Optional[StrictStr] = None,
+        assertion: Annotated[Optional[StrictStr], Field(description="JWT bearer / ID-JAG grant")] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5267,6 +6130,44 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param grant_type: (required)
+        :type grant_type: str
+        :param code:
+        :type code: str
+        :param redirect_uri:
+        :type redirect_uri: str
+        :param code_verifier:
+        :type code_verifier: str
+        :param refresh_token:
+        :type refresh_token: str
+        :param device_code:
+        :type device_code: str
+        :param auth_req_id: CIBA
+        :type auth_req_id: str
+        :param scope:
+        :type scope: str
+        :param resource:
+        :type resource: str
+        :param subject_token: Token exchange (RFC 8693)
+        :type subject_token: str
+        :param subject_token_type:
+        :type subject_token_type: str
+        :param actor_token:
+        :type actor_token: str
+        :param actor_token_type:
+        :type actor_token_type: str
+        :param requested_token_type:
+        :type requested_token_type: str
+        :param assertion: JWT bearer / ID-JAG grant
+        :type assertion: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5291,6 +6192,25 @@ class OAuthApi:
 
         _param = self._token_serialize(
             org_id=org_id,
+            grant_type=grant_type,
+            code=code,
+            redirect_uri=redirect_uri,
+            code_verifier=code_verifier,
+            refresh_token=refresh_token,
+            device_code=device_code,
+            auth_req_id=auth_req_id,
+            scope=scope,
+            resource=resource,
+            subject_token=subject_token,
+            subject_token_type=subject_token_type,
+            actor_token=actor_token,
+            actor_token_type=actor_token_type,
+            requested_token_type=requested_token_type,
+            assertion=assertion,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5319,6 +6239,25 @@ class OAuthApi:
     def token_with_http_info(
         self,
         org_id: StrictStr,
+        grant_type: StrictStr,
+        code: Optional[StrictStr] = None,
+        redirect_uri: Optional[StrictStr] = None,
+        code_verifier: Optional[StrictStr] = None,
+        refresh_token: Optional[StrictStr] = None,
+        device_code: Optional[StrictStr] = None,
+        auth_req_id: Annotated[Optional[StrictStr], Field(description="CIBA")] = None,
+        scope: Optional[StrictStr] = None,
+        resource: Optional[StrictStr] = None,
+        subject_token: Annotated[Optional[StrictStr], Field(description="Token exchange (RFC 8693)")] = None,
+        subject_token_type: Optional[StrictStr] = None,
+        actor_token: Optional[StrictStr] = None,
+        actor_token_type: Optional[StrictStr] = None,
+        requested_token_type: Optional[StrictStr] = None,
+        assertion: Annotated[Optional[StrictStr], Field(description="JWT bearer / ID-JAG grant")] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5338,6 +6277,44 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param grant_type: (required)
+        :type grant_type: str
+        :param code:
+        :type code: str
+        :param redirect_uri:
+        :type redirect_uri: str
+        :param code_verifier:
+        :type code_verifier: str
+        :param refresh_token:
+        :type refresh_token: str
+        :param device_code:
+        :type device_code: str
+        :param auth_req_id: CIBA
+        :type auth_req_id: str
+        :param scope:
+        :type scope: str
+        :param resource:
+        :type resource: str
+        :param subject_token: Token exchange (RFC 8693)
+        :type subject_token: str
+        :param subject_token_type:
+        :type subject_token_type: str
+        :param actor_token:
+        :type actor_token: str
+        :param actor_token_type:
+        :type actor_token_type: str
+        :param requested_token_type:
+        :type requested_token_type: str
+        :param assertion: JWT bearer / ID-JAG grant
+        :type assertion: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5362,6 +6339,25 @@ class OAuthApi:
 
         _param = self._token_serialize(
             org_id=org_id,
+            grant_type=grant_type,
+            code=code,
+            redirect_uri=redirect_uri,
+            code_verifier=code_verifier,
+            refresh_token=refresh_token,
+            device_code=device_code,
+            auth_req_id=auth_req_id,
+            scope=scope,
+            resource=resource,
+            subject_token=subject_token,
+            subject_token_type=subject_token_type,
+            actor_token=actor_token,
+            actor_token_type=actor_token_type,
+            requested_token_type=requested_token_type,
+            assertion=assertion,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5390,6 +6386,25 @@ class OAuthApi:
     def token_without_preload_content(
         self,
         org_id: StrictStr,
+        grant_type: StrictStr,
+        code: Optional[StrictStr] = None,
+        redirect_uri: Optional[StrictStr] = None,
+        code_verifier: Optional[StrictStr] = None,
+        refresh_token: Optional[StrictStr] = None,
+        device_code: Optional[StrictStr] = None,
+        auth_req_id: Annotated[Optional[StrictStr], Field(description="CIBA")] = None,
+        scope: Optional[StrictStr] = None,
+        resource: Optional[StrictStr] = None,
+        subject_token: Annotated[Optional[StrictStr], Field(description="Token exchange (RFC 8693)")] = None,
+        subject_token_type: Optional[StrictStr] = None,
+        actor_token: Optional[StrictStr] = None,
+        actor_token_type: Optional[StrictStr] = None,
+        requested_token_type: Optional[StrictStr] = None,
+        assertion: Annotated[Optional[StrictStr], Field(description="JWT bearer / ID-JAG grant")] = None,
+        client_id: Annotated[Optional[StrictStr], Field(description="Required for a public client; a confidential client may authenticate with HTTP Basic instead.")] = None,
+        client_secret: Annotated[Optional[StrictStr], Field(description="client_secret_post")] = None,
+        client_assertion_type: Optional[StrictStr] = None,
+        client_assertion: Annotated[Optional[StrictStr], Field(description="private_key_jwt (RFC 7523)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5409,6 +6424,44 @@ class OAuthApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param grant_type: (required)
+        :type grant_type: str
+        :param code:
+        :type code: str
+        :param redirect_uri:
+        :type redirect_uri: str
+        :param code_verifier:
+        :type code_verifier: str
+        :param refresh_token:
+        :type refresh_token: str
+        :param device_code:
+        :type device_code: str
+        :param auth_req_id: CIBA
+        :type auth_req_id: str
+        :param scope:
+        :type scope: str
+        :param resource:
+        :type resource: str
+        :param subject_token: Token exchange (RFC 8693)
+        :type subject_token: str
+        :param subject_token_type:
+        :type subject_token_type: str
+        :param actor_token:
+        :type actor_token: str
+        :param actor_token_type:
+        :type actor_token_type: str
+        :param requested_token_type:
+        :type requested_token_type: str
+        :param assertion: JWT bearer / ID-JAG grant
+        :type assertion: str
+        :param client_id: Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+        :type client_id: str
+        :param client_secret: client_secret_post
+        :type client_secret: str
+        :param client_assertion_type:
+        :type client_assertion_type: str
+        :param client_assertion: private_key_jwt (RFC 7523)
+        :type client_assertion: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5433,6 +6486,25 @@ class OAuthApi:
 
         _param = self._token_serialize(
             org_id=org_id,
+            grant_type=grant_type,
+            code=code,
+            redirect_uri=redirect_uri,
+            code_verifier=code_verifier,
+            refresh_token=refresh_token,
+            device_code=device_code,
+            auth_req_id=auth_req_id,
+            scope=scope,
+            resource=resource,
+            subject_token=subject_token,
+            subject_token_type=subject_token_type,
+            actor_token=actor_token,
+            actor_token_type=actor_token_type,
+            requested_token_type=requested_token_type,
+            assertion=assertion,
+            client_id=client_id,
+            client_secret=client_secret,
+            client_assertion_type=client_assertion_type,
+            client_assertion=client_assertion,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5456,6 +6528,25 @@ class OAuthApi:
     def _token_serialize(
         self,
         org_id,
+        grant_type,
+        code,
+        redirect_uri,
+        code_verifier,
+        refresh_token,
+        device_code,
+        auth_req_id,
+        scope,
+        resource,
+        subject_token,
+        subject_token_type,
+        actor_token,
+        actor_token_type,
+        requested_token_type,
+        assertion,
+        client_id,
+        client_secret,
+        client_assertion_type,
+        client_assertion,
         _request_auth,
         _content_type,
         _headers,
@@ -5482,6 +6573,44 @@ class OAuthApi:
         # process the query parameters
         # process the header parameters
         # process the form parameters
+        if grant_type is not None:
+            _form_params.append(('grant_type', grant_type))
+        if code is not None:
+            _form_params.append(('code', code))
+        if redirect_uri is not None:
+            _form_params.append(('redirect_uri', redirect_uri))
+        if code_verifier is not None:
+            _form_params.append(('code_verifier', code_verifier))
+        if refresh_token is not None:
+            _form_params.append(('refresh_token', refresh_token))
+        if device_code is not None:
+            _form_params.append(('device_code', device_code))
+        if auth_req_id is not None:
+            _form_params.append(('auth_req_id', auth_req_id))
+        if scope is not None:
+            _form_params.append(('scope', scope))
+        if resource is not None:
+            _form_params.append(('resource', resource))
+        if subject_token is not None:
+            _form_params.append(('subject_token', subject_token))
+        if subject_token_type is not None:
+            _form_params.append(('subject_token_type', subject_token_type))
+        if actor_token is not None:
+            _form_params.append(('actor_token', actor_token))
+        if actor_token_type is not None:
+            _form_params.append(('actor_token_type', actor_token_type))
+        if requested_token_type is not None:
+            _form_params.append(('requested_token_type', requested_token_type))
+        if assertion is not None:
+            _form_params.append(('assertion', assertion))
+        if client_id is not None:
+            _form_params.append(('client_id', client_id))
+        if client_secret is not None:
+            _form_params.append(('client_secret', client_secret))
+        if client_assertion_type is not None:
+            _form_params.append(('client_assertion_type', client_assertion_type))
+        if client_assertion is not None:
+            _form_params.append(('client_assertion', client_assertion))
         # process the body parameter
 
 
@@ -5493,6 +6622,19 @@ class OAuthApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/x-www-form-urlencoded'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

@@ -12,7 +12,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="createStreamConfig"></a>
 # **createStreamConfig**
-> SsfStream createStreamConfig(orgId)
+> SsfStream createStreamConfig(orgId, createStreamConfigRequest)
 
 Create an SSF stream
 
@@ -43,8 +43,9 @@ public class Example {
 
     SsfApi apiInstance = new SsfApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    CreateStreamConfigRequest createStreamConfigRequest = new CreateStreamConfigRequest(); // CreateStreamConfigRequest | 
     try {
-      SsfStream result = apiInstance.createStreamConfig(orgId);
+      SsfStream result = apiInstance.createStreamConfig(orgId, createStreamConfigRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling SsfApi#createStreamConfig");
@@ -62,6 +63,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **createStreamConfigRequest** | [**CreateStreamConfigRequest**](CreateStreamConfigRequest.md)|  | |
 
 ### Return type
 
@@ -73,7 +75,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -229,12 +231,12 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | A single stream (with stream_id) or all of the tenant&#39;s streams |  -  |
+| **200** | A single stream (with stream_id) or all of the organization&#39;s streams |  -  |
 | **404** | Stream not found |  -  |
 
 <a id="verifyStream"></a>
 # **verifyStream**
-> verifyStream(orgId)
+> verifyStream(orgId, verifyStreamRequest)
 
 Request a stream verification event
 
@@ -267,8 +269,9 @@ public class Example {
 
     SsfApi apiInstance = new SsfApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    VerifyStreamRequest verifyStreamRequest = new VerifyStreamRequest(); // VerifyStreamRequest | 
     try {
-      apiInstance.verifyStream(orgId);
+      apiInstance.verifyStream(orgId, verifyStreamRequest);
     } catch (ApiException e) {
       System.err.println("Exception when calling SsfApi#verifyStream");
       System.err.println("Status code: " + e.getCode());
@@ -285,6 +288,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **verifyStreamRequest** | [**VerifyStreamRequest**](VerifyStreamRequest.md)|  | [optional] |
 
 ### Return type
 
@@ -296,7 +300,7 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 ### HTTP response details

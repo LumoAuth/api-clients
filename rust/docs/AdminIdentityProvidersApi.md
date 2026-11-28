@@ -76,7 +76,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_social_providers_create
 
-> models::AdminSocialProvidersCreateResponse admin_social_providers_create(org_id)
+> models::AdminSocialProvidersCreateResponse admin_social_providers_create(org_id, admin_social_providers_create_request)
 Create a social login provider
 
 ### Parameters
@@ -85,6 +85,7 @@ Create a social login provider
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**admin_social_providers_create_request** | [**AdminSocialProvidersCreateRequest**](AdminSocialProvidersCreateRequest.md) | An unknown field is refused with 400. | [required] |
 
 ### Return type
 
@@ -96,7 +97,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -276,7 +277,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_social_providers_update
 
-> models::AdminSocialProvidersCreateResponse patch_admin_social_providers_update(org_id, provider_id)
+> models::AdminSocialProvidersCreateResponse patch_admin_social_providers_update(org_id, provider_id, put_admin_social_providers_update_request)
 Update a social login provider
 
 ### Parameters
@@ -286,6 +287,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **provider_id** | **String** |  | [required] |
+**put_admin_social_providers_update_request** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md) | Only the fields that are sent change. An unknown field is refused with 400. | [required] |
 
 ### Return type
 
@@ -297,7 +299,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -305,7 +307,7 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_social_providers_update
 
-> models::AdminSocialProvidersCreateResponse put_admin_social_providers_update(org_id, provider_id)
+> models::AdminSocialProvidersCreateResponse put_admin_social_providers_update(org_id, provider_id, put_admin_social_providers_update_request)
 Create or replace a social login provider
 
 ### Parameters
@@ -315,6 +317,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **provider_id** | **String** |  | [required] |
+**put_admin_social_providers_update_request** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md) | Only the fields that are sent change. An unknown field is refused with 400. | [required] |
 
 ### Return type
 
@@ -326,7 +329,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

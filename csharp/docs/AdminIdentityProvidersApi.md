@@ -218,7 +218,7 @@ catch (ApiException e)
 
 <a id="adminsocialproviderscreate"></a>
 # **AdminSocialProvidersCreate**
-> AdminSocialProvidersCreateResponse AdminSocialProvidersCreate (string orgId)
+> AdminSocialProvidersCreateResponse AdminSocialProvidersCreate (string orgId, AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest)
 
 Create a social login provider
 
@@ -251,11 +251,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminIdentityProvidersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var adminSocialProvidersCreateRequest = new AdminSocialProvidersCreateRequest(); // AdminSocialProvidersCreateRequest | An unknown field is refused with 400.
 
             try
             {
                 // Create a social login provider
-                AdminSocialProvidersCreateResponse result = apiInstance.AdminSocialProvidersCreate(orgId);
+                AdminSocialProvidersCreateResponse result = apiInstance.AdminSocialProvidersCreate(orgId, adminSocialProvidersCreateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -276,7 +277,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create a social login provider
-    ApiResponse<AdminSocialProvidersCreateResponse> response = apiInstance.AdminSocialProvidersCreateWithHttpInfo(orgId);
+    ApiResponse<AdminSocialProvidersCreateResponse> response = apiInstance.AdminSocialProvidersCreateWithHttpInfo(orgId, adminSocialProvidersCreateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -294,6 +295,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **adminSocialProvidersCreateRequest** | [**AdminSocialProvidersCreateRequest**](AdminSocialProvidersCreateRequest.md) | An unknown field is refused with 400. |  |
 
 ### Return type
 
@@ -305,7 +307,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -931,7 +933,7 @@ catch (ApiException e)
 
 <a id="patchadminsocialprovidersupdate"></a>
 # **PatchAdminSocialProvidersUpdate**
-> AdminSocialProvidersCreateResponse PatchAdminSocialProvidersUpdate (string orgId, string providerId)
+> AdminSocialProvidersCreateResponse PatchAdminSocialProvidersUpdate (string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest)
 
 Update a social login provider
 
@@ -965,11 +967,12 @@ namespace Example
             var apiInstance = new AdminIdentityProvidersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var providerId = "providerId_example";  // string | 
+            var putAdminSocialProvidersUpdateRequest = new PutAdminSocialProvidersUpdateRequest(); // PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
 
             try
             {
                 // Update a social login provider
-                AdminSocialProvidersCreateResponse result = apiInstance.PatchAdminSocialProvidersUpdate(orgId, providerId);
+                AdminSocialProvidersCreateResponse result = apiInstance.PatchAdminSocialProvidersUpdate(orgId, providerId, putAdminSocialProvidersUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -990,7 +993,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update a social login provider
-    ApiResponse<AdminSocialProvidersCreateResponse> response = apiInstance.PatchAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+    ApiResponse<AdminSocialProvidersCreateResponse> response = apiInstance.PatchAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId, putAdminSocialProvidersUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1009,6 +1012,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **providerId** | **string** |  |  |
+| **putAdminSocialProvidersUpdateRequest** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md) | Only the fields that are sent change. An unknown field is refused with 400. |  |
 
 ### Return type
 
@@ -1020,7 +1024,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1034,7 +1038,7 @@ catch (ApiException e)
 
 <a id="putadminsocialprovidersupdate"></a>
 # **PutAdminSocialProvidersUpdate**
-> AdminSocialProvidersCreateResponse PutAdminSocialProvidersUpdate (string orgId, string providerId)
+> AdminSocialProvidersCreateResponse PutAdminSocialProvidersUpdate (string orgId, string providerId, PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest)
 
 Create or replace a social login provider
 
@@ -1068,11 +1072,12 @@ namespace Example
             var apiInstance = new AdminIdentityProvidersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var providerId = "providerId_example";  // string | 
+            var putAdminSocialProvidersUpdateRequest = new PutAdminSocialProvidersUpdateRequest(); // PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
 
             try
             {
                 // Create or replace a social login provider
-                AdminSocialProvidersCreateResponse result = apiInstance.PutAdminSocialProvidersUpdate(orgId, providerId);
+                AdminSocialProvidersCreateResponse result = apiInstance.PutAdminSocialProvidersUpdate(orgId, providerId, putAdminSocialProvidersUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1093,7 +1098,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create or replace a social login provider
-    ApiResponse<AdminSocialProvidersCreateResponse> response = apiInstance.PutAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+    ApiResponse<AdminSocialProvidersCreateResponse> response = apiInstance.PutAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId, putAdminSocialProvidersUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1112,6 +1117,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **providerId** | **string** |  |  |
+| **putAdminSocialProvidersUpdateRequest** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md) | Only the fields that are sent change. An unknown field is refused with 400. |  |
 
 ### Return type
 
@@ -1123,7 +1129,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

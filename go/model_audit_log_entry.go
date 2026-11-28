@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -37,6 +37,8 @@ type AuditLogEntry struct {
 	TargetId NullableString `json:"targetId,omitempty"`
 	TargetName NullableString `json:"targetName,omitempty"`
 	IpAddress NullableString `json:"ipAddress,omitempty"`
+	// W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none
+	TraceId NullableString `json:"traceId,omitempty"`
 	// Detailed responses only
 	EventTime NullableTime `json:"eventTime,omitempty"`
 	// Detailed responses only
@@ -640,6 +642,48 @@ func (o *AuditLogEntry) UnsetIpAddress() {
 	o.IpAddress.Unset()
 }
 
+// GetTraceId returns the TraceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AuditLogEntry) GetTraceId() string {
+	if o == nil || IsNil(o.TraceId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TraceId.Get()
+}
+
+// GetTraceIdOk returns a tuple with the TraceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AuditLogEntry) GetTraceIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TraceId.Get(), o.TraceId.IsSet()
+}
+
+// HasTraceId returns a boolean if a field has been set.
+func (o *AuditLogEntry) HasTraceId() bool {
+	if o != nil && o.TraceId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTraceId gets a reference to the given NullableString and assigns it to the TraceId field.
+func (o *AuditLogEntry) SetTraceId(v string) {
+	o.TraceId.Set(&v)
+}
+// SetTraceIdNil sets the value for TraceId to be an explicit nil
+func (o *AuditLogEntry) SetTraceIdNil() {
+	o.TraceId.Set(nil)
+}
+
+// UnsetTraceId ensures that no value is present for TraceId, not even an explicit nil
+func (o *AuditLogEntry) UnsetTraceId() {
+	o.TraceId.Unset()
+}
+
 // GetEventTime returns the EventTime field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *AuditLogEntry) GetEventTime() time.Time {
 	if o == nil || IsNil(o.EventTime.Get()) {
@@ -1230,6 +1274,9 @@ func (o AuditLogEntry) ToMap() (map[string]interface{}, error) {
 	}
 	if o.IpAddress.IsSet() {
 		toSerialize["ipAddress"] = o.IpAddress.Get()
+	}
+	if o.TraceId.IsSet() {
+		toSerialize["traceId"] = o.TraceId.Get()
 	}
 	if o.EventTime.IsSet() {
 		toSerialize["eventTime"] = o.EventTime.Get()

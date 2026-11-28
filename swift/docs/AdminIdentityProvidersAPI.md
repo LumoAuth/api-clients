@@ -115,7 +115,7 @@ Name | Type | Description  | Notes
 
 # **adminSocialProvidersCreate**
 ```swift
-    open class func adminSocialProvidersCreate(orgId: String, completion: @escaping (_ data: AdminSocialProvidersCreateResponse?, _ error: Error?) -> Void)
+    open class func adminSocialProvidersCreate(orgId: String, adminSocialProvidersCreateRequest: AdminSocialProvidersCreateRequest, completion: @escaping (_ data: AdminSocialProvidersCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Create a social login provider
@@ -126,9 +126,10 @@ Create a social login provider
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let adminSocialProvidersCreateRequest = AdminSocialProvidersCreateRequest(provider: "provider_example", clientId: "clientId_example", clientSecret: "clientSecret_example", displayName: "displayName_example", enabled: false, enableForOAuthApps: false, requestedScopes: ["requestedScopes_example"], claimMapping: "TODO", providerConfig: "TODO", defaultRoles: ["defaultRoles_example"], brandColor: "brandColor_example", iconUrl: "iconUrl_example", authorizationUrl: "authorizationUrl_example", tokenUrl: "tokenUrl_example", userInfoUrl: "userInfoUrl_example", hostedDomain: "hostedDomain_example", tenantId: "tenantId_example", issuerUrl: "issuerUrl_example", teamId: "teamId_example", keyId: "keyId_example", privateKey: "privateKey_example") // AdminSocialProvidersCreateRequest | An unknown field is refused with 400.
 
 // Create a social login provider
-AdminIdentityProvidersAPI.adminSocialProvidersCreate(orgId: orgId) { (response, error) in
+AdminIdentityProvidersAPI.adminSocialProvidersCreate(orgId: orgId, adminSocialProvidersCreateRequest: adminSocialProvidersCreateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -145,6 +146,7 @@ AdminIdentityProvidersAPI.adminSocialProvidersCreate(orgId: orgId) { (response, 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **adminSocialProvidersCreateRequest** | [**AdminSocialProvidersCreateRequest**](AdminSocialProvidersCreateRequest.md) | An unknown field is refused with 400. | 
 
 ### Return type
 
@@ -156,7 +158,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -459,7 +461,7 @@ Name | Type | Description  | Notes
 
 # **patchAdminSocialProvidersUpdate**
 ```swift
-    open class func patchAdminSocialProvidersUpdate(orgId: String, providerId: String, completion: @escaping (_ data: AdminSocialProvidersCreateResponse?, _ error: Error?) -> Void)
+    open class func patchAdminSocialProvidersUpdate(orgId: String, providerId: String, putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest, completion: @escaping (_ data: AdminSocialProvidersCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update a social login provider
@@ -471,9 +473,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let providerId = "providerId_example" // String | 
+let putAdminSocialProvidersUpdateRequest = PutAdminSocialProvidersUpdateRequest(clientId: "clientId_example", clientSecret: "clientSecret_example", displayName: "displayName_example", enabled: false, enableForOAuthApps: false, requestedScopes: ["requestedScopes_example"], claimMapping: "TODO", providerConfig: "TODO", defaultRoles: ["defaultRoles_example"], brandColor: "brandColor_example", iconUrl: "iconUrl_example", authorizationUrl: "authorizationUrl_example", tokenUrl: "tokenUrl_example", userInfoUrl: "userInfoUrl_example", hostedDomain: "hostedDomain_example", tenantId: "tenantId_example", issuerUrl: "issuerUrl_example", teamId: "teamId_example", keyId: "keyId_example", privateKey: "privateKey_example") // PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
 
 // Update a social login provider
-AdminIdentityProvidersAPI.patchAdminSocialProvidersUpdate(orgId: orgId, providerId: providerId) { (response, error) in
+AdminIdentityProvidersAPI.patchAdminSocialProvidersUpdate(orgId: orgId, providerId: providerId, putAdminSocialProvidersUpdateRequest: putAdminSocialProvidersUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -491,6 +494,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **providerId** | **String** |  | 
+ **putAdminSocialProvidersUpdateRequest** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md) | Only the fields that are sent change. An unknown field is refused with 400. | 
 
 ### Return type
 
@@ -502,14 +506,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSocialProvidersUpdate**
 ```swift
-    open class func putAdminSocialProvidersUpdate(orgId: String, providerId: String, completion: @escaping (_ data: AdminSocialProvidersCreateResponse?, _ error: Error?) -> Void)
+    open class func putAdminSocialProvidersUpdate(orgId: String, providerId: String, putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest, completion: @escaping (_ data: AdminSocialProvidersCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Create or replace a social login provider
@@ -521,9 +525,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let providerId = "providerId_example" // String | 
+let putAdminSocialProvidersUpdateRequest = PutAdminSocialProvidersUpdateRequest(clientId: "clientId_example", clientSecret: "clientSecret_example", displayName: "displayName_example", enabled: false, enableForOAuthApps: false, requestedScopes: ["requestedScopes_example"], claimMapping: "TODO", providerConfig: "TODO", defaultRoles: ["defaultRoles_example"], brandColor: "brandColor_example", iconUrl: "iconUrl_example", authorizationUrl: "authorizationUrl_example", tokenUrl: "tokenUrl_example", userInfoUrl: "userInfoUrl_example", hostedDomain: "hostedDomain_example", tenantId: "tenantId_example", issuerUrl: "issuerUrl_example", teamId: "teamId_example", keyId: "keyId_example", privateKey: "privateKey_example") // PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
 
 // Create or replace a social login provider
-AdminIdentityProvidersAPI.putAdminSocialProvidersUpdate(orgId: orgId, providerId: providerId) { (response, error) in
+AdminIdentityProvidersAPI.putAdminSocialProvidersUpdate(orgId: orgId, providerId: providerId, putAdminSocialProvidersUpdateRequest: putAdminSocialProvidersUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -541,6 +546,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **providerId** | **String** |  | 
+ **putAdminSocialProvidersUpdateRequest** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md) | Only the fields that are sent change. An unknown field is refused with 400. | 
 
 ### Return type
 
@@ -552,7 +558,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

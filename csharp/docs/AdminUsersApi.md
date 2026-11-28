@@ -38,7 +38,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="addusergroup"></a>
 # **AddUserGroup**
-> AddUserGroupResponse AddUserGroup (string orgId, string userId)
+> AddUserGroupResponse AddUserGroup (string orgId, string userId, AddUserGroupRequest addUserGroupRequest)
 
 Add a user to a group
 
@@ -72,11 +72,12 @@ namespace Example
             var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var userId = "userId_example";  // string | 
+            var addUserGroupRequest = new AddUserGroupRequest(); // AddUserGroupRequest | 
 
             try
             {
                 // Add a user to a group
-                AddUserGroupResponse result = apiInstance.AddUserGroup(orgId, userId);
+                AddUserGroupResponse result = apiInstance.AddUserGroup(orgId, userId, addUserGroupRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -97,7 +98,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Add a user to a group
-    ApiResponse<AddUserGroupResponse> response = apiInstance.AddUserGroupWithHttpInfo(orgId, userId);
+    ApiResponse<AddUserGroupResponse> response = apiInstance.AddUserGroupWithHttpInfo(orgId, userId, addUserGroupRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -116,6 +117,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **userId** | **string** |  |  |
+| **addUserGroupRequest** | [**AddUserGroupRequest**](AddUserGroupRequest.md) |  |  |
 
 ### Return type
 
@@ -127,7 +129,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -140,11 +142,11 @@ catch (ApiException e)
 
 <a id="adduserpermission"></a>
 # **AddUserPermission**
-> AddUserPermissionResponse AddUserPermission (string orgId, string userId)
+> AddUserPermissionResponse AddUserPermission (string orgId, string userId, AddUserPermissionRequest addUserPermissionRequest)
 
 Assign a permission to a user
 
-Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 ### Example
 ```csharp
@@ -176,11 +178,12 @@ namespace Example
             var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var userId = "userId_example";  // string | 
+            var addUserPermissionRequest = new AddUserPermissionRequest(); // AddUserPermissionRequest | 
 
             try
             {
                 // Assign a permission to a user
-                AddUserPermissionResponse result = apiInstance.AddUserPermission(orgId, userId);
+                AddUserPermissionResponse result = apiInstance.AddUserPermission(orgId, userId, addUserPermissionRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -201,7 +204,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Assign a permission to a user
-    ApiResponse<AddUserPermissionResponse> response = apiInstance.AddUserPermissionWithHttpInfo(orgId, userId);
+    ApiResponse<AddUserPermissionResponse> response = apiInstance.AddUserPermissionWithHttpInfo(orgId, userId, addUserPermissionRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -220,6 +223,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **userId** | **string** |  |  |
+| **addUserPermissionRequest** | [**AddUserPermissionRequest**](AddUserPermissionRequest.md) |  |  |
 
 ### Return type
 
@@ -231,7 +235,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -244,7 +248,7 @@ catch (ApiException e)
 
 <a id="adduserrole"></a>
 # **AddUserRole**
-> AddUserRoleResponse AddUserRole (string orgId, string userId)
+> AddUserRoleResponse AddUserRole (string orgId, string userId, AddUserRoleRequest addUserRoleRequest)
 
 Assign a role to a user
 
@@ -278,11 +282,12 @@ namespace Example
             var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var userId = "userId_example";  // string | 
+            var addUserRoleRequest = new AddUserRoleRequest(); // AddUserRoleRequest | 
 
             try
             {
                 // Assign a role to a user
-                AddUserRoleResponse result = apiInstance.AddUserRole(orgId, userId);
+                AddUserRoleResponse result = apiInstance.AddUserRole(orgId, userId, addUserRoleRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -303,7 +308,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Assign a role to a user
-    ApiResponse<AddUserRoleResponse> response = apiInstance.AddUserRoleWithHttpInfo(orgId, userId);
+    ApiResponse<AddUserRoleResponse> response = apiInstance.AddUserRoleWithHttpInfo(orgId, userId, addUserRoleRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -322,6 +327,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **userId** | **string** |  |  |
+| **addUserRoleRequest** | [**AddUserRoleRequest**](AddUserRoleRequest.md) |  |  |
 
 ### Return type
 
@@ -333,7 +339,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1091,7 +1097,7 @@ catch (ApiException e)
 
 <a id="createuser"></a>
 # **CreateUser**
-> CreateUserResponse CreateUser (string orgId)
+> CreateUserResponse CreateUser (string orgId, CreateUserRequest createUserRequest)
 
 Create a user
 
@@ -1124,11 +1130,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var createUserRequest = new CreateUserRequest(); // CreateUserRequest | 
 
             try
             {
                 // Create a user
-                CreateUserResponse result = apiInstance.CreateUser(orgId);
+                CreateUserResponse result = apiInstance.CreateUser(orgId, createUserRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1149,7 +1156,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create a user
-    ApiResponse<CreateUserResponse> response = apiInstance.CreateUserWithHttpInfo(orgId);
+    ApiResponse<CreateUserResponse> response = apiInstance.CreateUserWithHttpInfo(orgId, createUserRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1167,6 +1174,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **createUserRequest** | [**CreateUserRequest**](CreateUserRequest.md) |  |  |
 
 ### Return type
 
@@ -1178,7 +1186,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1928,7 +1936,7 @@ catch (ApiException e)
 
 <a id="patchuser"></a>
 # **PatchUser**
-> UpdateUserResponse PatchUser (string orgId, string userId)
+> UpdateUserResponse PatchUser (string orgId, string userId, UpdateUserRequest updateUserRequest)
 
 Update a user
 
@@ -1964,11 +1972,12 @@ namespace Example
             var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var userId = "userId_example";  // string | 
+            var updateUserRequest = new UpdateUserRequest(); // UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
             try
             {
                 // Update a user
-                UpdateUserResponse result = apiInstance.PatchUser(orgId, userId);
+                UpdateUserResponse result = apiInstance.PatchUser(orgId, userId, updateUserRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1989,7 +1998,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update a user
-    ApiResponse<UpdateUserResponse> response = apiInstance.PatchUserWithHttpInfo(orgId, userId);
+    ApiResponse<UpdateUserResponse> response = apiInstance.PatchUserWithHttpInfo(orgId, userId, updateUserRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2008,6 +2017,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **userId** | **string** |  |  |
+| **updateUserRequest** | [**UpdateUserRequest**](UpdateUserRequest.md) | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. |  |
 
 ### Return type
 
@@ -2019,7 +2029,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2549,7 +2559,7 @@ catch (ApiException e)
 
 <a id="setuserpassword"></a>
 # **SetUserPassword**
-> SetUserPasswordPostResponse SetUserPassword (string orgId, string userId)
+> SetUserPasswordPostResponse SetUserPassword (string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest)
 
 Set a user's password
 
@@ -2585,11 +2595,12 @@ namespace Example
             var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var userId = "userId_example";  // string | 
+            var setUserPasswordPostRequest = new SetUserPasswordPostRequest(); // SetUserPasswordPostRequest | 
 
             try
             {
                 // Set a user's password
-                SetUserPasswordPostResponse result = apiInstance.SetUserPassword(orgId, userId);
+                SetUserPasswordPostResponse result = apiInstance.SetUserPassword(orgId, userId, setUserPasswordPostRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2610,7 +2621,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Set a user's password
-    ApiResponse<SetUserPasswordPostResponse> response = apiInstance.SetUserPasswordWithHttpInfo(orgId, userId);
+    ApiResponse<SetUserPasswordPostResponse> response = apiInstance.SetUserPasswordWithHttpInfo(orgId, userId, setUserPasswordPostRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2629,6 +2640,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **userId** | **string** |  |  |
+| **setUserPasswordPostRequest** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md) |  |  |
 
 ### Return type
 
@@ -2640,7 +2652,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2655,7 +2667,7 @@ catch (ApiException e)
 
 <a id="setuserpasswordpost"></a>
 # **SetUserPasswordPost**
-> SetUserPasswordPostResponse SetUserPasswordPost (string orgId, string userId)
+> SetUserPasswordPostResponse SetUserPasswordPost (string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest)
 
 Set a user's password
 
@@ -2691,11 +2703,12 @@ namespace Example
             var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var userId = "userId_example";  // string | 
+            var setUserPasswordPostRequest = new SetUserPasswordPostRequest(); // SetUserPasswordPostRequest | 
 
             try
             {
                 // Set a user's password
-                SetUserPasswordPostResponse result = apiInstance.SetUserPasswordPost(orgId, userId);
+                SetUserPasswordPostResponse result = apiInstance.SetUserPasswordPost(orgId, userId, setUserPasswordPostRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2716,7 +2729,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Set a user's password
-    ApiResponse<SetUserPasswordPostResponse> response = apiInstance.SetUserPasswordPostWithHttpInfo(orgId, userId);
+    ApiResponse<SetUserPasswordPostResponse> response = apiInstance.SetUserPasswordPostWithHttpInfo(orgId, userId, setUserPasswordPostRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2735,6 +2748,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **userId** | **string** |  |  |
+| **setUserPasswordPostRequest** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md) |  |  |
 
 ### Return type
 
@@ -2746,7 +2760,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2965,7 +2979,7 @@ catch (ApiException e)
 
 <a id="updateuser"></a>
 # **UpdateUser**
-> UpdateUserResponse UpdateUser (string orgId, string userId)
+> UpdateUserResponse UpdateUser (string orgId, string userId, UpdateUserRequest updateUserRequest)
 
 Update a user
 
@@ -3001,11 +3015,12 @@ namespace Example
             var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var userId = "userId_example";  // string | 
+            var updateUserRequest = new UpdateUserRequest(); // UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
             try
             {
                 // Update a user
-                UpdateUserResponse result = apiInstance.UpdateUser(orgId, userId);
+                UpdateUserResponse result = apiInstance.UpdateUser(orgId, userId, updateUserRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -3026,7 +3041,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update a user
-    ApiResponse<UpdateUserResponse> response = apiInstance.UpdateUserWithHttpInfo(orgId, userId);
+    ApiResponse<UpdateUserResponse> response = apiInstance.UpdateUserWithHttpInfo(orgId, userId, updateUserRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -3045,6 +3060,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **userId** | **string** |  |  |
+| **updateUserRequest** | [**UpdateUserRequest**](UpdateUserRequest.md) | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. |  |
 
 ### Return type
 
@@ -3056,7 +3072,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -3072,7 +3088,7 @@ catch (ApiException e)
 
 <a id="updateusergroups"></a>
 # **UpdateUserGroups**
-> UpdateUserGroupsResponse UpdateUserGroups (string orgId, string userId)
+> UpdateUserGroupsResponse UpdateUserGroups (string orgId, string userId, UpdateUserGroupsRequest updateUserGroupsRequest)
 
 Replace a user's groups
 
@@ -3106,11 +3122,12 @@ namespace Example
             var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var userId = "userId_example";  // string | 
+            var updateUserGroupsRequest = new UpdateUserGroupsRequest(); // UpdateUserGroupsRequest | 
 
             try
             {
                 // Replace a user's groups
-                UpdateUserGroupsResponse result = apiInstance.UpdateUserGroups(orgId, userId);
+                UpdateUserGroupsResponse result = apiInstance.UpdateUserGroups(orgId, userId, updateUserGroupsRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -3131,7 +3148,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Replace a user's groups
-    ApiResponse<UpdateUserGroupsResponse> response = apiInstance.UpdateUserGroupsWithHttpInfo(orgId, userId);
+    ApiResponse<UpdateUserGroupsResponse> response = apiInstance.UpdateUserGroupsWithHttpInfo(orgId, userId, updateUserGroupsRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -3150,6 +3167,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **userId** | **string** |  |  |
+| **updateUserGroupsRequest** | [**UpdateUserGroupsRequest**](UpdateUserGroupsRequest.md) |  |  |
 
 ### Return type
 
@@ -3161,7 +3179,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -3174,7 +3192,7 @@ catch (ApiException e)
 
 <a id="updateuserroles"></a>
 # **UpdateUserRoles**
-> UpdateUserRolesResponse UpdateUserRoles (string orgId, string userId)
+> UpdateUserRolesResponse UpdateUserRoles (string orgId, string userId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest)
 
 Replace a user's roles
 
@@ -3208,11 +3226,12 @@ namespace Example
             var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var userId = "userId_example";  // string | 
+            var adminGroupsUpdateRolesRequest = new AdminGroupsUpdateRolesRequest(); // AdminGroupsUpdateRolesRequest | 
 
             try
             {
                 // Replace a user's roles
-                UpdateUserRolesResponse result = apiInstance.UpdateUserRoles(orgId, userId);
+                UpdateUserRolesResponse result = apiInstance.UpdateUserRoles(orgId, userId, adminGroupsUpdateRolesRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -3233,7 +3252,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Replace a user's roles
-    ApiResponse<UpdateUserRolesResponse> response = apiInstance.UpdateUserRolesWithHttpInfo(orgId, userId);
+    ApiResponse<UpdateUserRolesResponse> response = apiInstance.UpdateUserRolesWithHttpInfo(orgId, userId, adminGroupsUpdateRolesRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -3252,6 +3271,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **userId** | **string** |  |  |
+| **adminGroupsUpdateRolesRequest** | [**AdminGroupsUpdateRolesRequest**](AdminGroupsUpdateRolesRequest.md) |  |  |
 
 ### Return type
 
@@ -3263,7 +3283,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

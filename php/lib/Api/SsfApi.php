@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -141,15 +141,16 @@ class SsfApi
      * Create an SSF stream
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CreateStreamConfigRequest $createStreamConfigRequest createStreamConfigRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createStreamConfig'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\SsfStream
      */
-    public function createStreamConfig($orgId, string $contentType = self::contentTypes['createStreamConfig'][0])
+    public function createStreamConfig($orgId, $createStreamConfigRequest, string $contentType = self::contentTypes['createStreamConfig'][0])
     {
-        list($response) = $this->createStreamConfigWithHttpInfo($orgId, $contentType);
+        list($response) = $this->createStreamConfigWithHttpInfo($orgId, $createStreamConfigRequest, $contentType);
         return $response;
     }
 
@@ -159,15 +160,16 @@ class SsfApi
      * Create an SSF stream
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CreateStreamConfigRequest $createStreamConfigRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createStreamConfig'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\SsfStream, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createStreamConfigWithHttpInfo($orgId, string $contentType = self::contentTypes['createStreamConfig'][0])
+    public function createStreamConfigWithHttpInfo($orgId, $createStreamConfigRequest, string $contentType = self::contentTypes['createStreamConfig'][0])
     {
-        $request = $this->createStreamConfigRequest($orgId, $contentType);
+        $request = $this->createStreamConfigRequest($orgId, $createStreamConfigRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -244,14 +246,15 @@ class SsfApi
      * Create an SSF stream
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CreateStreamConfigRequest $createStreamConfigRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createStreamConfig'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createStreamConfigAsync($orgId, string $contentType = self::contentTypes['createStreamConfig'][0])
+    public function createStreamConfigAsync($orgId, $createStreamConfigRequest, string $contentType = self::contentTypes['createStreamConfig'][0])
     {
-        return $this->createStreamConfigAsyncWithHttpInfo($orgId, $contentType)
+        return $this->createStreamConfigAsyncWithHttpInfo($orgId, $createStreamConfigRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -265,15 +268,16 @@ class SsfApi
      * Create an SSF stream
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CreateStreamConfigRequest $createStreamConfigRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createStreamConfig'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createStreamConfigAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['createStreamConfig'][0])
+    public function createStreamConfigAsyncWithHttpInfo($orgId, $createStreamConfigRequest, string $contentType = self::contentTypes['createStreamConfig'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\SsfStream';
-        $request = $this->createStreamConfigRequest($orgId, $contentType);
+        $request = $this->createStreamConfigRequest($orgId, $createStreamConfigRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -315,18 +319,26 @@ class SsfApi
      * Create request for operation 'createStreamConfig'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CreateStreamConfigRequest $createStreamConfigRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createStreamConfig'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createStreamConfigRequest($orgId, string $contentType = self::contentTypes['createStreamConfig'][0])
+    public function createStreamConfigRequest($orgId, $createStreamConfigRequest, string $contentType = self::contentTypes['createStreamConfig'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling createStreamConfig'
+            );
+        }
+
+        // verify the required parameter 'createStreamConfigRequest' is set
+        if ($createStreamConfigRequest === null || (is_array($createStreamConfigRequest) && count($createStreamConfigRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $createStreamConfigRequest when calling createStreamConfig'
             );
         }
 
@@ -357,7 +369,14 @@ class SsfApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($createStreamConfigRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($createStreamConfigRequest));
+            } else {
+                $httpBody = $createStreamConfigRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -958,15 +977,16 @@ class SsfApi
      * Request a stream verification event
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\VerifyStreamRequest|null $verifyStreamRequest verifyStreamRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyStream'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function verifyStream($orgId, string $contentType = self::contentTypes['verifyStream'][0])
+    public function verifyStream($orgId, $verifyStreamRequest = null, string $contentType = self::contentTypes['verifyStream'][0])
     {
-        $this->verifyStreamWithHttpInfo($orgId, $contentType);
+        $this->verifyStreamWithHttpInfo($orgId, $verifyStreamRequest, $contentType);
     }
 
     /**
@@ -975,15 +995,16 @@ class SsfApi
      * Request a stream verification event
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\VerifyStreamRequest|null $verifyStreamRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyStream'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function verifyStreamWithHttpInfo($orgId, string $contentType = self::contentTypes['verifyStream'][0])
+    public function verifyStreamWithHttpInfo($orgId, $verifyStreamRequest = null, string $contentType = self::contentTypes['verifyStream'][0])
     {
-        $request = $this->verifyStreamRequest($orgId, $contentType);
+        $request = $this->verifyStreamRequest($orgId, $verifyStreamRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1024,14 +1045,15 @@ class SsfApi
      * Request a stream verification event
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\VerifyStreamRequest|null $verifyStreamRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyStream'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function verifyStreamAsync($orgId, string $contentType = self::contentTypes['verifyStream'][0])
+    public function verifyStreamAsync($orgId, $verifyStreamRequest = null, string $contentType = self::contentTypes['verifyStream'][0])
     {
-        return $this->verifyStreamAsyncWithHttpInfo($orgId, $contentType)
+        return $this->verifyStreamAsyncWithHttpInfo($orgId, $verifyStreamRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1045,15 +1067,16 @@ class SsfApi
      * Request a stream verification event
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\VerifyStreamRequest|null $verifyStreamRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyStream'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function verifyStreamAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['verifyStream'][0])
+    public function verifyStreamAsyncWithHttpInfo($orgId, $verifyStreamRequest = null, string $contentType = self::contentTypes['verifyStream'][0])
     {
         $returnType = '';
-        $request = $this->verifyStreamRequest($orgId, $contentType);
+        $request = $this->verifyStreamRequest($orgId, $verifyStreamRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1082,12 +1105,13 @@ class SsfApi
      * Create request for operation 'verifyStream'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\VerifyStreamRequest|null $verifyStreamRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['verifyStream'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function verifyStreamRequest($orgId, string $contentType = self::contentTypes['verifyStream'][0])
+    public function verifyStreamRequest($orgId, $verifyStreamRequest = null, string $contentType = self::contentTypes['verifyStream'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -1096,6 +1120,7 @@ class SsfApi
                 'Missing the required parameter $orgId when calling verifyStream'
             );
         }
+
 
 
         $resourcePath = '/orgs/{orgId}/api/v1/ssf/verify';
@@ -1124,7 +1149,14 @@ class SsfApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($verifyStreamRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($verifyStreamRequest));
+            } else {
+                $httpBody = $verifyStreamRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

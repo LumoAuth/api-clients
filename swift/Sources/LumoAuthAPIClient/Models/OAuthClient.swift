@@ -12,6 +12,21 @@ import AnyCodable
 
 public struct OAuthClient: Codable, JSONEncodable, Hashable {
 
+    public enum AccessTokenFormat: String, Codable, CaseIterable {
+        case opaque = "opaque"
+        case jwt = "jwt"
+    }
+    public enum TokenEndpointAuthMethod: String, Codable, CaseIterable {
+        case clientSecretBasic = "client_secret_basic"
+        case privateKeyJwt = "private_key_jwt"
+        case _none = "none"
+        case attestJwtClientAuth = "attest_jwt_client_auth"
+    }
+    public enum FapiMode: String, Codable, CaseIterable {
+        case disabled = "disabled"
+        case fapi2Baseline = "fapi2_baseline"
+        case fapi2Advanced = "fapi2_advanced"
+    }
     public var id: Int
     public var clientId: String
     public var name: String
@@ -28,8 +43,38 @@ public struct OAuthClient: Codable, JSONEncodable, Hashable {
     public var grantTypes: [String]?
     /** Detailed responses only. Whether the client may use CIBA (backchannel authentication). */
     public var cibaEnabled: Bool?
+    /** Detailed responses only. Browser CORS origins (scheme://host[:port]). */
+    public var allowedOrigins: [String]?
+    /** Detailed responses only. Addresses that the end-session endpoint may return to. */
+    public var postLogoutRedirectUris: [String]?
+    /** Detailed responses only. OIDC Front-Channel Logout address. */
+    public var frontchannelLogoutUri: String?
+    /** Detailed responses only. OIDC Back-Channel Logout address. */
+    public var backchannelLogoutUri: String?
+    /** Detailed responses only. Format of the access tokens that the client receives. */
+    public var accessTokenFormat: AccessTokenFormat?
+    /** Detailed responses only. */
+    public var tokenEndpointAuthMethod: TokenEndpointAuthMethod?
+    /** Detailed responses only. https address of the client's public keys. */
+    public var jwksUri: String?
+    /** Detailed responses only. The client's public keys, inline. */
+    public var jwks: [String: AnyCodable]?
+    /** Detailed responses only. FAPI 2.0 security profile. */
+    public var fapiMode: FapiMode?
+    /** Detailed responses only. The stored switch; a FAPI profile requires PAR whatever it says. */
+    public var requirePar: Bool?
+    /** Detailed responses only. The stored switch; a FAPI profile requires DPoP whatever it says. */
+    public var dpopBoundAccessTokens: Bool?
+    /** Detailed responses only. */
+    public var attestationBasedAuthEnabled: Bool?
+    /** Detailed responses only. */
+    public var attesterIssuer: String?
+    /** Detailed responses only. */
+    public var attesterJwksUri: String?
+    /** Detailed responses only. Whether the client may use token exchange (RFC 8693). */
+    public var tokenExchangeEnabled: Bool?
 
-    public init(id: Int, clientId: String, name: String, isConfidential: Bool, isPublic: Bool, isActive: Bool, requiresPkce: Bool, createdAt: Date, redirectUris: [String]? = nil, scopes: [String]? = nil, grantTypes: [String]? = nil, cibaEnabled: Bool? = nil) {
+    public init(id: Int, clientId: String, name: String, isConfidential: Bool, isPublic: Bool, isActive: Bool, requiresPkce: Bool, createdAt: Date, redirectUris: [String]? = nil, scopes: [String]? = nil, grantTypes: [String]? = nil, cibaEnabled: Bool? = nil, allowedOrigins: [String]? = nil, postLogoutRedirectUris: [String]? = nil, frontchannelLogoutUri: String? = nil, backchannelLogoutUri: String? = nil, accessTokenFormat: AccessTokenFormat? = nil, tokenEndpointAuthMethod: TokenEndpointAuthMethod? = nil, jwksUri: String? = nil, jwks: [String: AnyCodable]? = nil, fapiMode: FapiMode? = nil, requirePar: Bool? = nil, dpopBoundAccessTokens: Bool? = nil, attestationBasedAuthEnabled: Bool? = nil, attesterIssuer: String? = nil, attesterJwksUri: String? = nil, tokenExchangeEnabled: Bool? = nil) {
         self.id = id
         self.clientId = clientId
         self.name = name
@@ -42,6 +87,21 @@ public struct OAuthClient: Codable, JSONEncodable, Hashable {
         self.scopes = scopes
         self.grantTypes = grantTypes
         self.cibaEnabled = cibaEnabled
+        self.allowedOrigins = allowedOrigins
+        self.postLogoutRedirectUris = postLogoutRedirectUris
+        self.frontchannelLogoutUri = frontchannelLogoutUri
+        self.backchannelLogoutUri = backchannelLogoutUri
+        self.accessTokenFormat = accessTokenFormat
+        self.tokenEndpointAuthMethod = tokenEndpointAuthMethod
+        self.jwksUri = jwksUri
+        self.jwks = jwks
+        self.fapiMode = fapiMode
+        self.requirePar = requirePar
+        self.dpopBoundAccessTokens = dpopBoundAccessTokens
+        self.attestationBasedAuthEnabled = attestationBasedAuthEnabled
+        self.attesterIssuer = attesterIssuer
+        self.attesterJwksUri = attesterJwksUri
+        self.tokenExchangeEnabled = tokenExchangeEnabled
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -57,6 +117,21 @@ public struct OAuthClient: Codable, JSONEncodable, Hashable {
         case scopes
         case grantTypes
         case cibaEnabled
+        case allowedOrigins
+        case postLogoutRedirectUris
+        case frontchannelLogoutUri
+        case backchannelLogoutUri
+        case accessTokenFormat
+        case tokenEndpointAuthMethod
+        case jwksUri
+        case jwks
+        case fapiMode
+        case requirePar
+        case dpopBoundAccessTokens
+        case attestationBasedAuthEnabled
+        case attesterIssuer
+        case attesterJwksUri
+        case tokenExchangeEnabled
     }
 
     // Encodable protocol methods
@@ -75,6 +150,21 @@ public struct OAuthClient: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(scopes, forKey: .scopes)
         try container.encodeIfPresent(grantTypes, forKey: .grantTypes)
         try container.encodeIfPresent(cibaEnabled, forKey: .cibaEnabled)
+        try container.encodeIfPresent(allowedOrigins, forKey: .allowedOrigins)
+        try container.encodeIfPresent(postLogoutRedirectUris, forKey: .postLogoutRedirectUris)
+        try container.encodeIfPresent(frontchannelLogoutUri, forKey: .frontchannelLogoutUri)
+        try container.encodeIfPresent(backchannelLogoutUri, forKey: .backchannelLogoutUri)
+        try container.encodeIfPresent(accessTokenFormat, forKey: .accessTokenFormat)
+        try container.encodeIfPresent(tokenEndpointAuthMethod, forKey: .tokenEndpointAuthMethod)
+        try container.encodeIfPresent(jwksUri, forKey: .jwksUri)
+        try container.encodeIfPresent(jwks, forKey: .jwks)
+        try container.encodeIfPresent(fapiMode, forKey: .fapiMode)
+        try container.encodeIfPresent(requirePar, forKey: .requirePar)
+        try container.encodeIfPresent(dpopBoundAccessTokens, forKey: .dpopBoundAccessTokens)
+        try container.encodeIfPresent(attestationBasedAuthEnabled, forKey: .attestationBasedAuthEnabled)
+        try container.encodeIfPresent(attesterIssuer, forKey: .attesterIssuer)
+        try container.encodeIfPresent(attesterJwksUri, forKey: .attesterJwksUri)
+        try container.encodeIfPresent(tokenExchangeEnabled, forKey: .tokenExchangeEnabled)
     }
 }
 

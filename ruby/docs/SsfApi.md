@@ -12,7 +12,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 ## create_stream_config
 
-> <SsfStream> create_stream_config(org_id)
+> <SsfStream> create_stream_config(org_id, create_stream_config_request)
 
 Create an SSF stream
 
@@ -34,10 +34,11 @@ end
 
 api_instance = LumoAuthApiClient::SsfApi.new
 org_id = 'org_id_example' # String | 
+create_stream_config_request = LumoAuthApiClient::CreateStreamConfigRequest.new # CreateStreamConfigRequest | 
 
 begin
   # Create an SSF stream
-  result = api_instance.create_stream_config(org_id)
+  result = api_instance.create_stream_config(org_id, create_stream_config_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling SsfApi->create_stream_config: #{e}"
@@ -48,12 +49,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<SsfStream>, Integer, Hash)> create_stream_config_with_http_info(org_id)
+> <Array(<SsfStream>, Integer, Hash)> create_stream_config_with_http_info(org_id, create_stream_config_request)
 
 ```ruby
 begin
   # Create an SSF stream
-  data, status_code, headers = api_instance.create_stream_config_with_http_info(org_id)
+  data, status_code, headers = api_instance.create_stream_config_with_http_info(org_id, create_stream_config_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <SsfStream>
@@ -67,6 +68,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **create_stream_config_request** | [**CreateStreamConfigRequest**](CreateStreamConfigRequest.md) |  |  |
 
 ### Return type
 
@@ -78,7 +80,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -235,7 +237,7 @@ end
 
 ## verify_stream
 
-> verify_stream(org_id)
+> verify_stream(org_id, opts)
 
 Request a stream verification event
 
@@ -259,10 +261,13 @@ end
 
 api_instance = LumoAuthApiClient::SsfApi.new
 org_id = 'org_id_example' # String | 
+opts = {
+  verify_stream_request: LumoAuthApiClient::VerifyStreamRequest.new # VerifyStreamRequest | 
+}
 
 begin
   # Request a stream verification event
-  api_instance.verify_stream(org_id)
+  api_instance.verify_stream(org_id, opts)
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling SsfApi->verify_stream: #{e}"
 end
@@ -272,12 +277,12 @@ end
 
 This returns an Array which contains the response data (`nil` in this case), status code and headers.
 
-> <Array(nil, Integer, Hash)> verify_stream_with_http_info(org_id)
+> <Array(nil, Integer, Hash)> verify_stream_with_http_info(org_id, opts)
 
 ```ruby
 begin
   # Request a stream verification event
-  data, status_code, headers = api_instance.verify_stream_with_http_info(org_id)
+  data, status_code, headers = api_instance.verify_stream_with_http_info(org_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => nil
@@ -291,6 +296,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **verify_stream_request** | [**VerifyStreamRequest**](VerifyStreamRequest.md) |  | [optional] |
 
 ### Return type
 
@@ -302,6 +308,6 @@ nil (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: Not defined
 

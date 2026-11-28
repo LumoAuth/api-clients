@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -39,6 +39,36 @@ type OAuthClient struct {
 	GrantTypes []string `json:"grantTypes,omitempty"`
 	// Detailed responses only. Whether the client may use CIBA (backchannel authentication).
 	CibaEnabled *bool `json:"cibaEnabled,omitempty"`
+	// Detailed responses only. Browser CORS origins (scheme://host[:port]).
+	AllowedOrigins []string `json:"allowedOrigins,omitempty"`
+	// Detailed responses only. Addresses that the end-session endpoint may return to.
+	PostLogoutRedirectUris []string `json:"postLogoutRedirectUris,omitempty"`
+	// Detailed responses only. OIDC Front-Channel Logout address.
+	FrontchannelLogoutUri NullableString `json:"frontchannelLogoutUri,omitempty"`
+	// Detailed responses only. OIDC Back-Channel Logout address.
+	BackchannelLogoutUri NullableString `json:"backchannelLogoutUri,omitempty"`
+	// Detailed responses only. Format of the access tokens that the client receives.
+	AccessTokenFormat *string `json:"accessTokenFormat,omitempty"`
+	// Detailed responses only.
+	TokenEndpointAuthMethod *string `json:"tokenEndpointAuthMethod,omitempty"`
+	// Detailed responses only. https address of the client's public keys.
+	JwksUri NullableString `json:"jwksUri,omitempty"`
+	// Detailed responses only. The client's public keys, inline.
+	Jwks map[string]interface{} `json:"jwks,omitempty"`
+	// Detailed responses only. FAPI 2.0 security profile.
+	FapiMode *string `json:"fapiMode,omitempty"`
+	// Detailed responses only. The stored switch; a FAPI profile requires PAR whatever it says.
+	RequirePar *bool `json:"requirePar,omitempty"`
+	// Detailed responses only. The stored switch; a FAPI profile requires DPoP whatever it says.
+	DpopBoundAccessTokens *bool `json:"dpopBoundAccessTokens,omitempty"`
+	// Detailed responses only.
+	AttestationBasedAuthEnabled *bool `json:"attestationBasedAuthEnabled,omitempty"`
+	// Detailed responses only.
+	AttesterIssuer NullableString `json:"attesterIssuer,omitempty"`
+	// Detailed responses only.
+	AttesterJwksUri NullableString `json:"attesterJwksUri,omitempty"`
+	// Detailed responses only. Whether the client may use token exchange (RFC 8693).
+	TokenExchangeEnabled *bool `json:"tokenExchangeEnabled,omitempty"`
 }
 
 type _OAuthClient OAuthClient
@@ -388,6 +418,537 @@ func (o *OAuthClient) SetCibaEnabled(v bool) {
 	o.CibaEnabled = &v
 }
 
+// GetAllowedOrigins returns the AllowedOrigins field value if set, zero value otherwise.
+func (o *OAuthClient) GetAllowedOrigins() []string {
+	if o == nil || IsNil(o.AllowedOrigins) {
+		var ret []string
+		return ret
+	}
+	return o.AllowedOrigins
+}
+
+// GetAllowedOriginsOk returns a tuple with the AllowedOrigins field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OAuthClient) GetAllowedOriginsOk() ([]string, bool) {
+	if o == nil || IsNil(o.AllowedOrigins) {
+		return nil, false
+	}
+	return o.AllowedOrigins, true
+}
+
+// HasAllowedOrigins returns a boolean if a field has been set.
+func (o *OAuthClient) HasAllowedOrigins() bool {
+	if o != nil && !IsNil(o.AllowedOrigins) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowedOrigins gets a reference to the given []string and assigns it to the AllowedOrigins field.
+func (o *OAuthClient) SetAllowedOrigins(v []string) {
+	o.AllowedOrigins = v
+}
+
+// GetPostLogoutRedirectUris returns the PostLogoutRedirectUris field value if set, zero value otherwise.
+func (o *OAuthClient) GetPostLogoutRedirectUris() []string {
+	if o == nil || IsNil(o.PostLogoutRedirectUris) {
+		var ret []string
+		return ret
+	}
+	return o.PostLogoutRedirectUris
+}
+
+// GetPostLogoutRedirectUrisOk returns a tuple with the PostLogoutRedirectUris field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OAuthClient) GetPostLogoutRedirectUrisOk() ([]string, bool) {
+	if o == nil || IsNil(o.PostLogoutRedirectUris) {
+		return nil, false
+	}
+	return o.PostLogoutRedirectUris, true
+}
+
+// HasPostLogoutRedirectUris returns a boolean if a field has been set.
+func (o *OAuthClient) HasPostLogoutRedirectUris() bool {
+	if o != nil && !IsNil(o.PostLogoutRedirectUris) {
+		return true
+	}
+
+	return false
+}
+
+// SetPostLogoutRedirectUris gets a reference to the given []string and assigns it to the PostLogoutRedirectUris field.
+func (o *OAuthClient) SetPostLogoutRedirectUris(v []string) {
+	o.PostLogoutRedirectUris = v
+}
+
+// GetFrontchannelLogoutUri returns the FrontchannelLogoutUri field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *OAuthClient) GetFrontchannelLogoutUri() string {
+	if o == nil || IsNil(o.FrontchannelLogoutUri.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.FrontchannelLogoutUri.Get()
+}
+
+// GetFrontchannelLogoutUriOk returns a tuple with the FrontchannelLogoutUri field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *OAuthClient) GetFrontchannelLogoutUriOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.FrontchannelLogoutUri.Get(), o.FrontchannelLogoutUri.IsSet()
+}
+
+// HasFrontchannelLogoutUri returns a boolean if a field has been set.
+func (o *OAuthClient) HasFrontchannelLogoutUri() bool {
+	if o != nil && o.FrontchannelLogoutUri.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetFrontchannelLogoutUri gets a reference to the given NullableString and assigns it to the FrontchannelLogoutUri field.
+func (o *OAuthClient) SetFrontchannelLogoutUri(v string) {
+	o.FrontchannelLogoutUri.Set(&v)
+}
+// SetFrontchannelLogoutUriNil sets the value for FrontchannelLogoutUri to be an explicit nil
+func (o *OAuthClient) SetFrontchannelLogoutUriNil() {
+	o.FrontchannelLogoutUri.Set(nil)
+}
+
+// UnsetFrontchannelLogoutUri ensures that no value is present for FrontchannelLogoutUri, not even an explicit nil
+func (o *OAuthClient) UnsetFrontchannelLogoutUri() {
+	o.FrontchannelLogoutUri.Unset()
+}
+
+// GetBackchannelLogoutUri returns the BackchannelLogoutUri field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *OAuthClient) GetBackchannelLogoutUri() string {
+	if o == nil || IsNil(o.BackchannelLogoutUri.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.BackchannelLogoutUri.Get()
+}
+
+// GetBackchannelLogoutUriOk returns a tuple with the BackchannelLogoutUri field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *OAuthClient) GetBackchannelLogoutUriOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BackchannelLogoutUri.Get(), o.BackchannelLogoutUri.IsSet()
+}
+
+// HasBackchannelLogoutUri returns a boolean if a field has been set.
+func (o *OAuthClient) HasBackchannelLogoutUri() bool {
+	if o != nil && o.BackchannelLogoutUri.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBackchannelLogoutUri gets a reference to the given NullableString and assigns it to the BackchannelLogoutUri field.
+func (o *OAuthClient) SetBackchannelLogoutUri(v string) {
+	o.BackchannelLogoutUri.Set(&v)
+}
+// SetBackchannelLogoutUriNil sets the value for BackchannelLogoutUri to be an explicit nil
+func (o *OAuthClient) SetBackchannelLogoutUriNil() {
+	o.BackchannelLogoutUri.Set(nil)
+}
+
+// UnsetBackchannelLogoutUri ensures that no value is present for BackchannelLogoutUri, not even an explicit nil
+func (o *OAuthClient) UnsetBackchannelLogoutUri() {
+	o.BackchannelLogoutUri.Unset()
+}
+
+// GetAccessTokenFormat returns the AccessTokenFormat field value if set, zero value otherwise.
+func (o *OAuthClient) GetAccessTokenFormat() string {
+	if o == nil || IsNil(o.AccessTokenFormat) {
+		var ret string
+		return ret
+	}
+	return *o.AccessTokenFormat
+}
+
+// GetAccessTokenFormatOk returns a tuple with the AccessTokenFormat field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OAuthClient) GetAccessTokenFormatOk() (*string, bool) {
+	if o == nil || IsNil(o.AccessTokenFormat) {
+		return nil, false
+	}
+	return o.AccessTokenFormat, true
+}
+
+// HasAccessTokenFormat returns a boolean if a field has been set.
+func (o *OAuthClient) HasAccessTokenFormat() bool {
+	if o != nil && !IsNil(o.AccessTokenFormat) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccessTokenFormat gets a reference to the given string and assigns it to the AccessTokenFormat field.
+func (o *OAuthClient) SetAccessTokenFormat(v string) {
+	o.AccessTokenFormat = &v
+}
+
+// GetTokenEndpointAuthMethod returns the TokenEndpointAuthMethod field value if set, zero value otherwise.
+func (o *OAuthClient) GetTokenEndpointAuthMethod() string {
+	if o == nil || IsNil(o.TokenEndpointAuthMethod) {
+		var ret string
+		return ret
+	}
+	return *o.TokenEndpointAuthMethod
+}
+
+// GetTokenEndpointAuthMethodOk returns a tuple with the TokenEndpointAuthMethod field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OAuthClient) GetTokenEndpointAuthMethodOk() (*string, bool) {
+	if o == nil || IsNil(o.TokenEndpointAuthMethod) {
+		return nil, false
+	}
+	return o.TokenEndpointAuthMethod, true
+}
+
+// HasTokenEndpointAuthMethod returns a boolean if a field has been set.
+func (o *OAuthClient) HasTokenEndpointAuthMethod() bool {
+	if o != nil && !IsNil(o.TokenEndpointAuthMethod) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenEndpointAuthMethod gets a reference to the given string and assigns it to the TokenEndpointAuthMethod field.
+func (o *OAuthClient) SetTokenEndpointAuthMethod(v string) {
+	o.TokenEndpointAuthMethod = &v
+}
+
+// GetJwksUri returns the JwksUri field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *OAuthClient) GetJwksUri() string {
+	if o == nil || IsNil(o.JwksUri.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.JwksUri.Get()
+}
+
+// GetJwksUriOk returns a tuple with the JwksUri field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *OAuthClient) GetJwksUriOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.JwksUri.Get(), o.JwksUri.IsSet()
+}
+
+// HasJwksUri returns a boolean if a field has been set.
+func (o *OAuthClient) HasJwksUri() bool {
+	if o != nil && o.JwksUri.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetJwksUri gets a reference to the given NullableString and assigns it to the JwksUri field.
+func (o *OAuthClient) SetJwksUri(v string) {
+	o.JwksUri.Set(&v)
+}
+// SetJwksUriNil sets the value for JwksUri to be an explicit nil
+func (o *OAuthClient) SetJwksUriNil() {
+	o.JwksUri.Set(nil)
+}
+
+// UnsetJwksUri ensures that no value is present for JwksUri, not even an explicit nil
+func (o *OAuthClient) UnsetJwksUri() {
+	o.JwksUri.Unset()
+}
+
+// GetJwks returns the Jwks field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *OAuthClient) GetJwks() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Jwks
+}
+
+// GetJwksOk returns a tuple with the Jwks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *OAuthClient) GetJwksOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Jwks) {
+		return map[string]interface{}{}, false
+	}
+	return o.Jwks, true
+}
+
+// HasJwks returns a boolean if a field has been set.
+func (o *OAuthClient) HasJwks() bool {
+	if o != nil && !IsNil(o.Jwks) {
+		return true
+	}
+
+	return false
+}
+
+// SetJwks gets a reference to the given map[string]interface{} and assigns it to the Jwks field.
+func (o *OAuthClient) SetJwks(v map[string]interface{}) {
+	o.Jwks = v
+}
+
+// GetFapiMode returns the FapiMode field value if set, zero value otherwise.
+func (o *OAuthClient) GetFapiMode() string {
+	if o == nil || IsNil(o.FapiMode) {
+		var ret string
+		return ret
+	}
+	return *o.FapiMode
+}
+
+// GetFapiModeOk returns a tuple with the FapiMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OAuthClient) GetFapiModeOk() (*string, bool) {
+	if o == nil || IsNil(o.FapiMode) {
+		return nil, false
+	}
+	return o.FapiMode, true
+}
+
+// HasFapiMode returns a boolean if a field has been set.
+func (o *OAuthClient) HasFapiMode() bool {
+	if o != nil && !IsNil(o.FapiMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetFapiMode gets a reference to the given string and assigns it to the FapiMode field.
+func (o *OAuthClient) SetFapiMode(v string) {
+	o.FapiMode = &v
+}
+
+// GetRequirePar returns the RequirePar field value if set, zero value otherwise.
+func (o *OAuthClient) GetRequirePar() bool {
+	if o == nil || IsNil(o.RequirePar) {
+		var ret bool
+		return ret
+	}
+	return *o.RequirePar
+}
+
+// GetRequireParOk returns a tuple with the RequirePar field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OAuthClient) GetRequireParOk() (*bool, bool) {
+	if o == nil || IsNil(o.RequirePar) {
+		return nil, false
+	}
+	return o.RequirePar, true
+}
+
+// HasRequirePar returns a boolean if a field has been set.
+func (o *OAuthClient) HasRequirePar() bool {
+	if o != nil && !IsNil(o.RequirePar) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequirePar gets a reference to the given bool and assigns it to the RequirePar field.
+func (o *OAuthClient) SetRequirePar(v bool) {
+	o.RequirePar = &v
+}
+
+// GetDpopBoundAccessTokens returns the DpopBoundAccessTokens field value if set, zero value otherwise.
+func (o *OAuthClient) GetDpopBoundAccessTokens() bool {
+	if o == nil || IsNil(o.DpopBoundAccessTokens) {
+		var ret bool
+		return ret
+	}
+	return *o.DpopBoundAccessTokens
+}
+
+// GetDpopBoundAccessTokensOk returns a tuple with the DpopBoundAccessTokens field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OAuthClient) GetDpopBoundAccessTokensOk() (*bool, bool) {
+	if o == nil || IsNil(o.DpopBoundAccessTokens) {
+		return nil, false
+	}
+	return o.DpopBoundAccessTokens, true
+}
+
+// HasDpopBoundAccessTokens returns a boolean if a field has been set.
+func (o *OAuthClient) HasDpopBoundAccessTokens() bool {
+	if o != nil && !IsNil(o.DpopBoundAccessTokens) {
+		return true
+	}
+
+	return false
+}
+
+// SetDpopBoundAccessTokens gets a reference to the given bool and assigns it to the DpopBoundAccessTokens field.
+func (o *OAuthClient) SetDpopBoundAccessTokens(v bool) {
+	o.DpopBoundAccessTokens = &v
+}
+
+// GetAttestationBasedAuthEnabled returns the AttestationBasedAuthEnabled field value if set, zero value otherwise.
+func (o *OAuthClient) GetAttestationBasedAuthEnabled() bool {
+	if o == nil || IsNil(o.AttestationBasedAuthEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.AttestationBasedAuthEnabled
+}
+
+// GetAttestationBasedAuthEnabledOk returns a tuple with the AttestationBasedAuthEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OAuthClient) GetAttestationBasedAuthEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.AttestationBasedAuthEnabled) {
+		return nil, false
+	}
+	return o.AttestationBasedAuthEnabled, true
+}
+
+// HasAttestationBasedAuthEnabled returns a boolean if a field has been set.
+func (o *OAuthClient) HasAttestationBasedAuthEnabled() bool {
+	if o != nil && !IsNil(o.AttestationBasedAuthEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetAttestationBasedAuthEnabled gets a reference to the given bool and assigns it to the AttestationBasedAuthEnabled field.
+func (o *OAuthClient) SetAttestationBasedAuthEnabled(v bool) {
+	o.AttestationBasedAuthEnabled = &v
+}
+
+// GetAttesterIssuer returns the AttesterIssuer field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *OAuthClient) GetAttesterIssuer() string {
+	if o == nil || IsNil(o.AttesterIssuer.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.AttesterIssuer.Get()
+}
+
+// GetAttesterIssuerOk returns a tuple with the AttesterIssuer field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *OAuthClient) GetAttesterIssuerOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AttesterIssuer.Get(), o.AttesterIssuer.IsSet()
+}
+
+// HasAttesterIssuer returns a boolean if a field has been set.
+func (o *OAuthClient) HasAttesterIssuer() bool {
+	if o != nil && o.AttesterIssuer.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAttesterIssuer gets a reference to the given NullableString and assigns it to the AttesterIssuer field.
+func (o *OAuthClient) SetAttesterIssuer(v string) {
+	o.AttesterIssuer.Set(&v)
+}
+// SetAttesterIssuerNil sets the value for AttesterIssuer to be an explicit nil
+func (o *OAuthClient) SetAttesterIssuerNil() {
+	o.AttesterIssuer.Set(nil)
+}
+
+// UnsetAttesterIssuer ensures that no value is present for AttesterIssuer, not even an explicit nil
+func (o *OAuthClient) UnsetAttesterIssuer() {
+	o.AttesterIssuer.Unset()
+}
+
+// GetAttesterJwksUri returns the AttesterJwksUri field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *OAuthClient) GetAttesterJwksUri() string {
+	if o == nil || IsNil(o.AttesterJwksUri.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.AttesterJwksUri.Get()
+}
+
+// GetAttesterJwksUriOk returns a tuple with the AttesterJwksUri field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *OAuthClient) GetAttesterJwksUriOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AttesterJwksUri.Get(), o.AttesterJwksUri.IsSet()
+}
+
+// HasAttesterJwksUri returns a boolean if a field has been set.
+func (o *OAuthClient) HasAttesterJwksUri() bool {
+	if o != nil && o.AttesterJwksUri.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAttesterJwksUri gets a reference to the given NullableString and assigns it to the AttesterJwksUri field.
+func (o *OAuthClient) SetAttesterJwksUri(v string) {
+	o.AttesterJwksUri.Set(&v)
+}
+// SetAttesterJwksUriNil sets the value for AttesterJwksUri to be an explicit nil
+func (o *OAuthClient) SetAttesterJwksUriNil() {
+	o.AttesterJwksUri.Set(nil)
+}
+
+// UnsetAttesterJwksUri ensures that no value is present for AttesterJwksUri, not even an explicit nil
+func (o *OAuthClient) UnsetAttesterJwksUri() {
+	o.AttesterJwksUri.Unset()
+}
+
+// GetTokenExchangeEnabled returns the TokenExchangeEnabled field value if set, zero value otherwise.
+func (o *OAuthClient) GetTokenExchangeEnabled() bool {
+	if o == nil || IsNil(o.TokenExchangeEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.TokenExchangeEnabled
+}
+
+// GetTokenExchangeEnabledOk returns a tuple with the TokenExchangeEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OAuthClient) GetTokenExchangeEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.TokenExchangeEnabled) {
+		return nil, false
+	}
+	return o.TokenExchangeEnabled, true
+}
+
+// HasTokenExchangeEnabled returns a boolean if a field has been set.
+func (o *OAuthClient) HasTokenExchangeEnabled() bool {
+	if o != nil && !IsNil(o.TokenExchangeEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenExchangeEnabled gets a reference to the given bool and assigns it to the TokenExchangeEnabled field.
+func (o *OAuthClient) SetTokenExchangeEnabled(v bool) {
+	o.TokenExchangeEnabled = &v
+}
+
 func (o OAuthClient) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -417,6 +978,51 @@ func (o OAuthClient) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CibaEnabled) {
 		toSerialize["cibaEnabled"] = o.CibaEnabled
+	}
+	if !IsNil(o.AllowedOrigins) {
+		toSerialize["allowedOrigins"] = o.AllowedOrigins
+	}
+	if !IsNil(o.PostLogoutRedirectUris) {
+		toSerialize["postLogoutRedirectUris"] = o.PostLogoutRedirectUris
+	}
+	if o.FrontchannelLogoutUri.IsSet() {
+		toSerialize["frontchannelLogoutUri"] = o.FrontchannelLogoutUri.Get()
+	}
+	if o.BackchannelLogoutUri.IsSet() {
+		toSerialize["backchannelLogoutUri"] = o.BackchannelLogoutUri.Get()
+	}
+	if !IsNil(o.AccessTokenFormat) {
+		toSerialize["accessTokenFormat"] = o.AccessTokenFormat
+	}
+	if !IsNil(o.TokenEndpointAuthMethod) {
+		toSerialize["tokenEndpointAuthMethod"] = o.TokenEndpointAuthMethod
+	}
+	if o.JwksUri.IsSet() {
+		toSerialize["jwksUri"] = o.JwksUri.Get()
+	}
+	if o.Jwks != nil {
+		toSerialize["jwks"] = o.Jwks
+	}
+	if !IsNil(o.FapiMode) {
+		toSerialize["fapiMode"] = o.FapiMode
+	}
+	if !IsNil(o.RequirePar) {
+		toSerialize["requirePar"] = o.RequirePar
+	}
+	if !IsNil(o.DpopBoundAccessTokens) {
+		toSerialize["dpopBoundAccessTokens"] = o.DpopBoundAccessTokens
+	}
+	if !IsNil(o.AttestationBasedAuthEnabled) {
+		toSerialize["attestationBasedAuthEnabled"] = o.AttestationBasedAuthEnabled
+	}
+	if o.AttesterIssuer.IsSet() {
+		toSerialize["attesterIssuer"] = o.AttesterIssuer.Get()
+	}
+	if o.AttesterJwksUri.IsSet() {
+		toSerialize["attesterJwksUri"] = o.AttesterJwksUri.Get()
+	}
+	if !IsNil(o.TokenExchangeEnabled) {
+		toSerialize["tokenExchangeEnabled"] = o.TokenExchangeEnabled
 	}
 	return toSerialize, nil
 }

@@ -12,10 +12,12 @@ import AnyCodable
 
 public struct IssueResourceTokenRequest: Codable, JSONEncodable, Hashable {
 
+    /** Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource. */
+    public var resource: String
     /** Agent identifier the resource token is bound to. */
-    public var agent: String?
+    public var agent: String
     /** JWK thumbprint of the agent key (PoP binding). */
-    public var agentJkt: String?
+    public var agentJkt: String
     /** Optional space-delimited requested scopes. */
     public var scope: String?
     /** Optional auth request URL to embed in the token. */
@@ -23,7 +25,8 @@ public struct IssueResourceTokenRequest: Codable, JSONEncodable, Hashable {
     /** Optional auth server URL for the aud claim; defaults to this issuer. */
     public var authServer: String?
 
-    public init(agent: String? = nil, agentJkt: String? = nil, scope: String? = nil, authRequestUrl: String? = nil, authServer: String? = nil) {
+    public init(resource: String, agent: String, agentJkt: String, scope: String? = nil, authRequestUrl: String? = nil, authServer: String? = nil) {
+        self.resource = resource
         self.agent = agent
         self.agentJkt = agentJkt
         self.scope = scope
@@ -32,6 +35,7 @@ public struct IssueResourceTokenRequest: Codable, JSONEncodable, Hashable {
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
+        case resource
         case agent
         case agentJkt = "agent_jkt"
         case scope
@@ -43,8 +47,9 @@ public struct IssueResourceTokenRequest: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(agent, forKey: .agent)
-        try container.encodeIfPresent(agentJkt, forKey: .agentJkt)
+        try container.encode(resource, forKey: .resource)
+        try container.encode(agent, forKey: .agent)
+        try container.encode(agentJkt, forKey: .agentJkt)
         try container.encodeIfPresent(scope, forKey: .scope)
         try container.encodeIfPresent(authRequestUrl, forKey: .authRequestUrl)
         try container.encodeIfPresent(authServer, forKey: .authServer)

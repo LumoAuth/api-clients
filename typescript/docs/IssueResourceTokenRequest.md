@@ -5,8 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**agent** | **string** | Agent identifier the resource token is bound to. | [optional] [default to undefined]
-**agent_jkt** | **string** | JWK thumbprint of the agent key (PoP binding). | [optional] [default to undefined]
+**resource** | **string** | Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource. | [default to undefined]
+**agent** | **string** | Agent identifier the resource token is bound to. | [default to undefined]
+**agent_jkt** | **string** | JWK thumbprint of the agent key (PoP binding). | [default to undefined]
 **scope** | **string** | Optional space-delimited requested scopes. | [optional] [default to undefined]
 **auth_request_url** | **string** | Optional auth request URL to embed in the token. | [optional] [default to undefined]
 **auth_server** | **string** | Optional auth server URL for the aud claim; defaults to this issuer. | [optional] [default to undefined]
@@ -17,6 +18,7 @@ Name | Type | Description | Notes
 import { IssueResourceTokenRequest } from '@lumoauth/api-client';
 
 const instance: IssueResourceTokenRequest = {
+    resource,
     agent,
     agent_jkt,
     scope,

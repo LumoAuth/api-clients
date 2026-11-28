@@ -39,7 +39,7 @@ Method | HTTP request | Description
 
 # **addUserGroup**
 ```swift
-    open class func addUserGroup(orgId: String, userId: String, completion: @escaping (_ data: AddUserGroupResponse?, _ error: Error?) -> Void)
+    open class func addUserGroup(orgId: String, userId: String, addUserGroupRequest: AddUserGroupRequest, completion: @escaping (_ data: AddUserGroupResponse?, _ error: Error?) -> Void)
 ```
 
 Add a user to a group
@@ -51,9 +51,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
+let addUserGroupRequest = AddUserGroupRequest(groupId: 123, groupSlug: "groupSlug_example") // AddUserGroupRequest | 
 
 // Add a user to a group
-AdminUsersAPI.addUserGroup(orgId: orgId, userId: userId) { (response, error) in
+AdminUsersAPI.addUserGroup(orgId: orgId, userId: userId, addUserGroupRequest: addUserGroupRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -71,6 +72,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **userId** | **String** |  | 
+ **addUserGroupRequest** | [**AddUserGroupRequest**](AddUserGroupRequest.md) |  | 
 
 ### Return type
 
@@ -82,19 +84,19 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **addUserPermission**
 ```swift
-    open class func addUserPermission(orgId: String, userId: String, completion: @escaping (_ data: AddUserPermissionResponse?, _ error: Error?) -> Void)
+    open class func addUserPermission(orgId: String, userId: String, addUserPermissionRequest: AddUserPermissionRequest, completion: @escaping (_ data: AddUserPermissionResponse?, _ error: Error?) -> Void)
 ```
 
 Assign a permission to a user
 
-Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 ### Example
 ```swift
@@ -103,9 +105,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
+let addUserPermissionRequest = AddUserPermissionRequest(permissionId: 123) // AddUserPermissionRequest | 
 
 // Assign a permission to a user
-AdminUsersAPI.addUserPermission(orgId: orgId, userId: userId) { (response, error) in
+AdminUsersAPI.addUserPermission(orgId: orgId, userId: userId, addUserPermissionRequest: addUserPermissionRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -123,6 +126,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **userId** | **String** |  | 
+ **addUserPermissionRequest** | [**AddUserPermissionRequest**](AddUserPermissionRequest.md) |  | 
 
 ### Return type
 
@@ -134,14 +138,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **addUserRole**
 ```swift
-    open class func addUserRole(orgId: String, userId: String, completion: @escaping (_ data: AddUserRoleResponse?, _ error: Error?) -> Void)
+    open class func addUserRole(orgId: String, userId: String, addUserRoleRequest: AddUserRoleRequest, completion: @escaping (_ data: AddUserRoleResponse?, _ error: Error?) -> Void)
 ```
 
 Assign a role to a user
@@ -153,9 +157,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
+let addUserRoleRequest = AddUserRoleRequest(roleId: 123, roleSlug: "roleSlug_example") // AddUserRoleRequest | 
 
 // Assign a role to a user
-AdminUsersAPI.addUserRole(orgId: orgId, userId: userId) { (response, error) in
+AdminUsersAPI.addUserRole(orgId: orgId, userId: userId, addUserRoleRequest: addUserRoleRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -173,6 +178,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **userId** | **String** |  | 
+ **addUserRoleRequest** | [**AddUserRoleRequest**](AddUserRoleRequest.md) |  | 
 
 ### Return type
 
@@ -184,7 +190,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -557,7 +563,7 @@ Name | Type | Description  | Notes
 
 # **createUser**
 ```swift
-    open class func createUser(orgId: String, completion: @escaping (_ data: CreateUserResponse?, _ error: Error?) -> Void)
+    open class func createUser(orgId: String, createUserRequest: CreateUserRequest, completion: @escaping (_ data: CreateUserResponse?, _ error: Error?) -> Void)
 ```
 
 Create a user
@@ -568,9 +574,10 @@ Create a user
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let createUserRequest = CreateUserRequest(email: "email_example", password: "password_example", username: "username_example", name: "name_example", givenName: "givenName_example", familyName: "familyName_example", phoneNumber: "phoneNumber_example", emailVerified: false, isActive: false, metadata: "TODO", roles: ["roles_example"], groups: ["groups_example"]) // CreateUserRequest | 
 
 // Create a user
-AdminUsersAPI.createUser(orgId: orgId) { (response, error) in
+AdminUsersAPI.createUser(orgId: orgId, createUserRequest: createUserRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -587,6 +594,7 @@ AdminUsersAPI.createUser(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **createUserRequest** | [**CreateUserRequest**](CreateUserRequest.md) |  | 
 
 ### Return type
 
@@ -598,7 +606,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -977,7 +985,7 @@ Name | Type | Description  | Notes
 
 # **patchUser**
 ```swift
-    open class func patchUser(orgId: String, userId: String, completion: @escaping (_ data: UpdateUserResponse?, _ error: Error?) -> Void)
+    open class func patchUser(orgId: String, userId: String, updateUserRequest: UpdateUserRequest, completion: @escaping (_ data: UpdateUserResponse?, _ error: Error?) -> Void)
 ```
 
 Update a user
@@ -991,9 +999,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
+let updateUserRequest = UpdateUserRequest(email: "email_example", name: "name_example", givenName: "givenName_example", familyName: "familyName_example", phoneNumber: "phoneNumber_example", picture: "picture_example", locale: "locale_example", zoneinfo: "zoneinfo_example", emailVerified: false, isActive: false, staff: false, metadata: "TODO") // UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
 // Update a user
-AdminUsersAPI.patchUser(orgId: orgId, userId: userId) { (response, error) in
+AdminUsersAPI.patchUser(orgId: orgId, userId: userId, updateUserRequest: updateUserRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1011,6 +1020,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **userId** | **String** |  | 
+ **updateUserRequest** | [**UpdateUserRequest**](UpdateUserRequest.md) | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | 
 
 ### Return type
 
@@ -1022,7 +1032,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1287,7 +1297,7 @@ Name | Type | Description  | Notes
 
 # **setUserPassword**
 ```swift
-    open class func setUserPassword(orgId: String, userId: String, completion: @escaping (_ data: SetUserPasswordPostResponse?, _ error: Error?) -> Void)
+    open class func setUserPassword(orgId: String, userId: String, setUserPasswordPostRequest: SetUserPasswordPostRequest, completion: @escaping (_ data: SetUserPasswordPostResponse?, _ error: Error?) -> Void)
 ```
 
 Set a user's password
@@ -1301,9 +1311,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
+let setUserPasswordPostRequest = SetUserPasswordPostRequest(password: "password_example", requireChange: false) // SetUserPasswordPostRequest | 
 
 // Set a user's password
-AdminUsersAPI.setUserPassword(orgId: orgId, userId: userId) { (response, error) in
+AdminUsersAPI.setUserPassword(orgId: orgId, userId: userId, setUserPasswordPostRequest: setUserPasswordPostRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1321,6 +1332,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **userId** | **String** |  | 
+ **setUserPasswordPostRequest** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md) |  | 
 
 ### Return type
 
@@ -1332,14 +1344,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **setUserPasswordPost**
 ```swift
-    open class func setUserPasswordPost(orgId: String, userId: String, completion: @escaping (_ data: SetUserPasswordPostResponse?, _ error: Error?) -> Void)
+    open class func setUserPasswordPost(orgId: String, userId: String, setUserPasswordPostRequest: SetUserPasswordPostRequest, completion: @escaping (_ data: SetUserPasswordPostResponse?, _ error: Error?) -> Void)
 ```
 
 Set a user's password
@@ -1353,9 +1365,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
+let setUserPasswordPostRequest = SetUserPasswordPostRequest(password: "password_example", requireChange: false) // SetUserPasswordPostRequest | 
 
 // Set a user's password
-AdminUsersAPI.setUserPasswordPost(orgId: orgId, userId: userId) { (response, error) in
+AdminUsersAPI.setUserPasswordPost(orgId: orgId, userId: userId, setUserPasswordPostRequest: setUserPasswordPostRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1373,6 +1386,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **userId** | **String** |  | 
+ **setUserPasswordPostRequest** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md) |  | 
 
 ### Return type
 
@@ -1384,7 +1398,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1491,7 +1505,7 @@ Name | Type | Description  | Notes
 
 # **updateUser**
 ```swift
-    open class func updateUser(orgId: String, userId: String, completion: @escaping (_ data: UpdateUserResponse?, _ error: Error?) -> Void)
+    open class func updateUser(orgId: String, userId: String, updateUserRequest: UpdateUserRequest, completion: @escaping (_ data: UpdateUserResponse?, _ error: Error?) -> Void)
 ```
 
 Update a user
@@ -1505,9 +1519,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
+let updateUserRequest = UpdateUserRequest(email: "email_example", name: "name_example", givenName: "givenName_example", familyName: "familyName_example", phoneNumber: "phoneNumber_example", picture: "picture_example", locale: "locale_example", zoneinfo: "zoneinfo_example", emailVerified: false, isActive: false, staff: false, metadata: "TODO") // UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
 // Update a user
-AdminUsersAPI.updateUser(orgId: orgId, userId: userId) { (response, error) in
+AdminUsersAPI.updateUser(orgId: orgId, userId: userId, updateUserRequest: updateUserRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1525,6 +1540,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **userId** | **String** |  | 
+ **updateUserRequest** | [**UpdateUserRequest**](UpdateUserRequest.md) | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | 
 
 ### Return type
 
@@ -1536,14 +1552,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateUserGroups**
 ```swift
-    open class func updateUserGroups(orgId: String, userId: String, completion: @escaping (_ data: UpdateUserGroupsResponse?, _ error: Error?) -> Void)
+    open class func updateUserGroups(orgId: String, userId: String, updateUserGroupsRequest: UpdateUserGroupsRequest, completion: @escaping (_ data: UpdateUserGroupsResponse?, _ error: Error?) -> Void)
 ```
 
 Replace a user's groups
@@ -1555,9 +1571,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
+let updateUserGroupsRequest = UpdateUserGroupsRequest(groups: ["groups_example"]) // UpdateUserGroupsRequest | 
 
 // Replace a user's groups
-AdminUsersAPI.updateUserGroups(orgId: orgId, userId: userId) { (response, error) in
+AdminUsersAPI.updateUserGroups(orgId: orgId, userId: userId, updateUserGroupsRequest: updateUserGroupsRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1575,6 +1592,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **userId** | **String** |  | 
+ **updateUserGroupsRequest** | [**UpdateUserGroupsRequest**](UpdateUserGroupsRequest.md) |  | 
 
 ### Return type
 
@@ -1586,14 +1604,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateUserRoles**
 ```swift
-    open class func updateUserRoles(orgId: String, userId: String, completion: @escaping (_ data: UpdateUserRolesResponse?, _ error: Error?) -> Void)
+    open class func updateUserRoles(orgId: String, userId: String, adminGroupsUpdateRolesRequest: AdminGroupsUpdateRolesRequest, completion: @escaping (_ data: UpdateUserRolesResponse?, _ error: Error?) -> Void)
 ```
 
 Replace a user's roles
@@ -1605,9 +1623,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
+let adminGroupsUpdateRolesRequest = AdminGroupsUpdateRolesRequest(roles: ["roles_example"]) // AdminGroupsUpdateRolesRequest | 
 
 // Replace a user's roles
-AdminUsersAPI.updateUserRoles(orgId: orgId, userId: userId) { (response, error) in
+AdminUsersAPI.updateUserRoles(orgId: orgId, userId: userId, adminGroupsUpdateRolesRequest: adminGroupsUpdateRolesRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1625,6 +1644,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **userId** | **String** |  | 
+ **adminGroupsUpdateRolesRequest** | [**AdminGroupsUpdateRolesRequest**](AdminGroupsUpdateRolesRequest.md) |  | 
 
 ### Return type
 
@@ -1636,7 +1656,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -28,7 +28,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminOrgInvitationsCreate"></a>
 # **adminOrgInvitationsCreate**
-> AdminOrgInvitationsCreateResponse adminOrgInvitationsCreate(orgId, organizationId)
+> AdminOrgInvitationsCreateResponse adminOrgInvitationsCreate(orgId, organizationId, adminOrgInvitationsCreateRequest)
 
 Invite a user to an organization
 
@@ -60,8 +60,9 @@ public class Example {
     AdminOrganizationsApi apiInstance = new AdminOrganizationsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
+    AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest = new AdminOrgInvitationsCreateRequest(); // AdminOrgInvitationsCreateRequest | 
     try {
-      AdminOrgInvitationsCreateResponse result = apiInstance.adminOrgInvitationsCreate(orgId, organizationId);
+      AdminOrgInvitationsCreateResponse result = apiInstance.adminOrgInvitationsCreate(orgId, organizationId, adminOrgInvitationsCreateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrgInvitationsCreate");
@@ -80,6 +81,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **organizationId** | **String**|  | |
+| **adminOrgInvitationsCreateRequest** | [**AdminOrgInvitationsCreateRequest**](AdminOrgInvitationsCreateRequest.md)|  | |
 
 ### Return type
 
@@ -91,7 +93,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -333,7 +335,7 @@ public class Example {
 
 <a id="adminOrgMembersAdd"></a>
 # **adminOrgMembersAdd**
-> AdminOrgMembersAddResponse adminOrgMembersAdd(orgId, organizationId)
+> AdminOrgMembersAddResponse adminOrgMembersAdd(orgId, organizationId, adminOrgMembersAddRequest)
 
 Add a member to an organization
 
@@ -365,8 +367,9 @@ public class Example {
     AdminOrganizationsApi apiInstance = new AdminOrganizationsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
+    AdminOrgMembersAddRequest adminOrgMembersAddRequest = new AdminOrgMembersAddRequest(); // AdminOrgMembersAddRequest | 
     try {
-      AdminOrgMembersAddResponse result = apiInstance.adminOrgMembersAdd(orgId, organizationId);
+      AdminOrgMembersAddResponse result = apiInstance.adminOrgMembersAdd(orgId, organizationId, adminOrgMembersAddRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrgMembersAdd");
@@ -385,6 +388,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **organizationId** | **String**|  | |
+| **adminOrgMembersAddRequest** | [**AdminOrgMembersAddRequest**](AdminOrgMembersAddRequest.md)|  | |
 
 ### Return type
 
@@ -396,7 +400,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -559,7 +563,7 @@ public class Example {
 
 <a id="adminOrgRolesCreate"></a>
 # **adminOrgRolesCreate**
-> AdminOrgRolesCreateResponse adminOrgRolesCreate(orgId, organizationId)
+> AdminOrgRolesCreateResponse adminOrgRolesCreate(orgId, organizationId, adminOrgRolesCreateRequest)
 
 Create an organization role
 
@@ -591,8 +595,9 @@ public class Example {
     AdminOrganizationsApi apiInstance = new AdminOrganizationsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
+    AdminOrgRolesCreateRequest adminOrgRolesCreateRequest = new AdminOrgRolesCreateRequest(); // AdminOrgRolesCreateRequest | 
     try {
-      AdminOrgRolesCreateResponse result = apiInstance.adminOrgRolesCreate(orgId, organizationId);
+      AdminOrgRolesCreateResponse result = apiInstance.adminOrgRolesCreate(orgId, organizationId, adminOrgRolesCreateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrgRolesCreate");
@@ -611,6 +616,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **organizationId** | **String**|  | |
+| **adminOrgRolesCreateRequest** | [**AdminOrgRolesCreateRequest**](AdminOrgRolesCreateRequest.md)|  | |
 
 ### Return type
 
@@ -622,7 +628,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -786,7 +792,7 @@ public class Example {
 
 <a id="adminOrganizationsCreate"></a>
 # **adminOrganizationsCreate**
-> AdminOrganizationsCreateResponse adminOrganizationsCreate(orgId)
+> AdminOrganizationsCreateResponse adminOrganizationsCreate(orgId, adminOrganizationsCreateRequest)
 
 Create an organization
 
@@ -817,8 +823,9 @@ public class Example {
 
     AdminOrganizationsApi apiInstance = new AdminOrganizationsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AdminOrganizationsCreateRequest adminOrganizationsCreateRequest = new AdminOrganizationsCreateRequest(); // AdminOrganizationsCreateRequest | 
     try {
-      AdminOrganizationsCreateResponse result = apiInstance.adminOrganizationsCreate(orgId);
+      AdminOrganizationsCreateResponse result = apiInstance.adminOrganizationsCreate(orgId, adminOrganizationsCreateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrganizationsCreate");
@@ -836,6 +843,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **adminOrganizationsCreateRequest** | [**AdminOrganizationsCreateRequest**](AdminOrganizationsCreateRequest.md)|  | |
 
 ### Return type
 
@@ -847,7 +855,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1079,7 +1087,7 @@ public class Example {
 
 <a id="patchAdminOrgMembersUpdate"></a>
 # **patchAdminOrgMembersUpdate**
-> PutAdminOrgMembersUpdateResponse patchAdminOrgMembersUpdate(orgId, organizationId, userId)
+> PutAdminOrgMembersUpdateResponse patchAdminOrgMembersUpdate(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest)
 
 Update a member&#39;s role or status
 
@@ -1112,8 +1120,9 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     String userId = "userId_example"; // String | 
+    PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest = new PutAdminOrgMembersUpdateRequest(); // PutAdminOrgMembersUpdateRequest | 
     try {
-      PutAdminOrgMembersUpdateResponse result = apiInstance.patchAdminOrgMembersUpdate(orgId, organizationId, userId);
+      PutAdminOrgMembersUpdateResponse result = apiInstance.patchAdminOrgMembersUpdate(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#patchAdminOrgMembersUpdate");
@@ -1133,6 +1142,7 @@ public class Example {
 | **orgId** | **String**|  | |
 | **organizationId** | **String**|  | |
 | **userId** | **String**|  | |
+| **putAdminOrgMembersUpdateRequest** | [**PutAdminOrgMembersUpdateRequest**](PutAdminOrgMembersUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1144,7 +1154,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1156,7 +1166,7 @@ public class Example {
 
 <a id="patchAdminOrgRolesUpdate"></a>
 # **patchAdminOrgRolesUpdate**
-> AdminOrgRolesCreateResponse patchAdminOrgRolesUpdate(orgId, organizationId, roleId)
+> AdminOrgRolesCreateResponse patchAdminOrgRolesUpdate(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest)
 
 Update an organization role
 
@@ -1189,8 +1199,9 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     String roleId = "roleId_example"; // String | 
+    PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest = new PutAdminOrgRolesUpdateRequest(); // PutAdminOrgRolesUpdateRequest | 
     try {
-      AdminOrgRolesCreateResponse result = apiInstance.patchAdminOrgRolesUpdate(orgId, organizationId, roleId);
+      AdminOrgRolesCreateResponse result = apiInstance.patchAdminOrgRolesUpdate(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#patchAdminOrgRolesUpdate");
@@ -1210,6 +1221,7 @@ public class Example {
 | **orgId** | **String**|  | |
 | **organizationId** | **String**|  | |
 | **roleId** | **String**|  | |
+| **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1221,7 +1233,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1233,7 +1245,7 @@ public class Example {
 
 <a id="patchAdminOrganizationsUpdate"></a>
 # **patchAdminOrganizationsUpdate**
-> AdminOrganizationsGetResponse patchAdminOrganizationsUpdate(orgId, organizationId)
+> AdminOrganizationsGetResponse patchAdminOrganizationsUpdate(orgId, organizationId, putAdminOrganizationsUpdateRequest)
 
 Update an organization
 
@@ -1265,8 +1277,9 @@ public class Example {
     AdminOrganizationsApi apiInstance = new AdminOrganizationsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
+    PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest = new PutAdminOrganizationsUpdateRequest(); // PutAdminOrganizationsUpdateRequest | 
     try {
-      AdminOrganizationsGetResponse result = apiInstance.patchAdminOrganizationsUpdate(orgId, organizationId);
+      AdminOrganizationsGetResponse result = apiInstance.patchAdminOrganizationsUpdate(orgId, organizationId, putAdminOrganizationsUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#patchAdminOrganizationsUpdate");
@@ -1285,6 +1298,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **organizationId** | **String**|  | |
+| **putAdminOrganizationsUpdateRequest** | [**PutAdminOrganizationsUpdateRequest**](PutAdminOrganizationsUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1296,7 +1310,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1309,7 +1323,7 @@ public class Example {
 
 <a id="putAdminOrgMembersUpdate"></a>
 # **putAdminOrgMembersUpdate**
-> PutAdminOrgMembersUpdateResponse putAdminOrgMembersUpdate(orgId, organizationId, userId)
+> PutAdminOrgMembersUpdateResponse putAdminOrgMembersUpdate(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest)
 
 Update a member&#39;s role or status
 
@@ -1342,8 +1356,9 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     String userId = "userId_example"; // String | 
+    PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest = new PutAdminOrgMembersUpdateRequest(); // PutAdminOrgMembersUpdateRequest | 
     try {
-      PutAdminOrgMembersUpdateResponse result = apiInstance.putAdminOrgMembersUpdate(orgId, organizationId, userId);
+      PutAdminOrgMembersUpdateResponse result = apiInstance.putAdminOrgMembersUpdate(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#putAdminOrgMembersUpdate");
@@ -1363,6 +1378,7 @@ public class Example {
 | **orgId** | **String**|  | |
 | **organizationId** | **String**|  | |
 | **userId** | **String**|  | |
+| **putAdminOrgMembersUpdateRequest** | [**PutAdminOrgMembersUpdateRequest**](PutAdminOrgMembersUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1374,7 +1390,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1386,7 +1402,7 @@ public class Example {
 
 <a id="putAdminOrgRolesUpdate"></a>
 # **putAdminOrgRolesUpdate**
-> AdminOrgRolesCreateResponse putAdminOrgRolesUpdate(orgId, organizationId, roleId)
+> AdminOrgRolesCreateResponse putAdminOrgRolesUpdate(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest)
 
 Update an organization role
 
@@ -1419,8 +1435,9 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     String roleId = "roleId_example"; // String | 
+    PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest = new PutAdminOrgRolesUpdateRequest(); // PutAdminOrgRolesUpdateRequest | 
     try {
-      AdminOrgRolesCreateResponse result = apiInstance.putAdminOrgRolesUpdate(orgId, organizationId, roleId);
+      AdminOrgRolesCreateResponse result = apiInstance.putAdminOrgRolesUpdate(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#putAdminOrgRolesUpdate");
@@ -1440,6 +1457,7 @@ public class Example {
 | **orgId** | **String**|  | |
 | **organizationId** | **String**|  | |
 | **roleId** | **String**|  | |
+| **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1451,7 +1469,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1463,7 +1481,7 @@ public class Example {
 
 <a id="putAdminOrganizationsUpdate"></a>
 # **putAdminOrganizationsUpdate**
-> AdminOrganizationsGetResponse putAdminOrganizationsUpdate(orgId, organizationId)
+> AdminOrganizationsGetResponse putAdminOrganizationsUpdate(orgId, organizationId, putAdminOrganizationsUpdateRequest)
 
 Update an organization
 
@@ -1495,8 +1513,9 @@ public class Example {
     AdminOrganizationsApi apiInstance = new AdminOrganizationsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
+    PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest = new PutAdminOrganizationsUpdateRequest(); // PutAdminOrganizationsUpdateRequest | 
     try {
-      AdminOrganizationsGetResponse result = apiInstance.putAdminOrganizationsUpdate(orgId, organizationId);
+      AdminOrganizationsGetResponse result = apiInstance.putAdminOrganizationsUpdate(orgId, organizationId, putAdminOrganizationsUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#putAdminOrganizationsUpdate");
@@ -1515,6 +1534,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **organizationId** | **String**|  | |
+| **putAdminOrganizationsUpdateRequest** | [**PutAdminOrganizationsUpdateRequest**](PutAdminOrganizationsUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1526,7 +1546,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

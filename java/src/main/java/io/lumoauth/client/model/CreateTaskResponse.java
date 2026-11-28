@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -22,6 +22,7 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,12 +50,17 @@ import io.lumoauth.client.JSON;
 /**
  * CreateTaskResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-28T05:25:48.073972593Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class CreateTaskResponse {
   public static final String SERIALIZED_NAME_TASK_ID = "task_id";
   @SerializedName(SERIALIZED_NAME_TASK_ID)
   @javax.annotation.Nullable
   private String taskId;
+
+  public static final String SERIALIZED_NAME_PARENT_TASK_ID = "parent_task_id";
+  @SerializedName(SERIALIZED_NAME_PARENT_TASK_ID)
+  @javax.annotation.Nullable
+  private String parentTaskId;
 
   public static final String SERIALIZED_NAME_CAEP_SESSION_ID = "caep_session_id";
   @SerializedName(SERIALIZED_NAME_CAEP_SESSION_ID)
@@ -100,6 +106,25 @@ public class CreateTaskResponse {
 
   public void setTaskId(@javax.annotation.Nullable String taskId) {
     this.taskId = taskId;
+  }
+
+
+  public CreateTaskResponse parentTaskId(@javax.annotation.Nullable String parentTaskId) {
+    this.parentTaskId = parentTaskId;
+    return this;
+  }
+
+  /**
+   * The parent task, or null for a task without one.
+   * @return parentTaskId
+   */
+  @javax.annotation.Nullable
+  public String getParentTaskId() {
+    return parentTaskId;
+  }
+
+  public void setParentTaskId(@javax.annotation.Nullable String parentTaskId) {
+    this.parentTaskId = parentTaskId;
   }
 
 
@@ -209,6 +234,7 @@ public class CreateTaskResponse {
     }
     CreateTaskResponse createTaskResponse = (CreateTaskResponse) o;
     return Objects.equals(this.taskId, createTaskResponse.taskId) &&
+        Objects.equals(this.parentTaskId, createTaskResponse.parentTaskId) &&
         Objects.equals(this.caepSessionId, createTaskResponse.caepSessionId) &&
         Objects.equals(this.expiresAt, createTaskResponse.expiresAt) &&
         Objects.equals(this.agentId, createTaskResponse.agentId) &&
@@ -216,9 +242,20 @@ public class CreateTaskResponse {
         Objects.equals(this.onBehalfOf, createTaskResponse.onBehalfOf);
   }
 
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
+  }
+
   @Override
   public int hashCode() {
-    return Objects.hash(taskId, caepSessionId, expiresAt, agentId, agent, onBehalfOf);
+    return Objects.hash(taskId, parentTaskId, caepSessionId, expiresAt, agentId, agent, onBehalfOf);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -226,6 +263,7 @@ public class CreateTaskResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class CreateTaskResponse {\n");
     sb.append("    taskId: ").append(toIndentedString(taskId)).append("\n");
+    sb.append("    parentTaskId: ").append(toIndentedString(parentTaskId)).append("\n");
     sb.append("    caepSessionId: ").append(toIndentedString(caepSessionId)).append("\n");
     sb.append("    expiresAt: ").append(toIndentedString(expiresAt)).append("\n");
     sb.append("    agentId: ").append(toIndentedString(agentId)).append("\n");
@@ -252,7 +290,7 @@ public class CreateTaskResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("task_id", "caep_session_id", "expires_at", "agent_id", "agent", "on_behalf_of"));
+    openapiFields = new HashSet<String>(Arrays.asList("task_id", "parent_task_id", "caep_session_id", "expires_at", "agent_id", "agent", "on_behalf_of"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -281,6 +319,9 @@ public class CreateTaskResponse {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("task_id") != null && !jsonObj.get("task_id").isJsonNull()) && !jsonObj.get("task_id").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `task_id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("task_id").toString()));
+      }
+      if ((jsonObj.get("parent_task_id") != null && !jsonObj.get("parent_task_id").isJsonNull()) && !jsonObj.get("parent_task_id").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `parent_task_id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("parent_task_id").toString()));
       }
       if ((jsonObj.get("caep_session_id") != null && !jsonObj.get("caep_session_id").isJsonNull()) && !jsonObj.get("caep_session_id").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `caep_session_id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("caep_session_id").toString()));

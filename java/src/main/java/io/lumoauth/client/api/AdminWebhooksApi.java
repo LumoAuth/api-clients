@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminWebhooksCreateRequest;
 import io.lumoauth.client.model.AdminWebhooksCreateResponse;
 import io.lumoauth.client.model.AdminWebhooksDeliveriesListResponse;
 import io.lumoauth.client.model.AdminWebhooksDeliveryReplayResponse;
@@ -40,6 +41,7 @@ import io.lumoauth.client.model.AdminWebhooksTunnelStartResponse;
 import io.lumoauth.client.model.AdminWebhooksWebhooksDisableResponse;
 import io.lumoauth.client.model.AdminWebhooksWebhooksEnableResponse;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAdminWebhooksUpdateRequest;
 import io.lumoauth.client.model.PutAdminWebhooksUpdateResponse;
 
 import java.lang.reflect.Type;
@@ -88,6 +90,7 @@ public class AdminWebhooksApi {
     /**
      * Build call for adminWebhooksCreate
      * @param orgId  (required)
+     * @param adminWebhooksCreateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -98,7 +101,7 @@ public class AdminWebhooksApi {
         <tr><td> 201 </td><td> Webhook created; the secret is shown once </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksCreateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminWebhooksCreateRequest adminWebhooksCreateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -112,7 +115,7 @@ public class AdminWebhooksApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminWebhooksCreateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/webhooks"
@@ -133,6 +136,7 @@ public class AdminWebhooksApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -144,13 +148,18 @@ public class AdminWebhooksApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminWebhooksCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminWebhooksCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminWebhooksCreateRequest adminWebhooksCreateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminWebhooksCreate(Async)");
         }
 
-        return adminWebhooksCreateCall(orgId, _callback);
+        // verify the required parameter 'adminWebhooksCreateRequest' is set
+        if (adminWebhooksCreateRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminWebhooksCreateRequest' when calling adminWebhooksCreate(Async)");
+        }
+
+        return adminWebhooksCreateCall(orgId, adminWebhooksCreateRequest, _callback);
 
     }
 
@@ -158,6 +167,7 @@ public class AdminWebhooksApi {
      * Create a webhook
      * Accepts &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60; and &#x60;configuration&#x60;. The signing secret is generated server-side and returned once in this response only: a &#x60;secret&#x60; in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
      * @param orgId  (required)
+     * @param adminWebhooksCreateRequest  (required)
      * @return AdminWebhooksCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -167,8 +177,8 @@ public class AdminWebhooksApi {
         <tr><td> 201 </td><td> Webhook created; the secret is shown once </td><td>  -  </td></tr>
      </table>
      */
-    public AdminWebhooksCreateResponse adminWebhooksCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<AdminWebhooksCreateResponse> localVarResp = adminWebhooksCreateWithHttpInfo(orgId);
+    public AdminWebhooksCreateResponse adminWebhooksCreate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminWebhooksCreateRequest adminWebhooksCreateRequest) throws ApiException {
+        ApiResponse<AdminWebhooksCreateResponse> localVarResp = adminWebhooksCreateWithHttpInfo(orgId, adminWebhooksCreateRequest);
         return localVarResp.getData();
     }
 
@@ -176,6 +186,7 @@ public class AdminWebhooksApi {
      * Create a webhook
      * Accepts &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60; and &#x60;configuration&#x60;. The signing secret is generated server-side and returned once in this response only: a &#x60;secret&#x60; in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
      * @param orgId  (required)
+     * @param adminWebhooksCreateRequest  (required)
      * @return ApiResponse&lt;AdminWebhooksCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -185,8 +196,8 @@ public class AdminWebhooksApi {
         <tr><td> 201 </td><td> Webhook created; the secret is shown once </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminWebhooksCreateResponse> adminWebhooksCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = adminWebhooksCreateValidateBeforeCall(orgId, null);
+    public ApiResponse<AdminWebhooksCreateResponse> adminWebhooksCreateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminWebhooksCreateRequest adminWebhooksCreateRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminWebhooksCreateValidateBeforeCall(orgId, adminWebhooksCreateRequest, null);
         Type localVarReturnType = new TypeToken<AdminWebhooksCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -195,6 +206,7 @@ public class AdminWebhooksApi {
      * Create a webhook (asynchronously)
      * Accepts &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60; and &#x60;configuration&#x60;. The signing secret is generated server-side and returned once in this response only: a &#x60;secret&#x60; in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
      * @param orgId  (required)
+     * @param adminWebhooksCreateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -205,9 +217,9 @@ public class AdminWebhooksApi {
         <tr><td> 201 </td><td> Webhook created; the secret is shown once </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminWebhooksCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksCreateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminWebhooksCreateRequest adminWebhooksCreateRequest, final ApiCallback<AdminWebhooksCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminWebhooksCreateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = adminWebhooksCreateValidateBeforeCall(orgId, adminWebhooksCreateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminWebhooksCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1139,7 +1151,7 @@ public class AdminWebhooksApi {
 
     /**
      * List webhooks
-     * Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+     * Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
      * @param orgId  (required)
      * @return AdminWebhooksListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1157,7 +1169,7 @@ public class AdminWebhooksApi {
 
     /**
      * List webhooks
-     * Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+     * Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminWebhooksListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1176,7 +1188,7 @@ public class AdminWebhooksApi {
 
     /**
      * List webhooks (asynchronously)
-     * Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+     * Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1552,7 +1564,7 @@ public class AdminWebhooksApi {
 
     /**
      * Start a webhook tunnel
-     * Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+     * Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
      * @param orgId  (required)
      * @return AdminWebhooksTunnelStartResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1570,7 +1582,7 @@ public class AdminWebhooksApi {
 
     /**
      * Start a webhook tunnel
-     * Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+     * Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminWebhooksTunnelStartResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1589,7 +1601,7 @@ public class AdminWebhooksApi {
 
     /**
      * Start a webhook tunnel (asynchronously)
-     * Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+     * Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1764,7 +1776,7 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery, in order, whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at, body, headers}&#x60;. &#x60;payload&#x60; is the event data and &#x60;received_at&#x60; is RFC 3339. &#x60;body&#x60; is the signed request body as a string (the envelope &#x60;{event, timestamp, tenant, data}&#x60;, exactly the bytes that the signature covers: send it unchanged) and &#x60;headers&#x60; the request headers of a real delivery (&#x60;X-LumoAuth-Signature&#x60;, &#x60;X-LumoAuth-Timestamp&#x60;, &#x60;X-LumoAuth-Delivery&#x60;, &#x60;X-LumoAuth-Event&#x60;, &#x60;Content-Type&#x60;, &#x60;User-Agent&#x60;); both are null for a delivery without a stored request. A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Not a tunnel webhook </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
@@ -1842,7 +1854,7 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery, in order, whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at, body, headers}&#x60;. &#x60;payload&#x60; is the event data and &#x60;received_at&#x60; is RFC 3339. &#x60;body&#x60; is the signed request body as a string (the envelope &#x60;{event, timestamp, tenant, data}&#x60;, exactly the bytes that the signature covers: send it unchanged) and &#x60;headers&#x60; the request headers of a real delivery (&#x60;X-LumoAuth-Signature&#x60;, &#x60;X-LumoAuth-Timestamp&#x60;, &#x60;X-LumoAuth-Delivery&#x60;, &#x60;X-LumoAuth-Event&#x60;, &#x60;Content-Type&#x60;, &#x60;User-Agent&#x60;); both are null for a delivery without a stored request. A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Not a tunnel webhook </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
@@ -1863,7 +1875,7 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery, in order, whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at, body, headers}&#x60;. &#x60;payload&#x60; is the event data and &#x60;received_at&#x60; is RFC 3339. &#x60;body&#x60; is the signed request body as a string (the envelope &#x60;{event, timestamp, tenant, data}&#x60;, exactly the bytes that the signature covers: send it unchanged) and &#x60;headers&#x60; the request headers of a real delivery (&#x60;X-LumoAuth-Signature&#x60;, &#x60;X-LumoAuth-Timestamp&#x60;, &#x60;X-LumoAuth-Delivery&#x60;, &#x60;X-LumoAuth-Event&#x60;, &#x60;Content-Type&#x60;, &#x60;User-Agent&#x60;); both are null for a delivery without a stored request. A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Not a tunnel webhook </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
@@ -1886,7 +1898,7 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery, in order, whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at, body, headers}&#x60;. &#x60;payload&#x60; is the event data and &#x60;received_at&#x60; is RFC 3339. &#x60;body&#x60; is the signed request body as a string (the envelope &#x60;{event, timestamp, tenant, data}&#x60;, exactly the bytes that the signature covers: send it unchanged) and &#x60;headers&#x60; the request headers of a real delivery (&#x60;X-LumoAuth-Signature&#x60;, &#x60;X-LumoAuth-Timestamp&#x60;, &#x60;X-LumoAuth-Delivery&#x60;, &#x60;X-LumoAuth-Event&#x60;, &#x60;Content-Type&#x60;, &#x60;User-Agent&#x60;); both are null for a delivery without a stored request. A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Not a tunnel webhook </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
@@ -2184,6 +2196,7 @@ public class AdminWebhooksApi {
      * Build call for patchAdminWebhooksUpdate
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @param putAdminWebhooksUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2195,7 +2208,7 @@ public class AdminWebhooksApi {
         <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminWebhooksUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminWebhooksUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2209,7 +2222,7 @@ public class AdminWebhooksApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminWebhooksUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}"
@@ -2231,6 +2244,7 @@ public class AdminWebhooksApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2242,7 +2256,7 @@ public class AdminWebhooksApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminWebhooksUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminWebhooksUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminWebhooksUpdate(Async)");
@@ -2253,7 +2267,12 @@ public class AdminWebhooksApi {
             throw new ApiException("Missing the required parameter 'webhookId' when calling patchAdminWebhooksUpdate(Async)");
         }
 
-        return patchAdminWebhooksUpdateCall(orgId, webhookId, _callback);
+        // verify the required parameter 'putAdminWebhooksUpdateRequest' is set
+        if (putAdminWebhooksUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminWebhooksUpdateRequest' when calling patchAdminWebhooksUpdate(Async)");
+        }
+
+        return patchAdminWebhooksUpdateCall(orgId, webhookId, putAdminWebhooksUpdateRequest, _callback);
 
     }
 
@@ -2262,6 +2281,7 @@ public class AdminWebhooksApi {
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @param putAdminWebhooksUpdateRequest  (required)
      * @return PutAdminWebhooksUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2272,8 +2292,8 @@ public class AdminWebhooksApi {
         <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminWebhooksUpdateResponse patchAdminWebhooksUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        ApiResponse<PutAdminWebhooksUpdateResponse> localVarResp = patchAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+    public PutAdminWebhooksUpdateResponse patchAdminWebhooksUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminWebhooksUpdateResponse> localVarResp = patchAdminWebhooksUpdateWithHttpInfo(orgId, webhookId, putAdminWebhooksUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -2282,6 +2302,7 @@ public class AdminWebhooksApi {
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @param putAdminWebhooksUpdateRequest  (required)
      * @return ApiResponse&lt;PutAdminWebhooksUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2292,8 +2313,8 @@ public class AdminWebhooksApi {
         <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminWebhooksUpdateResponse> patchAdminWebhooksUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminWebhooksUpdateValidateBeforeCall(orgId, webhookId, null);
+    public ApiResponse<PutAdminWebhooksUpdateResponse> patchAdminWebhooksUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminWebhooksUpdateValidateBeforeCall(orgId, webhookId, putAdminWebhooksUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminWebhooksUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2303,6 +2324,7 @@ public class AdminWebhooksApi {
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @param putAdminWebhooksUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2314,9 +2336,9 @@ public class AdminWebhooksApi {
         <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminWebhooksUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<PutAdminWebhooksUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminWebhooksUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, final ApiCallback<PutAdminWebhooksUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminWebhooksUpdateValidateBeforeCall(orgId, webhookId, _callback);
+        okhttp3.Call localVarCall = patchAdminWebhooksUpdateValidateBeforeCall(orgId, webhookId, putAdminWebhooksUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminWebhooksUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2325,6 +2347,7 @@ public class AdminWebhooksApi {
      * Build call for putAdminWebhooksUpdate
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @param putAdminWebhooksUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2336,7 +2359,7 @@ public class AdminWebhooksApi {
         <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminWebhooksUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminWebhooksUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2350,7 +2373,7 @@ public class AdminWebhooksApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminWebhooksUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}"
@@ -2372,6 +2395,7 @@ public class AdminWebhooksApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2383,7 +2407,7 @@ public class AdminWebhooksApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminWebhooksUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminWebhooksUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminWebhooksUpdate(Async)");
@@ -2394,7 +2418,12 @@ public class AdminWebhooksApi {
             throw new ApiException("Missing the required parameter 'webhookId' when calling putAdminWebhooksUpdate(Async)");
         }
 
-        return putAdminWebhooksUpdateCall(orgId, webhookId, _callback);
+        // verify the required parameter 'putAdminWebhooksUpdateRequest' is set
+        if (putAdminWebhooksUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminWebhooksUpdateRequest' when calling putAdminWebhooksUpdate(Async)");
+        }
+
+        return putAdminWebhooksUpdateCall(orgId, webhookId, putAdminWebhooksUpdateRequest, _callback);
 
     }
 
@@ -2403,6 +2432,7 @@ public class AdminWebhooksApi {
      * Changes only the fields that are sent: &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60;, &#x60;configuration&#x60;, &#x60;rotateSecret&#x60;. A new &#x60;url&#x60; for a webhook that has a signing secret needs &#x60;rotateSecret: true&#x60;; the response then carries the new &#x60;secret&#x60; once. Unknown fields, &#x60;secret&#x60; and event names that are not in the catalogue are refused with 400.
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @param putAdminWebhooksUpdateRequest  (required)
      * @return PutAdminWebhooksUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2413,8 +2443,8 @@ public class AdminWebhooksApi {
         <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminWebhooksUpdateResponse putAdminWebhooksUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        ApiResponse<PutAdminWebhooksUpdateResponse> localVarResp = putAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+    public PutAdminWebhooksUpdateResponse putAdminWebhooksUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminWebhooksUpdateResponse> localVarResp = putAdminWebhooksUpdateWithHttpInfo(orgId, webhookId, putAdminWebhooksUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -2423,6 +2453,7 @@ public class AdminWebhooksApi {
      * Changes only the fields that are sent: &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60;, &#x60;configuration&#x60;, &#x60;rotateSecret&#x60;. A new &#x60;url&#x60; for a webhook that has a signing secret needs &#x60;rotateSecret: true&#x60;; the response then carries the new &#x60;secret&#x60; once. Unknown fields, &#x60;secret&#x60; and event names that are not in the catalogue are refused with 400.
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @param putAdminWebhooksUpdateRequest  (required)
      * @return ApiResponse&lt;PutAdminWebhooksUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2433,8 +2464,8 @@ public class AdminWebhooksApi {
         <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminWebhooksUpdateResponse> putAdminWebhooksUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminWebhooksUpdateValidateBeforeCall(orgId, webhookId, null);
+    public ApiResponse<PutAdminWebhooksUpdateResponse> putAdminWebhooksUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminWebhooksUpdateValidateBeforeCall(orgId, webhookId, putAdminWebhooksUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminWebhooksUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2444,6 +2475,7 @@ public class AdminWebhooksApi {
      * Changes only the fields that are sent: &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60;, &#x60;configuration&#x60;, &#x60;rotateSecret&#x60;. A new &#x60;url&#x60; for a webhook that has a signing secret needs &#x60;rotateSecret: true&#x60;; the response then carries the new &#x60;secret&#x60; once. Unknown fields, &#x60;secret&#x60; and event names that are not in the catalogue are refused with 400.
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @param putAdminWebhooksUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2455,9 +2487,9 @@ public class AdminWebhooksApi {
         <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminWebhooksUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<PutAdminWebhooksUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminWebhooksUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest, final ApiCallback<PutAdminWebhooksUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminWebhooksUpdateValidateBeforeCall(orgId, webhookId, _callback);
+        okhttp3.Call localVarCall = putAdminWebhooksUpdateValidateBeforeCall(orgId, webhookId, putAdminWebhooksUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminWebhooksUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

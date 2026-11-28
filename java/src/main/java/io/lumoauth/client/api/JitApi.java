@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -98,8 +98,8 @@ public class JitApi {
         <tr><td> 200 </td><td> Request approved. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid request (e.g. request not in an approvable state). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Cross-tenant, missing jit.approve permission, or agent access denied. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller belongs to another organization, lacks jit.approve, or may not act on the agent. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call approveRequestCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId, @javax.annotation.Nullable ApproveRequestRequest approveRequestRequest, final ApiCallback _callback) throws ApiException {
@@ -180,8 +180,8 @@ public class JitApi {
         <tr><td> 200 </td><td> Request approved. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid request (e.g. request not in an approvable state). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Cross-tenant, missing jit.approve permission, or agent access denied. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller belongs to another organization, lacks jit.approve, or may not act on the agent. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApproveRequestResponse approveRequest(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId, @javax.annotation.Nullable ApproveRequestRequest approveRequestRequest) throws ApiException {
@@ -204,8 +204,8 @@ public class JitApi {
         <tr><td> 200 </td><td> Request approved. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid request (e.g. request not in an approvable state). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Cross-tenant, missing jit.approve permission, or agent access denied. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller belongs to another organization, lacks jit.approve, or may not act on the agent. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<ApproveRequestResponse> approveRequestWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId, @javax.annotation.Nullable ApproveRequestRequest approveRequestRequest) throws ApiException {
@@ -230,8 +230,8 @@ public class JitApi {
         <tr><td> 200 </td><td> Request approved. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid request (e.g. request not in an approvable state). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Cross-tenant, missing jit.approve permission, or agent access denied. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller belongs to another organization, lacks jit.approve, or may not act on the agent. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call approveRequestAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId, @javax.annotation.Nullable ApproveRequestRequest approveRequestRequest, final ApiCallback<ApproveRequestResponse> _callback) throws ApiException {
@@ -255,7 +255,7 @@ public class JitApi {
         <tr><td> 200 </td><td> Task completed and resources cleaned up. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Task belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or task not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -335,7 +335,7 @@ public class JitApi {
         <tr><td> 200 </td><td> Task completed and resources cleaned up. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Task belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or task not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -358,7 +358,7 @@ public class JitApi {
         <tr><td> 200 </td><td> Task completed and resources cleaned up. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Task belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or task not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -383,7 +383,7 @@ public class JitApi {
         <tr><td> 200 </td><td> Task completed and resources cleaned up. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Task belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or task not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -406,10 +406,10 @@ public class JitApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Ephemeral task/persona created. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Delegation user not found or not authorized. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Delegation user not found or not authorized, or parent_task_id does not name an open task of this organization, or the chain of tasks is already 5 tasks deep. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Agent is not authorized to act on behalf of users. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -472,7 +472,7 @@ public class JitApi {
 
     /**
      * Create a new ephemeral task/persona for an agent.
-     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: for nested agent chains   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
+     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: an open task of this organization that the new task is a step of   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
      * @param orgId  (required)
      * @param createTaskRequest  (optional)
      * @return CreateTaskResponse
@@ -482,10 +482,10 @@ public class JitApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Ephemeral task/persona created. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Delegation user not found or not authorized. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Delegation user not found or not authorized, or parent_task_id does not name an open task of this organization, or the chain of tasks is already 5 tasks deep. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Agent is not authorized to act on behalf of users. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -496,7 +496,7 @@ public class JitApi {
 
     /**
      * Create a new ephemeral task/persona for an agent.
-     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: for nested agent chains   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
+     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: an open task of this organization that the new task is a step of   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
      * @param orgId  (required)
      * @param createTaskRequest  (optional)
      * @return ApiResponse&lt;CreateTaskResponse&gt;
@@ -506,10 +506,10 @@ public class JitApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Ephemeral task/persona created. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Delegation user not found or not authorized. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Delegation user not found or not authorized, or parent_task_id does not name an open task of this organization, or the chain of tasks is already 5 tasks deep. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Agent is not authorized to act on behalf of users. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -521,7 +521,7 @@ public class JitApi {
 
     /**
      * Create a new ephemeral task/persona for an agent. (asynchronously)
-     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: for nested agent chains   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
+     * Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: an open task of this organization that the new task is a step of   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
      * @param orgId  (required)
      * @param createTaskRequest  (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -532,10 +532,10 @@ public class JitApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Ephemeral task/persona created. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Delegation user not found or not authorized. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Delegation user not found or not authorized, or parent_task_id does not name an open task of this organization, or the chain of tasks is already 5 tasks deep. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Agent is not authorized to act on behalf of users. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -561,8 +561,8 @@ public class JitApi {
         <tr><td> 200 </td><td> Request denied. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid request (e.g. request not in a deniable state). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Cross-tenant, missing jit.approve permission, or agent access denied. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller belongs to another organization, lacks jit.approve, or may not act on the agent. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call denyRequestCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId, @javax.annotation.Nullable DenyRequestRequest denyRequestRequest, final ApiCallback _callback) throws ApiException {
@@ -643,8 +643,8 @@ public class JitApi {
         <tr><td> 200 </td><td> Request denied. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid request (e.g. request not in a deniable state). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Cross-tenant, missing jit.approve permission, or agent access denied. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller belongs to another organization, lacks jit.approve, or may not act on the agent. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
      </table>
      */
     public DenyRequestResponse denyRequest(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId, @javax.annotation.Nullable DenyRequestRequest denyRequestRequest) throws ApiException {
@@ -667,8 +667,8 @@ public class JitApi {
         <tr><td> 200 </td><td> Request denied. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid request (e.g. request not in a deniable state). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Cross-tenant, missing jit.approve permission, or agent access denied. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller belongs to another organization, lacks jit.approve, or may not act on the agent. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<DenyRequestResponse> denyRequestWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId, @javax.annotation.Nullable DenyRequestRequest denyRequestRequest) throws ApiException {
@@ -693,8 +693,8 @@ public class JitApi {
         <tr><td> 200 </td><td> Request denied. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid request (e.g. request not in a deniable state). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Cross-tenant, missing jit.approve permission, or agent access denied. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller belongs to another organization, lacks jit.approve, or may not act on the agent. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call denyRequestAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId, @javax.annotation.Nullable DenyRequestRequest denyRequestRequest, final ApiCallback<DenyRequestResponse> _callback) throws ApiException {
@@ -718,7 +718,7 @@ public class JitApi {
         <tr><td> 200 </td><td> Continuous access evaluation (CAEP) result for the task. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. Agent, JIT and delegated credentials are not accepted. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission, or the access token lacks the &#x60;jit:approve&#x60; scope. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or task not found. </td><td>  -  </td></tr>
         <tr><td> 415 </td><td> A session caller must send Content-Type: application/json or an X-CSRF-Token / X-Requested-With header. </td><td>  -  </td></tr>
      </table>
      */
@@ -798,7 +798,7 @@ public class JitApi {
         <tr><td> 200 </td><td> Continuous access evaluation (CAEP) result for the task. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. Agent, JIT and delegated credentials are not accepted. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission, or the access token lacks the &#x60;jit:approve&#x60; scope. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or task not found. </td><td>  -  </td></tr>
         <tr><td> 415 </td><td> A session caller must send Content-Type: application/json or an X-CSRF-Token / X-Requested-With header. </td><td>  -  </td></tr>
      </table>
      */
@@ -821,7 +821,7 @@ public class JitApi {
         <tr><td> 200 </td><td> Continuous access evaluation (CAEP) result for the task. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. Agent, JIT and delegated credentials are not accepted. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission, or the access token lacks the &#x60;jit:approve&#x60; scope. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or task not found. </td><td>  -  </td></tr>
         <tr><td> 415 </td><td> A session caller must send Content-Type: application/json or an X-CSRF-Token / X-Requested-With header. </td><td>  -  </td></tr>
      </table>
      */
@@ -846,7 +846,7 @@ public class JitApi {
         <tr><td> 200 </td><td> Continuous access evaluation (CAEP) result for the task. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. Agent, JIT and delegated credentials are not accepted. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission, or the access token lacks the &#x60;jit:approve&#x60; scope. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or task not found. </td><td>  -  </td></tr>
         <tr><td> 415 </td><td> A session caller must send Content-Type: application/json or an X-CSRF-Token / X-Requested-With header. </td><td>  -  </td></tr>
      </table>
      */
@@ -871,7 +871,7 @@ public class JitApi {
         <tr><td> 200 </td><td> Current status of the JIT permission request. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Request belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -951,7 +951,7 @@ public class JitApi {
         <tr><td> 200 </td><td> Current status of the JIT permission request. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Request belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -974,7 +974,7 @@ public class JitApi {
         <tr><td> 200 </td><td> Current status of the JIT permission request. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Request belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -999,7 +999,7 @@ public class JitApi {
         <tr><td> 200 </td><td> Current status of the JIT permission request. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Request belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -1024,7 +1024,7 @@ public class JitApi {
         <tr><td> 200 </td><td> A downscoped JIT token (RFC 8693 token exchange). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Request belongs to a different agent, is not yet approved, is no longer redeemable (expired window, ended task, inactive agent/organization), or a JIT token was used. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> rate_limit_exceeded, or budget_exceeded when the agent budget is spent (Retry-After holds the seconds until the spent window starts again). </td><td>  -  </td></tr>
      </table>
      */
@@ -1104,7 +1104,7 @@ public class JitApi {
         <tr><td> 200 </td><td> A downscoped JIT token (RFC 8693 token exchange). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Request belongs to a different agent, is not yet approved, is no longer redeemable (expired window, ended task, inactive agent/organization), or a JIT token was used. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> rate_limit_exceeded, or budget_exceeded when the agent budget is spent (Retry-After holds the seconds until the spent window starts again). </td><td>  -  </td></tr>
      </table>
      */
@@ -1127,7 +1127,7 @@ public class JitApi {
         <tr><td> 200 </td><td> A downscoped JIT token (RFC 8693 token exchange). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Request belongs to a different agent, is not yet approved, is no longer redeemable (expired window, ended task, inactive agent/organization), or a JIT token was used. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> rate_limit_exceeded, or budget_exceeded when the agent budget is spent (Retry-After holds the seconds until the spent window starts again). </td><td>  -  </td></tr>
      </table>
      */
@@ -1152,7 +1152,7 @@ public class JitApi {
         <tr><td> 200 </td><td> A downscoped JIT token (RFC 8693 token exchange). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Request belongs to a different agent, is not yet approved, is no longer redeemable (expired window, ended task, inactive agent/organization), or a JIT token was used. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or request not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> rate_limit_exceeded, or budget_exceeded when the agent budget is spent (Retry-After holds the seconds until the spent window starts again). </td><td>  -  </td></tr>
      </table>
      */
@@ -1175,8 +1175,8 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Pending HITL requests the caller may act on. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Cross-tenant or missing jit.approve permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller belongs to another organization or lacks jit.approve. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listPendingRequestsCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1247,8 +1247,8 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Pending HITL requests the caller may act on. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Cross-tenant or missing jit.approve permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller belongs to another organization or lacks jit.approve. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public ListPendingRequestsResponse listPendingRequests(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1268,8 +1268,8 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Pending HITL requests the caller may act on. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Cross-tenant or missing jit.approve permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller belongs to another organization or lacks jit.approve. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<ListPendingRequestsResponse> listPendingRequestsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1291,8 +1291,8 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Pending HITL requests the caller may act on. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Cross-tenant or missing jit.approve permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> The caller belongs to another organization or lacks jit.approve. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listPendingRequestsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<ListPendingRequestsResponse> _callback) throws ApiException {
@@ -1317,7 +1317,7 @@ public class JitApi {
         <tr><td> 400 </td><td> Missing/invalid task_id, authorization_details, or the task is not active. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Task belongs to a different agent, or task_suspended: continuous access evaluation suspended the task on this request. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or task not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -1398,7 +1398,7 @@ public class JitApi {
         <tr><td> 400 </td><td> Missing/invalid task_id, authorization_details, or the task is not active. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Task belongs to a different agent, or task_suspended: continuous access evaluation suspended the task on this request. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or task not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -1422,7 +1422,7 @@ public class JitApi {
         <tr><td> 400 </td><td> Missing/invalid task_id, authorization_details, or the task is not active. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Task belongs to a different agent, or task_suspended: continuous access evaluation suspended the task on this request. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or task not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
@@ -1448,7 +1448,7 @@ public class JitApi {
         <tr><td> 400 </td><td> Missing/invalid task_id, authorization_details, or the task is not active. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Task belongs to a different agent, or task_suspended: continuous access evaluation suspended the task on this request. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or task not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */

@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**admin_groups_get**](AdminGroupsApi.md#admin_groups_get) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Get a single group by ID or slug
 [**admin_groups_get_members**](AdminGroupsApi.md#admin_groups_get_members) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members
 [**admin_groups_groups_get_roles**](AdminGroupsApi.md#admin_groups_groups_get_roles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles
-[**admin_groups_list**](AdminGroupsApi.md#admin_groups_list) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant
+[**admin_groups_list**](AdminGroupsApi.md#admin_groups_list) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the organization
 [**admin_groups_remove_member**](AdminGroupsApi.md#admin_groups_remove_member) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group
 [**admin_groups_remove_role**](AdminGroupsApi.md#admin_groups_remove_role) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group
 [**admin_groups_update_roles**](AdminGroupsApi.md#admin_groups_update_roles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles)
@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 ## admin_groups_add_members
 
-> models::AdminGroupsCreateResponse admin_groups_add_members(org_id, group_id)
+> models::AdminGroupsCreateResponse admin_groups_add_members(org_id, group_id, admin_groups_add_members_request)
 Add member(s) to group
 
 ### Parameters
@@ -32,6 +32,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **group_id** | **String** |  | [required] |
+**admin_groups_add_members_request** | [**AdminGroupsAddMembersRequest**](AdminGroupsAddMembersRequest.md) |  | [required] |
 
 ### Return type
 
@@ -43,7 +44,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -51,10 +52,10 @@ Name | Type | Description  | Required | Notes
 
 ## admin_groups_add_role
 
-> models::MessageResponse admin_groups_add_role(org_id, group_id)
+> models::MessageResponse admin_groups_add_role(org_id, group_id, admin_groups_add_role_request)
 Add a single role to a group
 
-A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 ### Parameters
 
@@ -63,6 +64,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **group_id** | **String** |  | [required] |
+**admin_groups_add_role_request** | [**AdminGroupsAddRoleRequest**](AdminGroupsAddRoleRequest.md) |  | [required] |
 
 ### Return type
 
@@ -74,7 +76,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -82,10 +84,10 @@ Name | Type | Description  | Required | Notes
 
 ## admin_groups_create
 
-> models::AdminGroupsCreateResponse admin_groups_create(org_id)
+> models::AdminGroupsCreateResponse admin_groups_create(org_id, admin_groups_create_request)
 Create a new group
 
-Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 ### Parameters
 
@@ -93,6 +95,7 @@ Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**admin_groups_create_request** | [**AdminGroupsCreateRequest**](AdminGroupsCreateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -104,7 +107,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -229,7 +232,7 @@ Name | Type | Description  | Required | Notes
 ## admin_groups_list
 
 > models::AdminGroupsListResponse admin_groups_list(org_id)
-List all groups in the tenant
+List all groups in the organization
 
 ### Parameters
 
@@ -316,10 +319,10 @@ Name | Type | Description  | Required | Notes
 
 ## admin_groups_update_roles
 
-> models::AdminGroupsCreateResponse admin_groups_update_roles(org_id, group_id)
+> models::AdminGroupsCreateResponse admin_groups_update_roles(org_id, group_id, admin_groups_update_roles_request)
 Update group roles (replaces all existing roles)
 
-`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
 ### Parameters
 
@@ -328,6 +331,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **group_id** | **String** |  | [required] |
+**admin_groups_update_roles_request** | [**AdminGroupsUpdateRolesRequest**](AdminGroupsUpdateRolesRequest.md) |  | [required] |
 
 ### Return type
 
@@ -339,7 +343,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -347,7 +351,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_groups_update
 
-> models::AdminGroupsCreateResponse patch_admin_groups_update(org_id, group_id)
+> models::AdminGroupsCreateResponse patch_admin_groups_update(org_id, group_id, put_admin_groups_update_request)
 Update an existing group
 
 ### Parameters
@@ -357,6 +361,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **group_id** | **String** |  | [required] |
+**put_admin_groups_update_request** | [**PutAdminGroupsUpdateRequest**](PutAdminGroupsUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -368,7 +373,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -376,7 +381,7 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_groups_update
 
-> models::AdminGroupsCreateResponse put_admin_groups_update(org_id, group_id)
+> models::AdminGroupsCreateResponse put_admin_groups_update(org_id, group_id, put_admin_groups_update_request)
 Update an existing group
 
 ### Parameters
@@ -386,6 +391,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **group_id** | **String** |  | [required] |
+**put_admin_groups_update_request** | [**PutAdminGroupsUpdateRequest**](PutAdminGroupsUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -397,7 +403,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

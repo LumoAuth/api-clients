@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -22,13 +22,19 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AdminPermissionsCreateRequest } from '../models';
+// @ts-ignore
 import type { AdminPermissionsCreateResponse } from '../models';
 // @ts-ignore
 import type { AdminPermissionsGetResponse } from '../models';
 // @ts-ignore
 import type { AdminPermissionsListResponse } from '../models';
 // @ts-ignore
+import type { AdminPermissionsUpdateRequest } from '../models';
+// @ts-ignore
 import type { AdminPermissionsUsageResponse } from '../models';
+// @ts-ignore
+import type { AdminScopesCreateRequest } from '../models';
 // @ts-ignore
 import type { AdminScopesCreateResponse } from '../models';
 // @ts-ignore
@@ -43,14 +49,17 @@ export const AdminPermissionsApiAxiosParamCreator = function (configuration?: Co
     return {
         /**
          * 
-         * @summary Create a custom permission for the tenant
+         * @summary Create a custom permission for the organization
          * @param {string} orgId 
+         * @param {AdminPermissionsCreateRequest} adminPermissionsCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminPermissionsCreate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminPermissionsCreate: async (orgId: string, adminPermissionsCreateRequest: AdminPermissionsCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminPermissionsCreate', 'orgId', orgId)
+            // verify required parameter 'adminPermissionsCreateRequest' is not null or undefined
+            assertParamExists('adminPermissionsCreate', 'adminPermissionsCreateRequest', adminPermissionsCreateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/permissions`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -73,9 +82,12 @@ export const AdminPermissionsApiAxiosParamCreator = function (configuration?: Co
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminPermissionsCreateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -174,7 +186,7 @@ export const AdminPermissionsApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary List all available permissions for the tenant
+         * @summary List all available permissions for the organization
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -218,14 +230,17 @@ export const AdminPermissionsApiAxiosParamCreator = function (configuration?: Co
          * @summary Update a permission
          * @param {string} orgId 
          * @param {string} permissionId 
+         * @param {AdminPermissionsUpdateRequest} adminPermissionsUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminPermissionsUpdate: async (orgId: string, permissionId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminPermissionsUpdate: async (orgId: string, permissionId: string, adminPermissionsUpdateRequest: AdminPermissionsUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminPermissionsUpdate', 'orgId', orgId)
             // verify required parameter 'permissionId' is not null or undefined
             assertParamExists('adminPermissionsUpdate', 'permissionId', permissionId)
+            // verify required parameter 'adminPermissionsUpdateRequest' is not null or undefined
+            assertParamExists('adminPermissionsUpdate', 'adminPermissionsUpdateRequest', adminPermissionsUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/permissions/{permissionId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"permissionId"}}`, encodeURIComponent(String(permissionId)));
@@ -249,9 +264,12 @@ export const AdminPermissionsApiAxiosParamCreator = function (configuration?: Co
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminPermissionsUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -307,12 +325,15 @@ export const AdminPermissionsApiAxiosParamCreator = function (configuration?: Co
          * 
          * @summary Create a custom OAuth scope
          * @param {string} orgId 
+         * @param {AdminScopesCreateRequest} adminScopesCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminScopesCreate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminScopesCreate: async (orgId: string, adminScopesCreateRequest: AdminScopesCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminScopesCreate', 'orgId', orgId)
+            // verify required parameter 'adminScopesCreateRequest' is not null or undefined
+            assertParamExists('adminScopesCreate', 'adminScopesCreateRequest', adminScopesCreateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/scopes`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -335,9 +356,12 @@ export const AdminPermissionsApiAxiosParamCreator = function (configuration?: Co
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminScopesCreateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -442,13 +466,14 @@ export const AdminPermissionsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Create a custom permission for the tenant
+         * @summary Create a custom permission for the organization
          * @param {string} orgId 
+         * @param {AdminPermissionsCreateRequest} adminPermissionsCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminPermissionsCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminPermissionsCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminPermissionsCreate(orgId, options);
+        async adminPermissionsCreate(orgId: string, adminPermissionsCreateRequest: AdminPermissionsCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminPermissionsCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminPermissionsCreate(orgId, adminPermissionsCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminPermissionsApi.adminPermissionsCreate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -483,7 +508,7 @@ export const AdminPermissionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List all available permissions for the tenant
+         * @summary List all available permissions for the organization
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -499,11 +524,12 @@ export const AdminPermissionsApiFp = function(configuration?: Configuration) {
          * @summary Update a permission
          * @param {string} orgId 
          * @param {string} permissionId 
+         * @param {AdminPermissionsUpdateRequest} adminPermissionsUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminPermissionsUpdate(orgId: string, permissionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminPermissionsCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminPermissionsUpdate(orgId, permissionId, options);
+        async adminPermissionsUpdate(orgId: string, permissionId: string, adminPermissionsUpdateRequest: AdminPermissionsUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminPermissionsCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminPermissionsUpdate(orgId, permissionId, adminPermissionsUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminPermissionsApi.adminPermissionsUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -526,11 +552,12 @@ export const AdminPermissionsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Create a custom OAuth scope
          * @param {string} orgId 
+         * @param {AdminScopesCreateRequest} adminScopesCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminScopesCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminScopesCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminScopesCreate(orgId, options);
+        async adminScopesCreate(orgId: string, adminScopesCreateRequest: AdminScopesCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminScopesCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminScopesCreate(orgId, adminScopesCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminPermissionsApi.adminScopesCreate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -574,13 +601,13 @@ export const AdminPermissionsApiFactory = function (configuration?: Configuratio
     return {
         /**
          * 
-         * @summary Create a custom permission for the tenant
+         * @summary Create a custom permission for the organization
          * @param {AdminPermissionsApiAdminPermissionsCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         adminPermissionsCreate(requestParameters: AdminPermissionsApiAdminPermissionsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminPermissionsCreateResponse> {
-            return localVarFp.adminPermissionsCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminPermissionsCreate(requestParameters.orgId, requestParameters.adminPermissionsCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -604,7 +631,7 @@ export const AdminPermissionsApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary List all available permissions for the tenant
+         * @summary List all available permissions for the organization
          * @param {AdminPermissionsApiAdminPermissionsListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -620,7 +647,7 @@ export const AdminPermissionsApiFactory = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         adminPermissionsUpdate(requestParameters: AdminPermissionsApiAdminPermissionsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminPermissionsCreateResponse> {
-            return localVarFp.adminPermissionsUpdate(requestParameters.orgId, requestParameters.permissionId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminPermissionsUpdate(requestParameters.orgId, requestParameters.permissionId, requestParameters.adminPermissionsUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -640,7 +667,7 @@ export const AdminPermissionsApiFactory = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         adminScopesCreate(requestParameters: AdminPermissionsApiAdminScopesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminScopesCreateResponse> {
-            return localVarFp.adminScopesCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminScopesCreate(requestParameters.orgId, requestParameters.adminScopesCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -673,7 +700,7 @@ export const AdminPermissionsApiFactory = function (configuration?: Configuratio
 export interface AdminPermissionsApiInterface {
     /**
      * 
-     * @summary Create a custom permission for the tenant
+     * @summary Create a custom permission for the organization
      * @param {AdminPermissionsApiAdminPermissionsCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -703,7 +730,7 @@ export interface AdminPermissionsApiInterface {
 
     /**
      * 
-     * @summary List all available permissions for the tenant
+     * @summary List all available permissions for the organization
      * @param {AdminPermissionsApiAdminPermissionsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -775,6 +802,13 @@ export interface AdminPermissionsApiAdminPermissionsCreateRequest {
      * @memberof AdminPermissionsApiAdminPermissionsCreate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {AdminPermissionsCreateRequest}
+     * @memberof AdminPermissionsApiAdminPermissionsCreate
+     */
+    readonly adminPermissionsCreateRequest: AdminPermissionsCreateRequest
 }
 
 /**
@@ -852,6 +886,13 @@ export interface AdminPermissionsApiAdminPermissionsUpdateRequest {
      * @memberof AdminPermissionsApiAdminPermissionsUpdate
      */
     readonly permissionId: string
+
+    /**
+     * 
+     * @type {AdminPermissionsUpdateRequest}
+     * @memberof AdminPermissionsApiAdminPermissionsUpdate
+     */
+    readonly adminPermissionsUpdateRequest: AdminPermissionsUpdateRequest
 }
 
 /**
@@ -887,6 +928,13 @@ export interface AdminPermissionsApiAdminScopesCreateRequest {
      * @memberof AdminPermissionsApiAdminScopesCreate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {AdminScopesCreateRequest}
+     * @memberof AdminPermissionsApiAdminScopesCreate
+     */
+    readonly adminScopesCreateRequest: AdminScopesCreateRequest
 }
 
 /**
@@ -933,14 +981,14 @@ export interface AdminPermissionsApiAdminScopesListRequest {
 export class AdminPermissionsApi extends BaseAPI implements AdminPermissionsApiInterface {
     /**
      * 
-     * @summary Create a custom permission for the tenant
+     * @summary Create a custom permission for the organization
      * @param {AdminPermissionsApiAdminPermissionsCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminPermissionsApi
      */
     public adminPermissionsCreate(requestParameters: AdminPermissionsApiAdminPermissionsCreateRequest, options?: RawAxiosRequestConfig) {
-        return AdminPermissionsApiFp(this.configuration).adminPermissionsCreate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminPermissionsApiFp(this.configuration).adminPermissionsCreate(requestParameters.orgId, requestParameters.adminPermissionsCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -969,7 +1017,7 @@ export class AdminPermissionsApi extends BaseAPI implements AdminPermissionsApiI
 
     /**
      * 
-     * @summary List all available permissions for the tenant
+     * @summary List all available permissions for the organization
      * @param {AdminPermissionsApiAdminPermissionsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -988,7 +1036,7 @@ export class AdminPermissionsApi extends BaseAPI implements AdminPermissionsApiI
      * @memberof AdminPermissionsApi
      */
     public adminPermissionsUpdate(requestParameters: AdminPermissionsApiAdminPermissionsUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminPermissionsApiFp(this.configuration).adminPermissionsUpdate(requestParameters.orgId, requestParameters.permissionId, options).then((request) => request(this.axios, this.basePath));
+        return AdminPermissionsApiFp(this.configuration).adminPermissionsUpdate(requestParameters.orgId, requestParameters.permissionId, requestParameters.adminPermissionsUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1012,7 +1060,7 @@ export class AdminPermissionsApi extends BaseAPI implements AdminPermissionsApiI
      * @memberof AdminPermissionsApi
      */
     public adminScopesCreate(requestParameters: AdminPermissionsApiAdminScopesCreateRequest, options?: RawAxiosRequestConfig) {
-        return AdminPermissionsApiFp(this.configuration).adminScopesCreate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminPermissionsApiFp(this.configuration).adminScopesCreate(requestParameters.orgId, requestParameters.adminScopesCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

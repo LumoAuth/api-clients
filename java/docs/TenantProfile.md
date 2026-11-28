@@ -2,7 +2,7 @@
 
 # TenantProfile
 
-The organization (tenant) record as returned by the settings endpoints.
+The organization record as returned by the settings endpoints.
 
 ## Properties
 

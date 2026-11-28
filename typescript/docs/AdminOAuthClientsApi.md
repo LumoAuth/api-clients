@@ -132,7 +132,7 @@ const { status, data } = await apiInstance.adminClientsGetBranding(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createClient**
-> CreateClientResponse createClient()
+> CreateClientResponse createClient(oAuthClientWrite)
 
 
 ### Example
@@ -140,16 +140,19 @@ const { status, data } = await apiInstance.adminClientsGetBranding(
 ```typescript
 import {
     AdminOAuthClientsApi,
-    Configuration
+    Configuration,
+    OAuthClientWrite
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminOAuthClientsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let oAuthClientWrite: OAuthClientWrite; //
 
 const { status, data } = await apiInstance.createClient(
-    orgId
+    orgId,
+    oAuthClientWrite
 );
 ```
 
@@ -157,6 +160,7 @@ const { status, data } = await apiInstance.createClient(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **oAuthClientWrite** | **OAuthClientWrite**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -170,7 +174,7 @@ const { status, data } = await apiInstance.createClient(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -566,7 +570,7 @@ const { status, data } = await apiInstance.patchAdminClientsUpdateBranding(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchClient**
-> UpdateClientResponse patchClient()
+> UpdateClientResponse patchClient(oAuthClientWrite)
 
 A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
@@ -575,7 +579,8 @@ A client that can administer the organization (it carries `admin` or an `admin:`
 ```typescript
 import {
     AdminOAuthClientsApi,
-    Configuration
+    Configuration,
+    OAuthClientWrite
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -583,10 +588,12 @@ const apiInstance = new AdminOAuthClientsApi(configuration);
 
 let orgId: string; // (default to undefined)
 let clientId: string; // (default to undefined)
+let oAuthClientWrite: OAuthClientWrite; //
 
 const { status, data } = await apiInstance.patchClient(
     orgId,
-    clientId
+    clientId,
+    oAuthClientWrite
 );
 ```
 
@@ -594,6 +601,7 @@ const { status, data } = await apiInstance.patchClient(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **oAuthClientWrite** | **OAuthClientWrite**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **clientId** | [**string**] |  | defaults to undefined|
 
@@ -608,7 +616,7 @@ const { status, data } = await apiInstance.patchClient(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -737,7 +745,7 @@ const { status, data } = await apiInstance.rotateClientSecret(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **setClientScopes**
-> SetClientScopesResponse setClientScopes()
+> SetClientScopesResponse setClientScopes(setClientScopesRequest)
 
 A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
 
@@ -746,7 +754,8 @@ A client that can administer the organization (it carries `admin` or an `admin:`
 ```typescript
 import {
     AdminOAuthClientsApi,
-    Configuration
+    Configuration,
+    SetClientScopesRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -754,10 +763,12 @@ const apiInstance = new AdminOAuthClientsApi(configuration);
 
 let orgId: string; // (default to undefined)
 let clientId: string; // (default to undefined)
+let setClientScopesRequest: SetClientScopesRequest; //
 
 const { status, data } = await apiInstance.setClientScopes(
     orgId,
-    clientId
+    clientId,
+    setClientScopesRequest
 );
 ```
 
@@ -765,6 +776,7 @@ const { status, data } = await apiInstance.setClientScopes(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **setClientScopesRequest** | **SetClientScopesRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **clientId** | [**string**] |  | defaults to undefined|
 
@@ -779,7 +791,7 @@ const { status, data } = await apiInstance.setClientScopes(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -793,7 +805,7 @@ const { status, data } = await apiInstance.setClientScopes(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateClient**
-> UpdateClientResponse updateClient()
+> UpdateClientResponse updateClient(oAuthClientWrite)
 
 A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
 
@@ -802,7 +814,8 @@ A client that can administer the organization (it carries `admin` or an `admin:`
 ```typescript
 import {
     AdminOAuthClientsApi,
-    Configuration
+    Configuration,
+    OAuthClientWrite
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -810,10 +823,12 @@ const apiInstance = new AdminOAuthClientsApi(configuration);
 
 let orgId: string; // (default to undefined)
 let clientId: string; // (default to undefined)
+let oAuthClientWrite: OAuthClientWrite; //
 
 const { status, data } = await apiInstance.updateClient(
     orgId,
-    clientId
+    clientId,
+    oAuthClientWrite
 );
 ```
 
@@ -821,6 +836,7 @@ const { status, data } = await apiInstance.updateClient(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **oAuthClientWrite** | **OAuthClientWrite**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **clientId** | [**string**] |  | defaults to undefined|
 
@@ -835,7 +851,7 @@ const { status, data } = await apiInstance.updateClient(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

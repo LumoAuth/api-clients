@@ -192,7 +192,8 @@ const { status, data } = await apiInstance.adminEmailTemplatesList(
 ```typescript
 import {
     AdminEmailApi,
-    Configuration
+    Configuration,
+    AdminEmailTemplatesPreviewRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -200,10 +201,12 @@ const apiInstance = new AdminEmailApi(configuration);
 
 let orgId: string; // (default to undefined)
 let type: string; // (default to undefined)
+let adminEmailTemplatesPreviewRequest: AdminEmailTemplatesPreviewRequest; // (optional)
 
 const { status, data } = await apiInstance.adminEmailTemplatesPreview(
     orgId,
-    type
+    type,
+    adminEmailTemplatesPreviewRequest
 );
 ```
 
@@ -211,6 +214,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesPreview(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminEmailTemplatesPreviewRequest** | **AdminEmailTemplatesPreviewRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **type** | [**string**] |  | defaults to undefined|
 
@@ -225,7 +229,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesPreview(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -238,7 +242,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesPreview(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminEmailTemplatesUpsert**
-> EmailTemplate adminEmailTemplatesUpsert()
+> EmailTemplate adminEmailTemplatesUpsert(adminEmailTemplatesUpsertRequest)
 
 Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
 
@@ -247,7 +251,8 @@ Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a
 ```typescript
 import {
     AdminEmailApi,
-    Configuration
+    Configuration,
+    AdminEmailTemplatesUpsertRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -255,10 +260,12 @@ const apiInstance = new AdminEmailApi(configuration);
 
 let orgId: string; // (default to undefined)
 let type: string; // (default to undefined)
+let adminEmailTemplatesUpsertRequest: AdminEmailTemplatesUpsertRequest; //
 
 const { status, data } = await apiInstance.adminEmailTemplatesUpsert(
     orgId,
-    type
+    type,
+    adminEmailTemplatesUpsertRequest
 );
 ```
 
@@ -266,6 +273,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesUpsert(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminEmailTemplatesUpsertRequest** | **AdminEmailTemplatesUpsertRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **type** | [**string**] |  | defaults to undefined|
 
@@ -280,7 +288,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesUpsert(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

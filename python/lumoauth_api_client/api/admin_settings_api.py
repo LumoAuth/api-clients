@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -17,12 +17,14 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr
+from pydantic import Field, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_analytics_dashboard_response import AdminAnalyticsDashboardResponse
 from lumoauth_api_client.models.admin_analytics_logins_response import AdminAnalyticsLoginsResponse
 from lumoauth_api_client.models.admin_analytics_users_response import AdminAnalyticsUsersResponse
+from lumoauth_api_client.models.admin_initial_access_tokens_create_response import AdminInitialAccessTokensCreateResponse
+from lumoauth_api_client.models.admin_initial_access_tokens_list_response import AdminInitialAccessTokensListResponse
 from lumoauth_api_client.models.admin_settings_all_response import AdminSettingsAllResponse
 from lumoauth_api_client.models.admin_settings_authentication_get_response import AdminSettingsAuthenticationGetResponse
 from lumoauth_api_client.models.admin_settings_branding_get_response import AdminSettingsBrandingGetResponse
@@ -31,6 +33,9 @@ from lumoauth_api_client.models.admin_settings_general_get_response import Admin
 from lumoauth_api_client.models.admin_settings_scim_get_response import AdminSettingsScimGetResponse
 from lumoauth_api_client.models.admin_settings_security_get_response import AdminSettingsSecurityGetResponse
 from lumoauth_api_client.models.admin_tenant_get_response import AdminTenantGetResponse
+from lumoauth_api_client.models.authentication_settings import AuthenticationSettings
+from lumoauth_api_client.models.branding_settings import BrandingSettings
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.models.put_admin_settings_authentication_update_response import PutAdminSettingsAuthenticationUpdateResponse
 from lumoauth_api_client.models.put_admin_settings_branding_update_response import PutAdminSettingsBrandingUpdateResponse
 from lumoauth_api_client.models.put_admin_settings_email_update_request import PutAdminSettingsEmailUpdateRequest
@@ -38,8 +43,11 @@ from lumoauth_api_client.models.put_admin_settings_email_update_response import 
 from lumoauth_api_client.models.put_admin_settings_general_update_request import PutAdminSettingsGeneralUpdateRequest
 from lumoauth_api_client.models.put_admin_settings_general_update_response import PutAdminSettingsGeneralUpdateResponse
 from lumoauth_api_client.models.put_admin_settings_scim_update_response import PutAdminSettingsScimUpdateResponse
+from lumoauth_api_client.models.put_admin_settings_security_update_request import PutAdminSettingsSecurityUpdateRequest
 from lumoauth_api_client.models.put_admin_settings_security_update_response import PutAdminSettingsSecurityUpdateResponse
+from lumoauth_api_client.models.put_admin_tenant_update_request import PutAdminTenantUpdateRequest
 from lumoauth_api_client.models.put_admin_tenant_update_response import PutAdminTenantUpdateResponse
+from lumoauth_api_client.models.scim_settings import ScimSettings
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -871,6 +879,810 @@ class AdminSettingsApi:
 
 
     @validate_call
+    def admin_initial_access_tokens_create(
+        self,
+        org_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AdminInitialAccessTokensCreateResponse:
+        """Create an initial access token for dynamic client registration
+
+        Generates a token and adds it to the organization's list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_initial_access_tokens_create_serialize(
+            org_id=org_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminInitialAccessTokensCreateResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def admin_initial_access_tokens_create_with_http_info(
+        self,
+        org_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AdminInitialAccessTokensCreateResponse]:
+        """Create an initial access token for dynamic client registration
+
+        Generates a token and adds it to the organization's list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_initial_access_tokens_create_serialize(
+            org_id=org_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminInitialAccessTokensCreateResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def admin_initial_access_tokens_create_without_preload_content(
+        self,
+        org_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create an initial access token for dynamic client registration
+
+        Generates a token and adds it to the organization's list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_initial_access_tokens_create_serialize(
+            org_id=org_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminInitialAccessTokensCreateResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _admin_initial_access_tokens_create_serialize(
+        self,
+        org_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if org_id is not None:
+            _path_params['orgId'] = org_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth', 
+            'BearerAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def admin_initial_access_tokens_delete(
+        self,
+        org_id: StrictStr,
+        token_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> MessageResponse:
+        """Delete an initial access token of dynamic client registration
+
+        The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param token_id: (required)
+        :type token_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_initial_access_tokens_delete_serialize(
+            org_id=org_id,
+            token_id=token_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def admin_initial_access_tokens_delete_with_http_info(
+        self,
+        org_id: StrictStr,
+        token_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[MessageResponse]:
+        """Delete an initial access token of dynamic client registration
+
+        The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param token_id: (required)
+        :type token_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_initial_access_tokens_delete_serialize(
+            org_id=org_id,
+            token_id=token_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def admin_initial_access_tokens_delete_without_preload_content(
+        self,
+        org_id: StrictStr,
+        token_id: Annotated[str, Field(strict=True)],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Delete an initial access token of dynamic client registration
+
+        The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param token_id: (required)
+        :type token_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_initial_access_tokens_delete_serialize(
+            org_id=org_id,
+            token_id=token_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _admin_initial_access_tokens_delete_serialize(
+        self,
+        org_id,
+        token_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if org_id is not None:
+            _path_params['orgId'] = org_id
+        if token_id is not None:
+            _path_params['tokenId'] = token_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth', 
+            'BearerAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def admin_initial_access_tokens_list(
+        self,
+        org_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AdminInitialAccessTokensListResponse:
+        """List the initial access tokens of dynamic client registration
+
+        Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_initial_access_tokens_list_serialize(
+            org_id=org_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminInitialAccessTokensListResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def admin_initial_access_tokens_list_with_http_info(
+        self,
+        org_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AdminInitialAccessTokensListResponse]:
+        """List the initial access tokens of dynamic client registration
+
+        Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_initial_access_tokens_list_serialize(
+            org_id=org_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminInitialAccessTokensListResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def admin_initial_access_tokens_list_without_preload_content(
+        self,
+        org_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List the initial access tokens of dynamic client registration
+
+        Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_initial_access_tokens_list_serialize(
+            org_id=org_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminInitialAccessTokensListResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _admin_initial_access_tokens_list_serialize(
+        self,
+        org_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if org_id is not None:
+            _path_params['orgId'] = org_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth', 
+            'BearerAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def admin_organization_get(
         self,
         org_id: StrictStr,
@@ -887,7 +1699,7 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> AdminTenantGetResponse:
-        """Get organization (tenant) profile
+        """Get organization profile
 
 
         :param org_id: (required)
@@ -953,7 +1765,7 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[AdminTenantGetResponse]:
-        """Get organization (tenant) profile
+        """Get organization profile
 
 
         :param org_id: (required)
@@ -1019,7 +1831,7 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get organization (tenant) profile
+        """Get organization profile
 
 
         :param org_id: (required)
@@ -3224,7 +4036,7 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> AdminTenantGetResponse:
-        """Get organization (tenant) profile
+        """Get organization profile
 
 
         :param org_id: (required)
@@ -3290,7 +4102,7 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[AdminTenantGetResponse]:
-        """Get organization (tenant) profile
+        """Get organization profile
 
 
         :param org_id: (required)
@@ -3356,7 +4168,7 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get organization (tenant) profile
+        """Get organization profile
 
 
         :param org_id: (required)
@@ -3470,6 +4282,7 @@ class AdminSettingsApi:
     def patch_admin_organization_update(
         self,
         org_id: StrictStr,
+        put_admin_tenant_update_request: PutAdminTenantUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3483,11 +4296,13 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PutAdminTenantUpdateResponse:
-        """Update organization (tenant) name and settings
+        """Update the organization's name and settings
 
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_tenant_update_request: (required)
+        :type put_admin_tenant_update_request: PutAdminTenantUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3512,6 +4327,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_organization_update_serialize(
             org_id=org_id,
+            put_admin_tenant_update_request=put_admin_tenant_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3537,6 +4353,7 @@ class AdminSettingsApi:
     def patch_admin_organization_update_with_http_info(
         self,
         org_id: StrictStr,
+        put_admin_tenant_update_request: PutAdminTenantUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3550,11 +4367,13 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PutAdminTenantUpdateResponse]:
-        """Update organization (tenant) name and settings
+        """Update the organization's name and settings
 
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_tenant_update_request: (required)
+        :type put_admin_tenant_update_request: PutAdminTenantUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3579,6 +4398,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_organization_update_serialize(
             org_id=org_id,
+            put_admin_tenant_update_request=put_admin_tenant_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3604,6 +4424,7 @@ class AdminSettingsApi:
     def patch_admin_organization_update_without_preload_content(
         self,
         org_id: StrictStr,
+        put_admin_tenant_update_request: PutAdminTenantUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3617,11 +4438,13 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update organization (tenant) name and settings
+        """Update the organization's name and settings
 
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_tenant_update_request: (required)
+        :type put_admin_tenant_update_request: PutAdminTenantUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3646,6 +4469,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_organization_update_serialize(
             org_id=org_id,
+            put_admin_tenant_update_request=put_admin_tenant_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3666,6 +4490,7 @@ class AdminSettingsApi:
     def _patch_admin_organization_update_serialize(
         self,
         org_id,
+        put_admin_tenant_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -3693,6 +4518,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_tenant_update_request is not None:
+            _body_params = put_admin_tenant_update_request
 
 
         # set the HTTP header `Accept`
@@ -3703,6 +4530,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -3732,6 +4572,7 @@ class AdminSettingsApi:
     def patch_admin_settings_auth_update(
         self,
         org_id: StrictStr,
+        authentication_settings: AuthenticationSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3747,9 +4588,12 @@ class AdminSettingsApi:
     ) -> PutAdminSettingsAuthenticationUpdateResponse:
         """Update authentication settings
 
+        The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
         :param org_id: (required)
         :type org_id: str
+        :param authentication_settings: (required)
+        :type authentication_settings: AuthenticationSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3774,6 +4618,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_auth_update_serialize(
             org_id=org_id,
+            authentication_settings=authentication_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3799,6 +4644,7 @@ class AdminSettingsApi:
     def patch_admin_settings_auth_update_with_http_info(
         self,
         org_id: StrictStr,
+        authentication_settings: AuthenticationSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3814,9 +4660,12 @@ class AdminSettingsApi:
     ) -> ApiResponse[PutAdminSettingsAuthenticationUpdateResponse]:
         """Update authentication settings
 
+        The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
         :param org_id: (required)
         :type org_id: str
+        :param authentication_settings: (required)
+        :type authentication_settings: AuthenticationSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3841,6 +4690,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_auth_update_serialize(
             org_id=org_id,
+            authentication_settings=authentication_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3866,6 +4716,7 @@ class AdminSettingsApi:
     def patch_admin_settings_auth_update_without_preload_content(
         self,
         org_id: StrictStr,
+        authentication_settings: AuthenticationSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3881,9 +4732,12 @@ class AdminSettingsApi:
     ) -> RESTResponseType:
         """Update authentication settings
 
+        The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
         :param org_id: (required)
         :type org_id: str
+        :param authentication_settings: (required)
+        :type authentication_settings: AuthenticationSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3908,6 +4762,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_auth_update_serialize(
             org_id=org_id,
+            authentication_settings=authentication_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3928,6 +4783,7 @@ class AdminSettingsApi:
     def _patch_admin_settings_auth_update_serialize(
         self,
         org_id,
+        authentication_settings,
         _request_auth,
         _content_type,
         _headers,
@@ -3955,6 +4811,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if authentication_settings is not None:
+            _body_params = authentication_settings
 
 
         # set the HTTP header `Accept`
@@ -3965,6 +4823,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -3994,6 +4865,7 @@ class AdminSettingsApi:
     def patch_admin_settings_authentication_update(
         self,
         org_id: StrictStr,
+        authentication_settings: AuthenticationSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4009,9 +4881,12 @@ class AdminSettingsApi:
     ) -> PutAdminSettingsAuthenticationUpdateResponse:
         """Update authentication settings (alias for settings/auth)
 
+        The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
         :param org_id: (required)
         :type org_id: str
+        :param authentication_settings: (required)
+        :type authentication_settings: AuthenticationSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4036,6 +4911,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_authentication_update_serialize(
             org_id=org_id,
+            authentication_settings=authentication_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4061,6 +4937,7 @@ class AdminSettingsApi:
     def patch_admin_settings_authentication_update_with_http_info(
         self,
         org_id: StrictStr,
+        authentication_settings: AuthenticationSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4076,9 +4953,12 @@ class AdminSettingsApi:
     ) -> ApiResponse[PutAdminSettingsAuthenticationUpdateResponse]:
         """Update authentication settings (alias for settings/auth)
 
+        The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
         :param org_id: (required)
         :type org_id: str
+        :param authentication_settings: (required)
+        :type authentication_settings: AuthenticationSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4103,6 +4983,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_authentication_update_serialize(
             org_id=org_id,
+            authentication_settings=authentication_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4128,6 +5009,7 @@ class AdminSettingsApi:
     def patch_admin_settings_authentication_update_without_preload_content(
         self,
         org_id: StrictStr,
+        authentication_settings: AuthenticationSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4143,9 +5025,12 @@ class AdminSettingsApi:
     ) -> RESTResponseType:
         """Update authentication settings (alias for settings/auth)
 
+        The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
         :param org_id: (required)
         :type org_id: str
+        :param authentication_settings: (required)
+        :type authentication_settings: AuthenticationSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4170,6 +5055,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_authentication_update_serialize(
             org_id=org_id,
+            authentication_settings=authentication_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4190,6 +5076,7 @@ class AdminSettingsApi:
     def _patch_admin_settings_authentication_update_serialize(
         self,
         org_id,
+        authentication_settings,
         _request_auth,
         _content_type,
         _headers,
@@ -4217,6 +5104,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if authentication_settings is not None:
+            _body_params = authentication_settings
 
 
         # set the HTTP header `Accept`
@@ -4227,6 +5116,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -4256,6 +5158,7 @@ class AdminSettingsApi:
     def patch_admin_settings_branding_update(
         self,
         org_id: StrictStr,
+        branding_settings: BrandingSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4275,6 +5178,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param branding_settings: (required)
+        :type branding_settings: BrandingSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4299,6 +5204,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_branding_update_serialize(
             org_id=org_id,
+            branding_settings=branding_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4324,6 +5230,7 @@ class AdminSettingsApi:
     def patch_admin_settings_branding_update_with_http_info(
         self,
         org_id: StrictStr,
+        branding_settings: BrandingSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4343,6 +5250,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param branding_settings: (required)
+        :type branding_settings: BrandingSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4367,6 +5276,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_branding_update_serialize(
             org_id=org_id,
+            branding_settings=branding_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4392,6 +5302,7 @@ class AdminSettingsApi:
     def patch_admin_settings_branding_update_without_preload_content(
         self,
         org_id: StrictStr,
+        branding_settings: BrandingSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4411,6 +5322,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param branding_settings: (required)
+        :type branding_settings: BrandingSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4435,6 +5348,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_branding_update_serialize(
             org_id=org_id,
+            branding_settings=branding_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4455,6 +5369,7 @@ class AdminSettingsApi:
     def _patch_admin_settings_branding_update_serialize(
         self,
         org_id,
+        branding_settings,
         _request_auth,
         _content_type,
         _headers,
@@ -4482,6 +5397,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if branding_settings is not None:
+            _body_params = branding_settings
 
 
         # set the HTTP header `Accept`
@@ -4492,6 +5409,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -5113,6 +6043,7 @@ class AdminSettingsApi:
     def patch_admin_settings_scim_update(
         self,
         org_id: StrictStr,
+        scim_settings: ScimSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5131,6 +6062,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param scim_settings: (required)
+        :type scim_settings: ScimSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5155,6 +6088,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_scim_update_serialize(
             org_id=org_id,
+            scim_settings=scim_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5179,6 +6113,7 @@ class AdminSettingsApi:
     def patch_admin_settings_scim_update_with_http_info(
         self,
         org_id: StrictStr,
+        scim_settings: ScimSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5197,6 +6132,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param scim_settings: (required)
+        :type scim_settings: ScimSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5221,6 +6158,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_scim_update_serialize(
             org_id=org_id,
+            scim_settings=scim_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5245,6 +6183,7 @@ class AdminSettingsApi:
     def patch_admin_settings_scim_update_without_preload_content(
         self,
         org_id: StrictStr,
+        scim_settings: ScimSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5263,6 +6202,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param scim_settings: (required)
+        :type scim_settings: ScimSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5287,6 +6228,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_scim_update_serialize(
             org_id=org_id,
+            scim_settings=scim_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5306,6 +6248,7 @@ class AdminSettingsApi:
     def _patch_admin_settings_scim_update_serialize(
         self,
         org_id,
+        scim_settings,
         _request_auth,
         _content_type,
         _headers,
@@ -5333,6 +6276,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if scim_settings is not None:
+            _body_params = scim_settings
 
 
         # set the HTTP header `Accept`
@@ -5343,6 +6288,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -5372,6 +6330,7 @@ class AdminSettingsApi:
     def patch_admin_settings_security_update(
         self,
         org_id: StrictStr,
+        put_admin_settings_security_update_request: Annotated[PutAdminSettingsSecurityUpdateRequest, Field(description="Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5390,6 +6349,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_security_update_request: Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
+        :type put_admin_settings_security_update_request: PutAdminSettingsSecurityUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5414,6 +6375,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_security_update_serialize(
             org_id=org_id,
+            put_admin_settings_security_update_request=put_admin_settings_security_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5438,6 +6400,7 @@ class AdminSettingsApi:
     def patch_admin_settings_security_update_with_http_info(
         self,
         org_id: StrictStr,
+        put_admin_settings_security_update_request: Annotated[PutAdminSettingsSecurityUpdateRequest, Field(description="Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5456,6 +6419,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_security_update_request: Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
+        :type put_admin_settings_security_update_request: PutAdminSettingsSecurityUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5480,6 +6445,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_security_update_serialize(
             org_id=org_id,
+            put_admin_settings_security_update_request=put_admin_settings_security_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5504,6 +6470,7 @@ class AdminSettingsApi:
     def patch_admin_settings_security_update_without_preload_content(
         self,
         org_id: StrictStr,
+        put_admin_settings_security_update_request: Annotated[PutAdminSettingsSecurityUpdateRequest, Field(description="Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5522,6 +6489,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_security_update_request: Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
+        :type put_admin_settings_security_update_request: PutAdminSettingsSecurityUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5546,6 +6515,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_settings_security_update_serialize(
             org_id=org_id,
+            put_admin_settings_security_update_request=put_admin_settings_security_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5565,6 +6535,7 @@ class AdminSettingsApi:
     def _patch_admin_settings_security_update_serialize(
         self,
         org_id,
+        put_admin_settings_security_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -5592,6 +6563,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_settings_security_update_request is not None:
+            _body_params = put_admin_settings_security_update_request
 
 
         # set the HTTP header `Accept`
@@ -5602,6 +6575,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -5631,6 +6617,7 @@ class AdminSettingsApi:
     def patch_admin_tenant_update(
         self,
         org_id: StrictStr,
+        put_admin_tenant_update_request: PutAdminTenantUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5644,11 +6631,13 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PutAdminTenantUpdateResponse:
-        """Update organization (tenant) name and settings
+        """Update the organization's name and settings
 
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_tenant_update_request: (required)
+        :type put_admin_tenant_update_request: PutAdminTenantUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5673,6 +6662,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_tenant_update_serialize(
             org_id=org_id,
+            put_admin_tenant_update_request=put_admin_tenant_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5698,6 +6688,7 @@ class AdminSettingsApi:
     def patch_admin_tenant_update_with_http_info(
         self,
         org_id: StrictStr,
+        put_admin_tenant_update_request: PutAdminTenantUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5711,11 +6702,13 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PutAdminTenantUpdateResponse]:
-        """Update organization (tenant) name and settings
+        """Update the organization's name and settings
 
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_tenant_update_request: (required)
+        :type put_admin_tenant_update_request: PutAdminTenantUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5740,6 +6733,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_tenant_update_serialize(
             org_id=org_id,
+            put_admin_tenant_update_request=put_admin_tenant_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5765,6 +6759,7 @@ class AdminSettingsApi:
     def patch_admin_tenant_update_without_preload_content(
         self,
         org_id: StrictStr,
+        put_admin_tenant_update_request: PutAdminTenantUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5778,11 +6773,13 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update organization (tenant) name and settings
+        """Update the organization's name and settings
 
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_tenant_update_request: (required)
+        :type put_admin_tenant_update_request: PutAdminTenantUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5807,6 +6804,7 @@ class AdminSettingsApi:
 
         _param = self._patch_admin_tenant_update_serialize(
             org_id=org_id,
+            put_admin_tenant_update_request=put_admin_tenant_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5827,6 +6825,7 @@ class AdminSettingsApi:
     def _patch_admin_tenant_update_serialize(
         self,
         org_id,
+        put_admin_tenant_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -5854,6 +6853,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_tenant_update_request is not None:
+            _body_params = put_admin_tenant_update_request
 
 
         # set the HTTP header `Accept`
@@ -5864,6 +6865,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -5893,6 +6907,7 @@ class AdminSettingsApi:
     def put_admin_organization_update(
         self,
         org_id: StrictStr,
+        put_admin_tenant_update_request: PutAdminTenantUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5906,11 +6921,13 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PutAdminTenantUpdateResponse:
-        """Update organization (tenant) name and settings
+        """Update the organization's name and settings
 
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_tenant_update_request: (required)
+        :type put_admin_tenant_update_request: PutAdminTenantUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5935,6 +6952,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_organization_update_serialize(
             org_id=org_id,
+            put_admin_tenant_update_request=put_admin_tenant_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5960,6 +6978,7 @@ class AdminSettingsApi:
     def put_admin_organization_update_with_http_info(
         self,
         org_id: StrictStr,
+        put_admin_tenant_update_request: PutAdminTenantUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5973,11 +6992,13 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PutAdminTenantUpdateResponse]:
-        """Update organization (tenant) name and settings
+        """Update the organization's name and settings
 
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_tenant_update_request: (required)
+        :type put_admin_tenant_update_request: PutAdminTenantUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6002,6 +7023,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_organization_update_serialize(
             org_id=org_id,
+            put_admin_tenant_update_request=put_admin_tenant_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6027,6 +7049,7 @@ class AdminSettingsApi:
     def put_admin_organization_update_without_preload_content(
         self,
         org_id: StrictStr,
+        put_admin_tenant_update_request: PutAdminTenantUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6040,11 +7063,13 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update organization (tenant) name and settings
+        """Update the organization's name and settings
 
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_tenant_update_request: (required)
+        :type put_admin_tenant_update_request: PutAdminTenantUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6069,6 +7094,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_organization_update_serialize(
             org_id=org_id,
+            put_admin_tenant_update_request=put_admin_tenant_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6089,6 +7115,7 @@ class AdminSettingsApi:
     def _put_admin_organization_update_serialize(
         self,
         org_id,
+        put_admin_tenant_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -6116,6 +7143,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_tenant_update_request is not None:
+            _body_params = put_admin_tenant_update_request
 
 
         # set the HTTP header `Accept`
@@ -6126,6 +7155,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -6155,6 +7197,7 @@ class AdminSettingsApi:
     def put_admin_settings_auth_update(
         self,
         org_id: StrictStr,
+        authentication_settings: AuthenticationSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6170,9 +7213,12 @@ class AdminSettingsApi:
     ) -> PutAdminSettingsAuthenticationUpdateResponse:
         """Update authentication settings
 
+        The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
         :param org_id: (required)
         :type org_id: str
+        :param authentication_settings: (required)
+        :type authentication_settings: AuthenticationSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6197,6 +7243,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_auth_update_serialize(
             org_id=org_id,
+            authentication_settings=authentication_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6222,6 +7269,7 @@ class AdminSettingsApi:
     def put_admin_settings_auth_update_with_http_info(
         self,
         org_id: StrictStr,
+        authentication_settings: AuthenticationSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6237,9 +7285,12 @@ class AdminSettingsApi:
     ) -> ApiResponse[PutAdminSettingsAuthenticationUpdateResponse]:
         """Update authentication settings
 
+        The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
         :param org_id: (required)
         :type org_id: str
+        :param authentication_settings: (required)
+        :type authentication_settings: AuthenticationSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6264,6 +7315,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_auth_update_serialize(
             org_id=org_id,
+            authentication_settings=authentication_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6289,6 +7341,7 @@ class AdminSettingsApi:
     def put_admin_settings_auth_update_without_preload_content(
         self,
         org_id: StrictStr,
+        authentication_settings: AuthenticationSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6304,9 +7357,12 @@ class AdminSettingsApi:
     ) -> RESTResponseType:
         """Update authentication settings
 
+        The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
         :param org_id: (required)
         :type org_id: str
+        :param authentication_settings: (required)
+        :type authentication_settings: AuthenticationSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6331,6 +7387,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_auth_update_serialize(
             org_id=org_id,
+            authentication_settings=authentication_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6351,6 +7408,7 @@ class AdminSettingsApi:
     def _put_admin_settings_auth_update_serialize(
         self,
         org_id,
+        authentication_settings,
         _request_auth,
         _content_type,
         _headers,
@@ -6378,6 +7436,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if authentication_settings is not None:
+            _body_params = authentication_settings
 
 
         # set the HTTP header `Accept`
@@ -6388,6 +7448,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -6417,6 +7490,7 @@ class AdminSettingsApi:
     def put_admin_settings_authentication_update(
         self,
         org_id: StrictStr,
+        authentication_settings: AuthenticationSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6432,9 +7506,12 @@ class AdminSettingsApi:
     ) -> PutAdminSettingsAuthenticationUpdateResponse:
         """Update authentication settings (alias for settings/auth)
 
+        The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
         :param org_id: (required)
         :type org_id: str
+        :param authentication_settings: (required)
+        :type authentication_settings: AuthenticationSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6459,6 +7536,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_authentication_update_serialize(
             org_id=org_id,
+            authentication_settings=authentication_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6484,6 +7562,7 @@ class AdminSettingsApi:
     def put_admin_settings_authentication_update_with_http_info(
         self,
         org_id: StrictStr,
+        authentication_settings: AuthenticationSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6499,9 +7578,12 @@ class AdminSettingsApi:
     ) -> ApiResponse[PutAdminSettingsAuthenticationUpdateResponse]:
         """Update authentication settings (alias for settings/auth)
 
+        The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
         :param org_id: (required)
         :type org_id: str
+        :param authentication_settings: (required)
+        :type authentication_settings: AuthenticationSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6526,6 +7608,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_authentication_update_serialize(
             org_id=org_id,
+            authentication_settings=authentication_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6551,6 +7634,7 @@ class AdminSettingsApi:
     def put_admin_settings_authentication_update_without_preload_content(
         self,
         org_id: StrictStr,
+        authentication_settings: AuthenticationSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6566,9 +7650,12 @@ class AdminSettingsApi:
     ) -> RESTResponseType:
         """Update authentication settings (alias for settings/auth)
 
+        The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
         :param org_id: (required)
         :type org_id: str
+        :param authentication_settings: (required)
+        :type authentication_settings: AuthenticationSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6593,6 +7680,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_authentication_update_serialize(
             org_id=org_id,
+            authentication_settings=authentication_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6613,6 +7701,7 @@ class AdminSettingsApi:
     def _put_admin_settings_authentication_update_serialize(
         self,
         org_id,
+        authentication_settings,
         _request_auth,
         _content_type,
         _headers,
@@ -6640,6 +7729,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if authentication_settings is not None:
+            _body_params = authentication_settings
 
 
         # set the HTTP header `Accept`
@@ -6650,6 +7741,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -6679,6 +7783,7 @@ class AdminSettingsApi:
     def put_admin_settings_branding_update(
         self,
         org_id: StrictStr,
+        branding_settings: BrandingSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6698,6 +7803,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param branding_settings: (required)
+        :type branding_settings: BrandingSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6722,6 +7829,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_branding_update_serialize(
             org_id=org_id,
+            branding_settings=branding_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6747,6 +7855,7 @@ class AdminSettingsApi:
     def put_admin_settings_branding_update_with_http_info(
         self,
         org_id: StrictStr,
+        branding_settings: BrandingSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6766,6 +7875,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param branding_settings: (required)
+        :type branding_settings: BrandingSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6790,6 +7901,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_branding_update_serialize(
             org_id=org_id,
+            branding_settings=branding_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6815,6 +7927,7 @@ class AdminSettingsApi:
     def put_admin_settings_branding_update_without_preload_content(
         self,
         org_id: StrictStr,
+        branding_settings: BrandingSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6834,6 +7947,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param branding_settings: (required)
+        :type branding_settings: BrandingSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6858,6 +7973,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_branding_update_serialize(
             org_id=org_id,
+            branding_settings=branding_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6878,6 +7994,7 @@ class AdminSettingsApi:
     def _put_admin_settings_branding_update_serialize(
         self,
         org_id,
+        branding_settings,
         _request_auth,
         _content_type,
         _headers,
@@ -6905,6 +8022,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if branding_settings is not None:
+            _body_params = branding_settings
 
 
         # set the HTTP header `Accept`
@@ -6915,6 +8034,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -7536,6 +8668,7 @@ class AdminSettingsApi:
     def put_admin_settings_scim_update(
         self,
         org_id: StrictStr,
+        scim_settings: ScimSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7554,6 +8687,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param scim_settings: (required)
+        :type scim_settings: ScimSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7578,6 +8713,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_scim_update_serialize(
             org_id=org_id,
+            scim_settings=scim_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7602,6 +8738,7 @@ class AdminSettingsApi:
     def put_admin_settings_scim_update_with_http_info(
         self,
         org_id: StrictStr,
+        scim_settings: ScimSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7620,6 +8757,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param scim_settings: (required)
+        :type scim_settings: ScimSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7644,6 +8783,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_scim_update_serialize(
             org_id=org_id,
+            scim_settings=scim_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7668,6 +8808,7 @@ class AdminSettingsApi:
     def put_admin_settings_scim_update_without_preload_content(
         self,
         org_id: StrictStr,
+        scim_settings: ScimSettings,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7686,6 +8827,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param scim_settings: (required)
+        :type scim_settings: ScimSettings
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7710,6 +8853,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_scim_update_serialize(
             org_id=org_id,
+            scim_settings=scim_settings,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7729,6 +8873,7 @@ class AdminSettingsApi:
     def _put_admin_settings_scim_update_serialize(
         self,
         org_id,
+        scim_settings,
         _request_auth,
         _content_type,
         _headers,
@@ -7756,6 +8901,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if scim_settings is not None:
+            _body_params = scim_settings
 
 
         # set the HTTP header `Accept`
@@ -7766,6 +8913,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -7795,6 +8955,7 @@ class AdminSettingsApi:
     def put_admin_settings_security_update(
         self,
         org_id: StrictStr,
+        put_admin_settings_security_update_request: Annotated[PutAdminSettingsSecurityUpdateRequest, Field(description="Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7813,6 +8974,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_security_update_request: Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
+        :type put_admin_settings_security_update_request: PutAdminSettingsSecurityUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7837,6 +9000,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_security_update_serialize(
             org_id=org_id,
+            put_admin_settings_security_update_request=put_admin_settings_security_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7861,6 +9025,7 @@ class AdminSettingsApi:
     def put_admin_settings_security_update_with_http_info(
         self,
         org_id: StrictStr,
+        put_admin_settings_security_update_request: Annotated[PutAdminSettingsSecurityUpdateRequest, Field(description="Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7879,6 +9044,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_security_update_request: Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
+        :type put_admin_settings_security_update_request: PutAdminSettingsSecurityUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7903,6 +9070,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_security_update_serialize(
             org_id=org_id,
+            put_admin_settings_security_update_request=put_admin_settings_security_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7927,6 +9095,7 @@ class AdminSettingsApi:
     def put_admin_settings_security_update_without_preload_content(
         self,
         org_id: StrictStr,
+        put_admin_settings_security_update_request: Annotated[PutAdminSettingsSecurityUpdateRequest, Field(description="Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7945,6 +9114,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_settings_security_update_request: Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
+        :type put_admin_settings_security_update_request: PutAdminSettingsSecurityUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -7969,6 +9140,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_settings_security_update_serialize(
             org_id=org_id,
+            put_admin_settings_security_update_request=put_admin_settings_security_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -7988,6 +9160,7 @@ class AdminSettingsApi:
     def _put_admin_settings_security_update_serialize(
         self,
         org_id,
+        put_admin_settings_security_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -8015,6 +9188,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_settings_security_update_request is not None:
+            _body_params = put_admin_settings_security_update_request
 
 
         # set the HTTP header `Accept`
@@ -8025,6 +9200,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -8054,6 +9242,7 @@ class AdminSettingsApi:
     def put_admin_tenant_update(
         self,
         org_id: StrictStr,
+        put_admin_tenant_update_request: PutAdminTenantUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8067,11 +9256,13 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PutAdminTenantUpdateResponse:
-        """Update organization (tenant) name and settings
+        """Update the organization's name and settings
 
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_tenant_update_request: (required)
+        :type put_admin_tenant_update_request: PutAdminTenantUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8096,6 +9287,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_tenant_update_serialize(
             org_id=org_id,
+            put_admin_tenant_update_request=put_admin_tenant_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8121,6 +9313,7 @@ class AdminSettingsApi:
     def put_admin_tenant_update_with_http_info(
         self,
         org_id: StrictStr,
+        put_admin_tenant_update_request: PutAdminTenantUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8134,11 +9327,13 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PutAdminTenantUpdateResponse]:
-        """Update organization (tenant) name and settings
+        """Update the organization's name and settings
 
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_tenant_update_request: (required)
+        :type put_admin_tenant_update_request: PutAdminTenantUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8163,6 +9358,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_tenant_update_serialize(
             org_id=org_id,
+            put_admin_tenant_update_request=put_admin_tenant_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8188,6 +9384,7 @@ class AdminSettingsApi:
     def put_admin_tenant_update_without_preload_content(
         self,
         org_id: StrictStr,
+        put_admin_tenant_update_request: PutAdminTenantUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -8201,11 +9398,13 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update organization (tenant) name and settings
+        """Update the organization's name and settings
 
 
         :param org_id: (required)
         :type org_id: str
+        :param put_admin_tenant_update_request: (required)
+        :type put_admin_tenant_update_request: PutAdminTenantUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -8230,6 +9429,7 @@ class AdminSettingsApi:
 
         _param = self._put_admin_tenant_update_serialize(
             org_id=org_id,
+            put_admin_tenant_update_request=put_admin_tenant_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -8250,6 +9450,7 @@ class AdminSettingsApi:
     def _put_admin_tenant_update_serialize(
         self,
         org_id,
+        put_admin_tenant_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -8277,6 +9478,8 @@ class AdminSettingsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_tenant_update_request is not None:
+            _body_params = put_admin_tenant_update_request
 
 
         # set the HTTP header `Accept`
@@ -8287,6 +9490,19 @@ class AdminSettingsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

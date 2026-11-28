@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -18,13 +18,14 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 )
 
 
 type AdminAuditLogsAPI interface {
 
 	/*
-	AdminAuditLogsActions List the distinct audit action types recorded for the tenant
+	AdminAuditLogsActions List the distinct audit action types recorded for the organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -149,7 +150,7 @@ func (r ApiAdminAuditLogsActionsRequest) Execute() (*AdminAuditLogsActionsRespon
 }
 
 /*
-AdminAuditLogsActions List the distinct audit action types recorded for the tenant
+AdminAuditLogsActions List the distinct audit action types recorded for the organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -257,6 +258,95 @@ type ApiAdminAuditLogsExportRequest struct {
 	ctx context.Context
 	ApiService AdminAuditLogsAPI
 	orgId string
+	format *string
+	eventType *string
+	action *string
+	actorId *string
+	targetType *string
+	targetId *string
+	severity *string
+	status *string
+	ipAddress *string
+	search *string
+	traceId *string
+	from *time.Time
+	to *time.Time
+}
+
+// csv (default) or json.
+func (r ApiAdminAuditLogsExportRequest) Format(format string) ApiAdminAuditLogsExportRequest {
+	r.format = &format
+	return r
+}
+
+// Exact event type, for example user.login.
+func (r ApiAdminAuditLogsExportRequest) EventType(eventType string) ApiAdminAuditLogsExportRequest {
+	r.eventType = &eventType
+	return r
+}
+
+// The short verb of the event (as GET /audit-logs/actions lists them).
+func (r ApiAdminAuditLogsExportRequest) Action(action string) ApiAdminAuditLogsExportRequest {
+	r.action = &action
+	return r
+}
+
+// Who acted: a user, API key or agent id. Also accepted as userId.
+func (r ApiAdminAuditLogsExportRequest) ActorId(actorId string) ApiAdminAuditLogsExportRequest {
+	r.actorId = &actorId
+	return r
+}
+
+// Kind of the subject of the event. Also accepted as resourceType.
+func (r ApiAdminAuditLogsExportRequest) TargetType(targetType string) ApiAdminAuditLogsExportRequest {
+	r.targetType = &targetType
+	return r
+}
+
+// The subject of the event, for example the user of a login.failed entry.
+func (r ApiAdminAuditLogsExportRequest) TargetId(targetId string) ApiAdminAuditLogsExportRequest {
+	r.targetId = &targetId
+	return r
+}
+
+func (r ApiAdminAuditLogsExportRequest) Severity(severity string) ApiAdminAuditLogsExportRequest {
+	r.severity = &severity
+	return r
+}
+
+// Result of the event.
+func (r ApiAdminAuditLogsExportRequest) Status(status string) ApiAdminAuditLogsExportRequest {
+	r.status = &status
+	return r
+}
+
+func (r ApiAdminAuditLogsExportRequest) IpAddress(ipAddress string) ApiAdminAuditLogsExportRequest {
+	r.ipAddress = &ipAddress
+	return r
+}
+
+// Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+func (r ApiAdminAuditLogsExportRequest) Search(search string) ApiAdminAuditLogsExportRequest {
+	r.search = &search
+	return r
+}
+
+// Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+func (r ApiAdminAuditLogsExportRequest) TraceId(traceId string) ApiAdminAuditLogsExportRequest {
+	r.traceId = &traceId
+	return r
+}
+
+// Entries at or after this time (ISO 8601). Also accepted as startDate.
+func (r ApiAdminAuditLogsExportRequest) From(from time.Time) ApiAdminAuditLogsExportRequest {
+	r.from = &from
+	return r
+}
+
+// Entries at or before this time (ISO 8601). Also accepted as endDate.
+func (r ApiAdminAuditLogsExportRequest) To(to time.Time) ApiAdminAuditLogsExportRequest {
+	r.to = &to
+	return r
 }
 
 func (r ApiAdminAuditLogsExportRequest) Execute() (string, *http.Response, error) {
@@ -302,6 +392,48 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsExportExecute(r ApiAdminAuditLo
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.format != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "form", "")
+	} else {
+		var defaultValue string = "csv"
+		r.format = &defaultValue
+	}
+	if r.eventType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "eventType", r.eventType, "form", "")
+	}
+	if r.action != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "action", r.action, "form", "")
+	}
+	if r.actorId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "actorId", r.actorId, "form", "")
+	}
+	if r.targetType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "targetType", r.targetType, "form", "")
+	}
+	if r.targetId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "targetId", r.targetId, "form", "")
+	}
+	if r.severity != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "severity", r.severity, "form", "")
+	}
+	if r.status != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status", r.status, "form", "")
+	}
+	if r.ipAddress != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ipAddress", r.ipAddress, "form", "")
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	if r.traceId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "traceId", r.traceId, "form", "")
+	}
+	if r.from != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "from", r.from, "form", "")
+	}
+	if r.to != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "to", r.to, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -493,6 +625,100 @@ type ApiAdminAuditLogsListRequest struct {
 	ctx context.Context
 	ApiService AdminAuditLogsAPI
 	orgId string
+	page *int32
+	limit *int32
+	eventType *string
+	action *string
+	actorId *string
+	targetType *string
+	targetId *string
+	severity *string
+	status *string
+	ipAddress *string
+	search *string
+	traceId *string
+	from *time.Time
+	to *time.Time
+}
+
+func (r ApiAdminAuditLogsListRequest) Page(page int32) ApiAdminAuditLogsListRequest {
+	r.page = &page
+	return r
+}
+
+func (r ApiAdminAuditLogsListRequest) Limit(limit int32) ApiAdminAuditLogsListRequest {
+	r.limit = &limit
+	return r
+}
+
+// Exact event type, for example user.login.
+func (r ApiAdminAuditLogsListRequest) EventType(eventType string) ApiAdminAuditLogsListRequest {
+	r.eventType = &eventType
+	return r
+}
+
+// The short verb of the event (as GET /audit-logs/actions lists them).
+func (r ApiAdminAuditLogsListRequest) Action(action string) ApiAdminAuditLogsListRequest {
+	r.action = &action
+	return r
+}
+
+// Who acted: a user, API key or agent id. Also accepted as userId.
+func (r ApiAdminAuditLogsListRequest) ActorId(actorId string) ApiAdminAuditLogsListRequest {
+	r.actorId = &actorId
+	return r
+}
+
+// Kind of the subject of the event. Also accepted as resourceType.
+func (r ApiAdminAuditLogsListRequest) TargetType(targetType string) ApiAdminAuditLogsListRequest {
+	r.targetType = &targetType
+	return r
+}
+
+// The subject of the event, for example the user of a login.failed entry.
+func (r ApiAdminAuditLogsListRequest) TargetId(targetId string) ApiAdminAuditLogsListRequest {
+	r.targetId = &targetId
+	return r
+}
+
+func (r ApiAdminAuditLogsListRequest) Severity(severity string) ApiAdminAuditLogsListRequest {
+	r.severity = &severity
+	return r
+}
+
+// Result of the event.
+func (r ApiAdminAuditLogsListRequest) Status(status string) ApiAdminAuditLogsListRequest {
+	r.status = &status
+	return r
+}
+
+func (r ApiAdminAuditLogsListRequest) IpAddress(ipAddress string) ApiAdminAuditLogsListRequest {
+	r.ipAddress = &ipAddress
+	return r
+}
+
+// Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+func (r ApiAdminAuditLogsListRequest) Search(search string) ApiAdminAuditLogsListRequest {
+	r.search = &search
+	return r
+}
+
+// Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+func (r ApiAdminAuditLogsListRequest) TraceId(traceId string) ApiAdminAuditLogsListRequest {
+	r.traceId = &traceId
+	return r
+}
+
+// Entries at or after this time (ISO 8601). Also accepted as startDate.
+func (r ApiAdminAuditLogsListRequest) From(from time.Time) ApiAdminAuditLogsListRequest {
+	r.from = &from
+	return r
+}
+
+// Entries at or before this time (ISO 8601). Also accepted as endDate.
+func (r ApiAdminAuditLogsListRequest) To(to time.Time) ApiAdminAuditLogsListRequest {
+	r.to = &to
+	return r
 }
 
 func (r ApiAdminAuditLogsListRequest) Execute() (*AdminAuditLogsListResponse, *http.Response, error) {
@@ -536,6 +762,54 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsListExecute(r ApiAdminAuditLogs
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		r.page = &defaultValue
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 25
+		r.limit = &defaultValue
+	}
+	if r.eventType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "eventType", r.eventType, "form", "")
+	}
+	if r.action != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "action", r.action, "form", "")
+	}
+	if r.actorId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "actorId", r.actorId, "form", "")
+	}
+	if r.targetType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "targetType", r.targetType, "form", "")
+	}
+	if r.targetId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "targetId", r.targetId, "form", "")
+	}
+	if r.severity != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "severity", r.severity, "form", "")
+	}
+	if r.status != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status", r.status, "form", "")
+	}
+	if r.ipAddress != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ipAddress", r.ipAddress, "form", "")
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	if r.traceId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "traceId", r.traceId, "form", "")
+	}
+	if r.from != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "from", r.from, "form", "")
+	}
+	if r.to != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "to", r.to, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -838,6 +1112,12 @@ type ApiPatchAdminAuditLogsRetentionUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminAuditLogsAPI
 	orgId string
+	putAdminAuditLogsRetentionUpdateRequest *PutAdminAuditLogsRetentionUpdateRequest
+}
+
+func (r ApiPatchAdminAuditLogsRetentionUpdateRequest) PutAdminAuditLogsRetentionUpdateRequest(putAdminAuditLogsRetentionUpdateRequest PutAdminAuditLogsRetentionUpdateRequest) ApiPatchAdminAuditLogsRetentionUpdateRequest {
+	r.putAdminAuditLogsRetentionUpdateRequest = &putAdminAuditLogsRetentionUpdateRequest
+	return r
 }
 
 func (r ApiPatchAdminAuditLogsRetentionUpdateRequest) Execute() (*AdminAuditLogsRetentionResponse, *http.Response, error) {
@@ -882,9 +1162,12 @@ func (a *AdminAuditLogsAPIService) PatchAdminAuditLogsRetentionUpdateExecute(r A
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminAuditLogsRetentionUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminAuditLogsRetentionUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -900,6 +1183,8 @@ func (a *AdminAuditLogsAPIService) PatchAdminAuditLogsRetentionUpdateExecute(r A
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminAuditLogsRetentionUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -955,6 +1240,12 @@ type ApiPutAdminAuditLogsRetentionUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminAuditLogsAPI
 	orgId string
+	putAdminAuditLogsRetentionUpdateRequest *PutAdminAuditLogsRetentionUpdateRequest
+}
+
+func (r ApiPutAdminAuditLogsRetentionUpdateRequest) PutAdminAuditLogsRetentionUpdateRequest(putAdminAuditLogsRetentionUpdateRequest PutAdminAuditLogsRetentionUpdateRequest) ApiPutAdminAuditLogsRetentionUpdateRequest {
+	r.putAdminAuditLogsRetentionUpdateRequest = &putAdminAuditLogsRetentionUpdateRequest
+	return r
 }
 
 func (r ApiPutAdminAuditLogsRetentionUpdateRequest) Execute() (*AdminAuditLogsRetentionResponse, *http.Response, error) {
@@ -999,9 +1290,12 @@ func (a *AdminAuditLogsAPIService) PutAdminAuditLogsRetentionUpdateExecute(r Api
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminAuditLogsRetentionUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminAuditLogsRetentionUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1017,6 +1311,8 @@ func (a *AdminAuditLogsAPIService) PutAdminAuditLogsRetentionUpdateExecute(r Api
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminAuditLogsRetentionUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

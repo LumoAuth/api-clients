@@ -22,7 +22,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 ## `abacAttributesCreate()`
 
 ```php
-abacAttributesCreate($orgId): \LumoAuth\ApiClient\Model\AbacAttributesCreateResponse
+abacAttributesCreate($orgId, $abacAttributesCreateRequest): \LumoAuth\ApiClient\Model\AbacAttributesCreateResponse
 ```
 
 Create an attribute definition
@@ -50,9 +50,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAbacApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$abacAttributesCreateRequest = new \LumoAuth\ApiClient\Model\AbacAttributesCreateRequest(); // \LumoAuth\ApiClient\Model\AbacAttributesCreateRequest
 
 try {
-    $result = $apiInstance->abacAttributesCreate($orgId);
+    $result = $apiInstance->abacAttributesCreate($orgId, $abacAttributesCreateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAbacApi->abacAttributesCreate: ', $e->getMessage(), PHP_EOL;
@@ -64,6 +65,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **abacAttributesCreateRequest** | [**\LumoAuth\ApiClient\Model\AbacAttributesCreateRequest**](../Model/AbacAttributesCreateRequest.md)|  | |
 
 ### Return type
 
@@ -75,7 +77,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -278,7 +280,7 @@ try {
 ## `abacPoliciesCreate()`
 
 ```php
-abacPoliciesCreate($orgId): \LumoAuth\ApiClient\Model\AbacPoliciesCreateResponse
+abacPoliciesCreate($orgId, $abacPoliciesCreateRequest): \LumoAuth\ApiClient\Model\AbacPoliciesCreateResponse
 ```
 
 Create an ABAC policy
@@ -306,9 +308,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAbacApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$abacPoliciesCreateRequest = new \LumoAuth\ApiClient\Model\AbacPoliciesCreateRequest(); // \LumoAuth\ApiClient\Model\AbacPoliciesCreateRequest
 
 try {
-    $result = $apiInstance->abacPoliciesCreate($orgId);
+    $result = $apiInstance->abacPoliciesCreate($orgId, $abacPoliciesCreateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAbacApi->abacPoliciesCreate: ', $e->getMessage(), PHP_EOL;
@@ -320,6 +323,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **abacPoliciesCreateRequest** | [**\LumoAuth\ApiClient\Model\AbacPoliciesCreateRequest**](../Model/AbacPoliciesCreateRequest.md)|  | |
 
 ### Return type
 
@@ -331,7 +335,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -601,7 +605,7 @@ try {
 ## `patchAbacAttributesUpdate()`
 
 ```php
-patchAbacAttributesUpdate($orgId, $id): \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateResponse
+patchAbacAttributesUpdate($orgId, $id, $putAbacAttributesUpdateRequest): \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateResponse
 ```
 
 Partially update an attribute definition
@@ -630,9 +634,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAbacApi(
 );
 $orgId = 'orgId_example'; // string
 $id = 'id_example'; // string
+$putAbacAttributesUpdateRequest = new \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest
 
 try {
-    $result = $apiInstance->patchAbacAttributesUpdate($orgId, $id);
+    $result = $apiInstance->patchAbacAttributesUpdate($orgId, $id, $putAbacAttributesUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAbacApi->patchAbacAttributesUpdate: ', $e->getMessage(), PHP_EOL;
@@ -645,6 +650,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **id** | **string**|  | |
+| **putAbacAttributesUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest**](../Model/PutAbacAttributesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -656,7 +662,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -666,7 +672,7 @@ try {
 ## `patchAbacPoliciesUpdate()`
 
 ```php
-patchAbacPoliciesUpdate($orgId, $id): \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateResponse
+patchAbacPoliciesUpdate($orgId, $id, $putAbacPoliciesUpdateRequest): \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateResponse
 ```
 
 Partially update an ABAC policy
@@ -695,9 +701,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAbacApi(
 );
 $orgId = 'orgId_example'; // string
 $id = 'id_example'; // string
+$putAbacPoliciesUpdateRequest = new \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest
 
 try {
-    $result = $apiInstance->patchAbacPoliciesUpdate($orgId, $id);
+    $result = $apiInstance->patchAbacPoliciesUpdate($orgId, $id, $putAbacPoliciesUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAbacApi->patchAbacPoliciesUpdate: ', $e->getMessage(), PHP_EOL;
@@ -710,6 +717,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **id** | **string**|  | |
+| **putAbacPoliciesUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest**](../Model/PutAbacPoliciesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -721,7 +729,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -731,7 +739,7 @@ try {
 ## `putAbacAttributesUpdate()`
 
 ```php
-putAbacAttributesUpdate($orgId, $id): \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateResponse
+putAbacAttributesUpdate($orgId, $id, $putAbacAttributesUpdateRequest): \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateResponse
 ```
 
 Update an attribute definition
@@ -760,9 +768,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAbacApi(
 );
 $orgId = 'orgId_example'; // string
 $id = 'id_example'; // string
+$putAbacAttributesUpdateRequest = new \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest
 
 try {
-    $result = $apiInstance->putAbacAttributesUpdate($orgId, $id);
+    $result = $apiInstance->putAbacAttributesUpdate($orgId, $id, $putAbacAttributesUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAbacApi->putAbacAttributesUpdate: ', $e->getMessage(), PHP_EOL;
@@ -775,6 +784,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **id** | **string**|  | |
+| **putAbacAttributesUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAbacAttributesUpdateRequest**](../Model/PutAbacAttributesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -786,7 +796,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -796,7 +806,7 @@ try {
 ## `putAbacPoliciesUpdate()`
 
 ```php
-putAbacPoliciesUpdate($orgId, $id): \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateResponse
+putAbacPoliciesUpdate($orgId, $id, $putAbacPoliciesUpdateRequest): \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateResponse
 ```
 
 Update an ABAC policy
@@ -825,9 +835,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAbacApi(
 );
 $orgId = 'orgId_example'; // string
 $id = 'id_example'; // string
+$putAbacPoliciesUpdateRequest = new \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest
 
 try {
-    $result = $apiInstance->putAbacPoliciesUpdate($orgId, $id);
+    $result = $apiInstance->putAbacPoliciesUpdate($orgId, $id, $putAbacPoliciesUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAbacApi->putAbacPoliciesUpdate: ', $e->getMessage(), PHP_EOL;
@@ -840,6 +851,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **id** | **string**|  | |
+| **putAbacPoliciesUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAbacPoliciesUpdateRequest**](../Model/PutAbacPoliciesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -851,7 +863,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

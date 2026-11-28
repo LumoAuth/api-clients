@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -18,10 +18,13 @@ module LumoAuthApiClient
     # The workload OIDC token (JWT).
     attr_accessor :attestation_token
 
+    attr_accessor :scope
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'attestation_token' => :'attestation_token'
+        :'attestation_token' => :'attestation_token',
+        :'scope' => :'scope'
       }
     end
 
@@ -38,7 +41,8 @@ module LumoAuthApiClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'attestation_token' => :'String'
+        :'attestation_token' => :'String',
+        :'scope' => :'AttestRequestScope'
       }
     end
 
@@ -68,6 +72,10 @@ module LumoAuthApiClient
         self.attestation_token = attributes[:'attestation_token']
       else
         self.attestation_token = nil
+      end
+
+      if attributes.key?(:'scope')
+        self.scope = attributes[:'scope']
       end
     end
 
@@ -106,7 +114,8 @@ module LumoAuthApiClient
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          attestation_token == o.attestation_token
+          attestation_token == o.attestation_token &&
+          scope == o.scope
     end
 
     # @see the `==` method
@@ -118,7 +127,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [attestation_token].hash
+      [attestation_token, scope].hash
     end
 
     # Builds the object from hash

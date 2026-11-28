@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -278,7 +278,7 @@ public class WellKnownApi {
 
     /**
      * JSON Web Key Set (RFC 7517)
-     * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+     * Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
      * @param orgId  (required)
      * @return JsonWebKeySet
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -297,7 +297,7 @@ public class WellKnownApi {
 
     /**
      * JSON Web Key Set (RFC 7517)
-     * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+     * Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
      * @param orgId  (required)
      * @return ApiResponse&lt;JsonWebKeySet&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -317,7 +317,7 @@ public class WellKnownApi {
 
     /**
      * JSON Web Key Set (RFC 7517) (asynchronously)
-     * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+     * Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -479,7 +479,7 @@ public class WellKnownApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Transmitter configuration </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getSsfConfigurationCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -549,7 +549,7 @@ public class WellKnownApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Transmitter configuration </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
      </table>
      */
     public GetSsfConfigurationResponse getSsfConfiguration(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -568,7 +568,7 @@ public class WellKnownApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Transmitter configuration </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<GetSsfConfigurationResponse> getSsfConfigurationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -589,7 +589,7 @@ public class WellKnownApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Transmitter configuration </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getSsfConfigurationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<GetSsfConfigurationResponse> _callback) throws ApiException {

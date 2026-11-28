@@ -13,7 +13,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -282,6 +282,12 @@ class VerifyAuthTokenRequest implements ModelInterface, ArrayAccess, \JsonSerial
     {
         $invalidProperties = [];
 
+        if ($this->container['authToken'] === null) {
+            $invalidProperties[] = "'authToken' can't be null";
+        }
+        if ($this->container['resource'] === null) {
+            $invalidProperties[] = "'resource' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -300,7 +306,7 @@ class VerifyAuthTokenRequest implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets authToken
      *
-     * @return string|null
+     * @return string
      */
     public function getAuthToken()
     {
@@ -310,7 +316,7 @@ class VerifyAuthTokenRequest implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets authToken
      *
-     * @param string|null $authToken The auth token presented by the agent.
+     * @param string $authToken The auth token presented by the agent.
      *
      * @return self
      */
@@ -327,7 +333,7 @@ class VerifyAuthTokenRequest implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets resource
      *
-     * @return string|null
+     * @return string
      */
     public function getResource()
     {
@@ -337,7 +343,7 @@ class VerifyAuthTokenRequest implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets resource
      *
-     * @param string|null $resource Resource identifier; defaults to the authenticated resource.
+     * @param string $resource Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
      *
      * @return self
      */

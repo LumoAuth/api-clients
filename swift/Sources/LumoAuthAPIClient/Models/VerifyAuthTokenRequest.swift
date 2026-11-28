@@ -13,11 +13,11 @@ import AnyCodable
 public struct VerifyAuthTokenRequest: Codable, JSONEncodable, Hashable {
 
     /** The auth token presented by the agent. */
-    public var authToken: String?
-    /** Resource identifier; defaults to the authenticated resource. */
-    public var resource: String?
+    public var authToken: String
+    /** Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource. */
+    public var resource: String
 
-    public init(authToken: String? = nil, resource: String? = nil) {
+    public init(authToken: String, resource: String) {
         self.authToken = authToken
         self.resource = resource
     }
@@ -31,8 +31,8 @@ public struct VerifyAuthTokenRequest: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(authToken, forKey: .authToken)
-        try container.encodeIfPresent(resource, forKey: .resource)
+        try container.encode(authToken, forKey: .authToken)
+        try container.encode(resource, forKey: .resource)
     }
 }
 

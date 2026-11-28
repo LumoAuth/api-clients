@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -27,11 +27,15 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AddUserGroupRequest;
 import io.lumoauth.client.model.AddUserGroupResponse;
+import io.lumoauth.client.model.AddUserPermissionRequest;
 import io.lumoauth.client.model.AddUserPermissionResponse;
+import io.lumoauth.client.model.AddUserRoleRequest;
 import io.lumoauth.client.model.AddUserRoleResponse;
 import io.lumoauth.client.model.AdminAgentsGetResponse;
 import io.lumoauth.client.model.AdminGroupsGroupsGetRolesResponse;
+import io.lumoauth.client.model.AdminGroupsUpdateRolesRequest;
 import io.lumoauth.client.model.AdminIdentitiesLegacySamlRelinkRequest;
 import io.lumoauth.client.model.AdminIdentitiesLegacySamlRelinkResponse;
 import io.lumoauth.client.model.AdminIdentitiesLegacySamlReportResponse;
@@ -40,6 +44,7 @@ import io.lumoauth.client.model.AdminIdentitiesListResponse;
 import io.lumoauth.client.model.AdminRolesGetPermissionsResponse;
 import io.lumoauth.client.model.AdminUsersRestoreResponse;
 import io.lumoauth.client.model.BlockUserResponse;
+import io.lumoauth.client.model.CreateUserRequest;
 import io.lumoauth.client.model.CreateUserResponse;
 import io.lumoauth.client.model.DeleteUserResponse;
 import io.lumoauth.client.model.GetUserResponse;
@@ -49,10 +54,13 @@ import io.lumoauth.client.model.RemoveUserGroupResponse;
 import io.lumoauth.client.model.RemoveUserPermissionResponse;
 import io.lumoauth.client.model.RemoveUserRoleResponse;
 import io.lumoauth.client.model.SendUserVerificationEmailResponse;
+import io.lumoauth.client.model.SetUserPasswordPostRequest;
 import io.lumoauth.client.model.SetUserPasswordPostResponse;
 import io.lumoauth.client.model.TriggerUserPasswordResetResponse;
 import io.lumoauth.client.model.UnblockUserResponse;
+import io.lumoauth.client.model.UpdateUserGroupsRequest;
 import io.lumoauth.client.model.UpdateUserGroupsResponse;
+import io.lumoauth.client.model.UpdateUserRequest;
 import io.lumoauth.client.model.UpdateUserResponse;
 import io.lumoauth.client.model.UpdateUserRolesResponse;
 
@@ -103,6 +111,7 @@ public class AdminUsersApi {
      * Build call for addUserGroup
      * @param orgId  (required)
      * @param userId  (required)
+     * @param addUserGroupRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -113,7 +122,7 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with the group assigned </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call addUserGroupCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call addUserGroupCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserGroupRequest addUserGroupRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -127,7 +136,7 @@ public class AdminUsersApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = addUserGroupRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/users/{userId}/groups"
@@ -149,6 +158,7 @@ public class AdminUsersApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -160,7 +170,7 @@ public class AdminUsersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call addUserGroupValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call addUserGroupValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserGroupRequest addUserGroupRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling addUserGroup(Async)");
@@ -171,7 +181,12 @@ public class AdminUsersApi {
             throw new ApiException("Missing the required parameter 'userId' when calling addUserGroup(Async)");
         }
 
-        return addUserGroupCall(orgId, userId, _callback);
+        // verify the required parameter 'addUserGroupRequest' is set
+        if (addUserGroupRequest == null) {
+            throw new ApiException("Missing the required parameter 'addUserGroupRequest' when calling addUserGroup(Async)");
+        }
+
+        return addUserGroupCall(orgId, userId, addUserGroupRequest, _callback);
 
     }
 
@@ -180,6 +195,7 @@ public class AdminUsersApi {
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @param addUserGroupRequest  (required)
      * @return AddUserGroupResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -189,8 +205,8 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with the group assigned </td><td>  -  </td></tr>
      </table>
      */
-    public AddUserGroupResponse addUserGroup(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        ApiResponse<AddUserGroupResponse> localVarResp = addUserGroupWithHttpInfo(orgId, userId);
+    public AddUserGroupResponse addUserGroup(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserGroupRequest addUserGroupRequest) throws ApiException {
+        ApiResponse<AddUserGroupResponse> localVarResp = addUserGroupWithHttpInfo(orgId, userId, addUserGroupRequest);
         return localVarResp.getData();
     }
 
@@ -199,6 +215,7 @@ public class AdminUsersApi {
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @param addUserGroupRequest  (required)
      * @return ApiResponse&lt;AddUserGroupResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -208,8 +225,8 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with the group assigned </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AddUserGroupResponse> addUserGroupWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        okhttp3.Call localVarCall = addUserGroupValidateBeforeCall(orgId, userId, null);
+    public ApiResponse<AddUserGroupResponse> addUserGroupWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserGroupRequest addUserGroupRequest) throws ApiException {
+        okhttp3.Call localVarCall = addUserGroupValidateBeforeCall(orgId, userId, addUserGroupRequest, null);
         Type localVarReturnType = new TypeToken<AddUserGroupResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -219,6 +236,7 @@ public class AdminUsersApi {
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @param addUserGroupRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -229,9 +247,9 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with the group assigned </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call addUserGroupAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AddUserGroupResponse> _callback) throws ApiException {
+    public okhttp3.Call addUserGroupAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserGroupRequest addUserGroupRequest, final ApiCallback<AddUserGroupResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = addUserGroupValidateBeforeCall(orgId, userId, _callback);
+        okhttp3.Call localVarCall = addUserGroupValidateBeforeCall(orgId, userId, addUserGroupRequest, _callback);
         Type localVarReturnType = new TypeToken<AddUserGroupResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -240,6 +258,7 @@ public class AdminUsersApi {
      * Build call for addUserPermission
      * @param orgId  (required)
      * @param userId  (required)
+     * @param addUserPermissionRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -250,7 +269,7 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> Permission assigned </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call addUserPermissionCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call addUserPermissionCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserPermissionRequest addUserPermissionRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -264,7 +283,7 @@ public class AdminUsersApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = addUserPermissionRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/users/{userId}/permissions"
@@ -286,6 +305,7 @@ public class AdminUsersApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -297,7 +317,7 @@ public class AdminUsersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call addUserPermissionValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call addUserPermissionValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserPermissionRequest addUserPermissionRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling addUserPermission(Async)");
@@ -308,15 +328,21 @@ public class AdminUsersApi {
             throw new ApiException("Missing the required parameter 'userId' when calling addUserPermission(Async)");
         }
 
-        return addUserPermissionCall(orgId, userId, _callback);
+        // verify the required parameter 'addUserPermissionRequest' is set
+        if (addUserPermissionRequest == null) {
+            throw new ApiException("Missing the required parameter 'addUserPermissionRequest' when calling addUserPermission(Async)");
+        }
+
+        return addUserPermissionCall(orgId, userId, addUserPermissionRequest, _callback);
 
     }
 
     /**
      * Assign a permission to a user
-     * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+     * Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param addUserPermissionRequest  (required)
      * @return AddUserPermissionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -326,16 +352,17 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> Permission assigned </td><td>  -  </td></tr>
      </table>
      */
-    public AddUserPermissionResponse addUserPermission(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        ApiResponse<AddUserPermissionResponse> localVarResp = addUserPermissionWithHttpInfo(orgId, userId);
+    public AddUserPermissionResponse addUserPermission(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserPermissionRequest addUserPermissionRequest) throws ApiException {
+        ApiResponse<AddUserPermissionResponse> localVarResp = addUserPermissionWithHttpInfo(orgId, userId, addUserPermissionRequest);
         return localVarResp.getData();
     }
 
     /**
      * Assign a permission to a user
-     * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+     * Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param addUserPermissionRequest  (required)
      * @return ApiResponse&lt;AddUserPermissionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -345,17 +372,18 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> Permission assigned </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AddUserPermissionResponse> addUserPermissionWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        okhttp3.Call localVarCall = addUserPermissionValidateBeforeCall(orgId, userId, null);
+    public ApiResponse<AddUserPermissionResponse> addUserPermissionWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserPermissionRequest addUserPermissionRequest) throws ApiException {
+        okhttp3.Call localVarCall = addUserPermissionValidateBeforeCall(orgId, userId, addUserPermissionRequest, null);
         Type localVarReturnType = new TypeToken<AddUserPermissionResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Assign a permission to a user (asynchronously)
-     * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+     * Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param addUserPermissionRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -366,9 +394,9 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> Permission assigned </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call addUserPermissionAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AddUserPermissionResponse> _callback) throws ApiException {
+    public okhttp3.Call addUserPermissionAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserPermissionRequest addUserPermissionRequest, final ApiCallback<AddUserPermissionResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = addUserPermissionValidateBeforeCall(orgId, userId, _callback);
+        okhttp3.Call localVarCall = addUserPermissionValidateBeforeCall(orgId, userId, addUserPermissionRequest, _callback);
         Type localVarReturnType = new TypeToken<AddUserPermissionResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -377,6 +405,7 @@ public class AdminUsersApi {
      * Build call for addUserRole
      * @param orgId  (required)
      * @param userId  (required)
+     * @param addUserRoleRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -387,7 +416,7 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with the role assigned </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call addUserRoleCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call addUserRoleCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserRoleRequest addUserRoleRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -401,7 +430,7 @@ public class AdminUsersApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = addUserRoleRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/users/{userId}/roles"
@@ -423,6 +452,7 @@ public class AdminUsersApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -434,7 +464,7 @@ public class AdminUsersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call addUserRoleValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call addUserRoleValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserRoleRequest addUserRoleRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling addUserRole(Async)");
@@ -445,7 +475,12 @@ public class AdminUsersApi {
             throw new ApiException("Missing the required parameter 'userId' when calling addUserRole(Async)");
         }
 
-        return addUserRoleCall(orgId, userId, _callback);
+        // verify the required parameter 'addUserRoleRequest' is set
+        if (addUserRoleRequest == null) {
+            throw new ApiException("Missing the required parameter 'addUserRoleRequest' when calling addUserRole(Async)");
+        }
+
+        return addUserRoleCall(orgId, userId, addUserRoleRequest, _callback);
 
     }
 
@@ -454,6 +489,7 @@ public class AdminUsersApi {
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @param addUserRoleRequest  (required)
      * @return AddUserRoleResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -463,8 +499,8 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with the role assigned </td><td>  -  </td></tr>
      </table>
      */
-    public AddUserRoleResponse addUserRole(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        ApiResponse<AddUserRoleResponse> localVarResp = addUserRoleWithHttpInfo(orgId, userId);
+    public AddUserRoleResponse addUserRole(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserRoleRequest addUserRoleRequest) throws ApiException {
+        ApiResponse<AddUserRoleResponse> localVarResp = addUserRoleWithHttpInfo(orgId, userId, addUserRoleRequest);
         return localVarResp.getData();
     }
 
@@ -473,6 +509,7 @@ public class AdminUsersApi {
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @param addUserRoleRequest  (required)
      * @return ApiResponse&lt;AddUserRoleResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -482,8 +519,8 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with the role assigned </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AddUserRoleResponse> addUserRoleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        okhttp3.Call localVarCall = addUserRoleValidateBeforeCall(orgId, userId, null);
+    public ApiResponse<AddUserRoleResponse> addUserRoleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserRoleRequest addUserRoleRequest) throws ApiException {
+        okhttp3.Call localVarCall = addUserRoleValidateBeforeCall(orgId, userId, addUserRoleRequest, null);
         Type localVarReturnType = new TypeToken<AddUserRoleResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -493,6 +530,7 @@ public class AdminUsersApi {
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @param addUserRoleRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -503,9 +541,9 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with the role assigned </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call addUserRoleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AddUserRoleResponse> _callback) throws ApiException {
+    public okhttp3.Call addUserRoleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AddUserRoleRequest addUserRoleRequest, final ApiCallback<AddUserRoleResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = addUserRoleValidateBeforeCall(orgId, userId, _callback);
+        okhttp3.Call localVarCall = addUserRoleValidateBeforeCall(orgId, userId, addUserRoleRequest, _callback);
         Type localVarReturnType = new TypeToken<AddUserRoleResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1550,6 +1588,7 @@ public class AdminUsersApi {
     /**
      * Build call for createUser
      * @param orgId  (required)
+     * @param createUserRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1561,7 +1600,7 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> Missing permission, or a plan limit (&#x60;plan_limit_reached&#x60;): no admin seat free for a user created with admin access (&#x60;limit&#x60;: &#x60;admin_seats&#x60;), or every monthly-active-user place of a plan with a hard cap used this month (&#x60;limit&#x60;: &#x60;mau&#x60;, with &#x60;resets_on&#x60;). Nothing is created </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createUserCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call createUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateUserRequest createUserRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1575,7 +1614,7 @@ public class AdminUsersApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = createUserRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/users"
@@ -1596,6 +1635,7 @@ public class AdminUsersApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1607,13 +1647,18 @@ public class AdminUsersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createUserValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createUserValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateUserRequest createUserRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling createUser(Async)");
         }
 
-        return createUserCall(orgId, _callback);
+        // verify the required parameter 'createUserRequest' is set
+        if (createUserRequest == null) {
+            throw new ApiException("Missing the required parameter 'createUserRequest' when calling createUser(Async)");
+        }
+
+        return createUserCall(orgId, createUserRequest, _callback);
 
     }
 
@@ -1621,6 +1666,7 @@ public class AdminUsersApi {
      * Create a user
      * 
      * @param orgId  (required)
+     * @param createUserRequest  (required)
      * @return CreateUserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1631,8 +1677,8 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> Missing permission, or a plan limit (&#x60;plan_limit_reached&#x60;): no admin seat free for a user created with admin access (&#x60;limit&#x60;: &#x60;admin_seats&#x60;), or every monthly-active-user place of a plan with a hard cap used this month (&#x60;limit&#x60;: &#x60;mau&#x60;, with &#x60;resets_on&#x60;). Nothing is created </td><td>  -  </td></tr>
      </table>
      */
-    public CreateUserResponse createUser(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<CreateUserResponse> localVarResp = createUserWithHttpInfo(orgId);
+    public CreateUserResponse createUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateUserRequest createUserRequest) throws ApiException {
+        ApiResponse<CreateUserResponse> localVarResp = createUserWithHttpInfo(orgId, createUserRequest);
         return localVarResp.getData();
     }
 
@@ -1640,6 +1686,7 @@ public class AdminUsersApi {
      * Create a user
      * 
      * @param orgId  (required)
+     * @param createUserRequest  (required)
      * @return ApiResponse&lt;CreateUserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1650,8 +1697,8 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> Missing permission, or a plan limit (&#x60;plan_limit_reached&#x60;): no admin seat free for a user created with admin access (&#x60;limit&#x60;: &#x60;admin_seats&#x60;), or every monthly-active-user place of a plan with a hard cap used this month (&#x60;limit&#x60;: &#x60;mau&#x60;, with &#x60;resets_on&#x60;). Nothing is created </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<CreateUserResponse> createUserWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = createUserValidateBeforeCall(orgId, null);
+    public ApiResponse<CreateUserResponse> createUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateUserRequest createUserRequest) throws ApiException {
+        okhttp3.Call localVarCall = createUserValidateBeforeCall(orgId, createUserRequest, null);
         Type localVarReturnType = new TypeToken<CreateUserResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1660,6 +1707,7 @@ public class AdminUsersApi {
      * Create a user (asynchronously)
      * 
      * @param orgId  (required)
+     * @param createUserRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1671,9 +1719,9 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> Missing permission, or a plan limit (&#x60;plan_limit_reached&#x60;): no admin seat free for a user created with admin access (&#x60;limit&#x60;: &#x60;admin_seats&#x60;), or every monthly-active-user place of a plan with a hard cap used this month (&#x60;limit&#x60;: &#x60;mau&#x60;, with &#x60;resets_on&#x60;). Nothing is created </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createUserAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<CreateUserResponse> _callback) throws ApiException {
+    public okhttp3.Call createUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateUserRequest createUserRequest, final ApiCallback<CreateUserResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createUserValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = createUserValidateBeforeCall(orgId, createUserRequest, _callback);
         Type localVarReturnType = new TypeToken<CreateUserResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2727,6 +2775,7 @@ public class AdminUsersApi {
      * Build call for patchUser
      * @param orgId  (required)
      * @param userId  (required)
+     * @param updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2740,7 +2789,7 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserRequest updateUserRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2754,7 +2803,7 @@ public class AdminUsersApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = updateUserRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/users/{userId}"
@@ -2776,6 +2825,7 @@ public class AdminUsersApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2787,7 +2837,7 @@ public class AdminUsersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchUserValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchUserValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserRequest updateUserRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchUser(Async)");
@@ -2798,7 +2848,12 @@ public class AdminUsersApi {
             throw new ApiException("Missing the required parameter 'userId' when calling patchUser(Async)");
         }
 
-        return patchUserCall(orgId, userId, _callback);
+        // verify the required parameter 'updateUserRequest' is set
+        if (updateUserRequest == null) {
+            throw new ApiException("Missing the required parameter 'updateUserRequest' when calling patchUser(Async)");
+        }
+
+        return patchUserCall(orgId, userId, updateUserRequest, _callback);
 
     }
 
@@ -2807,6 +2862,7 @@ public class AdminUsersApi {
      * Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60;, &#x60;staff&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. &#x60;staff: true&#x60; is refused with 409 for an account that is a member of a customer organization. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @return UpdateUserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2819,8 +2875,8 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
-    public UpdateUserResponse patchUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        ApiResponse<UpdateUserResponse> localVarResp = patchUserWithHttpInfo(orgId, userId);
+    public UpdateUserResponse patchUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserRequest updateUserRequest) throws ApiException {
+        ApiResponse<UpdateUserResponse> localVarResp = patchUserWithHttpInfo(orgId, userId, updateUserRequest);
         return localVarResp.getData();
     }
 
@@ -2829,6 +2885,7 @@ public class AdminUsersApi {
      * Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60;, &#x60;staff&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. &#x60;staff: true&#x60; is refused with 409 for an account that is a member of a customer organization. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @return ApiResponse&lt;UpdateUserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2841,8 +2898,8 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<UpdateUserResponse> patchUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        okhttp3.Call localVarCall = patchUserValidateBeforeCall(orgId, userId, null);
+    public ApiResponse<UpdateUserResponse> patchUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserRequest updateUserRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchUserValidateBeforeCall(orgId, userId, updateUserRequest, null);
         Type localVarReturnType = new TypeToken<UpdateUserResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2852,6 +2909,7 @@ public class AdminUsersApi {
      * Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60;, &#x60;staff&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. &#x60;staff: true&#x60; is refused with 409 for an account that is a member of a customer organization. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2865,9 +2923,9 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<UpdateUserResponse> _callback) throws ApiException {
+    public okhttp3.Call patchUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserRequest updateUserRequest, final ApiCallback<UpdateUserResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchUserValidateBeforeCall(orgId, userId, _callback);
+        okhttp3.Call localVarCall = patchUserValidateBeforeCall(orgId, userId, updateUserRequest, _callback);
         Type localVarReturnType = new TypeToken<UpdateUserResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -3595,6 +3653,7 @@ public class AdminUsersApi {
      * Build call for setUserPassword
      * @param orgId  (required)
      * @param userId  (required)
+     * @param setUserPasswordPostRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3607,7 +3666,7 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setUserPasswordCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call setUserPasswordCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull SetUserPasswordPostRequest setUserPasswordPostRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -3621,7 +3680,7 @@ public class AdminUsersApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = setUserPasswordPostRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/users/{userId}/password"
@@ -3643,6 +3702,7 @@ public class AdminUsersApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3654,7 +3714,7 @@ public class AdminUsersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call setUserPasswordValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call setUserPasswordValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull SetUserPasswordPostRequest setUserPasswordPostRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling setUserPassword(Async)");
@@ -3665,7 +3725,12 @@ public class AdminUsersApi {
             throw new ApiException("Missing the required parameter 'userId' when calling setUserPassword(Async)");
         }
 
-        return setUserPasswordCall(orgId, userId, _callback);
+        // verify the required parameter 'setUserPasswordPostRequest' is set
+        if (setUserPasswordPostRequest == null) {
+            throw new ApiException("Missing the required parameter 'setUserPasswordPostRequest' when calling setUserPassword(Async)");
+        }
+
+        return setUserPasswordCall(orgId, userId, setUserPasswordPostRequest, _callback);
 
     }
 
@@ -3674,6 +3739,7 @@ public class AdminUsersApi {
      * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param setUserPasswordPostRequest  (required)
      * @return SetUserPasswordPostResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3685,8 +3751,8 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
-    public SetUserPasswordPostResponse setUserPassword(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        ApiResponse<SetUserPasswordPostResponse> localVarResp = setUserPasswordWithHttpInfo(orgId, userId);
+    public SetUserPasswordPostResponse setUserPassword(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull SetUserPasswordPostRequest setUserPasswordPostRequest) throws ApiException {
+        ApiResponse<SetUserPasswordPostResponse> localVarResp = setUserPasswordWithHttpInfo(orgId, userId, setUserPasswordPostRequest);
         return localVarResp.getData();
     }
 
@@ -3695,6 +3761,7 @@ public class AdminUsersApi {
      * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param setUserPasswordPostRequest  (required)
      * @return ApiResponse&lt;SetUserPasswordPostResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3706,8 +3773,8 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<SetUserPasswordPostResponse> setUserPasswordWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        okhttp3.Call localVarCall = setUserPasswordValidateBeforeCall(orgId, userId, null);
+    public ApiResponse<SetUserPasswordPostResponse> setUserPasswordWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull SetUserPasswordPostRequest setUserPasswordPostRequest) throws ApiException {
+        okhttp3.Call localVarCall = setUserPasswordValidateBeforeCall(orgId, userId, setUserPasswordPostRequest, null);
         Type localVarReturnType = new TypeToken<SetUserPasswordPostResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -3717,6 +3784,7 @@ public class AdminUsersApi {
      * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param setUserPasswordPostRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3729,9 +3797,9 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setUserPasswordAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<SetUserPasswordPostResponse> _callback) throws ApiException {
+    public okhttp3.Call setUserPasswordAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull SetUserPasswordPostRequest setUserPasswordPostRequest, final ApiCallback<SetUserPasswordPostResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = setUserPasswordValidateBeforeCall(orgId, userId, _callback);
+        okhttp3.Call localVarCall = setUserPasswordValidateBeforeCall(orgId, userId, setUserPasswordPostRequest, _callback);
         Type localVarReturnType = new TypeToken<SetUserPasswordPostResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -3740,6 +3808,7 @@ public class AdminUsersApi {
      * Build call for setUserPasswordPost
      * @param orgId  (required)
      * @param userId  (required)
+     * @param setUserPasswordPostRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3752,7 +3821,7 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setUserPasswordPostCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call setUserPasswordPostCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull SetUserPasswordPostRequest setUserPasswordPostRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -3766,7 +3835,7 @@ public class AdminUsersApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = setUserPasswordPostRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/users/{userId}/password"
@@ -3788,6 +3857,7 @@ public class AdminUsersApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3799,7 +3869,7 @@ public class AdminUsersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call setUserPasswordPostValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call setUserPasswordPostValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull SetUserPasswordPostRequest setUserPasswordPostRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling setUserPasswordPost(Async)");
@@ -3810,7 +3880,12 @@ public class AdminUsersApi {
             throw new ApiException("Missing the required parameter 'userId' when calling setUserPasswordPost(Async)");
         }
 
-        return setUserPasswordPostCall(orgId, userId, _callback);
+        // verify the required parameter 'setUserPasswordPostRequest' is set
+        if (setUserPasswordPostRequest == null) {
+            throw new ApiException("Missing the required parameter 'setUserPasswordPostRequest' when calling setUserPasswordPost(Async)");
+        }
+
+        return setUserPasswordPostCall(orgId, userId, setUserPasswordPostRequest, _callback);
 
     }
 
@@ -3819,6 +3894,7 @@ public class AdminUsersApi {
      * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param setUserPasswordPostRequest  (required)
      * @return SetUserPasswordPostResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3830,8 +3906,8 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
-    public SetUserPasswordPostResponse setUserPasswordPost(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        ApiResponse<SetUserPasswordPostResponse> localVarResp = setUserPasswordPostWithHttpInfo(orgId, userId);
+    public SetUserPasswordPostResponse setUserPasswordPost(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull SetUserPasswordPostRequest setUserPasswordPostRequest) throws ApiException {
+        ApiResponse<SetUserPasswordPostResponse> localVarResp = setUserPasswordPostWithHttpInfo(orgId, userId, setUserPasswordPostRequest);
         return localVarResp.getData();
     }
 
@@ -3840,6 +3916,7 @@ public class AdminUsersApi {
      * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param setUserPasswordPostRequest  (required)
      * @return ApiResponse&lt;SetUserPasswordPostResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3851,8 +3928,8 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<SetUserPasswordPostResponse> setUserPasswordPostWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        okhttp3.Call localVarCall = setUserPasswordPostValidateBeforeCall(orgId, userId, null);
+    public ApiResponse<SetUserPasswordPostResponse> setUserPasswordPostWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull SetUserPasswordPostRequest setUserPasswordPostRequest) throws ApiException {
+        okhttp3.Call localVarCall = setUserPasswordPostValidateBeforeCall(orgId, userId, setUserPasswordPostRequest, null);
         Type localVarReturnType = new TypeToken<SetUserPasswordPostResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -3862,6 +3939,7 @@ public class AdminUsersApi {
      * Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param setUserPasswordPostRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3874,9 +3952,9 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setUserPasswordPostAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<SetUserPasswordPostResponse> _callback) throws ApiException {
+    public okhttp3.Call setUserPasswordPostAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull SetUserPasswordPostRequest setUserPasswordPostRequest, final ApiCallback<SetUserPasswordPostResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = setUserPasswordPostValidateBeforeCall(orgId, userId, _callback);
+        okhttp3.Call localVarCall = setUserPasswordPostValidateBeforeCall(orgId, userId, setUserPasswordPostRequest, _callback);
         Type localVarReturnType = new TypeToken<SetUserPasswordPostResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -4159,6 +4237,7 @@ public class AdminUsersApi {
      * Build call for updateUser
      * @param orgId  (required)
      * @param userId  (required)
+     * @param updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -4172,7 +4251,7 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call updateUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserRequest updateUserRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -4186,7 +4265,7 @@ public class AdminUsersApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = updateUserRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/users/{userId}"
@@ -4208,6 +4287,7 @@ public class AdminUsersApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -4219,7 +4299,7 @@ public class AdminUsersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateUserValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call updateUserValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserRequest updateUserRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling updateUser(Async)");
@@ -4230,7 +4310,12 @@ public class AdminUsersApi {
             throw new ApiException("Missing the required parameter 'userId' when calling updateUser(Async)");
         }
 
-        return updateUserCall(orgId, userId, _callback);
+        // verify the required parameter 'updateUserRequest' is set
+        if (updateUserRequest == null) {
+            throw new ApiException("Missing the required parameter 'updateUserRequest' when calling updateUser(Async)");
+        }
+
+        return updateUserCall(orgId, userId, updateUserRequest, _callback);
 
     }
 
@@ -4239,6 +4324,7 @@ public class AdminUsersApi {
      * Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60;, &#x60;staff&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. &#x60;staff: true&#x60; is refused with 409 for an account that is a member of a customer organization. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @return UpdateUserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4251,8 +4337,8 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
-    public UpdateUserResponse updateUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        ApiResponse<UpdateUserResponse> localVarResp = updateUserWithHttpInfo(orgId, userId);
+    public UpdateUserResponse updateUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserRequest updateUserRequest) throws ApiException {
+        ApiResponse<UpdateUserResponse> localVarResp = updateUserWithHttpInfo(orgId, userId, updateUserRequest);
         return localVarResp.getData();
     }
 
@@ -4261,6 +4347,7 @@ public class AdminUsersApi {
      * Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60;, &#x60;staff&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. &#x60;staff: true&#x60; is refused with 409 for an account that is a member of a customer organization. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @return ApiResponse&lt;UpdateUserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4273,8 +4360,8 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<UpdateUserResponse> updateUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        okhttp3.Call localVarCall = updateUserValidateBeforeCall(orgId, userId, null);
+    public ApiResponse<UpdateUserResponse> updateUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserRequest updateUserRequest) throws ApiException {
+        okhttp3.Call localVarCall = updateUserValidateBeforeCall(orgId, userId, updateUserRequest, null);
         Type localVarReturnType = new TypeToken<UpdateUserResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -4284,6 +4371,7 @@ public class AdminUsersApi {
      * Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60;, &#x60;staff&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. &#x60;staff: true&#x60; is refused with 409 for an account that is a member of a customer organization. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
      * @param orgId  (required)
      * @param userId  (required)
+     * @param updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -4297,9 +4385,9 @@ public class AdminUsersApi {
         <tr><td> 403 </td><td> The user holds privileges that the caller lacks, or step_up_required for a change of &#x60;email&#x60; </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<UpdateUserResponse> _callback) throws ApiException {
+    public okhttp3.Call updateUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserRequest updateUserRequest, final ApiCallback<UpdateUserResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateUserValidateBeforeCall(orgId, userId, _callback);
+        okhttp3.Call localVarCall = updateUserValidateBeforeCall(orgId, userId, updateUserRequest, _callback);
         Type localVarReturnType = new TypeToken<UpdateUserResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -4308,6 +4396,7 @@ public class AdminUsersApi {
      * Build call for updateUserGroups
      * @param orgId  (required)
      * @param userId  (required)
+     * @param updateUserGroupsRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -4318,7 +4407,7 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with updated groups </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateUserGroupsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call updateUserGroupsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserGroupsRequest updateUserGroupsRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -4332,7 +4421,7 @@ public class AdminUsersApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = updateUserGroupsRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/users/{userId}/groups"
@@ -4354,6 +4443,7 @@ public class AdminUsersApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -4365,7 +4455,7 @@ public class AdminUsersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateUserGroupsValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call updateUserGroupsValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserGroupsRequest updateUserGroupsRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling updateUserGroups(Async)");
@@ -4376,7 +4466,12 @@ public class AdminUsersApi {
             throw new ApiException("Missing the required parameter 'userId' when calling updateUserGroups(Async)");
         }
 
-        return updateUserGroupsCall(orgId, userId, _callback);
+        // verify the required parameter 'updateUserGroupsRequest' is set
+        if (updateUserGroupsRequest == null) {
+            throw new ApiException("Missing the required parameter 'updateUserGroupsRequest' when calling updateUserGroups(Async)");
+        }
+
+        return updateUserGroupsCall(orgId, userId, updateUserGroupsRequest, _callback);
 
     }
 
@@ -4385,6 +4480,7 @@ public class AdminUsersApi {
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @param updateUserGroupsRequest  (required)
      * @return UpdateUserGroupsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4394,8 +4490,8 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with updated groups </td><td>  -  </td></tr>
      </table>
      */
-    public UpdateUserGroupsResponse updateUserGroups(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        ApiResponse<UpdateUserGroupsResponse> localVarResp = updateUserGroupsWithHttpInfo(orgId, userId);
+    public UpdateUserGroupsResponse updateUserGroups(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserGroupsRequest updateUserGroupsRequest) throws ApiException {
+        ApiResponse<UpdateUserGroupsResponse> localVarResp = updateUserGroupsWithHttpInfo(orgId, userId, updateUserGroupsRequest);
         return localVarResp.getData();
     }
 
@@ -4404,6 +4500,7 @@ public class AdminUsersApi {
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @param updateUserGroupsRequest  (required)
      * @return ApiResponse&lt;UpdateUserGroupsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4413,8 +4510,8 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with updated groups </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<UpdateUserGroupsResponse> updateUserGroupsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        okhttp3.Call localVarCall = updateUserGroupsValidateBeforeCall(orgId, userId, null);
+    public ApiResponse<UpdateUserGroupsResponse> updateUserGroupsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserGroupsRequest updateUserGroupsRequest) throws ApiException {
+        okhttp3.Call localVarCall = updateUserGroupsValidateBeforeCall(orgId, userId, updateUserGroupsRequest, null);
         Type localVarReturnType = new TypeToken<UpdateUserGroupsResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -4424,6 +4521,7 @@ public class AdminUsersApi {
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @param updateUserGroupsRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -4434,9 +4532,9 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with updated groups </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateUserGroupsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<UpdateUserGroupsResponse> _callback) throws ApiException {
+    public okhttp3.Call updateUserGroupsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull UpdateUserGroupsRequest updateUserGroupsRequest, final ApiCallback<UpdateUserGroupsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateUserGroupsValidateBeforeCall(orgId, userId, _callback);
+        okhttp3.Call localVarCall = updateUserGroupsValidateBeforeCall(orgId, userId, updateUserGroupsRequest, _callback);
         Type localVarReturnType = new TypeToken<UpdateUserGroupsResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -4445,6 +4543,7 @@ public class AdminUsersApi {
      * Build call for updateUserRoles
      * @param orgId  (required)
      * @param userId  (required)
+     * @param adminGroupsUpdateRolesRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -4455,7 +4554,7 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with updated roles </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateUserRolesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call updateUserRolesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -4469,7 +4568,7 @@ public class AdminUsersApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminGroupsUpdateRolesRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/users/{userId}/roles"
@@ -4491,6 +4590,7 @@ public class AdminUsersApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -4502,7 +4602,7 @@ public class AdminUsersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateUserRolesValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call updateUserRolesValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling updateUserRoles(Async)");
@@ -4513,7 +4613,12 @@ public class AdminUsersApi {
             throw new ApiException("Missing the required parameter 'userId' when calling updateUserRoles(Async)");
         }
 
-        return updateUserRolesCall(orgId, userId, _callback);
+        // verify the required parameter 'adminGroupsUpdateRolesRequest' is set
+        if (adminGroupsUpdateRolesRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminGroupsUpdateRolesRequest' when calling updateUserRoles(Async)");
+        }
+
+        return updateUserRolesCall(orgId, userId, adminGroupsUpdateRolesRequest, _callback);
 
     }
 
@@ -4522,6 +4627,7 @@ public class AdminUsersApi {
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @param adminGroupsUpdateRolesRequest  (required)
      * @return UpdateUserRolesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4531,8 +4637,8 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with updated roles </td><td>  -  </td></tr>
      </table>
      */
-    public UpdateUserRolesResponse updateUserRoles(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        ApiResponse<UpdateUserRolesResponse> localVarResp = updateUserRolesWithHttpInfo(orgId, userId);
+    public UpdateUserRolesResponse updateUserRoles(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest) throws ApiException {
+        ApiResponse<UpdateUserRolesResponse> localVarResp = updateUserRolesWithHttpInfo(orgId, userId, adminGroupsUpdateRolesRequest);
         return localVarResp.getData();
     }
 
@@ -4541,6 +4647,7 @@ public class AdminUsersApi {
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @param adminGroupsUpdateRolesRequest  (required)
      * @return ApiResponse&lt;UpdateUserRolesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4550,8 +4657,8 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with updated roles </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<UpdateUserRolesResponse> updateUserRolesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        okhttp3.Call localVarCall = updateUserRolesValidateBeforeCall(orgId, userId, null);
+    public ApiResponse<UpdateUserRolesResponse> updateUserRolesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest) throws ApiException {
+        okhttp3.Call localVarCall = updateUserRolesValidateBeforeCall(orgId, userId, adminGroupsUpdateRolesRequest, null);
         Type localVarReturnType = new TypeToken<UpdateUserRolesResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -4561,6 +4668,7 @@ public class AdminUsersApi {
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @param adminGroupsUpdateRolesRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -4571,9 +4679,9 @@ public class AdminUsersApi {
         <tr><td> 200 </td><td> User with updated roles </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateUserRolesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<UpdateUserRolesResponse> _callback) throws ApiException {
+    public okhttp3.Call updateUserRolesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, final ApiCallback<UpdateUserRolesResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateUserRolesValidateBeforeCall(orgId, userId, _callback);
+        okhttp3.Call localVarCall = updateUserRolesValidateBeforeCall(orgId, userId, adminGroupsUpdateRolesRequest, _callback);
         Type localVarReturnType = new TypeToken<UpdateUserRolesResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

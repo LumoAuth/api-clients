@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -29,7 +29,7 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// List the distinct audit action types recorded for the tenant
+        /// List the distinct audit action types recorded for the organization
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -37,7 +37,7 @@ namespace LumoAuth.ApiClient.Api
         AdminAuditLogsActionsResponse AdminAuditLogsActions(string orgId);
 
         /// <summary>
-        /// List the distinct audit action types recorded for the tenant
+        /// List the distinct audit action types recorded for the organization
         /// </summary>
         /// <remarks>
         /// 
@@ -54,8 +54,21 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="format">csv (default) or json. (optional, default to csv)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <returns>string</returns>
-        string AdminAuditLogsExport(string orgId);
+        string AdminAuditLogsExport(string orgId, string? format = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default);
 
         /// <summary>
         /// Export audit logs as CSV (default) or JSON
@@ -65,8 +78,21 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="format">csv (default) or json. (optional, default to csv)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <returns>ApiResponse of string</returns>
-        ApiResponse<string> AdminAuditLogsExportWithHttpInfo(string orgId);
+        ApiResponse<string> AdminAuditLogsExportWithHttpInfo(string orgId, string? format = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default);
         /// <summary>
         /// Get an audit log entry
         /// </summary>
@@ -92,8 +118,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page"> (optional, default to 1)</param>
+        /// <param name="limit"> (optional, default to 25)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <returns>AdminAuditLogsListResponse</returns>
-        AdminAuditLogsListResponse AdminAuditLogsList(string orgId);
+        AdminAuditLogsListResponse AdminAuditLogsList(string orgId, int? page = default, int? limit = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default);
 
         /// <summary>
         /// List audit log entries
@@ -103,8 +143,22 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page"> (optional, default to 1)</param>
+        /// <param name="limit"> (optional, default to 25)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <returns>ApiResponse of AdminAuditLogsListResponse</returns>
-        ApiResponse<AdminAuditLogsListResponse> AdminAuditLogsListWithHttpInfo(string orgId);
+        ApiResponse<AdminAuditLogsListResponse> AdminAuditLogsListWithHttpInfo(string orgId, int? page = default, int? limit = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default);
         /// <summary>
         /// Get audit log retention settings
         /// </summary>
@@ -149,8 +203,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <returns>AdminAuditLogsRetentionResponse</returns>
-        AdminAuditLogsRetentionResponse PatchAdminAuditLogsRetentionUpdate(string orgId);
+        AdminAuditLogsRetentionResponse PatchAdminAuditLogsRetentionUpdate(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest);
 
         /// <summary>
         /// Update audit log retention settings
@@ -160,8 +215,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <returns>ApiResponse of AdminAuditLogsRetentionResponse</returns>
-        ApiResponse<AdminAuditLogsRetentionResponse> PatchAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId);
+        ApiResponse<AdminAuditLogsRetentionResponse> PatchAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest);
         /// <summary>
         /// Update audit log retention settings
         /// </summary>
@@ -170,8 +226,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <returns>AdminAuditLogsRetentionResponse</returns>
-        AdminAuditLogsRetentionResponse PutAdminAuditLogsRetentionUpdate(string orgId);
+        AdminAuditLogsRetentionResponse PutAdminAuditLogsRetentionUpdate(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest);
 
         /// <summary>
         /// Update audit log retention settings
@@ -181,8 +238,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <returns>ApiResponse of AdminAuditLogsRetentionResponse</returns>
-        ApiResponse<AdminAuditLogsRetentionResponse> PutAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId);
+        ApiResponse<AdminAuditLogsRetentionResponse> PutAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest);
         #endregion Synchronous Operations
     }
 
@@ -193,7 +251,7 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// List the distinct audit action types recorded for the tenant
+        /// List the distinct audit action types recorded for the organization
         /// </summary>
         /// <remarks>
         /// 
@@ -205,7 +263,7 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task<AdminAuditLogsActionsResponse> AdminAuditLogsActionsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List the distinct audit action types recorded for the tenant
+        /// List the distinct audit action types recorded for the organization
         /// </summary>
         /// <remarks>
         /// 
@@ -223,9 +281,22 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="format">csv (default) or json. (optional, default to csv)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of string</returns>
-        System.Threading.Tasks.Task<string> AdminAuditLogsExportAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<string> AdminAuditLogsExportAsync(string orgId, string? format = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Export audit logs as CSV (default) or JSON
@@ -235,9 +306,22 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="format">csv (default) or json. (optional, default to csv)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (string)</returns>
-        System.Threading.Tasks.Task<ApiResponse<string>> AdminAuditLogsExportWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<string>> AdminAuditLogsExportWithHttpInfoAsync(string orgId, string? format = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Get an audit log entry
         /// </summary>
@@ -271,9 +355,23 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page"> (optional, default to 1)</param>
+        /// <param name="limit"> (optional, default to 25)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminAuditLogsListResponse</returns>
-        System.Threading.Tasks.Task<AdminAuditLogsListResponse> AdminAuditLogsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminAuditLogsListResponse> AdminAuditLogsListAsync(string orgId, int? page = default, int? limit = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List audit log entries
@@ -283,9 +381,23 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page"> (optional, default to 1)</param>
+        /// <param name="limit"> (optional, default to 25)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminAuditLogsListResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminAuditLogsListResponse>> AdminAuditLogsListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminAuditLogsListResponse>> AdminAuditLogsListWithHttpInfoAsync(string orgId, int? page = default, int? limit = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Get audit log retention settings
         /// </summary>
@@ -340,9 +452,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminAuditLogsRetentionResponse</returns>
-        System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> PatchAdminAuditLogsRetentionUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> PatchAdminAuditLogsRetentionUpdateAsync(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update audit log retention settings
@@ -352,9 +465,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminAuditLogsRetentionResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminAuditLogsRetentionResponse>> PatchAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminAuditLogsRetentionResponse>> PatchAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update audit log retention settings
         /// </summary>
@@ -363,9 +477,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminAuditLogsRetentionResponse</returns>
-        System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> PutAdminAuditLogsRetentionUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> PutAdminAuditLogsRetentionUpdateAsync(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update audit log retention settings
@@ -375,9 +490,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminAuditLogsRetentionResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminAuditLogsRetentionResponse>> PutAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminAuditLogsRetentionResponse>> PutAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -592,7 +708,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the distinct audit action types recorded for the tenant 
+        /// List the distinct audit action types recorded for the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -604,7 +720,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the distinct audit action types recorded for the tenant 
+        /// List the distinct audit action types recorded for the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -658,7 +774,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the distinct audit action types recorded for the tenant 
+        /// List the distinct audit action types recorded for the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -671,7 +787,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the distinct audit action types recorded for the tenant 
+        /// List the distinct audit action types recorded for the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -733,10 +849,23 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="format">csv (default) or json. (optional, default to csv)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <returns>string</returns>
-        public string AdminAuditLogsExport(string orgId)
+        public string AdminAuditLogsExport(string orgId, string? format = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = AdminAuditLogsExportWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = AdminAuditLogsExportWithHttpInfo(orgId, format, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
             return localVarResponse.Data;
         }
 
@@ -745,8 +874,21 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="format">csv (default) or json. (optional, default to csv)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <returns>ApiResponse of string</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<string> AdminAuditLogsExportWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<string> AdminAuditLogsExportWithHttpInfo(string orgId, string? format = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -770,6 +912,58 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (format != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "format", format));
+            }
+            if (eventType != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "eventType", eventType));
+            }
+            if (action != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "action", action));
+            }
+            if (actorId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "actorId", actorId));
+            }
+            if (targetType != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "targetType", targetType));
+            }
+            if (targetId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "targetId", targetId));
+            }
+            if (severity != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "severity", severity));
+            }
+            if (status != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "status", status));
+            }
+            if (ipAddress != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "ipAddress", ipAddress));
+            }
+            if (search != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "search", search));
+            }
+            if (traceId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "traceId", traceId));
+            }
+            if (from != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "from", from));
+            }
+            if (to != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "to", to));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -800,11 +994,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="format">csv (default) or json. (optional, default to csv)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of string</returns>
-        public async System.Threading.Tasks.Task<string> AdminAuditLogsExportAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<string> AdminAuditLogsExportAsync(string orgId, string? format = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = await AdminAuditLogsExportWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = await AdminAuditLogsExportWithHttpInfoAsync(orgId, format, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -813,9 +1020,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="format">csv (default) or json. (optional, default to csv)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (string)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<string>> AdminAuditLogsExportWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<string>> AdminAuditLogsExportWithHttpInfoAsync(string orgId, string? format = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -841,6 +1061,58 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (format != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "format", format));
+            }
+            if (eventType != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "eventType", eventType));
+            }
+            if (action != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "action", action));
+            }
+            if (actorId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "actorId", actorId));
+            }
+            if (targetType != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "targetType", targetType));
+            }
+            if (targetId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "targetId", targetId));
+            }
+            if (severity != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "severity", severity));
+            }
+            if (status != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "status", status));
+            }
+            if (ipAddress != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "ipAddress", ipAddress));
+            }
+            if (search != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "search", search));
+            }
+            if (traceId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "traceId", traceId));
+            }
+            if (from != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "from", from));
+            }
+            if (to != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "to", to));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1023,10 +1295,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page"> (optional, default to 1)</param>
+        /// <param name="limit"> (optional, default to 25)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <returns>AdminAuditLogsListResponse</returns>
-        public AdminAuditLogsListResponse AdminAuditLogsList(string orgId)
+        public AdminAuditLogsListResponse AdminAuditLogsList(string orgId, int? page = default, int? limit = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsListResponse> localVarResponse = AdminAuditLogsListWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsListResponse> localVarResponse = AdminAuditLogsListWithHttpInfo(orgId, page, limit, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to);
             return localVarResponse.Data;
         }
 
@@ -1035,8 +1321,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page"> (optional, default to 1)</param>
+        /// <param name="limit"> (optional, default to 25)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <returns>ApiResponse of AdminAuditLogsListResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsListResponse> AdminAuditLogsListWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsListResponse> AdminAuditLogsListWithHttpInfo(string orgId, int? page = default, int? limit = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1059,6 +1359,62 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (page != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "page", page));
+            }
+            if (limit != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "limit", limit));
+            }
+            if (eventType != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "eventType", eventType));
+            }
+            if (action != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "action", action));
+            }
+            if (actorId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "actorId", actorId));
+            }
+            if (targetType != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "targetType", targetType));
+            }
+            if (targetId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "targetId", targetId));
+            }
+            if (severity != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "severity", severity));
+            }
+            if (status != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "status", status));
+            }
+            if (ipAddress != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "ipAddress", ipAddress));
+            }
+            if (search != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "search", search));
+            }
+            if (traceId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "traceId", traceId));
+            }
+            if (from != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "from", from));
+            }
+            if (to != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "to", to));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1089,11 +1445,25 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page"> (optional, default to 1)</param>
+        /// <param name="limit"> (optional, default to 25)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminAuditLogsListResponse</returns>
-        public async System.Threading.Tasks.Task<AdminAuditLogsListResponse> AdminAuditLogsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminAuditLogsListResponse> AdminAuditLogsListAsync(string orgId, int? page = default, int? limit = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsListResponse> localVarResponse = await AdminAuditLogsListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsListResponse> localVarResponse = await AdminAuditLogsListWithHttpInfoAsync(orgId, page, limit, eventType, action, actorId, targetType, targetId, severity, status, ipAddress, search, traceId, from, to, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1102,9 +1472,23 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="page"> (optional, default to 1)</param>
+        /// <param name="limit"> (optional, default to 25)</param>
+        /// <param name="eventType">Exact event type, for example user.login. (optional)</param>
+        /// <param name="action">The short verb of the event (as GET /audit-logs/actions lists them). (optional)</param>
+        /// <param name="actorId">Who acted: a user, API key or agent id. Also accepted as userId. (optional)</param>
+        /// <param name="targetType">Kind of the subject of the event. Also accepted as resourceType. (optional)</param>
+        /// <param name="targetId">The subject of the event, for example the user of a login.failed entry. (optional)</param>
+        /// <param name="severity"> (optional)</param>
+        /// <param name="status">Result of the event. (optional)</param>
+        /// <param name="ipAddress"> (optional)</param>
+        /// <param name="search">Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)</param>
+        /// <param name="traceId">Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)</param>
+        /// <param name="from">Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)</param>
+        /// <param name="to">Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminAuditLogsListResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsListResponse>> AdminAuditLogsListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsListResponse>> AdminAuditLogsListWithHttpInfoAsync(string orgId, int? page = default, int? limit = default, string? eventType = default, string? action = default, string? actorId = default, string? targetType = default, string? targetId = default, string? severity = default, string? status = default, string? ipAddress = default, string? search = default, string? traceId = default, DateTime? from = default, DateTime? to = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1129,6 +1513,62 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (page != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "page", page));
+            }
+            if (limit != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "limit", limit));
+            }
+            if (eventType != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "eventType", eventType));
+            }
+            if (action != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "action", action));
+            }
+            if (actorId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "actorId", actorId));
+            }
+            if (targetType != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "targetType", targetType));
+            }
+            if (targetId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "targetId", targetId));
+            }
+            if (severity != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "severity", severity));
+            }
+            if (status != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "status", status));
+            }
+            if (ipAddress != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "ipAddress", ipAddress));
+            }
+            if (search != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "search", search));
+            }
+            if (traceId != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "traceId", traceId));
+            }
+            if (from != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "from", from));
+            }
+            if (to != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "to", to));
+            }
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1434,10 +1874,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <returns>AdminAuditLogsRetentionResponse</returns>
-        public AdminAuditLogsRetentionResponse PatchAdminAuditLogsRetentionUpdate(string orgId)
+        public AdminAuditLogsRetentionResponse PatchAdminAuditLogsRetentionUpdate(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = PatchAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = PatchAdminAuditLogsRetentionUpdateWithHttpInfo(orgId, putAdminAuditLogsRetentionUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -1446,16 +1887,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <returns>ApiResponse of AdminAuditLogsRetentionResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> PatchAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> PatchAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminAuditLogsApi->PatchAdminAuditLogsRetentionUpdate");
 
+            // verify the required parameter 'putAdminAuditLogsRetentionUpdateRequest' is set
+            if (putAdminAuditLogsRetentionUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminAuditLogsRetentionUpdateRequest' when calling AdminAuditLogsApi->PatchAdminAuditLogsRetentionUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1470,6 +1917,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminAuditLogsRetentionUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1500,11 +1948,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminAuditLogsRetentionResponse</returns>
-        public async System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> PatchAdminAuditLogsRetentionUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> PatchAdminAuditLogsRetentionUpdateAsync(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = await PatchAdminAuditLogsRetentionUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = await PatchAdminAuditLogsRetentionUpdateWithHttpInfoAsync(orgId, putAdminAuditLogsRetentionUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1513,18 +1962,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminAuditLogsRetentionResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse>> PatchAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse>> PatchAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminAuditLogsApi->PatchAdminAuditLogsRetentionUpdate");
 
+            // verify the required parameter 'putAdminAuditLogsRetentionUpdateRequest' is set
+            if (putAdminAuditLogsRetentionUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminAuditLogsRetentionUpdateRequest' when calling AdminAuditLogsApi->PatchAdminAuditLogsRetentionUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1540,6 +1995,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminAuditLogsRetentionUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1571,10 +2027,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <returns>AdminAuditLogsRetentionResponse</returns>
-        public AdminAuditLogsRetentionResponse PutAdminAuditLogsRetentionUpdate(string orgId)
+        public AdminAuditLogsRetentionResponse PutAdminAuditLogsRetentionUpdate(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = PutAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = PutAdminAuditLogsRetentionUpdateWithHttpInfo(orgId, putAdminAuditLogsRetentionUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -1583,16 +2040,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <returns>ApiResponse of AdminAuditLogsRetentionResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> PutAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> PutAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminAuditLogsApi->PutAdminAuditLogsRetentionUpdate");
 
+            // verify the required parameter 'putAdminAuditLogsRetentionUpdateRequest' is set
+            if (putAdminAuditLogsRetentionUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminAuditLogsRetentionUpdateRequest' when calling AdminAuditLogsApi->PutAdminAuditLogsRetentionUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1607,6 +2070,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminAuditLogsRetentionUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1637,11 +2101,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminAuditLogsRetentionResponse</returns>
-        public async System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> PutAdminAuditLogsRetentionUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> PutAdminAuditLogsRetentionUpdateAsync(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = await PutAdminAuditLogsRetentionUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = await PutAdminAuditLogsRetentionUpdateWithHttpInfoAsync(orgId, putAdminAuditLogsRetentionUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1650,18 +2115,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminAuditLogsRetentionUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminAuditLogsRetentionResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse>> PutAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse>> PutAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, PutAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminAuditLogsApi->PutAdminAuditLogsRetentionUpdate");
 
+            // verify the required parameter 'putAdminAuditLogsRetentionUpdateRequest' is set
+            if (putAdminAuditLogsRetentionUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminAuditLogsRetentionUpdateRequest' when calling AdminAuditLogsApi->PutAdminAuditLogsRetentionUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1677,6 +2148,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminAuditLogsRetentionUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

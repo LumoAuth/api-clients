@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 
 # **create_stream_config**
-> SsfStream create_stream_config(org_id)
+> SsfStream create_stream_config(org_id, create_stream_config_request)
 
 Create an SSF stream
 
@@ -22,6 +22,7 @@ Create an SSF stream
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.create_stream_config_request import CreateStreamConfigRequest
 from lumoauth_api_client.models.ssf_stream import SsfStream
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -53,10 +54,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.SsfApi(api_client)
     org_id = 'org_id_example' # str | 
+    create_stream_config_request = lumoauth_api_client.CreateStreamConfigRequest() # CreateStreamConfigRequest | 
 
     try:
         # Create an SSF stream
-        api_response = api_instance.create_stream_config(org_id)
+        api_response = api_instance.create_stream_config(org_id, create_stream_config_request)
         print("The response of SsfApi->create_stream_config:\n")
         pprint(api_response)
     except Exception as e:
@@ -71,6 +73,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **create_stream_config_request** | [**CreateStreamConfigRequest**](CreateStreamConfigRequest.md)|  | 
 
 ### Return type
 
@@ -82,7 +85,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -261,13 +264,13 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | A single stream (with stream_id) or all of the tenant&#39;s streams |  -  |
+**200** | A single stream (with stream_id) or all of the organization&#39;s streams |  -  |
 **404** | Stream not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **verify_stream**
-> verify_stream(org_id)
+> verify_stream(org_id, verify_stream_request=verify_stream_request)
 
 Request a stream verification event
 
@@ -280,6 +283,7 @@ Needs `settings.manage`, as the portal does.
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.verify_stream_request import VerifyStreamRequest
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -310,10 +314,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.SsfApi(api_client)
     org_id = 'org_id_example' # str | 
+    verify_stream_request = lumoauth_api_client.VerifyStreamRequest() # VerifyStreamRequest |  (optional)
 
     try:
         # Request a stream verification event
-        api_instance.verify_stream(org_id)
+        api_instance.verify_stream(org_id, verify_stream_request=verify_stream_request)
     except Exception as e:
         print("Exception when calling SsfApi->verify_stream: %s\n" % e)
 ```
@@ -326,6 +331,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **verify_stream_request** | [**VerifyStreamRequest**](VerifyStreamRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -337,7 +343,7 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 ### HTTP response details

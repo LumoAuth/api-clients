@@ -4,9 +4,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AdminSandboxDestroy**](AdminSandboxAPI.md#AdminSandboxDestroy) | **Post** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant
-[**AdminSandboxList**](AdminSandboxAPI.md#AdminSandboxList) | **Get** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox tenants
-[**AdminSandboxSpawn**](AdminSandboxAPI.md#AdminSandboxSpawn) | **Post** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant
+[**AdminSandboxDestroy**](AdminSandboxAPI.md#AdminSandboxDestroy) | **Post** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox organization
+[**AdminSandboxList**](AdminSandboxAPI.md#AdminSandboxList) | **Get** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox organizations
+[**AdminSandboxSpawn**](AdminSandboxAPI.md#AdminSandboxSpawn) | **Post** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox organization
 
 
 
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 > MessageResponse AdminSandboxDestroy(ctx, orgId, sandboxSlug).Execute()
 
-Destroy a sandbox tenant
+Destroy a sandbox organization
 
 ### Example
 
@@ -85,7 +85,7 @@ Name | Type | Description  | Notes
 
 > AdminSandboxListResponse AdminSandboxList(ctx, orgId).Execute()
 
-List the caller's sandbox tenants
+List the caller's sandbox organizations
 
 ### Example
 
@@ -153,7 +153,7 @@ Name | Type | Description  | Notes
 
 > AdminSandboxSpawnResponse AdminSandboxSpawn(ctx, orgId).AdminSandboxSpawnRequest(adminSandboxSpawnRequest).Execute()
 
-Spawn a sandbox tenant
+Spawn a sandbox organization
 
 
 

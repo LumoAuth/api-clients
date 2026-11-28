@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 
 # **abac_attributes_create**
-> AbacAttributesCreateResponse abac_attributes_create(org_id)
+> AbacAttributesCreateResponse abac_attributes_create(org_id, abac_attributes_create_request)
 
 Create an attribute definition
 
@@ -31,6 +31,7 @@ Create an attribute definition
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.abac_attributes_create_request import AbacAttributesCreateRequest
 from lumoauth_api_client.models.abac_attributes_create_response import AbacAttributesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -62,10 +63,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminAbacApi(api_client)
     org_id = 'org_id_example' # str | 
+    abac_attributes_create_request = lumoauth_api_client.AbacAttributesCreateRequest() # AbacAttributesCreateRequest | 
 
     try:
         # Create an attribute definition
-        api_response = api_instance.abac_attributes_create(org_id)
+        api_response = api_instance.abac_attributes_create(org_id, abac_attributes_create_request)
         print("The response of AdminAbacApi->abac_attributes_create:\n")
         pprint(api_response)
     except Exception as e:
@@ -80,6 +82,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **abac_attributes_create_request** | [**AbacAttributesCreateRequest**](AbacAttributesCreateRequest.md)|  | 
 
 ### Return type
 
@@ -91,7 +94,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -361,7 +364,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abac_policies_create**
-> AbacPoliciesCreateResponse abac_policies_create(org_id)
+> AbacPoliciesCreateResponse abac_policies_create(org_id, abac_policies_create_request)
 
 Create an ABAC policy
 
@@ -372,6 +375,7 @@ Create an ABAC policy
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.abac_policies_create_request import AbacPoliciesCreateRequest
 from lumoauth_api_client.models.abac_policies_create_response import AbacPoliciesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -403,10 +407,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminAbacApi(api_client)
     org_id = 'org_id_example' # str | 
+    abac_policies_create_request = lumoauth_api_client.AbacPoliciesCreateRequest() # AbacPoliciesCreateRequest | 
 
     try:
         # Create an ABAC policy
-        api_response = api_instance.abac_policies_create(org_id)
+        api_response = api_instance.abac_policies_create(org_id, abac_policies_create_request)
         print("The response of AdminAbacApi->abac_policies_create:\n")
         pprint(api_response)
     except Exception as e:
@@ -421,6 +426,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **abac_policies_create_request** | [**AbacPoliciesCreateRequest**](AbacPoliciesCreateRequest.md)|  | 
 
 ### Return type
 
@@ -432,7 +438,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -791,7 +797,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_abac_attributes_update**
-> PutAbacAttributesUpdateResponse patch_abac_attributes_update(org_id, id)
+> PutAbacAttributesUpdateResponse patch_abac_attributes_update(org_id, id, put_abac_attributes_update_request)
 
 Partially update an attribute definition
 
@@ -802,6 +808,7 @@ Partially update an attribute definition
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_abac_attributes_update_request import PutAbacAttributesUpdateRequest
 from lumoauth_api_client.models.put_abac_attributes_update_response import PutAbacAttributesUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -834,10 +841,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminAbacApi(api_client)
     org_id = 'org_id_example' # str | 
     id = 'id_example' # str | 
+    put_abac_attributes_update_request = lumoauth_api_client.PutAbacAttributesUpdateRequest() # PutAbacAttributesUpdateRequest | 
 
     try:
         # Partially update an attribute definition
-        api_response = api_instance.patch_abac_attributes_update(org_id, id)
+        api_response = api_instance.patch_abac_attributes_update(org_id, id, put_abac_attributes_update_request)
         print("The response of AdminAbacApi->patch_abac_attributes_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -853,6 +861,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **id** | **str**|  | 
+ **put_abac_attributes_update_request** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -864,7 +873,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -878,7 +887,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_abac_policies_update**
-> PutAbacPoliciesUpdateResponse patch_abac_policies_update(org_id, id)
+> PutAbacPoliciesUpdateResponse patch_abac_policies_update(org_id, id, put_abac_policies_update_request)
 
 Partially update an ABAC policy
 
@@ -889,6 +898,7 @@ Partially update an ABAC policy
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_abac_policies_update_request import PutAbacPoliciesUpdateRequest
 from lumoauth_api_client.models.put_abac_policies_update_response import PutAbacPoliciesUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -921,10 +931,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminAbacApi(api_client)
     org_id = 'org_id_example' # str | 
     id = 'id_example' # str | 
+    put_abac_policies_update_request = lumoauth_api_client.PutAbacPoliciesUpdateRequest() # PutAbacPoliciesUpdateRequest | 
 
     try:
         # Partially update an ABAC policy
-        api_response = api_instance.patch_abac_policies_update(org_id, id)
+        api_response = api_instance.patch_abac_policies_update(org_id, id, put_abac_policies_update_request)
         print("The response of AdminAbacApi->patch_abac_policies_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -940,6 +951,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **id** | **str**|  | 
+ **put_abac_policies_update_request** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -951,7 +963,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -966,7 +978,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_abac_attributes_update**
-> PutAbacAttributesUpdateResponse put_abac_attributes_update(org_id, id)
+> PutAbacAttributesUpdateResponse put_abac_attributes_update(org_id, id, put_abac_attributes_update_request)
 
 Update an attribute definition
 
@@ -977,6 +989,7 @@ Update an attribute definition
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_abac_attributes_update_request import PutAbacAttributesUpdateRequest
 from lumoauth_api_client.models.put_abac_attributes_update_response import PutAbacAttributesUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1009,10 +1022,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminAbacApi(api_client)
     org_id = 'org_id_example' # str | 
     id = 'id_example' # str | 
+    put_abac_attributes_update_request = lumoauth_api_client.PutAbacAttributesUpdateRequest() # PutAbacAttributesUpdateRequest | 
 
     try:
         # Update an attribute definition
-        api_response = api_instance.put_abac_attributes_update(org_id, id)
+        api_response = api_instance.put_abac_attributes_update(org_id, id, put_abac_attributes_update_request)
         print("The response of AdminAbacApi->put_abac_attributes_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1028,6 +1042,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **id** | **str**|  | 
+ **put_abac_attributes_update_request** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -1039,7 +1054,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1053,7 +1068,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_abac_policies_update**
-> PutAbacPoliciesUpdateResponse put_abac_policies_update(org_id, id)
+> PutAbacPoliciesUpdateResponse put_abac_policies_update(org_id, id, put_abac_policies_update_request)
 
 Update an ABAC policy
 
@@ -1064,6 +1079,7 @@ Update an ABAC policy
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_abac_policies_update_request import PutAbacPoliciesUpdateRequest
 from lumoauth_api_client.models.put_abac_policies_update_response import PutAbacPoliciesUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1096,10 +1112,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminAbacApi(api_client)
     org_id = 'org_id_example' # str | 
     id = 'id_example' # str | 
+    put_abac_policies_update_request = lumoauth_api_client.PutAbacPoliciesUpdateRequest() # PutAbacPoliciesUpdateRequest | 
 
     try:
         # Update an ABAC policy
-        api_response = api_instance.put_abac_policies_update(org_id, id)
+        api_response = api_instance.put_abac_policies_update(org_id, id, put_abac_policies_update_request)
         print("The response of AdminAbacApi->put_abac_policies_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1115,6 +1132,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **id** | **str**|  | 
+ **put_abac_policies_update_request** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -1126,7 +1144,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

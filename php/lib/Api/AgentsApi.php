@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -2815,15 +2815,16 @@ class AgentsApi
      * Register (or re-register) an agent
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RegisterAgentRequest $registerAgentRequest registerAgentRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['registerAgent'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\RegisterAgentResponse
      */
-    public function registerAgent($orgId, string $contentType = self::contentTypes['registerAgent'][0])
+    public function registerAgent($orgId, $registerAgentRequest, string $contentType = self::contentTypes['registerAgent'][0])
     {
-        list($response) = $this->registerAgentWithHttpInfo($orgId, $contentType);
+        list($response) = $this->registerAgentWithHttpInfo($orgId, $registerAgentRequest, $contentType);
         return $response;
     }
 
@@ -2833,15 +2834,16 @@ class AgentsApi
      * Register (or re-register) an agent
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RegisterAgentRequest $registerAgentRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['registerAgent'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\RegisterAgentResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function registerAgentWithHttpInfo($orgId, string $contentType = self::contentTypes['registerAgent'][0])
+    public function registerAgentWithHttpInfo($orgId, $registerAgentRequest, string $contentType = self::contentTypes['registerAgent'][0])
     {
-        $request = $this->registerAgentRequest($orgId, $contentType);
+        $request = $this->registerAgentRequest($orgId, $registerAgentRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2918,14 +2920,15 @@ class AgentsApi
      * Register (or re-register) an agent
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RegisterAgentRequest $registerAgentRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['registerAgent'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function registerAgentAsync($orgId, string $contentType = self::contentTypes['registerAgent'][0])
+    public function registerAgentAsync($orgId, $registerAgentRequest, string $contentType = self::contentTypes['registerAgent'][0])
     {
-        return $this->registerAgentAsyncWithHttpInfo($orgId, $contentType)
+        return $this->registerAgentAsyncWithHttpInfo($orgId, $registerAgentRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2939,15 +2942,16 @@ class AgentsApi
      * Register (or re-register) an agent
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RegisterAgentRequest $registerAgentRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['registerAgent'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function registerAgentAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['registerAgent'][0])
+    public function registerAgentAsyncWithHttpInfo($orgId, $registerAgentRequest, string $contentType = self::contentTypes['registerAgent'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\RegisterAgentResponse';
-        $request = $this->registerAgentRequest($orgId, $contentType);
+        $request = $this->registerAgentRequest($orgId, $registerAgentRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2989,18 +2993,26 @@ class AgentsApi
      * Create request for operation 'registerAgent'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RegisterAgentRequest $registerAgentRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['registerAgent'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function registerAgentRequest($orgId, string $contentType = self::contentTypes['registerAgent'][0])
+    public function registerAgentRequest($orgId, $registerAgentRequest, string $contentType = self::contentTypes['registerAgent'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling registerAgent'
+            );
+        }
+
+        // verify the required parameter 'registerAgentRequest' is set
+        if ($registerAgentRequest === null || (is_array($registerAgentRequest) && count($registerAgentRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $registerAgentRequest when calling registerAgent'
             );
         }
 
@@ -3031,7 +3043,14 @@ class AgentsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($registerAgentRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($registerAgentRequest));
+            } else {
+                $httpBody = $registerAgentRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

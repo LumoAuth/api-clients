@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminWebhooksTunnelStartResponseData
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-28T05:25:48.073972593Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminWebhooksTunnelStartResponseData {
   public static final String SERIALIZED_NAME_WEBHOOK_ID = "webhook_id";
   @SerializedName(SERIALIZED_NAME_WEBHOOK_ID)
@@ -64,6 +64,11 @@ public class AdminWebhooksTunnelStartResponseData {
   @SerializedName(SERIALIZED_NAME_TUNNEL_URL)
   @javax.annotation.Nullable
   private String tunnelUrl;
+
+  public static final String SERIALIZED_NAME_SIGNING_SECRET = "signing_secret";
+  @SerializedName(SERIALIZED_NAME_SIGNING_SECRET)
+  @javax.annotation.Nullable
+  private String signingSecret;
 
   public AdminWebhooksTunnelStartResponseData() {
   }
@@ -125,6 +130,25 @@ public class AdminWebhooksTunnelStartResponseData {
   }
 
 
+  public AdminWebhooksTunnelStartResponseData signingSecret(@javax.annotation.Nullable String signingSecret) {
+    this.signingSecret = signingSecret;
+    return this;
+  }
+
+  /**
+   * The secret that signs the tunnel&#39;s deliveries (X-LumoAuth-Signature). Shown once.
+   * @return signingSecret
+   */
+  @javax.annotation.Nullable
+  public String getSigningSecret() {
+    return signingSecret;
+  }
+
+  public void setSigningSecret(@javax.annotation.Nullable String signingSecret) {
+    this.signingSecret = signingSecret;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -137,12 +161,13 @@ public class AdminWebhooksTunnelStartResponseData {
     AdminWebhooksTunnelStartResponseData adminWebhooksTunnelStartResponseData = (AdminWebhooksTunnelStartResponseData) o;
     return Objects.equals(this.webhookId, adminWebhooksTunnelStartResponseData.webhookId) &&
         Objects.equals(this.sessionId, adminWebhooksTunnelStartResponseData.sessionId) &&
-        Objects.equals(this.tunnelUrl, adminWebhooksTunnelStartResponseData.tunnelUrl);
+        Objects.equals(this.tunnelUrl, adminWebhooksTunnelStartResponseData.tunnelUrl) &&
+        Objects.equals(this.signingSecret, adminWebhooksTunnelStartResponseData.signingSecret);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(webhookId, sessionId, tunnelUrl);
+    return Objects.hash(webhookId, sessionId, tunnelUrl, signingSecret);
   }
 
   @Override
@@ -152,6 +177,7 @@ public class AdminWebhooksTunnelStartResponseData {
     sb.append("    webhookId: ").append(toIndentedString(webhookId)).append("\n");
     sb.append("    sessionId: ").append(toIndentedString(sessionId)).append("\n");
     sb.append("    tunnelUrl: ").append(toIndentedString(tunnelUrl)).append("\n");
+    sb.append("    signingSecret: ").append(toIndentedString(signingSecret)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -173,7 +199,7 @@ public class AdminWebhooksTunnelStartResponseData {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("webhook_id", "session_id", "tunnel_url"));
+    openapiFields = new HashSet<String>(Arrays.asList("webhook_id", "session_id", "tunnel_url", "signing_secret"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -205,6 +231,9 @@ public class AdminWebhooksTunnelStartResponseData {
       }
       if ((jsonObj.get("tunnel_url") != null && !jsonObj.get("tunnel_url").isJsonNull()) && !jsonObj.get("tunnel_url").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `tunnel_url` to be a primitive type in the JSON string but got `%s`", jsonObj.get("tunnel_url").toString()));
+      }
+      if ((jsonObj.get("signing_secret") != null && !jsonObj.get("signing_secret").isJsonNull()) && !jsonObj.get("signing_secret").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `signing_secret` to be a primitive type in the JSON string but got `%s`", jsonObj.get("signing_secret").toString()));
       }
   }
 

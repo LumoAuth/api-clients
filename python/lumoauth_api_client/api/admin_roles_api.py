@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -19,12 +19,17 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr, field_validator
 from typing_extensions import Annotated
+from lumoauth_api_client.models.admin_roles_add_permissions_request import AdminRolesAddPermissionsRequest
+from lumoauth_api_client.models.admin_roles_add_user_request import AdminRolesAddUserRequest
+from lumoauth_api_client.models.admin_roles_create_request import AdminRolesCreateRequest
 from lumoauth_api_client.models.admin_roles_create_response import AdminRolesCreateResponse
 from lumoauth_api_client.models.admin_roles_get_permissions_response import AdminRolesGetPermissionsResponse
 from lumoauth_api_client.models.admin_roles_get_response import AdminRolesGetResponse
 from lumoauth_api_client.models.admin_roles_get_users_response import AdminRolesGetUsersResponse
 from lumoauth_api_client.models.admin_roles_list_response import AdminRolesListResponse
+from lumoauth_api_client.models.admin_roles_update_permissions_request import AdminRolesUpdatePermissionsRequest
 from lumoauth_api_client.models.message_response import MessageResponse
+from lumoauth_api_client.models.put_admin_org_roles_update_request import PutAdminOrgRolesUpdateRequest
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -49,6 +54,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        admin_roles_add_permissions_request: AdminRolesAddPermissionsRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -64,12 +70,14 @@ class AdminRolesApi:
     ) -> MessageResponse:
         """Add permission(s) to a role
 
-        Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+        Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization's own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
         :param org_id: (required)
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param admin_roles_add_permissions_request: (required)
+        :type admin_roles_add_permissions_request: AdminRolesAddPermissionsRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -95,6 +103,7 @@ class AdminRolesApi:
         _param = self._admin_roles_add_permissions_serialize(
             org_id=org_id,
             role_id=role_id,
+            admin_roles_add_permissions_request=admin_roles_add_permissions_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -123,6 +132,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        admin_roles_add_permissions_request: AdminRolesAddPermissionsRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -138,12 +148,14 @@ class AdminRolesApi:
     ) -> ApiResponse[MessageResponse]:
         """Add permission(s) to a role
 
-        Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+        Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization's own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
         :param org_id: (required)
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param admin_roles_add_permissions_request: (required)
+        :type admin_roles_add_permissions_request: AdminRolesAddPermissionsRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -169,6 +181,7 @@ class AdminRolesApi:
         _param = self._admin_roles_add_permissions_serialize(
             org_id=org_id,
             role_id=role_id,
+            admin_roles_add_permissions_request=admin_roles_add_permissions_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -197,6 +210,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        admin_roles_add_permissions_request: AdminRolesAddPermissionsRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -212,12 +226,14 @@ class AdminRolesApi:
     ) -> RESTResponseType:
         """Add permission(s) to a role
 
-        Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+        Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization's own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
         :param org_id: (required)
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param admin_roles_add_permissions_request: (required)
+        :type admin_roles_add_permissions_request: AdminRolesAddPermissionsRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -243,6 +259,7 @@ class AdminRolesApi:
         _param = self._admin_roles_add_permissions_serialize(
             org_id=org_id,
             role_id=role_id,
+            admin_roles_add_permissions_request=admin_roles_add_permissions_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -266,6 +283,7 @@ class AdminRolesApi:
         self,
         org_id,
         role_id,
+        admin_roles_add_permissions_request,
         _request_auth,
         _content_type,
         _headers,
@@ -295,6 +313,8 @@ class AdminRolesApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_roles_add_permissions_request is not None:
+            _body_params = admin_roles_add_permissions_request
 
 
         # set the HTTP header `Accept`
@@ -305,6 +325,19 @@ class AdminRolesApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -335,6 +368,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        admin_roles_add_user_request: AdminRolesAddUserRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -355,6 +389,8 @@ class AdminRolesApi:
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param admin_roles_add_user_request: (required)
+        :type admin_roles_add_user_request: AdminRolesAddUserRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -380,6 +416,7 @@ class AdminRolesApi:
         _param = self._admin_roles_add_user_serialize(
             org_id=org_id,
             role_id=role_id,
+            admin_roles_add_user_request=admin_roles_add_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -405,6 +442,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        admin_roles_add_user_request: AdminRolesAddUserRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -425,6 +463,8 @@ class AdminRolesApi:
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param admin_roles_add_user_request: (required)
+        :type admin_roles_add_user_request: AdminRolesAddUserRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -450,6 +490,7 @@ class AdminRolesApi:
         _param = self._admin_roles_add_user_serialize(
             org_id=org_id,
             role_id=role_id,
+            admin_roles_add_user_request=admin_roles_add_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -475,6 +516,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        admin_roles_add_user_request: AdminRolesAddUserRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -495,6 +537,8 @@ class AdminRolesApi:
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param admin_roles_add_user_request: (required)
+        :type admin_roles_add_user_request: AdminRolesAddUserRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -520,6 +564,7 @@ class AdminRolesApi:
         _param = self._admin_roles_add_user_serialize(
             org_id=org_id,
             role_id=role_id,
+            admin_roles_add_user_request=admin_roles_add_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -540,6 +585,7 @@ class AdminRolesApi:
         self,
         org_id,
         role_id,
+        admin_roles_add_user_request,
         _request_auth,
         _content_type,
         _headers,
@@ -569,6 +615,8 @@ class AdminRolesApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_roles_add_user_request is not None:
+            _body_params = admin_roles_add_user_request
 
 
         # set the HTTP header `Accept`
@@ -579,6 +627,19 @@ class AdminRolesApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -608,6 +669,7 @@ class AdminRolesApi:
     def admin_roles_create(
         self,
         org_id: StrictStr,
+        admin_roles_create_request: AdminRolesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -623,10 +685,12 @@ class AdminRolesApi:
     ) -> AdminRolesCreateResponse:
         """Create a new role
 
-        Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+        Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization's own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_roles_create_request: (required)
+        :type admin_roles_create_request: AdminRolesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -651,6 +715,7 @@ class AdminRolesApi:
 
         _param = self._admin_roles_create_serialize(
             org_id=org_id,
+            admin_roles_create_request=admin_roles_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -675,6 +740,7 @@ class AdminRolesApi:
     def admin_roles_create_with_http_info(
         self,
         org_id: StrictStr,
+        admin_roles_create_request: AdminRolesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -690,10 +756,12 @@ class AdminRolesApi:
     ) -> ApiResponse[AdminRolesCreateResponse]:
         """Create a new role
 
-        Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+        Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization's own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_roles_create_request: (required)
+        :type admin_roles_create_request: AdminRolesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -718,6 +786,7 @@ class AdminRolesApi:
 
         _param = self._admin_roles_create_serialize(
             org_id=org_id,
+            admin_roles_create_request=admin_roles_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -742,6 +811,7 @@ class AdminRolesApi:
     def admin_roles_create_without_preload_content(
         self,
         org_id: StrictStr,
+        admin_roles_create_request: AdminRolesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -757,10 +827,12 @@ class AdminRolesApi:
     ) -> RESTResponseType:
         """Create a new role
 
-        Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+        Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization's own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_roles_create_request: (required)
+        :type admin_roles_create_request: AdminRolesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -785,6 +857,7 @@ class AdminRolesApi:
 
         _param = self._admin_roles_create_serialize(
             org_id=org_id,
+            admin_roles_create_request=admin_roles_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -804,6 +877,7 @@ class AdminRolesApi:
     def _admin_roles_create_serialize(
         self,
         org_id,
+        admin_roles_create_request,
         _request_auth,
         _content_type,
         _headers,
@@ -831,6 +905,8 @@ class AdminRolesApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_roles_create_request is not None:
+            _body_params = admin_roles_create_request
 
 
         # set the HTTP header `Accept`
@@ -841,6 +917,19 @@ class AdminRolesApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1979,7 +2068,7 @@ class AdminRolesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> AdminRolesListResponse:
-        """List all roles in the tenant
+        """List all roles in the organization
 
 
         :param org_id: (required)
@@ -2045,7 +2134,7 @@ class AdminRolesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[AdminRolesListResponse]:
-        """List all roles in the tenant
+        """List all roles in the organization
 
 
         :param org_id: (required)
@@ -2111,7 +2200,7 @@ class AdminRolesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List all roles in the tenant
+        """List all roles in the organization
 
 
         :param org_id: (required)
@@ -2807,6 +2896,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        admin_roles_update_permissions_request: AdminRolesUpdatePermissionsRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2822,12 +2912,14 @@ class AdminRolesApi:
     ) -> AdminRolesCreateResponse:
         """Update role permissions (replaces all)
 
-        Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+        Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization's own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
         :param org_id: (required)
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param admin_roles_update_permissions_request: (required)
+        :type admin_roles_update_permissions_request: AdminRolesUpdatePermissionsRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2853,6 +2945,7 @@ class AdminRolesApi:
         _param = self._admin_roles_update_permissions_serialize(
             org_id=org_id,
             role_id=role_id,
+            admin_roles_update_permissions_request=admin_roles_update_permissions_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2881,6 +2974,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        admin_roles_update_permissions_request: AdminRolesUpdatePermissionsRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2896,12 +2990,14 @@ class AdminRolesApi:
     ) -> ApiResponse[AdminRolesCreateResponse]:
         """Update role permissions (replaces all)
 
-        Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+        Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization's own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
         :param org_id: (required)
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param admin_roles_update_permissions_request: (required)
+        :type admin_roles_update_permissions_request: AdminRolesUpdatePermissionsRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2927,6 +3023,7 @@ class AdminRolesApi:
         _param = self._admin_roles_update_permissions_serialize(
             org_id=org_id,
             role_id=role_id,
+            admin_roles_update_permissions_request=admin_roles_update_permissions_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2955,6 +3052,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        admin_roles_update_permissions_request: AdminRolesUpdatePermissionsRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2970,12 +3068,14 @@ class AdminRolesApi:
     ) -> RESTResponseType:
         """Update role permissions (replaces all)
 
-        Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+        Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization's own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
         :param org_id: (required)
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param admin_roles_update_permissions_request: (required)
+        :type admin_roles_update_permissions_request: AdminRolesUpdatePermissionsRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3001,6 +3101,7 @@ class AdminRolesApi:
         _param = self._admin_roles_update_permissions_serialize(
             org_id=org_id,
             role_id=role_id,
+            admin_roles_update_permissions_request=admin_roles_update_permissions_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3024,6 +3125,7 @@ class AdminRolesApi:
         self,
         org_id,
         role_id,
+        admin_roles_update_permissions_request,
         _request_auth,
         _content_type,
         _headers,
@@ -3053,6 +3155,8 @@ class AdminRolesApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_roles_update_permissions_request is not None:
+            _body_params = admin_roles_update_permissions_request
 
 
         # set the HTTP header `Accept`
@@ -3063,6 +3167,19 @@ class AdminRolesApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -3093,6 +3210,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3113,6 +3231,8 @@ class AdminRolesApi:
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param put_admin_org_roles_update_request: (required)
+        :type put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3138,6 +3258,7 @@ class AdminRolesApi:
         _param = self._patch_admin_roles_update_serialize(
             org_id=org_id,
             role_id=role_id,
+            put_admin_org_roles_update_request=put_admin_org_roles_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3163,6 +3284,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3183,6 +3305,8 @@ class AdminRolesApi:
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param put_admin_org_roles_update_request: (required)
+        :type put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3208,6 +3332,7 @@ class AdminRolesApi:
         _param = self._patch_admin_roles_update_serialize(
             org_id=org_id,
             role_id=role_id,
+            put_admin_org_roles_update_request=put_admin_org_roles_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3233,6 +3358,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3253,6 +3379,8 @@ class AdminRolesApi:
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param put_admin_org_roles_update_request: (required)
+        :type put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3278,6 +3406,7 @@ class AdminRolesApi:
         _param = self._patch_admin_roles_update_serialize(
             org_id=org_id,
             role_id=role_id,
+            put_admin_org_roles_update_request=put_admin_org_roles_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3298,6 +3427,7 @@ class AdminRolesApi:
         self,
         org_id,
         role_id,
+        put_admin_org_roles_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -3327,6 +3457,8 @@ class AdminRolesApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_org_roles_update_request is not None:
+            _body_params = put_admin_org_roles_update_request
 
 
         # set the HTTP header `Accept`
@@ -3337,6 +3469,19 @@ class AdminRolesApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -3367,6 +3512,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3387,6 +3533,8 @@ class AdminRolesApi:
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param put_admin_org_roles_update_request: (required)
+        :type put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3412,6 +3560,7 @@ class AdminRolesApi:
         _param = self._put_admin_roles_update_serialize(
             org_id=org_id,
             role_id=role_id,
+            put_admin_org_roles_update_request=put_admin_org_roles_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3437,6 +3586,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3457,6 +3607,8 @@ class AdminRolesApi:
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param put_admin_org_roles_update_request: (required)
+        :type put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3482,6 +3634,7 @@ class AdminRolesApi:
         _param = self._put_admin_roles_update_serialize(
             org_id=org_id,
             role_id=role_id,
+            put_admin_org_roles_update_request=put_admin_org_roles_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3507,6 +3660,7 @@ class AdminRolesApi:
         self,
         org_id: StrictStr,
         role_id: StrictStr,
+        put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3527,6 +3681,8 @@ class AdminRolesApi:
         :type org_id: str
         :param role_id: (required)
         :type role_id: str
+        :param put_admin_org_roles_update_request: (required)
+        :type put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3552,6 +3708,7 @@ class AdminRolesApi:
         _param = self._put_admin_roles_update_serialize(
             org_id=org_id,
             role_id=role_id,
+            put_admin_org_roles_update_request=put_admin_org_roles_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3572,6 +3729,7 @@ class AdminRolesApi:
         self,
         org_id,
         role_id,
+        put_admin_org_roles_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -3601,6 +3759,8 @@ class AdminRolesApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_org_roles_update_request is not None:
+            _body_params = put_admin_org_roles_update_request
 
 
         # set the HTTP header `Accept`
@@ -3611,6 +3771,19 @@ class AdminRolesApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

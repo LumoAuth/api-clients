@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## CreateStreamConfig
 
-> SsfStream CreateStreamConfig(ctx, orgId).Execute()
+> SsfStream CreateStreamConfig(ctx, orgId).CreateStreamConfigRequest(createStreamConfigRequest).Execute()
 
 Create an SSF stream
 
@@ -31,10 +31,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	createStreamConfigRequest := *openapiclient.NewCreateStreamConfigRequest() // CreateStreamConfigRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SsfAPI.CreateStreamConfig(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.SsfAPI.CreateStreamConfig(context.Background(), orgId).CreateStreamConfigRequest(createStreamConfigRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SsfAPI.CreateStreamConfig``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -60,6 +61,7 @@ Other parameters are passed through a pointer to a apiCreateStreamConfigRequest 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **createStreamConfigRequest** | [**CreateStreamConfigRequest**](CreateStreamConfigRequest.md) |  | 
 
 ### Return type
 
@@ -71,7 +73,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -221,7 +223,7 @@ Name | Type | Description  | Notes
 
 ## VerifyStream
 
-> VerifyStream(ctx, orgId).Execute()
+> VerifyStream(ctx, orgId).VerifyStreamRequest(verifyStreamRequest).Execute()
 
 Request a stream verification event
 
@@ -241,10 +243,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	verifyStreamRequest := *openapiclient.NewVerifyStreamRequest() // VerifyStreamRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.SsfAPI.VerifyStream(context.Background(), orgId).Execute()
+	r, err := apiClient.SsfAPI.VerifyStream(context.Background(), orgId).VerifyStreamRequest(verifyStreamRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SsfAPI.VerifyStream``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -268,6 +271,7 @@ Other parameters are passed through a pointer to a apiVerifyStreamRequest struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **verifyStreamRequest** | [**VerifyStreamRequest**](VerifyStreamRequest.md) |  | 
 
 ### Return type
 
@@ -279,7 +283,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -19,12 +19,17 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr, field_validator
 from typing_extensions import Annotated
+from lumoauth_api_client.models.admin_groups_add_members_request import AdminGroupsAddMembersRequest
+from lumoauth_api_client.models.admin_groups_add_role_request import AdminGroupsAddRoleRequest
+from lumoauth_api_client.models.admin_groups_create_request import AdminGroupsCreateRequest
 from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse
 from lumoauth_api_client.models.admin_groups_get_members_response import AdminGroupsGetMembersResponse
 from lumoauth_api_client.models.admin_groups_get_response import AdminGroupsGetResponse
 from lumoauth_api_client.models.admin_groups_groups_get_roles_response import AdminGroupsGroupsGetRolesResponse
 from lumoauth_api_client.models.admin_groups_list_response import AdminGroupsListResponse
+from lumoauth_api_client.models.admin_groups_update_roles_request import AdminGroupsUpdateRolesRequest
 from lumoauth_api_client.models.message_response import MessageResponse
+from lumoauth_api_client.models.put_admin_groups_update_request import PutAdminGroupsUpdateRequest
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -49,6 +54,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        admin_groups_add_members_request: AdminGroupsAddMembersRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -69,6 +75,8 @@ class AdminGroupsApi:
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param admin_groups_add_members_request: (required)
+        :type admin_groups_add_members_request: AdminGroupsAddMembersRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -94,6 +102,7 @@ class AdminGroupsApi:
         _param = self._admin_groups_add_members_serialize(
             org_id=org_id,
             group_id=group_id,
+            admin_groups_add_members_request=admin_groups_add_members_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -119,6 +128,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        admin_groups_add_members_request: AdminGroupsAddMembersRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -139,6 +149,8 @@ class AdminGroupsApi:
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param admin_groups_add_members_request: (required)
+        :type admin_groups_add_members_request: AdminGroupsAddMembersRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -164,6 +176,7 @@ class AdminGroupsApi:
         _param = self._admin_groups_add_members_serialize(
             org_id=org_id,
             group_id=group_id,
+            admin_groups_add_members_request=admin_groups_add_members_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -189,6 +202,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        admin_groups_add_members_request: AdminGroupsAddMembersRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -209,6 +223,8 @@ class AdminGroupsApi:
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param admin_groups_add_members_request: (required)
+        :type admin_groups_add_members_request: AdminGroupsAddMembersRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -234,6 +250,7 @@ class AdminGroupsApi:
         _param = self._admin_groups_add_members_serialize(
             org_id=org_id,
             group_id=group_id,
+            admin_groups_add_members_request=admin_groups_add_members_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -254,6 +271,7 @@ class AdminGroupsApi:
         self,
         org_id,
         group_id,
+        admin_groups_add_members_request,
         _request_auth,
         _content_type,
         _headers,
@@ -283,6 +301,8 @@ class AdminGroupsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_groups_add_members_request is not None:
+            _body_params = admin_groups_add_members_request
 
 
         # set the HTTP header `Accept`
@@ -293,6 +313,19 @@ class AdminGroupsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -323,6 +356,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        admin_groups_add_role_request: AdminGroupsAddRoleRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -338,12 +372,14 @@ class AdminGroupsApi:
     ) -> MessageResponse:
         """Add a single role to a group
 
-        A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+        A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
         :param org_id: (required)
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param admin_groups_add_role_request: (required)
+        :type admin_groups_add_role_request: AdminGroupsAddRoleRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -369,6 +405,7 @@ class AdminGroupsApi:
         _param = self._admin_groups_add_role_serialize(
             org_id=org_id,
             group_id=group_id,
+            admin_groups_add_role_request=admin_groups_add_role_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -394,6 +431,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        admin_groups_add_role_request: AdminGroupsAddRoleRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -409,12 +447,14 @@ class AdminGroupsApi:
     ) -> ApiResponse[MessageResponse]:
         """Add a single role to a group
 
-        A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+        A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
         :param org_id: (required)
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param admin_groups_add_role_request: (required)
+        :type admin_groups_add_role_request: AdminGroupsAddRoleRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -440,6 +480,7 @@ class AdminGroupsApi:
         _param = self._admin_groups_add_role_serialize(
             org_id=org_id,
             group_id=group_id,
+            admin_groups_add_role_request=admin_groups_add_role_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -465,6 +506,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        admin_groups_add_role_request: AdminGroupsAddRoleRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -480,12 +522,14 @@ class AdminGroupsApi:
     ) -> RESTResponseType:
         """Add a single role to a group
 
-        A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+        A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
         :param org_id: (required)
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param admin_groups_add_role_request: (required)
+        :type admin_groups_add_role_request: AdminGroupsAddRoleRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -511,6 +555,7 @@ class AdminGroupsApi:
         _param = self._admin_groups_add_role_serialize(
             org_id=org_id,
             group_id=group_id,
+            admin_groups_add_role_request=admin_groups_add_role_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -531,6 +576,7 @@ class AdminGroupsApi:
         self,
         org_id,
         group_id,
+        admin_groups_add_role_request,
         _request_auth,
         _content_type,
         _headers,
@@ -560,6 +606,8 @@ class AdminGroupsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_groups_add_role_request is not None:
+            _body_params = admin_groups_add_role_request
 
 
         # set the HTTP header `Accept`
@@ -570,6 +618,19 @@ class AdminGroupsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -599,6 +660,7 @@ class AdminGroupsApi:
     def admin_groups_create(
         self,
         org_id: StrictStr,
+        admin_groups_create_request: AdminGroupsCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -614,10 +676,12 @@ class AdminGroupsApi:
     ) -> AdminGroupsCreateResponse:
         """Create a new group
 
-        Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+        Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_groups_create_request: (required)
+        :type admin_groups_create_request: AdminGroupsCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -642,6 +706,7 @@ class AdminGroupsApi:
 
         _param = self._admin_groups_create_serialize(
             org_id=org_id,
+            admin_groups_create_request=admin_groups_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -666,6 +731,7 @@ class AdminGroupsApi:
     def admin_groups_create_with_http_info(
         self,
         org_id: StrictStr,
+        admin_groups_create_request: AdminGroupsCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -681,10 +747,12 @@ class AdminGroupsApi:
     ) -> ApiResponse[AdminGroupsCreateResponse]:
         """Create a new group
 
-        Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+        Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_groups_create_request: (required)
+        :type admin_groups_create_request: AdminGroupsCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -709,6 +777,7 @@ class AdminGroupsApi:
 
         _param = self._admin_groups_create_serialize(
             org_id=org_id,
+            admin_groups_create_request=admin_groups_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -733,6 +802,7 @@ class AdminGroupsApi:
     def admin_groups_create_without_preload_content(
         self,
         org_id: StrictStr,
+        admin_groups_create_request: AdminGroupsCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -748,10 +818,12 @@ class AdminGroupsApi:
     ) -> RESTResponseType:
         """Create a new group
 
-        Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+        Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_groups_create_request: (required)
+        :type admin_groups_create_request: AdminGroupsCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -776,6 +848,7 @@ class AdminGroupsApi:
 
         _param = self._admin_groups_create_serialize(
             org_id=org_id,
+            admin_groups_create_request=admin_groups_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -795,6 +868,7 @@ class AdminGroupsApi:
     def _admin_groups_create_serialize(
         self,
         org_id,
+        admin_groups_create_request,
         _request_auth,
         _content_type,
         _headers,
@@ -822,6 +896,8 @@ class AdminGroupsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_groups_create_request is not None:
+            _body_params = admin_groups_create_request
 
 
         # set the HTTP header `Accept`
@@ -832,6 +908,19 @@ class AdminGroupsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1970,7 +2059,7 @@ class AdminGroupsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> AdminGroupsListResponse:
-        """List all groups in the tenant
+        """List all groups in the organization
 
 
         :param org_id: (required)
@@ -2036,7 +2125,7 @@ class AdminGroupsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[AdminGroupsListResponse]:
-        """List all groups in the tenant
+        """List all groups in the organization
 
 
         :param org_id: (required)
@@ -2102,7 +2191,7 @@ class AdminGroupsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List all groups in the tenant
+        """List all groups in the organization
 
 
         :param org_id: (required)
@@ -2795,6 +2884,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        admin_groups_update_roles_request: AdminGroupsUpdateRolesRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2810,12 +2900,14 @@ class AdminGroupsApi:
     ) -> AdminGroupsCreateResponse:
         """Update group roles (replaces all existing roles)
 
-        `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+        `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
         :param org_id: (required)
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param admin_groups_update_roles_request: (required)
+        :type admin_groups_update_roles_request: AdminGroupsUpdateRolesRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2841,6 +2933,7 @@ class AdminGroupsApi:
         _param = self._admin_groups_update_roles_serialize(
             org_id=org_id,
             group_id=group_id,
+            admin_groups_update_roles_request=admin_groups_update_roles_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2866,6 +2959,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        admin_groups_update_roles_request: AdminGroupsUpdateRolesRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2881,12 +2975,14 @@ class AdminGroupsApi:
     ) -> ApiResponse[AdminGroupsCreateResponse]:
         """Update group roles (replaces all existing roles)
 
-        `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+        `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
         :param org_id: (required)
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param admin_groups_update_roles_request: (required)
+        :type admin_groups_update_roles_request: AdminGroupsUpdateRolesRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2912,6 +3008,7 @@ class AdminGroupsApi:
         _param = self._admin_groups_update_roles_serialize(
             org_id=org_id,
             group_id=group_id,
+            admin_groups_update_roles_request=admin_groups_update_roles_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2937,6 +3034,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        admin_groups_update_roles_request: AdminGroupsUpdateRolesRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2952,12 +3050,14 @@ class AdminGroupsApi:
     ) -> RESTResponseType:
         """Update group roles (replaces all existing roles)
 
-        `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+        `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
         :param org_id: (required)
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param admin_groups_update_roles_request: (required)
+        :type admin_groups_update_roles_request: AdminGroupsUpdateRolesRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2983,6 +3083,7 @@ class AdminGroupsApi:
         _param = self._admin_groups_update_roles_serialize(
             org_id=org_id,
             group_id=group_id,
+            admin_groups_update_roles_request=admin_groups_update_roles_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3003,6 +3104,7 @@ class AdminGroupsApi:
         self,
         org_id,
         group_id,
+        admin_groups_update_roles_request,
         _request_auth,
         _content_type,
         _headers,
@@ -3032,6 +3134,8 @@ class AdminGroupsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_groups_update_roles_request is not None:
+            _body_params = admin_groups_update_roles_request
 
 
         # set the HTTP header `Accept`
@@ -3042,6 +3146,19 @@ class AdminGroupsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -3072,6 +3189,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        put_admin_groups_update_request: PutAdminGroupsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3092,6 +3210,8 @@ class AdminGroupsApi:
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param put_admin_groups_update_request: (required)
+        :type put_admin_groups_update_request: PutAdminGroupsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3117,6 +3237,7 @@ class AdminGroupsApi:
         _param = self._patch_admin_groups_update_serialize(
             org_id=org_id,
             group_id=group_id,
+            put_admin_groups_update_request=put_admin_groups_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3142,6 +3263,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        put_admin_groups_update_request: PutAdminGroupsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3162,6 +3284,8 @@ class AdminGroupsApi:
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param put_admin_groups_update_request: (required)
+        :type put_admin_groups_update_request: PutAdminGroupsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3187,6 +3311,7 @@ class AdminGroupsApi:
         _param = self._patch_admin_groups_update_serialize(
             org_id=org_id,
             group_id=group_id,
+            put_admin_groups_update_request=put_admin_groups_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3212,6 +3337,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        put_admin_groups_update_request: PutAdminGroupsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3232,6 +3358,8 @@ class AdminGroupsApi:
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param put_admin_groups_update_request: (required)
+        :type put_admin_groups_update_request: PutAdminGroupsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3257,6 +3385,7 @@ class AdminGroupsApi:
         _param = self._patch_admin_groups_update_serialize(
             org_id=org_id,
             group_id=group_id,
+            put_admin_groups_update_request=put_admin_groups_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3277,6 +3406,7 @@ class AdminGroupsApi:
         self,
         org_id,
         group_id,
+        put_admin_groups_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -3306,6 +3436,8 @@ class AdminGroupsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_groups_update_request is not None:
+            _body_params = put_admin_groups_update_request
 
 
         # set the HTTP header `Accept`
@@ -3316,6 +3448,19 @@ class AdminGroupsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -3346,6 +3491,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        put_admin_groups_update_request: PutAdminGroupsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3366,6 +3512,8 @@ class AdminGroupsApi:
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param put_admin_groups_update_request: (required)
+        :type put_admin_groups_update_request: PutAdminGroupsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3391,6 +3539,7 @@ class AdminGroupsApi:
         _param = self._put_admin_groups_update_serialize(
             org_id=org_id,
             group_id=group_id,
+            put_admin_groups_update_request=put_admin_groups_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3416,6 +3565,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        put_admin_groups_update_request: PutAdminGroupsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3436,6 +3586,8 @@ class AdminGroupsApi:
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param put_admin_groups_update_request: (required)
+        :type put_admin_groups_update_request: PutAdminGroupsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3461,6 +3613,7 @@ class AdminGroupsApi:
         _param = self._put_admin_groups_update_serialize(
             org_id=org_id,
             group_id=group_id,
+            put_admin_groups_update_request=put_admin_groups_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3486,6 +3639,7 @@ class AdminGroupsApi:
         self,
         org_id: StrictStr,
         group_id: StrictStr,
+        put_admin_groups_update_request: PutAdminGroupsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3506,6 +3660,8 @@ class AdminGroupsApi:
         :type org_id: str
         :param group_id: (required)
         :type group_id: str
+        :param put_admin_groups_update_request: (required)
+        :type put_admin_groups_update_request: PutAdminGroupsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3531,6 +3687,7 @@ class AdminGroupsApi:
         _param = self._put_admin_groups_update_serialize(
             org_id=org_id,
             group_id=group_id,
+            put_admin_groups_update_request=put_admin_groups_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3551,6 +3708,7 @@ class AdminGroupsApi:
         self,
         org_id,
         group_id,
+        put_admin_groups_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -3580,6 +3738,8 @@ class AdminGroupsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_groups_update_request is not None:
+            _body_params = put_admin_groups_update_request
 
 
         # set the HTTP header `Accept`
@@ -3590,6 +3750,19 @@ class AdminGroupsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

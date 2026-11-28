@@ -11,7 +11,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**AdminGroupsGet**](AdminGroupsApi.md#admingroupsget) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Get a single group by ID or slug |
 | [**AdminGroupsGetMembers**](AdminGroupsApi.md#admingroupsgetmembers) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members |
 | [**AdminGroupsGroupsGetRoles**](AdminGroupsApi.md#admingroupsgroupsgetroles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles |
-| [**AdminGroupsList**](AdminGroupsApi.md#admingroupslist) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant |
+| [**AdminGroupsList**](AdminGroupsApi.md#admingroupslist) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the organization |
 | [**AdminGroupsRemoveMember**](AdminGroupsApi.md#admingroupsremovemember) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group |
 | [**AdminGroupsRemoveRole**](AdminGroupsApi.md#admingroupsremoverole) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group |
 | [**AdminGroupsUpdateRoles**](AdminGroupsApi.md#admingroupsupdateroles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles) |
@@ -20,7 +20,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="admingroupsaddmembers"></a>
 # **AdminGroupsAddMembers**
-> AdminGroupsCreateResponse AdminGroupsAddMembers (string orgId, string groupId)
+> AdminGroupsCreateResponse AdminGroupsAddMembers (string orgId, string groupId, AdminGroupsAddMembersRequest adminGroupsAddMembersRequest)
 
 Add member(s) to group
 
@@ -54,11 +54,12 @@ namespace Example
             var apiInstance = new AdminGroupsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var groupId = "groupId_example";  // string | 
+            var adminGroupsAddMembersRequest = new AdminGroupsAddMembersRequest(); // AdminGroupsAddMembersRequest | 
 
             try
             {
                 // Add member(s) to group
-                AdminGroupsCreateResponse result = apiInstance.AdminGroupsAddMembers(orgId, groupId);
+                AdminGroupsCreateResponse result = apiInstance.AdminGroupsAddMembers(orgId, groupId, adminGroupsAddMembersRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -79,7 +80,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Add member(s) to group
-    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.AdminGroupsAddMembersWithHttpInfo(orgId, groupId);
+    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.AdminGroupsAddMembersWithHttpInfo(orgId, groupId, adminGroupsAddMembersRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -98,6 +99,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **groupId** | **string** |  |  |
+| **adminGroupsAddMembersRequest** | [**AdminGroupsAddMembersRequest**](AdminGroupsAddMembersRequest.md) |  |  |
 
 ### Return type
 
@@ -109,7 +111,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -122,11 +124,11 @@ catch (ApiException e)
 
 <a id="admingroupsaddrole"></a>
 # **AdminGroupsAddRole**
-> MessageResponse AdminGroupsAddRole (string orgId, string groupId)
+> MessageResponse AdminGroupsAddRole (string orgId, string groupId, AdminGroupsAddRoleRequest adminGroupsAddRoleRequest)
 
 Add a single role to a group
 
-A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 ### Example
 ```csharp
@@ -158,11 +160,12 @@ namespace Example
             var apiInstance = new AdminGroupsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var groupId = "groupId_example";  // string | 
+            var adminGroupsAddRoleRequest = new AdminGroupsAddRoleRequest(); // AdminGroupsAddRoleRequest | 
 
             try
             {
                 // Add a single role to a group
-                MessageResponse result = apiInstance.AdminGroupsAddRole(orgId, groupId);
+                MessageResponse result = apiInstance.AdminGroupsAddRole(orgId, groupId, adminGroupsAddRoleRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -183,7 +186,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Add a single role to a group
-    ApiResponse<MessageResponse> response = apiInstance.AdminGroupsAddRoleWithHttpInfo(orgId, groupId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminGroupsAddRoleWithHttpInfo(orgId, groupId, adminGroupsAddRoleRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -202,6 +205,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **groupId** | **string** |  |  |
+| **adminGroupsAddRoleRequest** | [**AdminGroupsAddRoleRequest**](AdminGroupsAddRoleRequest.md) |  |  |
 
 ### Return type
 
@@ -213,7 +217,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -226,11 +230,11 @@ catch (ApiException e)
 
 <a id="admingroupscreate"></a>
 # **AdminGroupsCreate**
-> AdminGroupsCreateResponse AdminGroupsCreate (string orgId)
+> AdminGroupsCreateResponse AdminGroupsCreate (string orgId, AdminGroupsCreateRequest adminGroupsCreateRequest)
 
 Create a new group
 
-Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 ### Example
 ```csharp
@@ -261,11 +265,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminGroupsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var adminGroupsCreateRequest = new AdminGroupsCreateRequest(); // AdminGroupsCreateRequest | 
 
             try
             {
                 // Create a new group
-                AdminGroupsCreateResponse result = apiInstance.AdminGroupsCreate(orgId);
+                AdminGroupsCreateResponse result = apiInstance.AdminGroupsCreate(orgId, adminGroupsCreateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -286,7 +291,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create a new group
-    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.AdminGroupsCreateWithHttpInfo(orgId);
+    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.AdminGroupsCreateWithHttpInfo(orgId, adminGroupsCreateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -304,6 +309,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **adminGroupsCreateRequest** | [**AdminGroupsCreateRequest**](AdminGroupsCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -315,7 +321,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -738,7 +744,7 @@ catch (ApiException e)
 # **AdminGroupsList**
 > AdminGroupsListResponse AdminGroupsList (string orgId)
 
-List all groups in the tenant
+List all groups in the organization
 
 ### Example
 ```csharp
@@ -772,7 +778,7 @@ namespace Example
 
             try
             {
-                // List all groups in the tenant
+                // List all groups in the organization
                 AdminGroupsListResponse result = apiInstance.AdminGroupsList(orgId);
                 Debug.WriteLine(result);
             }
@@ -793,7 +799,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List all groups in the tenant
+    // List all groups in the organization
     ApiResponse<AdminGroupsListResponse> response = apiInstance.AdminGroupsListWithHttpInfo(orgId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
@@ -1044,11 +1050,11 @@ catch (ApiException e)
 
 <a id="admingroupsupdateroles"></a>
 # **AdminGroupsUpdateRoles**
-> AdminGroupsCreateResponse AdminGroupsUpdateRoles (string orgId, string groupId)
+> AdminGroupsCreateResponse AdminGroupsUpdateRoles (string orgId, string groupId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest)
 
 Update group roles (replaces all existing roles)
 
-`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
 ### Example
 ```csharp
@@ -1080,11 +1086,12 @@ namespace Example
             var apiInstance = new AdminGroupsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var groupId = "groupId_example";  // string | 
+            var adminGroupsUpdateRolesRequest = new AdminGroupsUpdateRolesRequest(); // AdminGroupsUpdateRolesRequest | 
 
             try
             {
                 // Update group roles (replaces all existing roles)
-                AdminGroupsCreateResponse result = apiInstance.AdminGroupsUpdateRoles(orgId, groupId);
+                AdminGroupsCreateResponse result = apiInstance.AdminGroupsUpdateRoles(orgId, groupId, adminGroupsUpdateRolesRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1105,7 +1112,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update group roles (replaces all existing roles)
-    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.AdminGroupsUpdateRolesWithHttpInfo(orgId, groupId);
+    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.AdminGroupsUpdateRolesWithHttpInfo(orgId, groupId, adminGroupsUpdateRolesRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1124,6 +1131,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **groupId** | **string** |  |  |
+| **adminGroupsUpdateRolesRequest** | [**AdminGroupsUpdateRolesRequest**](AdminGroupsUpdateRolesRequest.md) |  |  |
 
 ### Return type
 
@@ -1135,7 +1143,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1148,7 +1156,7 @@ catch (ApiException e)
 
 <a id="patchadmingroupsupdate"></a>
 # **PatchAdminGroupsUpdate**
-> AdminGroupsCreateResponse PatchAdminGroupsUpdate (string orgId, string groupId)
+> AdminGroupsCreateResponse PatchAdminGroupsUpdate (string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest)
 
 Update an existing group
 
@@ -1182,11 +1190,12 @@ namespace Example
             var apiInstance = new AdminGroupsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var groupId = "groupId_example";  // string | 
+            var putAdminGroupsUpdateRequest = new PutAdminGroupsUpdateRequest(); // PutAdminGroupsUpdateRequest | 
 
             try
             {
                 // Update an existing group
-                AdminGroupsCreateResponse result = apiInstance.PatchAdminGroupsUpdate(orgId, groupId);
+                AdminGroupsCreateResponse result = apiInstance.PatchAdminGroupsUpdate(orgId, groupId, putAdminGroupsUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1207,7 +1216,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an existing group
-    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.PatchAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.PatchAdminGroupsUpdateWithHttpInfo(orgId, groupId, putAdminGroupsUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1226,6 +1235,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **groupId** | **string** |  |  |
+| **putAdminGroupsUpdateRequest** | [**PutAdminGroupsUpdateRequest**](PutAdminGroupsUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1237,7 +1247,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1250,7 +1260,7 @@ catch (ApiException e)
 
 <a id="putadmingroupsupdate"></a>
 # **PutAdminGroupsUpdate**
-> AdminGroupsCreateResponse PutAdminGroupsUpdate (string orgId, string groupId)
+> AdminGroupsCreateResponse PutAdminGroupsUpdate (string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest)
 
 Update an existing group
 
@@ -1284,11 +1294,12 @@ namespace Example
             var apiInstance = new AdminGroupsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var groupId = "groupId_example";  // string | 
+            var putAdminGroupsUpdateRequest = new PutAdminGroupsUpdateRequest(); // PutAdminGroupsUpdateRequest | 
 
             try
             {
                 // Update an existing group
-                AdminGroupsCreateResponse result = apiInstance.PutAdminGroupsUpdate(orgId, groupId);
+                AdminGroupsCreateResponse result = apiInstance.PutAdminGroupsUpdate(orgId, groupId, putAdminGroupsUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1309,7 +1320,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an existing group
-    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.PutAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.PutAdminGroupsUpdateWithHttpInfo(orgId, groupId, putAdminGroupsUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1328,6 +1339,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **groupId** | **string** |  |  |
+| **putAdminGroupsUpdateRequest** | [**PutAdminGroupsUpdateRequest**](PutAdminGroupsUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1339,7 +1351,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

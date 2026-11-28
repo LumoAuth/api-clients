@@ -86,7 +86,7 @@ Name | Type | Description  | Required | Notes
 
 ## create_client
 
-> models::CreateClientResponse create_client(org_id)
+> models::CreateClientResponse create_client(org_id, o_auth_client_write)
 Create an OAuth client
 
 ### Parameters
@@ -95,6 +95,7 @@ Create an OAuth client
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**o_auth_client_write** | [**OAuthClientWrite**](OAuthClientWrite.md) |  | [required] |
 
 ### Return type
 
@@ -106,7 +107,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -323,7 +324,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_client
 
-> models::UpdateClientResponse patch_client(org_id, client_id)
+> models::UpdateClientResponse patch_client(org_id, client_id, o_auth_client_write)
 Update an OAuth client
 
 A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
@@ -335,6 +336,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **client_id** | **String** |  | [required] |
+**o_auth_client_write** | [**OAuthClientWrite**](OAuthClientWrite.md) |  | [required] |
 
 ### Return type
 
@@ -346,7 +348,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -417,7 +419,7 @@ Name | Type | Description  | Required | Notes
 
 ## set_client_scopes
 
-> models::SetClientScopesResponse set_client_scopes(org_id, client_id)
+> models::SetClientScopesResponse set_client_scopes(org_id, client_id, set_client_scopes_request)
 Replace the scopes granted to an OAuth client
 
 A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
@@ -429,6 +431,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **client_id** | **String** |  | [required] |
+**set_client_scopes_request** | [**SetClientScopesRequest**](SetClientScopesRequest.md) |  | [required] |
 
 ### Return type
 
@@ -440,7 +443,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -448,7 +451,7 @@ Name | Type | Description  | Required | Notes
 
 ## update_client
 
-> models::UpdateClientResponse update_client(org_id, client_id)
+> models::UpdateClientResponse update_client(org_id, client_id, o_auth_client_write)
 Update an OAuth client (same as PATCH: only the fields that are sent change)
 
 A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
@@ -460,6 +463,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **client_id** | **String** |  | [required] |
+**o_auth_client_write** | [**OAuthClientWrite**](OAuthClientWrite.md) |  | [required] |
 
 ### Return type
 
@@ -471,7 +475,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

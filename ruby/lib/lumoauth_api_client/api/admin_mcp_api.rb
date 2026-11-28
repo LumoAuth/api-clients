@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -22,25 +22,31 @@ module LumoAuthApiClient
     # Register an MCP server
     # The `resource_uri` is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
     # @param org_id [String] 
+    # @param mcp_server_write [McpServerWrite] 
     # @param [Hash] opts the optional parameters
     # @return [AdminMcpServersCreateResponse]
-    def admin_mcp_servers_create(org_id, opts = {})
-      data, _status_code, _headers = admin_mcp_servers_create_with_http_info(org_id, opts)
+    def admin_mcp_servers_create(org_id, mcp_server_write, opts = {})
+      data, _status_code, _headers = admin_mcp_servers_create_with_http_info(org_id, mcp_server_write, opts)
       data
     end
 
     # Register an MCP server
     # The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
     # @param org_id [String] 
+    # @param mcp_server_write [McpServerWrite] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminMcpServersCreateResponse, Integer, Hash)>] AdminMcpServersCreateResponse data, response status code and response headers
-    def admin_mcp_servers_create_with_http_info(org_id, opts = {})
+    def admin_mcp_servers_create_with_http_info(org_id, mcp_server_write, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminMcpApi.admin_mcp_servers_create ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminMcpApi.admin_mcp_servers_create"
+      end
+      # verify the required parameter 'mcp_server_write' is set
+      if @api_client.config.client_side_validation && mcp_server_write.nil?
+        fail ArgumentError, "Missing the required parameter 'mcp_server_write' when calling AdminMcpApi.admin_mcp_servers_create"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/mcp/servers'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -52,12 +58,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(mcp_server_write)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminMcpServersCreateResponse'
@@ -500,6 +511,164 @@ module LumoAuthApiClient
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AdminMcpApi#admin_mcp_servers_list\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Update an MCP server
+    # Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+    # @param org_id [String] 
+    # @param server_id [String] 
+    # @param mcp_server_write [McpServerWrite] 
+    # @param [Hash] opts the optional parameters
+    # @return [AdminMcpServersCreateResponse]
+    def patch_admin_mcp_servers_update(org_id, server_id, mcp_server_write, opts = {})
+      data, _status_code, _headers = patch_admin_mcp_servers_update_with_http_info(org_id, server_id, mcp_server_write, opts)
+      data
+    end
+
+    # Update an MCP server
+    # Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+    # @param org_id [String] 
+    # @param server_id [String] 
+    # @param mcp_server_write [McpServerWrite] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(AdminMcpServersCreateResponse, Integer, Hash)>] AdminMcpServersCreateResponse data, response status code and response headers
+    def patch_admin_mcp_servers_update_with_http_info(org_id, server_id, mcp_server_write, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AdminMcpApi.patch_admin_mcp_servers_update ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminMcpApi.patch_admin_mcp_servers_update"
+      end
+      # verify the required parameter 'server_id' is set
+      if @api_client.config.client_side_validation && server_id.nil?
+        fail ArgumentError, "Missing the required parameter 'server_id' when calling AdminMcpApi.patch_admin_mcp_servers_update"
+      end
+      # verify the required parameter 'mcp_server_write' is set
+      if @api_client.config.client_side_validation && mcp_server_write.nil?
+        fail ArgumentError, "Missing the required parameter 'mcp_server_write' when calling AdminMcpApi.patch_admin_mcp_servers_update"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'serverId' + '}', CGI.escape(server_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(mcp_server_write)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'AdminMcpServersCreateResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AdminMcpApi.patch_admin_mcp_servers_update",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PATCH, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AdminMcpApi#patch_admin_mcp_servers_update\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Update an MCP server (same as PATCH: only the fields that are sent change)
+    # @param org_id [String] 
+    # @param server_id [String] 
+    # @param mcp_server_write [McpServerWrite] 
+    # @param [Hash] opts the optional parameters
+    # @return [AdminMcpServersCreateResponse]
+    def put_admin_mcp_servers_update(org_id, server_id, mcp_server_write, opts = {})
+      data, _status_code, _headers = put_admin_mcp_servers_update_with_http_info(org_id, server_id, mcp_server_write, opts)
+      data
+    end
+
+    # Update an MCP server (same as PATCH: only the fields that are sent change)
+    # @param org_id [String] 
+    # @param server_id [String] 
+    # @param mcp_server_write [McpServerWrite] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(AdminMcpServersCreateResponse, Integer, Hash)>] AdminMcpServersCreateResponse data, response status code and response headers
+    def put_admin_mcp_servers_update_with_http_info(org_id, server_id, mcp_server_write, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AdminMcpApi.put_admin_mcp_servers_update ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminMcpApi.put_admin_mcp_servers_update"
+      end
+      # verify the required parameter 'server_id' is set
+      if @api_client.config.client_side_validation && server_id.nil?
+        fail ArgumentError, "Missing the required parameter 'server_id' when calling AdminMcpApi.put_admin_mcp_servers_update"
+      end
+      # verify the required parameter 'mcp_server_write' is set
+      if @api_client.config.client_side_validation && mcp_server_write.nil?
+        fail ArgumentError, "Missing the required parameter 'mcp_server_write' when calling AdminMcpApi.put_admin_mcp_servers_update"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'serverId' + '}', CGI.escape(server_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(mcp_server_write)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'AdminMcpServersCreateResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AdminMcpApi.put_admin_mcp_servers_update",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AdminMcpApi#put_admin_mcp_servers_update\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

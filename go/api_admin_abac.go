@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -209,6 +209,12 @@ type ApiAbacAttributesCreateRequest struct {
 	ctx context.Context
 	ApiService AdminAbacAPI
 	orgId string
+	abacAttributesCreateRequest *AbacAttributesCreateRequest
+}
+
+func (r ApiAbacAttributesCreateRequest) AbacAttributesCreateRequest(abacAttributesCreateRequest AbacAttributesCreateRequest) ApiAbacAttributesCreateRequest {
+	r.abacAttributesCreateRequest = &abacAttributesCreateRequest
+	return r
 }
 
 func (r ApiAbacAttributesCreateRequest) Execute() (*AbacAttributesCreateResponse, *http.Response, error) {
@@ -251,9 +257,12 @@ func (a *AdminAbacAPIService) AbacAttributesCreateExecute(r ApiAbacAttributesCre
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.abacAttributesCreateRequest == nil {
+		return localVarReturnValue, nil, reportError("abacAttributesCreateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -269,6 +278,8 @@ func (a *AdminAbacAPIService) AbacAttributesCreateExecute(r ApiAbacAttributesCre
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.abacAttributesCreateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -677,6 +688,12 @@ type ApiAbacPoliciesCreateRequest struct {
 	ctx context.Context
 	ApiService AdminAbacAPI
 	orgId string
+	abacPoliciesCreateRequest *AbacPoliciesCreateRequest
+}
+
+func (r ApiAbacPoliciesCreateRequest) AbacPoliciesCreateRequest(abacPoliciesCreateRequest AbacPoliciesCreateRequest) ApiAbacPoliciesCreateRequest {
+	r.abacPoliciesCreateRequest = &abacPoliciesCreateRequest
+	return r
 }
 
 func (r ApiAbacPoliciesCreateRequest) Execute() (*AbacPoliciesCreateResponse, *http.Response, error) {
@@ -719,9 +736,12 @@ func (a *AdminAbacAPIService) AbacPoliciesCreateExecute(r ApiAbacPoliciesCreateR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.abacPoliciesCreateRequest == nil {
+		return localVarReturnValue, nil, reportError("abacPoliciesCreateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -737,6 +757,8 @@ func (a *AdminAbacAPIService) AbacPoliciesCreateExecute(r ApiAbacPoliciesCreateR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.abacPoliciesCreateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1275,6 +1297,12 @@ type ApiPatchAbacAttributesUpdateRequest struct {
 	ApiService AdminAbacAPI
 	orgId string
 	id string
+	putAbacAttributesUpdateRequest *PutAbacAttributesUpdateRequest
+}
+
+func (r ApiPatchAbacAttributesUpdateRequest) PutAbacAttributesUpdateRequest(putAbacAttributesUpdateRequest PutAbacAttributesUpdateRequest) ApiPatchAbacAttributesUpdateRequest {
+	r.putAbacAttributesUpdateRequest = &putAbacAttributesUpdateRequest
+	return r
 }
 
 func (r ApiPatchAbacAttributesUpdateRequest) Execute() (*PutAbacAttributesUpdateResponse, *http.Response, error) {
@@ -1320,9 +1348,12 @@ func (a *AdminAbacAPIService) PatchAbacAttributesUpdateExecute(r ApiPatchAbacAtt
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAbacAttributesUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAbacAttributesUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1338,6 +1369,8 @@ func (a *AdminAbacAPIService) PatchAbacAttributesUpdateExecute(r ApiPatchAbacAtt
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAbacAttributesUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1394,6 +1427,12 @@ type ApiPatchAbacPoliciesUpdateRequest struct {
 	ApiService AdminAbacAPI
 	orgId string
 	id string
+	putAbacPoliciesUpdateRequest *PutAbacPoliciesUpdateRequest
+}
+
+func (r ApiPatchAbacPoliciesUpdateRequest) PutAbacPoliciesUpdateRequest(putAbacPoliciesUpdateRequest PutAbacPoliciesUpdateRequest) ApiPatchAbacPoliciesUpdateRequest {
+	r.putAbacPoliciesUpdateRequest = &putAbacPoliciesUpdateRequest
+	return r
 }
 
 func (r ApiPatchAbacPoliciesUpdateRequest) Execute() (*PutAbacPoliciesUpdateResponse, *http.Response, error) {
@@ -1439,9 +1478,12 @@ func (a *AdminAbacAPIService) PatchAbacPoliciesUpdateExecute(r ApiPatchAbacPolic
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAbacPoliciesUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAbacPoliciesUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1457,6 +1499,8 @@ func (a *AdminAbacAPIService) PatchAbacPoliciesUpdateExecute(r ApiPatchAbacPolic
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAbacPoliciesUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1513,6 +1557,12 @@ type ApiPutAbacAttributesUpdateRequest struct {
 	ApiService AdminAbacAPI
 	orgId string
 	id string
+	putAbacAttributesUpdateRequest *PutAbacAttributesUpdateRequest
+}
+
+func (r ApiPutAbacAttributesUpdateRequest) PutAbacAttributesUpdateRequest(putAbacAttributesUpdateRequest PutAbacAttributesUpdateRequest) ApiPutAbacAttributesUpdateRequest {
+	r.putAbacAttributesUpdateRequest = &putAbacAttributesUpdateRequest
+	return r
 }
 
 func (r ApiPutAbacAttributesUpdateRequest) Execute() (*PutAbacAttributesUpdateResponse, *http.Response, error) {
@@ -1558,9 +1608,12 @@ func (a *AdminAbacAPIService) PutAbacAttributesUpdateExecute(r ApiPutAbacAttribu
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAbacAttributesUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAbacAttributesUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1576,6 +1629,8 @@ func (a *AdminAbacAPIService) PutAbacAttributesUpdateExecute(r ApiPutAbacAttribu
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAbacAttributesUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1632,6 +1687,12 @@ type ApiPutAbacPoliciesUpdateRequest struct {
 	ApiService AdminAbacAPI
 	orgId string
 	id string
+	putAbacPoliciesUpdateRequest *PutAbacPoliciesUpdateRequest
+}
+
+func (r ApiPutAbacPoliciesUpdateRequest) PutAbacPoliciesUpdateRequest(putAbacPoliciesUpdateRequest PutAbacPoliciesUpdateRequest) ApiPutAbacPoliciesUpdateRequest {
+	r.putAbacPoliciesUpdateRequest = &putAbacPoliciesUpdateRequest
+	return r
 }
 
 func (r ApiPutAbacPoliciesUpdateRequest) Execute() (*PutAbacPoliciesUpdateResponse, *http.Response, error) {
@@ -1677,9 +1738,12 @@ func (a *AdminAbacAPIService) PutAbacPoliciesUpdateExecute(r ApiPutAbacPoliciesU
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAbacPoliciesUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAbacPoliciesUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1695,6 +1759,8 @@ func (a *AdminAbacAPIService) PutAbacPoliciesUpdateExecute(r ApiPutAbacPoliciesU
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAbacPoliciesUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

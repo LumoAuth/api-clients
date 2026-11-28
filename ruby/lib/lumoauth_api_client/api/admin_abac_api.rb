@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -21,24 +21,30 @@ module LumoAuthApiClient
     end
     # Create an attribute definition
     # @param org_id [String] 
+    # @param abac_attributes_create_request [AbacAttributesCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AbacAttributesCreateResponse]
-    def abac_attributes_create(org_id, opts = {})
-      data, _status_code, _headers = abac_attributes_create_with_http_info(org_id, opts)
+    def abac_attributes_create(org_id, abac_attributes_create_request, opts = {})
+      data, _status_code, _headers = abac_attributes_create_with_http_info(org_id, abac_attributes_create_request, opts)
       data
     end
 
     # Create an attribute definition
     # @param org_id [String] 
+    # @param abac_attributes_create_request [AbacAttributesCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AbacAttributesCreateResponse, Integer, Hash)>] AbacAttributesCreateResponse data, response status code and response headers
-    def abac_attributes_create_with_http_info(org_id, opts = {})
+    def abac_attributes_create_with_http_info(org_id, abac_attributes_create_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.abac_attributes_create ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminAbacApi.abac_attributes_create"
+      end
+      # verify the required parameter 'abac_attributes_create_request' is set
+      if @api_client.config.client_side_validation && abac_attributes_create_request.nil?
+        fail ArgumentError, "Missing the required parameter 'abac_attributes_create_request' when calling AdminAbacApi.abac_attributes_create"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/attributes'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -50,12 +56,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(abac_attributes_create_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AbacAttributesCreateResponse'
@@ -287,24 +298,30 @@ module LumoAuthApiClient
 
     # Create an ABAC policy
     # @param org_id [String] 
+    # @param abac_policies_create_request [AbacPoliciesCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AbacPoliciesCreateResponse]
-    def abac_policies_create(org_id, opts = {})
-      data, _status_code, _headers = abac_policies_create_with_http_info(org_id, opts)
+    def abac_policies_create(org_id, abac_policies_create_request, opts = {})
+      data, _status_code, _headers = abac_policies_create_with_http_info(org_id, abac_policies_create_request, opts)
       data
     end
 
     # Create an ABAC policy
     # @param org_id [String] 
+    # @param abac_policies_create_request [AbacPoliciesCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AbacPoliciesCreateResponse, Integer, Hash)>] AbacPoliciesCreateResponse data, response status code and response headers
-    def abac_policies_create_with_http_info(org_id, opts = {})
+    def abac_policies_create_with_http_info(org_id, abac_policies_create_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.abac_policies_create ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminAbacApi.abac_policies_create"
+      end
+      # verify the required parameter 'abac_policies_create_request' is set
+      if @api_client.config.client_side_validation && abac_policies_create_request.nil?
+        fail ArgumentError, "Missing the required parameter 'abac_policies_create_request' when calling AdminAbacApi.abac_policies_create"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/policies'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -316,12 +333,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(abac_policies_create_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AbacPoliciesCreateResponse'
@@ -629,19 +651,21 @@ module LumoAuthApiClient
     # Partially update an attribute definition
     # @param org_id [String] 
     # @param id [String] 
+    # @param put_abac_attributes_update_request [PutAbacAttributesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [PutAbacAttributesUpdateResponse]
-    def patch_abac_attributes_update(org_id, id, opts = {})
-      data, _status_code, _headers = patch_abac_attributes_update_with_http_info(org_id, id, opts)
+    def patch_abac_attributes_update(org_id, id, put_abac_attributes_update_request, opts = {})
+      data, _status_code, _headers = patch_abac_attributes_update_with_http_info(org_id, id, put_abac_attributes_update_request, opts)
       data
     end
 
     # Partially update an attribute definition
     # @param org_id [String] 
     # @param id [String] 
+    # @param put_abac_attributes_update_request [PutAbacAttributesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAbacAttributesUpdateResponse, Integer, Hash)>] PutAbacAttributesUpdateResponse data, response status code and response headers
-    def patch_abac_attributes_update_with_http_info(org_id, id, opts = {})
+    def patch_abac_attributes_update_with_http_info(org_id, id, put_abac_attributes_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.patch_abac_attributes_update ...'
       end
@@ -658,6 +682,10 @@ module LumoAuthApiClient
         fail ArgumentError, "invalid value for 'id' when calling AdminAbacApi.patch_abac_attributes_update, must conform to the pattern #{pattern}."
       end
 
+      # verify the required parameter 'put_abac_attributes_update_request' is set
+      if @api_client.config.client_side_validation && put_abac_attributes_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_abac_attributes_update_request' when calling AdminAbacApi.patch_abac_attributes_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/attributes/{id}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
@@ -668,12 +696,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_abac_attributes_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAbacAttributesUpdateResponse'
@@ -701,19 +734,21 @@ module LumoAuthApiClient
     # Partially update an ABAC policy
     # @param org_id [String] 
     # @param id [String] 
+    # @param put_abac_policies_update_request [PutAbacPoliciesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [PutAbacPoliciesUpdateResponse]
-    def patch_abac_policies_update(org_id, id, opts = {})
-      data, _status_code, _headers = patch_abac_policies_update_with_http_info(org_id, id, opts)
+    def patch_abac_policies_update(org_id, id, put_abac_policies_update_request, opts = {})
+      data, _status_code, _headers = patch_abac_policies_update_with_http_info(org_id, id, put_abac_policies_update_request, opts)
       data
     end
 
     # Partially update an ABAC policy
     # @param org_id [String] 
     # @param id [String] 
+    # @param put_abac_policies_update_request [PutAbacPoliciesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAbacPoliciesUpdateResponse, Integer, Hash)>] PutAbacPoliciesUpdateResponse data, response status code and response headers
-    def patch_abac_policies_update_with_http_info(org_id, id, opts = {})
+    def patch_abac_policies_update_with_http_info(org_id, id, put_abac_policies_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.patch_abac_policies_update ...'
       end
@@ -730,6 +765,10 @@ module LumoAuthApiClient
         fail ArgumentError, "invalid value for 'id' when calling AdminAbacApi.patch_abac_policies_update, must conform to the pattern #{pattern}."
       end
 
+      # verify the required parameter 'put_abac_policies_update_request' is set
+      if @api_client.config.client_side_validation && put_abac_policies_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_abac_policies_update_request' when calling AdminAbacApi.patch_abac_policies_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/policies/{id}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
@@ -740,12 +779,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_abac_policies_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAbacPoliciesUpdateResponse'
@@ -773,19 +817,21 @@ module LumoAuthApiClient
     # Update an attribute definition
     # @param org_id [String] 
     # @param id [String] 
+    # @param put_abac_attributes_update_request [PutAbacAttributesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [PutAbacAttributesUpdateResponse]
-    def put_abac_attributes_update(org_id, id, opts = {})
-      data, _status_code, _headers = put_abac_attributes_update_with_http_info(org_id, id, opts)
+    def put_abac_attributes_update(org_id, id, put_abac_attributes_update_request, opts = {})
+      data, _status_code, _headers = put_abac_attributes_update_with_http_info(org_id, id, put_abac_attributes_update_request, opts)
       data
     end
 
     # Update an attribute definition
     # @param org_id [String] 
     # @param id [String] 
+    # @param put_abac_attributes_update_request [PutAbacAttributesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAbacAttributesUpdateResponse, Integer, Hash)>] PutAbacAttributesUpdateResponse data, response status code and response headers
-    def put_abac_attributes_update_with_http_info(org_id, id, opts = {})
+    def put_abac_attributes_update_with_http_info(org_id, id, put_abac_attributes_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.put_abac_attributes_update ...'
       end
@@ -802,6 +848,10 @@ module LumoAuthApiClient
         fail ArgumentError, "invalid value for 'id' when calling AdminAbacApi.put_abac_attributes_update, must conform to the pattern #{pattern}."
       end
 
+      # verify the required parameter 'put_abac_attributes_update_request' is set
+      if @api_client.config.client_side_validation && put_abac_attributes_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_abac_attributes_update_request' when calling AdminAbacApi.put_abac_attributes_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/attributes/{id}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
@@ -812,12 +862,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_abac_attributes_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAbacAttributesUpdateResponse'
@@ -845,19 +900,21 @@ module LumoAuthApiClient
     # Update an ABAC policy
     # @param org_id [String] 
     # @param id [String] 
+    # @param put_abac_policies_update_request [PutAbacPoliciesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [PutAbacPoliciesUpdateResponse]
-    def put_abac_policies_update(org_id, id, opts = {})
-      data, _status_code, _headers = put_abac_policies_update_with_http_info(org_id, id, opts)
+    def put_abac_policies_update(org_id, id, put_abac_policies_update_request, opts = {})
+      data, _status_code, _headers = put_abac_policies_update_with_http_info(org_id, id, put_abac_policies_update_request, opts)
       data
     end
 
     # Update an ABAC policy
     # @param org_id [String] 
     # @param id [String] 
+    # @param put_abac_policies_update_request [PutAbacPoliciesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAbacPoliciesUpdateResponse, Integer, Hash)>] PutAbacPoliciesUpdateResponse data, response status code and response headers
-    def put_abac_policies_update_with_http_info(org_id, id, opts = {})
+    def put_abac_policies_update_with_http_info(org_id, id, put_abac_policies_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.put_abac_policies_update ...'
       end
@@ -874,6 +931,10 @@ module LumoAuthApiClient
         fail ArgumentError, "invalid value for 'id' when calling AdminAbacApi.put_abac_policies_update, must conform to the pattern #{pattern}."
       end
 
+      # verify the required parameter 'put_abac_policies_update_request' is set
+      if @api_client.config.client_side_validation && put_abac_policies_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_abac_policies_update_request' when calling AdminAbacApi.put_abac_policies_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/abac/policies/{id}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
@@ -884,12 +945,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_abac_policies_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAbacPoliciesUpdateResponse'

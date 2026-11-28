@@ -97,9 +97,35 @@ const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let scope: string; // (default to undefined)
+let loginHint: string; // (optional) (default to undefined)
+let loginHintToken: string; // (optional) (default to undefined)
+let idTokenHint: string; // (optional) (default to undefined)
+let bindingMessage: string; // (optional) (default to undefined)
+let acrValues: string; // (optional) (default to undefined)
+let requestedExpiry: number; // (optional) (default to undefined)
+let clientNotificationToken: string; // (optional) (default to undefined)
+let authorizationDetails: string; // (optional) (default to undefined)
+let clientId: string; //Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) (default to undefined)
+let clientSecret: string; //client_secret_post (optional) (default to undefined)
+let clientAssertionType: string; // (optional) (default to undefined)
+let clientAssertion: string; //private_key_jwt (RFC 7523) (optional) (default to undefined)
 
 const { status, data } = await apiInstance.backchannelAuthorize(
-    orgId
+    orgId,
+    scope,
+    loginHint,
+    loginHintToken,
+    idTokenHint,
+    bindingMessage,
+    acrValues,
+    requestedExpiry,
+    clientNotificationToken,
+    authorizationDetails,
+    clientId,
+    clientSecret,
+    clientAssertionType,
+    clientAssertion
 );
 ```
 
@@ -108,6 +134,19 @@ const { status, data } = await apiInstance.backchannelAuthorize(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **scope** | [**string**] |  | defaults to undefined|
+| **loginHint** | [**string**] |  | (optional) defaults to undefined|
+| **loginHintToken** | [**string**] |  | (optional) defaults to undefined|
+| **idTokenHint** | [**string**] |  | (optional) defaults to undefined|
+| **bindingMessage** | [**string**] |  | (optional) defaults to undefined|
+| **acrValues** | [**string**] |  | (optional) defaults to undefined|
+| **requestedExpiry** | [**number**] |  | (optional) defaults to undefined|
+| **clientNotificationToken** | [**string**] |  | (optional) defaults to undefined|
+| **authorizationDetails** | [**string**] |  | (optional) defaults to undefined|
+| **clientId** | [**string**] | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | (optional) defaults to undefined|
+| **clientSecret** | [**string**] | client_secret_post | (optional) defaults to undefined|
+| **clientAssertionType** | [**string**] |  | (optional) defaults to undefined|
+| **clientAssertion** | [**string**] | private_key_jwt (RFC 7523) | (optional) defaults to undefined|
 
 
 ### Return type
@@ -120,7 +159,7 @@ const { status, data } = await apiInstance.backchannelAuthorize(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
@@ -211,9 +250,23 @@ const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let clientId: string; //Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) (default to undefined)
+let clientSecret: string; //client_secret_post (optional) (default to undefined)
+let clientAssertionType: string; // (optional) (default to undefined)
+let clientAssertion: string; //private_key_jwt (RFC 7523) (optional) (default to undefined)
+let scope: string; //Space-separated scopes. (optional) (default to undefined)
+let resource: string; //RFC 8707 resource indicator. (optional) (default to undefined)
+let authorizationDetails: string; //RFC 9396, a JSON array as text. (optional) (default to undefined)
 
 const { status, data } = await apiInstance.deviceAuthorization(
-    orgId
+    orgId,
+    clientId,
+    clientSecret,
+    clientAssertionType,
+    clientAssertion,
+    scope,
+    resource,
+    authorizationDetails
 );
 ```
 
@@ -222,6 +275,13 @@ const { status, data } = await apiInstance.deviceAuthorization(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **clientId** | [**string**] | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | (optional) defaults to undefined|
+| **clientSecret** | [**string**] | client_secret_post | (optional) defaults to undefined|
+| **clientAssertionType** | [**string**] |  | (optional) defaults to undefined|
+| **clientAssertion** | [**string**] | private_key_jwt (RFC 7523) | (optional) defaults to undefined|
+| **scope** | [**string**] | Space-separated scopes. | (optional) defaults to undefined|
+| **resource** | [**string**] | RFC 8707 resource indicator. | (optional) defaults to undefined|
+| **authorizationDetails** | [**string**] | RFC 9396, a JSON array as text. | (optional) defaults to undefined|
 
 
 ### Return type
@@ -234,7 +294,7 @@ const { status, data } = await apiInstance.deviceAuthorization(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
@@ -426,9 +486,21 @@ const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let token: string; // (default to undefined)
+let tokenTypeHint: string; // (optional) (default to undefined)
+let clientId: string; //Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) (default to undefined)
+let clientSecret: string; //client_secret_post (optional) (default to undefined)
+let clientAssertionType: string; // (optional) (default to undefined)
+let clientAssertion: string; //private_key_jwt (RFC 7523) (optional) (default to undefined)
 
 const { status, data } = await apiInstance.introspect(
-    orgId
+    orgId,
+    token,
+    tokenTypeHint,
+    clientId,
+    clientSecret,
+    clientAssertionType,
+    clientAssertion
 );
 ```
 
@@ -437,6 +509,12 @@ const { status, data } = await apiInstance.introspect(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **token** | [**string**] |  | defaults to undefined|
+| **tokenTypeHint** | [**string**]**Array<&#39;access_token&#39; &#124; &#39;refresh_token&#39;>** |  | (optional) defaults to undefined|
+| **clientId** | [**string**] | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | (optional) defaults to undefined|
+| **clientSecret** | [**string**] | client_secret_post | (optional) defaults to undefined|
+| **clientAssertionType** | [**string**] |  | (optional) defaults to undefined|
+| **clientAssertion** | [**string**] | private_key_jwt (RFC 7523) | (optional) defaults to undefined|
 
 
 ### Return type
@@ -449,7 +527,7 @@ const { status, data } = await apiInstance.introspect(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
@@ -480,9 +558,41 @@ const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let responseType: string; // (optional) (default to undefined)
+let redirectUri: string; // (optional) (default to undefined)
+let scope: string; // (optional) (default to undefined)
+let state: string; // (optional) (default to undefined)
+let nonce: string; // (optional) (default to undefined)
+let codeChallenge: string; // (optional) (default to undefined)
+let codeChallengeMethod: string; // (optional) (default to undefined)
+let request: string; //A signed request object (JAR, RFC 9101). (optional) (default to undefined)
+let resource: string; // (optional) (default to undefined)
+let authorizationDetails: string; // (optional) (default to undefined)
+let prompt: string; // (optional) (default to undefined)
+let loginHint: string; // (optional) (default to undefined)
+let clientId: string; //Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) (default to undefined)
+let clientSecret: string; //client_secret_post (optional) (default to undefined)
+let clientAssertionType: string; // (optional) (default to undefined)
+let clientAssertion: string; //private_key_jwt (RFC 7523) (optional) (default to undefined)
 
 const { status, data } = await apiInstance.par(
-    orgId
+    orgId,
+    responseType,
+    redirectUri,
+    scope,
+    state,
+    nonce,
+    codeChallenge,
+    codeChallengeMethod,
+    request,
+    resource,
+    authorizationDetails,
+    prompt,
+    loginHint,
+    clientId,
+    clientSecret,
+    clientAssertionType,
+    clientAssertion
 );
 ```
 
@@ -491,6 +601,22 @@ const { status, data } = await apiInstance.par(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **responseType** | [**string**] |  | (optional) defaults to undefined|
+| **redirectUri** | [**string**] |  | (optional) defaults to undefined|
+| **scope** | [**string**] |  | (optional) defaults to undefined|
+| **state** | [**string**] |  | (optional) defaults to undefined|
+| **nonce** | [**string**] |  | (optional) defaults to undefined|
+| **codeChallenge** | [**string**] |  | (optional) defaults to undefined|
+| **codeChallengeMethod** | [**string**] |  | (optional) defaults to undefined|
+| **request** | [**string**] | A signed request object (JAR, RFC 9101). | (optional) defaults to undefined|
+| **resource** | [**string**] |  | (optional) defaults to undefined|
+| **authorizationDetails** | [**string**] |  | (optional) defaults to undefined|
+| **prompt** | [**string**] |  | (optional) defaults to undefined|
+| **loginHint** | [**string**] |  | (optional) defaults to undefined|
+| **clientId** | [**string**] | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | (optional) defaults to undefined|
+| **clientSecret** | [**string**] | client_secret_post | (optional) defaults to undefined|
+| **clientAssertionType** | [**string**] |  | (optional) defaults to undefined|
+| **clientAssertion** | [**string**] | private_key_jwt (RFC 7523) | (optional) defaults to undefined|
 
 
 ### Return type
@@ -503,7 +629,7 @@ const { status, data } = await apiInstance.par(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
@@ -518,7 +644,7 @@ const { status, data } = await apiInstance.par(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **registerClient**
-> RegisterClientResponse registerClient()
+> RegisterClientResponse registerClient(registerClientRequest)
 
 Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization\'s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
 
@@ -527,16 +653,19 @@ Registers an OAuth client from a JSON metadata document. Authenticated with an i
 ```typescript
 import {
     OAuthApi,
-    Configuration
+    Configuration,
+    RegisterClientRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let registerClientRequest: RegisterClientRequest; //RFC 7591 client metadata.
 
 const { status, data } = await apiInstance.registerClient(
-    orgId
+    orgId,
+    registerClientRequest
 );
 ```
 
@@ -544,6 +673,7 @@ const { status, data } = await apiInstance.registerClient(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **registerClientRequest** | **RegisterClientRequest**| RFC 7591 client metadata. | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -557,7 +687,7 @@ const { status, data } = await apiInstance.registerClient(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -648,9 +778,21 @@ const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let token: string; // (default to undefined)
+let tokenTypeHint: string; // (optional) (default to undefined)
+let clientId: string; //Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) (default to undefined)
+let clientSecret: string; //client_secret_post (optional) (default to undefined)
+let clientAssertionType: string; // (optional) (default to undefined)
+let clientAssertion: string; //private_key_jwt (RFC 7523) (optional) (default to undefined)
 
 const { status, data } = await apiInstance.revoke(
-    orgId
+    orgId,
+    token,
+    tokenTypeHint,
+    clientId,
+    clientSecret,
+    clientAssertionType,
+    clientAssertion
 );
 ```
 
@@ -659,6 +801,12 @@ const { status, data } = await apiInstance.revoke(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **token** | [**string**] |  | defaults to undefined|
+| **tokenTypeHint** | [**string**]**Array<&#39;access_token&#39; &#124; &#39;refresh_token&#39;>** |  | (optional) defaults to undefined|
+| **clientId** | [**string**] | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | (optional) defaults to undefined|
+| **clientSecret** | [**string**] | client_secret_post | (optional) defaults to undefined|
+| **clientAssertionType** | [**string**] |  | (optional) defaults to undefined|
+| **clientAssertion** | [**string**] | private_key_jwt (RFC 7523) | (optional) defaults to undefined|
 
 
 ### Return type
@@ -671,15 +819,15 @@ const { status, data } = await apiInstance.revoke(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). |  -  |
-|**400** | invalid_request (token parameter missing) or unsupported_token_type. |  -  |
+|**200** | The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. |  -  |
+|**400** | invalid_request (token parameter missing), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). |  -  |
 |**401** | invalid_client — client authentication failed. |  -  |
 |**429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
@@ -956,7 +1104,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submitLoginJson**
-> SubmitLoginJsonResponse submitLoginJson()
+> SubmitLoginJsonResponse submitLoginJson(submitLoginJsonRequest)
 
 Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
 
@@ -965,16 +1113,19 @@ Establishes the end-user browser session from JSON credentials so a following /o
 ```typescript
 import {
     OAuthApi,
-    Configuration
+    Configuration,
+    SubmitLoginJsonRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let submitLoginJsonRequest: SubmitLoginJsonRequest; //
 
 const { status, data } = await apiInstance.submitLoginJson(
-    orgId
+    orgId,
+    submitLoginJsonRequest
 );
 ```
 
@@ -982,6 +1133,7 @@ const { status, data } = await apiInstance.submitLoginJson(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **submitLoginJsonRequest** | **SubmitLoginJsonRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -995,7 +1147,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1081,9 +1233,47 @@ const configuration = new Configuration();
 const apiInstance = new OAuthApi(configuration);
 
 let orgId: string; // (default to undefined)
+let grantType: string; // (default to undefined)
+let code: string; // (optional) (default to undefined)
+let redirectUri: string; // (optional) (default to undefined)
+let codeVerifier: string; // (optional) (default to undefined)
+let refreshToken: string; // (optional) (default to undefined)
+let deviceCode: string; // (optional) (default to undefined)
+let authReqId: string; //CIBA (optional) (default to undefined)
+let scope: string; // (optional) (default to undefined)
+let resource: string; // (optional) (default to undefined)
+let subjectToken: string; //Token exchange (RFC 8693) (optional) (default to undefined)
+let subjectTokenType: string; // (optional) (default to undefined)
+let actorToken: string; // (optional) (default to undefined)
+let actorTokenType: string; // (optional) (default to undefined)
+let requestedTokenType: string; // (optional) (default to undefined)
+let assertion: string; //JWT bearer / ID-JAG grant (optional) (default to undefined)
+let clientId: string; //Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) (default to undefined)
+let clientSecret: string; //client_secret_post (optional) (default to undefined)
+let clientAssertionType: string; // (optional) (default to undefined)
+let clientAssertion: string; //private_key_jwt (RFC 7523) (optional) (default to undefined)
 
 const { status, data } = await apiInstance.token(
-    orgId
+    orgId,
+    grantType,
+    code,
+    redirectUri,
+    codeVerifier,
+    refreshToken,
+    deviceCode,
+    authReqId,
+    scope,
+    resource,
+    subjectToken,
+    subjectTokenType,
+    actorToken,
+    actorTokenType,
+    requestedTokenType,
+    assertion,
+    clientId,
+    clientSecret,
+    clientAssertionType,
+    clientAssertion
 );
 ```
 
@@ -1092,6 +1282,25 @@ const { status, data } = await apiInstance.token(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **grantType** | [**string**] |  | defaults to undefined|
+| **code** | [**string**] |  | (optional) defaults to undefined|
+| **redirectUri** | [**string**] |  | (optional) defaults to undefined|
+| **codeVerifier** | [**string**] |  | (optional) defaults to undefined|
+| **refreshToken** | [**string**] |  | (optional) defaults to undefined|
+| **deviceCode** | [**string**] |  | (optional) defaults to undefined|
+| **authReqId** | [**string**] | CIBA | (optional) defaults to undefined|
+| **scope** | [**string**] |  | (optional) defaults to undefined|
+| **resource** | [**string**] |  | (optional) defaults to undefined|
+| **subjectToken** | [**string**] | Token exchange (RFC 8693) | (optional) defaults to undefined|
+| **subjectTokenType** | [**string**] |  | (optional) defaults to undefined|
+| **actorToken** | [**string**] |  | (optional) defaults to undefined|
+| **actorTokenType** | [**string**] |  | (optional) defaults to undefined|
+| **requestedTokenType** | [**string**] |  | (optional) defaults to undefined|
+| **assertion** | [**string**] | JWT bearer / ID-JAG grant | (optional) defaults to undefined|
+| **clientId** | [**string**] | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | (optional) defaults to undefined|
+| **clientSecret** | [**string**] | client_secret_post | (optional) defaults to undefined|
+| **clientAssertionType** | [**string**] |  | (optional) defaults to undefined|
+| **clientAssertion** | [**string**] | private_key_jwt (RFC 7523) | (optional) defaults to undefined|
 
 
 ### Return type
@@ -1104,7 +1313,7 @@ const { status, data } = await apiInstance.token(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 

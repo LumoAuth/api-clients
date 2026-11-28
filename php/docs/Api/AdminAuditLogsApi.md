@@ -4,7 +4,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**adminAuditLogsActions()**](AdminAuditLogsApi.md#adminAuditLogsActions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant |
+| [**adminAuditLogsActions()**](AdminAuditLogsApi.md#adminAuditLogsActions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the organization |
 | [**adminAuditLogsExport()**](AdminAuditLogsApi.md#adminAuditLogsExport) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON |
 | [**adminAuditLogsGet()**](AdminAuditLogsApi.md#adminAuditLogsGet) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry |
 | [**adminAuditLogsList()**](AdminAuditLogsApi.md#adminAuditLogsList) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries |
@@ -20,7 +20,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 adminAuditLogsActions($orgId): \LumoAuth\ApiClient\Model\AdminAuditLogsActionsResponse
 ```
 
-List the distinct audit action types recorded for the tenant
+List the distinct audit action types recorded for the organization
 
 ### Example
 
@@ -80,7 +80,7 @@ try {
 ## `adminAuditLogsExport()`
 
 ```php
-adminAuditLogsExport($orgId): string
+adminAuditLogsExport($orgId, $format, $eventType, $action, $actorId, $targetType, $targetId, $severity, $status, $ipAddress, $search, $traceId, $from, $to): string
 ```
 
 Export audit logs as CSV (default) or JSON
@@ -110,9 +110,22 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAuditLogsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$format = 'csv'; // string | csv (default) or json.
+$eventType = 'eventType_example'; // string | Exact event type, for example user.login.
+$action = 'action_example'; // string | The short verb of the event (as GET /audit-logs/actions lists them).
+$actorId = 'actorId_example'; // string | Who acted: a user, API key or agent id. Also accepted as userId.
+$targetType = 'targetType_example'; // string | Kind of the subject of the event. Also accepted as resourceType.
+$targetId = 'targetId_example'; // string | The subject of the event, for example the user of a login.failed entry.
+$severity = 'severity_example'; // string
+$status = 'status_example'; // string | Result of the event.
+$ipAddress = 'ipAddress_example'; // string
+$search = 'search_example'; // string | Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+$traceId = 'traceId_example'; // string | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+$from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Entries at or after this time (ISO 8601). Also accepted as startDate.
+$to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Entries at or before this time (ISO 8601). Also accepted as endDate.
 
 try {
-    $result = $apiInstance->adminAuditLogsExport($orgId);
+    $result = $apiInstance->adminAuditLogsExport($orgId, $format, $eventType, $action, $actorId, $targetType, $targetId, $severity, $status, $ipAddress, $search, $traceId, $from, $to);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAuditLogsApi->adminAuditLogsExport: ', $e->getMessage(), PHP_EOL;
@@ -124,6 +137,19 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **format** | **string**| csv (default) or json. | [optional] [default to &#39;csv&#39;] |
+| **eventType** | **string**| Exact event type, for example user.login. | [optional] |
+| **action** | **string**| The short verb of the event (as GET /audit-logs/actions lists them). | [optional] |
+| **actorId** | **string**| Who acted: a user, API key or agent id. Also accepted as userId. | [optional] |
+| **targetType** | **string**| Kind of the subject of the event. Also accepted as resourceType. | [optional] |
+| **targetId** | **string**| The subject of the event, for example the user of a login.failed entry. | [optional] |
+| **severity** | **string**|  | [optional] |
+| **status** | **string**| Result of the event. | [optional] |
+| **ipAddress** | **string**|  | [optional] |
+| **search** | **string**| Text in the message, error message, event type, actor id or name, target name, client id or trace ID. | [optional] |
+| **traceId** | **string**| Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). | [optional] |
+| **from** | **\DateTime**| Entries at or after this time (ISO 8601). Also accepted as startDate. | [optional] |
+| **to** | **\DateTime**| Entries at or before this time (ISO 8601). Also accepted as endDate. | [optional] |
 
 ### Return type
 
@@ -210,7 +236,7 @@ try {
 ## `adminAuditLogsList()`
 
 ```php
-adminAuditLogsList($orgId): \LumoAuth\ApiClient\Model\AdminAuditLogsListResponse
+adminAuditLogsList($orgId, $page, $limit, $eventType, $action, $actorId, $targetType, $targetId, $severity, $status, $ipAddress, $search, $traceId, $from, $to): \LumoAuth\ApiClient\Model\AdminAuditLogsListResponse
 ```
 
 List audit log entries
@@ -238,9 +264,23 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAuditLogsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$page = 1; // int
+$limit = 25; // int
+$eventType = 'eventType_example'; // string | Exact event type, for example user.login.
+$action = 'action_example'; // string | The short verb of the event (as GET /audit-logs/actions lists them).
+$actorId = 'actorId_example'; // string | Who acted: a user, API key or agent id. Also accepted as userId.
+$targetType = 'targetType_example'; // string | Kind of the subject of the event. Also accepted as resourceType.
+$targetId = 'targetId_example'; // string | The subject of the event, for example the user of a login.failed entry.
+$severity = 'severity_example'; // string
+$status = 'status_example'; // string | Result of the event.
+$ipAddress = 'ipAddress_example'; // string
+$search = 'search_example'; // string | Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+$traceId = 'traceId_example'; // string | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+$from = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Entries at or after this time (ISO 8601). Also accepted as startDate.
+$to = new \DateTime('2013-10-20T19:20:30+01:00'); // \DateTime | Entries at or before this time (ISO 8601). Also accepted as endDate.
 
 try {
-    $result = $apiInstance->adminAuditLogsList($orgId);
+    $result = $apiInstance->adminAuditLogsList($orgId, $page, $limit, $eventType, $action, $actorId, $targetType, $targetId, $severity, $status, $ipAddress, $search, $traceId, $from, $to);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAuditLogsApi->adminAuditLogsList: ', $e->getMessage(), PHP_EOL;
@@ -252,6 +292,20 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **page** | **int**|  | [optional] [default to 1] |
+| **limit** | **int**|  | [optional] [default to 25] |
+| **eventType** | **string**| Exact event type, for example user.login. | [optional] |
+| **action** | **string**| The short verb of the event (as GET /audit-logs/actions lists them). | [optional] |
+| **actorId** | **string**| Who acted: a user, API key or agent id. Also accepted as userId. | [optional] |
+| **targetType** | **string**| Kind of the subject of the event. Also accepted as resourceType. | [optional] |
+| **targetId** | **string**| The subject of the event, for example the user of a login.failed entry. | [optional] |
+| **severity** | **string**|  | [optional] |
+| **status** | **string**| Result of the event. | [optional] |
+| **ipAddress** | **string**|  | [optional] |
+| **search** | **string**| Text in the message, error message, event type, actor id or name, target name, client id or trace ID. | [optional] |
+| **traceId** | **string**| Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). | [optional] |
+| **from** | **\DateTime**| Entries at or after this time (ISO 8601). Also accepted as startDate. | [optional] |
+| **to** | **\DateTime**| Entries at or before this time (ISO 8601). Also accepted as endDate. | [optional] |
 
 ### Return type
 
@@ -399,7 +453,7 @@ try {
 ## `patchAdminAuditLogsRetentionUpdate()`
 
 ```php
-patchAdminAuditLogsRetentionUpdate($orgId): \LumoAuth\ApiClient\Model\AdminAuditLogsRetentionResponse
+patchAdminAuditLogsRetentionUpdate($orgId, $putAdminAuditLogsRetentionUpdateRequest): \LumoAuth\ApiClient\Model\AdminAuditLogsRetentionResponse
 ```
 
 Update audit log retention settings
@@ -429,9 +483,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAuditLogsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$putAdminAuditLogsRetentionUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest
 
 try {
-    $result = $apiInstance->patchAdminAuditLogsRetentionUpdate($orgId);
+    $result = $apiInstance->patchAdminAuditLogsRetentionUpdate($orgId, $putAdminAuditLogsRetentionUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAuditLogsApi->patchAdminAuditLogsRetentionUpdate: ', $e->getMessage(), PHP_EOL;
@@ -443,6 +498,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **putAdminAuditLogsRetentionUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest**](../Model/PutAdminAuditLogsRetentionUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -454,7 +510,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -464,7 +520,7 @@ try {
 ## `putAdminAuditLogsRetentionUpdate()`
 
 ```php
-putAdminAuditLogsRetentionUpdate($orgId): \LumoAuth\ApiClient\Model\AdminAuditLogsRetentionResponse
+putAdminAuditLogsRetentionUpdate($orgId, $putAdminAuditLogsRetentionUpdateRequest): \LumoAuth\ApiClient\Model\AdminAuditLogsRetentionResponse
 ```
 
 Update audit log retention settings
@@ -494,9 +550,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminAuditLogsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$putAdminAuditLogsRetentionUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest
 
 try {
-    $result = $apiInstance->putAdminAuditLogsRetentionUpdate($orgId);
+    $result = $apiInstance->putAdminAuditLogsRetentionUpdate($orgId, $putAdminAuditLogsRetentionUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminAuditLogsApi->putAdminAuditLogsRetentionUpdate: ', $e->getMessage(), PHP_EOL;
@@ -508,6 +565,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **putAdminAuditLogsRetentionUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest**](../Model/PutAdminAuditLogsRetentionUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -519,7 +577,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

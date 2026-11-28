@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -164,24 +164,30 @@ module LumoAuthApiClient
 
     # Create an OAuth client
     # @param org_id [String] 
+    # @param o_auth_client_write [OAuthClientWrite] 
     # @param [Hash] opts the optional parameters
     # @return [CreateClientResponse]
-    def create_client(org_id, opts = {})
-      data, _status_code, _headers = create_client_with_http_info(org_id, opts)
+    def create_client(org_id, o_auth_client_write, opts = {})
+      data, _status_code, _headers = create_client_with_http_info(org_id, o_auth_client_write, opts)
       data
     end
 
     # Create an OAuth client
     # @param org_id [String] 
+    # @param o_auth_client_write [OAuthClientWrite] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateClientResponse, Integer, Hash)>] CreateClientResponse data, response status code and response headers
-    def create_client_with_http_info(org_id, opts = {})
+    def create_client_with_http_info(org_id, o_auth_client_write, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.create_client ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminOAuthClientsApi.create_client"
+      end
+      # verify the required parameter 'o_auth_client_write' is set
+      if @api_client.config.client_side_validation && o_auth_client_write.nil?
+        fail ArgumentError, "Missing the required parameter 'o_auth_client_write' when calling AdminOAuthClientsApi.create_client"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/clients'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -193,12 +199,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(o_auth_client_write)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CreateClientResponse'
@@ -703,10 +714,11 @@ module LumoAuthApiClient
     # A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
     # @param org_id [String] 
     # @param client_id [String] 
+    # @param o_auth_client_write [OAuthClientWrite] 
     # @param [Hash] opts the optional parameters
     # @return [UpdateClientResponse]
-    def patch_client(org_id, client_id, opts = {})
-      data, _status_code, _headers = patch_client_with_http_info(org_id, client_id, opts)
+    def patch_client(org_id, client_id, o_auth_client_write, opts = {})
+      data, _status_code, _headers = patch_client_with_http_info(org_id, client_id, o_auth_client_write, opts)
       data
     end
 
@@ -714,9 +726,10 @@ module LumoAuthApiClient
     # A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
     # @param org_id [String] 
     # @param client_id [String] 
+    # @param o_auth_client_write [OAuthClientWrite] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(UpdateClientResponse, Integer, Hash)>] UpdateClientResponse data, response status code and response headers
-    def patch_client_with_http_info(org_id, client_id, opts = {})
+    def patch_client_with_http_info(org_id, client_id, o_auth_client_write, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.patch_client ...'
       end
@@ -728,6 +741,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && client_id.nil?
         fail ArgumentError, "Missing the required parameter 'client_id' when calling AdminOAuthClientsApi.patch_client"
       end
+      # verify the required parameter 'o_auth_client_write' is set
+      if @api_client.config.client_side_validation && o_auth_client_write.nil?
+        fail ArgumentError, "Missing the required parameter 'o_auth_client_write' when calling AdminOAuthClientsApi.patch_client"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/clients/{clientId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'clientId' + '}', CGI.escape(client_id.to_s))
 
@@ -738,12 +755,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(o_auth_client_write)
 
       # return_type
       return_type = opts[:debug_return_type] || 'UpdateClientResponse'
@@ -917,10 +939,11 @@ module LumoAuthApiClient
     # A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403. Adding such a scope needs the same standing.
     # @param org_id [String] 
     # @param client_id [String] 
+    # @param set_client_scopes_request [SetClientScopesRequest] 
     # @param [Hash] opts the optional parameters
     # @return [SetClientScopesResponse]
-    def set_client_scopes(org_id, client_id, opts = {})
-      data, _status_code, _headers = set_client_scopes_with_http_info(org_id, client_id, opts)
+    def set_client_scopes(org_id, client_id, set_client_scopes_request, opts = {})
+      data, _status_code, _headers = set_client_scopes_with_http_info(org_id, client_id, set_client_scopes_request, opts)
       data
     end
 
@@ -928,9 +951,10 @@ module LumoAuthApiClient
     # A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403. Adding such a scope needs the same standing.
     # @param org_id [String] 
     # @param client_id [String] 
+    # @param set_client_scopes_request [SetClientScopesRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(SetClientScopesResponse, Integer, Hash)>] SetClientScopesResponse data, response status code and response headers
-    def set_client_scopes_with_http_info(org_id, client_id, opts = {})
+    def set_client_scopes_with_http_info(org_id, client_id, set_client_scopes_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.set_client_scopes ...'
       end
@@ -942,6 +966,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && client_id.nil?
         fail ArgumentError, "Missing the required parameter 'client_id' when calling AdminOAuthClientsApi.set_client_scopes"
       end
+      # verify the required parameter 'set_client_scopes_request' is set
+      if @api_client.config.client_side_validation && set_client_scopes_request.nil?
+        fail ArgumentError, "Missing the required parameter 'set_client_scopes_request' when calling AdminOAuthClientsApi.set_client_scopes"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'clientId' + '}', CGI.escape(client_id.to_s))
 
@@ -952,12 +980,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(set_client_scopes_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'SetClientScopesResponse'
@@ -986,10 +1019,11 @@ module LumoAuthApiClient
     # A client that can administer the organization (it carries `admin` or an `admin:` scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (`settings.manage` and `users.delete`); a client with `authz:check` only by a caller with `policies.view`. Otherwise 403.
     # @param org_id [String] 
     # @param client_id [String] 
+    # @param o_auth_client_write [OAuthClientWrite] 
     # @param [Hash] opts the optional parameters
     # @return [UpdateClientResponse]
-    def update_client(org_id, client_id, opts = {})
-      data, _status_code, _headers = update_client_with_http_info(org_id, client_id, opts)
+    def update_client(org_id, client_id, o_auth_client_write, opts = {})
+      data, _status_code, _headers = update_client_with_http_info(org_id, client_id, o_auth_client_write, opts)
       data
     end
 
@@ -997,9 +1031,10 @@ module LumoAuthApiClient
     # A client that can administer the organization (it carries &#x60;admin&#x60; or an &#x60;admin:&#x60; scope, is provided by LumoAuth, or is a connection to the LumoAuth MCP server) is changed only by a full administrator (&#x60;settings.manage&#x60; and &#x60;users.delete&#x60;); a client with &#x60;authz:check&#x60; only by a caller with &#x60;policies.view&#x60;. Otherwise 403.
     # @param org_id [String] 
     # @param client_id [String] 
+    # @param o_auth_client_write [OAuthClientWrite] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(UpdateClientResponse, Integer, Hash)>] UpdateClientResponse data, response status code and response headers
-    def update_client_with_http_info(org_id, client_id, opts = {})
+    def update_client_with_http_info(org_id, client_id, o_auth_client_write, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.update_client ...'
       end
@@ -1011,6 +1046,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && client_id.nil?
         fail ArgumentError, "Missing the required parameter 'client_id' when calling AdminOAuthClientsApi.update_client"
       end
+      # verify the required parameter 'o_auth_client_write' is set
+      if @api_client.config.client_side_validation && o_auth_client_write.nil?
+        fail ArgumentError, "Missing the required parameter 'o_auth_client_write' when calling AdminOAuthClientsApi.update_client"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/clients/{clientId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'clientId' + '}', CGI.escape(client_id.to_s))
 
@@ -1021,12 +1060,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(o_auth_client_write)
 
       # return_type
       return_type = opts[:debug_return_type] || 'UpdateClientResponse'

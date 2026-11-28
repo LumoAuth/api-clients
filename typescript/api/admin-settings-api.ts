@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -28,6 +28,10 @@ import type { AdminAnalyticsLoginsResponse } from '../models';
 // @ts-ignore
 import type { AdminAnalyticsUsersResponse } from '../models';
 // @ts-ignore
+import type { AdminInitialAccessTokensCreateResponse } from '../models';
+// @ts-ignore
+import type { AdminInitialAccessTokensListResponse } from '../models';
+// @ts-ignore
 import type { AdminSettingsAllResponse } from '../models';
 // @ts-ignore
 import type { AdminSettingsAuthenticationGetResponse } from '../models';
@@ -44,6 +48,12 @@ import type { AdminSettingsSecurityGetResponse } from '../models';
 // @ts-ignore
 import type { AdminTenantGetResponse } from '../models';
 // @ts-ignore
+import type { AuthenticationSettings } from '../models';
+// @ts-ignore
+import type { BrandingSettings } from '../models';
+// @ts-ignore
+import type { MessageResponse } from '../models';
+// @ts-ignore
 import type { PutAdminSettingsAuthenticationUpdateResponse } from '../models';
 // @ts-ignore
 import type { PutAdminSettingsBrandingUpdateResponse } from '../models';
@@ -58,9 +68,15 @@ import type { PutAdminSettingsGeneralUpdateResponse } from '../models';
 // @ts-ignore
 import type { PutAdminSettingsScimUpdateResponse } from '../models';
 // @ts-ignore
+import type { PutAdminSettingsSecurityUpdateRequest } from '../models';
+// @ts-ignore
 import type { PutAdminSettingsSecurityUpdateResponse } from '../models';
 // @ts-ignore
+import type { PutAdminTenantUpdateRequest } from '../models';
+// @ts-ignore
 import type { PutAdminTenantUpdateResponse } from '../models';
+// @ts-ignore
+import type { ScimSettings } from '../models';
 /**
  * AdminSettingsApi - axios parameter creator
  * @export
@@ -201,8 +217,135 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
+         * Generates a token and adds it to the organization\'s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+         * @summary Create an initial access token for dynamic client registration
+         * @param {string} orgId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminInitialAccessTokensCreate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminInitialAccessTokensCreate', 'orgId', orgId)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+         * @summary Delete an initial access token of dynamic client registration
+         * @param {string} orgId 
+         * @param {string} tokenId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminInitialAccessTokensDelete: async (orgId: string, tokenId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminInitialAccessTokensDelete', 'orgId', orgId)
+            // verify required parameter 'tokenId' is not null or undefined
+            assertParamExists('adminInitialAccessTokensDelete', 'tokenId', tokenId)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId}`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"tokenId"}}`, encodeURIComponent(String(tokenId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+         * @summary List the initial access tokens of dynamic client registration
+         * @param {string} orgId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminInitialAccessTokensList: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminInitialAccessTokensList', 'orgId', orgId)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
-         * @summary Get organization (tenant) profile
+         * @summary Get organization profile
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -571,7 +714,7 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Get organization (tenant) profile
+         * @summary Get organization profile
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -612,14 +755,17 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Update organization (tenant) name and settings
+         * @summary Update the organization\'s name and settings
          * @param {string} orgId 
+         * @param {PutAdminTenantUpdateRequest} putAdminTenantUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminOrganizationUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminOrganizationUpdate: async (orgId: string, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminOrganizationUpdate', 'orgId', orgId)
+            // verify required parameter 'putAdminTenantUpdateRequest' is not null or undefined
+            assertParamExists('patchAdminOrganizationUpdate', 'putAdminTenantUpdateRequest', putAdminTenantUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/organization`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -642,9 +788,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminTenantUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -652,15 +801,18 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
          * @summary Update authentication settings
          * @param {string} orgId 
+         * @param {AuthenticationSettings} authenticationSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsAuthUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminSettingsAuthUpdate: async (orgId: string, authenticationSettings: AuthenticationSettings, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminSettingsAuthUpdate', 'orgId', orgId)
+            // verify required parameter 'authenticationSettings' is not null or undefined
+            assertParamExists('patchAdminSettingsAuthUpdate', 'authenticationSettings', authenticationSettings)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/auth`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -683,9 +835,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(authenticationSettings, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -693,15 +848,18 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
          * @summary Update authentication settings (alias for settings/auth)
          * @param {string} orgId 
+         * @param {AuthenticationSettings} authenticationSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsAuthenticationUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminSettingsAuthenticationUpdate: async (orgId: string, authenticationSettings: AuthenticationSettings, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminSettingsAuthenticationUpdate', 'orgId', orgId)
+            // verify required parameter 'authenticationSettings' is not null or undefined
+            assertParamExists('patchAdminSettingsAuthenticationUpdate', 'authenticationSettings', authenticationSettings)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/authentication`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -724,9 +882,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(authenticationSettings, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -737,12 +898,15 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
          * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
          * @summary Update branding/login page settings
          * @param {string} orgId 
+         * @param {BrandingSettings} brandingSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsBrandingUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminSettingsBrandingUpdate: async (orgId: string, brandingSettings: BrandingSettings, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminSettingsBrandingUpdate', 'orgId', orgId)
+            // verify required parameter 'brandingSettings' is not null or undefined
+            assertParamExists('patchAdminSettingsBrandingUpdate', 'brandingSettings', brandingSettings)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/branding`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -765,9 +929,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(brandingSettings, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -868,12 +1035,15 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
          * 
          * @summary Update SCIM settings
          * @param {string} orgId 
+         * @param {ScimSettings} scimSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsScimUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminSettingsScimUpdate: async (orgId: string, scimSettings: ScimSettings, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminSettingsScimUpdate', 'orgId', orgId)
+            // verify required parameter 'scimSettings' is not null or undefined
+            assertParamExists('patchAdminSettingsScimUpdate', 'scimSettings', scimSettings)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/scim`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -896,9 +1066,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(scimSettings, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -909,12 +1082,15 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
          * 
          * @summary Update security settings
          * @param {string} orgId 
+         * @param {PutAdminSettingsSecurityUpdateRequest} putAdminSettingsSecurityUpdateRequest Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsSecurityUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminSettingsSecurityUpdate: async (orgId: string, putAdminSettingsSecurityUpdateRequest: PutAdminSettingsSecurityUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminSettingsSecurityUpdate', 'orgId', orgId)
+            // verify required parameter 'putAdminSettingsSecurityUpdateRequest' is not null or undefined
+            assertParamExists('patchAdminSettingsSecurityUpdate', 'putAdminSettingsSecurityUpdateRequest', putAdminSettingsSecurityUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/security`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -937,9 +1113,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminSettingsSecurityUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -948,14 +1127,17 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Update organization (tenant) name and settings
+         * @summary Update the organization\'s name and settings
          * @param {string} orgId 
+         * @param {PutAdminTenantUpdateRequest} putAdminTenantUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminTenantUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminTenantUpdate: async (orgId: string, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminTenantUpdate', 'orgId', orgId)
+            // verify required parameter 'putAdminTenantUpdateRequest' is not null or undefined
+            assertParamExists('patchAdminTenantUpdate', 'putAdminTenantUpdateRequest', putAdminTenantUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/tenant`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -978,9 +1160,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminTenantUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -989,14 +1174,17 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Update organization (tenant) name and settings
+         * @summary Update the organization\'s name and settings
          * @param {string} orgId 
+         * @param {PutAdminTenantUpdateRequest} putAdminTenantUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminOrganizationUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminOrganizationUpdate: async (orgId: string, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminOrganizationUpdate', 'orgId', orgId)
+            // verify required parameter 'putAdminTenantUpdateRequest' is not null or undefined
+            assertParamExists('putAdminOrganizationUpdate', 'putAdminTenantUpdateRequest', putAdminTenantUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/organization`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1019,9 +1207,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminTenantUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1029,15 +1220,18 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
          * @summary Update authentication settings
          * @param {string} orgId 
+         * @param {AuthenticationSettings} authenticationSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsAuthUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminSettingsAuthUpdate: async (orgId: string, authenticationSettings: AuthenticationSettings, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminSettingsAuthUpdate', 'orgId', orgId)
+            // verify required parameter 'authenticationSettings' is not null or undefined
+            assertParamExists('putAdminSettingsAuthUpdate', 'authenticationSettings', authenticationSettings)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/auth`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1060,9 +1254,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(authenticationSettings, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1070,15 +1267,18 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
          * @summary Update authentication settings (alias for settings/auth)
          * @param {string} orgId 
+         * @param {AuthenticationSettings} authenticationSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsAuthenticationUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminSettingsAuthenticationUpdate: async (orgId: string, authenticationSettings: AuthenticationSettings, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminSettingsAuthenticationUpdate', 'orgId', orgId)
+            // verify required parameter 'authenticationSettings' is not null or undefined
+            assertParamExists('putAdminSettingsAuthenticationUpdate', 'authenticationSettings', authenticationSettings)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/authentication`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1101,9 +1301,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(authenticationSettings, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1114,12 +1317,15 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
          * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
          * @summary Update branding/login page settings
          * @param {string} orgId 
+         * @param {BrandingSettings} brandingSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsBrandingUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminSettingsBrandingUpdate: async (orgId: string, brandingSettings: BrandingSettings, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminSettingsBrandingUpdate', 'orgId', orgId)
+            // verify required parameter 'brandingSettings' is not null or undefined
+            assertParamExists('putAdminSettingsBrandingUpdate', 'brandingSettings', brandingSettings)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/branding`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1142,9 +1348,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(brandingSettings, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1245,12 +1454,15 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
          * 
          * @summary Update SCIM settings
          * @param {string} orgId 
+         * @param {ScimSettings} scimSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsScimUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminSettingsScimUpdate: async (orgId: string, scimSettings: ScimSettings, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminSettingsScimUpdate', 'orgId', orgId)
+            // verify required parameter 'scimSettings' is not null or undefined
+            assertParamExists('putAdminSettingsScimUpdate', 'scimSettings', scimSettings)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/scim`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1273,9 +1485,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(scimSettings, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1286,12 +1501,15 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
          * 
          * @summary Update security settings
          * @param {string} orgId 
+         * @param {PutAdminSettingsSecurityUpdateRequest} putAdminSettingsSecurityUpdateRequest Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsSecurityUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminSettingsSecurityUpdate: async (orgId: string, putAdminSettingsSecurityUpdateRequest: PutAdminSettingsSecurityUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminSettingsSecurityUpdate', 'orgId', orgId)
+            // verify required parameter 'putAdminSettingsSecurityUpdateRequest' is not null or undefined
+            assertParamExists('putAdminSettingsSecurityUpdate', 'putAdminSettingsSecurityUpdateRequest', putAdminSettingsSecurityUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/settings/security`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1314,9 +1532,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminSettingsSecurityUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1325,14 +1546,17 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Update organization (tenant) name and settings
+         * @summary Update the organization\'s name and settings
          * @param {string} orgId 
+         * @param {PutAdminTenantUpdateRequest} putAdminTenantUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminTenantUpdate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminTenantUpdate: async (orgId: string, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminTenantUpdate', 'orgId', orgId)
+            // verify required parameter 'putAdminTenantUpdateRequest' is not null or undefined
+            assertParamExists('putAdminTenantUpdate', 'putAdminTenantUpdateRequest', putAdminTenantUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/tenant`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1355,9 +1579,12 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminTenantUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1416,8 +1643,48 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Generates a token and adds it to the organization\'s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+         * @summary Create an initial access token for dynamic client registration
+         * @param {string} orgId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminInitialAccessTokensCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminInitialAccessTokensCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminInitialAccessTokensCreate(orgId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminInitialAccessTokensCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+         * @summary Delete an initial access token of dynamic client registration
+         * @param {string} orgId 
+         * @param {string} tokenId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminInitialAccessTokensDelete(orgId: string, tokenId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminInitialAccessTokensDelete(orgId, tokenId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminInitialAccessTokensDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+         * @summary List the initial access tokens of dynamic client registration
+         * @param {string} orgId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminInitialAccessTokensList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminInitialAccessTokensListResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminInitialAccessTokensList(orgId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminInitialAccessTokensList']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
-         * @summary Get organization (tenant) profile
+         * @summary Get organization profile
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1534,7 +1801,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get organization (tenant) profile
+         * @summary Get organization profile
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1547,39 +1814,42 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update organization (tenant) name and settings
+         * @summary Update the organization\'s name and settings
          * @param {string} orgId 
+         * @param {PutAdminTenantUpdateRequest} putAdminTenantUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminOrganizationUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminTenantUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminOrganizationUpdate(orgId, options);
+        async patchAdminOrganizationUpdate(orgId: string, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminTenantUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminOrganizationUpdate(orgId, putAdminTenantUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminOrganizationUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
          * @summary Update authentication settings
          * @param {string} orgId 
+         * @param {AuthenticationSettings} authenticationSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsAuthUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsAuthUpdate(orgId, options);
+        async patchAdminSettingsAuthUpdate(orgId: string, authenticationSettings: AuthenticationSettings, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsAuthUpdate(orgId, authenticationSettings, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsAuthUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
          * @summary Update authentication settings (alias for settings/auth)
          * @param {string} orgId 
+         * @param {AuthenticationSettings} authenticationSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsAuthenticationUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsAuthenticationUpdate(orgId, options);
+        async patchAdminSettingsAuthenticationUpdate(orgId: string, authenticationSettings: AuthenticationSettings, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsAuthenticationUpdate(orgId, authenticationSettings, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsAuthenticationUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1588,11 +1858,12 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
          * @summary Update branding/login page settings
          * @param {string} orgId 
+         * @param {BrandingSettings} brandingSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsBrandingUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsBrandingUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsBrandingUpdate(orgId, options);
+        async patchAdminSettingsBrandingUpdate(orgId: string, brandingSettings: BrandingSettings, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsBrandingUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsBrandingUpdate(orgId, brandingSettings, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsBrandingUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1629,11 +1900,12 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Update SCIM settings
          * @param {string} orgId 
+         * @param {ScimSettings} scimSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsScimUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsScimUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsScimUpdate(orgId, options);
+        async patchAdminSettingsScimUpdate(orgId: string, scimSettings: ScimSettings, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsScimUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsScimUpdate(orgId, scimSettings, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsScimUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1642,63 +1914,68 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Update security settings
          * @param {string} orgId 
+         * @param {PutAdminSettingsSecurityUpdateRequest} putAdminSettingsSecurityUpdateRequest Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsSecurityUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsSecurityUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsSecurityUpdate(orgId, options);
+        async patchAdminSettingsSecurityUpdate(orgId: string, putAdminSettingsSecurityUpdateRequest: PutAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsSecurityUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsSecurityUpdate(orgId, putAdminSettingsSecurityUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsSecurityUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @summary Update organization (tenant) name and settings
+         * @summary Update the organization\'s name and settings
          * @param {string} orgId 
+         * @param {PutAdminTenantUpdateRequest} putAdminTenantUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminTenantUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminTenantUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminTenantUpdate(orgId, options);
+        async patchAdminTenantUpdate(orgId: string, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminTenantUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminTenantUpdate(orgId, putAdminTenantUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminTenantUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @summary Update organization (tenant) name and settings
+         * @summary Update the organization\'s name and settings
          * @param {string} orgId 
+         * @param {PutAdminTenantUpdateRequest} putAdminTenantUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminOrganizationUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminTenantUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminOrganizationUpdate(orgId, options);
+        async putAdminOrganizationUpdate(orgId: string, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminTenantUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminOrganizationUpdate(orgId, putAdminTenantUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminOrganizationUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
          * @summary Update authentication settings
          * @param {string} orgId 
+         * @param {AuthenticationSettings} authenticationSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsAuthUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsAuthUpdate(orgId, options);
+        async putAdminSettingsAuthUpdate(orgId: string, authenticationSettings: AuthenticationSettings, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsAuthUpdate(orgId, authenticationSettings, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsAuthUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
          * @summary Update authentication settings (alias for settings/auth)
          * @param {string} orgId 
+         * @param {AuthenticationSettings} authenticationSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsAuthenticationUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsAuthenticationUpdate(orgId, options);
+        async putAdminSettingsAuthenticationUpdate(orgId: string, authenticationSettings: AuthenticationSettings, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsAuthenticationUpdate(orgId, authenticationSettings, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsAuthenticationUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1707,11 +1984,12 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
          * @summary Update branding/login page settings
          * @param {string} orgId 
+         * @param {BrandingSettings} brandingSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsBrandingUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsBrandingUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsBrandingUpdate(orgId, options);
+        async putAdminSettingsBrandingUpdate(orgId: string, brandingSettings: BrandingSettings, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsBrandingUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsBrandingUpdate(orgId, brandingSettings, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsBrandingUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1748,11 +2026,12 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Update SCIM settings
          * @param {string} orgId 
+         * @param {ScimSettings} scimSettings 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsScimUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsScimUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsScimUpdate(orgId, options);
+        async putAdminSettingsScimUpdate(orgId: string, scimSettings: ScimSettings, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsScimUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsScimUpdate(orgId, scimSettings, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsScimUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1761,24 +2040,26 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Update security settings
          * @param {string} orgId 
+         * @param {PutAdminSettingsSecurityUpdateRequest} putAdminSettingsSecurityUpdateRequest Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsSecurityUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsSecurityUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsSecurityUpdate(orgId, options);
+        async putAdminSettingsSecurityUpdate(orgId: string, putAdminSettingsSecurityUpdateRequest: PutAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsSecurityUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsSecurityUpdate(orgId, putAdminSettingsSecurityUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsSecurityUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @summary Update organization (tenant) name and settings
+         * @summary Update the organization\'s name and settings
          * @param {string} orgId 
+         * @param {PutAdminTenantUpdateRequest} putAdminTenantUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminTenantUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminTenantUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminTenantUpdate(orgId, options);
+        async putAdminTenantUpdate(orgId: string, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminTenantUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminTenantUpdate(orgId, putAdminTenantUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminTenantUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1824,8 +2105,38 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
             return localVarFp.adminAnalyticsUsers(requestParameters.orgId, requestParameters.days, options).then((request) => request(axios, basePath));
         },
         /**
+         * Generates a token and adds it to the organization\'s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+         * @summary Create an initial access token for dynamic client registration
+         * @param {AdminSettingsApiAdminInitialAccessTokensCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminInitialAccessTokensCreate(requestParameters: AdminSettingsApiAdminInitialAccessTokensCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminInitialAccessTokensCreateResponse> {
+            return localVarFp.adminInitialAccessTokensCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+         * @summary Delete an initial access token of dynamic client registration
+         * @param {AdminSettingsApiAdminInitialAccessTokensDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminInitialAccessTokensDelete(requestParameters: AdminSettingsApiAdminInitialAccessTokensDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
+            return localVarFp.adminInitialAccessTokensDelete(requestParameters.orgId, requestParameters.tokenId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+         * @summary List the initial access tokens of dynamic client registration
+         * @param {AdminSettingsApiAdminInitialAccessTokensListRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminInitialAccessTokensList(requestParameters: AdminSettingsApiAdminInitialAccessTokensListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminInitialAccessTokensListResponse> {
+            return localVarFp.adminInitialAccessTokensList(requestParameters.orgId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
-         * @summary Get organization (tenant) profile
+         * @summary Get organization profile
          * @param {AdminSettingsApiAdminOrganizationGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1915,7 +2226,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
-         * @summary Get organization (tenant) profile
+         * @summary Get organization profile
          * @param {AdminSettingsApiAdminTenantGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1925,33 +2236,33 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
-         * @summary Update organization (tenant) name and settings
+         * @summary Update the organization\'s name and settings
          * @param {AdminSettingsApiPatchAdminOrganizationUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         patchAdminOrganizationUpdate(requestParameters: AdminSettingsApiPatchAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse> {
-            return localVarFp.patchAdminOrganizationUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminOrganizationUpdate(requestParameters.orgId, requestParameters.putAdminTenantUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
          * @summary Update authentication settings
          * @param {AdminSettingsApiPatchAdminSettingsAuthUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         patchAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse> {
-            return localVarFp.patchAdminSettingsAuthUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminSettingsAuthUpdate(requestParameters.orgId, requestParameters.authenticationSettings, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
          * @summary Update authentication settings (alias for settings/auth)
          * @param {AdminSettingsApiPatchAdminSettingsAuthenticationUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         patchAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse> {
-            return localVarFp.patchAdminSettingsAuthenticationUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminSettingsAuthenticationUpdate(requestParameters.orgId, requestParameters.authenticationSettings, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
@@ -1961,7 +2272,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         patchAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsBrandingUpdateResponse> {
-            return localVarFp.patchAdminSettingsBrandingUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminSettingsBrandingUpdate(requestParameters.orgId, requestParameters.brandingSettings, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes the sender of the mail that the organization\'s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth\'s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
@@ -1991,7 +2302,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         patchAdminSettingsScimUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsScimUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsScimUpdateResponse> {
-            return localVarFp.patchAdminSettingsScimUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminSettingsScimUpdate(requestParameters.orgId, requestParameters.scimSettings, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2001,47 +2312,47 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         patchAdminSettingsSecurityUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsSecurityUpdateResponse> {
-            return localVarFp.patchAdminSettingsSecurityUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminSettingsSecurityUpdate(requestParameters.orgId, requestParameters.putAdminSettingsSecurityUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update organization (tenant) name and settings
+         * @summary Update the organization\'s name and settings
          * @param {AdminSettingsApiPatchAdminTenantUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         patchAdminTenantUpdate(requestParameters: AdminSettingsApiPatchAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse> {
-            return localVarFp.patchAdminTenantUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminTenantUpdate(requestParameters.orgId, requestParameters.putAdminTenantUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update organization (tenant) name and settings
+         * @summary Update the organization\'s name and settings
          * @param {AdminSettingsApiPutAdminOrganizationUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         putAdminOrganizationUpdate(requestParameters: AdminSettingsApiPutAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse> {
-            return localVarFp.putAdminOrganizationUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminOrganizationUpdate(requestParameters.orgId, requestParameters.putAdminTenantUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
          * @summary Update authentication settings
          * @param {AdminSettingsApiPutAdminSettingsAuthUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         putAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse> {
-            return localVarFp.putAdminSettingsAuthUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminSettingsAuthUpdate(requestParameters.orgId, requestParameters.authenticationSettings, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
          * @summary Update authentication settings (alias for settings/auth)
          * @param {AdminSettingsApiPutAdminSettingsAuthenticationUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         putAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse> {
-            return localVarFp.putAdminSettingsAuthenticationUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminSettingsAuthenticationUpdate(requestParameters.orgId, requestParameters.authenticationSettings, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
@@ -2051,7 +2362,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         putAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPutAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsBrandingUpdateResponse> {
-            return localVarFp.putAdminSettingsBrandingUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminSettingsBrandingUpdate(requestParameters.orgId, requestParameters.brandingSettings, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes the sender of the mail that the organization\'s own mail provider sends: fromEmail, fromName and replyToEmail. The provider itself (credentials, host, on/off) is set up in the portal. Without a provider the mail is sent by LumoAuth with LumoAuth\'s sender, and a write is refused with 400. PATCH changes the fields sent; PUT replaces the three fields as a set (fromEmail is then required). The caller needs settings.manage and users.delete; an access token must come from a sign-in of the last 10 minutes.
@@ -2081,7 +2392,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         putAdminSettingsScimUpdate(requestParameters: AdminSettingsApiPutAdminSettingsScimUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsScimUpdateResponse> {
-            return localVarFp.putAdminSettingsScimUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminSettingsScimUpdate(requestParameters.orgId, requestParameters.scimSettings, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2091,17 +2402,17 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         putAdminSettingsSecurityUpdate(requestParameters: AdminSettingsApiPutAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsSecurityUpdateResponse> {
-            return localVarFp.putAdminSettingsSecurityUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminSettingsSecurityUpdate(requestParameters.orgId, requestParameters.putAdminSettingsSecurityUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update organization (tenant) name and settings
+         * @summary Update the organization\'s name and settings
          * @param {AdminSettingsApiPutAdminTenantUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         putAdminTenantUpdate(requestParameters: AdminSettingsApiPutAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse> {
-            return localVarFp.putAdminTenantUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminTenantUpdate(requestParameters.orgId, requestParameters.putAdminTenantUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2143,8 +2454,38 @@ export interface AdminSettingsApiInterface {
     adminAnalyticsUsers(requestParameters: AdminSettingsApiAdminAnalyticsUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAnalyticsUsersResponse>;
 
     /**
+     * Generates a token and adds it to the organization\'s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+     * @summary Create an initial access token for dynamic client registration
+     * @param {AdminSettingsApiAdminInitialAccessTokensCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminSettingsApiInterface
+     */
+    adminInitialAccessTokensCreate(requestParameters: AdminSettingsApiAdminInitialAccessTokensCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminInitialAccessTokensCreateResponse>;
+
+    /**
+     * The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+     * @summary Delete an initial access token of dynamic client registration
+     * @param {AdminSettingsApiAdminInitialAccessTokensDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminSettingsApiInterface
+     */
+    adminInitialAccessTokensDelete(requestParameters: AdminSettingsApiAdminInitialAccessTokensDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
+
+    /**
+     * Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+     * @summary List the initial access tokens of dynamic client registration
+     * @param {AdminSettingsApiAdminInitialAccessTokensListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminSettingsApiInterface
+     */
+    adminInitialAccessTokensList(requestParameters: AdminSettingsApiAdminInitialAccessTokensListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminInitialAccessTokensListResponse>;
+
+    /**
      * 
-     * @summary Get organization (tenant) profile
+     * @summary Get organization profile
      * @param {AdminSettingsApiAdminOrganizationGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2234,7 +2575,7 @@ export interface AdminSettingsApiInterface {
 
     /**
      * 
-     * @summary Get organization (tenant) profile
+     * @summary Get organization profile
      * @param {AdminSettingsApiAdminTenantGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2244,7 +2585,7 @@ export interface AdminSettingsApiInterface {
 
     /**
      * 
-     * @summary Update organization (tenant) name and settings
+     * @summary Update the organization\'s name and settings
      * @param {AdminSettingsApiPatchAdminOrganizationUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2253,7 +2594,7 @@ export interface AdminSettingsApiInterface {
     patchAdminOrganizationUpdate(requestParameters: AdminSettingsApiPatchAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse>;
 
     /**
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @summary Update authentication settings
      * @param {AdminSettingsApiPatchAdminSettingsAuthUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2263,7 +2604,7 @@ export interface AdminSettingsApiInterface {
     patchAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>;
 
     /**
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @summary Update authentication settings (alias for settings/auth)
      * @param {AdminSettingsApiPatchAdminSettingsAuthenticationUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2324,7 +2665,7 @@ export interface AdminSettingsApiInterface {
 
     /**
      * 
-     * @summary Update organization (tenant) name and settings
+     * @summary Update the organization\'s name and settings
      * @param {AdminSettingsApiPatchAdminTenantUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2334,7 +2675,7 @@ export interface AdminSettingsApiInterface {
 
     /**
      * 
-     * @summary Update organization (tenant) name and settings
+     * @summary Update the organization\'s name and settings
      * @param {AdminSettingsApiPutAdminOrganizationUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2343,7 +2684,7 @@ export interface AdminSettingsApiInterface {
     putAdminOrganizationUpdate(requestParameters: AdminSettingsApiPutAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse>;
 
     /**
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @summary Update authentication settings
      * @param {AdminSettingsApiPutAdminSettingsAuthUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2353,7 +2694,7 @@ export interface AdminSettingsApiInterface {
     putAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>;
 
     /**
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @summary Update authentication settings (alias for settings/auth)
      * @param {AdminSettingsApiPutAdminSettingsAuthenticationUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2414,7 +2755,7 @@ export interface AdminSettingsApiInterface {
 
     /**
      * 
-     * @summary Update organization (tenant) name and settings
+     * @summary Update the organization\'s name and settings
      * @param {AdminSettingsApiPutAdminTenantUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2478,6 +2819,55 @@ export interface AdminSettingsApiAdminAnalyticsUsersRequest {
      * @memberof AdminSettingsApiAdminAnalyticsUsers
      */
     readonly days?: number
+}
+
+/**
+ * Request parameters for adminInitialAccessTokensCreate operation in AdminSettingsApi.
+ * @export
+ * @interface AdminSettingsApiAdminInitialAccessTokensCreateRequest
+ */
+export interface AdminSettingsApiAdminInitialAccessTokensCreateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminSettingsApiAdminInitialAccessTokensCreate
+     */
+    readonly orgId: string
+}
+
+/**
+ * Request parameters for adminInitialAccessTokensDelete operation in AdminSettingsApi.
+ * @export
+ * @interface AdminSettingsApiAdminInitialAccessTokensDeleteRequest
+ */
+export interface AdminSettingsApiAdminInitialAccessTokensDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminSettingsApiAdminInitialAccessTokensDelete
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminSettingsApiAdminInitialAccessTokensDelete
+     */
+    readonly tokenId: string
+}
+
+/**
+ * Request parameters for adminInitialAccessTokensList operation in AdminSettingsApi.
+ * @export
+ * @interface AdminSettingsApiAdminInitialAccessTokensListRequest
+ */
+export interface AdminSettingsApiAdminInitialAccessTokensListRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminSettingsApiAdminInitialAccessTokensList
+     */
+    readonly orgId: string
 }
 
 /**
@@ -2632,6 +3022,13 @@ export interface AdminSettingsApiPatchAdminOrganizationUpdateRequest {
      * @memberof AdminSettingsApiPatchAdminOrganizationUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {PutAdminTenantUpdateRequest}
+     * @memberof AdminSettingsApiPatchAdminOrganizationUpdate
+     */
+    readonly putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest
 }
 
 /**
@@ -2646,6 +3043,13 @@ export interface AdminSettingsApiPatchAdminSettingsAuthUpdateRequest {
      * @memberof AdminSettingsApiPatchAdminSettingsAuthUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {AuthenticationSettings}
+     * @memberof AdminSettingsApiPatchAdminSettingsAuthUpdate
+     */
+    readonly authenticationSettings: AuthenticationSettings
 }
 
 /**
@@ -2660,6 +3064,13 @@ export interface AdminSettingsApiPatchAdminSettingsAuthenticationUpdateRequest {
      * @memberof AdminSettingsApiPatchAdminSettingsAuthenticationUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {AuthenticationSettings}
+     * @memberof AdminSettingsApiPatchAdminSettingsAuthenticationUpdate
+     */
+    readonly authenticationSettings: AuthenticationSettings
 }
 
 /**
@@ -2674,6 +3085,13 @@ export interface AdminSettingsApiPatchAdminSettingsBrandingUpdateRequest {
      * @memberof AdminSettingsApiPatchAdminSettingsBrandingUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {BrandingSettings}
+     * @memberof AdminSettingsApiPatchAdminSettingsBrandingUpdate
+     */
+    readonly brandingSettings: BrandingSettings
 }
 
 /**
@@ -2730,6 +3148,13 @@ export interface AdminSettingsApiPatchAdminSettingsScimUpdateRequest {
      * @memberof AdminSettingsApiPatchAdminSettingsScimUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {ScimSettings}
+     * @memberof AdminSettingsApiPatchAdminSettingsScimUpdate
+     */
+    readonly scimSettings: ScimSettings
 }
 
 /**
@@ -2744,6 +3169,13 @@ export interface AdminSettingsApiPatchAdminSettingsSecurityUpdateRequest {
      * @memberof AdminSettingsApiPatchAdminSettingsSecurityUpdate
      */
     readonly orgId: string
+
+    /**
+     * Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
+     * @type {PutAdminSettingsSecurityUpdateRequest}
+     * @memberof AdminSettingsApiPatchAdminSettingsSecurityUpdate
+     */
+    readonly putAdminSettingsSecurityUpdateRequest: PutAdminSettingsSecurityUpdateRequest
 }
 
 /**
@@ -2758,6 +3190,13 @@ export interface AdminSettingsApiPatchAdminTenantUpdateRequest {
      * @memberof AdminSettingsApiPatchAdminTenantUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {PutAdminTenantUpdateRequest}
+     * @memberof AdminSettingsApiPatchAdminTenantUpdate
+     */
+    readonly putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest
 }
 
 /**
@@ -2772,6 +3211,13 @@ export interface AdminSettingsApiPutAdminOrganizationUpdateRequest {
      * @memberof AdminSettingsApiPutAdminOrganizationUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {PutAdminTenantUpdateRequest}
+     * @memberof AdminSettingsApiPutAdminOrganizationUpdate
+     */
+    readonly putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest
 }
 
 /**
@@ -2786,6 +3232,13 @@ export interface AdminSettingsApiPutAdminSettingsAuthUpdateRequest {
      * @memberof AdminSettingsApiPutAdminSettingsAuthUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {AuthenticationSettings}
+     * @memberof AdminSettingsApiPutAdminSettingsAuthUpdate
+     */
+    readonly authenticationSettings: AuthenticationSettings
 }
 
 /**
@@ -2800,6 +3253,13 @@ export interface AdminSettingsApiPutAdminSettingsAuthenticationUpdateRequest {
      * @memberof AdminSettingsApiPutAdminSettingsAuthenticationUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {AuthenticationSettings}
+     * @memberof AdminSettingsApiPutAdminSettingsAuthenticationUpdate
+     */
+    readonly authenticationSettings: AuthenticationSettings
 }
 
 /**
@@ -2814,6 +3274,13 @@ export interface AdminSettingsApiPutAdminSettingsBrandingUpdateRequest {
      * @memberof AdminSettingsApiPutAdminSettingsBrandingUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {BrandingSettings}
+     * @memberof AdminSettingsApiPutAdminSettingsBrandingUpdate
+     */
+    readonly brandingSettings: BrandingSettings
 }
 
 /**
@@ -2870,6 +3337,13 @@ export interface AdminSettingsApiPutAdminSettingsScimUpdateRequest {
      * @memberof AdminSettingsApiPutAdminSettingsScimUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {ScimSettings}
+     * @memberof AdminSettingsApiPutAdminSettingsScimUpdate
+     */
+    readonly scimSettings: ScimSettings
 }
 
 /**
@@ -2884,6 +3358,13 @@ export interface AdminSettingsApiPutAdminSettingsSecurityUpdateRequest {
      * @memberof AdminSettingsApiPutAdminSettingsSecurityUpdate
      */
     readonly orgId: string
+
+    /**
+     * Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
+     * @type {PutAdminSettingsSecurityUpdateRequest}
+     * @memberof AdminSettingsApiPutAdminSettingsSecurityUpdate
+     */
+    readonly putAdminSettingsSecurityUpdateRequest: PutAdminSettingsSecurityUpdateRequest
 }
 
 /**
@@ -2898,6 +3379,13 @@ export interface AdminSettingsApiPutAdminTenantUpdateRequest {
      * @memberof AdminSettingsApiPutAdminTenantUpdate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {PutAdminTenantUpdateRequest}
+     * @memberof AdminSettingsApiPutAdminTenantUpdate
+     */
+    readonly putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest
 }
 
 /**
@@ -2944,8 +3432,44 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
     }
 
     /**
+     * Generates a token and adds it to the organization\'s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+     * @summary Create an initial access token for dynamic client registration
+     * @param {AdminSettingsApiAdminInitialAccessTokensCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminSettingsApi
+     */
+    public adminInitialAccessTokensCreate(requestParameters: AdminSettingsApiAdminInitialAccessTokensCreateRequest, options?: RawAxiosRequestConfig) {
+        return AdminSettingsApiFp(this.configuration).adminInitialAccessTokensCreate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+     * @summary Delete an initial access token of dynamic client registration
+     * @param {AdminSettingsApiAdminInitialAccessTokensDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminSettingsApi
+     */
+    public adminInitialAccessTokensDelete(requestParameters: AdminSettingsApiAdminInitialAccessTokensDeleteRequest, options?: RawAxiosRequestConfig) {
+        return AdminSettingsApiFp(this.configuration).adminInitialAccessTokensDelete(requestParameters.orgId, requestParameters.tokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+     * @summary List the initial access tokens of dynamic client registration
+     * @param {AdminSettingsApiAdminInitialAccessTokensListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminSettingsApi
+     */
+    public adminInitialAccessTokensList(requestParameters: AdminSettingsApiAdminInitialAccessTokensListRequest, options?: RawAxiosRequestConfig) {
+        return AdminSettingsApiFp(this.configuration).adminInitialAccessTokensList(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
-     * @summary Get organization (tenant) profile
+     * @summary Get organization profile
      * @param {AdminSettingsApiAdminOrganizationGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3053,7 +3577,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
 
     /**
      * 
-     * @summary Get organization (tenant) profile
+     * @summary Get organization profile
      * @param {AdminSettingsApiAdminTenantGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3065,18 +3589,18 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
 
     /**
      * 
-     * @summary Update organization (tenant) name and settings
+     * @summary Update the organization\'s name and settings
      * @param {AdminSettingsApiPatchAdminOrganizationUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSettingsApi
      */
     public patchAdminOrganizationUpdate(requestParameters: AdminSettingsApiPatchAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).patchAdminOrganizationUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).patchAdminOrganizationUpdate(requestParameters.orgId, requestParameters.putAdminTenantUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @summary Update authentication settings
      * @param {AdminSettingsApiPatchAdminSettingsAuthUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3084,11 +3608,11 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public patchAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).patchAdminSettingsAuthUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).patchAdminSettingsAuthUpdate(requestParameters.orgId, requestParameters.authenticationSettings, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @summary Update authentication settings (alias for settings/auth)
      * @param {AdminSettingsApiPatchAdminSettingsAuthenticationUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3096,7 +3620,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public patchAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).patchAdminSettingsAuthenticationUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).patchAdminSettingsAuthenticationUpdate(requestParameters.orgId, requestParameters.authenticationSettings, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3108,7 +3632,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public patchAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).patchAdminSettingsBrandingUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).patchAdminSettingsBrandingUpdate(requestParameters.orgId, requestParameters.brandingSettings, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3144,7 +3668,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public patchAdminSettingsScimUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsScimUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).patchAdminSettingsScimUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).patchAdminSettingsScimUpdate(requestParameters.orgId, requestParameters.scimSettings, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3156,35 +3680,35 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public patchAdminSettingsSecurityUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).patchAdminSettingsSecurityUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).patchAdminSettingsSecurityUpdate(requestParameters.orgId, requestParameters.putAdminSettingsSecurityUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Update organization (tenant) name and settings
+     * @summary Update the organization\'s name and settings
      * @param {AdminSettingsApiPatchAdminTenantUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSettingsApi
      */
     public patchAdminTenantUpdate(requestParameters: AdminSettingsApiPatchAdminTenantUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).patchAdminTenantUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).patchAdminTenantUpdate(requestParameters.orgId, requestParameters.putAdminTenantUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Update organization (tenant) name and settings
+     * @summary Update the organization\'s name and settings
      * @param {AdminSettingsApiPutAdminOrganizationUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSettingsApi
      */
     public putAdminOrganizationUpdate(requestParameters: AdminSettingsApiPutAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).putAdminOrganizationUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).putAdminOrganizationUpdate(requestParameters.orgId, requestParameters.putAdminTenantUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @summary Update authentication settings
      * @param {AdminSettingsApiPutAdminSettingsAuthUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3192,11 +3716,11 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public putAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).putAdminSettingsAuthUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).putAdminSettingsAuthUpdate(requestParameters.orgId, requestParameters.authenticationSettings, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @summary Update authentication settings (alias for settings/auth)
      * @param {AdminSettingsApiPutAdminSettingsAuthenticationUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3204,7 +3728,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public putAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).putAdminSettingsAuthenticationUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).putAdminSettingsAuthenticationUpdate(requestParameters.orgId, requestParameters.authenticationSettings, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3216,7 +3740,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public putAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPutAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).putAdminSettingsBrandingUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).putAdminSettingsBrandingUpdate(requestParameters.orgId, requestParameters.brandingSettings, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3252,7 +3776,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public putAdminSettingsScimUpdate(requestParameters: AdminSettingsApiPutAdminSettingsScimUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).putAdminSettingsScimUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).putAdminSettingsScimUpdate(requestParameters.orgId, requestParameters.scimSettings, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3264,19 +3788,19 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public putAdminSettingsSecurityUpdate(requestParameters: AdminSettingsApiPutAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).putAdminSettingsSecurityUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).putAdminSettingsSecurityUpdate(requestParameters.orgId, requestParameters.putAdminSettingsSecurityUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Update organization (tenant) name and settings
+     * @summary Update the organization\'s name and settings
      * @param {AdminSettingsApiPutAdminTenantUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSettingsApi
      */
     public putAdminTenantUpdate(requestParameters: AdminSettingsApiPutAdminTenantUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).putAdminTenantUpdate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).putAdminTenantUpdate(requestParameters.orgId, requestParameters.putAdminTenantUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

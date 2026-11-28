@@ -4,10 +4,10 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_permissions_create**](AdminPermissionsApi.md#admin_permissions_create) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the tenant
+[**admin_permissions_create**](AdminPermissionsApi.md#admin_permissions_create) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the organization
 [**admin_permissions_delete**](AdminPermissionsApi.md#admin_permissions_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Delete a custom permission
 [**admin_permissions_get**](AdminPermissionsApi.md#admin_permissions_get) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Get a single permission
-[**admin_permissions_list**](AdminPermissionsApi.md#admin_permissions_list) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the tenant
+[**admin_permissions_list**](AdminPermissionsApi.md#admin_permissions_list) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the organization
 [**admin_permissions_update**](AdminPermissionsApi.md#admin_permissions_update) | **PATCH** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Update a permission
 [**admin_permissions_usage**](AdminPermissionsApi.md#admin_permissions_usage) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId}/usage | Get permission usage (roles assigned to this permission)
 [**admin_scopes_create**](AdminPermissionsApi.md#admin_scopes_create) | **POST** /orgs/{orgId}/api/v1/admin/scopes | Create a custom OAuth scope
@@ -18,8 +18,8 @@ Method | HTTP request | Description
 
 ## admin_permissions_create
 
-> models::AdminPermissionsCreateResponse admin_permissions_create(org_id)
-Create a custom permission for the tenant
+> models::AdminPermissionsCreateResponse admin_permissions_create(org_id, admin_permissions_create_request)
+Create a custom permission for the organization
 
 ### Parameters
 
@@ -27,6 +27,7 @@ Create a custom permission for the tenant
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**admin_permissions_create_request** | [**AdminPermissionsCreateRequest**](AdminPermissionsCreateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -38,7 +39,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -105,7 +106,7 @@ Name | Type | Description  | Required | Notes
 ## admin_permissions_list
 
 > models::AdminPermissionsListResponse admin_permissions_list(org_id)
-List all available permissions for the tenant
+List all available permissions for the organization
 
 ### Parameters
 
@@ -132,7 +133,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_permissions_update
 
-> models::AdminPermissionsCreateResponse admin_permissions_update(org_id, permission_id)
+> models::AdminPermissionsCreateResponse admin_permissions_update(org_id, permission_id, admin_permissions_update_request)
 Update a permission
 
 ### Parameters
@@ -142,6 +143,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **permission_id** | **String** |  | [required] |
+**admin_permissions_update_request** | [**AdminPermissionsUpdateRequest**](AdminPermissionsUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -153,7 +155,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -190,7 +192,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_scopes_create
 
-> models::AdminScopesCreateResponse admin_scopes_create(org_id)
+> models::AdminScopesCreateResponse admin_scopes_create(org_id, admin_scopes_create_request)
 Create a custom OAuth scope
 
 ### Parameters
@@ -199,6 +201,7 @@ Create a custom OAuth scope
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**admin_scopes_create_request** | [**AdminScopesCreateRequest**](AdminScopesCreateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -210,7 +213,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

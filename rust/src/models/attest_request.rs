@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -16,12 +16,15 @@ pub struct AttestRequest {
     /// The workload OIDC token (JWT).
     #[serde(rename = "attestation_token")]
     pub attestation_token: String,
+    #[serde(rename = "scope", skip_serializing_if = "Option::is_none")]
+    pub scope: Option<Box<models::AttestRequestScope>>,
 }
 
 impl AttestRequest {
     pub fn new(attestation_token: String) -> AttestRequest {
         AttestRequest {
             attestation_token,
+            scope: None,
         }
     }
 }

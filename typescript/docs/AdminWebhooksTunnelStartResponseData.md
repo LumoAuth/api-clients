@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **webhook_id** | **number** |  | [optional] [default to undefined]
 **session_id** | **string** |  | [optional] [default to undefined]
 **tunnel_url** | **string** |  | [optional] [default to undefined]
+**signing_secret** | **string** | The secret that signs the tunnel\&#39;s deliveries (X-LumoAuth-Signature). Shown once. | [optional] [default to undefined]
 
 ## Example
 
@@ -18,6 +19,7 @@ const instance: AdminWebhooksTunnelStartResponseData = {
     webhook_id,
     session_id,
     tunnel_url,
+    signing_secret,
 };
 ```
 

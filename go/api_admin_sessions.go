@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -67,7 +67,7 @@ type AdminSessionsAPI interface {
 	/*
 	AdminSessionsList List active sessions
 
-	Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+	Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -94,7 +94,7 @@ type AdminSessionsAPI interface {
 	AdminSessionsRevokeExecute(r ApiAdminSessionsRevokeRequest) (*AdminSessionsRevokeResponse, *http.Response, error)
 
 	/*
-	AdminSessionsRevokeAll Revoke every session in the tenant
+	AdminSessionsRevokeAll Revoke every session in the organization
 
 	Signs out all users. Requires `confirm: true` in the body.
 
@@ -122,9 +122,9 @@ type AdminSessionsAPI interface {
 	AdminSessionsStatsExecute(r ApiAdminSessionsStatsRequest) (*AdminSessionsStatsResponse, *http.Response, error)
 
 	/*
-	AdminTokensList List access tokens
+	AdminTokensList List stored (opaque) access tokens
 
-	Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
+	Paginated OPAQUE access tokens issued by the organization's clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user's or a client's tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -197,6 +197,8 @@ type AdminSessionsAPI interface {
 	/*
 	AdminUserTokensRevokeAll Revoke all tokens of a user
 
+	Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@param userId
@@ -210,6 +212,8 @@ type AdminSessionsAPI interface {
 
 	/*
 	AdminUserTokensRevokePost Revoke all tokens of a user (POST alias)
+
+	Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -592,7 +596,7 @@ func (r ApiAdminSessionsListRequest) Execute() (*AdminSessionsListResponse, *htt
 /*
 AdminSessionsList List active sessions
 
-Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -832,7 +836,7 @@ func (r ApiAdminSessionsRevokeAllRequest) Execute() (*AdminSessionsRevokeAllResp
 }
 
 /*
-AdminSessionsRevokeAll Revoke every session in the tenant
+AdminSessionsRevokeAll Revoke every session in the organization
 
 Signs out all users. Requires `confirm: true` in the body.
 
@@ -1069,9 +1073,9 @@ func (r ApiAdminTokensListRequest) Execute() (*AdminTokensListResponse, *http.Re
 }
 
 /*
-AdminTokensList List access tokens
+AdminTokensList List stored (opaque) access tokens
 
-Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
+Paginated OPAQUE access tokens issued by the organization's clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user's or a client's tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1667,6 +1671,8 @@ func (r ApiAdminUserTokensRevokeAllRequest) Execute() (*AdminUserTokensRevokeAll
 /*
 AdminUserTokensRevokeAll Revoke all tokens of a user
 
+Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
  @param userId
@@ -1785,6 +1791,8 @@ func (r ApiAdminUserTokensRevokePostRequest) Execute() (*AdminUserTokensRevokePo
 
 /*
 AdminUserTokensRevokePost Revoke all tokens of a user (POST alias)
+
+Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId

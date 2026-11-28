@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -53,7 +53,7 @@ namespace LumoAuth.ApiClient.Api
         /// JSON Web Key Set (RFC 7517)
         /// </summary>
         /// <remarks>
-        /// Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+        /// Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -64,7 +64,7 @@ namespace LumoAuth.ApiClient.Api
         /// JSON Web Key Set (RFC 7517)
         /// </summary>
         /// <remarks>
-        /// Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+        /// Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -145,7 +145,7 @@ namespace LumoAuth.ApiClient.Api
         /// JSON Web Key Set (RFC 7517)
         /// </summary>
         /// <remarks>
-        /// Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+        /// Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -157,7 +157,7 @@ namespace LumoAuth.ApiClient.Api
         /// JSON Web Key Set (RFC 7517)
         /// </summary>
         /// <remarks>
-        /// Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+        /// Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -539,7 +539,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// JSON Web Key Set (RFC 7517) Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+        /// JSON Web Key Set (RFC 7517) Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -551,7 +551,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// JSON Web Key Set (RFC 7517) Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+        /// JSON Web Key Set (RFC 7517) Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -594,7 +594,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// JSON Web Key Set (RFC 7517) Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+        /// JSON Web Key Set (RFC 7517) Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -607,7 +607,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// JSON Web Key Set (RFC 7517) Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+        /// JSON Web Key Set (RFC 7517) Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

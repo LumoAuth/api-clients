@@ -603,7 +603,7 @@ No authorization required
 ## `registerAgent()`
 
 ```php
-registerAgent($orgId): \LumoAuth\ApiClient\Model\RegisterAgentResponse
+registerAgent($orgId, $registerAgentRequest): \LumoAuth\ApiClient\Model\RegisterAgentResponse
 ```
 
 Register (or re-register) an agent
@@ -631,9 +631,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AgentsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$registerAgentRequest = new \LumoAuth\ApiClient\Model\RegisterAgentRequest(); // \LumoAuth\ApiClient\Model\RegisterAgentRequest
 
 try {
-    $result = $apiInstance->registerAgent($orgId);
+    $result = $apiInstance->registerAgent($orgId, $registerAgentRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AgentsApi->registerAgent: ', $e->getMessage(), PHP_EOL;
@@ -645,6 +646,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **registerAgentRequest** | [**\LumoAuth\ApiClient\Model\RegisterAgentRequest**](../Model/RegisterAgentRequest.md)|  | |
 
 ### Return type
 
@@ -656,7 +658,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

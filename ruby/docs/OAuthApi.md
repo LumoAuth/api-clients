@@ -92,7 +92,7 @@ No authorization required
 
 ## backchannel_authorize
 
-> <BackchannelAuthorizeResponse> backchannel_authorize(org_id)
+> <BackchannelAuthorizeResponse> backchannel_authorize(org_id, scope, opts)
 
 CIBA backchannel authentication request
 
@@ -112,10 +112,25 @@ end
 
 api_instance = LumoAuthApiClient::OAuthApi.new
 org_id = 'org_id_example' # String | 
+scope = 'scope_example' # String | 
+opts = {
+  login_hint: 'login_hint_example', # String | 
+  login_hint_token: 'login_hint_token_example', # String | 
+  id_token_hint: 'id_token_hint_example', # String | 
+  binding_message: 'binding_message_example', # String | 
+  acr_values: 'acr_values_example', # String | 
+  requested_expiry: 56, # Integer | 
+  client_notification_token: 'client_notification_token_example', # String | 
+  authorization_details: 'authorization_details_example', # String | 
+  client_id: 'client_id_example', # String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+  client_secret: 'client_secret_example', # String | client_secret_post
+  client_assertion_type: 'client_assertion_type_example', # String | 
+  client_assertion: 'client_assertion_example' # String | private_key_jwt (RFC 7523)
+}
 
 begin
   # CIBA backchannel authentication request
-  result = api_instance.backchannel_authorize(org_id)
+  result = api_instance.backchannel_authorize(org_id, scope, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling OAuthApi->backchannel_authorize: #{e}"
@@ -126,12 +141,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<BackchannelAuthorizeResponse>, Integer, Hash)> backchannel_authorize_with_http_info(org_id)
+> <Array(<BackchannelAuthorizeResponse>, Integer, Hash)> backchannel_authorize_with_http_info(org_id, scope, opts)
 
 ```ruby
 begin
   # CIBA backchannel authentication request
-  data, status_code, headers = api_instance.backchannel_authorize_with_http_info(org_id)
+  data, status_code, headers = api_instance.backchannel_authorize_with_http_info(org_id, scope, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <BackchannelAuthorizeResponse>
@@ -145,6 +160,19 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **scope** | **String** |  |  |
+| **login_hint** | **String** |  | [optional] |
+| **login_hint_token** | **String** |  | [optional] |
+| **id_token_hint** | **String** |  | [optional] |
+| **binding_message** | **String** |  | [optional] |
+| **acr_values** | **String** |  | [optional] |
+| **requested_expiry** | **Integer** |  | [optional] |
+| **client_notification_token** | **String** |  | [optional] |
+| **authorization_details** | **String** |  | [optional] |
+| **client_id** | **String** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **client_secret** | **String** | client_secret_post | [optional] |
+| **client_assertion_type** | **String** |  | [optional] |
+| **client_assertion** | **String** | private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -156,7 +184,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 
@@ -228,7 +256,7 @@ No authorization required
 
 ## device_authorization
 
-> <DeviceAuthorizationResponse> device_authorization(org_id)
+> <DeviceAuthorizationResponse> device_authorization(org_id, opts)
 
 Device authorization request (RFC 8628)
 
@@ -248,10 +276,19 @@ end
 
 api_instance = LumoAuthApiClient::OAuthApi.new
 org_id = 'org_id_example' # String | 
+opts = {
+  client_id: 'client_id_example', # String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+  client_secret: 'client_secret_example', # String | client_secret_post
+  client_assertion_type: 'client_assertion_type_example', # String | 
+  client_assertion: 'client_assertion_example', # String | private_key_jwt (RFC 7523)
+  scope: 'scope_example', # String | Space-separated scopes.
+  resource: 'resource_example', # String | RFC 8707 resource indicator.
+  authorization_details: 'authorization_details_example' # String | RFC 9396, a JSON array as text.
+}
 
 begin
   # Device authorization request (RFC 8628)
-  result = api_instance.device_authorization(org_id)
+  result = api_instance.device_authorization(org_id, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling OAuthApi->device_authorization: #{e}"
@@ -262,12 +299,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<DeviceAuthorizationResponse>, Integer, Hash)> device_authorization_with_http_info(org_id)
+> <Array(<DeviceAuthorizationResponse>, Integer, Hash)> device_authorization_with_http_info(org_id, opts)
 
 ```ruby
 begin
   # Device authorization request (RFC 8628)
-  data, status_code, headers = api_instance.device_authorization_with_http_info(org_id)
+  data, status_code, headers = api_instance.device_authorization_with_http_info(org_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <DeviceAuthorizationResponse>
@@ -281,6 +318,13 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **client_id** | **String** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **client_secret** | **String** | client_secret_post | [optional] |
+| **client_assertion_type** | **String** |  | [optional] |
+| **client_assertion** | **String** | private_key_jwt (RFC 7523) | [optional] |
+| **scope** | **String** | Space-separated scopes. | [optional] |
+| **resource** | **String** | RFC 8707 resource indicator. | [optional] |
+| **authorization_details** | **String** | RFC 9396, a JSON array as text. | [optional] |
 
 ### Return type
 
@@ -292,7 +336,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 
@@ -502,7 +546,7 @@ No authorization required
 
 ## introspect
 
-> <IntrospectResponse> introspect(org_id)
+> <IntrospectResponse> introspect(org_id, token, opts)
 
 Token introspection (RFC 7662)
 
@@ -522,10 +566,18 @@ end
 
 api_instance = LumoAuthApiClient::OAuthApi.new
 org_id = 'org_id_example' # String | 
+token = 'token_example' # String | 
+opts = {
+  token_type_hint: 'access_token', # String | 
+  client_id: 'client_id_example', # String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+  client_secret: 'client_secret_example', # String | client_secret_post
+  client_assertion_type: 'client_assertion_type_example', # String | 
+  client_assertion: 'client_assertion_example' # String | private_key_jwt (RFC 7523)
+}
 
 begin
   # Token introspection (RFC 7662)
-  result = api_instance.introspect(org_id)
+  result = api_instance.introspect(org_id, token, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling OAuthApi->introspect: #{e}"
@@ -536,12 +588,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<IntrospectResponse>, Integer, Hash)> introspect_with_http_info(org_id)
+> <Array(<IntrospectResponse>, Integer, Hash)> introspect_with_http_info(org_id, token, opts)
 
 ```ruby
 begin
   # Token introspection (RFC 7662)
-  data, status_code, headers = api_instance.introspect_with_http_info(org_id)
+  data, status_code, headers = api_instance.introspect_with_http_info(org_id, token, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <IntrospectResponse>
@@ -555,6 +607,12 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **token** | **String** |  |  |
+| **token_type_hint** | **String** |  | [optional] |
+| **client_id** | **String** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **client_secret** | **String** | client_secret_post | [optional] |
+| **client_assertion_type** | **String** |  | [optional] |
+| **client_assertion** | **String** | private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -566,13 +624,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 
 ## par
 
-> <ParResponse> par(org_id)
+> <ParResponse> par(org_id, opts)
 
 Pushed authorization request (RFC 9126)
 
@@ -592,10 +650,28 @@ end
 
 api_instance = LumoAuthApiClient::OAuthApi.new
 org_id = 'org_id_example' # String | 
+opts = {
+  response_type: 'response_type_example', # String | 
+  redirect_uri: 'redirect_uri_example', # String | 
+  scope: 'scope_example', # String | 
+  state: 'state_example', # String | 
+  nonce: 'nonce_example', # String | 
+  code_challenge: 'code_challenge_example', # String | 
+  code_challenge_method: 'code_challenge_method_example', # String | 
+  request: 'request_example', # String | A signed request object (JAR, RFC 9101).
+  resource: 'resource_example', # String | 
+  authorization_details: 'authorization_details_example', # String | 
+  prompt: 'prompt_example', # String | 
+  login_hint: 'login_hint_example', # String | 
+  client_id: 'client_id_example', # String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+  client_secret: 'client_secret_example', # String | client_secret_post
+  client_assertion_type: 'client_assertion_type_example', # String | 
+  client_assertion: 'client_assertion_example' # String | private_key_jwt (RFC 7523)
+}
 
 begin
   # Pushed authorization request (RFC 9126)
-  result = api_instance.par(org_id)
+  result = api_instance.par(org_id, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling OAuthApi->par: #{e}"
@@ -606,12 +682,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<ParResponse>, Integer, Hash)> par_with_http_info(org_id)
+> <Array(<ParResponse>, Integer, Hash)> par_with_http_info(org_id, opts)
 
 ```ruby
 begin
   # Pushed authorization request (RFC 9126)
-  data, status_code, headers = api_instance.par_with_http_info(org_id)
+  data, status_code, headers = api_instance.par_with_http_info(org_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <ParResponse>
@@ -625,6 +701,22 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **response_type** | **String** |  | [optional] |
+| **redirect_uri** | **String** |  | [optional] |
+| **scope** | **String** |  | [optional] |
+| **state** | **String** |  | [optional] |
+| **nonce** | **String** |  | [optional] |
+| **code_challenge** | **String** |  | [optional] |
+| **code_challenge_method** | **String** |  | [optional] |
+| **request** | **String** | A signed request object (JAR, RFC 9101). | [optional] |
+| **resource** | **String** |  | [optional] |
+| **authorization_details** | **String** |  | [optional] |
+| **prompt** | **String** |  | [optional] |
+| **login_hint** | **String** |  | [optional] |
+| **client_id** | **String** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **client_secret** | **String** | client_secret_post | [optional] |
+| **client_assertion_type** | **String** |  | [optional] |
+| **client_assertion** | **String** | private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -636,13 +728,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 
 ## register_client
 
-> <RegisterClientResponse> register_client(org_id)
+> <RegisterClientResponse> register_client(org_id, register_client_request)
 
 Dynamic client registration (RFC 7591 / OIDC DCR)
 
@@ -666,10 +758,11 @@ end
 
 api_instance = LumoAuthApiClient::OAuthApi.new
 org_id = 'org_id_example' # String | 
+register_client_request = LumoAuthApiClient::RegisterClientRequest.new # RegisterClientRequest | RFC 7591 client metadata.
 
 begin
   # Dynamic client registration (RFC 7591 / OIDC DCR)
-  result = api_instance.register_client(org_id)
+  result = api_instance.register_client(org_id, register_client_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling OAuthApi->register_client: #{e}"
@@ -680,12 +773,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<RegisterClientResponse>, Integer, Hash)> register_client_with_http_info(org_id)
+> <Array(<RegisterClientResponse>, Integer, Hash)> register_client_with_http_info(org_id, register_client_request)
 
 ```ruby
 begin
   # Dynamic client registration (RFC 7591 / OIDC DCR)
-  data, status_code, headers = api_instance.register_client_with_http_info(org_id)
+  data, status_code, headers = api_instance.register_client_with_http_info(org_id, register_client_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <RegisterClientResponse>
@@ -699,6 +792,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **register_client_request** | [**RegisterClientRequest**](RegisterClientRequest.md) | RFC 7591 client metadata. |  |
 
 ### Return type
 
@@ -710,7 +804,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -782,7 +876,7 @@ No authorization required
 
 ## revoke
 
-> Object revoke(org_id)
+> Object revoke(org_id, token, opts)
 
 Token revocation (RFC 7009)
 
@@ -802,10 +896,18 @@ end
 
 api_instance = LumoAuthApiClient::OAuthApi.new
 org_id = 'org_id_example' # String | 
+token = 'token_example' # String | 
+opts = {
+  token_type_hint: 'access_token', # String | 
+  client_id: 'client_id_example', # String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+  client_secret: 'client_secret_example', # String | client_secret_post
+  client_assertion_type: 'client_assertion_type_example', # String | 
+  client_assertion: 'client_assertion_example' # String | private_key_jwt (RFC 7523)
+}
 
 begin
   # Token revocation (RFC 7009)
-  result = api_instance.revoke(org_id)
+  result = api_instance.revoke(org_id, token, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling OAuthApi->revoke: #{e}"
@@ -816,12 +918,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(Object, Integer, Hash)> revoke_with_http_info(org_id)
+> <Array(Object, Integer, Hash)> revoke_with_http_info(org_id, token, opts)
 
 ```ruby
 begin
   # Token revocation (RFC 7009)
-  data, status_code, headers = api_instance.revoke_with_http_info(org_id)
+  data, status_code, headers = api_instance.revoke_with_http_info(org_id, token, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => Object
@@ -835,6 +937,12 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **token** | **String** |  |  |
+| **token_type_hint** | **String** |  | [optional] |
+| **client_id** | **String** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **client_secret** | **String** | client_secret_post | [optional] |
+| **client_assertion_type** | **String** |  | [optional] |
+| **client_assertion** | **String** | private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -846,7 +954,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 
@@ -1175,7 +1283,7 @@ No authorization required
 
 ## submit_login_json
 
-> <SubmitLoginJsonResponse> submit_login_json(org_id)
+> <SubmitLoginJsonResponse> submit_login_json(org_id, submit_login_json_request)
 
 Programmatic (JSON) login for the authorization flow
 
@@ -1189,10 +1297,11 @@ require 'lumoauth_api_client'
 
 api_instance = LumoAuthApiClient::OAuthApi.new
 org_id = 'org_id_example' # String | 
+submit_login_json_request = LumoAuthApiClient::SubmitLoginJsonRequest.new({email: 'email_example', password: 'password_example'}) # SubmitLoginJsonRequest | 
 
 begin
   # Programmatic (JSON) login for the authorization flow
-  result = api_instance.submit_login_json(org_id)
+  result = api_instance.submit_login_json(org_id, submit_login_json_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling OAuthApi->submit_login_json: #{e}"
@@ -1203,12 +1312,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<SubmitLoginJsonResponse>, Integer, Hash)> submit_login_json_with_http_info(org_id)
+> <Array(<SubmitLoginJsonResponse>, Integer, Hash)> submit_login_json_with_http_info(org_id, submit_login_json_request)
 
 ```ruby
 begin
   # Programmatic (JSON) login for the authorization flow
-  data, status_code, headers = api_instance.submit_login_json_with_http_info(org_id)
+  data, status_code, headers = api_instance.submit_login_json_with_http_info(org_id, submit_login_json_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <SubmitLoginJsonResponse>
@@ -1222,6 +1331,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **submit_login_json_request** | [**SubmitLoginJsonRequest**](SubmitLoginJsonRequest.md) |  |  |
 
 ### Return type
 
@@ -1233,7 +1343,7 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -1303,7 +1413,7 @@ No authorization required
 
 ## token
 
-> <TokenResponse> token(org_id)
+> <TokenResponse> token(org_id, grant_type, opts)
 
 OAuth 2.1 token endpoint
 
@@ -1323,10 +1433,31 @@ end
 
 api_instance = LumoAuthApiClient::OAuthApi.new
 org_id = 'org_id_example' # String | 
+grant_type = 'grant_type_example' # String | 
+opts = {
+  code: 'code_example', # String | 
+  redirect_uri: 'redirect_uri_example', # String | 
+  code_verifier: 'code_verifier_example', # String | 
+  refresh_token: 'refresh_token_example', # String | 
+  device_code: 'device_code_example', # String | 
+  auth_req_id: 'auth_req_id_example', # String | CIBA
+  scope: 'scope_example', # String | 
+  resource: 'resource_example', # String | 
+  subject_token: 'subject_token_example', # String | Token exchange (RFC 8693)
+  subject_token_type: 'subject_token_type_example', # String | 
+  actor_token: 'actor_token_example', # String | 
+  actor_token_type: 'actor_token_type_example', # String | 
+  requested_token_type: 'requested_token_type_example', # String | 
+  assertion: 'assertion_example', # String | JWT bearer / ID-JAG grant
+  client_id: 'client_id_example', # String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+  client_secret: 'client_secret_example', # String | client_secret_post
+  client_assertion_type: 'client_assertion_type_example', # String | 
+  client_assertion: 'client_assertion_example' # String | private_key_jwt (RFC 7523)
+}
 
 begin
   # OAuth 2.1 token endpoint
-  result = api_instance.token(org_id)
+  result = api_instance.token(org_id, grant_type, opts)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling OAuthApi->token: #{e}"
@@ -1337,12 +1468,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<TokenResponse>, Integer, Hash)> token_with_http_info(org_id)
+> <Array(<TokenResponse>, Integer, Hash)> token_with_http_info(org_id, grant_type, opts)
 
 ```ruby
 begin
   # OAuth 2.1 token endpoint
-  data, status_code, headers = api_instance.token_with_http_info(org_id)
+  data, status_code, headers = api_instance.token_with_http_info(org_id, grant_type, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <TokenResponse>
@@ -1356,6 +1487,25 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **grant_type** | **String** |  |  |
+| **code** | **String** |  | [optional] |
+| **redirect_uri** | **String** |  | [optional] |
+| **code_verifier** | **String** |  | [optional] |
+| **refresh_token** | **String** |  | [optional] |
+| **device_code** | **String** |  | [optional] |
+| **auth_req_id** | **String** | CIBA | [optional] |
+| **scope** | **String** |  | [optional] |
+| **resource** | **String** |  | [optional] |
+| **subject_token** | **String** | Token exchange (RFC 8693) | [optional] |
+| **subject_token_type** | **String** |  | [optional] |
+| **actor_token** | **String** |  | [optional] |
+| **actor_token_type** | **String** |  | [optional] |
+| **requested_token_type** | **String** |  | [optional] |
+| **assertion** | **String** | JWT bearer / ID-JAG grant | [optional] |
+| **client_id** | **String** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **client_secret** | **String** | client_secret_post | [optional] |
+| **client_assertion_type** | **String** |  | [optional] |
+| **client_assertion** | **String** | private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -1367,6 +1517,6 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 

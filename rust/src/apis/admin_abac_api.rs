@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -129,9 +129,10 @@ pub enum PutAbacPoliciesUpdateError {
 }
 
 
-pub async fn abac_attributes_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AbacAttributesCreateResponse, Error<AbacAttributesCreateError>> {
+pub async fn abac_attributes_create(configuration: &configuration::Configuration, org_id: &str, abac_attributes_create_request: models::AbacAttributesCreateRequest) -> Result<models::AbacAttributesCreateResponse, Error<AbacAttributesCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_abac_attributes_create_request = abac_attributes_create_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/abac/attributes", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -150,6 +151,7 @@ pub async fn abac_attributes_create(configuration: &configuration::Configuration
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_abac_attributes_create_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -319,9 +321,10 @@ pub async fn abac_attributes_list(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn abac_policies_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AbacPoliciesCreateResponse, Error<AbacPoliciesCreateError>> {
+pub async fn abac_policies_create(configuration: &configuration::Configuration, org_id: &str, abac_policies_create_request: models::AbacPoliciesCreateRequest) -> Result<models::AbacPoliciesCreateResponse, Error<AbacPoliciesCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_abac_policies_create_request = abac_policies_create_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/abac/policies", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -340,6 +343,7 @@ pub async fn abac_policies_create(configuration: &configuration::Configuration, 
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_abac_policies_create_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -561,10 +565,11 @@ pub async fn abac_policies_toggle(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn patch_abac_attributes_update(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<models::PutAbacAttributesUpdateResponse, Error<PatchAbacAttributesUpdateError>> {
+pub async fn patch_abac_attributes_update(configuration: &configuration::Configuration, org_id: &str, id: &str, put_abac_attributes_update_request: models::PutAbacAttributesUpdateRequest) -> Result<models::PutAbacAttributesUpdateResponse, Error<PatchAbacAttributesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_id = id;
+    let p_put_abac_attributes_update_request = put_abac_attributes_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/abac/attributes/{id}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -583,6 +588,7 @@ pub async fn patch_abac_attributes_update(configuration: &configuration::Configu
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_abac_attributes_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -609,10 +615,11 @@ pub async fn patch_abac_attributes_update(configuration: &configuration::Configu
     }
 }
 
-pub async fn patch_abac_policies_update(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<models::PutAbacPoliciesUpdateResponse, Error<PatchAbacPoliciesUpdateError>> {
+pub async fn patch_abac_policies_update(configuration: &configuration::Configuration, org_id: &str, id: &str, put_abac_policies_update_request: models::PutAbacPoliciesUpdateRequest) -> Result<models::PutAbacPoliciesUpdateResponse, Error<PatchAbacPoliciesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_id = id;
+    let p_put_abac_policies_update_request = put_abac_policies_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/abac/policies/{id}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -631,6 +638,7 @@ pub async fn patch_abac_policies_update(configuration: &configuration::Configura
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_abac_policies_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -657,10 +665,11 @@ pub async fn patch_abac_policies_update(configuration: &configuration::Configura
     }
 }
 
-pub async fn put_abac_attributes_update(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<models::PutAbacAttributesUpdateResponse, Error<PutAbacAttributesUpdateError>> {
+pub async fn put_abac_attributes_update(configuration: &configuration::Configuration, org_id: &str, id: &str, put_abac_attributes_update_request: models::PutAbacAttributesUpdateRequest) -> Result<models::PutAbacAttributesUpdateResponse, Error<PutAbacAttributesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_id = id;
+    let p_put_abac_attributes_update_request = put_abac_attributes_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/abac/attributes/{id}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -679,6 +688,7 @@ pub async fn put_abac_attributes_update(configuration: &configuration::Configura
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_abac_attributes_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -705,10 +715,11 @@ pub async fn put_abac_attributes_update(configuration: &configuration::Configura
     }
 }
 
-pub async fn put_abac_policies_update(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<models::PutAbacPoliciesUpdateResponse, Error<PutAbacPoliciesUpdateError>> {
+pub async fn put_abac_policies_update(configuration: &configuration::Configuration, org_id: &str, id: &str, put_abac_policies_update_request: models::PutAbacPoliciesUpdateRequest) -> Result<models::PutAbacPoliciesUpdateResponse, Error<PutAbacPoliciesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_id = id;
+    let p_put_abac_policies_update_request = put_abac_policies_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/abac/policies/{id}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -727,6 +738,7 @@ pub async fn put_abac_policies_update(configuration: &configuration::Configurati
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_abac_policies_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

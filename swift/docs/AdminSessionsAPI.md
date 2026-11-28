@@ -9,9 +9,9 @@ Method | HTTP request | Description
 [**adminSessionsCount**](AdminSessionsAPI.md#adminsessionscount) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Active session count
 [**adminSessionsList**](AdminSessionsAPI.md#adminsessionslist) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions
 [**adminSessionsRevoke**](AdminSessionsAPI.md#adminsessionsrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a session
-[**adminSessionsRevokeAll**](AdminSessionsAPI.md#adminsessionsrevokeall) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the tenant
+[**adminSessionsRevokeAll**](AdminSessionsAPI.md#adminsessionsrevokeall) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the organization
 [**adminSessionsStats**](AdminSessionsAPI.md#adminsessionsstats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Session statistics
-[**adminTokensList**](AdminSessionsAPI.md#admintokenslist) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens
+[**adminTokensList**](AdminSessionsAPI.md#admintokenslist) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List stored (opaque) access tokens
 [**adminTokensRevoke**](AdminSessionsAPI.md#admintokensrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/tokens/{tokenId} | Revoke a token
 [**adminUserSessionsList**](AdminSessionsAPI.md#adminusersessionslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | List a user&#39;s active sessions
 [**adminUserSessionsRevokeAll**](AdminSessionsAPI.md#adminusersessionsrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions of a user
@@ -175,7 +175,7 @@ Name | Type | Description  | Notes
 
 List active sessions
 
-Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
 ### Example
 ```swift
@@ -273,7 +273,7 @@ Name | Type | Description  | Notes
     open class func adminSessionsRevokeAll(orgId: String, adminSessionsRevokeAllRequest: AdminSessionsRevokeAllRequest, completion: @escaping (_ data: AdminSessionsRevokeAllResponse?, _ error: Error?) -> Void)
 ```
 
-Revoke every session in the tenant
+Revoke every session in the organization
 
 Signs out all users. Requires `confirm: true` in the body.
 
@@ -285,7 +285,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let adminSessionsRevokeAllRequest = AdminSessionsRevokeAllRequest(confirm: true) // AdminSessionsRevokeAllRequest | 
 
-// Revoke every session in the tenant
+// Revoke every session in the organization
 AdminSessionsAPI.adminSessionsRevokeAll(orgId: orgId, adminSessionsRevokeAllRequest: adminSessionsRevokeAllRequest) { (response, error) in
     guard error == nil else {
         print(error)
@@ -373,9 +373,9 @@ Name | Type | Description  | Notes
     open class func adminTokensList(orgId: String, completion: @escaping (_ data: AdminTokensListResponse?, _ error: Error?) -> Void)
 ```
 
-List access tokens
+List stored (opaque) access tokens
 
-Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
+Paginated OPAQUE access tokens issued by the organization's clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user's or a client's tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
 
 ### Example
 ```swift
@@ -384,7 +384,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// List access tokens
+// List stored (opaque) access tokens
 AdminSessionsAPI.adminTokensList(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -627,6 +627,8 @@ Name | Type | Description  | Notes
 
 Revoke all tokens of a user
 
+Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
+
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
@@ -676,6 +678,8 @@ Name | Type | Description  | Notes
 ```
 
 Revoke all tokens of a user (POST alias)
+
+Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
 ### Example
 ```swift

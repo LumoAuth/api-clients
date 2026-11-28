@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -24,6 +24,7 @@ var _ MappedNullable = &AttestRequest{}
 type AttestRequest struct {
 	// The workload OIDC token (JWT).
 	AttestationToken string `json:"attestation_token"`
+	Scope *AttestRequestScope `json:"scope,omitempty"`
 }
 
 type _AttestRequest AttestRequest
@@ -70,6 +71,38 @@ func (o *AttestRequest) SetAttestationToken(v string) {
 	o.AttestationToken = v
 }
 
+// GetScope returns the Scope field value if set, zero value otherwise.
+func (o *AttestRequest) GetScope() AttestRequestScope {
+	if o == nil || IsNil(o.Scope) {
+		var ret AttestRequestScope
+		return ret
+	}
+	return *o.Scope
+}
+
+// GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AttestRequest) GetScopeOk() (*AttestRequestScope, bool) {
+	if o == nil || IsNil(o.Scope) {
+		return nil, false
+	}
+	return o.Scope, true
+}
+
+// HasScope returns a boolean if a field has been set.
+func (o *AttestRequest) HasScope() bool {
+	if o != nil && !IsNil(o.Scope) {
+		return true
+	}
+
+	return false
+}
+
+// SetScope gets a reference to the given AttestRequestScope and assigns it to the Scope field.
+func (o *AttestRequest) SetScope(v AttestRequestScope) {
+	o.Scope = &v
+}
+
 func (o AttestRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -81,6 +114,9 @@ func (o AttestRequest) MarshalJSON() ([]byte, error) {
 func (o AttestRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["attestation_token"] = o.AttestationToken
+	if !IsNil(o.Scope) {
+		toSerialize["scope"] = o.Scope
+	}
 	return toSerialize, nil
 }
 

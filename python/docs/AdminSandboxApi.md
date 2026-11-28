@@ -4,15 +4,15 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_sandbox_destroy**](AdminSandboxApi.md#admin_sandbox_destroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant
-[**admin_sandbox_list**](AdminSandboxApi.md#admin_sandbox_list) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox tenants
-[**admin_sandbox_spawn**](AdminSandboxApi.md#admin_sandbox_spawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant
+[**admin_sandbox_destroy**](AdminSandboxApi.md#admin_sandbox_destroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox organization
+[**admin_sandbox_list**](AdminSandboxApi.md#admin_sandbox_list) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox organizations
+[**admin_sandbox_spawn**](AdminSandboxApi.md#admin_sandbox_spawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox organization
 
 
 # **admin_sandbox_destroy**
 > MessageResponse admin_sandbox_destroy(org_id, sandbox_slug)
 
-Destroy a sandbox tenant
+Destroy a sandbox organization
 
 ### Example
 
@@ -55,7 +55,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     sandbox_slug = 'sandbox_slug_example' # str | 
 
     try:
-        # Destroy a sandbox tenant
+        # Destroy a sandbox organization
         api_response = api_instance.admin_sandbox_destroy(org_id, sandbox_slug)
         print("The response of AdminSandboxApi->admin_sandbox_destroy:\n")
         pprint(api_response)
@@ -98,7 +98,7 @@ Name | Type | Description  | Notes
 # **admin_sandbox_list**
 > AdminSandboxListResponse admin_sandbox_list(org_id)
 
-List the caller's sandbox tenants
+List the caller's sandbox organizations
 
 ### Example
 
@@ -140,7 +140,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # List the caller's sandbox tenants
+        # List the caller's sandbox organizations
         api_response = api_instance.admin_sandbox_list(org_id)
         print("The response of AdminSandboxApi->admin_sandbox_list:\n")
         pprint(api_response)
@@ -181,7 +181,7 @@ Name | Type | Description  | Notes
 # **admin_sandbox_spawn**
 > AdminSandboxSpawnResponse admin_sandbox_spawn(org_id, admin_sandbox_spawn_request=admin_sandbox_spawn_request)
 
-Spawn a sandbox tenant
+Spawn a sandbox organization
 
 Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
 
@@ -227,7 +227,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     admin_sandbox_spawn_request = lumoauth_api_client.AdminSandboxSpawnRequest() # AdminSandboxSpawnRequest |  (optional)
 
     try:
-        # Spawn a sandbox tenant
+        # Spawn a sandbox organization
         api_response = api_instance.admin_sandbox_spawn(org_id, admin_sandbox_spawn_request=admin_sandbox_spawn_request)
         print("The response of AdminSandboxApi->admin_sandbox_spawn:\n")
         pprint(api_response)

@@ -11,10 +11,12 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**AdminMcpServersGrantsRemove**](AdminMcpApi.md#adminmcpserversgrantsremove) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Remove every grant of an agent on an MCP server |
 | [**AdminMcpServersGrantsSet**](AdminMcpApi.md#adminmcpserversgrantsset) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Set the tools of an MCP server that an agent may call |
 | [**AdminMcpServersList**](AdminMcpApi.md#adminmcpserverslist) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers |
+| [**PatchAdminMcpServersUpdate**](AdminMcpApi.md#patchadminmcpserversupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server |
+| [**PutAdminMcpServersUpdate**](AdminMcpApi.md#putadminmcpserversupdate) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server (same as PATCH: only the fields that are sent change) |
 
 <a id="adminmcpserverscreate"></a>
 # **AdminMcpServersCreate**
-> AdminMcpServersCreateResponse AdminMcpServersCreate (string orgId)
+> AdminMcpServersCreateResponse AdminMcpServersCreate (string orgId, McpServerWrite mcpServerWrite)
 
 Register an MCP server
 
@@ -49,11 +51,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminMcpApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var mcpServerWrite = new McpServerWrite(); // McpServerWrite | 
 
             try
             {
                 // Register an MCP server
-                AdminMcpServersCreateResponse result = apiInstance.AdminMcpServersCreate(orgId);
+                AdminMcpServersCreateResponse result = apiInstance.AdminMcpServersCreate(orgId, mcpServerWrite);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -74,7 +77,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Register an MCP server
-    ApiResponse<AdminMcpServersCreateResponse> response = apiInstance.AdminMcpServersCreateWithHttpInfo(orgId);
+    ApiResponse<AdminMcpServersCreateResponse> response = apiInstance.AdminMcpServersCreateWithHttpInfo(orgId, mcpServerWrite);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -92,6 +95,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **mcpServerWrite** | [**McpServerWrite**](McpServerWrite.md) |  |  |
 
 ### Return type
 
@@ -103,7 +107,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -739,6 +743,222 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | MCP servers |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="patchadminmcpserversupdate"></a>
+# **PatchAdminMcpServersUpdate**
+> AdminMcpServersCreateResponse PatchAdminMcpServersUpdate (string orgId, string serverId, McpServerWrite mcpServerWrite)
+
+Update an MCP server
+
+Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class PatchAdminMcpServersUpdateExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminMcpApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+            var serverId = "serverId_example";  // string | 
+            var mcpServerWrite = new McpServerWrite(); // McpServerWrite | 
+
+            try
+            {
+                // Update an MCP server
+                AdminMcpServersCreateResponse result = apiInstance.PatchAdminMcpServersUpdate(orgId, serverId, mcpServerWrite);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminMcpApi.PatchAdminMcpServersUpdate: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the PatchAdminMcpServersUpdateWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Update an MCP server
+    ApiResponse<AdminMcpServersCreateResponse> response = apiInstance.PatchAdminMcpServersUpdateWithHttpInfo(orgId, serverId, mcpServerWrite);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminMcpApi.PatchAdminMcpServersUpdateWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+| **serverId** | **string** |  |  |
+| **mcpServerWrite** | [**McpServerWrite**](McpServerWrite.md) |  |  |
+
+### Return type
+
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Updated MCP server |  -  |
+| **400** | resource_uri changed, a switch that is not a JSON boolean, or a field that cannot be set (include_scope_in_challenge, bearer_methods_supported) |  -  |
+| **404** | MCP server not found |  -  |
+| **422** | validation_error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="putadminmcpserversupdate"></a>
+# **PutAdminMcpServersUpdate**
+> AdminMcpServersCreateResponse PutAdminMcpServersUpdate (string orgId, string serverId, McpServerWrite mcpServerWrite)
+
+Update an MCP server (same as PATCH: only the fields that are sent change)
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class PutAdminMcpServersUpdateExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminMcpApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+            var serverId = "serverId_example";  // string | 
+            var mcpServerWrite = new McpServerWrite(); // McpServerWrite | 
+
+            try
+            {
+                // Update an MCP server (same as PATCH: only the fields that are sent change)
+                AdminMcpServersCreateResponse result = apiInstance.PutAdminMcpServersUpdate(orgId, serverId, mcpServerWrite);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminMcpApi.PutAdminMcpServersUpdate: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the PutAdminMcpServersUpdateWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Update an MCP server (same as PATCH: only the fields that are sent change)
+    ApiResponse<AdminMcpServersCreateResponse> response = apiInstance.PutAdminMcpServersUpdateWithHttpInfo(orgId, serverId, mcpServerWrite);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminMcpApi.PutAdminMcpServersUpdateWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+| **serverId** | **string** |  |  |
+| **mcpServerWrite** | [**McpServerWrite**](McpServerWrite.md) |  |  |
+
+### Return type
+
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Updated MCP server |  -  |
+| **400** | resource_uri changed, or a field that cannot be set |  -  |
+| **404** | MCP server not found |  -  |
+| **422** | validation_error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

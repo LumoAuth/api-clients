@@ -297,7 +297,7 @@ No authorization required
 
 ## register_agent
 
-> models::RegisterAgentResponse register_agent(org_id)
+> models::RegisterAgentResponse register_agent(org_id, register_agent_request)
 Register (or re-register) an agent
 
 ### Parameters
@@ -306,6 +306,7 @@ Register (or re-register) an agent
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**register_agent_request** | [**RegisterAgentRequest**](RegisterAgentRequest.md) |  | [required] |
 
 ### Return type
 
@@ -317,7 +318,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -13,7 +13,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -60,7 +60,8 @@ class AdminWebhooksTunnelStartResponseData implements ModelInterface, ArrayAcces
     protected static $openAPITypes = [
         'webhookId' => 'int',
         'sessionId' => 'string',
-        'tunnelUrl' => 'string'
+        'tunnelUrl' => 'string',
+        'signingSecret' => 'string'
     ];
 
     /**
@@ -73,7 +74,8 @@ class AdminWebhooksTunnelStartResponseData implements ModelInterface, ArrayAcces
     protected static $openAPIFormats = [
         'webhookId' => null,
         'sessionId' => null,
-        'tunnelUrl' => null
+        'tunnelUrl' => null,
+        'signingSecret' => null
     ];
 
     /**
@@ -84,7 +86,8 @@ class AdminWebhooksTunnelStartResponseData implements ModelInterface, ArrayAcces
     protected static array $openAPINullables = [
         'webhookId' => false,
         'sessionId' => false,
-        'tunnelUrl' => false
+        'tunnelUrl' => false,
+        'signingSecret' => false
     ];
 
     /**
@@ -175,7 +178,8 @@ class AdminWebhooksTunnelStartResponseData implements ModelInterface, ArrayAcces
     protected static $attributeMap = [
         'webhookId' => 'webhook_id',
         'sessionId' => 'session_id',
-        'tunnelUrl' => 'tunnel_url'
+        'tunnelUrl' => 'tunnel_url',
+        'signingSecret' => 'signing_secret'
     ];
 
     /**
@@ -186,7 +190,8 @@ class AdminWebhooksTunnelStartResponseData implements ModelInterface, ArrayAcces
     protected static $setters = [
         'webhookId' => 'setWebhookId',
         'sessionId' => 'setSessionId',
-        'tunnelUrl' => 'setTunnelUrl'
+        'tunnelUrl' => 'setTunnelUrl',
+        'signingSecret' => 'setSigningSecret'
     ];
 
     /**
@@ -197,7 +202,8 @@ class AdminWebhooksTunnelStartResponseData implements ModelInterface, ArrayAcces
     protected static $getters = [
         'webhookId' => 'getWebhookId',
         'sessionId' => 'getSessionId',
-        'tunnelUrl' => 'getTunnelUrl'
+        'tunnelUrl' => 'getTunnelUrl',
+        'signingSecret' => 'getSigningSecret'
     ];
 
     /**
@@ -260,6 +266,7 @@ class AdminWebhooksTunnelStartResponseData implements ModelInterface, ArrayAcces
         $this->setIfExists('webhookId', $data ?? [], null);
         $this->setIfExists('sessionId', $data ?? [], null);
         $this->setIfExists('tunnelUrl', $data ?? [], null);
+        $this->setIfExists('signingSecret', $data ?? [], null);
     }
 
     /**
@@ -381,6 +388,33 @@ class AdminWebhooksTunnelStartResponseData implements ModelInterface, ArrayAcces
             throw new \InvalidArgumentException('non-nullable tunnelUrl cannot be null');
         }
         $this->container['tunnelUrl'] = $tunnelUrl;
+
+        return $this;
+    }
+
+    /**
+     * Gets signingSecret
+     *
+     * @return string|null
+     */
+    public function getSigningSecret()
+    {
+        return $this->container['signingSecret'];
+    }
+
+    /**
+     * Sets signingSecret
+     *
+     * @param string|null $signingSecret The secret that signs the tunnel's deliveries (X-LumoAuth-Signature). Shown once.
+     *
+     * @return self
+     */
+    public function setSigningSecret($signingSecret)
+    {
+        if (is_null($signingSecret)) {
+            throw new \InvalidArgumentException('non-nullable signingSecret cannot be null');
+        }
+        $this->container['signingSecret'] = $signingSecret;
 
         return $this;
     }

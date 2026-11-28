@@ -163,7 +163,7 @@ end
 
 ## admin_social_providers_create
 
-> <AdminSocialProvidersCreateResponse> admin_social_providers_create(org_id)
+> <AdminSocialProvidersCreateResponse> admin_social_providers_create(org_id, admin_social_providers_create_request)
 
 Create a social login provider
 
@@ -185,10 +185,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminIdentityProvidersApi.new
 org_id = 'org_id_example' # String | 
+admin_social_providers_create_request = LumoAuthApiClient::AdminSocialProvidersCreateRequest.new({provider: 'provider_example'}) # AdminSocialProvidersCreateRequest | An unknown field is refused with 400.
 
 begin
   # Create a social login provider
-  result = api_instance.admin_social_providers_create(org_id)
+  result = api_instance.admin_social_providers_create(org_id, admin_social_providers_create_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminIdentityProvidersApi->admin_social_providers_create: #{e}"
@@ -199,12 +200,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminSocialProvidersCreateResponse>, Integer, Hash)> admin_social_providers_create_with_http_info(org_id)
+> <Array(<AdminSocialProvidersCreateResponse>, Integer, Hash)> admin_social_providers_create_with_http_info(org_id, admin_social_providers_create_request)
 
 ```ruby
 begin
   # Create a social login provider
-  data, status_code, headers = api_instance.admin_social_providers_create_with_http_info(org_id)
+  data, status_code, headers = api_instance.admin_social_providers_create_with_http_info(org_id, admin_social_providers_create_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminSocialProvidersCreateResponse>
@@ -218,6 +219,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **admin_social_providers_create_request** | [**AdminSocialProvidersCreateRequest**](AdminSocialProvidersCreateRequest.md) | An unknown field is refused with 400. |  |
 
 ### Return type
 
@@ -229,7 +231,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -675,7 +677,7 @@ end
 
 ## patch_admin_social_providers_update
 
-> <AdminSocialProvidersCreateResponse> patch_admin_social_providers_update(org_id, provider_id)
+> <AdminSocialProvidersCreateResponse> patch_admin_social_providers_update(org_id, provider_id, put_admin_social_providers_update_request)
 
 Update a social login provider
 
@@ -698,10 +700,11 @@ end
 api_instance = LumoAuthApiClient::AdminIdentityProvidersApi.new
 org_id = 'org_id_example' # String | 
 provider_id = 'provider_id_example' # String | 
+put_admin_social_providers_update_request = LumoAuthApiClient::PutAdminSocialProvidersUpdateRequest.new # PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
 
 begin
   # Update a social login provider
-  result = api_instance.patch_admin_social_providers_update(org_id, provider_id)
+  result = api_instance.patch_admin_social_providers_update(org_id, provider_id, put_admin_social_providers_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminIdentityProvidersApi->patch_admin_social_providers_update: #{e}"
@@ -712,12 +715,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminSocialProvidersCreateResponse>, Integer, Hash)> patch_admin_social_providers_update_with_http_info(org_id, provider_id)
+> <Array(<AdminSocialProvidersCreateResponse>, Integer, Hash)> patch_admin_social_providers_update_with_http_info(org_id, provider_id, put_admin_social_providers_update_request)
 
 ```ruby
 begin
   # Update a social login provider
-  data, status_code, headers = api_instance.patch_admin_social_providers_update_with_http_info(org_id, provider_id)
+  data, status_code, headers = api_instance.patch_admin_social_providers_update_with_http_info(org_id, provider_id, put_admin_social_providers_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminSocialProvidersCreateResponse>
@@ -732,6 +735,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **provider_id** | **String** |  |  |
+| **put_admin_social_providers_update_request** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md) | Only the fields that are sent change. An unknown field is refused with 400. |  |
 
 ### Return type
 
@@ -743,13 +747,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## put_admin_social_providers_update
 
-> <AdminSocialProvidersCreateResponse> put_admin_social_providers_update(org_id, provider_id)
+> <AdminSocialProvidersCreateResponse> put_admin_social_providers_update(org_id, provider_id, put_admin_social_providers_update_request)
 
 Create or replace a social login provider
 
@@ -772,10 +776,11 @@ end
 api_instance = LumoAuthApiClient::AdminIdentityProvidersApi.new
 org_id = 'org_id_example' # String | 
 provider_id = 'provider_id_example' # String | 
+put_admin_social_providers_update_request = LumoAuthApiClient::PutAdminSocialProvidersUpdateRequest.new # PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
 
 begin
   # Create or replace a social login provider
-  result = api_instance.put_admin_social_providers_update(org_id, provider_id)
+  result = api_instance.put_admin_social_providers_update(org_id, provider_id, put_admin_social_providers_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminIdentityProvidersApi->put_admin_social_providers_update: #{e}"
@@ -786,12 +791,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminSocialProvidersCreateResponse>, Integer, Hash)> put_admin_social_providers_update_with_http_info(org_id, provider_id)
+> <Array(<AdminSocialProvidersCreateResponse>, Integer, Hash)> put_admin_social_providers_update_with_http_info(org_id, provider_id, put_admin_social_providers_update_request)
 
 ```ruby
 begin
   # Create or replace a social login provider
-  data, status_code, headers = api_instance.put_admin_social_providers_update_with_http_info(org_id, provider_id)
+  data, status_code, headers = api_instance.put_admin_social_providers_update_with_http_info(org_id, provider_id, put_admin_social_providers_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminSocialProvidersCreateResponse>
@@ -806,6 +811,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **provider_id** | **String** |  |  |
+| **put_admin_social_providers_update_request** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md) | Only the fields that are sent change. An unknown field is refused with 400. |  |
 
 ### Return type
 
@@ -817,6 +823,6 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 

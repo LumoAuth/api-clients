@@ -13,7 +13,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -36,7 +36,7 @@ use \LumoAuth\ApiClient\ObjectSerializer;
  * TenantProfile Class Doc Comment
  *
  * @category Class
- * @description The organization (tenant) record as returned by the settings endpoints.
+ * @description The organization record as returned by the settings endpoints.
  * @package  LumoAuth\ApiClient
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech

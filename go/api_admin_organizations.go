@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -318,6 +318,12 @@ type ApiAdminOrgInvitationsCreateRequest struct {
 	ApiService AdminOrganizationsAPI
 	orgId string
 	organizationId string
+	adminOrgInvitationsCreateRequest *AdminOrgInvitationsCreateRequest
+}
+
+func (r ApiAdminOrgInvitationsCreateRequest) AdminOrgInvitationsCreateRequest(adminOrgInvitationsCreateRequest AdminOrgInvitationsCreateRequest) ApiAdminOrgInvitationsCreateRequest {
+	r.adminOrgInvitationsCreateRequest = &adminOrgInvitationsCreateRequest
+	return r
 }
 
 func (r ApiAdminOrgInvitationsCreateRequest) Execute() (*AdminOrgInvitationsCreateResponse, *http.Response, error) {
@@ -363,9 +369,12 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsCreateExecute(r ApiAdm
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminOrgInvitationsCreateRequest == nil {
+		return localVarReturnValue, nil, reportError("adminOrgInvitationsCreateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -381,6 +390,8 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsCreateExecute(r ApiAdm
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminOrgInvitationsCreateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -802,6 +813,12 @@ type ApiAdminOrgMembersAddRequest struct {
 	ApiService AdminOrganizationsAPI
 	orgId string
 	organizationId string
+	adminOrgMembersAddRequest *AdminOrgMembersAddRequest
+}
+
+func (r ApiAdminOrgMembersAddRequest) AdminOrgMembersAddRequest(adminOrgMembersAddRequest AdminOrgMembersAddRequest) ApiAdminOrgMembersAddRequest {
+	r.adminOrgMembersAddRequest = &adminOrgMembersAddRequest
+	return r
 }
 
 func (r ApiAdminOrgMembersAddRequest) Execute() (*AdminOrgMembersAddResponse, *http.Response, error) {
@@ -847,9 +864,12 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersAddExecute(r ApiAdminOrgMe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminOrgMembersAddRequest == nil {
+		return localVarReturnValue, nil, reportError("adminOrgMembersAddRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -865,6 +885,8 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersAddExecute(r ApiAdminOrgMe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminOrgMembersAddRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1163,6 +1185,12 @@ type ApiAdminOrgRolesCreateRequest struct {
 	ApiService AdminOrganizationsAPI
 	orgId string
 	organizationId string
+	adminOrgRolesCreateRequest *AdminOrgRolesCreateRequest
+}
+
+func (r ApiAdminOrgRolesCreateRequest) AdminOrgRolesCreateRequest(adminOrgRolesCreateRequest AdminOrgRolesCreateRequest) ApiAdminOrgRolesCreateRequest {
+	r.adminOrgRolesCreateRequest = &adminOrgRolesCreateRequest
+	return r
 }
 
 func (r ApiAdminOrgRolesCreateRequest) Execute() (*AdminOrgRolesCreateResponse, *http.Response, error) {
@@ -1208,9 +1236,12 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesCreateExecute(r ApiAdminOrgR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminOrgRolesCreateRequest == nil {
+		return localVarReturnValue, nil, reportError("adminOrgRolesCreateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1226,6 +1257,8 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesCreateExecute(r ApiAdminOrgR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminOrgRolesCreateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1523,6 +1556,12 @@ type ApiAdminOrganizationsCreateRequest struct {
 	ctx context.Context
 	ApiService AdminOrganizationsAPI
 	orgId string
+	adminOrganizationsCreateRequest *AdminOrganizationsCreateRequest
+}
+
+func (r ApiAdminOrganizationsCreateRequest) AdminOrganizationsCreateRequest(adminOrganizationsCreateRequest AdminOrganizationsCreateRequest) ApiAdminOrganizationsCreateRequest {
+	r.adminOrganizationsCreateRequest = &adminOrganizationsCreateRequest
+	return r
 }
 
 func (r ApiAdminOrganizationsCreateRequest) Execute() (*AdminOrganizationsCreateResponse, *http.Response, error) {
@@ -1565,9 +1604,12 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsCreateExecute(r ApiAdmi
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminOrganizationsCreateRequest == nil {
+		return localVarReturnValue, nil, reportError("adminOrganizationsCreateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1583,6 +1625,8 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsCreateExecute(r ApiAdmi
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminOrganizationsCreateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1993,6 +2037,12 @@ type ApiPatchAdminOrgMembersUpdateRequest struct {
 	orgId string
 	organizationId string
 	userId string
+	putAdminOrgMembersUpdateRequest *PutAdminOrgMembersUpdateRequest
+}
+
+func (r ApiPatchAdminOrgMembersUpdateRequest) PutAdminOrgMembersUpdateRequest(putAdminOrgMembersUpdateRequest PutAdminOrgMembersUpdateRequest) ApiPatchAdminOrgMembersUpdateRequest {
+	r.putAdminOrgMembersUpdateRequest = &putAdminOrgMembersUpdateRequest
+	return r
 }
 
 func (r ApiPatchAdminOrgMembersUpdateRequest) Execute() (*PutAdminOrgMembersUpdateResponse, *http.Response, error) {
@@ -2041,9 +2091,12 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrgMembersUpdateExecute(r ApiPa
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminOrgMembersUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminOrgMembersUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2059,6 +2112,8 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrgMembersUpdateExecute(r ApiPa
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminOrgMembersUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2116,6 +2171,12 @@ type ApiPatchAdminOrgRolesUpdateRequest struct {
 	orgId string
 	organizationId string
 	roleId string
+	putAdminOrgRolesUpdateRequest *PutAdminOrgRolesUpdateRequest
+}
+
+func (r ApiPatchAdminOrgRolesUpdateRequest) PutAdminOrgRolesUpdateRequest(putAdminOrgRolesUpdateRequest PutAdminOrgRolesUpdateRequest) ApiPatchAdminOrgRolesUpdateRequest {
+	r.putAdminOrgRolesUpdateRequest = &putAdminOrgRolesUpdateRequest
+	return r
 }
 
 func (r ApiPatchAdminOrgRolesUpdateRequest) Execute() (*AdminOrgRolesCreateResponse, *http.Response, error) {
@@ -2164,9 +2225,12 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrgRolesUpdateExecute(r ApiPatc
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminOrgRolesUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminOrgRolesUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2182,6 +2246,8 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrgRolesUpdateExecute(r ApiPatc
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminOrgRolesUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2238,6 +2304,12 @@ type ApiPatchAdminOrganizationsUpdateRequest struct {
 	ApiService AdminOrganizationsAPI
 	orgId string
 	organizationId string
+	putAdminOrganizationsUpdateRequest *PutAdminOrganizationsUpdateRequest
+}
+
+func (r ApiPatchAdminOrganizationsUpdateRequest) PutAdminOrganizationsUpdateRequest(putAdminOrganizationsUpdateRequest PutAdminOrganizationsUpdateRequest) ApiPatchAdminOrganizationsUpdateRequest {
+	r.putAdminOrganizationsUpdateRequest = &putAdminOrganizationsUpdateRequest
+	return r
 }
 
 func (r ApiPatchAdminOrganizationsUpdateRequest) Execute() (*AdminOrganizationsGetResponse, *http.Response, error) {
@@ -2283,9 +2355,12 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrganizationsUpdateExecute(r Ap
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminOrganizationsUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminOrganizationsUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2301,6 +2376,8 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrganizationsUpdateExecute(r Ap
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminOrganizationsUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2358,6 +2435,12 @@ type ApiPutAdminOrgMembersUpdateRequest struct {
 	orgId string
 	organizationId string
 	userId string
+	putAdminOrgMembersUpdateRequest *PutAdminOrgMembersUpdateRequest
+}
+
+func (r ApiPutAdminOrgMembersUpdateRequest) PutAdminOrgMembersUpdateRequest(putAdminOrgMembersUpdateRequest PutAdminOrgMembersUpdateRequest) ApiPutAdminOrgMembersUpdateRequest {
+	r.putAdminOrgMembersUpdateRequest = &putAdminOrgMembersUpdateRequest
+	return r
 }
 
 func (r ApiPutAdminOrgMembersUpdateRequest) Execute() (*PutAdminOrgMembersUpdateResponse, *http.Response, error) {
@@ -2406,9 +2489,12 @@ func (a *AdminOrganizationsAPIService) PutAdminOrgMembersUpdateExecute(r ApiPutA
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminOrgMembersUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminOrgMembersUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2424,6 +2510,8 @@ func (a *AdminOrganizationsAPIService) PutAdminOrgMembersUpdateExecute(r ApiPutA
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminOrgMembersUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2481,6 +2569,12 @@ type ApiPutAdminOrgRolesUpdateRequest struct {
 	orgId string
 	organizationId string
 	roleId string
+	putAdminOrgRolesUpdateRequest *PutAdminOrgRolesUpdateRequest
+}
+
+func (r ApiPutAdminOrgRolesUpdateRequest) PutAdminOrgRolesUpdateRequest(putAdminOrgRolesUpdateRequest PutAdminOrgRolesUpdateRequest) ApiPutAdminOrgRolesUpdateRequest {
+	r.putAdminOrgRolesUpdateRequest = &putAdminOrgRolesUpdateRequest
+	return r
 }
 
 func (r ApiPutAdminOrgRolesUpdateRequest) Execute() (*AdminOrgRolesCreateResponse, *http.Response, error) {
@@ -2529,9 +2623,12 @@ func (a *AdminOrganizationsAPIService) PutAdminOrgRolesUpdateExecute(r ApiPutAdm
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminOrgRolesUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminOrgRolesUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2547,6 +2644,8 @@ func (a *AdminOrganizationsAPIService) PutAdminOrgRolesUpdateExecute(r ApiPutAdm
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminOrgRolesUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2603,6 +2702,12 @@ type ApiPutAdminOrganizationsUpdateRequest struct {
 	ApiService AdminOrganizationsAPI
 	orgId string
 	organizationId string
+	putAdminOrganizationsUpdateRequest *PutAdminOrganizationsUpdateRequest
+}
+
+func (r ApiPutAdminOrganizationsUpdateRequest) PutAdminOrganizationsUpdateRequest(putAdminOrganizationsUpdateRequest PutAdminOrganizationsUpdateRequest) ApiPutAdminOrganizationsUpdateRequest {
+	r.putAdminOrganizationsUpdateRequest = &putAdminOrganizationsUpdateRequest
+	return r
 }
 
 func (r ApiPutAdminOrganizationsUpdateRequest) Execute() (*AdminOrganizationsGetResponse, *http.Response, error) {
@@ -2648,9 +2753,12 @@ func (a *AdminOrganizationsAPIService) PutAdminOrganizationsUpdateExecute(r ApiP
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminOrganizationsUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminOrganizationsUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2666,6 +2774,8 @@ func (a *AdminOrganizationsAPIService) PutAdminOrganizationsUpdateExecute(r ApiP
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminOrganizationsUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

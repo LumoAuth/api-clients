@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**AdminRolesGet**](AdminRolesAPI.md#AdminRolesGet) | **Get** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Get a single role by ID or slug
 [**AdminRolesGetPermissions**](AdminRolesAPI.md#AdminRolesGetPermissions) | **Get** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Get role permissions
 [**AdminRolesGetUsers**](AdminRolesAPI.md#AdminRolesGetUsers) | **Get** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users | Get users assigned to a role
-[**AdminRolesList**](AdminRolesAPI.md#AdminRolesList) | **Get** /orgs/{orgId}/api/v1/admin/roles | List all roles in the tenant
+[**AdminRolesList**](AdminRolesAPI.md#AdminRolesList) | **Get** /orgs/{orgId}/api/v1/admin/roles | List all roles in the organization
 [**AdminRolesRemovePermission**](AdminRolesAPI.md#AdminRolesRemovePermission) | **Delete** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId} | Remove a permission from a role
 [**AdminRolesRemoveUser**](AdminRolesAPI.md#AdminRolesRemoveUser) | **Delete** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId} | Remove a user from a role
 [**AdminRolesUpdatePermissions**](AdminRolesAPI.md#AdminRolesUpdatePermissions) | **Put** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Update role permissions (replaces all)
@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 ## AdminRolesAddPermissions
 
-> MessageResponse AdminRolesAddPermissions(ctx, orgId, roleId).Execute()
+> MessageResponse AdminRolesAddPermissions(ctx, orgId, roleId).AdminRolesAddPermissionsRequest(adminRolesAddPermissionsRequest).Execute()
 
 Add permission(s) to a role
 
@@ -43,10 +43,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	roleId := "roleId_example" // string | 
+	adminRolesAddPermissionsRequest := *openapiclient.NewAdminRolesAddPermissionsRequest() // AdminRolesAddPermissionsRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminRolesAPI.AdminRolesAddPermissions(context.Background(), orgId, roleId).Execute()
+	resp, r, err := apiClient.AdminRolesAPI.AdminRolesAddPermissions(context.Background(), orgId, roleId).AdminRolesAddPermissionsRequest(adminRolesAddPermissionsRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminRolesAPI.AdminRolesAddPermissions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -74,6 +75,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **adminRolesAddPermissionsRequest** | [**AdminRolesAddPermissionsRequest**](AdminRolesAddPermissionsRequest.md) |  | 
 
 ### Return type
 
@@ -85,7 +87,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -95,7 +97,7 @@ Name | Type | Description  | Notes
 
 ## AdminRolesAddUser
 
-> MessageResponse AdminRolesAddUser(ctx, orgId, roleId).Execute()
+> MessageResponse AdminRolesAddUser(ctx, orgId, roleId).AdminRolesAddUserRequest(adminRolesAddUserRequest).Execute()
 
 Assign a user to a role
 
@@ -114,10 +116,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	roleId := "roleId_example" // string | 
+	adminRolesAddUserRequest := *openapiclient.NewAdminRolesAddUserRequest("UserId_example") // AdminRolesAddUserRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminRolesAPI.AdminRolesAddUser(context.Background(), orgId, roleId).Execute()
+	resp, r, err := apiClient.AdminRolesAPI.AdminRolesAddUser(context.Background(), orgId, roleId).AdminRolesAddUserRequest(adminRolesAddUserRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminRolesAPI.AdminRolesAddUser``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -145,6 +148,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **adminRolesAddUserRequest** | [**AdminRolesAddUserRequest**](AdminRolesAddUserRequest.md) |  | 
 
 ### Return type
 
@@ -156,7 +160,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -166,7 +170,7 @@ Name | Type | Description  | Notes
 
 ## AdminRolesCreate
 
-> AdminRolesCreateResponse AdminRolesCreate(ctx, orgId).Execute()
+> AdminRolesCreateResponse AdminRolesCreate(ctx, orgId).AdminRolesCreateRequest(adminRolesCreateRequest).Execute()
 
 Create a new role
 
@@ -186,10 +190,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	adminRolesCreateRequest := *openapiclient.NewAdminRolesCreateRequest("Name_example") // AdminRolesCreateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminRolesAPI.AdminRolesCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminRolesAPI.AdminRolesCreate(context.Background(), orgId).AdminRolesCreateRequest(adminRolesCreateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminRolesAPI.AdminRolesCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -215,6 +220,7 @@ Other parameters are passed through a pointer to a apiAdminRolesCreateRequest st
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **adminRolesCreateRequest** | [**AdminRolesCreateRequest**](AdminRolesCreateRequest.md) |  | 
 
 ### Return type
 
@@ -226,7 +232,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -522,7 +528,7 @@ Name | Type | Description  | Notes
 
 > AdminRolesListResponse AdminRolesList(ctx, orgId).Execute()
 
-List all roles in the tenant
+List all roles in the organization
 
 ### Example
 
@@ -738,7 +744,7 @@ Name | Type | Description  | Notes
 
 ## AdminRolesUpdatePermissions
 
-> AdminRolesCreateResponse AdminRolesUpdatePermissions(ctx, orgId, roleId).Execute()
+> AdminRolesCreateResponse AdminRolesUpdatePermissions(ctx, orgId, roleId).AdminRolesUpdatePermissionsRequest(adminRolesUpdatePermissionsRequest).Execute()
 
 Update role permissions (replaces all)
 
@@ -759,10 +765,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	roleId := "roleId_example" // string | 
+	adminRolesUpdatePermissionsRequest := *openapiclient.NewAdminRolesUpdatePermissionsRequest([]string{"Permissions_example"}) // AdminRolesUpdatePermissionsRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminRolesAPI.AdminRolesUpdatePermissions(context.Background(), orgId, roleId).Execute()
+	resp, r, err := apiClient.AdminRolesAPI.AdminRolesUpdatePermissions(context.Background(), orgId, roleId).AdminRolesUpdatePermissionsRequest(adminRolesUpdatePermissionsRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminRolesAPI.AdminRolesUpdatePermissions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -790,6 +797,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **adminRolesUpdatePermissionsRequest** | [**AdminRolesUpdatePermissionsRequest**](AdminRolesUpdatePermissionsRequest.md) |  | 
 
 ### Return type
 
@@ -801,7 +809,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -811,7 +819,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminRolesUpdate
 
-> AdminRolesCreateResponse PatchAdminRolesUpdate(ctx, orgId, roleId).Execute()
+> AdminRolesCreateResponse PatchAdminRolesUpdate(ctx, orgId, roleId).PutAdminOrgRolesUpdateRequest(putAdminOrgRolesUpdateRequest).Execute()
 
 Update an existing role
 
@@ -830,10 +838,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	roleId := "roleId_example" // string | 
+	putAdminOrgRolesUpdateRequest := *openapiclient.NewPutAdminOrgRolesUpdateRequest() // PutAdminOrgRolesUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminRolesAPI.PatchAdminRolesUpdate(context.Background(), orgId, roleId).Execute()
+	resp, r, err := apiClient.AdminRolesAPI.PatchAdminRolesUpdate(context.Background(), orgId, roleId).PutAdminOrgRolesUpdateRequest(putAdminOrgRolesUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminRolesAPI.PatchAdminRolesUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -861,6 +870,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -872,7 +882,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -882,7 +892,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminRolesUpdate
 
-> AdminRolesCreateResponse PutAdminRolesUpdate(ctx, orgId, roleId).Execute()
+> AdminRolesCreateResponse PutAdminRolesUpdate(ctx, orgId, roleId).PutAdminOrgRolesUpdateRequest(putAdminOrgRolesUpdateRequest).Execute()
 
 Update an existing role
 
@@ -901,10 +911,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	roleId := "roleId_example" // string | 
+	putAdminOrgRolesUpdateRequest := *openapiclient.NewPutAdminOrgRolesUpdateRequest() // PutAdminOrgRolesUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminRolesAPI.PutAdminRolesUpdate(context.Background(), orgId, roleId).Execute()
+	resp, r, err := apiClient.AdminRolesAPI.PutAdminRolesUpdate(context.Background(), orgId, roleId).PutAdminOrgRolesUpdateRequest(putAdminOrgRolesUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminRolesAPI.PutAdminRolesUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -932,6 +943,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -943,7 +955,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

@@ -4,16 +4,16 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**adminSandboxDestroy**](AdminSandboxApi.md#adminSandboxDestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant |
-| [**adminSandboxList**](AdminSandboxApi.md#adminSandboxList) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox tenants |
-| [**adminSandboxSpawn**](AdminSandboxApi.md#adminSandboxSpawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant |
+| [**adminSandboxDestroy**](AdminSandboxApi.md#adminSandboxDestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox organization |
+| [**adminSandboxList**](AdminSandboxApi.md#adminSandboxList) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox organizations |
+| [**adminSandboxSpawn**](AdminSandboxApi.md#adminSandboxSpawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox organization |
 
 
 <a id="adminSandboxDestroy"></a>
 # **adminSandboxDestroy**
 > MessageResponse adminSandboxDestroy(orgId, sandboxSlug)
 
-Destroy a sandbox tenant
+Destroy a sandbox organization
 
 ### Example
 ```java
@@ -87,7 +87,7 @@ public class Example {
 # **adminSandboxList**
 > AdminSandboxListResponse adminSandboxList(orgId)
 
-List the caller&#39;s sandbox tenants
+List the caller&#39;s sandbox organizations
 
 ### Example
 ```java
@@ -158,7 +158,7 @@ public class Example {
 # **adminSandboxSpawn**
 > AdminSandboxSpawnResponse adminSandboxSpawn(orgId, adminSandboxSpawnRequest)
 
-Spawn a sandbox tenant
+Spawn a sandbox organization
 
 Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as &#x60;X-API-Key&#x60; on &#x60;/orgs/{sandbox slug}/api/v1/admin/...&#x60;. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
 

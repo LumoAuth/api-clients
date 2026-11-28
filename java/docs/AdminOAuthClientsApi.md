@@ -175,7 +175,7 @@ public class Example {
 
 <a id="createClient"></a>
 # **createClient**
-> CreateClientResponse createClient(orgId)
+> CreateClientResponse createClient(orgId, oauthClientWrite)
 
 Create an OAuth client
 
@@ -206,8 +206,9 @@ public class Example {
 
     AdminOAuthClientsApi apiInstance = new AdminOAuthClientsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    OAuthClientWrite oauthClientWrite = new OAuthClientWrite(); // OAuthClientWrite | 
     try {
-      CreateClientResponse result = apiInstance.createClient(orgId);
+      CreateClientResponse result = apiInstance.createClient(orgId, oauthClientWrite);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOAuthClientsApi#createClient");
@@ -225,6 +226,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **oauthClientWrite** | [**OAuthClientWrite**](OAuthClientWrite.md)|  | |
 
 ### Return type
 
@@ -236,7 +238,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -772,7 +774,7 @@ public class Example {
 
 <a id="patchClient"></a>
 # **patchClient**
-> UpdateClientResponse patchClient(orgId, clientId)
+> UpdateClientResponse patchClient(orgId, clientId, oauthClientWrite)
 
 Update an OAuth client
 
@@ -806,8 +808,9 @@ public class Example {
     AdminOAuthClientsApi apiInstance = new AdminOAuthClientsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String clientId = "clientId_example"; // String | 
+    OAuthClientWrite oauthClientWrite = new OAuthClientWrite(); // OAuthClientWrite | 
     try {
-      UpdateClientResponse result = apiInstance.patchClient(orgId, clientId);
+      UpdateClientResponse result = apiInstance.patchClient(orgId, clientId, oauthClientWrite);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOAuthClientsApi#patchClient");
@@ -826,6 +829,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **clientId** | **String**|  | |
+| **oauthClientWrite** | [**OAuthClientWrite**](OAuthClientWrite.md)|  | |
 
 ### Return type
 
@@ -837,7 +841,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1004,7 +1008,7 @@ public class Example {
 
 <a id="setClientScopes"></a>
 # **setClientScopes**
-> SetClientScopesResponse setClientScopes(orgId, clientId)
+> SetClientScopesResponse setClientScopes(orgId, clientId, setClientScopesRequest)
 
 Replace the scopes granted to an OAuth client
 
@@ -1038,8 +1042,9 @@ public class Example {
     AdminOAuthClientsApi apiInstance = new AdminOAuthClientsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String clientId = "clientId_example"; // String | 
+    SetClientScopesRequest setClientScopesRequest = new SetClientScopesRequest(); // SetClientScopesRequest | 
     try {
-      SetClientScopesResponse result = apiInstance.setClientScopes(orgId, clientId);
+      SetClientScopesResponse result = apiInstance.setClientScopes(orgId, clientId, setClientScopesRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOAuthClientsApi#setClientScopes");
@@ -1058,6 +1063,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **clientId** | **String**|  | |
+| **setClientScopesRequest** | [**SetClientScopesRequest**](SetClientScopesRequest.md)|  | |
 
 ### Return type
 
@@ -1069,7 +1075,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1081,7 +1087,7 @@ public class Example {
 
 <a id="updateClient"></a>
 # **updateClient**
-> UpdateClientResponse updateClient(orgId, clientId)
+> UpdateClientResponse updateClient(orgId, clientId, oauthClientWrite)
 
 Update an OAuth client (same as PATCH: only the fields that are sent change)
 
@@ -1115,8 +1121,9 @@ public class Example {
     AdminOAuthClientsApi apiInstance = new AdminOAuthClientsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String clientId = "clientId_example"; // String | 
+    OAuthClientWrite oauthClientWrite = new OAuthClientWrite(); // OAuthClientWrite | 
     try {
-      UpdateClientResponse result = apiInstance.updateClient(orgId, clientId);
+      UpdateClientResponse result = apiInstance.updateClient(orgId, clientId, oauthClientWrite);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOAuthClientsApi#updateClient");
@@ -1135,6 +1142,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **clientId** | **String**|  | |
+| **oauthClientWrite** | [**OAuthClientWrite**](OAuthClientWrite.md)|  | |
 
 ### Return type
 
@@ -1146,7 +1154,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

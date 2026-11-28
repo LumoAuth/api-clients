@@ -23,7 +23,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**putAdminWebhooksUpdate**](#putadminwebhooksupdate) | **PUT** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update a webhook|
 
 # **adminWebhooksCreate**
-> AdminWebhooksCreateResponse adminWebhooksCreate()
+> AdminWebhooksCreateResponse adminWebhooksCreate(adminWebhooksCreateRequest)
 
 Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
 
@@ -32,16 +32,19 @@ Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and 
 ```typescript
 import {
     AdminWebhooksApi,
-    Configuration
+    Configuration,
+    AdminWebhooksCreateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminWebhooksApi(configuration);
 
 let orgId: string; // (default to undefined)
+let adminWebhooksCreateRequest: AdminWebhooksCreateRequest; //
 
 const { status, data } = await apiInstance.adminWebhooksCreate(
-    orgId
+    orgId,
+    adminWebhooksCreateRequest
 );
 ```
 
@@ -49,6 +52,7 @@ const { status, data } = await apiInstance.adminWebhooksCreate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminWebhooksCreateRequest** | **AdminWebhooksCreateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -62,7 +66,7 @@ const { status, data } = await apiInstance.adminWebhooksCreate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -406,7 +410,7 @@ const { status, data } = await apiInstance.adminWebhooksGet(
 # **adminWebhooksList**
 > AdminWebhooksListResponse adminWebhooksList()
 
-Paginated list of the tenant\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+Paginated list of the organization\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
 ### Example
 
@@ -568,7 +572,7 @@ const { status, data } = await apiInstance.adminWebhooksTest(
 # **adminWebhooksTunnelStart**
 > AdminWebhooksTunnelStartResponse adminWebhooksTunnelStart()
 
-Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 
 ### Example
 
@@ -722,7 +726,7 @@ const { status, data } = await apiInstance.adminWebhooksTunnelStream(
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. |  -  |
+|**200** | Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery, in order, whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at, body, headers}&#x60;. &#x60;payload&#x60; is the event data and &#x60;received_at&#x60; is RFC 3339. &#x60;body&#x60; is the signed request body as a string (the envelope &#x60;{event, timestamp, tenant, data}&#x60;, exactly the bytes that the signature covers: send it unchanged) and &#x60;headers&#x60; the request headers of a real delivery (&#x60;X-LumoAuth-Signature&#x60;, &#x60;X-LumoAuth-Timestamp&#x60;, &#x60;X-LumoAuth-Delivery&#x60;, &#x60;X-LumoAuth-Event&#x60;, &#x60;Content-Type&#x60;, &#x60;User-Agent&#x60;); both are null for a delivery without a stored request. A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. |  -  |
 |**400** | Not a tunnel webhook |  -  |
 |**404** | Webhook not found |  -  |
 
@@ -837,7 +841,7 @@ const { status, data } = await apiInstance.adminWebhooksWebhooksEnable(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminWebhooksUpdate**
-> PutAdminWebhooksUpdateResponse patchAdminWebhooksUpdate()
+> PutAdminWebhooksUpdateResponse patchAdminWebhooksUpdate(putAdminWebhooksUpdateRequest)
 
 
 ### Example
@@ -845,7 +849,8 @@ const { status, data } = await apiInstance.adminWebhooksWebhooksEnable(
 ```typescript
 import {
     AdminWebhooksApi,
-    Configuration
+    Configuration,
+    PutAdminWebhooksUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -853,10 +858,12 @@ const apiInstance = new AdminWebhooksApi(configuration);
 
 let orgId: string; // (default to undefined)
 let webhookId: string; // (default to undefined)
+let putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest; //
 
 const { status, data } = await apiInstance.patchAdminWebhooksUpdate(
     orgId,
-    webhookId
+    webhookId,
+    putAdminWebhooksUpdateRequest
 );
 ```
 
@@ -864,6 +871,7 @@ const { status, data } = await apiInstance.patchAdminWebhooksUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminWebhooksUpdateRequest** | **PutAdminWebhooksUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **webhookId** | [**string**] |  | defaults to undefined|
 
@@ -878,7 +886,7 @@ const { status, data } = await apiInstance.patchAdminWebhooksUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -891,7 +899,7 @@ const { status, data } = await apiInstance.patchAdminWebhooksUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminWebhooksUpdate**
-> PutAdminWebhooksUpdateResponse putAdminWebhooksUpdate()
+> PutAdminWebhooksUpdateResponse putAdminWebhooksUpdate(putAdminWebhooksUpdateRequest)
 
 Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.
 
@@ -900,7 +908,8 @@ Changes only the fields that are sent: `url`, `events`, `isActive` (also as `act
 ```typescript
 import {
     AdminWebhooksApi,
-    Configuration
+    Configuration,
+    PutAdminWebhooksUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -908,10 +917,12 @@ const apiInstance = new AdminWebhooksApi(configuration);
 
 let orgId: string; // (default to undefined)
 let webhookId: string; // (default to undefined)
+let putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest; //
 
 const { status, data } = await apiInstance.putAdminWebhooksUpdate(
     orgId,
-    webhookId
+    webhookId,
+    putAdminWebhooksUpdateRequest
 );
 ```
 
@@ -919,6 +930,7 @@ const { status, data } = await apiInstance.putAdminWebhooksUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminWebhooksUpdateRequest** | **PutAdminWebhooksUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **webhookId** | [**string**] |  | defaults to undefined|
 
@@ -933,7 +945,7 @@ const { status, data } = await apiInstance.putAdminWebhooksUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

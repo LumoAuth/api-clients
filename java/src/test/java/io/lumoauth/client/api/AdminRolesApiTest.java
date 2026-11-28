@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -14,12 +14,17 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminRolesAddPermissionsRequest;
+import io.lumoauth.client.model.AdminRolesAddUserRequest;
+import io.lumoauth.client.model.AdminRolesCreateRequest;
 import io.lumoauth.client.model.AdminRolesCreateResponse;
 import io.lumoauth.client.model.AdminRolesGetPermissionsResponse;
 import io.lumoauth.client.model.AdminRolesGetResponse;
 import io.lumoauth.client.model.AdminRolesGetUsersResponse;
 import io.lumoauth.client.model.AdminRolesListResponse;
+import io.lumoauth.client.model.AdminRolesUpdatePermissionsRequest;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAdminOrgRolesUpdateRequest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +44,7 @@ public class AdminRolesApiTest {
     /**
      * Add permission(s) to a role
      *
-     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      *
      * @throws ApiException if the Api call fails
      */
@@ -47,7 +52,8 @@ public class AdminRolesApiTest {
     public void adminRolesAddPermissionsTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        MessageResponse response = api.adminRolesAddPermissions(orgId, roleId);
+        AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest = null;
+        MessageResponse response = api.adminRolesAddPermissions(orgId, roleId, adminRolesAddPermissionsRequest);
         // TODO: test validations
     }
 
@@ -60,21 +66,23 @@ public class AdminRolesApiTest {
     public void adminRolesAddUserTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        MessageResponse response = api.adminRolesAddUser(orgId, roleId);
+        AdminRolesAddUserRequest adminRolesAddUserRequest = null;
+        MessageResponse response = api.adminRolesAddUser(orgId, roleId, adminRolesAddUserRequest);
         // TODO: test validations
     }
 
     /**
      * Create a new role
      *
-     * Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+     * Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminRolesCreateTest() throws ApiException {
         String orgId = null;
-        AdminRolesCreateResponse response = api.adminRolesCreate(orgId);
+        AdminRolesCreateRequest adminRolesCreateRequest = null;
+        AdminRolesCreateResponse response = api.adminRolesCreate(orgId, adminRolesCreateRequest);
         // TODO: test validations
     }
 
@@ -131,7 +139,7 @@ public class AdminRolesApiTest {
     }
 
     /**
-     * List all roles in the tenant
+     * List all roles in the organization
      *
      * @throws ApiException if the Api call fails
      */
@@ -175,7 +183,7 @@ public class AdminRolesApiTest {
     /**
      * Update role permissions (replaces all)
      *
-     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      *
      * @throws ApiException if the Api call fails
      */
@@ -183,7 +191,8 @@ public class AdminRolesApiTest {
     public void adminRolesUpdatePermissionsTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        AdminRolesCreateResponse response = api.adminRolesUpdatePermissions(orgId, roleId);
+        AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest = null;
+        AdminRolesCreateResponse response = api.adminRolesUpdatePermissions(orgId, roleId, adminRolesUpdatePermissionsRequest);
         // TODO: test validations
     }
 
@@ -196,7 +205,8 @@ public class AdminRolesApiTest {
     public void patchAdminRolesUpdateTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        AdminRolesCreateResponse response = api.patchAdminRolesUpdate(orgId, roleId);
+        PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest = null;
+        AdminRolesCreateResponse response = api.patchAdminRolesUpdate(orgId, roleId, putAdminOrgRolesUpdateRequest);
         // TODO: test validations
     }
 
@@ -209,7 +219,8 @@ public class AdminRolesApiTest {
     public void putAdminRolesUpdateTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        AdminRolesCreateResponse response = api.putAdminRolesUpdate(orgId, roleId);
+        PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest = null;
+        AdminRolesCreateResponse response = api.putAdminRolesUpdate(orgId, roleId, putAdminOrgRolesUpdateRequest);
         // TODO: test validations
     }
 

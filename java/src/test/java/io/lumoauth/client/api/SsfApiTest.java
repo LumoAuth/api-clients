@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -14,8 +14,10 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.CreateStreamConfigRequest;
 import io.lumoauth.client.model.GetStreamConfig200Response;
 import io.lumoauth.client.model.SsfStream;
+import io.lumoauth.client.model.VerifyStreamRequest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +42,8 @@ public class SsfApiTest {
     @Test
     public void createStreamConfigTest() throws ApiException {
         String orgId = null;
-        SsfStream response = api.createStreamConfig(orgId);
+        CreateStreamConfigRequest createStreamConfigRequest = null;
+        SsfStream response = api.createStreamConfig(orgId, createStreamConfigRequest);
         // TODO: test validations
     }
 
@@ -82,7 +85,8 @@ public class SsfApiTest {
     @Test
     public void verifyStreamTest() throws ApiException {
         String orgId = null;
-        api.verifyStream(orgId);
+        VerifyStreamRequest verifyStreamRequest = null;
+        api.verifyStream(orgId, verifyStreamRequest);
         // TODO: test validations
     }
 

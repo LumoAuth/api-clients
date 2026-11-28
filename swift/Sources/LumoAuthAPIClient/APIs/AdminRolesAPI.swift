@@ -17,17 +17,18 @@ open class AdminRolesAPI {
      
      - parameter orgId: (path)  
      - parameter roleId: (path)  
+     - parameter adminRolesAddPermissionsRequest: (body)  
      - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminRolesAddPermissions(orgId: String, roleId: String) async throws -> MessageResponse {
-        return try await adminRolesAddPermissionsWithRequestBuilder(orgId: orgId, roleId: roleId).execute().body
+    open class func adminRolesAddPermissions(orgId: String, roleId: String, adminRolesAddPermissionsRequest: AdminRolesAddPermissionsRequest) async throws -> MessageResponse {
+        return try await adminRolesAddPermissionsWithRequestBuilder(orgId: orgId, roleId: roleId, adminRolesAddPermissionsRequest: adminRolesAddPermissionsRequest).execute().body
     }
 
     /**
      Add permission(s) to a role
      - POST /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions
-     - Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+     - Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization's own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -36,9 +37,10 @@ open class AdminRolesAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter roleId: (path)  
+     - parameter adminRolesAddPermissionsRequest: (body)  
      - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminRolesAddPermissionsWithRequestBuilder(orgId: String, roleId: String) -> RequestBuilder<MessageResponse> {
+    open class func adminRolesAddPermissionsWithRequestBuilder(orgId: String, roleId: String, adminRolesAddPermissionsRequest: AdminRolesAddPermissionsRequest) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -47,12 +49,12 @@ open class AdminRolesAPI {
         let roleIdPostEscape = roleIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{roleId}", with: roleIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminRolesAddPermissionsRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -67,11 +69,12 @@ open class AdminRolesAPI {
      
      - parameter orgId: (path)  
      - parameter roleId: (path)  
+     - parameter adminRolesAddUserRequest: (body)  
      - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminRolesAddUser(orgId: String, roleId: String) async throws -> MessageResponse {
-        return try await adminRolesAddUserWithRequestBuilder(orgId: orgId, roleId: roleId).execute().body
+    open class func adminRolesAddUser(orgId: String, roleId: String, adminRolesAddUserRequest: AdminRolesAddUserRequest) async throws -> MessageResponse {
+        return try await adminRolesAddUserWithRequestBuilder(orgId: orgId, roleId: roleId, adminRolesAddUserRequest: adminRolesAddUserRequest).execute().body
     }
 
     /**
@@ -85,9 +88,10 @@ open class AdminRolesAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter roleId: (path)  
+     - parameter adminRolesAddUserRequest: (body)  
      - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminRolesAddUserWithRequestBuilder(orgId: String, roleId: String) -> RequestBuilder<MessageResponse> {
+    open class func adminRolesAddUserWithRequestBuilder(orgId: String, roleId: String, adminRolesAddUserRequest: AdminRolesAddUserRequest) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/roles/{roleId}/users"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -96,12 +100,12 @@ open class AdminRolesAPI {
         let roleIdPostEscape = roleIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{roleId}", with: roleIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminRolesAddUserRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -115,17 +119,18 @@ open class AdminRolesAPI {
      Create a new role
      
      - parameter orgId: (path)  
+     - parameter adminRolesCreateRequest: (body)  
      - returns: AdminRolesCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminRolesCreate(orgId: String) async throws -> AdminRolesCreateResponse {
-        return try await adminRolesCreateWithRequestBuilder(orgId: orgId).execute().body
+    open class func adminRolesCreate(orgId: String, adminRolesCreateRequest: AdminRolesCreateRequest) async throws -> AdminRolesCreateResponse {
+        return try await adminRolesCreateWithRequestBuilder(orgId: orgId, adminRolesCreateRequest: adminRolesCreateRequest).execute().body
     }
 
     /**
      Create a new role
      - POST /orgs/{orgId}/api/v1/admin/roles
-     - Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+     - Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization's own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -133,20 +138,21 @@ open class AdminRolesAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter adminRolesCreateRequest: (body)  
      - returns: RequestBuilder<AdminRolesCreateResponse> 
      */
-    open class func adminRolesCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminRolesCreateResponse> {
+    open class func adminRolesCreateWithRequestBuilder(orgId: String, adminRolesCreateRequest: AdminRolesCreateRequest) -> RequestBuilder<AdminRolesCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/roles"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminRolesCreateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -353,7 +359,7 @@ open class AdminRolesAPI {
     }
 
     /**
-     List all roles in the tenant
+     List all roles in the organization
      
      - parameter orgId: (path)  
      - returns: AdminRolesListResponse
@@ -364,7 +370,7 @@ open class AdminRolesAPI {
     }
 
     /**
-     List all roles in the tenant
+     List all roles in the organization
      - GET /orgs/{orgId}/api/v1/admin/roles
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -510,17 +516,18 @@ open class AdminRolesAPI {
      
      - parameter orgId: (path)  
      - parameter roleId: (path)  
+     - parameter adminRolesUpdatePermissionsRequest: (body)  
      - returns: AdminRolesCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminRolesUpdatePermissions(orgId: String, roleId: String) async throws -> AdminRolesCreateResponse {
-        return try await adminRolesUpdatePermissionsWithRequestBuilder(orgId: orgId, roleId: roleId).execute().body
+    open class func adminRolesUpdatePermissions(orgId: String, roleId: String, adminRolesUpdatePermissionsRequest: AdminRolesUpdatePermissionsRequest) async throws -> AdminRolesCreateResponse {
+        return try await adminRolesUpdatePermissionsWithRequestBuilder(orgId: orgId, roleId: roleId, adminRolesUpdatePermissionsRequest: adminRolesUpdatePermissionsRequest).execute().body
     }
 
     /**
      Update role permissions (replaces all)
      - PUT /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions
-     - Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+     - Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization's own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -529,9 +536,10 @@ open class AdminRolesAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter roleId: (path)  
+     - parameter adminRolesUpdatePermissionsRequest: (body)  
      - returns: RequestBuilder<AdminRolesCreateResponse> 
      */
-    open class func adminRolesUpdatePermissionsWithRequestBuilder(orgId: String, roleId: String) -> RequestBuilder<AdminRolesCreateResponse> {
+    open class func adminRolesUpdatePermissionsWithRequestBuilder(orgId: String, roleId: String, adminRolesUpdatePermissionsRequest: AdminRolesUpdatePermissionsRequest) -> RequestBuilder<AdminRolesCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -540,12 +548,12 @@ open class AdminRolesAPI {
         let roleIdPostEscape = roleIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{roleId}", with: roleIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminRolesUpdatePermissionsRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -560,11 +568,12 @@ open class AdminRolesAPI {
      
      - parameter orgId: (path)  
      - parameter roleId: (path)  
+     - parameter putAdminOrgRolesUpdateRequest: (body)  
      - returns: AdminRolesCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminRolesUpdate(orgId: String, roleId: String) async throws -> AdminRolesCreateResponse {
-        return try await patchAdminRolesUpdateWithRequestBuilder(orgId: orgId, roleId: roleId).execute().body
+    open class func patchAdminRolesUpdate(orgId: String, roleId: String, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest) async throws -> AdminRolesCreateResponse {
+        return try await patchAdminRolesUpdateWithRequestBuilder(orgId: orgId, roleId: roleId, putAdminOrgRolesUpdateRequest: putAdminOrgRolesUpdateRequest).execute().body
     }
 
     /**
@@ -578,9 +587,10 @@ open class AdminRolesAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter roleId: (path)  
+     - parameter putAdminOrgRolesUpdateRequest: (body)  
      - returns: RequestBuilder<AdminRolesCreateResponse> 
      */
-    open class func patchAdminRolesUpdateWithRequestBuilder(orgId: String, roleId: String) -> RequestBuilder<AdminRolesCreateResponse> {
+    open class func patchAdminRolesUpdateWithRequestBuilder(orgId: String, roleId: String, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest) -> RequestBuilder<AdminRolesCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/roles/{roleId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -589,12 +599,12 @@ open class AdminRolesAPI {
         let roleIdPostEscape = roleIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{roleId}", with: roleIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminOrgRolesUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -609,11 +619,12 @@ open class AdminRolesAPI {
      
      - parameter orgId: (path)  
      - parameter roleId: (path)  
+     - parameter putAdminOrgRolesUpdateRequest: (body)  
      - returns: AdminRolesCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminRolesUpdate(orgId: String, roleId: String) async throws -> AdminRolesCreateResponse {
-        return try await putAdminRolesUpdateWithRequestBuilder(orgId: orgId, roleId: roleId).execute().body
+    open class func putAdminRolesUpdate(orgId: String, roleId: String, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest) async throws -> AdminRolesCreateResponse {
+        return try await putAdminRolesUpdateWithRequestBuilder(orgId: orgId, roleId: roleId, putAdminOrgRolesUpdateRequest: putAdminOrgRolesUpdateRequest).execute().body
     }
 
     /**
@@ -627,9 +638,10 @@ open class AdminRolesAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter roleId: (path)  
+     - parameter putAdminOrgRolesUpdateRequest: (body)  
      - returns: RequestBuilder<AdminRolesCreateResponse> 
      */
-    open class func putAdminRolesUpdateWithRequestBuilder(orgId: String, roleId: String) -> RequestBuilder<AdminRolesCreateResponse> {
+    open class func putAdminRolesUpdateWithRequestBuilder(orgId: String, roleId: String, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest) -> RequestBuilder<AdminRolesCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/roles/{roleId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -638,12 +650,12 @@ open class AdminRolesAPI {
         let roleIdPostEscape = roleIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{roleId}", with: roleIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminOrgRolesUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

@@ -11,12 +11,12 @@
 
 LumoAuth API
 - API version: 1.0.0
-  - Build date: 2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]
+  - Build date: 2026-11-28T05:25:48.073972593Z[Etc/UTC]
   - Generator version: 7.14.0
 
 LumoAuth REST API — authentication, authorization, agent registry,
-MCP server authorization, and tenant administration. Multi-tenant:
-most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+MCP server authorization, and organization administration. Most
+paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
 
 
   For more information, please visit [https://lumoauth.dev](https://lumoauth.dev)
@@ -178,7 +178,7 @@ Class | Method | HTTP request | Description
 *AdminAgentsApi* | [**adminAgentsSetScopes**](docs/AdminAgentsApi.md#adminAgentsSetScopes) | **PUT** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Update agent scopes/capabilities
 *AdminAgentsApi* | [**patchAdminAgentsUpdate**](docs/AdminAgentsApi.md#patchAdminAgentsUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Update an existing agent
 *AdminAgentsApi* | [**putAdminAgentsUpdate**](docs/AdminAgentsApi.md#putAdminAgentsUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Update an existing agent
-*AdminAuditLogsApi* | [**adminAuditLogsActions**](docs/AdminAuditLogsApi.md#adminAuditLogsActions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant
+*AdminAuditLogsApi* | [**adminAuditLogsActions**](docs/AdminAuditLogsApi.md#adminAuditLogsActions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the organization
 *AdminAuditLogsApi* | [**adminAuditLogsExport**](docs/AdminAuditLogsApi.md#adminAuditLogsExport) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON
 *AdminAuditLogsApi* | [**adminAuditLogsGet**](docs/AdminAuditLogsApi.md#adminAuditLogsGet) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry
 *AdminAuditLogsApi* | [**adminAuditLogsList**](docs/AdminAuditLogsApi.md#adminAuditLogsList) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries
@@ -199,7 +199,7 @@ Class | Method | HTTP request | Description
 *AdminGroupsApi* | [**adminGroupsGet**](docs/AdminGroupsApi.md#adminGroupsGet) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Get a single group by ID or slug
 *AdminGroupsApi* | [**adminGroupsGetMembers**](docs/AdminGroupsApi.md#adminGroupsGetMembers) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members
 *AdminGroupsApi* | [**adminGroupsGroupsGetRoles**](docs/AdminGroupsApi.md#adminGroupsGroupsGetRoles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles
-*AdminGroupsApi* | [**adminGroupsList**](docs/AdminGroupsApi.md#adminGroupsList) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant
+*AdminGroupsApi* | [**adminGroupsList**](docs/AdminGroupsApi.md#adminGroupsList) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the organization
 *AdminGroupsApi* | [**adminGroupsRemoveMember**](docs/AdminGroupsApi.md#adminGroupsRemoveMember) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group
 *AdminGroupsApi* | [**adminGroupsRemoveRole**](docs/AdminGroupsApi.md#adminGroupsRemoveRole) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group
 *AdminGroupsApi* | [**adminGroupsUpdateRoles**](docs/AdminGroupsApi.md#adminGroupsUpdateRoles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles)
@@ -223,6 +223,8 @@ Class | Method | HTTP request | Description
 *AdminMcpApi* | [**adminMcpServersGrantsRemove**](docs/AdminMcpApi.md#adminMcpServersGrantsRemove) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Remove every grant of an agent on an MCP server
 *AdminMcpApi* | [**adminMcpServersGrantsSet**](docs/AdminMcpApi.md#adminMcpServersGrantsSet) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Set the tools of an MCP server that an agent may call
 *AdminMcpApi* | [**adminMcpServersList**](docs/AdminMcpApi.md#adminMcpServersList) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers
+*AdminMcpApi* | [**patchAdminMcpServersUpdate**](docs/AdminMcpApi.md#patchAdminMcpServersUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server
+*AdminMcpApi* | [**putAdminMcpServersUpdate**](docs/AdminMcpApi.md#putAdminMcpServersUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server (same as PATCH: only the fields that are sent change)
 *AdminMfaApi* | [**deleteUserAuthenticator**](docs/AdminMfaApi.md#deleteUserAuthenticator) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/authenticators/{authenticatorId} | Remove one of a user&#39;s authenticators
 *AdminMfaApi* | [**getMfaCoverageReport**](docs/AdminMfaApi.md#getMfaCoverageReport) | **GET** /orgs/{orgId}/api/v1/admin/reports/mfa-coverage | MFA enrollment coverage
 *AdminMfaApi* | [**getMfaPolicy**](docs/AdminMfaApi.md#getMfaPolicy) | **GET** /orgs/{orgId}/api/v1/admin/policies/mfa | Get the MFA policy
@@ -264,10 +266,10 @@ Class | Method | HTTP request | Description
 *AdminOrganizationsApi* | [**putAdminOrgMembersUpdate**](docs/AdminOrganizationsApi.md#putAdminOrgMembersUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member&#39;s role or status
 *AdminOrganizationsApi* | [**putAdminOrgRolesUpdate**](docs/AdminOrganizationsApi.md#putAdminOrgRolesUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role
 *AdminOrganizationsApi* | [**putAdminOrganizationsUpdate**](docs/AdminOrganizationsApi.md#putAdminOrganizationsUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization
-*AdminPermissionsApi* | [**adminPermissionsCreate**](docs/AdminPermissionsApi.md#adminPermissionsCreate) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the tenant
+*AdminPermissionsApi* | [**adminPermissionsCreate**](docs/AdminPermissionsApi.md#adminPermissionsCreate) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the organization
 *AdminPermissionsApi* | [**adminPermissionsDelete**](docs/AdminPermissionsApi.md#adminPermissionsDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Delete a custom permission
 *AdminPermissionsApi* | [**adminPermissionsGet**](docs/AdminPermissionsApi.md#adminPermissionsGet) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Get a single permission
-*AdminPermissionsApi* | [**adminPermissionsList**](docs/AdminPermissionsApi.md#adminPermissionsList) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the tenant
+*AdminPermissionsApi* | [**adminPermissionsList**](docs/AdminPermissionsApi.md#adminPermissionsList) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the organization
 *AdminPermissionsApi* | [**adminPermissionsUpdate**](docs/AdminPermissionsApi.md#adminPermissionsUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Update a permission
 *AdminPermissionsApi* | [**adminPermissionsUsage**](docs/AdminPermissionsApi.md#adminPermissionsUsage) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId}/usage | Get permission usage (roles assigned to this permission)
 *AdminPermissionsApi* | [**adminScopesCreate**](docs/AdminPermissionsApi.md#adminScopesCreate) | **POST** /orgs/{orgId}/api/v1/admin/scopes | Create a custom OAuth scope
@@ -286,23 +288,23 @@ Class | Method | HTTP request | Description
 *AdminRolesApi* | [**adminRolesGet**](docs/AdminRolesApi.md#adminRolesGet) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Get a single role by ID or slug
 *AdminRolesApi* | [**adminRolesGetPermissions**](docs/AdminRolesApi.md#adminRolesGetPermissions) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Get role permissions
 *AdminRolesApi* | [**adminRolesGetUsers**](docs/AdminRolesApi.md#adminRolesGetUsers) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users | Get users assigned to a role
-*AdminRolesApi* | [**adminRolesList**](docs/AdminRolesApi.md#adminRolesList) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the tenant
+*AdminRolesApi* | [**adminRolesList**](docs/AdminRolesApi.md#adminRolesList) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the organization
 *AdminRolesApi* | [**adminRolesRemovePermission**](docs/AdminRolesApi.md#adminRolesRemovePermission) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId} | Remove a permission from a role
 *AdminRolesApi* | [**adminRolesRemoveUser**](docs/AdminRolesApi.md#adminRolesRemoveUser) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId} | Remove a user from a role
 *AdminRolesApi* | [**adminRolesUpdatePermissions**](docs/AdminRolesApi.md#adminRolesUpdatePermissions) | **PUT** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Update role permissions (replaces all)
 *AdminRolesApi* | [**patchAdminRolesUpdate**](docs/AdminRolesApi.md#patchAdminRolesUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Update an existing role
 *AdminRolesApi* | [**putAdminRolesUpdate**](docs/AdminRolesApi.md#putAdminRolesUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Update an existing role
-*AdminSandboxApi* | [**adminSandboxDestroy**](docs/AdminSandboxApi.md#adminSandboxDestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant
-*AdminSandboxApi* | [**adminSandboxList**](docs/AdminSandboxApi.md#adminSandboxList) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox tenants
-*AdminSandboxApi* | [**adminSandboxSpawn**](docs/AdminSandboxApi.md#adminSandboxSpawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant
+*AdminSandboxApi* | [**adminSandboxDestroy**](docs/AdminSandboxApi.md#adminSandboxDestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox organization
+*AdminSandboxApi* | [**adminSandboxList**](docs/AdminSandboxApi.md#adminSandboxList) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox organizations
+*AdminSandboxApi* | [**adminSandboxSpawn**](docs/AdminSandboxApi.md#adminSandboxSpawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox organization
 *AdminSessionsApi* | [**adminClientTokensRevokeAll**](docs/AdminSessionsApi.md#adminClientTokensRevokeAll) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens | Revoke all tokens of a client
 *AdminSessionsApi* | [**adminClientTokensRevokePost**](docs/AdminSessionsApi.md#adminClientTokensRevokePost) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke | Revoke all tokens of a client (POST alias)
 *AdminSessionsApi* | [**adminSessionsCount**](docs/AdminSessionsApi.md#adminSessionsCount) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Active session count
 *AdminSessionsApi* | [**adminSessionsList**](docs/AdminSessionsApi.md#adminSessionsList) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions
 *AdminSessionsApi* | [**adminSessionsRevoke**](docs/AdminSessionsApi.md#adminSessionsRevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a session
-*AdminSessionsApi* | [**adminSessionsRevokeAll**](docs/AdminSessionsApi.md#adminSessionsRevokeAll) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the tenant
+*AdminSessionsApi* | [**adminSessionsRevokeAll**](docs/AdminSessionsApi.md#adminSessionsRevokeAll) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the organization
 *AdminSessionsApi* | [**adminSessionsStats**](docs/AdminSessionsApi.md#adminSessionsStats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Session statistics
-*AdminSessionsApi* | [**adminTokensList**](docs/AdminSessionsApi.md#adminTokensList) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens
+*AdminSessionsApi* | [**adminTokensList**](docs/AdminSessionsApi.md#adminTokensList) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List stored (opaque) access tokens
 *AdminSessionsApi* | [**adminTokensRevoke**](docs/AdminSessionsApi.md#adminTokensRevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/tokens/{tokenId} | Revoke a token
 *AdminSessionsApi* | [**adminUserSessionsList**](docs/AdminSessionsApi.md#adminUserSessionsList) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | List a user&#39;s active sessions
 *AdminSessionsApi* | [**adminUserSessionsRevokeAll**](docs/AdminSessionsApi.md#adminUserSessionsRevokeAll) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions of a user
@@ -312,7 +314,10 @@ Class | Method | HTTP request | Description
 *AdminSettingsApi* | [**adminAnalyticsDashboard**](docs/AdminSettingsApi.md#adminAnalyticsDashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics
 *AdminSettingsApi* | [**adminAnalyticsLogins**](docs/AdminSettingsApi.md#adminAnalyticsLogins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics
 *AdminSettingsApi* | [**adminAnalyticsUsers**](docs/AdminSettingsApi.md#adminAnalyticsUsers) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics
-*AdminSettingsApi* | [**adminOrganizationGet**](docs/AdminSettingsApi.md#adminOrganizationGet) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile
+*AdminSettingsApi* | [**adminInitialAccessTokensCreate**](docs/AdminSettingsApi.md#adminInitialAccessTokensCreate) | **POST** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | Create an initial access token for dynamic client registration
+*AdminSettingsApi* | [**adminInitialAccessTokensDelete**](docs/AdminSettingsApi.md#adminInitialAccessTokensDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId} | Delete an initial access token of dynamic client registration
+*AdminSettingsApi* | [**adminInitialAccessTokensList**](docs/AdminSettingsApi.md#adminInitialAccessTokensList) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | List the initial access tokens of dynamic client registration
+*AdminSettingsApi* | [**adminOrganizationGet**](docs/AdminSettingsApi.md#adminOrganizationGet) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization profile
 *AdminSettingsApi* | [**adminSettingsAll**](docs/AdminSettingsApi.md#adminSettingsAll) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined)
 *AdminSettingsApi* | [**adminSettingsAuthGet**](docs/AdminSettingsApi.md#adminSettingsAuthGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings
 *AdminSettingsApi* | [**adminSettingsAuthenticationGet**](docs/AdminSettingsApi.md#adminSettingsAuthenticationGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth)
@@ -321,8 +326,8 @@ Class | Method | HTTP request | Description
 *AdminSettingsApi* | [**adminSettingsGeneralGet**](docs/AdminSettingsApi.md#adminSettingsGeneralGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings
 *AdminSettingsApi* | [**adminSettingsScimGet**](docs/AdminSettingsApi.md#adminSettingsScimGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings
 *AdminSettingsApi* | [**adminSettingsSecurityGet**](docs/AdminSettingsApi.md#adminSettingsSecurityGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings
-*AdminSettingsApi* | [**adminTenantGet**](docs/AdminSettingsApi.md#adminTenantGet) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile
-*AdminSettingsApi* | [**patchAdminOrganizationUpdate**](docs/AdminSettingsApi.md#patchAdminOrganizationUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
+*AdminSettingsApi* | [**adminTenantGet**](docs/AdminSettingsApi.md#adminTenantGet) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization profile
+*AdminSettingsApi* | [**patchAdminOrganizationUpdate**](docs/AdminSettingsApi.md#patchAdminOrganizationUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update the organization&#39;s name and settings
 *AdminSettingsApi* | [**patchAdminSettingsAuthUpdate**](docs/AdminSettingsApi.md#patchAdminSettingsAuthUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 *AdminSettingsApi* | [**patchAdminSettingsAuthenticationUpdate**](docs/AdminSettingsApi.md#patchAdminSettingsAuthenticationUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 *AdminSettingsApi* | [**patchAdminSettingsBrandingUpdate**](docs/AdminSettingsApi.md#patchAdminSettingsBrandingUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -330,8 +335,8 @@ Class | Method | HTTP request | Description
 *AdminSettingsApi* | [**patchAdminSettingsGeneralUpdate**](docs/AdminSettingsApi.md#patchAdminSettingsGeneralUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 *AdminSettingsApi* | [**patchAdminSettingsScimUpdate**](docs/AdminSettingsApi.md#patchAdminSettingsScimUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 *AdminSettingsApi* | [**patchAdminSettingsSecurityUpdate**](docs/AdminSettingsApi.md#patchAdminSettingsSecurityUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-*AdminSettingsApi* | [**patchAdminTenantUpdate**](docs/AdminSettingsApi.md#patchAdminTenantUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
-*AdminSettingsApi* | [**putAdminOrganizationUpdate**](docs/AdminSettingsApi.md#putAdminOrganizationUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
+*AdminSettingsApi* | [**patchAdminTenantUpdate**](docs/AdminSettingsApi.md#patchAdminTenantUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update the organization&#39;s name and settings
+*AdminSettingsApi* | [**putAdminOrganizationUpdate**](docs/AdminSettingsApi.md#putAdminOrganizationUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update the organization&#39;s name and settings
 *AdminSettingsApi* | [**putAdminSettingsAuthUpdate**](docs/AdminSettingsApi.md#putAdminSettingsAuthUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 *AdminSettingsApi* | [**putAdminSettingsAuthenticationUpdate**](docs/AdminSettingsApi.md#putAdminSettingsAuthenticationUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 *AdminSettingsApi* | [**putAdminSettingsBrandingUpdate**](docs/AdminSettingsApi.md#putAdminSettingsBrandingUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -339,7 +344,7 @@ Class | Method | HTTP request | Description
 *AdminSettingsApi* | [**putAdminSettingsGeneralUpdate**](docs/AdminSettingsApi.md#putAdminSettingsGeneralUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 *AdminSettingsApi* | [**putAdminSettingsScimUpdate**](docs/AdminSettingsApi.md#putAdminSettingsScimUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 *AdminSettingsApi* | [**putAdminSettingsSecurityUpdate**](docs/AdminSettingsApi.md#putAdminSettingsSecurityUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-*AdminSettingsApi* | [**putAdminTenantUpdate**](docs/AdminSettingsApi.md#putAdminTenantUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
+*AdminSettingsApi* | [**putAdminTenantUpdate**](docs/AdminSettingsApi.md#putAdminTenantUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update the organization&#39;s name and settings
 *AdminUsersApi* | [**addUserGroup**](docs/AdminUsersApi.md#addUserGroup) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/groups | Add a user to a group
 *AdminUsersApi* | [**addUserPermission**](docs/AdminUsersApi.md#addUserPermission) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions | Assign a permission to a user
 *AdminUsersApi* | [**addUserRole**](docs/AdminUsersApi.md#addUserRole) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Assign a role to a user
@@ -495,17 +500,22 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [AbacAttributeDefinition](docs/AbacAttributeDefinition.md)
+ - [AbacAttributesCreateRequest](docs/AbacAttributesCreateRequest.md)
  - [AbacAttributesCreateResponse](docs/AbacAttributesCreateResponse.md)
  - [AbacAttributesGetResponse](docs/AbacAttributesGetResponse.md)
  - [AbacAttributesListResponse](docs/AbacAttributesListResponse.md)
+ - [AbacPoliciesCreateRequest](docs/AbacPoliciesCreateRequest.md)
  - [AbacPoliciesCreateResponse](docs/AbacPoliciesCreateResponse.md)
  - [AbacPoliciesGetResponse](docs/AbacPoliciesGetResponse.md)
  - [AbacPoliciesListResponse](docs/AbacPoliciesListResponse.md)
  - [AbacPoliciesToggleResponse](docs/AbacPoliciesToggleResponse.md)
  - [AbacPolicy](docs/AbacPolicy.md)
  - [AbacResourceAttribute](docs/AbacResourceAttribute.md)
+ - [AddUserGroupRequest](docs/AddUserGroupRequest.md)
  - [AddUserGroupResponse](docs/AddUserGroupResponse.md)
+ - [AddUserPermissionRequest](docs/AddUserPermissionRequest.md)
  - [AddUserPermissionResponse](docs/AddUserPermissionResponse.md)
+ - [AddUserRoleRequest](docs/AddUserRoleRequest.md)
  - [AddUserRoleResponse](docs/AddUserRoleResponse.md)
  - [AdminAgentsActivateResponse](docs/AdminAgentsActivateResponse.md)
  - [AdminAgentsAgentsDisableResponse](docs/AdminAgentsAgentsDisableResponse.md)
@@ -560,8 +570,13 @@ Class | Method | HTTP request | Description
  - [AdminClientsGetBrandingResponse](docs/AdminClientsGetBrandingResponse.md)
  - [AdminClientsGetBrandingResponseData](docs/AdminClientsGetBrandingResponseData.md)
  - [AdminEmailTemplatesListResponse](docs/AdminEmailTemplatesListResponse.md)
+ - [AdminEmailTemplatesPreviewRequest](docs/AdminEmailTemplatesPreviewRequest.md)
  - [AdminEmailTemplatesPreviewResponse](docs/AdminEmailTemplatesPreviewResponse.md)
+ - [AdminEmailTemplatesUpsertRequest](docs/AdminEmailTemplatesUpsertRequest.md)
  - [AdminEmailTemplatesVariablesResponse](docs/AdminEmailTemplatesVariablesResponse.md)
+ - [AdminGroupsAddMembersRequest](docs/AdminGroupsAddMembersRequest.md)
+ - [AdminGroupsAddRoleRequest](docs/AdminGroupsAddRoleRequest.md)
+ - [AdminGroupsCreateRequest](docs/AdminGroupsCreateRequest.md)
  - [AdminGroupsCreateResponse](docs/AdminGroupsCreateResponse.md)
  - [AdminGroupsGetMembersResponse](docs/AdminGroupsGetMembersResponse.md)
  - [AdminGroupsGetMembersResponseDataItem](docs/AdminGroupsGetMembersResponseDataItem.md)
@@ -569,6 +584,7 @@ Class | Method | HTTP request | Description
  - [AdminGroupsGroupsGetRolesResponse](docs/AdminGroupsGroupsGetRolesResponse.md)
  - [AdminGroupsGroupsGetRolesResponseDataItem](docs/AdminGroupsGroupsGetRolesResponseDataItem.md)
  - [AdminGroupsListResponse](docs/AdminGroupsListResponse.md)
+ - [AdminGroupsUpdateRolesRequest](docs/AdminGroupsUpdateRolesRequest.md)
  - [AdminIdentitiesLegacySamlRelinkRequest](docs/AdminIdentitiesLegacySamlRelinkRequest.md)
  - [AdminIdentitiesLegacySamlRelinkResponse](docs/AdminIdentitiesLegacySamlRelinkResponse.md)
  - [AdminIdentitiesLegacySamlRelinkResponseData](docs/AdminIdentitiesLegacySamlRelinkResponseData.md)
@@ -579,6 +595,10 @@ Class | Method | HTTP request | Description
  - [AdminIdentitiesListResponse](docs/AdminIdentitiesListResponse.md)
  - [AdminIdentitiesListResponseData](docs/AdminIdentitiesListResponseData.md)
  - [AdminIdentitiesListResponseDataBindingsItem](docs/AdminIdentitiesListResponseDataBindingsItem.md)
+ - [AdminInitialAccessTokensCreateResponse](docs/AdminInitialAccessTokensCreateResponse.md)
+ - [AdminInitialAccessTokensCreateResponseData](docs/AdminInitialAccessTokensCreateResponseData.md)
+ - [AdminInitialAccessTokensListResponse](docs/AdminInitialAccessTokensListResponse.md)
+ - [AdminInitialAccessTokensListResponseDataItem](docs/AdminInitialAccessTokensListResponseDataItem.md)
  - [AdminMcpServersCreateResponse](docs/AdminMcpServersCreateResponse.md)
  - [AdminMcpServersGetResponse](docs/AdminMcpServersGetResponse.md)
  - [AdminMcpServersGrantsListResponse](docs/AdminMcpServersGrantsListResponse.md)
@@ -589,18 +609,24 @@ Class | Method | HTTP request | Description
  - [AdminMcpServersGrantsSetResponse](docs/AdminMcpServersGrantsSetResponse.md)
  - [AdminMcpServersGrantsSetResponseData](docs/AdminMcpServersGrantsSetResponseData.md)
  - [AdminMcpServersListResponse](docs/AdminMcpServersListResponse.md)
+ - [AdminOrgInvitationsCreateRequest](docs/AdminOrgInvitationsCreateRequest.md)
  - [AdminOrgInvitationsCreateResponse](docs/AdminOrgInvitationsCreateResponse.md)
  - [AdminOrgInvitationsListResponse](docs/AdminOrgInvitationsListResponse.md)
+ - [AdminOrgMembersAddRequest](docs/AdminOrgMembersAddRequest.md)
  - [AdminOrgMembersAddResponse](docs/AdminOrgMembersAddResponse.md)
  - [AdminOrgMembersListResponse](docs/AdminOrgMembersListResponse.md)
+ - [AdminOrgRolesCreateRequest](docs/AdminOrgRolesCreateRequest.md)
  - [AdminOrgRolesCreateResponse](docs/AdminOrgRolesCreateResponse.md)
  - [AdminOrgRolesListResponse](docs/AdminOrgRolesListResponse.md)
+ - [AdminOrganizationsCreateRequest](docs/AdminOrganizationsCreateRequest.md)
  - [AdminOrganizationsCreateResponse](docs/AdminOrganizationsCreateResponse.md)
  - [AdminOrganizationsGetResponse](docs/AdminOrganizationsGetResponse.md)
  - [AdminOrganizationsListResponse](docs/AdminOrganizationsListResponse.md)
+ - [AdminPermissionsCreateRequest](docs/AdminPermissionsCreateRequest.md)
  - [AdminPermissionsCreateResponse](docs/AdminPermissionsCreateResponse.md)
  - [AdminPermissionsGetResponse](docs/AdminPermissionsGetResponse.md)
  - [AdminPermissionsListResponse](docs/AdminPermissionsListResponse.md)
+ - [AdminPermissionsUpdateRequest](docs/AdminPermissionsUpdateRequest.md)
  - [AdminPermissionsUsageResponse](docs/AdminPermissionsUsageResponse.md)
  - [AdminPermissionsUsageResponseData](docs/AdminPermissionsUsageResponseData.md)
  - [AdminPoppyDomainCheckRequest](docs/AdminPoppyDomainCheckRequest.md)
@@ -628,17 +654,22 @@ Class | Method | HTTP request | Description
  - [AdminPoppyUpdateRequestTasks](docs/AdminPoppyUpdateRequestTasks.md)
  - [AdminPoppyUpdateRequestWeb](docs/AdminPoppyUpdateRequestWeb.md)
  - [AdminPoppyUpdateResponse](docs/AdminPoppyUpdateResponse.md)
+ - [AdminRolesAddPermissionsRequest](docs/AdminRolesAddPermissionsRequest.md)
+ - [AdminRolesAddUserRequest](docs/AdminRolesAddUserRequest.md)
+ - [AdminRolesCreateRequest](docs/AdminRolesCreateRequest.md)
  - [AdminRolesCreateResponse](docs/AdminRolesCreateResponse.md)
  - [AdminRolesGetPermissionsResponse](docs/AdminRolesGetPermissionsResponse.md)
  - [AdminRolesGetPermissionsResponseDataItem](docs/AdminRolesGetPermissionsResponseDataItem.md)
  - [AdminRolesGetResponse](docs/AdminRolesGetResponse.md)
  - [AdminRolesGetUsersResponse](docs/AdminRolesGetUsersResponse.md)
  - [AdminRolesListResponse](docs/AdminRolesListResponse.md)
+ - [AdminRolesUpdatePermissionsRequest](docs/AdminRolesUpdatePermissionsRequest.md)
  - [AdminSandboxListResponse](docs/AdminSandboxListResponse.md)
  - [AdminSandboxSpawnRequest](docs/AdminSandboxSpawnRequest.md)
  - [AdminSandboxSpawnResponse](docs/AdminSandboxSpawnResponse.md)
  - [AdminSandboxSpawnResponseData](docs/AdminSandboxSpawnResponseData.md)
  - [AdminSandboxSpawnResponseData1](docs/AdminSandboxSpawnResponseData1.md)
+ - [AdminScopesCreateRequest](docs/AdminScopesCreateRequest.md)
  - [AdminScopesCreateResponse](docs/AdminScopesCreateResponse.md)
  - [AdminScopesListResponse](docs/AdminScopesListResponse.md)
  - [AdminScopesListResponseMeta](docs/AdminScopesListResponseMeta.md)
@@ -664,6 +695,7 @@ Class | Method | HTTP request | Description
  - [AdminSocialProvidersAvailableResponse](docs/AdminSocialProvidersAvailableResponse.md)
  - [AdminSocialProvidersAvailableResponseDataItem](docs/AdminSocialProvidersAvailableResponseDataItem.md)
  - [AdminSocialProvidersCallbackUrlsResponse](docs/AdminSocialProvidersCallbackUrlsResponse.md)
+ - [AdminSocialProvidersCreateRequest](docs/AdminSocialProvidersCreateRequest.md)
  - [AdminSocialProvidersCreateResponse](docs/AdminSocialProvidersCreateResponse.md)
  - [AdminSocialProvidersGetResponse](docs/AdminSocialProvidersGetResponse.md)
  - [AdminSocialProvidersListResponse](docs/AdminSocialProvidersListResponse.md)
@@ -676,6 +708,7 @@ Class | Method | HTTP request | Description
  - [AdminUserTokensRevokeAllResponse](docs/AdminUserTokensRevokeAllResponse.md)
  - [AdminUserTokensRevokePostResponse](docs/AdminUserTokensRevokePostResponse.md)
  - [AdminUsersRestoreResponse](docs/AdminUsersRestoreResponse.md)
+ - [AdminWebhooksCreateRequest](docs/AdminWebhooksCreateRequest.md)
  - [AdminWebhooksCreateResponse](docs/AdminWebhooksCreateResponse.md)
  - [AdminWebhooksCreateResponseData](docs/AdminWebhooksCreateResponseData.md)
  - [AdminWebhooksDeliveriesListResponse](docs/AdminWebhooksDeliveriesListResponse.md)
@@ -704,6 +737,7 @@ Class | Method | HTTP request | Description
  - [AskRequest](docs/AskRequest.md)
  - [AskResponse](docs/AskResponse.md)
  - [AttestRequest](docs/AttestRequest.md)
+ - [AttestRequestScope](docs/AttestRequestScope.md)
  - [AttestResponse](docs/AttestResponse.md)
  - [AttestResponseIdentity](docs/AttestResponseIdentity.md)
  - [AuditLogEntry](docs/AuditLogEntry.md)
@@ -720,16 +754,22 @@ Class | Method | HTTP request | Description
  - [BackchannelAuthorizeResponse](docs/BackchannelAuthorizeResponse.md)
  - [BlockUserResponse](docs/BlockUserResponse.md)
  - [BrandingSettings](docs/BrandingSettings.md)
+ - [CheckAbacBulkRequest](docs/CheckAbacBulkRequest.md)
  - [CheckAbacBulkResponse](docs/CheckAbacBulkResponse.md)
  - [CheckAbacBulkResponseResultsItem](docs/CheckAbacBulkResponseResultsItem.md)
+ - [CheckAbacRequest](docs/CheckAbacRequest.md)
  - [CheckAbacResponse](docs/CheckAbacResponse.md)
  - [CheckAbacResponseMatchedPoliciesItem](docs/CheckAbacResponseMatchedPoliciesItem.md)
  - [CheckAnyPermissionResponse](docs/CheckAnyPermissionResponse.md)
  - [CheckEmailFirstRequest](docs/CheckEmailFirstRequest.md)
  - [CheckEmailFirstResponse](docs/CheckEmailFirstResponse.md)
+ - [CheckPermissionRequest](docs/CheckPermissionRequest.md)
  - [CheckPermissionResponse](docs/CheckPermissionResponse.md)
+ - [CheckPermissionsBulkRequest](docs/CheckPermissionsBulkRequest.md)
  - [CheckPermissionsBulkResponse](docs/CheckPermissionsBulkResponse.md)
+ - [CheckRelationRequest](docs/CheckRelationRequest.md)
  - [CheckRelationResponse](docs/CheckRelationResponse.md)
+ - [CheckRelationScopedRequest](docs/CheckRelationScopedRequest.md)
  - [CheckRelationScopedResponse](docs/CheckRelationScopedResponse.md)
  - [CimdCheckResult](docs/CimdCheckResult.md)
  - [CimdCheckResultEffective](docs/CimdCheckResultEffective.md)
@@ -742,8 +782,10 @@ Class | Method | HTTP request | Description
  - [CreateClientResponse](docs/CreateClientResponse.md)
  - [CreateClientResponseData](docs/CreateClientResponseData.md)
  - [CreateMfaChallengeRequest](docs/CreateMfaChallengeRequest.md)
+ - [CreateStreamConfigRequest](docs/CreateStreamConfigRequest.md)
  - [CreateTaskRequest](docs/CreateTaskRequest.md)
  - [CreateTaskResponse](docs/CreateTaskResponse.md)
+ - [CreateUserRequest](docs/CreateUserRequest.md)
  - [CreateUserResponse](docs/CreateUserResponse.md)
  - [DeleteUserAuthenticatorResponse](docs/DeleteUserAuthenticatorResponse.md)
  - [DeleteUserResponse](docs/DeleteUserResponse.md)
@@ -757,7 +799,9 @@ Class | Method | HTTP request | Description
  - [EndPoppySessionResponse](docs/EndPoppySessionResponse.md)
  - [EnrollAuthenticator201Response](docs/EnrollAuthenticator201Response.md)
  - [EnrollAuthenticatorRequest](docs/EnrollAuthenticatorRequest.md)
+ - [EvaluateBatchRequest](docs/EvaluateBatchRequest.md)
  - [EvaluateBatchResponse](docs/EvaluateBatchResponse.md)
+ - [EvaluateRequest](docs/EvaluateRequest.md)
  - [EvaluateResponseContext](docs/EvaluateResponseContext.md)
  - [EvaluateResponseContextReasonAdmin](docs/EvaluateResponseContextReasonAdmin.md)
  - [ExpandRelationRequest](docs/ExpandRelationRequest.md)
@@ -839,6 +883,9 @@ Class | Method | HTTP request | Description
  - [McpServerToolAuthorizeRequest](docs/McpServerToolAuthorizeRequest.md)
  - [McpServerToolAuthorizeRequestSubject](docs/McpServerToolAuthorizeRequestSubject.md)
  - [McpServerToolAuthorizeResponse](docs/McpServerToolAuthorizeResponse.md)
+ - [McpServerWrite](docs/McpServerWrite.md)
+ - [McpServerWriteBasicScopes](docs/McpServerWriteBasicScopes.md)
+ - [McpServerWriteScopesSupported](docs/McpServerWriteScopesSupported.md)
  - [MessageResponse](docs/MessageResponse.md)
  - [MfaAuthenticator](docs/MfaAuthenticator.md)
  - [MfaAuthenticatorLastUsedContext](docs/MfaAuthenticatorLastUsedContext.md)
@@ -850,6 +897,7 @@ Class | Method | HTTP request | Description
  - [OAuthAccessToken](docs/OAuthAccessToken.md)
  - [OAuthClient](docs/OAuthClient.md)
  - [OAuthClientSecretIssued](docs/OAuthClientSecretIssued.md)
+ - [OAuthClientWrite](docs/OAuthClientWrite.md)
  - [OAuthScope](docs/OAuthScope.md)
  - [OpenIdConfiguration](docs/OpenIdConfiguration.md)
  - [Organization](docs/Organization.md)
@@ -888,13 +936,20 @@ Class | Method | HTTP request | Description
  - [ProtectedResourceList](docs/ProtectedResourceList.md)
  - [ProtectedResourceMetadata](docs/ProtectedResourceMetadata.md)
  - [PushEnrollmentStarted](docs/PushEnrollmentStarted.md)
+ - [PutAbacAttributesUpdateRequest](docs/PutAbacAttributesUpdateRequest.md)
  - [PutAbacAttributesUpdateResponse](docs/PutAbacAttributesUpdateResponse.md)
+ - [PutAbacPoliciesUpdateRequest](docs/PutAbacPoliciesUpdateRequest.md)
  - [PutAbacPoliciesUpdateResponse](docs/PutAbacPoliciesUpdateResponse.md)
  - [PutAdminAgentsUpdateRequest](docs/PutAdminAgentsUpdateRequest.md)
  - [PutAdminAgentsUpdateResponse](docs/PutAdminAgentsUpdateResponse.md)
+ - [PutAdminAuditLogsRetentionUpdateRequest](docs/PutAdminAuditLogsRetentionUpdateRequest.md)
  - [PutAdminClientsUpdateBrandingRequest](docs/PutAdminClientsUpdateBrandingRequest.md)
  - [PutAdminClientsUpdateBrandingResponse](docs/PutAdminClientsUpdateBrandingResponse.md)
+ - [PutAdminGroupsUpdateRequest](docs/PutAdminGroupsUpdateRequest.md)
+ - [PutAdminOrgMembersUpdateRequest](docs/PutAdminOrgMembersUpdateRequest.md)
  - [PutAdminOrgMembersUpdateResponse](docs/PutAdminOrgMembersUpdateResponse.md)
+ - [PutAdminOrgRolesUpdateRequest](docs/PutAdminOrgRolesUpdateRequest.md)
+ - [PutAdminOrganizationsUpdateRequest](docs/PutAdminOrganizationsUpdateRequest.md)
  - [PutAdminSettingsAuthenticationUpdateResponse](docs/PutAdminSettingsAuthenticationUpdateResponse.md)
  - [PutAdminSettingsBrandingUpdateResponse](docs/PutAdminSettingsBrandingUpdateResponse.md)
  - [PutAdminSettingsEmailUpdateRequest](docs/PutAdminSettingsEmailUpdateRequest.md)
@@ -903,11 +958,17 @@ Class | Method | HTTP request | Description
  - [PutAdminSettingsGeneralUpdateResponse](docs/PutAdminSettingsGeneralUpdateResponse.md)
  - [PutAdminSettingsGeneralUpdateResponseData](docs/PutAdminSettingsGeneralUpdateResponseData.md)
  - [PutAdminSettingsScimUpdateResponse](docs/PutAdminSettingsScimUpdateResponse.md)
+ - [PutAdminSettingsSecurityUpdateRequest](docs/PutAdminSettingsSecurityUpdateRequest.md)
  - [PutAdminSettingsSecurityUpdateResponse](docs/PutAdminSettingsSecurityUpdateResponse.md)
+ - [PutAdminSocialProvidersUpdateRequest](docs/PutAdminSocialProvidersUpdateRequest.md)
+ - [PutAdminTenantUpdateRequest](docs/PutAdminTenantUpdateRequest.md)
  - [PutAdminTenantUpdateResponse](docs/PutAdminTenantUpdateResponse.md)
+ - [PutAdminWebhooksUpdateRequest](docs/PutAdminWebhooksUpdateRequest.md)
  - [PutAdminWebhooksUpdateResponse](docs/PutAdminWebhooksUpdateResponse.md)
  - [RedactedSecret](docs/RedactedSecret.md)
+ - [RegisterAgentRequest](docs/RegisterAgentRequest.md)
  - [RegisterAgentResponse](docs/RegisterAgentResponse.md)
+ - [RegisterClientRequest](docs/RegisterClientRequest.md)
  - [RegisterClientResponse](docs/RegisterClientResponse.md)
  - [RegisteredClientMetadata](docs/RegisteredClientMetadata.md)
  - [RemoveUserGroupResponse](docs/RemoveUserGroupResponse.md)
@@ -932,10 +993,13 @@ Class | Method | HTTP request | Description
  - [ScimSettingsOutbound](docs/ScimSettingsOutbound.md)
  - [SendPoppyFeedbackRequest](docs/SendPoppyFeedbackRequest.md)
  - [SendUserVerificationEmailResponse](docs/SendUserVerificationEmailResponse.md)
+ - [SetClientScopesRequest](docs/SetClientScopesRequest.md)
  - [SetClientScopesResponse](docs/SetClientScopesResponse.md)
+ - [SetResourceAttributeRequest](docs/SetResourceAttributeRequest.md)
  - [SetResourceAttributeResponse](docs/SetResourceAttributeResponse.md)
  - [SetUserAttributeResponse](docs/SetUserAttributeResponse.md)
  - [SetUserAttributeResponseData](docs/SetUserAttributeResponseData.md)
+ - [SetUserPasswordPostRequest](docs/SetUserPasswordPostRequest.md)
  - [SetUserPasswordPostResponse](docs/SetUserPasswordPostResponse.md)
  - [SignedAgentCard](docs/SignedAgentCard.md)
  - [SingleServerMetadata](docs/SingleServerMetadata.md)
@@ -950,6 +1014,7 @@ Class | Method | HTTP request | Description
  - [StartAgentEnrollmentRequestInventoryMcpServersItem](docs/StartAgentEnrollmentRequestInventoryMcpServersItem.md)
  - [StartAgentEnrollmentRequestJwks](docs/StartAgentEnrollmentRequestJwks.md)
  - [StartAgentEnrollmentResponse](docs/StartAgentEnrollmentResponse.md)
+ - [SubmitLoginJsonRequest](docs/SubmitLoginJsonRequest.md)
  - [SubmitLoginJsonResponse](docs/SubmitLoginJsonResponse.md)
  - [TenantProfile](docs/TenantProfile.md)
  - [TokenResponse](docs/TokenResponse.md)
@@ -959,7 +1024,9 @@ Class | Method | HTTP request | Description
  - [UpdateAuthenticatorRequest](docs/UpdateAuthenticatorRequest.md)
  - [UpdateClientResponse](docs/UpdateClientResponse.md)
  - [UpdateMfaPolicyResponse](docs/UpdateMfaPolicyResponse.md)
+ - [UpdateUserGroupsRequest](docs/UpdateUserGroupsRequest.md)
  - [UpdateUserGroupsResponse](docs/UpdateUserGroupsResponse.md)
+ - [UpdateUserRequest](docs/UpdateUserRequest.md)
  - [UpdateUserResponse](docs/UpdateUserResponse.md)
  - [UpdateUserRolesResponse](docs/UpdateUserRolesResponse.md)
  - [User](docs/User.md)
@@ -974,6 +1041,7 @@ Class | Method | HTTP request | Description
  - [VerifyMfaChallengeRequest](docs/VerifyMfaChallengeRequest.md)
  - [VerifyResourceTokenRequest](docs/VerifyResourceTokenRequest.md)
  - [VerifyResourceTokenResponse](docs/VerifyResourceTokenResponse.md)
+ - [VerifyStreamRequest](docs/VerifyStreamRequest.md)
  - [Webhook](docs/Webhook.md)
  - [WebhookDelivery](docs/WebhookDelivery.md)
  - [WebhookDeliveryDetail](docs/WebhookDeliveryDetail.md)

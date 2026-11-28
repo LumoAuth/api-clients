@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**auth_token** | **str** | The auth token presented by the agent. | [optional] 
-**resource** | **str** | Resource identifier; defaults to the authenticated resource. | [optional] 
+**auth_token** | **str** | The auth token presented by the agent. | 
+**resource** | **str** | Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource. | 
 
 ## Example
 

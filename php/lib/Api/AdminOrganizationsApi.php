@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -190,15 +190,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $organizationId organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgInvitationsCreateRequest $adminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgInvitationsCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminOrgInvitationsCreateResponse
      */
-    public function adminOrgInvitationsCreate($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgInvitationsCreate'][0])
+    public function adminOrgInvitationsCreate($orgId, $organizationId, $adminOrgInvitationsCreateRequest, string $contentType = self::contentTypes['adminOrgInvitationsCreate'][0])
     {
-        list($response) = $this->adminOrgInvitationsCreateWithHttpInfo($orgId, $organizationId, $contentType);
+        list($response) = $this->adminOrgInvitationsCreateWithHttpInfo($orgId, $organizationId, $adminOrgInvitationsCreateRequest, $contentType);
         return $response;
     }
 
@@ -209,15 +210,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgInvitationsCreateRequest $adminOrgInvitationsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgInvitationsCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminOrgInvitationsCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminOrgInvitationsCreateWithHttpInfo($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgInvitationsCreate'][0])
+    public function adminOrgInvitationsCreateWithHttpInfo($orgId, $organizationId, $adminOrgInvitationsCreateRequest, string $contentType = self::contentTypes['adminOrgInvitationsCreate'][0])
     {
-        $request = $this->adminOrgInvitationsCreateRequest($orgId, $organizationId, $contentType);
+        $request = $this->adminOrgInvitationsCreateRequest($orgId, $organizationId, $adminOrgInvitationsCreateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -295,14 +297,15 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgInvitationsCreateRequest $adminOrgInvitationsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgInvitationsCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminOrgInvitationsCreateAsync($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgInvitationsCreate'][0])
+    public function adminOrgInvitationsCreateAsync($orgId, $organizationId, $adminOrgInvitationsCreateRequest, string $contentType = self::contentTypes['adminOrgInvitationsCreate'][0])
     {
-        return $this->adminOrgInvitationsCreateAsyncWithHttpInfo($orgId, $organizationId, $contentType)
+        return $this->adminOrgInvitationsCreateAsyncWithHttpInfo($orgId, $organizationId, $adminOrgInvitationsCreateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -317,15 +320,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgInvitationsCreateRequest $adminOrgInvitationsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgInvitationsCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminOrgInvitationsCreateAsyncWithHttpInfo($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgInvitationsCreate'][0])
+    public function adminOrgInvitationsCreateAsyncWithHttpInfo($orgId, $organizationId, $adminOrgInvitationsCreateRequest, string $contentType = self::contentTypes['adminOrgInvitationsCreate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminOrgInvitationsCreateResponse';
-        $request = $this->adminOrgInvitationsCreateRequest($orgId, $organizationId, $contentType);
+        $request = $this->adminOrgInvitationsCreateRequest($orgId, $organizationId, $adminOrgInvitationsCreateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -368,12 +372,13 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgInvitationsCreateRequest $adminOrgInvitationsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgInvitationsCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminOrgInvitationsCreateRequest($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgInvitationsCreate'][0])
+    public function adminOrgInvitationsCreateRequest($orgId, $organizationId, $adminOrgInvitationsCreateRequest, string $contentType = self::contentTypes['adminOrgInvitationsCreate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -387,6 +392,13 @@ class AdminOrganizationsApi
         if ($organizationId === null || (is_array($organizationId) && count($organizationId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $organizationId when calling adminOrgInvitationsCreate'
+            );
+        }
+
+        // verify the required parameter 'adminOrgInvitationsCreateRequest' is set
+        if ($adminOrgInvitationsCreateRequest === null || (is_array($adminOrgInvitationsCreateRequest) && count($adminOrgInvitationsCreateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $adminOrgInvitationsCreateRequest when calling adminOrgInvitationsCreate'
             );
         }
 
@@ -425,7 +437,14 @@ class AdminOrganizationsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminOrgInvitationsCreateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminOrgInvitationsCreateRequest));
+            } else {
+                $httpBody = $adminOrgInvitationsCreateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -1424,15 +1443,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $organizationId organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgMembersAddRequest $adminOrgMembersAddRequest adminOrgMembersAddRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgMembersAdd'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminOrgMembersAddResponse
      */
-    public function adminOrgMembersAdd($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgMembersAdd'][0])
+    public function adminOrgMembersAdd($orgId, $organizationId, $adminOrgMembersAddRequest, string $contentType = self::contentTypes['adminOrgMembersAdd'][0])
     {
-        list($response) = $this->adminOrgMembersAddWithHttpInfo($orgId, $organizationId, $contentType);
+        list($response) = $this->adminOrgMembersAddWithHttpInfo($orgId, $organizationId, $adminOrgMembersAddRequest, $contentType);
         return $response;
     }
 
@@ -1443,15 +1463,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgMembersAddRequest $adminOrgMembersAddRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgMembersAdd'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminOrgMembersAddResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminOrgMembersAddWithHttpInfo($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgMembersAdd'][0])
+    public function adminOrgMembersAddWithHttpInfo($orgId, $organizationId, $adminOrgMembersAddRequest, string $contentType = self::contentTypes['adminOrgMembersAdd'][0])
     {
-        $request = $this->adminOrgMembersAddRequest($orgId, $organizationId, $contentType);
+        $request = $this->adminOrgMembersAddRequest($orgId, $organizationId, $adminOrgMembersAddRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1529,14 +1550,15 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgMembersAddRequest $adminOrgMembersAddRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgMembersAdd'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminOrgMembersAddAsync($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgMembersAdd'][0])
+    public function adminOrgMembersAddAsync($orgId, $organizationId, $adminOrgMembersAddRequest, string $contentType = self::contentTypes['adminOrgMembersAdd'][0])
     {
-        return $this->adminOrgMembersAddAsyncWithHttpInfo($orgId, $organizationId, $contentType)
+        return $this->adminOrgMembersAddAsyncWithHttpInfo($orgId, $organizationId, $adminOrgMembersAddRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1551,15 +1573,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgMembersAddRequest $adminOrgMembersAddRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgMembersAdd'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminOrgMembersAddAsyncWithHttpInfo($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgMembersAdd'][0])
+    public function adminOrgMembersAddAsyncWithHttpInfo($orgId, $organizationId, $adminOrgMembersAddRequest, string $contentType = self::contentTypes['adminOrgMembersAdd'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminOrgMembersAddResponse';
-        $request = $this->adminOrgMembersAddRequest($orgId, $organizationId, $contentType);
+        $request = $this->adminOrgMembersAddRequest($orgId, $organizationId, $adminOrgMembersAddRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1602,12 +1625,13 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgMembersAddRequest $adminOrgMembersAddRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgMembersAdd'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminOrgMembersAddRequest($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgMembersAdd'][0])
+    public function adminOrgMembersAddRequest($orgId, $organizationId, $adminOrgMembersAddRequest, string $contentType = self::contentTypes['adminOrgMembersAdd'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -1621,6 +1645,13 @@ class AdminOrganizationsApi
         if ($organizationId === null || (is_array($organizationId) && count($organizationId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $organizationId when calling adminOrgMembersAdd'
+            );
+        }
+
+        // verify the required parameter 'adminOrgMembersAddRequest' is set
+        if ($adminOrgMembersAddRequest === null || (is_array($adminOrgMembersAddRequest) && count($adminOrgMembersAddRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $adminOrgMembersAddRequest when calling adminOrgMembersAdd'
             );
         }
 
@@ -1659,7 +1690,14 @@ class AdminOrganizationsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminOrgMembersAddRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminOrgMembersAddRequest));
+            } else {
+                $httpBody = $adminOrgMembersAddRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -2335,15 +2373,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $organizationId organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgRolesCreateRequest $adminOrgRolesCreateRequest adminOrgRolesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgRolesCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse
      */
-    public function adminOrgRolesCreate($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgRolesCreate'][0])
+    public function adminOrgRolesCreate($orgId, $organizationId, $adminOrgRolesCreateRequest, string $contentType = self::contentTypes['adminOrgRolesCreate'][0])
     {
-        list($response) = $this->adminOrgRolesCreateWithHttpInfo($orgId, $organizationId, $contentType);
+        list($response) = $this->adminOrgRolesCreateWithHttpInfo($orgId, $organizationId, $adminOrgRolesCreateRequest, $contentType);
         return $response;
     }
 
@@ -2354,15 +2393,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgRolesCreateRequest $adminOrgRolesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgRolesCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminOrgRolesCreateWithHttpInfo($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgRolesCreate'][0])
+    public function adminOrgRolesCreateWithHttpInfo($orgId, $organizationId, $adminOrgRolesCreateRequest, string $contentType = self::contentTypes['adminOrgRolesCreate'][0])
     {
-        $request = $this->adminOrgRolesCreateRequest($orgId, $organizationId, $contentType);
+        $request = $this->adminOrgRolesCreateRequest($orgId, $organizationId, $adminOrgRolesCreateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2440,14 +2480,15 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgRolesCreateRequest $adminOrgRolesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgRolesCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminOrgRolesCreateAsync($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgRolesCreate'][0])
+    public function adminOrgRolesCreateAsync($orgId, $organizationId, $adminOrgRolesCreateRequest, string $contentType = self::contentTypes['adminOrgRolesCreate'][0])
     {
-        return $this->adminOrgRolesCreateAsyncWithHttpInfo($orgId, $organizationId, $contentType)
+        return $this->adminOrgRolesCreateAsyncWithHttpInfo($orgId, $organizationId, $adminOrgRolesCreateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2462,15 +2503,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgRolesCreateRequest $adminOrgRolesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgRolesCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminOrgRolesCreateAsyncWithHttpInfo($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgRolesCreate'][0])
+    public function adminOrgRolesCreateAsyncWithHttpInfo($orgId, $organizationId, $adminOrgRolesCreateRequest, string $contentType = self::contentTypes['adminOrgRolesCreate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse';
-        $request = $this->adminOrgRolesCreateRequest($orgId, $organizationId, $contentType);
+        $request = $this->adminOrgRolesCreateRequest($orgId, $organizationId, $adminOrgRolesCreateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2513,12 +2555,13 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrgRolesCreateRequest $adminOrgRolesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrgRolesCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminOrgRolesCreateRequest($orgId, $organizationId, string $contentType = self::contentTypes['adminOrgRolesCreate'][0])
+    public function adminOrgRolesCreateRequest($orgId, $organizationId, $adminOrgRolesCreateRequest, string $contentType = self::contentTypes['adminOrgRolesCreate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -2532,6 +2575,13 @@ class AdminOrganizationsApi
         if ($organizationId === null || (is_array($organizationId) && count($organizationId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $organizationId when calling adminOrgRolesCreate'
+            );
+        }
+
+        // verify the required parameter 'adminOrgRolesCreateRequest' is set
+        if ($adminOrgRolesCreateRequest === null || (is_array($adminOrgRolesCreateRequest) && count($adminOrgRolesCreateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $adminOrgRolesCreateRequest when calling adminOrgRolesCreate'
             );
         }
 
@@ -2570,7 +2620,14 @@ class AdminOrganizationsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminOrgRolesCreateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminOrgRolesCreateRequest));
+            } else {
+                $httpBody = $adminOrgRolesCreateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -3248,15 +3305,16 @@ class AdminOrganizationsApi
      * Create an organization
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrganizationsCreateRequest $adminOrganizationsCreateRequest adminOrganizationsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrganizationsCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminOrganizationsCreateResponse
      */
-    public function adminOrganizationsCreate($orgId, string $contentType = self::contentTypes['adminOrganizationsCreate'][0])
+    public function adminOrganizationsCreate($orgId, $adminOrganizationsCreateRequest, string $contentType = self::contentTypes['adminOrganizationsCreate'][0])
     {
-        list($response) = $this->adminOrganizationsCreateWithHttpInfo($orgId, $contentType);
+        list($response) = $this->adminOrganizationsCreateWithHttpInfo($orgId, $adminOrganizationsCreateRequest, $contentType);
         return $response;
     }
 
@@ -3266,15 +3324,16 @@ class AdminOrganizationsApi
      * Create an organization
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrganizationsCreateRequest $adminOrganizationsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrganizationsCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminOrganizationsCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminOrganizationsCreateWithHttpInfo($orgId, string $contentType = self::contentTypes['adminOrganizationsCreate'][0])
+    public function adminOrganizationsCreateWithHttpInfo($orgId, $adminOrganizationsCreateRequest, string $contentType = self::contentTypes['adminOrganizationsCreate'][0])
     {
-        $request = $this->adminOrganizationsCreateRequest($orgId, $contentType);
+        $request = $this->adminOrganizationsCreateRequest($orgId, $adminOrganizationsCreateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3351,14 +3410,15 @@ class AdminOrganizationsApi
      * Create an organization
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrganizationsCreateRequest $adminOrganizationsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrganizationsCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminOrganizationsCreateAsync($orgId, string $contentType = self::contentTypes['adminOrganizationsCreate'][0])
+    public function adminOrganizationsCreateAsync($orgId, $adminOrganizationsCreateRequest, string $contentType = self::contentTypes['adminOrganizationsCreate'][0])
     {
-        return $this->adminOrganizationsCreateAsyncWithHttpInfo($orgId, $contentType)
+        return $this->adminOrganizationsCreateAsyncWithHttpInfo($orgId, $adminOrganizationsCreateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3372,15 +3432,16 @@ class AdminOrganizationsApi
      * Create an organization
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrganizationsCreateRequest $adminOrganizationsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrganizationsCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminOrganizationsCreateAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['adminOrganizationsCreate'][0])
+    public function adminOrganizationsCreateAsyncWithHttpInfo($orgId, $adminOrganizationsCreateRequest, string $contentType = self::contentTypes['adminOrganizationsCreate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminOrganizationsCreateResponse';
-        $request = $this->adminOrganizationsCreateRequest($orgId, $contentType);
+        $request = $this->adminOrganizationsCreateRequest($orgId, $adminOrganizationsCreateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3422,18 +3483,26 @@ class AdminOrganizationsApi
      * Create request for operation 'adminOrganizationsCreate'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminOrganizationsCreateRequest $adminOrganizationsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminOrganizationsCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminOrganizationsCreateRequest($orgId, string $contentType = self::contentTypes['adminOrganizationsCreate'][0])
+    public function adminOrganizationsCreateRequest($orgId, $adminOrganizationsCreateRequest, string $contentType = self::contentTypes['adminOrganizationsCreate'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling adminOrganizationsCreate'
+            );
+        }
+
+        // verify the required parameter 'adminOrganizationsCreateRequest' is set
+        if ($adminOrganizationsCreateRequest === null || (is_array($adminOrganizationsCreateRequest) && count($adminOrganizationsCreateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $adminOrganizationsCreateRequest when calling adminOrganizationsCreate'
             );
         }
 
@@ -3464,7 +3533,14 @@ class AdminOrganizationsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminOrganizationsCreateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminOrganizationsCreateRequest));
+            } else {
+                $httpBody = $adminOrganizationsCreateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -4398,15 +4474,16 @@ class AdminOrganizationsApi
      * @param  string $orgId orgId (required)
      * @param  string $organizationId organizationId (required)
      * @param  string $userId userId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest $putAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrgMembersUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateResponse
      */
-    public function patchAdminOrgMembersUpdate($orgId, $organizationId, $userId, string $contentType = self::contentTypes['patchAdminOrgMembersUpdate'][0])
+    public function patchAdminOrgMembersUpdate($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, string $contentType = self::contentTypes['patchAdminOrgMembersUpdate'][0])
     {
-        list($response) = $this->patchAdminOrgMembersUpdateWithHttpInfo($orgId, $organizationId, $userId, $contentType);
+        list($response) = $this->patchAdminOrgMembersUpdateWithHttpInfo($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, $contentType);
         return $response;
     }
 
@@ -4418,15 +4495,16 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest $putAdminOrgMembersUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrgMembersUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function patchAdminOrgMembersUpdateWithHttpInfo($orgId, $organizationId, $userId, string $contentType = self::contentTypes['patchAdminOrgMembersUpdate'][0])
+    public function patchAdminOrgMembersUpdateWithHttpInfo($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, string $contentType = self::contentTypes['patchAdminOrgMembersUpdate'][0])
     {
-        $request = $this->patchAdminOrgMembersUpdateRequest($orgId, $organizationId, $userId, $contentType);
+        $request = $this->patchAdminOrgMembersUpdateRequest($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4505,14 +4583,15 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest $putAdminOrgMembersUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrgMembersUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAdminOrgMembersUpdateAsync($orgId, $organizationId, $userId, string $contentType = self::contentTypes['patchAdminOrgMembersUpdate'][0])
+    public function patchAdminOrgMembersUpdateAsync($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, string $contentType = self::contentTypes['patchAdminOrgMembersUpdate'][0])
     {
-        return $this->patchAdminOrgMembersUpdateAsyncWithHttpInfo($orgId, $organizationId, $userId, $contentType)
+        return $this->patchAdminOrgMembersUpdateAsyncWithHttpInfo($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4528,15 +4607,16 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest $putAdminOrgMembersUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrgMembersUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAdminOrgMembersUpdateAsyncWithHttpInfo($orgId, $organizationId, $userId, string $contentType = self::contentTypes['patchAdminOrgMembersUpdate'][0])
+    public function patchAdminOrgMembersUpdateAsyncWithHttpInfo($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, string $contentType = self::contentTypes['patchAdminOrgMembersUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateResponse';
-        $request = $this->patchAdminOrgMembersUpdateRequest($orgId, $organizationId, $userId, $contentType);
+        $request = $this->patchAdminOrgMembersUpdateRequest($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -4580,12 +4660,13 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest $putAdminOrgMembersUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrgMembersUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function patchAdminOrgMembersUpdateRequest($orgId, $organizationId, $userId, string $contentType = self::contentTypes['patchAdminOrgMembersUpdate'][0])
+    public function patchAdminOrgMembersUpdateRequest($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, string $contentType = self::contentTypes['patchAdminOrgMembersUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -4606,6 +4687,13 @@ class AdminOrganizationsApi
         if ($userId === null || (is_array($userId) && count($userId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $userId when calling patchAdminOrgMembersUpdate'
+            );
+        }
+
+        // verify the required parameter 'putAdminOrgMembersUpdateRequest' is set
+        if ($putAdminOrgMembersUpdateRequest === null || (is_array($putAdminOrgMembersUpdateRequest) && count($putAdminOrgMembersUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAdminOrgMembersUpdateRequest when calling patchAdminOrgMembersUpdate'
             );
         }
 
@@ -4652,7 +4740,14 @@ class AdminOrganizationsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAdminOrgMembersUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAdminOrgMembersUpdateRequest));
+            } else {
+                $httpBody = $putAdminOrgMembersUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -4715,15 +4810,16 @@ class AdminOrganizationsApi
      * @param  string $orgId orgId (required)
      * @param  string $organizationId organizationId (required)
      * @param  string $roleId roleId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest $putAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrgRolesUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse
      */
-    public function patchAdminOrgRolesUpdate($orgId, $organizationId, $roleId, string $contentType = self::contentTypes['patchAdminOrgRolesUpdate'][0])
+    public function patchAdminOrgRolesUpdate($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, string $contentType = self::contentTypes['patchAdminOrgRolesUpdate'][0])
     {
-        list($response) = $this->patchAdminOrgRolesUpdateWithHttpInfo($orgId, $organizationId, $roleId, $contentType);
+        list($response) = $this->patchAdminOrgRolesUpdateWithHttpInfo($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, $contentType);
         return $response;
     }
 
@@ -4735,15 +4831,16 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $roleId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest $putAdminOrgRolesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrgRolesUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function patchAdminOrgRolesUpdateWithHttpInfo($orgId, $organizationId, $roleId, string $contentType = self::contentTypes['patchAdminOrgRolesUpdate'][0])
+    public function patchAdminOrgRolesUpdateWithHttpInfo($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, string $contentType = self::contentTypes['patchAdminOrgRolesUpdate'][0])
     {
-        $request = $this->patchAdminOrgRolesUpdateRequest($orgId, $organizationId, $roleId, $contentType);
+        $request = $this->patchAdminOrgRolesUpdateRequest($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4822,14 +4919,15 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $roleId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest $putAdminOrgRolesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrgRolesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAdminOrgRolesUpdateAsync($orgId, $organizationId, $roleId, string $contentType = self::contentTypes['patchAdminOrgRolesUpdate'][0])
+    public function patchAdminOrgRolesUpdateAsync($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, string $contentType = self::contentTypes['patchAdminOrgRolesUpdate'][0])
     {
-        return $this->patchAdminOrgRolesUpdateAsyncWithHttpInfo($orgId, $organizationId, $roleId, $contentType)
+        return $this->patchAdminOrgRolesUpdateAsyncWithHttpInfo($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4845,15 +4943,16 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $roleId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest $putAdminOrgRolesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrgRolesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAdminOrgRolesUpdateAsyncWithHttpInfo($orgId, $organizationId, $roleId, string $contentType = self::contentTypes['patchAdminOrgRolesUpdate'][0])
+    public function patchAdminOrgRolesUpdateAsyncWithHttpInfo($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, string $contentType = self::contentTypes['patchAdminOrgRolesUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse';
-        $request = $this->patchAdminOrgRolesUpdateRequest($orgId, $organizationId, $roleId, $contentType);
+        $request = $this->patchAdminOrgRolesUpdateRequest($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -4897,12 +4996,13 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $roleId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest $putAdminOrgRolesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrgRolesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function patchAdminOrgRolesUpdateRequest($orgId, $organizationId, $roleId, string $contentType = self::contentTypes['patchAdminOrgRolesUpdate'][0])
+    public function patchAdminOrgRolesUpdateRequest($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, string $contentType = self::contentTypes['patchAdminOrgRolesUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -4929,6 +5029,13 @@ class AdminOrganizationsApi
             throw new \InvalidArgumentException("invalid value for \"roleId\" when calling AdminOrganizationsApi.patchAdminOrgRolesUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
         }
         
+        // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+        if ($putAdminOrgRolesUpdateRequest === null || (is_array($putAdminOrgRolesUpdateRequest) && count($putAdminOrgRolesUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAdminOrgRolesUpdateRequest when calling patchAdminOrgRolesUpdate'
+            );
+        }
+
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}';
         $formParams = [];
@@ -4972,7 +5079,14 @@ class AdminOrganizationsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAdminOrgRolesUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAdminOrgRolesUpdateRequest));
+            } else {
+                $httpBody = $putAdminOrgRolesUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -5034,15 +5148,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $organizationId organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest $putAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrganizationsUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminOrganizationsGetResponse
      */
-    public function patchAdminOrganizationsUpdate($orgId, $organizationId, string $contentType = self::contentTypes['patchAdminOrganizationsUpdate'][0])
+    public function patchAdminOrganizationsUpdate($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, string $contentType = self::contentTypes['patchAdminOrganizationsUpdate'][0])
     {
-        list($response) = $this->patchAdminOrganizationsUpdateWithHttpInfo($orgId, $organizationId, $contentType);
+        list($response) = $this->patchAdminOrganizationsUpdateWithHttpInfo($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, $contentType);
         return $response;
     }
 
@@ -5053,15 +5168,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest $putAdminOrganizationsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrganizationsUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminOrganizationsGetResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function patchAdminOrganizationsUpdateWithHttpInfo($orgId, $organizationId, string $contentType = self::contentTypes['patchAdminOrganizationsUpdate'][0])
+    public function patchAdminOrganizationsUpdateWithHttpInfo($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, string $contentType = self::contentTypes['patchAdminOrganizationsUpdate'][0])
     {
-        $request = $this->patchAdminOrganizationsUpdateRequest($orgId, $organizationId, $contentType);
+        $request = $this->patchAdminOrganizationsUpdateRequest($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -5139,14 +5255,15 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest $putAdminOrganizationsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrganizationsUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAdminOrganizationsUpdateAsync($orgId, $organizationId, string $contentType = self::contentTypes['patchAdminOrganizationsUpdate'][0])
+    public function patchAdminOrganizationsUpdateAsync($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, string $contentType = self::contentTypes['patchAdminOrganizationsUpdate'][0])
     {
-        return $this->patchAdminOrganizationsUpdateAsyncWithHttpInfo($orgId, $organizationId, $contentType)
+        return $this->patchAdminOrganizationsUpdateAsyncWithHttpInfo($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -5161,15 +5278,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest $putAdminOrganizationsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrganizationsUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAdminOrganizationsUpdateAsyncWithHttpInfo($orgId, $organizationId, string $contentType = self::contentTypes['patchAdminOrganizationsUpdate'][0])
+    public function patchAdminOrganizationsUpdateAsyncWithHttpInfo($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, string $contentType = self::contentTypes['patchAdminOrganizationsUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminOrganizationsGetResponse';
-        $request = $this->patchAdminOrganizationsUpdateRequest($orgId, $organizationId, $contentType);
+        $request = $this->patchAdminOrganizationsUpdateRequest($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -5212,12 +5330,13 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest $putAdminOrganizationsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminOrganizationsUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function patchAdminOrganizationsUpdateRequest($orgId, $organizationId, string $contentType = self::contentTypes['patchAdminOrganizationsUpdate'][0])
+    public function patchAdminOrganizationsUpdateRequest($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, string $contentType = self::contentTypes['patchAdminOrganizationsUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -5231,6 +5350,13 @@ class AdminOrganizationsApi
         if ($organizationId === null || (is_array($organizationId) && count($organizationId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $organizationId when calling patchAdminOrganizationsUpdate'
+            );
+        }
+
+        // verify the required parameter 'putAdminOrganizationsUpdateRequest' is set
+        if ($putAdminOrganizationsUpdateRequest === null || (is_array($putAdminOrganizationsUpdateRequest) && count($putAdminOrganizationsUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAdminOrganizationsUpdateRequest when calling patchAdminOrganizationsUpdate'
             );
         }
 
@@ -5269,7 +5395,14 @@ class AdminOrganizationsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAdminOrganizationsUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAdminOrganizationsUpdateRequest));
+            } else {
+                $httpBody = $putAdminOrganizationsUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -5332,15 +5465,16 @@ class AdminOrganizationsApi
      * @param  string $orgId orgId (required)
      * @param  string $organizationId organizationId (required)
      * @param  string $userId userId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest $putAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrgMembersUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateResponse
      */
-    public function putAdminOrgMembersUpdate($orgId, $organizationId, $userId, string $contentType = self::contentTypes['putAdminOrgMembersUpdate'][0])
+    public function putAdminOrgMembersUpdate($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, string $contentType = self::contentTypes['putAdminOrgMembersUpdate'][0])
     {
-        list($response) = $this->putAdminOrgMembersUpdateWithHttpInfo($orgId, $organizationId, $userId, $contentType);
+        list($response) = $this->putAdminOrgMembersUpdateWithHttpInfo($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, $contentType);
         return $response;
     }
 
@@ -5352,15 +5486,16 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest $putAdminOrgMembersUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrgMembersUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function putAdminOrgMembersUpdateWithHttpInfo($orgId, $organizationId, $userId, string $contentType = self::contentTypes['putAdminOrgMembersUpdate'][0])
+    public function putAdminOrgMembersUpdateWithHttpInfo($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, string $contentType = self::contentTypes['putAdminOrgMembersUpdate'][0])
     {
-        $request = $this->putAdminOrgMembersUpdateRequest($orgId, $organizationId, $userId, $contentType);
+        $request = $this->putAdminOrgMembersUpdateRequest($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -5439,14 +5574,15 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest $putAdminOrgMembersUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrgMembersUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAdminOrgMembersUpdateAsync($orgId, $organizationId, $userId, string $contentType = self::contentTypes['putAdminOrgMembersUpdate'][0])
+    public function putAdminOrgMembersUpdateAsync($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, string $contentType = self::contentTypes['putAdminOrgMembersUpdate'][0])
     {
-        return $this->putAdminOrgMembersUpdateAsyncWithHttpInfo($orgId, $organizationId, $userId, $contentType)
+        return $this->putAdminOrgMembersUpdateAsyncWithHttpInfo($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -5462,15 +5598,16 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest $putAdminOrgMembersUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrgMembersUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAdminOrgMembersUpdateAsyncWithHttpInfo($orgId, $organizationId, $userId, string $contentType = self::contentTypes['putAdminOrgMembersUpdate'][0])
+    public function putAdminOrgMembersUpdateAsyncWithHttpInfo($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, string $contentType = self::contentTypes['putAdminOrgMembersUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateResponse';
-        $request = $this->putAdminOrgMembersUpdateRequest($orgId, $organizationId, $userId, $contentType);
+        $request = $this->putAdminOrgMembersUpdateRequest($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -5514,12 +5651,13 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgMembersUpdateRequest $putAdminOrgMembersUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrgMembersUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function putAdminOrgMembersUpdateRequest($orgId, $organizationId, $userId, string $contentType = self::contentTypes['putAdminOrgMembersUpdate'][0])
+    public function putAdminOrgMembersUpdateRequest($orgId, $organizationId, $userId, $putAdminOrgMembersUpdateRequest, string $contentType = self::contentTypes['putAdminOrgMembersUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -5540,6 +5678,13 @@ class AdminOrganizationsApi
         if ($userId === null || (is_array($userId) && count($userId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $userId when calling putAdminOrgMembersUpdate'
+            );
+        }
+
+        // verify the required parameter 'putAdminOrgMembersUpdateRequest' is set
+        if ($putAdminOrgMembersUpdateRequest === null || (is_array($putAdminOrgMembersUpdateRequest) && count($putAdminOrgMembersUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAdminOrgMembersUpdateRequest when calling putAdminOrgMembersUpdate'
             );
         }
 
@@ -5586,7 +5731,14 @@ class AdminOrganizationsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAdminOrgMembersUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAdminOrgMembersUpdateRequest));
+            } else {
+                $httpBody = $putAdminOrgMembersUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -5649,15 +5801,16 @@ class AdminOrganizationsApi
      * @param  string $orgId orgId (required)
      * @param  string $organizationId organizationId (required)
      * @param  string $roleId roleId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest $putAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrgRolesUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse
      */
-    public function putAdminOrgRolesUpdate($orgId, $organizationId, $roleId, string $contentType = self::contentTypes['putAdminOrgRolesUpdate'][0])
+    public function putAdminOrgRolesUpdate($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, string $contentType = self::contentTypes['putAdminOrgRolesUpdate'][0])
     {
-        list($response) = $this->putAdminOrgRolesUpdateWithHttpInfo($orgId, $organizationId, $roleId, $contentType);
+        list($response) = $this->putAdminOrgRolesUpdateWithHttpInfo($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, $contentType);
         return $response;
     }
 
@@ -5669,15 +5822,16 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $roleId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest $putAdminOrgRolesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrgRolesUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function putAdminOrgRolesUpdateWithHttpInfo($orgId, $organizationId, $roleId, string $contentType = self::contentTypes['putAdminOrgRolesUpdate'][0])
+    public function putAdminOrgRolesUpdateWithHttpInfo($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, string $contentType = self::contentTypes['putAdminOrgRolesUpdate'][0])
     {
-        $request = $this->putAdminOrgRolesUpdateRequest($orgId, $organizationId, $roleId, $contentType);
+        $request = $this->putAdminOrgRolesUpdateRequest($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -5756,14 +5910,15 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $roleId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest $putAdminOrgRolesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrgRolesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAdminOrgRolesUpdateAsync($orgId, $organizationId, $roleId, string $contentType = self::contentTypes['putAdminOrgRolesUpdate'][0])
+    public function putAdminOrgRolesUpdateAsync($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, string $contentType = self::contentTypes['putAdminOrgRolesUpdate'][0])
     {
-        return $this->putAdminOrgRolesUpdateAsyncWithHttpInfo($orgId, $organizationId, $roleId, $contentType)
+        return $this->putAdminOrgRolesUpdateAsyncWithHttpInfo($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -5779,15 +5934,16 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $roleId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest $putAdminOrgRolesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrgRolesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAdminOrgRolesUpdateAsyncWithHttpInfo($orgId, $organizationId, $roleId, string $contentType = self::contentTypes['putAdminOrgRolesUpdate'][0])
+    public function putAdminOrgRolesUpdateAsyncWithHttpInfo($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, string $contentType = self::contentTypes['putAdminOrgRolesUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminOrgRolesCreateResponse';
-        $request = $this->putAdminOrgRolesUpdateRequest($orgId, $organizationId, $roleId, $contentType);
+        $request = $this->putAdminOrgRolesUpdateRequest($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -5831,12 +5987,13 @@ class AdminOrganizationsApi
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
      * @param  string $roleId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest $putAdminOrgRolesUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrgRolesUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function putAdminOrgRolesUpdateRequest($orgId, $organizationId, $roleId, string $contentType = self::contentTypes['putAdminOrgRolesUpdate'][0])
+    public function putAdminOrgRolesUpdateRequest($orgId, $organizationId, $roleId, $putAdminOrgRolesUpdateRequest, string $contentType = self::contentTypes['putAdminOrgRolesUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -5863,6 +6020,13 @@ class AdminOrganizationsApi
             throw new \InvalidArgumentException("invalid value for \"roleId\" when calling AdminOrganizationsApi.putAdminOrgRolesUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
         }
         
+        // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+        if ($putAdminOrgRolesUpdateRequest === null || (is_array($putAdminOrgRolesUpdateRequest) && count($putAdminOrgRolesUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAdminOrgRolesUpdateRequest when calling putAdminOrgRolesUpdate'
+            );
+        }
+
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}';
         $formParams = [];
@@ -5906,7 +6070,14 @@ class AdminOrganizationsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAdminOrgRolesUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAdminOrgRolesUpdateRequest));
+            } else {
+                $httpBody = $putAdminOrgRolesUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -5968,15 +6139,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $organizationId organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest $putAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrganizationsUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminOrganizationsGetResponse
      */
-    public function putAdminOrganizationsUpdate($orgId, $organizationId, string $contentType = self::contentTypes['putAdminOrganizationsUpdate'][0])
+    public function putAdminOrganizationsUpdate($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, string $contentType = self::contentTypes['putAdminOrganizationsUpdate'][0])
     {
-        list($response) = $this->putAdminOrganizationsUpdateWithHttpInfo($orgId, $organizationId, $contentType);
+        list($response) = $this->putAdminOrganizationsUpdateWithHttpInfo($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, $contentType);
         return $response;
     }
 
@@ -5987,15 +6159,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest $putAdminOrganizationsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrganizationsUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminOrganizationsGetResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function putAdminOrganizationsUpdateWithHttpInfo($orgId, $organizationId, string $contentType = self::contentTypes['putAdminOrganizationsUpdate'][0])
+    public function putAdminOrganizationsUpdateWithHttpInfo($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, string $contentType = self::contentTypes['putAdminOrganizationsUpdate'][0])
     {
-        $request = $this->putAdminOrganizationsUpdateRequest($orgId, $organizationId, $contentType);
+        $request = $this->putAdminOrganizationsUpdateRequest($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -6073,14 +6246,15 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest $putAdminOrganizationsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrganizationsUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAdminOrganizationsUpdateAsync($orgId, $organizationId, string $contentType = self::contentTypes['putAdminOrganizationsUpdate'][0])
+    public function putAdminOrganizationsUpdateAsync($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, string $contentType = self::contentTypes['putAdminOrganizationsUpdate'][0])
     {
-        return $this->putAdminOrganizationsUpdateAsyncWithHttpInfo($orgId, $organizationId, $contentType)
+        return $this->putAdminOrganizationsUpdateAsyncWithHttpInfo($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -6095,15 +6269,16 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest $putAdminOrganizationsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrganizationsUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAdminOrganizationsUpdateAsyncWithHttpInfo($orgId, $organizationId, string $contentType = self::contentTypes['putAdminOrganizationsUpdate'][0])
+    public function putAdminOrganizationsUpdateAsyncWithHttpInfo($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, string $contentType = self::contentTypes['putAdminOrganizationsUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminOrganizationsGetResponse';
-        $request = $this->putAdminOrganizationsUpdateRequest($orgId, $organizationId, $contentType);
+        $request = $this->putAdminOrganizationsUpdateRequest($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -6146,12 +6321,13 @@ class AdminOrganizationsApi
      *
      * @param  string $orgId (required)
      * @param  string $organizationId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminOrganizationsUpdateRequest $putAdminOrganizationsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminOrganizationsUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function putAdminOrganizationsUpdateRequest($orgId, $organizationId, string $contentType = self::contentTypes['putAdminOrganizationsUpdate'][0])
+    public function putAdminOrganizationsUpdateRequest($orgId, $organizationId, $putAdminOrganizationsUpdateRequest, string $contentType = self::contentTypes['putAdminOrganizationsUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -6165,6 +6341,13 @@ class AdminOrganizationsApi
         if ($organizationId === null || (is_array($organizationId) && count($organizationId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $organizationId when calling putAdminOrganizationsUpdate'
+            );
+        }
+
+        // verify the required parameter 'putAdminOrganizationsUpdateRequest' is set
+        if ($putAdminOrganizationsUpdateRequest === null || (is_array($putAdminOrganizationsUpdateRequest) && count($putAdminOrganizationsUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAdminOrganizationsUpdateRequest when calling putAdminOrganizationsUpdate'
             );
         }
 
@@ -6203,7 +6386,14 @@ class AdminOrganizationsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAdminOrganizationsUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAdminOrganizationsUpdateRequest));
+            } else {
+                $httpBody = $putAdminOrganizationsUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

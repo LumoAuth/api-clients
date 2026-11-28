@@ -17,11 +17,12 @@ open class AdminGroupsAPI {
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
+     - parameter adminGroupsAddMembersRequest: (body)  
      - returns: AdminGroupsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsAddMembers(orgId: String, groupId: String) async throws -> AdminGroupsCreateResponse {
-        return try await adminGroupsAddMembersWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
+    open class func adminGroupsAddMembers(orgId: String, groupId: String, adminGroupsAddMembersRequest: AdminGroupsAddMembersRequest) async throws -> AdminGroupsCreateResponse {
+        return try await adminGroupsAddMembersWithRequestBuilder(orgId: orgId, groupId: groupId, adminGroupsAddMembersRequest: adminGroupsAddMembersRequest).execute().body
     }
 
     /**
@@ -35,9 +36,10 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
+     - parameter adminGroupsAddMembersRequest: (body)  
      - returns: RequestBuilder<AdminGroupsCreateResponse> 
      */
-    open class func adminGroupsAddMembersWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<AdminGroupsCreateResponse> {
+    open class func adminGroupsAddMembersWithRequestBuilder(orgId: String, groupId: String, adminGroupsAddMembersRequest: AdminGroupsAddMembersRequest) -> RequestBuilder<AdminGroupsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}/members"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -46,12 +48,12 @@ open class AdminGroupsAPI {
         let groupIdPostEscape = groupIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{groupId}", with: groupIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminGroupsAddMembersRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -66,17 +68,18 @@ open class AdminGroupsAPI {
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
+     - parameter adminGroupsAddRoleRequest: (body)  
      - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsAddRole(orgId: String, groupId: String) async throws -> MessageResponse {
-        return try await adminGroupsAddRoleWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
+    open class func adminGroupsAddRole(orgId: String, groupId: String, adminGroupsAddRoleRequest: AdminGroupsAddRoleRequest) async throws -> MessageResponse {
+        return try await adminGroupsAddRoleWithRequestBuilder(orgId: orgId, groupId: groupId, adminGroupsAddRoleRequest: adminGroupsAddRoleRequest).execute().body
     }
 
     /**
      Add a single role to a group
      - POST /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles
-     - A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+     - A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -85,9 +88,10 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
+     - parameter adminGroupsAddRoleRequest: (body)  
      - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminGroupsAddRoleWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<MessageResponse> {
+    open class func adminGroupsAddRoleWithRequestBuilder(orgId: String, groupId: String, adminGroupsAddRoleRequest: AdminGroupsAddRoleRequest) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -96,12 +100,12 @@ open class AdminGroupsAPI {
         let groupIdPostEscape = groupIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{groupId}", with: groupIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminGroupsAddRoleRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -115,17 +119,18 @@ open class AdminGroupsAPI {
      Create a new group
      
      - parameter orgId: (path)  
+     - parameter adminGroupsCreateRequest: (body)  
      - returns: AdminGroupsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsCreate(orgId: String) async throws -> AdminGroupsCreateResponse {
-        return try await adminGroupsCreateWithRequestBuilder(orgId: orgId).execute().body
+    open class func adminGroupsCreate(orgId: String, adminGroupsCreateRequest: AdminGroupsCreateRequest) async throws -> AdminGroupsCreateResponse {
+        return try await adminGroupsCreateWithRequestBuilder(orgId: orgId, adminGroupsCreateRequest: adminGroupsCreateRequest).execute().body
     }
 
     /**
      Create a new group
      - POST /orgs/{orgId}/api/v1/admin/groups
-     - Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+     - Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -133,20 +138,21 @@ open class AdminGroupsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter adminGroupsCreateRequest: (body)  
      - returns: RequestBuilder<AdminGroupsCreateResponse> 
      */
-    open class func adminGroupsCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminGroupsCreateResponse> {
+    open class func adminGroupsCreateWithRequestBuilder(orgId: String, adminGroupsCreateRequest: AdminGroupsCreateRequest) -> RequestBuilder<AdminGroupsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminGroupsCreateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -353,7 +359,7 @@ open class AdminGroupsAPI {
     }
 
     /**
-     List all groups in the tenant
+     List all groups in the organization
      
      - parameter orgId: (path)  
      - returns: AdminGroupsListResponse
@@ -364,7 +370,7 @@ open class AdminGroupsAPI {
     }
 
     /**
-     List all groups in the tenant
+     List all groups in the organization
      - GET /orgs/{orgId}/api/v1/admin/groups
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -509,17 +515,18 @@ open class AdminGroupsAPI {
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
+     - parameter adminGroupsUpdateRolesRequest: (body)  
      - returns: AdminGroupsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsUpdateRoles(orgId: String, groupId: String) async throws -> AdminGroupsCreateResponse {
-        return try await adminGroupsUpdateRolesWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
+    open class func adminGroupsUpdateRoles(orgId: String, groupId: String, adminGroupsUpdateRolesRequest: AdminGroupsUpdateRolesRequest) async throws -> AdminGroupsCreateResponse {
+        return try await adminGroupsUpdateRolesWithRequestBuilder(orgId: orgId, groupId: groupId, adminGroupsUpdateRolesRequest: adminGroupsUpdateRolesRequest).execute().body
     }
 
     /**
      Update group roles (replaces all existing roles)
      - PUT /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles
-     - `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+     - `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -528,9 +535,10 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
+     - parameter adminGroupsUpdateRolesRequest: (body)  
      - returns: RequestBuilder<AdminGroupsCreateResponse> 
      */
-    open class func adminGroupsUpdateRolesWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<AdminGroupsCreateResponse> {
+    open class func adminGroupsUpdateRolesWithRequestBuilder(orgId: String, groupId: String, adminGroupsUpdateRolesRequest: AdminGroupsUpdateRolesRequest) -> RequestBuilder<AdminGroupsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -539,12 +547,12 @@ open class AdminGroupsAPI {
         let groupIdPostEscape = groupIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{groupId}", with: groupIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminGroupsUpdateRolesRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -559,11 +567,12 @@ open class AdminGroupsAPI {
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
+     - parameter putAdminGroupsUpdateRequest: (body)  
      - returns: AdminGroupsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminGroupsUpdate(orgId: String, groupId: String) async throws -> AdminGroupsCreateResponse {
-        return try await patchAdminGroupsUpdateWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
+    open class func patchAdminGroupsUpdate(orgId: String, groupId: String, putAdminGroupsUpdateRequest: PutAdminGroupsUpdateRequest) async throws -> AdminGroupsCreateResponse {
+        return try await patchAdminGroupsUpdateWithRequestBuilder(orgId: orgId, groupId: groupId, putAdminGroupsUpdateRequest: putAdminGroupsUpdateRequest).execute().body
     }
 
     /**
@@ -577,9 +586,10 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
+     - parameter putAdminGroupsUpdateRequest: (body)  
      - returns: RequestBuilder<AdminGroupsCreateResponse> 
      */
-    open class func patchAdminGroupsUpdateWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<AdminGroupsCreateResponse> {
+    open class func patchAdminGroupsUpdateWithRequestBuilder(orgId: String, groupId: String, putAdminGroupsUpdateRequest: PutAdminGroupsUpdateRequest) -> RequestBuilder<AdminGroupsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -588,12 +598,12 @@ open class AdminGroupsAPI {
         let groupIdPostEscape = groupIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{groupId}", with: groupIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminGroupsUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -608,11 +618,12 @@ open class AdminGroupsAPI {
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
+     - parameter putAdminGroupsUpdateRequest: (body)  
      - returns: AdminGroupsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminGroupsUpdate(orgId: String, groupId: String) async throws -> AdminGroupsCreateResponse {
-        return try await putAdminGroupsUpdateWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
+    open class func putAdminGroupsUpdate(orgId: String, groupId: String, putAdminGroupsUpdateRequest: PutAdminGroupsUpdateRequest) async throws -> AdminGroupsCreateResponse {
+        return try await putAdminGroupsUpdateWithRequestBuilder(orgId: orgId, groupId: groupId, putAdminGroupsUpdateRequest: putAdminGroupsUpdateRequest).execute().body
     }
 
     /**
@@ -626,9 +637,10 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
+     - parameter putAdminGroupsUpdateRequest: (body)  
      - returns: RequestBuilder<AdminGroupsCreateResponse> 
      */
-    open class func putAdminGroupsUpdateWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<AdminGroupsCreateResponse> {
+    open class func putAdminGroupsUpdateWithRequestBuilder(orgId: String, groupId: String, putAdminGroupsUpdateRequest: PutAdminGroupsUpdateRequest) -> RequestBuilder<AdminGroupsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -637,12 +649,12 @@ open class AdminGroupsAPI {
         let groupIdPostEscape = groupIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{groupId}", with: groupIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminGroupsUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

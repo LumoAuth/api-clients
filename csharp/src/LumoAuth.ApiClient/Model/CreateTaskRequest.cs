@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -38,7 +38,7 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         /// <param name="name">Optional human-readable task name..</param>
         /// <param name="type">Optional task type for categorization..</param>
-        /// <param name="parentTaskId">Optional parent task id for nested agent chains..</param>
+        /// <param name="parentTaskId">Optional. The task_id of an open task of this organization, for a task that is one step of that task. The new task expires no later than its parent and ends when the parent ends. A chain holds at most 5 tasks..</param>
         /// <param name="onBehalfOf">Optional delegation user email (requires delegation permission)..</param>
         public CreateTaskRequest(string name = default, string type = default, string parentTaskId = default, string onBehalfOf = default)
         {
@@ -69,9 +69,9 @@ namespace LumoAuth.ApiClient.Model
         public string Type { get; set; }
 
         /// <summary>
-        /// Optional parent task id for nested agent chains.
+        /// Optional. The task_id of an open task of this organization, for a task that is one step of that task. The new task expires no later than its parent and ends when the parent ends. A chain holds at most 5 tasks.
         /// </summary>
-        /// <value>Optional parent task id for nested agent chains.</value>
+        /// <value>Optional. The task_id of an open task of this organization, for a task that is one step of that task. The new task expires no later than its parent and ends when the parent ends. A chain holds at most 5 tasks.</value>
         [DataMember(Name = "parent_task_id", EmitDefaultValue = false)]
         public string ParentTaskId { get; set; }
 

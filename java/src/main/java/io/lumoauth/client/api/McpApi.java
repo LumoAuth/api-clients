@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -363,7 +363,7 @@ public class McpApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A single MCP server with discovery metadata. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or MCP server not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or MCP server not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getServerCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback _callback) throws ApiException {
@@ -441,7 +441,7 @@ public class McpApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A single MCP server with discovery metadata. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or MCP server not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or MCP server not found. </td><td>  -  </td></tr>
      </table>
      */
     public GetServerResponse getServer(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
@@ -462,7 +462,7 @@ public class McpApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A single MCP server with discovery metadata. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or MCP server not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or MCP server not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<GetServerResponse> getServerWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
@@ -485,7 +485,7 @@ public class McpApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A single MCP server with discovery metadata. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or MCP server not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or MCP server not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getServerAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback<GetServerResponse> _callback) throws ApiException {
@@ -662,9 +662,9 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> List of active MCP servers for the tenant. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> List of active MCP servers for the organization. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listServersCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -733,9 +733,9 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> List of active MCP servers for the tenant. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> List of active MCP servers for the organization. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public ListServersResponse listServers(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -753,9 +753,9 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> List of active MCP servers for the tenant. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> List of active MCP servers for the organization. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<ListServersResponse> listServersWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -775,9 +775,9 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> List of active MCP servers for the tenant. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> List of active MCP servers for the organization. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Caller lacks the agents.view permission. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listServersAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<ListServersResponse> _callback) throws ApiException {

@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -27,12 +27,17 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminGroupsAddMembersRequest;
+import io.lumoauth.client.model.AdminGroupsAddRoleRequest;
+import io.lumoauth.client.model.AdminGroupsCreateRequest;
 import io.lumoauth.client.model.AdminGroupsCreateResponse;
 import io.lumoauth.client.model.AdminGroupsGetMembersResponse;
 import io.lumoauth.client.model.AdminGroupsGetResponse;
 import io.lumoauth.client.model.AdminGroupsGroupsGetRolesResponse;
 import io.lumoauth.client.model.AdminGroupsListResponse;
+import io.lumoauth.client.model.AdminGroupsUpdateRolesRequest;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAdminGroupsUpdateRequest;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,6 +86,7 @@ public class AdminGroupsApi {
      * Build call for adminGroupsAddMembers
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param adminGroupsAddMembersRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -91,7 +97,7 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group; message reports how many members were added </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsAddMembersCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminGroupsAddMembersCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsAddMembersRequest adminGroupsAddMembersRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -105,7 +111,7 @@ public class AdminGroupsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminGroupsAddMembersRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}/members"
@@ -127,6 +133,7 @@ public class AdminGroupsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -138,7 +145,7 @@ public class AdminGroupsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminGroupsAddMembersValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminGroupsAddMembersValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsAddMembersRequest adminGroupsAddMembersRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminGroupsAddMembers(Async)");
@@ -149,7 +156,12 @@ public class AdminGroupsApi {
             throw new ApiException("Missing the required parameter 'groupId' when calling adminGroupsAddMembers(Async)");
         }
 
-        return adminGroupsAddMembersCall(orgId, groupId, _callback);
+        // verify the required parameter 'adminGroupsAddMembersRequest' is set
+        if (adminGroupsAddMembersRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminGroupsAddMembersRequest' when calling adminGroupsAddMembers(Async)");
+        }
+
+        return adminGroupsAddMembersCall(orgId, groupId, adminGroupsAddMembersRequest, _callback);
 
     }
 
@@ -158,6 +170,7 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param adminGroupsAddMembersRequest  (required)
      * @return AdminGroupsCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -167,8 +180,8 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group; message reports how many members were added </td><td>  -  </td></tr>
      </table>
      */
-    public AdminGroupsCreateResponse adminGroupsAddMembers(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        ApiResponse<AdminGroupsCreateResponse> localVarResp = adminGroupsAddMembersWithHttpInfo(orgId, groupId);
+    public AdminGroupsCreateResponse adminGroupsAddMembers(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsAddMembersRequest adminGroupsAddMembersRequest) throws ApiException {
+        ApiResponse<AdminGroupsCreateResponse> localVarResp = adminGroupsAddMembersWithHttpInfo(orgId, groupId, adminGroupsAddMembersRequest);
         return localVarResp.getData();
     }
 
@@ -177,6 +190,7 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param adminGroupsAddMembersRequest  (required)
      * @return ApiResponse&lt;AdminGroupsCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -186,8 +200,8 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group; message reports how many members were added </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminGroupsCreateResponse> adminGroupsAddMembersWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        okhttp3.Call localVarCall = adminGroupsAddMembersValidateBeforeCall(orgId, groupId, null);
+    public ApiResponse<AdminGroupsCreateResponse> adminGroupsAddMembersWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsAddMembersRequest adminGroupsAddMembersRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminGroupsAddMembersValidateBeforeCall(orgId, groupId, adminGroupsAddMembersRequest, null);
         Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -197,6 +211,7 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param adminGroupsAddMembersRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -207,9 +222,9 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group; message reports how many members were added </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsAddMembersAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsAddMembersAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsAddMembersRequest adminGroupsAddMembersRequest, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminGroupsAddMembersValidateBeforeCall(orgId, groupId, _callback);
+        okhttp3.Call localVarCall = adminGroupsAddMembersValidateBeforeCall(orgId, groupId, adminGroupsAddMembersRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -218,6 +233,7 @@ public class AdminGroupsApi {
      * Build call for adminGroupsAddRole
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param adminGroupsAddRoleRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -228,7 +244,7 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Added </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsAddRoleCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminGroupsAddRoleCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsAddRoleRequest adminGroupsAddRoleRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -242,7 +258,7 @@ public class AdminGroupsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminGroupsAddRoleRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles"
@@ -264,6 +280,7 @@ public class AdminGroupsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -275,7 +292,7 @@ public class AdminGroupsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminGroupsAddRoleValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminGroupsAddRoleValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsAddRoleRequest adminGroupsAddRoleRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminGroupsAddRole(Async)");
@@ -286,15 +303,21 @@ public class AdminGroupsApi {
             throw new ApiException("Missing the required parameter 'groupId' when calling adminGroupsAddRole(Async)");
         }
 
-        return adminGroupsAddRoleCall(orgId, groupId, _callback);
+        // verify the required parameter 'adminGroupsAddRoleRequest' is set
+        if (adminGroupsAddRoleRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminGroupsAddRoleRequest' when calling adminGroupsAddRole(Async)");
+        }
+
+        return adminGroupsAddRoleCall(orgId, groupId, adminGroupsAddRoleRequest, _callback);
 
     }
 
     /**
      * Add a single role to a group
-     * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+     * A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param adminGroupsAddRoleRequest  (required)
      * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -304,16 +327,17 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Added </td><td>  -  </td></tr>
      </table>
      */
-    public MessageResponse adminGroupsAddRole(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        ApiResponse<MessageResponse> localVarResp = adminGroupsAddRoleWithHttpInfo(orgId, groupId);
+    public MessageResponse adminGroupsAddRole(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsAddRoleRequest adminGroupsAddRoleRequest) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminGroupsAddRoleWithHttpInfo(orgId, groupId, adminGroupsAddRoleRequest);
         return localVarResp.getData();
     }
 
     /**
      * Add a single role to a group
-     * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+     * A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param adminGroupsAddRoleRequest  (required)
      * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -323,17 +347,18 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Added </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<MessageResponse> adminGroupsAddRoleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        okhttp3.Call localVarCall = adminGroupsAddRoleValidateBeforeCall(orgId, groupId, null);
+    public ApiResponse<MessageResponse> adminGroupsAddRoleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsAddRoleRequest adminGroupsAddRoleRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminGroupsAddRoleValidateBeforeCall(orgId, groupId, adminGroupsAddRoleRequest, null);
         Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Add a single role to a group (asynchronously)
-     * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+     * A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param adminGroupsAddRoleRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -344,9 +369,9 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Added </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsAddRoleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<MessageResponse> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsAddRoleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsAddRoleRequest adminGroupsAddRoleRequest, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminGroupsAddRoleValidateBeforeCall(orgId, groupId, _callback);
+        okhttp3.Call localVarCall = adminGroupsAddRoleValidateBeforeCall(orgId, groupId, adminGroupsAddRoleRequest, _callback);
         Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -354,6 +379,7 @@ public class AdminGroupsApi {
     /**
      * Build call for adminGroupsCreate
      * @param orgId  (required)
+     * @param adminGroupsCreateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -364,7 +390,7 @@ public class AdminGroupsApi {
         <tr><td> 201 </td><td> Created group </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminGroupsCreateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminGroupsCreateRequest adminGroupsCreateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -378,7 +404,7 @@ public class AdminGroupsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminGroupsCreateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/groups"
@@ -399,6 +425,7 @@ public class AdminGroupsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -410,20 +437,26 @@ public class AdminGroupsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminGroupsCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminGroupsCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminGroupsCreateRequest adminGroupsCreateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminGroupsCreate(Async)");
         }
 
-        return adminGroupsCreateCall(orgId, _callback);
+        // verify the required parameter 'adminGroupsCreateRequest' is set
+        if (adminGroupsCreateRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminGroupsCreateRequest' when calling adminGroupsCreate(Async)");
+        }
+
+        return adminGroupsCreateCall(orgId, adminGroupsCreateRequest, _callback);
 
     }
 
     /**
      * Create a new group
-     * Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+     * Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
      * @param orgId  (required)
+     * @param adminGroupsCreateRequest  (required)
      * @return AdminGroupsCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -433,15 +466,16 @@ public class AdminGroupsApi {
         <tr><td> 201 </td><td> Created group </td><td>  -  </td></tr>
      </table>
      */
-    public AdminGroupsCreateResponse adminGroupsCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<AdminGroupsCreateResponse> localVarResp = adminGroupsCreateWithHttpInfo(orgId);
+    public AdminGroupsCreateResponse adminGroupsCreate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminGroupsCreateRequest adminGroupsCreateRequest) throws ApiException {
+        ApiResponse<AdminGroupsCreateResponse> localVarResp = adminGroupsCreateWithHttpInfo(orgId, adminGroupsCreateRequest);
         return localVarResp.getData();
     }
 
     /**
      * Create a new group
-     * Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+     * Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
      * @param orgId  (required)
+     * @param adminGroupsCreateRequest  (required)
      * @return ApiResponse&lt;AdminGroupsCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -451,16 +485,17 @@ public class AdminGroupsApi {
         <tr><td> 201 </td><td> Created group </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminGroupsCreateResponse> adminGroupsCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = adminGroupsCreateValidateBeforeCall(orgId, null);
+    public ApiResponse<AdminGroupsCreateResponse> adminGroupsCreateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminGroupsCreateRequest adminGroupsCreateRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminGroupsCreateValidateBeforeCall(orgId, adminGroupsCreateRequest, null);
         Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Create a new group (asynchronously)
-     * Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+     * Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
      * @param orgId  (required)
+     * @param adminGroupsCreateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -471,9 +506,9 @@ public class AdminGroupsApi {
         <tr><td> 201 </td><td> Created group </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsCreateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminGroupsCreateRequest adminGroupsCreateRequest, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminGroupsCreateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = adminGroupsCreateValidateBeforeCall(orgId, adminGroupsCreateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1096,7 +1131,7 @@ public class AdminGroupsApi {
     }
 
     /**
-     * List all groups in the tenant
+     * List all groups in the organization
      * 
      * @param orgId  (required)
      * @return AdminGroupsListResponse
@@ -1114,7 +1149,7 @@ public class AdminGroupsApi {
     }
 
     /**
-     * List all groups in the tenant
+     * List all groups in the organization
      * 
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminGroupsListResponse&gt;
@@ -1133,7 +1168,7 @@ public class AdminGroupsApi {
     }
 
     /**
-     * List all groups in the tenant (asynchronously)
+     * List all groups in the organization (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1451,6 +1486,7 @@ public class AdminGroupsApi {
      * Build call for adminGroupsUpdateRoles
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param adminGroupsUpdateRolesRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1461,7 +1497,7 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsUpdateRolesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminGroupsUpdateRolesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1475,7 +1511,7 @@ public class AdminGroupsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminGroupsUpdateRolesRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles"
@@ -1497,6 +1533,7 @@ public class AdminGroupsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1508,7 +1545,7 @@ public class AdminGroupsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminGroupsUpdateRolesValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminGroupsUpdateRolesValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminGroupsUpdateRoles(Async)");
@@ -1519,15 +1556,21 @@ public class AdminGroupsApi {
             throw new ApiException("Missing the required parameter 'groupId' when calling adminGroupsUpdateRoles(Async)");
         }
 
-        return adminGroupsUpdateRolesCall(orgId, groupId, _callback);
+        // verify the required parameter 'adminGroupsUpdateRolesRequest' is set
+        if (adminGroupsUpdateRolesRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminGroupsUpdateRolesRequest' when calling adminGroupsUpdateRoles(Async)");
+        }
+
+        return adminGroupsUpdateRolesCall(orgId, groupId, adminGroupsUpdateRolesRequest, _callback);
 
     }
 
     /**
      * Update group roles (replaces all existing roles)
-     * &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+     * &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param adminGroupsUpdateRolesRequest  (required)
      * @return AdminGroupsCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1537,16 +1580,17 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public AdminGroupsCreateResponse adminGroupsUpdateRoles(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        ApiResponse<AdminGroupsCreateResponse> localVarResp = adminGroupsUpdateRolesWithHttpInfo(orgId, groupId);
+    public AdminGroupsCreateResponse adminGroupsUpdateRoles(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest) throws ApiException {
+        ApiResponse<AdminGroupsCreateResponse> localVarResp = adminGroupsUpdateRolesWithHttpInfo(orgId, groupId, adminGroupsUpdateRolesRequest);
         return localVarResp.getData();
     }
 
     /**
      * Update group roles (replaces all existing roles)
-     * &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+     * &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param adminGroupsUpdateRolesRequest  (required)
      * @return ApiResponse&lt;AdminGroupsCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1556,17 +1600,18 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminGroupsCreateResponse> adminGroupsUpdateRolesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        okhttp3.Call localVarCall = adminGroupsUpdateRolesValidateBeforeCall(orgId, groupId, null);
+    public ApiResponse<AdminGroupsCreateResponse> adminGroupsUpdateRolesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminGroupsUpdateRolesValidateBeforeCall(orgId, groupId, adminGroupsUpdateRolesRequest, null);
         Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Update group roles (replaces all existing roles) (asynchronously)
-     * &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+     * &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param adminGroupsUpdateRolesRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1577,9 +1622,9 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsUpdateRolesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsUpdateRolesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminGroupsUpdateRolesValidateBeforeCall(orgId, groupId, _callback);
+        okhttp3.Call localVarCall = adminGroupsUpdateRolesValidateBeforeCall(orgId, groupId, adminGroupsUpdateRolesRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1588,6 +1633,7 @@ public class AdminGroupsApi {
      * Build call for patchAdminGroupsUpdate
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param putAdminGroupsUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1598,7 +1644,7 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminGroupsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminGroupsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1612,7 +1658,7 @@ public class AdminGroupsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminGroupsUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}"
@@ -1634,6 +1680,7 @@ public class AdminGroupsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1645,7 +1692,7 @@ public class AdminGroupsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminGroupsUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminGroupsUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminGroupsUpdate(Async)");
@@ -1656,7 +1703,12 @@ public class AdminGroupsApi {
             throw new ApiException("Missing the required parameter 'groupId' when calling patchAdminGroupsUpdate(Async)");
         }
 
-        return patchAdminGroupsUpdateCall(orgId, groupId, _callback);
+        // verify the required parameter 'putAdminGroupsUpdateRequest' is set
+        if (putAdminGroupsUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminGroupsUpdateRequest' when calling patchAdminGroupsUpdate(Async)");
+        }
+
+        return patchAdminGroupsUpdateCall(orgId, groupId, putAdminGroupsUpdateRequest, _callback);
 
     }
 
@@ -1665,6 +1717,7 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param putAdminGroupsUpdateRequest  (required)
      * @return AdminGroupsCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1674,8 +1727,8 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public AdminGroupsCreateResponse patchAdminGroupsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        ApiResponse<AdminGroupsCreateResponse> localVarResp = patchAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+    public AdminGroupsCreateResponse patchAdminGroupsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest) throws ApiException {
+        ApiResponse<AdminGroupsCreateResponse> localVarResp = patchAdminGroupsUpdateWithHttpInfo(orgId, groupId, putAdminGroupsUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -1684,6 +1737,7 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param putAdminGroupsUpdateRequest  (required)
      * @return ApiResponse&lt;AdminGroupsCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1693,8 +1747,8 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminGroupsCreateResponse> patchAdminGroupsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminGroupsUpdateValidateBeforeCall(orgId, groupId, null);
+    public ApiResponse<AdminGroupsCreateResponse> patchAdminGroupsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminGroupsUpdateValidateBeforeCall(orgId, groupId, putAdminGroupsUpdateRequest, null);
         Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1704,6 +1758,7 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param putAdminGroupsUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1714,9 +1769,9 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminGroupsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminGroupsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminGroupsUpdateValidateBeforeCall(orgId, groupId, _callback);
+        okhttp3.Call localVarCall = patchAdminGroupsUpdateValidateBeforeCall(orgId, groupId, putAdminGroupsUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1725,6 +1780,7 @@ public class AdminGroupsApi {
      * Build call for putAdminGroupsUpdate
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param putAdminGroupsUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1735,7 +1791,7 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminGroupsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminGroupsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1749,7 +1805,7 @@ public class AdminGroupsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminGroupsUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}"
@@ -1771,6 +1827,7 @@ public class AdminGroupsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1782,7 +1839,7 @@ public class AdminGroupsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminGroupsUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminGroupsUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminGroupsUpdate(Async)");
@@ -1793,7 +1850,12 @@ public class AdminGroupsApi {
             throw new ApiException("Missing the required parameter 'groupId' when calling putAdminGroupsUpdate(Async)");
         }
 
-        return putAdminGroupsUpdateCall(orgId, groupId, _callback);
+        // verify the required parameter 'putAdminGroupsUpdateRequest' is set
+        if (putAdminGroupsUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminGroupsUpdateRequest' when calling putAdminGroupsUpdate(Async)");
+        }
+
+        return putAdminGroupsUpdateCall(orgId, groupId, putAdminGroupsUpdateRequest, _callback);
 
     }
 
@@ -1802,6 +1864,7 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param putAdminGroupsUpdateRequest  (required)
      * @return AdminGroupsCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1811,8 +1874,8 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public AdminGroupsCreateResponse putAdminGroupsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        ApiResponse<AdminGroupsCreateResponse> localVarResp = putAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+    public AdminGroupsCreateResponse putAdminGroupsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest) throws ApiException {
+        ApiResponse<AdminGroupsCreateResponse> localVarResp = putAdminGroupsUpdateWithHttpInfo(orgId, groupId, putAdminGroupsUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -1821,6 +1884,7 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param putAdminGroupsUpdateRequest  (required)
      * @return ApiResponse&lt;AdminGroupsCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1830,8 +1894,8 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminGroupsCreateResponse> putAdminGroupsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminGroupsUpdateValidateBeforeCall(orgId, groupId, null);
+    public ApiResponse<AdminGroupsCreateResponse> putAdminGroupsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminGroupsUpdateValidateBeforeCall(orgId, groupId, putAdminGroupsUpdateRequest, null);
         Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1841,6 +1905,7 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @param putAdminGroupsUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1851,9 +1916,9 @@ public class AdminGroupsApi {
         <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminGroupsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminGroupsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminGroupsUpdateValidateBeforeCall(orgId, groupId, _callback);
+        okhttp3.Call localVarCall = putAdminGroupsUpdateValidateBeforeCall(orgId, groupId, putAdminGroupsUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

@@ -9,9 +9,9 @@ Method | HTTP request | Description
 [**admin_sessions_count**](AdminSessionsApi.md#admin_sessions_count) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Active session count
 [**admin_sessions_list**](AdminSessionsApi.md#admin_sessions_list) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions
 [**admin_sessions_revoke**](AdminSessionsApi.md#admin_sessions_revoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a session
-[**admin_sessions_revoke_all**](AdminSessionsApi.md#admin_sessions_revoke_all) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the tenant
+[**admin_sessions_revoke_all**](AdminSessionsApi.md#admin_sessions_revoke_all) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the organization
 [**admin_sessions_stats**](AdminSessionsApi.md#admin_sessions_stats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Session statistics
-[**admin_tokens_list**](AdminSessionsApi.md#admin_tokens_list) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens
+[**admin_tokens_list**](AdminSessionsApi.md#admin_tokens_list) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List stored (opaque) access tokens
 [**admin_tokens_revoke**](AdminSessionsApi.md#admin_tokens_revoke) | **DELETE** /orgs/{orgId}/api/v1/admin/tokens/{tokenId} | Revoke a token
 [**admin_user_sessions_list**](AdminSessionsApi.md#admin_user_sessions_list) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | List a user's active sessions
 [**admin_user_sessions_revoke_all**](AdminSessionsApi.md#admin_user_sessions_revoke_all) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions of a user
@@ -112,7 +112,7 @@ Name | Type | Description  | Required | Notes
 > models::AdminSessionsListResponse admin_sessions_list(org_id)
 List active sessions
 
-Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
 ### Parameters
 
@@ -169,7 +169,7 @@ Name | Type | Description  | Required | Notes
 ## admin_sessions_revoke_all
 
 > models::AdminSessionsRevokeAllResponse admin_sessions_revoke_all(org_id, admin_sessions_revoke_all_request)
-Revoke every session in the tenant
+Revoke every session in the organization
 
 Signs out all users. Requires `confirm: true` in the body.
 
@@ -228,9 +228,9 @@ Name | Type | Description  | Required | Notes
 ## admin_tokens_list
 
 > models::AdminTokensListResponse admin_tokens_list(org_id)
-List access tokens
+List stored (opaque) access tokens
 
-Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
+Paginated OPAQUE access tokens issued by the organization's clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user's or a client's tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
 
 ### Parameters
 
@@ -378,6 +378,8 @@ Name | Type | Description  | Required | Notes
 > models::AdminUserTokensRevokeAllResponse admin_user_tokens_revoke_all(org_id, user_id)
 Revoke all tokens of a user
 
+Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
+
 ### Parameters
 
 
@@ -406,6 +408,8 @@ Name | Type | Description  | Required | Notes
 
 > models::AdminUserTokensRevokePostResponse admin_user_tokens_revoke_post(org_id, user_id)
 Revoke all tokens of a user (POST alias)
+
+Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
 ### Parameters
 

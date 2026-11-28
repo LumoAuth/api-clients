@@ -26,7 +26,7 @@ Method | HTTP request | Description
 
 ## admin_webhooks_create
 
-> models::AdminWebhooksCreateResponse admin_webhooks_create(org_id)
+> models::AdminWebhooksCreateResponse admin_webhooks_create(org_id, admin_webhooks_create_request)
 Create a webhook
 
 Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
@@ -37,6 +37,7 @@ Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**admin_webhooks_create_request** | [**AdminWebhooksCreateRequest**](AdminWebhooksCreateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -48,7 +49,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -240,7 +241,7 @@ Name | Type | Description  | Required | Notes
 > models::AdminWebhooksListResponse admin_webhooks_list(org_id)
 List webhooks
 
-Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
 ### Parameters
 
@@ -332,7 +333,7 @@ Name | Type | Description  | Required | Notes
 > models::AdminWebhooksTunnelStartResponse admin_webhooks_tunnel_start(org_id)
 Start a webhook tunnel
 
-Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 
 ### Parameters
 
@@ -479,7 +480,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_webhooks_update
 
-> models::PutAdminWebhooksUpdateResponse patch_admin_webhooks_update(org_id, webhook_id)
+> models::PutAdminWebhooksUpdateResponse patch_admin_webhooks_update(org_id, webhook_id, put_admin_webhooks_update_request)
 Partially update a webhook
 
 ### Parameters
@@ -489,6 +490,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **webhook_id** | **String** |  | [required] |
+**put_admin_webhooks_update_request** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -500,7 +502,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -508,7 +510,7 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_webhooks_update
 
-> models::PutAdminWebhooksUpdateResponse put_admin_webhooks_update(org_id, webhook_id)
+> models::PutAdminWebhooksUpdateResponse put_admin_webhooks_update(org_id, webhook_id, put_admin_webhooks_update_request)
 Update a webhook
 
 Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.
@@ -520,6 +522,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **webhook_id** | **String** |  | [required] |
+**put_admin_webhooks_update_request** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -531,7 +534,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

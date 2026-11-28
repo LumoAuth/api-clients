@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -34,6 +34,7 @@ import io.lumoauth.client.model.AdminMcpServersGrantsRemoveResponse;
 import io.lumoauth.client.model.AdminMcpServersGrantsSetRequest;
 import io.lumoauth.client.model.AdminMcpServersGrantsSetResponse;
 import io.lumoauth.client.model.AdminMcpServersListResponse;
+import io.lumoauth.client.model.McpServerWrite;
 import io.lumoauth.client.model.MessageResponse;
 
 import java.lang.reflect.Type;
@@ -82,6 +83,7 @@ public class AdminMcpApi {
     /**
      * Build call for adminMcpServersCreate
      * @param orgId  (required)
+     * @param mcpServerWrite  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -95,7 +97,7 @@ public class AdminMcpApi {
         <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminMcpServersCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminMcpServersCreateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -109,7 +111,7 @@ public class AdminMcpApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = mcpServerWrite;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/mcp/servers"
@@ -130,6 +132,7 @@ public class AdminMcpApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -141,13 +144,18 @@ public class AdminMcpApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminMcpServersCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminMcpServersCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminMcpServersCreate(Async)");
         }
 
-        return adminMcpServersCreateCall(orgId, _callback);
+        // verify the required parameter 'mcpServerWrite' is set
+        if (mcpServerWrite == null) {
+            throw new ApiException("Missing the required parameter 'mcpServerWrite' when calling adminMcpServersCreate(Async)");
+        }
+
+        return adminMcpServersCreateCall(orgId, mcpServerWrite, _callback);
 
     }
 
@@ -155,6 +163,7 @@ public class AdminMcpApi {
      * Register an MCP server
      * The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
      * @param orgId  (required)
+     * @param mcpServerWrite  (required)
      * @return AdminMcpServersCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -167,8 +176,8 @@ public class AdminMcpApi {
         <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
      </table>
      */
-    public AdminMcpServersCreateResponse adminMcpServersCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<AdminMcpServersCreateResponse> localVarResp = adminMcpServersCreateWithHttpInfo(orgId);
+    public AdminMcpServersCreateResponse adminMcpServersCreate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite) throws ApiException {
+        ApiResponse<AdminMcpServersCreateResponse> localVarResp = adminMcpServersCreateWithHttpInfo(orgId, mcpServerWrite);
         return localVarResp.getData();
     }
 
@@ -176,6 +185,7 @@ public class AdminMcpApi {
      * Register an MCP server
      * The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
      * @param orgId  (required)
+     * @param mcpServerWrite  (required)
      * @return ApiResponse&lt;AdminMcpServersCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -188,8 +198,8 @@ public class AdminMcpApi {
         <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminMcpServersCreateResponse> adminMcpServersCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = adminMcpServersCreateValidateBeforeCall(orgId, null);
+    public ApiResponse<AdminMcpServersCreateResponse> adminMcpServersCreateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite) throws ApiException {
+        okhttp3.Call localVarCall = adminMcpServersCreateValidateBeforeCall(orgId, mcpServerWrite, null);
         Type localVarReturnType = new TypeToken<AdminMcpServersCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -198,6 +208,7 @@ public class AdminMcpApi {
      * Register an MCP server (asynchronously)
      * The &#x60;resource_uri&#x60; is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
      * @param orgId  (required)
+     * @param mcpServerWrite  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -211,9 +222,9 @@ public class AdminMcpApi {
         <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminMcpServersCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminMcpServersCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call adminMcpServersCreateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite, final ApiCallback<AdminMcpServersCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminMcpServersCreateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = adminMcpServersCreateValidateBeforeCall(orgId, mcpServerWrite, _callback);
         Type localVarReturnType = new TypeToken<AdminMcpServersCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1093,6 +1104,324 @@ public class AdminMcpApi {
 
         okhttp3.Call localVarCall = adminMcpServersListValidateBeforeCall(orgId, _callback);
         Type localVarReturnType = new TypeToken<AdminMcpServersListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for patchAdminMcpServersUpdate
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param mcpServerWrite  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated MCP server </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> resource_uri changed, a switch that is not a JSON boolean, or a field that cannot be set (include_scope_in_challenge, bearer_methods_supported) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call patchAdminMcpServersUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = mcpServerWrite;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "serverId" + "}", localVarApiClient.escapeString(serverId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call patchAdminMcpServersUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminMcpServersUpdate(Async)");
+        }
+
+        // verify the required parameter 'serverId' is set
+        if (serverId == null) {
+            throw new ApiException("Missing the required parameter 'serverId' when calling patchAdminMcpServersUpdate(Async)");
+        }
+
+        // verify the required parameter 'mcpServerWrite' is set
+        if (mcpServerWrite == null) {
+            throw new ApiException("Missing the required parameter 'mcpServerWrite' when calling patchAdminMcpServersUpdate(Async)");
+        }
+
+        return patchAdminMcpServersUpdateCall(orgId, serverId, mcpServerWrite, _callback);
+
+    }
+
+    /**
+     * Update an MCP server
+     * Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param mcpServerWrite  (required)
+     * @return AdminMcpServersCreateResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated MCP server </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> resource_uri changed, a switch that is not a JSON boolean, or a field that cannot be set (include_scope_in_challenge, bearer_methods_supported) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminMcpServersCreateResponse patchAdminMcpServersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite) throws ApiException {
+        ApiResponse<AdminMcpServersCreateResponse> localVarResp = patchAdminMcpServersUpdateWithHttpInfo(orgId, serverId, mcpServerWrite);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Update an MCP server
+     * Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param mcpServerWrite  (required)
+     * @return ApiResponse&lt;AdminMcpServersCreateResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated MCP server </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> resource_uri changed, a switch that is not a JSON boolean, or a field that cannot be set (include_scope_in_challenge, bearer_methods_supported) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminMcpServersCreateResponse> patchAdminMcpServersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminMcpServersUpdateValidateBeforeCall(orgId, serverId, mcpServerWrite, null);
+        Type localVarReturnType = new TypeToken<AdminMcpServersCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Update an MCP server (asynchronously)
+     * Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param mcpServerWrite  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated MCP server </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> resource_uri changed, a switch that is not a JSON boolean, or a field that cannot be set (include_scope_in_challenge, bearer_methods_supported) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call patchAdminMcpServersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite, final ApiCallback<AdminMcpServersCreateResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = patchAdminMcpServersUpdateValidateBeforeCall(orgId, serverId, mcpServerWrite, _callback);
+        Type localVarReturnType = new TypeToken<AdminMcpServersCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for putAdminMcpServersUpdate
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param mcpServerWrite  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated MCP server </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> resource_uri changed, or a field that cannot be set </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call putAdminMcpServersUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = mcpServerWrite;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "serverId" + "}", localVarApiClient.escapeString(serverId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call putAdminMcpServersUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling putAdminMcpServersUpdate(Async)");
+        }
+
+        // verify the required parameter 'serverId' is set
+        if (serverId == null) {
+            throw new ApiException("Missing the required parameter 'serverId' when calling putAdminMcpServersUpdate(Async)");
+        }
+
+        // verify the required parameter 'mcpServerWrite' is set
+        if (mcpServerWrite == null) {
+            throw new ApiException("Missing the required parameter 'mcpServerWrite' when calling putAdminMcpServersUpdate(Async)");
+        }
+
+        return putAdminMcpServersUpdateCall(orgId, serverId, mcpServerWrite, _callback);
+
+    }
+
+    /**
+     * Update an MCP server (same as PATCH: only the fields that are sent change)
+     * 
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param mcpServerWrite  (required)
+     * @return AdminMcpServersCreateResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated MCP server </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> resource_uri changed, or a field that cannot be set </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminMcpServersCreateResponse putAdminMcpServersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite) throws ApiException {
+        ApiResponse<AdminMcpServersCreateResponse> localVarResp = putAdminMcpServersUpdateWithHttpInfo(orgId, serverId, mcpServerWrite);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Update an MCP server (same as PATCH: only the fields that are sent change)
+     * 
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param mcpServerWrite  (required)
+     * @return ApiResponse&lt;AdminMcpServersCreateResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated MCP server </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> resource_uri changed, or a field that cannot be set </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminMcpServersCreateResponse> putAdminMcpServersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite) throws ApiException {
+        okhttp3.Call localVarCall = putAdminMcpServersUpdateValidateBeforeCall(orgId, serverId, mcpServerWrite, null);
+        Type localVarReturnType = new TypeToken<AdminMcpServersCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Update an MCP server (same as PATCH: only the fields that are sent change) (asynchronously)
+     * 
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param mcpServerWrite  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Updated MCP server </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> resource_uri changed, or a field that cannot be set </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call putAdminMcpServersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerWrite mcpServerWrite, final ApiCallback<AdminMcpServersCreateResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = putAdminMcpServersUpdateValidateBeforeCall(orgId, serverId, mcpServerWrite, _callback);
+        Type localVarReturnType = new TypeToken<AdminMcpServersCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

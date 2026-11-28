@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -63,7 +63,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //var response = instance.AdminOrgInvitationsCreate(orgId, organizationId);
+            //AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest = null;
+            //var response = instance.AdminOrgInvitationsCreate(orgId, organizationId, adminOrgInvitationsCreateRequest);
             //Assert.IsType<AdminOrgInvitationsCreateResponse>(response);
         }
 
@@ -117,7 +118,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //var response = instance.AdminOrgMembersAdd(orgId, organizationId);
+            //AdminOrgMembersAddRequest adminOrgMembersAddRequest = null;
+            //var response = instance.AdminOrgMembersAdd(orgId, organizationId, adminOrgMembersAddRequest);
             //Assert.IsType<AdminOrgMembersAddResponse>(response);
         }
 
@@ -157,7 +159,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //var response = instance.AdminOrgRolesCreate(orgId, organizationId);
+            //AdminOrgRolesCreateRequest adminOrgRolesCreateRequest = null;
+            //var response = instance.AdminOrgRolesCreate(orgId, organizationId, adminOrgRolesCreateRequest);
             //Assert.IsType<AdminOrgRolesCreateResponse>(response);
         }
 
@@ -196,7 +199,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.AdminOrganizationsCreate(orgId);
+            //AdminOrganizationsCreateRequest adminOrganizationsCreateRequest = null;
+            //var response = instance.AdminOrganizationsCreate(orgId, adminOrganizationsCreateRequest);
             //Assert.IsType<AdminOrganizationsCreateResponse>(response);
         }
 
@@ -248,7 +252,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string organizationId = null;
             //string userId = null;
-            //var response = instance.PatchAdminOrgMembersUpdate(orgId, organizationId, userId);
+            //PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest = null;
+            //var response = instance.PatchAdminOrgMembersUpdate(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
             //Assert.IsType<PutAdminOrgMembersUpdateResponse>(response);
         }
 
@@ -262,7 +267,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string organizationId = null;
             //string roleId = null;
-            //var response = instance.PatchAdminOrgRolesUpdate(orgId, organizationId, roleId);
+            //PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest = null;
+            //var response = instance.PatchAdminOrgRolesUpdate(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
             //Assert.IsType<AdminOrgRolesCreateResponse>(response);
         }
 
@@ -275,7 +281,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //var response = instance.PatchAdminOrganizationsUpdate(orgId, organizationId);
+            //PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest = null;
+            //var response = instance.PatchAdminOrganizationsUpdate(orgId, organizationId, putAdminOrganizationsUpdateRequest);
             //Assert.IsType<AdminOrganizationsGetResponse>(response);
         }
 
@@ -289,7 +296,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string organizationId = null;
             //string userId = null;
-            //var response = instance.PutAdminOrgMembersUpdate(orgId, organizationId, userId);
+            //PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest = null;
+            //var response = instance.PutAdminOrgMembersUpdate(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
             //Assert.IsType<PutAdminOrgMembersUpdateResponse>(response);
         }
 
@@ -303,7 +311,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string organizationId = null;
             //string roleId = null;
-            //var response = instance.PutAdminOrgRolesUpdate(orgId, organizationId, roleId);
+            //PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest = null;
+            //var response = instance.PutAdminOrgRolesUpdate(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
             //Assert.IsType<AdminOrgRolesCreateResponse>(response);
         }
 
@@ -316,7 +325,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //var response = instance.PutAdminOrganizationsUpdate(orgId, organizationId);
+            //PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest = null;
+            //var response = instance.PutAdminOrganizationsUpdate(orgId, organizationId, putAdminOrganizationsUpdateRequest);
             //Assert.IsType<AdminOrganizationsGetResponse>(response);
         }
     }

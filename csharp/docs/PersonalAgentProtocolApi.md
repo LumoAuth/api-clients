@@ -113,6 +113,7 @@ catch (ApiException e)
 | **401** | invalid_client. |  -  |
 | **403** | insufficient_scope. |  -  |
 | **404** | not_found: unknown organization or Session. |  -  |
+| **409** | protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -412,7 +413,8 @@ catch (ApiException e)
 | **200** | The state of the Session. |  -  |
 | **401** | invalid_client. |  -  |
 | **403** | insufficient_scope. |  -  |
-| **404** | not_found: unknown organization, or the protocol is switched off. |  -  |
+| **404** | not_found: unknown organization. |  -  |
+| **409** | protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). Answered after the calling application authenticated. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -726,7 +728,8 @@ catch (ApiException e)
 | **400** | invalid_request: method, url or headers missing or malformed. |  -  |
 | **401** | invalid_client: the calling application did not authenticate. |  -  |
 | **403** | insufficient_scope: the calling application may not verify Session headers. |  -  |
-| **404** | not_found: unknown organization, or the protocol is switched off. |  -  |
+| **404** | not_found: unknown organization. |  -  |
+| **409** | protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). Answered after the calling application authenticated. |  -  |
 | **429** | too_many_requests, with Retry-After. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

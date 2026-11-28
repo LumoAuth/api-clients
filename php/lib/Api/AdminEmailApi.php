@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -1079,15 +1079,16 @@ class AdminEmailApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $type type (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminEmailTemplatesPreviewRequest|null $adminEmailTemplatesPreviewRequest adminEmailTemplatesPreviewRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesPreview'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminEmailTemplatesPreviewResponse
      */
-    public function adminEmailTemplatesPreview($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesPreview'][0])
+    public function adminEmailTemplatesPreview($orgId, $type, $adminEmailTemplatesPreviewRequest = null, string $contentType = self::contentTypes['adminEmailTemplatesPreview'][0])
     {
-        list($response) = $this->adminEmailTemplatesPreviewWithHttpInfo($orgId, $type, $contentType);
+        list($response) = $this->adminEmailTemplatesPreviewWithHttpInfo($orgId, $type, $adminEmailTemplatesPreviewRequest, $contentType);
         return $response;
     }
 
@@ -1098,15 +1099,16 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminEmailTemplatesPreviewRequest|null $adminEmailTemplatesPreviewRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesPreview'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminEmailTemplatesPreviewResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminEmailTemplatesPreviewWithHttpInfo($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesPreview'][0])
+    public function adminEmailTemplatesPreviewWithHttpInfo($orgId, $type, $adminEmailTemplatesPreviewRequest = null, string $contentType = self::contentTypes['adminEmailTemplatesPreview'][0])
     {
-        $request = $this->adminEmailTemplatesPreviewRequest($orgId, $type, $contentType);
+        $request = $this->adminEmailTemplatesPreviewRequest($orgId, $type, $adminEmailTemplatesPreviewRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1184,14 +1186,15 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminEmailTemplatesPreviewRequest|null $adminEmailTemplatesPreviewRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesPreview'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminEmailTemplatesPreviewAsync($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesPreview'][0])
+    public function adminEmailTemplatesPreviewAsync($orgId, $type, $adminEmailTemplatesPreviewRequest = null, string $contentType = self::contentTypes['adminEmailTemplatesPreview'][0])
     {
-        return $this->adminEmailTemplatesPreviewAsyncWithHttpInfo($orgId, $type, $contentType)
+        return $this->adminEmailTemplatesPreviewAsyncWithHttpInfo($orgId, $type, $adminEmailTemplatesPreviewRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1206,15 +1209,16 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminEmailTemplatesPreviewRequest|null $adminEmailTemplatesPreviewRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesPreview'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminEmailTemplatesPreviewAsyncWithHttpInfo($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesPreview'][0])
+    public function adminEmailTemplatesPreviewAsyncWithHttpInfo($orgId, $type, $adminEmailTemplatesPreviewRequest = null, string $contentType = self::contentTypes['adminEmailTemplatesPreview'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminEmailTemplatesPreviewResponse';
-        $request = $this->adminEmailTemplatesPreviewRequest($orgId, $type, $contentType);
+        $request = $this->adminEmailTemplatesPreviewRequest($orgId, $type, $adminEmailTemplatesPreviewRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1257,12 +1261,13 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminEmailTemplatesPreviewRequest|null $adminEmailTemplatesPreviewRequest (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesPreview'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminEmailTemplatesPreviewRequest($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesPreview'][0])
+    public function adminEmailTemplatesPreviewRequest($orgId, $type, $adminEmailTemplatesPreviewRequest = null, string $contentType = self::contentTypes['adminEmailTemplatesPreview'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -1278,6 +1283,7 @@ class AdminEmailApi
                 'Missing the required parameter $type when calling adminEmailTemplatesPreview'
             );
         }
+
 
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/email-templates/{type}/preview';
@@ -1314,7 +1320,14 @@ class AdminEmailApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminEmailTemplatesPreviewRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminEmailTemplatesPreviewRequest));
+            } else {
+                $httpBody = $adminEmailTemplatesPreviewRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -1376,15 +1389,16 @@ class AdminEmailApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $type type (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminEmailTemplatesUpsertRequest $adminEmailTemplatesUpsertRequest adminEmailTemplatesUpsertRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesUpsert'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\EmailTemplate
      */
-    public function adminEmailTemplatesUpsert($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesUpsert'][0])
+    public function adminEmailTemplatesUpsert($orgId, $type, $adminEmailTemplatesUpsertRequest, string $contentType = self::contentTypes['adminEmailTemplatesUpsert'][0])
     {
-        list($response) = $this->adminEmailTemplatesUpsertWithHttpInfo($orgId, $type, $contentType);
+        list($response) = $this->adminEmailTemplatesUpsertWithHttpInfo($orgId, $type, $adminEmailTemplatesUpsertRequest, $contentType);
         return $response;
     }
 
@@ -1395,15 +1409,16 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminEmailTemplatesUpsertRequest $adminEmailTemplatesUpsertRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesUpsert'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\EmailTemplate, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminEmailTemplatesUpsertWithHttpInfo($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesUpsert'][0])
+    public function adminEmailTemplatesUpsertWithHttpInfo($orgId, $type, $adminEmailTemplatesUpsertRequest, string $contentType = self::contentTypes['adminEmailTemplatesUpsert'][0])
     {
-        $request = $this->adminEmailTemplatesUpsertRequest($orgId, $type, $contentType);
+        $request = $this->adminEmailTemplatesUpsertRequest($orgId, $type, $adminEmailTemplatesUpsertRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1481,14 +1496,15 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminEmailTemplatesUpsertRequest $adminEmailTemplatesUpsertRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesUpsert'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminEmailTemplatesUpsertAsync($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesUpsert'][0])
+    public function adminEmailTemplatesUpsertAsync($orgId, $type, $adminEmailTemplatesUpsertRequest, string $contentType = self::contentTypes['adminEmailTemplatesUpsert'][0])
     {
-        return $this->adminEmailTemplatesUpsertAsyncWithHttpInfo($orgId, $type, $contentType)
+        return $this->adminEmailTemplatesUpsertAsyncWithHttpInfo($orgId, $type, $adminEmailTemplatesUpsertRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1503,15 +1519,16 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminEmailTemplatesUpsertRequest $adminEmailTemplatesUpsertRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesUpsert'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminEmailTemplatesUpsertAsyncWithHttpInfo($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesUpsert'][0])
+    public function adminEmailTemplatesUpsertAsyncWithHttpInfo($orgId, $type, $adminEmailTemplatesUpsertRequest, string $contentType = self::contentTypes['adminEmailTemplatesUpsert'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\EmailTemplate';
-        $request = $this->adminEmailTemplatesUpsertRequest($orgId, $type, $contentType);
+        $request = $this->adminEmailTemplatesUpsertRequest($orgId, $type, $adminEmailTemplatesUpsertRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1554,12 +1571,13 @@ class AdminEmailApi
      *
      * @param  string $orgId (required)
      * @param  string $type (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminEmailTemplatesUpsertRequest $adminEmailTemplatesUpsertRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminEmailTemplatesUpsert'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminEmailTemplatesUpsertRequest($orgId, $type, string $contentType = self::contentTypes['adminEmailTemplatesUpsert'][0])
+    public function adminEmailTemplatesUpsertRequest($orgId, $type, $adminEmailTemplatesUpsertRequest, string $contentType = self::contentTypes['adminEmailTemplatesUpsert'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -1573,6 +1591,13 @@ class AdminEmailApi
         if ($type === null || (is_array($type) && count($type) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $type when calling adminEmailTemplatesUpsert'
+            );
+        }
+
+        // verify the required parameter 'adminEmailTemplatesUpsertRequest' is set
+        if ($adminEmailTemplatesUpsertRequest === null || (is_array($adminEmailTemplatesUpsertRequest) && count($adminEmailTemplatesUpsertRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $adminEmailTemplatesUpsertRequest when calling adminEmailTemplatesUpsert'
             );
         }
 
@@ -1611,7 +1636,14 @@ class AdminEmailApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminEmailTemplatesUpsertRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminEmailTemplatesUpsertRequest));
+            } else {
+                $httpBody = $adminEmailTemplatesUpsertRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

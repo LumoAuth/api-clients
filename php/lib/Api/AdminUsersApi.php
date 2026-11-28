@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -223,15 +223,16 @@ class AdminUsersApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $userId userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserGroupRequest $addUserGroupRequest addUserGroupRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserGroup'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AddUserGroupResponse
      */
-    public function addUserGroup($orgId, $userId, string $contentType = self::contentTypes['addUserGroup'][0])
+    public function addUserGroup($orgId, $userId, $addUserGroupRequest, string $contentType = self::contentTypes['addUserGroup'][0])
     {
-        list($response) = $this->addUserGroupWithHttpInfo($orgId, $userId, $contentType);
+        list($response) = $this->addUserGroupWithHttpInfo($orgId, $userId, $addUserGroupRequest, $contentType);
         return $response;
     }
 
@@ -242,15 +243,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserGroupRequest $addUserGroupRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserGroup'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AddUserGroupResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function addUserGroupWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['addUserGroup'][0])
+    public function addUserGroupWithHttpInfo($orgId, $userId, $addUserGroupRequest, string $contentType = self::contentTypes['addUserGroup'][0])
     {
-        $request = $this->addUserGroupRequest($orgId, $userId, $contentType);
+        $request = $this->addUserGroupRequest($orgId, $userId, $addUserGroupRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -328,14 +330,15 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserGroupRequest $addUserGroupRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserGroup'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function addUserGroupAsync($orgId, $userId, string $contentType = self::contentTypes['addUserGroup'][0])
+    public function addUserGroupAsync($orgId, $userId, $addUserGroupRequest, string $contentType = self::contentTypes['addUserGroup'][0])
     {
-        return $this->addUserGroupAsyncWithHttpInfo($orgId, $userId, $contentType)
+        return $this->addUserGroupAsyncWithHttpInfo($orgId, $userId, $addUserGroupRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -350,15 +353,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserGroupRequest $addUserGroupRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserGroup'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function addUserGroupAsyncWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['addUserGroup'][0])
+    public function addUserGroupAsyncWithHttpInfo($orgId, $userId, $addUserGroupRequest, string $contentType = self::contentTypes['addUserGroup'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AddUserGroupResponse';
-        $request = $this->addUserGroupRequest($orgId, $userId, $contentType);
+        $request = $this->addUserGroupRequest($orgId, $userId, $addUserGroupRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -401,12 +405,13 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserGroupRequest $addUserGroupRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserGroup'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function addUserGroupRequest($orgId, $userId, string $contentType = self::contentTypes['addUserGroup'][0])
+    public function addUserGroupRequest($orgId, $userId, $addUserGroupRequest, string $contentType = self::contentTypes['addUserGroup'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -420,6 +425,13 @@ class AdminUsersApi
         if ($userId === null || (is_array($userId) && count($userId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $userId when calling addUserGroup'
+            );
+        }
+
+        // verify the required parameter 'addUserGroupRequest' is set
+        if ($addUserGroupRequest === null || (is_array($addUserGroupRequest) && count($addUserGroupRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $addUserGroupRequest when calling addUserGroup'
             );
         }
 
@@ -458,7 +470,14 @@ class AdminUsersApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($addUserGroupRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($addUserGroupRequest));
+            } else {
+                $httpBody = $addUserGroupRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -520,15 +539,16 @@ class AdminUsersApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $userId userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserPermissionRequest $addUserPermissionRequest addUserPermissionRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserPermission'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AddUserPermissionResponse
      */
-    public function addUserPermission($orgId, $userId, string $contentType = self::contentTypes['addUserPermission'][0])
+    public function addUserPermission($orgId, $userId, $addUserPermissionRequest, string $contentType = self::contentTypes['addUserPermission'][0])
     {
-        list($response) = $this->addUserPermissionWithHttpInfo($orgId, $userId, $contentType);
+        list($response) = $this->addUserPermissionWithHttpInfo($orgId, $userId, $addUserPermissionRequest, $contentType);
         return $response;
     }
 
@@ -539,15 +559,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserPermissionRequest $addUserPermissionRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserPermission'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AddUserPermissionResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function addUserPermissionWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['addUserPermission'][0])
+    public function addUserPermissionWithHttpInfo($orgId, $userId, $addUserPermissionRequest, string $contentType = self::contentTypes['addUserPermission'][0])
     {
-        $request = $this->addUserPermissionRequest($orgId, $userId, $contentType);
+        $request = $this->addUserPermissionRequest($orgId, $userId, $addUserPermissionRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -625,14 +646,15 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserPermissionRequest $addUserPermissionRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function addUserPermissionAsync($orgId, $userId, string $contentType = self::contentTypes['addUserPermission'][0])
+    public function addUserPermissionAsync($orgId, $userId, $addUserPermissionRequest, string $contentType = self::contentTypes['addUserPermission'][0])
     {
-        return $this->addUserPermissionAsyncWithHttpInfo($orgId, $userId, $contentType)
+        return $this->addUserPermissionAsyncWithHttpInfo($orgId, $userId, $addUserPermissionRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -647,15 +669,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserPermissionRequest $addUserPermissionRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function addUserPermissionAsyncWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['addUserPermission'][0])
+    public function addUserPermissionAsyncWithHttpInfo($orgId, $userId, $addUserPermissionRequest, string $contentType = self::contentTypes['addUserPermission'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AddUserPermissionResponse';
-        $request = $this->addUserPermissionRequest($orgId, $userId, $contentType);
+        $request = $this->addUserPermissionRequest($orgId, $userId, $addUserPermissionRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -698,12 +721,13 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserPermissionRequest $addUserPermissionRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function addUserPermissionRequest($orgId, $userId, string $contentType = self::contentTypes['addUserPermission'][0])
+    public function addUserPermissionRequest($orgId, $userId, $addUserPermissionRequest, string $contentType = self::contentTypes['addUserPermission'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -717,6 +741,13 @@ class AdminUsersApi
         if ($userId === null || (is_array($userId) && count($userId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $userId when calling addUserPermission'
+            );
+        }
+
+        // verify the required parameter 'addUserPermissionRequest' is set
+        if ($addUserPermissionRequest === null || (is_array($addUserPermissionRequest) && count($addUserPermissionRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $addUserPermissionRequest when calling addUserPermission'
             );
         }
 
@@ -755,7 +786,14 @@ class AdminUsersApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($addUserPermissionRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($addUserPermissionRequest));
+            } else {
+                $httpBody = $addUserPermissionRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -817,15 +855,16 @@ class AdminUsersApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $userId userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserRoleRequest $addUserRoleRequest addUserRoleRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserRole'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AddUserRoleResponse
      */
-    public function addUserRole($orgId, $userId, string $contentType = self::contentTypes['addUserRole'][0])
+    public function addUserRole($orgId, $userId, $addUserRoleRequest, string $contentType = self::contentTypes['addUserRole'][0])
     {
-        list($response) = $this->addUserRoleWithHttpInfo($orgId, $userId, $contentType);
+        list($response) = $this->addUserRoleWithHttpInfo($orgId, $userId, $addUserRoleRequest, $contentType);
         return $response;
     }
 
@@ -836,15 +875,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserRoleRequest $addUserRoleRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserRole'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AddUserRoleResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function addUserRoleWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['addUserRole'][0])
+    public function addUserRoleWithHttpInfo($orgId, $userId, $addUserRoleRequest, string $contentType = self::contentTypes['addUserRole'][0])
     {
-        $request = $this->addUserRoleRequest($orgId, $userId, $contentType);
+        $request = $this->addUserRoleRequest($orgId, $userId, $addUserRoleRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -922,14 +962,15 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserRoleRequest $addUserRoleRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserRole'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function addUserRoleAsync($orgId, $userId, string $contentType = self::contentTypes['addUserRole'][0])
+    public function addUserRoleAsync($orgId, $userId, $addUserRoleRequest, string $contentType = self::contentTypes['addUserRole'][0])
     {
-        return $this->addUserRoleAsyncWithHttpInfo($orgId, $userId, $contentType)
+        return $this->addUserRoleAsyncWithHttpInfo($orgId, $userId, $addUserRoleRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -944,15 +985,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserRoleRequest $addUserRoleRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserRole'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function addUserRoleAsyncWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['addUserRole'][0])
+    public function addUserRoleAsyncWithHttpInfo($orgId, $userId, $addUserRoleRequest, string $contentType = self::contentTypes['addUserRole'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AddUserRoleResponse';
-        $request = $this->addUserRoleRequest($orgId, $userId, $contentType);
+        $request = $this->addUserRoleRequest($orgId, $userId, $addUserRoleRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -995,12 +1037,13 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AddUserRoleRequest $addUserRoleRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addUserRole'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function addUserRoleRequest($orgId, $userId, string $contentType = self::contentTypes['addUserRole'][0])
+    public function addUserRoleRequest($orgId, $userId, $addUserRoleRequest, string $contentType = self::contentTypes['addUserRole'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -1014,6 +1057,13 @@ class AdminUsersApi
         if ($userId === null || (is_array($userId) && count($userId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $userId when calling addUserRole'
+            );
+        }
+
+        // verify the required parameter 'addUserRoleRequest' is set
+        if ($addUserRoleRequest === null || (is_array($addUserRoleRequest) && count($addUserRoleRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $addUserRoleRequest when calling addUserRole'
             );
         }
 
@@ -1052,7 +1102,14 @@ class AdminUsersApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($addUserRoleRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($addUserRoleRequest));
+            } else {
+                $httpBody = $addUserRoleRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -3225,15 +3282,16 @@ class AdminUsersApi
      * Create a user
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CreateUserRequest $createUserRequest createUserRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUser'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\CreateUserResponse
      */
-    public function createUser($orgId, string $contentType = self::contentTypes['createUser'][0])
+    public function createUser($orgId, $createUserRequest, string $contentType = self::contentTypes['createUser'][0])
     {
-        list($response) = $this->createUserWithHttpInfo($orgId, $contentType);
+        list($response) = $this->createUserWithHttpInfo($orgId, $createUserRequest, $contentType);
         return $response;
     }
 
@@ -3243,15 +3301,16 @@ class AdminUsersApi
      * Create a user
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CreateUserRequest $createUserRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUser'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\CreateUserResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createUserWithHttpInfo($orgId, string $contentType = self::contentTypes['createUser'][0])
+    public function createUserWithHttpInfo($orgId, $createUserRequest, string $contentType = self::contentTypes['createUser'][0])
     {
-        $request = $this->createUserRequest($orgId, $contentType);
+        $request = $this->createUserRequest($orgId, $createUserRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3328,14 +3387,15 @@ class AdminUsersApi
      * Create a user
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CreateUserRequest $createUserRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createUserAsync($orgId, string $contentType = self::contentTypes['createUser'][0])
+    public function createUserAsync($orgId, $createUserRequest, string $contentType = self::contentTypes['createUser'][0])
     {
-        return $this->createUserAsyncWithHttpInfo($orgId, $contentType)
+        return $this->createUserAsyncWithHttpInfo($orgId, $createUserRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3349,15 +3409,16 @@ class AdminUsersApi
      * Create a user
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CreateUserRequest $createUserRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createUserAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['createUser'][0])
+    public function createUserAsyncWithHttpInfo($orgId, $createUserRequest, string $contentType = self::contentTypes['createUser'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\CreateUserResponse';
-        $request = $this->createUserRequest($orgId, $contentType);
+        $request = $this->createUserRequest($orgId, $createUserRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3399,18 +3460,26 @@ class AdminUsersApi
      * Create request for operation 'createUser'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\CreateUserRequest $createUserRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createUserRequest($orgId, string $contentType = self::contentTypes['createUser'][0])
+    public function createUserRequest($orgId, $createUserRequest, string $contentType = self::contentTypes['createUser'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling createUser'
+            );
+        }
+
+        // verify the required parameter 'createUserRequest' is set
+        if ($createUserRequest === null || (is_array($createUserRequest) && count($createUserRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $createUserRequest when calling createUser'
             );
         }
 
@@ -3441,7 +3510,14 @@ class AdminUsersApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($createUserRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($createUserRequest));
+            } else {
+                $httpBody = $createUserRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -5751,15 +5827,16 @@ class AdminUsersApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $userId userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserRequest $updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchUser'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\UpdateUserResponse
      */
-    public function patchUser($orgId, $userId, string $contentType = self::contentTypes['patchUser'][0])
+    public function patchUser($orgId, $userId, $updateUserRequest, string $contentType = self::contentTypes['patchUser'][0])
     {
-        list($response) = $this->patchUserWithHttpInfo($orgId, $userId, $contentType);
+        list($response) = $this->patchUserWithHttpInfo($orgId, $userId, $updateUserRequest, $contentType);
         return $response;
     }
 
@@ -5770,15 +5847,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserRequest $updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchUser'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\UpdateUserResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function patchUserWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['patchUser'][0])
+    public function patchUserWithHttpInfo($orgId, $userId, $updateUserRequest, string $contentType = self::contentTypes['patchUser'][0])
     {
-        $request = $this->patchUserRequest($orgId, $userId, $contentType);
+        $request = $this->patchUserRequest($orgId, $userId, $updateUserRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -5856,14 +5934,15 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserRequest $updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchUserAsync($orgId, $userId, string $contentType = self::contentTypes['patchUser'][0])
+    public function patchUserAsync($orgId, $userId, $updateUserRequest, string $contentType = self::contentTypes['patchUser'][0])
     {
-        return $this->patchUserAsyncWithHttpInfo($orgId, $userId, $contentType)
+        return $this->patchUserAsyncWithHttpInfo($orgId, $userId, $updateUserRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -5878,15 +5957,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserRequest $updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchUserAsyncWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['patchUser'][0])
+    public function patchUserAsyncWithHttpInfo($orgId, $userId, $updateUserRequest, string $contentType = self::contentTypes['patchUser'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\UpdateUserResponse';
-        $request = $this->patchUserRequest($orgId, $userId, $contentType);
+        $request = $this->patchUserRequest($orgId, $userId, $updateUserRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -5929,12 +6009,13 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserRequest $updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function patchUserRequest($orgId, $userId, string $contentType = self::contentTypes['patchUser'][0])
+    public function patchUserRequest($orgId, $userId, $updateUserRequest, string $contentType = self::contentTypes['patchUser'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -5948,6 +6029,13 @@ class AdminUsersApi
         if ($userId === null || (is_array($userId) && count($userId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $userId when calling patchUser'
+            );
+        }
+
+        // verify the required parameter 'updateUserRequest' is set
+        if ($updateUserRequest === null || (is_array($updateUserRequest) && count($updateUserRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $updateUserRequest when calling patchUser'
             );
         }
 
@@ -5986,7 +6074,14 @@ class AdminUsersApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($updateUserRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($updateUserRequest));
+            } else {
+                $httpBody = $updateUserRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -7557,15 +7652,16 @@ class AdminUsersApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $userId userId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest $setUserPasswordPostRequest setUserPasswordPostRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPassword'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\SetUserPasswordPostResponse
      */
-    public function setUserPassword($orgId, $userId, string $contentType = self::contentTypes['setUserPassword'][0])
+    public function setUserPassword($orgId, $userId, $setUserPasswordPostRequest, string $contentType = self::contentTypes['setUserPassword'][0])
     {
-        list($response) = $this->setUserPasswordWithHttpInfo($orgId, $userId, $contentType);
+        list($response) = $this->setUserPasswordWithHttpInfo($orgId, $userId, $setUserPasswordPostRequest, $contentType);
         return $response;
     }
 
@@ -7576,15 +7672,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest $setUserPasswordPostRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPassword'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\SetUserPasswordPostResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function setUserPasswordWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['setUserPassword'][0])
+    public function setUserPasswordWithHttpInfo($orgId, $userId, $setUserPasswordPostRequest, string $contentType = self::contentTypes['setUserPassword'][0])
     {
-        $request = $this->setUserPasswordRequest($orgId, $userId, $contentType);
+        $request = $this->setUserPasswordRequest($orgId, $userId, $setUserPasswordPostRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -7662,14 +7759,15 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest $setUserPasswordPostRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function setUserPasswordAsync($orgId, $userId, string $contentType = self::contentTypes['setUserPassword'][0])
+    public function setUserPasswordAsync($orgId, $userId, $setUserPasswordPostRequest, string $contentType = self::contentTypes['setUserPassword'][0])
     {
-        return $this->setUserPasswordAsyncWithHttpInfo($orgId, $userId, $contentType)
+        return $this->setUserPasswordAsyncWithHttpInfo($orgId, $userId, $setUserPasswordPostRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -7684,15 +7782,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest $setUserPasswordPostRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function setUserPasswordAsyncWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['setUserPassword'][0])
+    public function setUserPasswordAsyncWithHttpInfo($orgId, $userId, $setUserPasswordPostRequest, string $contentType = self::contentTypes['setUserPassword'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\SetUserPasswordPostResponse';
-        $request = $this->setUserPasswordRequest($orgId, $userId, $contentType);
+        $request = $this->setUserPasswordRequest($orgId, $userId, $setUserPasswordPostRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -7735,12 +7834,13 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest $setUserPasswordPostRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function setUserPasswordRequest($orgId, $userId, string $contentType = self::contentTypes['setUserPassword'][0])
+    public function setUserPasswordRequest($orgId, $userId, $setUserPasswordPostRequest, string $contentType = self::contentTypes['setUserPassword'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -7754,6 +7854,13 @@ class AdminUsersApi
         if ($userId === null || (is_array($userId) && count($userId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $userId when calling setUserPassword'
+            );
+        }
+
+        // verify the required parameter 'setUserPasswordPostRequest' is set
+        if ($setUserPasswordPostRequest === null || (is_array($setUserPasswordPostRequest) && count($setUserPasswordPostRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $setUserPasswordPostRequest when calling setUserPassword'
             );
         }
 
@@ -7792,7 +7899,14 @@ class AdminUsersApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($setUserPasswordPostRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($setUserPasswordPostRequest));
+            } else {
+                $httpBody = $setUserPasswordPostRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -7854,15 +7968,16 @@ class AdminUsersApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $userId userId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest $setUserPasswordPostRequest setUserPasswordPostRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPasswordPost'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\SetUserPasswordPostResponse
      */
-    public function setUserPasswordPost($orgId, $userId, string $contentType = self::contentTypes['setUserPasswordPost'][0])
+    public function setUserPasswordPost($orgId, $userId, $setUserPasswordPostRequest, string $contentType = self::contentTypes['setUserPasswordPost'][0])
     {
-        list($response) = $this->setUserPasswordPostWithHttpInfo($orgId, $userId, $contentType);
+        list($response) = $this->setUserPasswordPostWithHttpInfo($orgId, $userId, $setUserPasswordPostRequest, $contentType);
         return $response;
     }
 
@@ -7873,15 +7988,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest $setUserPasswordPostRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPasswordPost'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\SetUserPasswordPostResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function setUserPasswordPostWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['setUserPasswordPost'][0])
+    public function setUserPasswordPostWithHttpInfo($orgId, $userId, $setUserPasswordPostRequest, string $contentType = self::contentTypes['setUserPasswordPost'][0])
     {
-        $request = $this->setUserPasswordPostRequest($orgId, $userId, $contentType);
+        $request = $this->setUserPasswordPostRequest($orgId, $userId, $setUserPasswordPostRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -7959,14 +8075,15 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest $setUserPasswordPostRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPasswordPost'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function setUserPasswordPostAsync($orgId, $userId, string $contentType = self::contentTypes['setUserPasswordPost'][0])
+    public function setUserPasswordPostAsync($orgId, $userId, $setUserPasswordPostRequest, string $contentType = self::contentTypes['setUserPasswordPost'][0])
     {
-        return $this->setUserPasswordPostAsyncWithHttpInfo($orgId, $userId, $contentType)
+        return $this->setUserPasswordPostAsyncWithHttpInfo($orgId, $userId, $setUserPasswordPostRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -7981,15 +8098,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest $setUserPasswordPostRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPasswordPost'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function setUserPasswordPostAsyncWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['setUserPasswordPost'][0])
+    public function setUserPasswordPostAsyncWithHttpInfo($orgId, $userId, $setUserPasswordPostRequest, string $contentType = self::contentTypes['setUserPasswordPost'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\SetUserPasswordPostResponse';
-        $request = $this->setUserPasswordPostRequest($orgId, $userId, $contentType);
+        $request = $this->setUserPasswordPostRequest($orgId, $userId, $setUserPasswordPostRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -8032,12 +8150,13 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetUserPasswordPostRequest $setUserPasswordPostRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPasswordPost'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function setUserPasswordPostRequest($orgId, $userId, string $contentType = self::contentTypes['setUserPasswordPost'][0])
+    public function setUserPasswordPostRequest($orgId, $userId, $setUserPasswordPostRequest, string $contentType = self::contentTypes['setUserPasswordPost'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -8051,6 +8170,13 @@ class AdminUsersApi
         if ($userId === null || (is_array($userId) && count($userId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $userId when calling setUserPasswordPost'
+            );
+        }
+
+        // verify the required parameter 'setUserPasswordPostRequest' is set
+        if ($setUserPasswordPostRequest === null || (is_array($setUserPasswordPostRequest) && count($setUserPasswordPostRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $setUserPasswordPostRequest when calling setUserPasswordPost'
             );
         }
 
@@ -8089,7 +8215,14 @@ class AdminUsersApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($setUserPasswordPostRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($setUserPasswordPostRequest));
+            } else {
+                $httpBody = $setUserPasswordPostRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -8745,15 +8878,16 @@ class AdminUsersApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $userId userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserRequest $updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUser'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\UpdateUserResponse
      */
-    public function updateUser($orgId, $userId, string $contentType = self::contentTypes['updateUser'][0])
+    public function updateUser($orgId, $userId, $updateUserRequest, string $contentType = self::contentTypes['updateUser'][0])
     {
-        list($response) = $this->updateUserWithHttpInfo($orgId, $userId, $contentType);
+        list($response) = $this->updateUserWithHttpInfo($orgId, $userId, $updateUserRequest, $contentType);
         return $response;
     }
 
@@ -8764,15 +8898,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserRequest $updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUser'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\UpdateUserResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function updateUserWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['updateUser'][0])
+    public function updateUserWithHttpInfo($orgId, $userId, $updateUserRequest, string $contentType = self::contentTypes['updateUser'][0])
     {
-        $request = $this->updateUserRequest($orgId, $userId, $contentType);
+        $request = $this->updateUserRequest($orgId, $userId, $updateUserRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -8850,14 +8985,15 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserRequest $updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateUserAsync($orgId, $userId, string $contentType = self::contentTypes['updateUser'][0])
+    public function updateUserAsync($orgId, $userId, $updateUserRequest, string $contentType = self::contentTypes['updateUser'][0])
     {
-        return $this->updateUserAsyncWithHttpInfo($orgId, $userId, $contentType)
+        return $this->updateUserAsyncWithHttpInfo($orgId, $userId, $updateUserRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -8872,15 +9008,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserRequest $updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateUserAsyncWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['updateUser'][0])
+    public function updateUserAsyncWithHttpInfo($orgId, $userId, $updateUserRequest, string $contentType = self::contentTypes['updateUser'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\UpdateUserResponse';
-        $request = $this->updateUserRequest($orgId, $userId, $contentType);
+        $request = $this->updateUserRequest($orgId, $userId, $updateUserRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -8923,12 +9060,13 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserRequest $updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function updateUserRequest($orgId, $userId, string $contentType = self::contentTypes['updateUser'][0])
+    public function updateUserRequest($orgId, $userId, $updateUserRequest, string $contentType = self::contentTypes['updateUser'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -8942,6 +9080,13 @@ class AdminUsersApi
         if ($userId === null || (is_array($userId) && count($userId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $userId when calling updateUser'
+            );
+        }
+
+        // verify the required parameter 'updateUserRequest' is set
+        if ($updateUserRequest === null || (is_array($updateUserRequest) && count($updateUserRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $updateUserRequest when calling updateUser'
             );
         }
 
@@ -8980,7 +9125,14 @@ class AdminUsersApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($updateUserRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($updateUserRequest));
+            } else {
+                $httpBody = $updateUserRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -9042,15 +9194,16 @@ class AdminUsersApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $userId userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserGroupsRequest $updateUserGroupsRequest updateUserGroupsRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserGroups'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\UpdateUserGroupsResponse
      */
-    public function updateUserGroups($orgId, $userId, string $contentType = self::contentTypes['updateUserGroups'][0])
+    public function updateUserGroups($orgId, $userId, $updateUserGroupsRequest, string $contentType = self::contentTypes['updateUserGroups'][0])
     {
-        list($response) = $this->updateUserGroupsWithHttpInfo($orgId, $userId, $contentType);
+        list($response) = $this->updateUserGroupsWithHttpInfo($orgId, $userId, $updateUserGroupsRequest, $contentType);
         return $response;
     }
 
@@ -9061,15 +9214,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserGroupsRequest $updateUserGroupsRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserGroups'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\UpdateUserGroupsResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function updateUserGroupsWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['updateUserGroups'][0])
+    public function updateUserGroupsWithHttpInfo($orgId, $userId, $updateUserGroupsRequest, string $contentType = self::contentTypes['updateUserGroups'][0])
     {
-        $request = $this->updateUserGroupsRequest($orgId, $userId, $contentType);
+        $request = $this->updateUserGroupsRequest($orgId, $userId, $updateUserGroupsRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -9147,14 +9301,15 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserGroupsRequest $updateUserGroupsRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserGroups'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateUserGroupsAsync($orgId, $userId, string $contentType = self::contentTypes['updateUserGroups'][0])
+    public function updateUserGroupsAsync($orgId, $userId, $updateUserGroupsRequest, string $contentType = self::contentTypes['updateUserGroups'][0])
     {
-        return $this->updateUserGroupsAsyncWithHttpInfo($orgId, $userId, $contentType)
+        return $this->updateUserGroupsAsyncWithHttpInfo($orgId, $userId, $updateUserGroupsRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -9169,15 +9324,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserGroupsRequest $updateUserGroupsRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserGroups'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateUserGroupsAsyncWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['updateUserGroups'][0])
+    public function updateUserGroupsAsyncWithHttpInfo($orgId, $userId, $updateUserGroupsRequest, string $contentType = self::contentTypes['updateUserGroups'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\UpdateUserGroupsResponse';
-        $request = $this->updateUserGroupsRequest($orgId, $userId, $contentType);
+        $request = $this->updateUserGroupsRequest($orgId, $userId, $updateUserGroupsRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -9220,12 +9376,13 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\UpdateUserGroupsRequest $updateUserGroupsRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserGroups'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function updateUserGroupsRequest($orgId, $userId, string $contentType = self::contentTypes['updateUserGroups'][0])
+    public function updateUserGroupsRequest($orgId, $userId, $updateUserGroupsRequest, string $contentType = self::contentTypes['updateUserGroups'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -9239,6 +9396,13 @@ class AdminUsersApi
         if ($userId === null || (is_array($userId) && count($userId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $userId when calling updateUserGroups'
+            );
+        }
+
+        // verify the required parameter 'updateUserGroupsRequest' is set
+        if ($updateUserGroupsRequest === null || (is_array($updateUserGroupsRequest) && count($updateUserGroupsRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $updateUserGroupsRequest when calling updateUserGroups'
             );
         }
 
@@ -9277,7 +9441,14 @@ class AdminUsersApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($updateUserGroupsRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($updateUserGroupsRequest));
+            } else {
+                $httpBody = $updateUserGroupsRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -9339,15 +9510,16 @@ class AdminUsersApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $userId userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminGroupsUpdateRolesRequest $adminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserRoles'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\UpdateUserRolesResponse
      */
-    public function updateUserRoles($orgId, $userId, string $contentType = self::contentTypes['updateUserRoles'][0])
+    public function updateUserRoles($orgId, $userId, $adminGroupsUpdateRolesRequest, string $contentType = self::contentTypes['updateUserRoles'][0])
     {
-        list($response) = $this->updateUserRolesWithHttpInfo($orgId, $userId, $contentType);
+        list($response) = $this->updateUserRolesWithHttpInfo($orgId, $userId, $adminGroupsUpdateRolesRequest, $contentType);
         return $response;
     }
 
@@ -9358,15 +9530,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminGroupsUpdateRolesRequest $adminGroupsUpdateRolesRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserRoles'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\UpdateUserRolesResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function updateUserRolesWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['updateUserRoles'][0])
+    public function updateUserRolesWithHttpInfo($orgId, $userId, $adminGroupsUpdateRolesRequest, string $contentType = self::contentTypes['updateUserRoles'][0])
     {
-        $request = $this->updateUserRolesRequest($orgId, $userId, $contentType);
+        $request = $this->updateUserRolesRequest($orgId, $userId, $adminGroupsUpdateRolesRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -9444,14 +9617,15 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminGroupsUpdateRolesRequest $adminGroupsUpdateRolesRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserRoles'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateUserRolesAsync($orgId, $userId, string $contentType = self::contentTypes['updateUserRoles'][0])
+    public function updateUserRolesAsync($orgId, $userId, $adminGroupsUpdateRolesRequest, string $contentType = self::contentTypes['updateUserRoles'][0])
     {
-        return $this->updateUserRolesAsyncWithHttpInfo($orgId, $userId, $contentType)
+        return $this->updateUserRolesAsyncWithHttpInfo($orgId, $userId, $adminGroupsUpdateRolesRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -9466,15 +9640,16 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminGroupsUpdateRolesRequest $adminGroupsUpdateRolesRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserRoles'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateUserRolesAsyncWithHttpInfo($orgId, $userId, string $contentType = self::contentTypes['updateUserRoles'][0])
+    public function updateUserRolesAsyncWithHttpInfo($orgId, $userId, $adminGroupsUpdateRolesRequest, string $contentType = self::contentTypes['updateUserRoles'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\UpdateUserRolesResponse';
-        $request = $this->updateUserRolesRequest($orgId, $userId, $contentType);
+        $request = $this->updateUserRolesRequest($orgId, $userId, $adminGroupsUpdateRolesRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -9517,12 +9692,13 @@ class AdminUsersApi
      *
      * @param  string $orgId (required)
      * @param  string $userId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminGroupsUpdateRolesRequest $adminGroupsUpdateRolesRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserRoles'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function updateUserRolesRequest($orgId, $userId, string $contentType = self::contentTypes['updateUserRoles'][0])
+    public function updateUserRolesRequest($orgId, $userId, $adminGroupsUpdateRolesRequest, string $contentType = self::contentTypes['updateUserRoles'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -9536,6 +9712,13 @@ class AdminUsersApi
         if ($userId === null || (is_array($userId) && count($userId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $userId when calling updateUserRoles'
+            );
+        }
+
+        // verify the required parameter 'adminGroupsUpdateRolesRequest' is set
+        if ($adminGroupsUpdateRolesRequest === null || (is_array($adminGroupsUpdateRolesRequest) && count($adminGroupsUpdateRolesRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $adminGroupsUpdateRolesRequest when calling updateUserRoles'
             );
         }
 
@@ -9574,7 +9757,14 @@ class AdminUsersApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminGroupsUpdateRolesRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminGroupsUpdateRolesRequest));
+            } else {
+                $httpBody = $adminGroupsUpdateRolesRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

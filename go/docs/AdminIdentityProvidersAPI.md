@@ -156,7 +156,7 @@ Name | Type | Description  | Notes
 
 ## AdminSocialProvidersCreate
 
-> AdminSocialProvidersCreateResponse AdminSocialProvidersCreate(ctx, orgId).Execute()
+> AdminSocialProvidersCreateResponse AdminSocialProvidersCreate(ctx, orgId).AdminSocialProvidersCreateRequest(adminSocialProvidersCreateRequest).Execute()
 
 Create a social login provider
 
@@ -174,10 +174,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	adminSocialProvidersCreateRequest := *openapiclient.NewAdminSocialProvidersCreateRequest("Provider_example") // AdminSocialProvidersCreateRequest | An unknown field is refused with 400.
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersCreate(context.Background(), orgId).AdminSocialProvidersCreateRequest(adminSocialProvidersCreateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.AdminSocialProvidersCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -203,6 +204,7 @@ Other parameters are passed through a pointer to a apiAdminSocialProvidersCreate
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **adminSocialProvidersCreateRequest** | [**AdminSocialProvidersCreateRequest**](AdminSocialProvidersCreateRequest.md) | An unknown field is refused with 400. | 
 
 ### Return type
 
@@ -214,7 +216,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -644,7 +646,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminSocialProvidersUpdate
 
-> AdminSocialProvidersCreateResponse PatchAdminSocialProvidersUpdate(ctx, orgId, providerId).Execute()
+> AdminSocialProvidersCreateResponse PatchAdminSocialProvidersUpdate(ctx, orgId, providerId).PutAdminSocialProvidersUpdateRequest(putAdminSocialProvidersUpdateRequest).Execute()
 
 Update a social login provider
 
@@ -663,10 +665,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	providerId := "providerId_example" // string | 
+	putAdminSocialProvidersUpdateRequest := *openapiclient.NewPutAdminSocialProvidersUpdateRequest() // PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminIdentityProvidersAPI.PatchAdminSocialProvidersUpdate(context.Background(), orgId, providerId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.PatchAdminSocialProvidersUpdate(context.Background(), orgId, providerId).PutAdminSocialProvidersUpdateRequest(putAdminSocialProvidersUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.PatchAdminSocialProvidersUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -694,6 +697,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **putAdminSocialProvidersUpdateRequest** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md) | Only the fields that are sent change. An unknown field is refused with 400. | 
 
 ### Return type
 
@@ -705,7 +709,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -715,7 +719,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminSocialProvidersUpdate
 
-> AdminSocialProvidersCreateResponse PutAdminSocialProvidersUpdate(ctx, orgId, providerId).Execute()
+> AdminSocialProvidersCreateResponse PutAdminSocialProvidersUpdate(ctx, orgId, providerId).PutAdminSocialProvidersUpdateRequest(putAdminSocialProvidersUpdateRequest).Execute()
 
 Create or replace a social login provider
 
@@ -734,10 +738,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	providerId := "providerId_example" // string | 
+	putAdminSocialProvidersUpdateRequest := *openapiclient.NewPutAdminSocialProvidersUpdateRequest() // PutAdminSocialProvidersUpdateRequest | Only the fields that are sent change. An unknown field is refused with 400.
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminIdentityProvidersAPI.PutAdminSocialProvidersUpdate(context.Background(), orgId, providerId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.PutAdminSocialProvidersUpdate(context.Background(), orgId, providerId).PutAdminSocialProvidersUpdateRequest(putAdminSocialProvidersUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.PutAdminSocialProvidersUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -765,6 +770,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **putAdminSocialProvidersUpdateRequest** | [**PutAdminSocialProvidersUpdateRequest**](PutAdminSocialProvidersUpdateRequest.md) | Only the fields that are sent change. An unknown field is refused with 400. | 
 
 ### Return type
 
@@ -776,7 +782,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

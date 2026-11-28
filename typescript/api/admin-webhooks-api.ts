@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -21,6 +21,8 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AdminWebhooksCreateRequest } from '../models';
 // @ts-ignore
 import type { AdminWebhooksCreateResponse } from '../models';
 // @ts-ignore
@@ -48,6 +50,8 @@ import type { AdminWebhooksWebhooksEnableResponse } from '../models';
 // @ts-ignore
 import type { MessageResponse } from '../models';
 // @ts-ignore
+import type { PutAdminWebhooksUpdateRequest } from '../models';
+// @ts-ignore
 import type { PutAdminWebhooksUpdateResponse } from '../models';
 /**
  * AdminWebhooksApi - axios parameter creator
@@ -59,12 +63,15 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
          * Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
          * @summary Create a webhook
          * @param {string} orgId 
+         * @param {AdminWebhooksCreateRequest} adminWebhooksCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksCreate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminWebhooksCreate: async (orgId: string, adminWebhooksCreateRequest: AdminWebhooksCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminWebhooksCreate', 'orgId', orgId)
+            // verify required parameter 'adminWebhooksCreateRequest' is not null or undefined
+            assertParamExists('adminWebhooksCreate', 'adminWebhooksCreateRequest', adminWebhooksCreateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/webhooks`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -87,9 +94,12 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminWebhooksCreateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -371,7 +381,7 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * Paginated list of the tenant\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+         * Paginated list of the organization\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
          * @summary List webhooks
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -502,7 +512,7 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+         * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
          * @summary Start a webhook tunnel
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -727,14 +737,17 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
          * @summary Partially update a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
+         * @param {PutAdminWebhooksUpdateRequest} putAdminWebhooksUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminWebhooksUpdate: async (orgId: string, webhookId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminWebhooksUpdate: async (orgId: string, webhookId: string, putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminWebhooksUpdate', 'orgId', orgId)
             // verify required parameter 'webhookId' is not null or undefined
             assertParamExists('patchAdminWebhooksUpdate', 'webhookId', webhookId)
+            // verify required parameter 'putAdminWebhooksUpdateRequest' is not null or undefined
+            assertParamExists('patchAdminWebhooksUpdate', 'putAdminWebhooksUpdateRequest', putAdminWebhooksUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"webhookId"}}`, encodeURIComponent(String(webhookId)));
@@ -758,9 +771,12 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminWebhooksUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -772,14 +788,17 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
          * @summary Update a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
+         * @param {PutAdminWebhooksUpdateRequest} putAdminWebhooksUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminWebhooksUpdate: async (orgId: string, webhookId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminWebhooksUpdate: async (orgId: string, webhookId: string, putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminWebhooksUpdate', 'orgId', orgId)
             // verify required parameter 'webhookId' is not null or undefined
             assertParamExists('putAdminWebhooksUpdate', 'webhookId', webhookId)
+            // verify required parameter 'putAdminWebhooksUpdateRequest' is not null or undefined
+            assertParamExists('putAdminWebhooksUpdate', 'putAdminWebhooksUpdateRequest', putAdminWebhooksUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"webhookId"}}`, encodeURIComponent(String(webhookId)));
@@ -803,9 +822,12 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminWebhooksUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -826,11 +848,12 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
          * Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
          * @summary Create a webhook
          * @param {string} orgId 
+         * @param {AdminWebhooksCreateRequest} adminWebhooksCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksCreate(orgId, options);
+        async adminWebhooksCreate(orgId: string, adminWebhooksCreateRequest: AdminWebhooksCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksCreate(orgId, adminWebhooksCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksCreate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -921,7 +944,7 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Paginated list of the tenant\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+         * Paginated list of the organization\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
          * @summary List webhooks
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -962,7 +985,7 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+         * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
          * @summary Start a webhook tunnel
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -1035,11 +1058,12 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
          * @summary Partially update a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
+         * @param {PutAdminWebhooksUpdateRequest} putAdminWebhooksUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminWebhooksUpdate(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminWebhooksUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminWebhooksUpdate(orgId, webhookId, options);
+        async patchAdminWebhooksUpdate(orgId: string, webhookId: string, putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminWebhooksUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminWebhooksUpdate(orgId, webhookId, putAdminWebhooksUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.patchAdminWebhooksUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1049,11 +1073,12 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
          * @summary Update a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
+         * @param {PutAdminWebhooksUpdateRequest} putAdminWebhooksUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminWebhooksUpdate(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminWebhooksUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminWebhooksUpdate(orgId, webhookId, options);
+        async putAdminWebhooksUpdate(orgId: string, webhookId: string, putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminWebhooksUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminWebhooksUpdate(orgId, webhookId, putAdminWebhooksUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.putAdminWebhooksUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1076,7 +1101,7 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         adminWebhooksCreate(requestParameters: AdminWebhooksApiAdminWebhooksCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksCreateResponse> {
-            return localVarFp.adminWebhooksCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminWebhooksCreate(requestParameters.orgId, requestParameters.adminWebhooksCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1139,7 +1164,7 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
             return localVarFp.adminWebhooksGet(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Paginated list of the tenant\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+         * Paginated list of the organization\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
          * @summary List webhooks
          * @param {AdminWebhooksApiAdminWebhooksListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1169,7 +1194,7 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
             return localVarFp.adminWebhooksTest(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+         * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
          * @summary Start a webhook tunnel
          * @param {AdminWebhooksApiAdminWebhooksTunnelStartRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1226,7 +1251,7 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         patchAdminWebhooksUpdate(requestParameters: AdminWebhooksApiPatchAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminWebhooksUpdateResponse> {
-            return localVarFp.patchAdminWebhooksUpdate(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminWebhooksUpdate(requestParameters.orgId, requestParameters.webhookId, requestParameters.putAdminWebhooksUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.
@@ -1236,7 +1261,7 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         putAdminWebhooksUpdate(requestParameters: AdminWebhooksApiPutAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminWebhooksUpdateResponse> {
-            return localVarFp.putAdminWebhooksUpdate(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminWebhooksUpdate(requestParameters.orgId, requestParameters.webhookId, requestParameters.putAdminWebhooksUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1318,7 +1343,7 @@ export interface AdminWebhooksApiInterface {
     adminWebhooksGet(requestParameters: AdminWebhooksApiAdminWebhooksGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksGetResponse>;
 
     /**
-     * Paginated list of the tenant\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+     * Paginated list of the organization\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
      * @summary List webhooks
      * @param {AdminWebhooksApiAdminWebhooksListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1348,7 +1373,7 @@ export interface AdminWebhooksApiInterface {
     adminWebhooksTest(requestParameters: AdminWebhooksApiAdminWebhooksTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksTestResponse>;
 
     /**
-     * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+     * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
      * @summary Start a webhook tunnel
      * @param {AdminWebhooksApiAdminWebhooksTunnelStartRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1431,6 +1456,13 @@ export interface AdminWebhooksApiAdminWebhooksCreateRequest {
      * @memberof AdminWebhooksApiAdminWebhooksCreate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {AdminWebhooksCreateRequest}
+     * @memberof AdminWebhooksApiAdminWebhooksCreate
+     */
+    readonly adminWebhooksCreateRequest: AdminWebhooksCreateRequest
 }
 
 /**
@@ -1739,6 +1771,13 @@ export interface AdminWebhooksApiPatchAdminWebhooksUpdateRequest {
      * @memberof AdminWebhooksApiPatchAdminWebhooksUpdate
      */
     readonly webhookId: string
+
+    /**
+     * 
+     * @type {PutAdminWebhooksUpdateRequest}
+     * @memberof AdminWebhooksApiPatchAdminWebhooksUpdate
+     */
+    readonly putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest
 }
 
 /**
@@ -1760,6 +1799,13 @@ export interface AdminWebhooksApiPutAdminWebhooksUpdateRequest {
      * @memberof AdminWebhooksApiPutAdminWebhooksUpdate
      */
     readonly webhookId: string
+
+    /**
+     * 
+     * @type {PutAdminWebhooksUpdateRequest}
+     * @memberof AdminWebhooksApiPutAdminWebhooksUpdate
+     */
+    readonly putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest
 }
 
 /**
@@ -1778,7 +1824,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
      * @memberof AdminWebhooksApi
      */
     public adminWebhooksCreate(requestParameters: AdminWebhooksApiAdminWebhooksCreateRequest, options?: RawAxiosRequestConfig) {
-        return AdminWebhooksApiFp(this.configuration).adminWebhooksCreate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminWebhooksApiFp(this.configuration).adminWebhooksCreate(requestParameters.orgId, requestParameters.adminWebhooksCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1854,7 +1900,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * Paginated list of the tenant\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+     * Paginated list of the organization\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
      * @summary List webhooks
      * @param {AdminWebhooksApiAdminWebhooksListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1890,7 +1936,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+     * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
      * @summary Start a webhook tunnel
      * @param {AdminWebhooksApiAdminWebhooksTunnelStartRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1958,7 +2004,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
      * @memberof AdminWebhooksApi
      */
     public patchAdminWebhooksUpdate(requestParameters: AdminWebhooksApiPatchAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminWebhooksApiFp(this.configuration).patchAdminWebhooksUpdate(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(this.axios, this.basePath));
+        return AdminWebhooksApiFp(this.configuration).patchAdminWebhooksUpdate(requestParameters.orgId, requestParameters.webhookId, requestParameters.putAdminWebhooksUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1970,7 +2016,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
      * @memberof AdminWebhooksApi
      */
     public putAdminWebhooksUpdate(requestParameters: AdminWebhooksApiPutAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminWebhooksApiFp(this.configuration).putAdminWebhooksUpdate(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(this.axios, this.basePath));
+        return AdminWebhooksApiFp(this.configuration).putAdminWebhooksUpdate(requestParameters.orgId, requestParameters.webhookId, requestParameters.putAdminWebhooksUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

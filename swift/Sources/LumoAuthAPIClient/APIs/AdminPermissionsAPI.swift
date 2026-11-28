@@ -13,18 +13,19 @@ import AnyCodable
 open class AdminPermissionsAPI {
 
     /**
-     Create a custom permission for the tenant
+     Create a custom permission for the organization
      
      - parameter orgId: (path)  
+     - parameter adminPermissionsCreateRequest: (body)  
      - returns: AdminPermissionsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminPermissionsCreate(orgId: String) async throws -> AdminPermissionsCreateResponse {
-        return try await adminPermissionsCreateWithRequestBuilder(orgId: orgId).execute().body
+    open class func adminPermissionsCreate(orgId: String, adminPermissionsCreateRequest: AdminPermissionsCreateRequest) async throws -> AdminPermissionsCreateResponse {
+        return try await adminPermissionsCreateWithRequestBuilder(orgId: orgId, adminPermissionsCreateRequest: adminPermissionsCreateRequest).execute().body
     }
 
     /**
-     Create a custom permission for the tenant
+     Create a custom permission for the organization
      - POST /orgs/{orgId}/api/v1/admin/permissions
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -33,20 +34,21 @@ open class AdminPermissionsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter adminPermissionsCreateRequest: (body)  
      - returns: RequestBuilder<AdminPermissionsCreateResponse> 
      */
-    open class func adminPermissionsCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminPermissionsCreateResponse> {
+    open class func adminPermissionsCreateWithRequestBuilder(orgId: String, adminPermissionsCreateRequest: AdminPermissionsCreateRequest) -> RequestBuilder<AdminPermissionsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/permissions"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminPermissionsCreateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -155,7 +157,7 @@ open class AdminPermissionsAPI {
     }
 
     /**
-     List all available permissions for the tenant
+     List all available permissions for the organization
      
      - parameter orgId: (path)  
      - returns: AdminPermissionsListResponse
@@ -166,7 +168,7 @@ open class AdminPermissionsAPI {
     }
 
     /**
-     List all available permissions for the tenant
+     List all available permissions for the organization
      - GET /orgs/{orgId}/api/v1/admin/permissions
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -203,11 +205,12 @@ open class AdminPermissionsAPI {
      
      - parameter orgId: (path)  
      - parameter permissionId: (path)  
+     - parameter adminPermissionsUpdateRequest: (body)  
      - returns: AdminPermissionsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminPermissionsUpdate(orgId: String, permissionId: String) async throws -> AdminPermissionsCreateResponse {
-        return try await adminPermissionsUpdateWithRequestBuilder(orgId: orgId, permissionId: permissionId).execute().body
+    open class func adminPermissionsUpdate(orgId: String, permissionId: String, adminPermissionsUpdateRequest: AdminPermissionsUpdateRequest) async throws -> AdminPermissionsCreateResponse {
+        return try await adminPermissionsUpdateWithRequestBuilder(orgId: orgId, permissionId: permissionId, adminPermissionsUpdateRequest: adminPermissionsUpdateRequest).execute().body
     }
 
     /**
@@ -221,9 +224,10 @@ open class AdminPermissionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter permissionId: (path)  
+     - parameter adminPermissionsUpdateRequest: (body)  
      - returns: RequestBuilder<AdminPermissionsCreateResponse> 
      */
-    open class func adminPermissionsUpdateWithRequestBuilder(orgId: String, permissionId: String) -> RequestBuilder<AdminPermissionsCreateResponse> {
+    open class func adminPermissionsUpdateWithRequestBuilder(orgId: String, permissionId: String, adminPermissionsUpdateRequest: AdminPermissionsUpdateRequest) -> RequestBuilder<AdminPermissionsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/permissions/{permissionId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -232,12 +236,12 @@ open class AdminPermissionsAPI {
         let permissionIdPostEscape = permissionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{permissionId}", with: permissionIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminPermissionsUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -300,11 +304,12 @@ open class AdminPermissionsAPI {
      Create a custom OAuth scope
      
      - parameter orgId: (path)  
+     - parameter adminScopesCreateRequest: (body)  
      - returns: AdminScopesCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminScopesCreate(orgId: String) async throws -> AdminScopesCreateResponse {
-        return try await adminScopesCreateWithRequestBuilder(orgId: orgId).execute().body
+    open class func adminScopesCreate(orgId: String, adminScopesCreateRequest: AdminScopesCreateRequest) async throws -> AdminScopesCreateResponse {
+        return try await adminScopesCreateWithRequestBuilder(orgId: orgId, adminScopesCreateRequest: adminScopesCreateRequest).execute().body
     }
 
     /**
@@ -317,20 +322,21 @@ open class AdminPermissionsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter adminScopesCreateRequest: (body)  
      - returns: RequestBuilder<AdminScopesCreateResponse> 
      */
-    open class func adminScopesCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminScopesCreateResponse> {
+    open class func adminScopesCreateWithRequestBuilder(orgId: String, adminScopesCreateRequest: AdminScopesCreateRequest) -> RequestBuilder<AdminScopesCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/scopes"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminScopesCreateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

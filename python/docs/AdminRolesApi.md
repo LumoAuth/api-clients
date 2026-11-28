@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**admin_roles_get**](AdminRolesApi.md#admin_roles_get) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Get a single role by ID or slug
 [**admin_roles_get_permissions**](AdminRolesApi.md#admin_roles_get_permissions) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Get role permissions
 [**admin_roles_get_users**](AdminRolesApi.md#admin_roles_get_users) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users | Get users assigned to a role
-[**admin_roles_list**](AdminRolesApi.md#admin_roles_list) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the tenant
+[**admin_roles_list**](AdminRolesApi.md#admin_roles_list) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the organization
 [**admin_roles_remove_permission**](AdminRolesApi.md#admin_roles_remove_permission) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId} | Remove a permission from a role
 [**admin_roles_remove_user**](AdminRolesApi.md#admin_roles_remove_user) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId} | Remove a user from a role
 [**admin_roles_update_permissions**](AdminRolesApi.md#admin_roles_update_permissions) | **PUT** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Update role permissions (replaces all)
@@ -20,11 +20,11 @@ Method | HTTP request | Description
 
 
 # **admin_roles_add_permissions**
-> MessageResponse admin_roles_add_permissions(org_id, role_id)
+> MessageResponse admin_roles_add_permissions(org_id, role_id, admin_roles_add_permissions_request)
 
 Add permission(s) to a role
 
-Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization's own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 ### Example
 
@@ -33,6 +33,7 @@ Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a lis
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_roles_add_permissions_request import AdminRolesAddPermissionsRequest
 from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -65,10 +66,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminRolesApi(api_client)
     org_id = 'org_id_example' # str | 
     role_id = 'role_id_example' # str | 
+    admin_roles_add_permissions_request = lumoauth_api_client.AdminRolesAddPermissionsRequest() # AdminRolesAddPermissionsRequest | 
 
     try:
         # Add permission(s) to a role
-        api_response = api_instance.admin_roles_add_permissions(org_id, role_id)
+        api_response = api_instance.admin_roles_add_permissions(org_id, role_id, admin_roles_add_permissions_request)
         print("The response of AdminRolesApi->admin_roles_add_permissions:\n")
         pprint(api_response)
     except Exception as e:
@@ -84,6 +86,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **role_id** | **str**|  | 
+ **admin_roles_add_permissions_request** | [**AdminRolesAddPermissionsRequest**](AdminRolesAddPermissionsRequest.md)|  | 
 
 ### Return type
 
@@ -95,7 +98,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -104,13 +107,13 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Added; message reports how many permissions were added |  -  |
 **400** | No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform |  -  |
-**403** | A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
+**403** | A built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
 **404** | Role not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_roles_add_user**
-> MessageResponse admin_roles_add_user(org_id, role_id)
+> MessageResponse admin_roles_add_user(org_id, role_id, admin_roles_add_user_request)
 
 Assign a user to a role
 
@@ -121,6 +124,7 @@ Assign a user to a role
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_roles_add_user_request import AdminRolesAddUserRequest
 from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -153,10 +157,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminRolesApi(api_client)
     org_id = 'org_id_example' # str | 
     role_id = 'role_id_example' # str | 
+    admin_roles_add_user_request = lumoauth_api_client.AdminRolesAddUserRequest() # AdminRolesAddUserRequest | 
 
     try:
         # Assign a user to a role
-        api_response = api_instance.admin_roles_add_user(org_id, role_id)
+        api_response = api_instance.admin_roles_add_user(org_id, role_id, admin_roles_add_user_request)
         print("The response of AdminRolesApi->admin_roles_add_user:\n")
         pprint(api_response)
     except Exception as e:
@@ -172,6 +177,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **role_id** | **str**|  | 
+ **admin_roles_add_user_request** | [**AdminRolesAddUserRequest**](AdminRolesAddUserRequest.md)|  | 
 
 ### Return type
 
@@ -183,7 +189,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -195,11 +201,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_roles_create**
-> AdminRolesCreateResponse admin_roles_create(org_id)
+> AdminRolesCreateResponse admin_roles_create(org_id, admin_roles_create_request)
 
 Create a new role
 
-Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization's own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
 ### Example
 
@@ -208,6 +214,7 @@ Optional `permissions` is a list of permission slugs. Giving it needs `roles.ass
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_roles_create_request import AdminRolesCreateRequest
 from lumoauth_api_client.models.admin_roles_create_response import AdminRolesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -239,10 +246,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminRolesApi(api_client)
     org_id = 'org_id_example' # str | 
+    admin_roles_create_request = lumoauth_api_client.AdminRolesCreateRequest() # AdminRolesCreateRequest | 
 
     try:
         # Create a new role
-        api_response = api_instance.admin_roles_create(org_id)
+        api_response = api_instance.admin_roles_create(org_id, admin_roles_create_request)
         print("The response of AdminRolesApi->admin_roles_create:\n")
         pprint(api_response)
     except Exception as e:
@@ -257,6 +265,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **admin_roles_create_request** | [**AdminRolesCreateRequest**](AdminRolesCreateRequest.md)|  | 
 
 ### Return type
 
@@ -268,7 +277,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -622,7 +631,7 @@ Name | Type | Description  | Notes
 # **admin_roles_list**
 > AdminRolesListResponse admin_roles_list(org_id)
 
-List all roles in the tenant
+List all roles in the organization
 
 ### Example
 
@@ -664,7 +673,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # List all roles in the tenant
+        # List all roles in the organization
         api_response = api_instance.admin_roles_list(org_id)
         print("The response of AdminRolesApi->admin_roles_list:\n")
         pprint(api_response)
@@ -879,11 +888,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_roles_update_permissions**
-> AdminRolesCreateResponse admin_roles_update_permissions(org_id, role_id)
+> AdminRolesCreateResponse admin_roles_update_permissions(org_id, role_id, admin_roles_update_permissions_request)
 
 Update role permissions (replaces all)
 
-Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization's own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 ### Example
 
@@ -893,6 +902,7 @@ Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full lis
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.admin_roles_create_response import AdminRolesCreateResponse
+from lumoauth_api_client.models.admin_roles_update_permissions_request import AdminRolesUpdatePermissionsRequest
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -924,10 +934,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminRolesApi(api_client)
     org_id = 'org_id_example' # str | 
     role_id = 'role_id_example' # str | 
+    admin_roles_update_permissions_request = lumoauth_api_client.AdminRolesUpdatePermissionsRequest() # AdminRolesUpdatePermissionsRequest | 
 
     try:
         # Update role permissions (replaces all)
-        api_response = api_instance.admin_roles_update_permissions(org_id, role_id)
+        api_response = api_instance.admin_roles_update_permissions(org_id, role_id, admin_roles_update_permissions_request)
         print("The response of AdminRolesApi->admin_roles_update_permissions:\n")
         pprint(api_response)
     except Exception as e:
@@ -943,6 +954,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **role_id** | **str**|  | 
+ **admin_roles_update_permissions_request** | [**AdminRolesUpdatePermissionsRequest**](AdminRolesUpdatePermissionsRequest.md)|  | 
 
 ### Return type
 
@@ -954,7 +966,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -963,13 +975,13 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Updated role |  -  |
 **400** | permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform |  -  |
-**403** | A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
+**403** | A new built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
 **404** | Role not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_roles_update**
-> AdminRolesCreateResponse patch_admin_roles_update(org_id, role_id)
+> AdminRolesCreateResponse patch_admin_roles_update(org_id, role_id, put_admin_org_roles_update_request)
 
 Update an existing role
 
@@ -981,6 +993,7 @@ Update an existing role
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.admin_roles_create_response import AdminRolesCreateResponse
+from lumoauth_api_client.models.put_admin_org_roles_update_request import PutAdminOrgRolesUpdateRequest
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1012,10 +1025,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminRolesApi(api_client)
     org_id = 'org_id_example' # str | 
     role_id = 'role_id_example' # str | 
+    put_admin_org_roles_update_request = lumoauth_api_client.PutAdminOrgRolesUpdateRequest() # PutAdminOrgRolesUpdateRequest | 
 
     try:
         # Update an existing role
-        api_response = api_instance.patch_admin_roles_update(org_id, role_id)
+        api_response = api_instance.patch_admin_roles_update(org_id, role_id, put_admin_org_roles_update_request)
         print("The response of AdminRolesApi->patch_admin_roles_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1031,6 +1045,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **role_id** | **str**|  | 
+ **put_admin_org_roles_update_request** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -1042,7 +1057,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1054,7 +1069,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_roles_update**
-> AdminRolesCreateResponse put_admin_roles_update(org_id, role_id)
+> AdminRolesCreateResponse put_admin_roles_update(org_id, role_id, put_admin_org_roles_update_request)
 
 Update an existing role
 
@@ -1066,6 +1081,7 @@ Update an existing role
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.admin_roles_create_response import AdminRolesCreateResponse
+from lumoauth_api_client.models.put_admin_org_roles_update_request import PutAdminOrgRolesUpdateRequest
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1097,10 +1113,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminRolesApi(api_client)
     org_id = 'org_id_example' # str | 
     role_id = 'role_id_example' # str | 
+    put_admin_org_roles_update_request = lumoauth_api_client.PutAdminOrgRolesUpdateRequest() # PutAdminOrgRolesUpdateRequest | 
 
     try:
         # Update an existing role
-        api_response = api_instance.put_admin_roles_update(org_id, role_id)
+        api_response = api_instance.put_admin_roles_update(org_id, role_id, put_admin_org_roles_update_request)
         print("The response of AdminRolesApi->put_admin_roles_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1116,6 +1133,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **role_id** | **str**|  | 
+ **put_admin_org_roles_update_request** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -1127,7 +1145,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -1616,7 +1616,7 @@ class AdminSessionsApi
     /**
      * Operation adminSessionsRevokeAll
      *
-     * Revoke every session in the tenant
+     * Revoke every session in the organization
      *
      * @param  string $orgId orgId (required)
      * @param  \LumoAuth\ApiClient\Model\AdminSessionsRevokeAllRequest $adminSessionsRevokeAllRequest adminSessionsRevokeAllRequest (required)
@@ -1635,7 +1635,7 @@ class AdminSessionsApi
     /**
      * Operation adminSessionsRevokeAllWithHttpInfo
      *
-     * Revoke every session in the tenant
+     * Revoke every session in the organization
      *
      * @param  string $orgId (required)
      * @param  \LumoAuth\ApiClient\Model\AdminSessionsRevokeAllRequest $adminSessionsRevokeAllRequest (required)
@@ -1721,7 +1721,7 @@ class AdminSessionsApi
     /**
      * Operation adminSessionsRevokeAllAsync
      *
-     * Revoke every session in the tenant
+     * Revoke every session in the organization
      *
      * @param  string $orgId (required)
      * @param  \LumoAuth\ApiClient\Model\AdminSessionsRevokeAllRequest $adminSessionsRevokeAllRequest (required)
@@ -1743,7 +1743,7 @@ class AdminSessionsApi
     /**
      * Operation adminSessionsRevokeAllAsyncWithHttpInfo
      *
-     * Revoke every session in the tenant
+     * Revoke every session in the organization
      *
      * @param  string $orgId (required)
      * @param  \LumoAuth\ApiClient\Model\AdminSessionsRevokeAllRequest $adminSessionsRevokeAllRequest (required)
@@ -2189,7 +2189,7 @@ class AdminSessionsApi
     /**
      * Operation adminTokensList
      *
-     * List access tokens
+     * List stored (opaque) access tokens
      *
      * @param  string $orgId orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminTokensList'] to see the possible values for this operation
@@ -2207,7 +2207,7 @@ class AdminSessionsApi
     /**
      * Operation adminTokensListWithHttpInfo
      *
-     * List access tokens
+     * List stored (opaque) access tokens
      *
      * @param  string $orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminTokensList'] to see the possible values for this operation
@@ -2292,7 +2292,7 @@ class AdminSessionsApi
     /**
      * Operation adminTokensListAsync
      *
-     * List access tokens
+     * List stored (opaque) access tokens
      *
      * @param  string $orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminTokensList'] to see the possible values for this operation
@@ -2313,7 +2313,7 @@ class AdminSessionsApi
     /**
      * Operation adminTokensListAsyncWithHttpInfo
      *
-     * List access tokens
+     * List stored (opaque) access tokens
      *
      * @param  string $orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminTokensList'] to see the possible values for this operation

@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -34,8 +34,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserGroupRequest"></param>
         /// <returns>AddUserGroupResponse</returns>
-        AddUserGroupResponse AddUserGroup(string orgId, string userId);
+        AddUserGroupResponse AddUserGroup(string orgId, string userId, AddUserGroupRequest addUserGroupRequest);
 
         /// <summary>
         /// Add a user to a group
@@ -46,39 +47,43 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserGroupRequest"></param>
         /// <returns>ApiResponse of AddUserGroupResponse</returns>
-        ApiResponse<AddUserGroupResponse> AddUserGroupWithHttpInfo(string orgId, string userId);
+        ApiResponse<AddUserGroupResponse> AddUserGroupWithHttpInfo(string orgId, string userId, AddUserGroupRequest addUserGroupRequest);
         /// <summary>
         /// Assign a permission to a user
         /// </summary>
         /// <remarks>
-        /// Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+        /// Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserPermissionRequest"></param>
         /// <returns>AddUserPermissionResponse</returns>
-        AddUserPermissionResponse AddUserPermission(string orgId, string userId);
+        AddUserPermissionResponse AddUserPermission(string orgId, string userId, AddUserPermissionRequest addUserPermissionRequest);
 
         /// <summary>
         /// Assign a permission to a user
         /// </summary>
         /// <remarks>
-        /// Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+        /// Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserPermissionRequest"></param>
         /// <returns>ApiResponse of AddUserPermissionResponse</returns>
-        ApiResponse<AddUserPermissionResponse> AddUserPermissionWithHttpInfo(string orgId, string userId);
+        ApiResponse<AddUserPermissionResponse> AddUserPermissionWithHttpInfo(string orgId, string userId, AddUserPermissionRequest addUserPermissionRequest);
         /// <summary>
         /// Assign a role to a user
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserRoleRequest"></param>
         /// <returns>AddUserRoleResponse</returns>
-        AddUserRoleResponse AddUserRole(string orgId, string userId);
+        AddUserRoleResponse AddUserRole(string orgId, string userId, AddUserRoleRequest addUserRoleRequest);
 
         /// <summary>
         /// Assign a role to a user
@@ -89,8 +94,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserRoleRequest"></param>
         /// <returns>ApiResponse of AddUserRoleResponse</returns>
-        ApiResponse<AddUserRoleResponse> AddUserRoleWithHttpInfo(string orgId, string userId);
+        ApiResponse<AddUserRoleResponse> AddUserRoleWithHttpInfo(string orgId, string userId, AddUserRoleRequest addUserRoleRequest);
         /// <summary>
         /// Relink legacy SAML users to an IdP
         /// </summary>
@@ -258,8 +264,9 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createUserRequest"></param>
         /// <returns>CreateUserResponse</returns>
-        CreateUserResponse CreateUser(string orgId);
+        CreateUserResponse CreateUser(string orgId, CreateUserRequest createUserRequest);
 
         /// <summary>
         /// Create a user
@@ -269,8 +276,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createUserRequest"></param>
         /// <returns>ApiResponse of CreateUserResponse</returns>
-        ApiResponse<CreateUserResponse> CreateUserWithHttpInfo(string orgId);
+        ApiResponse<CreateUserResponse> CreateUserWithHttpInfo(string orgId, CreateUserRequest createUserRequest);
         /// <summary>
         /// Delete a user
         /// </summary>
@@ -442,8 +450,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <returns>UpdateUserResponse</returns>
-        UpdateUserResponse PatchUser(string orgId, string userId);
+        UpdateUserResponse PatchUser(string orgId, string userId, UpdateUserRequest updateUserRequest);
 
         /// <summary>
         /// Update a user
@@ -454,8 +463,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <returns>ApiResponse of UpdateUserResponse</returns>
-        ApiResponse<UpdateUserResponse> PatchUserWithHttpInfo(string orgId, string userId);
+        ApiResponse<UpdateUserResponse> PatchUserWithHttpInfo(string orgId, string userId, UpdateUserRequest updateUserRequest);
         /// <summary>
         /// Remove a user from a group
         /// </summary>
@@ -576,8 +586,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <returns>SetUserPasswordPostResponse</returns>
-        SetUserPasswordPostResponse SetUserPassword(string orgId, string userId);
+        SetUserPasswordPostResponse SetUserPassword(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest);
 
         /// <summary>
         /// Set a user&#39;s password
@@ -588,8 +599,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <returns>ApiResponse of SetUserPasswordPostResponse</returns>
-        ApiResponse<SetUserPasswordPostResponse> SetUserPasswordWithHttpInfo(string orgId, string userId);
+        ApiResponse<SetUserPasswordPostResponse> SetUserPasswordWithHttpInfo(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest);
         /// <summary>
         /// Set a user&#39;s password
         /// </summary>
@@ -599,8 +611,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <returns>SetUserPasswordPostResponse</returns>
-        SetUserPasswordPostResponse SetUserPasswordPost(string orgId, string userId);
+        SetUserPasswordPostResponse SetUserPasswordPost(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest);
 
         /// <summary>
         /// Set a user&#39;s password
@@ -611,8 +624,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <returns>ApiResponse of SetUserPasswordPostResponse</returns>
-        ApiResponse<SetUserPasswordPostResponse> SetUserPasswordPostWithHttpInfo(string orgId, string userId);
+        ApiResponse<SetUserPasswordPostResponse> SetUserPasswordPostWithHttpInfo(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest);
         /// <summary>
         /// Send a password reset email
         /// </summary>
@@ -662,8 +676,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <returns>UpdateUserResponse</returns>
-        UpdateUserResponse UpdateUser(string orgId, string userId);
+        UpdateUserResponse UpdateUser(string orgId, string userId, UpdateUserRequest updateUserRequest);
 
         /// <summary>
         /// Update a user
@@ -674,16 +689,18 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <returns>ApiResponse of UpdateUserResponse</returns>
-        ApiResponse<UpdateUserResponse> UpdateUserWithHttpInfo(string orgId, string userId);
+        ApiResponse<UpdateUserResponse> UpdateUserWithHttpInfo(string orgId, string userId, UpdateUserRequest updateUserRequest);
         /// <summary>
         /// Replace a user&#39;s groups
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserGroupsRequest"></param>
         /// <returns>UpdateUserGroupsResponse</returns>
-        UpdateUserGroupsResponse UpdateUserGroups(string orgId, string userId);
+        UpdateUserGroupsResponse UpdateUserGroups(string orgId, string userId, UpdateUserGroupsRequest updateUserGroupsRequest);
 
         /// <summary>
         /// Replace a user&#39;s groups
@@ -694,16 +711,18 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserGroupsRequest"></param>
         /// <returns>ApiResponse of UpdateUserGroupsResponse</returns>
-        ApiResponse<UpdateUserGroupsResponse> UpdateUserGroupsWithHttpInfo(string orgId, string userId);
+        ApiResponse<UpdateUserGroupsResponse> UpdateUserGroupsWithHttpInfo(string orgId, string userId, UpdateUserGroupsRequest updateUserGroupsRequest);
         /// <summary>
         /// Replace a user&#39;s roles
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <returns>UpdateUserRolesResponse</returns>
-        UpdateUserRolesResponse UpdateUserRoles(string orgId, string userId);
+        UpdateUserRolesResponse UpdateUserRoles(string orgId, string userId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest);
 
         /// <summary>
         /// Replace a user&#39;s roles
@@ -714,8 +733,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <returns>ApiResponse of UpdateUserRolesResponse</returns>
-        ApiResponse<UpdateUserRolesResponse> UpdateUserRolesWithHttpInfo(string orgId, string userId);
+        ApiResponse<UpdateUserRolesResponse> UpdateUserRolesWithHttpInfo(string orgId, string userId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest);
         #endregion Synchronous Operations
     }
 
@@ -734,9 +754,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserGroupRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AddUserGroupResponse</returns>
-        System.Threading.Tasks.Task<AddUserGroupResponse> AddUserGroupAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AddUserGroupResponse> AddUserGroupAsync(string orgId, string userId, AddUserGroupRequest addUserGroupRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add a user to a group
@@ -747,34 +768,37 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserGroupRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AddUserGroupResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AddUserGroupResponse>> AddUserGroupWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AddUserGroupResponse>> AddUserGroupWithHttpInfoAsync(string orgId, string userId, AddUserGroupRequest addUserGroupRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Assign a permission to a user
         /// </summary>
         /// <remarks>
-        /// Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+        /// Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserPermissionRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AddUserPermissionResponse</returns>
-        System.Threading.Tasks.Task<AddUserPermissionResponse> AddUserPermissionAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AddUserPermissionResponse> AddUserPermissionAsync(string orgId, string userId, AddUserPermissionRequest addUserPermissionRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Assign a permission to a user
         /// </summary>
         /// <remarks>
-        /// Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+        /// Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserPermissionRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AddUserPermissionResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AddUserPermissionResponse>> AddUserPermissionWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AddUserPermissionResponse>> AddUserPermissionWithHttpInfoAsync(string orgId, string userId, AddUserPermissionRequest addUserPermissionRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Assign a role to a user
         /// </summary>
@@ -784,9 +808,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserRoleRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AddUserRoleResponse</returns>
-        System.Threading.Tasks.Task<AddUserRoleResponse> AddUserRoleAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AddUserRoleResponse> AddUserRoleAsync(string orgId, string userId, AddUserRoleRequest addUserRoleRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Assign a role to a user
@@ -797,9 +822,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserRoleRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AddUserRoleResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AddUserRoleResponse>> AddUserRoleWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AddUserRoleResponse>> AddUserRoleWithHttpInfoAsync(string orgId, string userId, AddUserRoleRequest addUserRoleRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Relink legacy SAML users to an IdP
         /// </summary>
@@ -987,9 +1013,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createUserRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CreateUserResponse</returns>
-        System.Threading.Tasks.Task<CreateUserResponse> CreateUserAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<CreateUserResponse> CreateUserAsync(string orgId, CreateUserRequest createUserRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a user
@@ -999,9 +1026,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createUserRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CreateUserResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CreateUserResponse>> CreateUserWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<CreateUserResponse>> CreateUserWithHttpInfoAsync(string orgId, CreateUserRequest createUserRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete a user
         /// </summary>
@@ -1208,9 +1236,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of UpdateUserResponse</returns>
-        System.Threading.Tasks.Task<UpdateUserResponse> PatchUserAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<UpdateUserResponse> PatchUserAsync(string orgId, string userId, UpdateUserRequest updateUserRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a user
@@ -1221,9 +1250,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (UpdateUserResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<UpdateUserResponse>> PatchUserWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<UpdateUserResponse>> PatchUserWithHttpInfoAsync(string orgId, string userId, UpdateUserRequest updateUserRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Remove a user from a group
         /// </summary>
@@ -1366,9 +1396,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SetUserPasswordPostResponse</returns>
-        System.Threading.Tasks.Task<SetUserPasswordPostResponse> SetUserPasswordAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<SetUserPasswordPostResponse> SetUserPasswordAsync(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Set a user&#39;s password
@@ -1379,9 +1410,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SetUserPasswordPostResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<SetUserPasswordPostResponse>> SetUserPasswordWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<SetUserPasswordPostResponse>> SetUserPasswordWithHttpInfoAsync(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Set a user&#39;s password
         /// </summary>
@@ -1391,9 +1423,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SetUserPasswordPostResponse</returns>
-        System.Threading.Tasks.Task<SetUserPasswordPostResponse> SetUserPasswordPostAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<SetUserPasswordPostResponse> SetUserPasswordPostAsync(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Set a user&#39;s password
@@ -1404,9 +1437,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SetUserPasswordPostResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<SetUserPasswordPostResponse>> SetUserPasswordPostWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<SetUserPasswordPostResponse>> SetUserPasswordPostWithHttpInfoAsync(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Send a password reset email
         /// </summary>
@@ -1466,9 +1500,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of UpdateUserResponse</returns>
-        System.Threading.Tasks.Task<UpdateUserResponse> UpdateUserAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<UpdateUserResponse> UpdateUserAsync(string orgId, string userId, UpdateUserRequest updateUserRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a user
@@ -1479,9 +1514,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (UpdateUserResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<UpdateUserResponse>> UpdateUserWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<UpdateUserResponse>> UpdateUserWithHttpInfoAsync(string orgId, string userId, UpdateUserRequest updateUserRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Replace a user&#39;s groups
         /// </summary>
@@ -1491,9 +1527,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserGroupsRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of UpdateUserGroupsResponse</returns>
-        System.Threading.Tasks.Task<UpdateUserGroupsResponse> UpdateUserGroupsAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<UpdateUserGroupsResponse> UpdateUserGroupsAsync(string orgId, string userId, UpdateUserGroupsRequest updateUserGroupsRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace a user&#39;s groups
@@ -1504,9 +1541,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserGroupsRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (UpdateUserGroupsResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<UpdateUserGroupsResponse>> UpdateUserGroupsWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<UpdateUserGroupsResponse>> UpdateUserGroupsWithHttpInfoAsync(string orgId, string userId, UpdateUserGroupsRequest updateUserGroupsRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Replace a user&#39;s roles
         /// </summary>
@@ -1516,9 +1554,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of UpdateUserRolesResponse</returns>
-        System.Threading.Tasks.Task<UpdateUserRolesResponse> UpdateUserRolesAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<UpdateUserRolesResponse> UpdateUserRolesAsync(string orgId, string userId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace a user&#39;s roles
@@ -1529,9 +1568,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (UpdateUserRolesResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<UpdateUserRolesResponse>> UpdateUserRolesWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<UpdateUserRolesResponse>> UpdateUserRolesWithHttpInfoAsync(string orgId, string userId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -1751,10 +1791,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserGroupRequest"></param>
         /// <returns>AddUserGroupResponse</returns>
-        public AddUserGroupResponse AddUserGroup(string orgId, string userId)
+        public AddUserGroupResponse AddUserGroup(string orgId, string userId, AddUserGroupRequest addUserGroupRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AddUserGroupResponse> localVarResponse = AddUserGroupWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<AddUserGroupResponse> localVarResponse = AddUserGroupWithHttpInfo(orgId, userId, addUserGroupRequest);
             return localVarResponse.Data;
         }
 
@@ -1764,8 +1805,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserGroupRequest"></param>
         /// <returns>ApiResponse of AddUserGroupResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AddUserGroupResponse> AddUserGroupWithHttpInfo(string orgId, string userId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AddUserGroupResponse> AddUserGroupWithHttpInfo(string orgId, string userId, AddUserGroupRequest addUserGroupRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1775,9 +1817,14 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->AddUserGroup");
 
+            // verify the required parameter 'addUserGroupRequest' is set
+            if (addUserGroupRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'addUserGroupRequest' when calling AdminUsersApi->AddUserGroup");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1793,6 +1840,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = addUserGroupRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1824,11 +1872,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserGroupRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AddUserGroupResponse</returns>
-        public async System.Threading.Tasks.Task<AddUserGroupResponse> AddUserGroupAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AddUserGroupResponse> AddUserGroupAsync(string orgId, string userId, AddUserGroupRequest addUserGroupRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AddUserGroupResponse> localVarResponse = await AddUserGroupWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AddUserGroupResponse> localVarResponse = await AddUserGroupWithHttpInfoAsync(orgId, userId, addUserGroupRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1838,9 +1887,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserGroupRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AddUserGroupResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AddUserGroupResponse>> AddUserGroupWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AddUserGroupResponse>> AddUserGroupWithHttpInfoAsync(string orgId, string userId, AddUserGroupRequest addUserGroupRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1850,10 +1900,15 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->AddUserGroup");
 
+            // verify the required parameter 'addUserGroupRequest' is set
+            if (addUserGroupRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'addUserGroupRequest' when calling AdminUsersApi->AddUserGroup");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1870,6 +1925,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = addUserGroupRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1897,26 +1953,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Assign a permission to a user Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+        /// Assign a permission to a user Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserPermissionRequest"></param>
         /// <returns>AddUserPermissionResponse</returns>
-        public AddUserPermissionResponse AddUserPermission(string orgId, string userId)
+        public AddUserPermissionResponse AddUserPermission(string orgId, string userId, AddUserPermissionRequest addUserPermissionRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AddUserPermissionResponse> localVarResponse = AddUserPermissionWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<AddUserPermissionResponse> localVarResponse = AddUserPermissionWithHttpInfo(orgId, userId, addUserPermissionRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Assign a permission to a user Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+        /// Assign a permission to a user Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserPermissionRequest"></param>
         /// <returns>ApiResponse of AddUserPermissionResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AddUserPermissionResponse> AddUserPermissionWithHttpInfo(string orgId, string userId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AddUserPermissionResponse> AddUserPermissionWithHttpInfo(string orgId, string userId, AddUserPermissionRequest addUserPermissionRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1926,9 +1984,14 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->AddUserPermission");
 
+            // verify the required parameter 'addUserPermissionRequest' is set
+            if (addUserPermissionRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'addUserPermissionRequest' when calling AdminUsersApi->AddUserPermission");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1944,6 +2007,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = addUserPermissionRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1970,28 +2034,30 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Assign a permission to a user Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+        /// Assign a permission to a user Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserPermissionRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AddUserPermissionResponse</returns>
-        public async System.Threading.Tasks.Task<AddUserPermissionResponse> AddUserPermissionAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AddUserPermissionResponse> AddUserPermissionAsync(string orgId, string userId, AddUserPermissionRequest addUserPermissionRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AddUserPermissionResponse> localVarResponse = await AddUserPermissionWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AddUserPermissionResponse> localVarResponse = await AddUserPermissionWithHttpInfoAsync(orgId, userId, addUserPermissionRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Assign a permission to a user Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+        /// Assign a permission to a user Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserPermissionRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AddUserPermissionResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AddUserPermissionResponse>> AddUserPermissionWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AddUserPermissionResponse>> AddUserPermissionWithHttpInfoAsync(string orgId, string userId, AddUserPermissionRequest addUserPermissionRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2001,10 +2067,15 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->AddUserPermission");
 
+            // verify the required parameter 'addUserPermissionRequest' is set
+            if (addUserPermissionRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'addUserPermissionRequest' when calling AdminUsersApi->AddUserPermission");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2021,6 +2092,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = addUserPermissionRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2053,10 +2125,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserRoleRequest"></param>
         /// <returns>AddUserRoleResponse</returns>
-        public AddUserRoleResponse AddUserRole(string orgId, string userId)
+        public AddUserRoleResponse AddUserRole(string orgId, string userId, AddUserRoleRequest addUserRoleRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AddUserRoleResponse> localVarResponse = AddUserRoleWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<AddUserRoleResponse> localVarResponse = AddUserRoleWithHttpInfo(orgId, userId, addUserRoleRequest);
             return localVarResponse.Data;
         }
 
@@ -2066,8 +2139,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserRoleRequest"></param>
         /// <returns>ApiResponse of AddUserRoleResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AddUserRoleResponse> AddUserRoleWithHttpInfo(string orgId, string userId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AddUserRoleResponse> AddUserRoleWithHttpInfo(string orgId, string userId, AddUserRoleRequest addUserRoleRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2077,9 +2151,14 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->AddUserRole");
 
+            // verify the required parameter 'addUserRoleRequest' is set
+            if (addUserRoleRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'addUserRoleRequest' when calling AdminUsersApi->AddUserRole");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2095,6 +2174,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = addUserRoleRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2126,11 +2206,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserRoleRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AddUserRoleResponse</returns>
-        public async System.Threading.Tasks.Task<AddUserRoleResponse> AddUserRoleAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AddUserRoleResponse> AddUserRoleAsync(string orgId, string userId, AddUserRoleRequest addUserRoleRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AddUserRoleResponse> localVarResponse = await AddUserRoleWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AddUserRoleResponse> localVarResponse = await AddUserRoleWithHttpInfoAsync(orgId, userId, addUserRoleRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2140,9 +2221,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="addUserRoleRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AddUserRoleResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AddUserRoleResponse>> AddUserRoleWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AddUserRoleResponse>> AddUserRoleWithHttpInfoAsync(string orgId, string userId, AddUserRoleRequest addUserRoleRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2152,10 +2234,15 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->AddUserRole");
 
+            // verify the required parameter 'addUserRoleRequest' is set
+            if (addUserRoleRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'addUserRoleRequest' when calling AdminUsersApi->AddUserRole");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2172,6 +2259,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = addUserRoleRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3290,10 +3378,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createUserRequest"></param>
         /// <returns>CreateUserResponse</returns>
-        public CreateUserResponse CreateUser(string orgId)
+        public CreateUserResponse CreateUser(string orgId, CreateUserRequest createUserRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CreateUserResponse> localVarResponse = CreateUserWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<CreateUserResponse> localVarResponse = CreateUserWithHttpInfo(orgId, createUserRequest);
             return localVarResponse.Data;
         }
 
@@ -3302,16 +3391,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createUserRequest"></param>
         /// <returns>ApiResponse of CreateUserResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<CreateUserResponse> CreateUserWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<CreateUserResponse> CreateUserWithHttpInfo(string orgId, CreateUserRequest createUserRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminUsersApi->CreateUser");
 
+            // verify the required parameter 'createUserRequest' is set
+            if (createUserRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'createUserRequest' when calling AdminUsersApi->CreateUser");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3326,6 +3421,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = createUserRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3356,11 +3452,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createUserRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CreateUserResponse</returns>
-        public async System.Threading.Tasks.Task<CreateUserResponse> CreateUserAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<CreateUserResponse> CreateUserAsync(string orgId, CreateUserRequest createUserRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<CreateUserResponse> localVarResponse = await CreateUserWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<CreateUserResponse> localVarResponse = await CreateUserWithHttpInfoAsync(orgId, createUserRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -3369,18 +3466,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="createUserRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CreateUserResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CreateUserResponse>> CreateUserWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CreateUserResponse>> CreateUserWithHttpInfoAsync(string orgId, CreateUserRequest createUserRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminUsersApi->CreateUser");
 
+            // verify the required parameter 'createUserRequest' is set
+            if (createUserRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'createUserRequest' when calling AdminUsersApi->CreateUser");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3396,6 +3499,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = createUserRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4615,10 +4719,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <returns>UpdateUserResponse</returns>
-        public UpdateUserResponse PatchUser(string orgId, string userId)
+        public UpdateUserResponse PatchUser(string orgId, string userId, UpdateUserRequest updateUserRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse> localVarResponse = PatchUserWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse> localVarResponse = PatchUserWithHttpInfo(orgId, userId, updateUserRequest);
             return localVarResponse.Data;
         }
 
@@ -4628,8 +4733,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <returns>ApiResponse of UpdateUserResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse> PatchUserWithHttpInfo(string orgId, string userId)
+        public LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse> PatchUserWithHttpInfo(string orgId, string userId, UpdateUserRequest updateUserRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -4639,9 +4745,14 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->PatchUser");
 
+            // verify the required parameter 'updateUserRequest' is set
+            if (updateUserRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'updateUserRequest' when calling AdminUsersApi->PatchUser");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4657,6 +4768,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = updateUserRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4688,11 +4800,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of UpdateUserResponse</returns>
-        public async System.Threading.Tasks.Task<UpdateUserResponse> PatchUserAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<UpdateUserResponse> PatchUserAsync(string orgId, string userId, UpdateUserRequest updateUserRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse> localVarResponse = await PatchUserWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse> localVarResponse = await PatchUserWithHttpInfoAsync(orgId, userId, updateUserRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -4702,9 +4815,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (UpdateUserResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse>> PatchUserWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse>> PatchUserWithHttpInfoAsync(string orgId, string userId, UpdateUserRequest updateUserRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -4714,10 +4828,15 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->PatchUser");
 
+            // verify the required parameter 'updateUserRequest' is set
+            if (updateUserRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'updateUserRequest' when calling AdminUsersApi->PatchUser");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4734,6 +4853,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = updateUserRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5563,10 +5683,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <returns>SetUserPasswordPostResponse</returns>
-        public SetUserPasswordPostResponse SetUserPassword(string orgId, string userId)
+        public SetUserPasswordPostResponse SetUserPassword(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse> localVarResponse = SetUserPasswordWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse> localVarResponse = SetUserPasswordWithHttpInfo(orgId, userId, setUserPasswordPostRequest);
             return localVarResponse.Data;
         }
 
@@ -5576,8 +5697,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <returns>ApiResponse of SetUserPasswordPostResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse> SetUserPasswordWithHttpInfo(string orgId, string userId)
+        public LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse> SetUserPasswordWithHttpInfo(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -5587,9 +5709,14 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->SetUserPassword");
 
+            // verify the required parameter 'setUserPasswordPostRequest' is set
+            if (setUserPasswordPostRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'setUserPasswordPostRequest' when calling AdminUsersApi->SetUserPassword");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5605,6 +5732,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = setUserPasswordPostRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5636,11 +5764,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SetUserPasswordPostResponse</returns>
-        public async System.Threading.Tasks.Task<SetUserPasswordPostResponse> SetUserPasswordAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<SetUserPasswordPostResponse> SetUserPasswordAsync(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse> localVarResponse = await SetUserPasswordWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse> localVarResponse = await SetUserPasswordWithHttpInfoAsync(orgId, userId, setUserPasswordPostRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -5650,9 +5779,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SetUserPasswordPostResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse>> SetUserPasswordWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse>> SetUserPasswordWithHttpInfoAsync(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -5662,10 +5792,15 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->SetUserPassword");
 
+            // verify the required parameter 'setUserPasswordPostRequest' is set
+            if (setUserPasswordPostRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'setUserPasswordPostRequest' when calling AdminUsersApi->SetUserPassword");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5682,6 +5817,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = setUserPasswordPostRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5714,10 +5850,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <returns>SetUserPasswordPostResponse</returns>
-        public SetUserPasswordPostResponse SetUserPasswordPost(string orgId, string userId)
+        public SetUserPasswordPostResponse SetUserPasswordPost(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse> localVarResponse = SetUserPasswordPostWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse> localVarResponse = SetUserPasswordPostWithHttpInfo(orgId, userId, setUserPasswordPostRequest);
             return localVarResponse.Data;
         }
 
@@ -5727,8 +5864,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <returns>ApiResponse of SetUserPasswordPostResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse> SetUserPasswordPostWithHttpInfo(string orgId, string userId)
+        public LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse> SetUserPasswordPostWithHttpInfo(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -5738,9 +5876,14 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->SetUserPasswordPost");
 
+            // verify the required parameter 'setUserPasswordPostRequest' is set
+            if (setUserPasswordPostRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'setUserPasswordPostRequest' when calling AdminUsersApi->SetUserPasswordPost");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5756,6 +5899,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = setUserPasswordPostRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5787,11 +5931,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SetUserPasswordPostResponse</returns>
-        public async System.Threading.Tasks.Task<SetUserPasswordPostResponse> SetUserPasswordPostAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<SetUserPasswordPostResponse> SetUserPasswordPostAsync(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse> localVarResponse = await SetUserPasswordPostWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse> localVarResponse = await SetUserPasswordPostWithHttpInfoAsync(orgId, userId, setUserPasswordPostRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -5801,9 +5946,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="setUserPasswordPostRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SetUserPasswordPostResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse>> SetUserPasswordPostWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SetUserPasswordPostResponse>> SetUserPasswordPostWithHttpInfoAsync(string orgId, string userId, SetUserPasswordPostRequest setUserPasswordPostRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -5813,10 +5959,15 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->SetUserPasswordPost");
 
+            // verify the required parameter 'setUserPasswordPostRequest' is set
+            if (setUserPasswordPostRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'setUserPasswordPostRequest' when calling AdminUsersApi->SetUserPasswordPost");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5833,6 +5984,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = setUserPasswordPostRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -6167,10 +6319,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <returns>UpdateUserResponse</returns>
-        public UpdateUserResponse UpdateUser(string orgId, string userId)
+        public UpdateUserResponse UpdateUser(string orgId, string userId, UpdateUserRequest updateUserRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse> localVarResponse = UpdateUserWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse> localVarResponse = UpdateUserWithHttpInfo(orgId, userId, updateUserRequest);
             return localVarResponse.Data;
         }
 
@@ -6180,8 +6333,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <returns>ApiResponse of UpdateUserResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse> UpdateUserWithHttpInfo(string orgId, string userId)
+        public LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse> UpdateUserWithHttpInfo(string orgId, string userId, UpdateUserRequest updateUserRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -6191,9 +6345,14 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->UpdateUser");
 
+            // verify the required parameter 'updateUserRequest' is set
+            if (updateUserRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'updateUserRequest' when calling AdminUsersApi->UpdateUser");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -6209,6 +6368,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = updateUserRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -6240,11 +6400,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of UpdateUserResponse</returns>
-        public async System.Threading.Tasks.Task<UpdateUserResponse> UpdateUserAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<UpdateUserResponse> UpdateUserAsync(string orgId, string userId, UpdateUserRequest updateUserRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse> localVarResponse = await UpdateUserWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse> localVarResponse = await UpdateUserWithHttpInfoAsync(orgId, userId, updateUserRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -6254,9 +6415,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserRequest">Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (UpdateUserResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse>> UpdateUserWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UpdateUserResponse>> UpdateUserWithHttpInfoAsync(string orgId, string userId, UpdateUserRequest updateUserRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -6266,10 +6428,15 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->UpdateUser");
 
+            // verify the required parameter 'updateUserRequest' is set
+            if (updateUserRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'updateUserRequest' when calling AdminUsersApi->UpdateUser");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -6286,6 +6453,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = updateUserRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -6318,10 +6486,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserGroupsRequest"></param>
         /// <returns>UpdateUserGroupsResponse</returns>
-        public UpdateUserGroupsResponse UpdateUserGroups(string orgId, string userId)
+        public UpdateUserGroupsResponse UpdateUserGroups(string orgId, string userId, UpdateUserGroupsRequest updateUserGroupsRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserGroupsResponse> localVarResponse = UpdateUserGroupsWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserGroupsResponse> localVarResponse = UpdateUserGroupsWithHttpInfo(orgId, userId, updateUserGroupsRequest);
             return localVarResponse.Data;
         }
 
@@ -6331,8 +6500,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserGroupsRequest"></param>
         /// <returns>ApiResponse of UpdateUserGroupsResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<UpdateUserGroupsResponse> UpdateUserGroupsWithHttpInfo(string orgId, string userId)
+        public LumoAuth.ApiClient.Client.ApiResponse<UpdateUserGroupsResponse> UpdateUserGroupsWithHttpInfo(string orgId, string userId, UpdateUserGroupsRequest updateUserGroupsRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -6342,9 +6512,14 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->UpdateUserGroups");
 
+            // verify the required parameter 'updateUserGroupsRequest' is set
+            if (updateUserGroupsRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'updateUserGroupsRequest' when calling AdminUsersApi->UpdateUserGroups");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -6360,6 +6535,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = updateUserGroupsRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -6391,11 +6567,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserGroupsRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of UpdateUserGroupsResponse</returns>
-        public async System.Threading.Tasks.Task<UpdateUserGroupsResponse> UpdateUserGroupsAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<UpdateUserGroupsResponse> UpdateUserGroupsAsync(string orgId, string userId, UpdateUserGroupsRequest updateUserGroupsRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserGroupsResponse> localVarResponse = await UpdateUserGroupsWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserGroupsResponse> localVarResponse = await UpdateUserGroupsWithHttpInfoAsync(orgId, userId, updateUserGroupsRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -6405,9 +6582,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="updateUserGroupsRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (UpdateUserGroupsResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UpdateUserGroupsResponse>> UpdateUserGroupsWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UpdateUserGroupsResponse>> UpdateUserGroupsWithHttpInfoAsync(string orgId, string userId, UpdateUserGroupsRequest updateUserGroupsRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -6417,10 +6595,15 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->UpdateUserGroups");
 
+            // verify the required parameter 'updateUserGroupsRequest' is set
+            if (updateUserGroupsRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'updateUserGroupsRequest' when calling AdminUsersApi->UpdateUserGroups");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -6437,6 +6620,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = updateUserGroupsRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -6469,10 +6653,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <returns>UpdateUserRolesResponse</returns>
-        public UpdateUserRolesResponse UpdateUserRoles(string orgId, string userId)
+        public UpdateUserRolesResponse UpdateUserRoles(string orgId, string userId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserRolesResponse> localVarResponse = UpdateUserRolesWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserRolesResponse> localVarResponse = UpdateUserRolesWithHttpInfo(orgId, userId, adminGroupsUpdateRolesRequest);
             return localVarResponse.Data;
         }
 
@@ -6482,8 +6667,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <returns>ApiResponse of UpdateUserRolesResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<UpdateUserRolesResponse> UpdateUserRolesWithHttpInfo(string orgId, string userId)
+        public LumoAuth.ApiClient.Client.ApiResponse<UpdateUserRolesResponse> UpdateUserRolesWithHttpInfo(string orgId, string userId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -6493,9 +6679,14 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->UpdateUserRoles");
 
+            // verify the required parameter 'adminGroupsUpdateRolesRequest' is set
+            if (adminGroupsUpdateRolesRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminGroupsUpdateRolesRequest' when calling AdminUsersApi->UpdateUserRoles");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -6511,6 +6702,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = adminGroupsUpdateRolesRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -6542,11 +6734,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of UpdateUserRolesResponse</returns>
-        public async System.Threading.Tasks.Task<UpdateUserRolesResponse> UpdateUserRolesAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<UpdateUserRolesResponse> UpdateUserRolesAsync(string orgId, string userId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserRolesResponse> localVarResponse = await UpdateUserRolesWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateUserRolesResponse> localVarResponse = await UpdateUserRolesWithHttpInfoAsync(orgId, userId, adminGroupsUpdateRolesRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -6556,9 +6749,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (UpdateUserRolesResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UpdateUserRolesResponse>> UpdateUserRolesWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UpdateUserRolesResponse>> UpdateUserRolesWithHttpInfoAsync(string orgId, string userId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -6568,10 +6762,15 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminUsersApi->UpdateUserRoles");
 
+            // verify the required parameter 'adminGroupsUpdateRolesRequest' is set
+            if (adminGroupsUpdateRolesRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminGroupsUpdateRolesRequest' when calling AdminUsersApi->UpdateUserRoles");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -6588,6 +6787,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = adminGroupsUpdateRolesRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

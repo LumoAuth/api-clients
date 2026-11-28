@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -42,6 +42,9 @@ module LumoAuthApiClient
     attr_accessor :target_name
 
     attr_accessor :ip_address
+
+    # W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none
+    attr_accessor :trace_id
 
     # Detailed responses only
     attr_accessor :event_time
@@ -102,6 +105,7 @@ module LumoAuthApiClient
         :'target_id' => :'targetId',
         :'target_name' => :'targetName',
         :'ip_address' => :'ipAddress',
+        :'trace_id' => :'traceId',
         :'event_time' => :'eventTime',
         :'duration_ms' => :'durationMs',
         :'initiated_by' => :'initiatedBy',
@@ -146,6 +150,7 @@ module LumoAuthApiClient
         :'target_id' => :'String',
         :'target_name' => :'String',
         :'ip_address' => :'String',
+        :'trace_id' => :'String',
         :'event_time' => :'Time',
         :'duration_ms' => :'Integer',
         :'initiated_by' => :'String',
@@ -178,6 +183,7 @@ module LumoAuthApiClient
         :'target_id',
         :'target_name',
         :'ip_address',
+        :'trace_id',
         :'event_time',
         :'duration_ms',
         :'initiated_by',
@@ -269,6 +275,10 @@ module LumoAuthApiClient
 
       if attributes.key?(:'ip_address')
         self.ip_address = attributes[:'ip_address']
+      end
+
+      if attributes.key?(:'trace_id')
+        self.trace_id = attributes[:'trace_id']
       end
 
       if attributes.key?(:'event_time')
@@ -402,6 +412,7 @@ module LumoAuthApiClient
           target_id == o.target_id &&
           target_name == o.target_name &&
           ip_address == o.ip_address &&
+          trace_id == o.trace_id &&
           event_time == o.event_time &&
           duration_ms == o.duration_ms &&
           initiated_by == o.initiated_by &&
@@ -427,7 +438,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, created_at, event_type, action, severity, message, actor_id, actor_name, actor_type, auth_method, target_type, target_id, target_name, ip_address, event_time, duration_ms, initiated_by, client_id, user_agent, geo_location, session_id, request_id, status, status_reason, old_value, new_value, changes, context].hash
+      [id, created_at, event_type, action, severity, message, actor_id, actor_name, actor_type, auth_method, target_type, target_id, target_name, ip_address, trace_id, event_time, duration_ms, initiated_by, client_id, user_agent, geo_location, session_id, request_id, status, status_reason, old_value, new_value, changes, context].hash
     end
 
     # Builds the object from hash

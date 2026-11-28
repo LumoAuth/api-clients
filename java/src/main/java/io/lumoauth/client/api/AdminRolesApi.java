@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -27,12 +27,17 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminRolesAddPermissionsRequest;
+import io.lumoauth.client.model.AdminRolesAddUserRequest;
+import io.lumoauth.client.model.AdminRolesCreateRequest;
 import io.lumoauth.client.model.AdminRolesCreateResponse;
 import io.lumoauth.client.model.AdminRolesGetPermissionsResponse;
 import io.lumoauth.client.model.AdminRolesGetResponse;
 import io.lumoauth.client.model.AdminRolesGetUsersResponse;
 import io.lumoauth.client.model.AdminRolesListResponse;
+import io.lumoauth.client.model.AdminRolesUpdatePermissionsRequest;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAdminOrgRolesUpdateRequest;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,6 +86,7 @@ public class AdminRolesApi {
      * Build call for adminRolesAddPermissions
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param adminRolesAddPermissionsRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -90,11 +96,11 @@ public class AdminRolesApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Added; message reports how many permissions were added </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesAddPermissionsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminRolesAddPermissionsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -108,7 +114,7 @@ public class AdminRolesApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminRolesAddPermissionsRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions"
@@ -130,6 +136,7 @@ public class AdminRolesApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -141,7 +148,7 @@ public class AdminRolesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminRolesAddPermissionsValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminRolesAddPermissionsValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminRolesAddPermissions(Async)");
@@ -152,15 +159,21 @@ public class AdminRolesApi {
             throw new ApiException("Missing the required parameter 'roleId' when calling adminRolesAddPermissions(Async)");
         }
 
-        return adminRolesAddPermissionsCall(orgId, roleId, _callback);
+        // verify the required parameter 'adminRolesAddPermissionsRequest' is set
+        if (adminRolesAddPermissionsRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminRolesAddPermissionsRequest' when calling adminRolesAddPermissions(Async)");
+        }
+
+        return adminRolesAddPermissionsCall(orgId, roleId, adminRolesAddPermissionsRequest, _callback);
 
     }
 
     /**
      * Add permission(s) to a role
-     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param adminRolesAddPermissionsRequest  (required)
      * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -169,20 +182,21 @@ public class AdminRolesApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Added; message reports how many permissions were added </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
-    public MessageResponse adminRolesAddPermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        ApiResponse<MessageResponse> localVarResp = adminRolesAddPermissionsWithHttpInfo(orgId, roleId);
+    public MessageResponse adminRolesAddPermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminRolesAddPermissionsWithHttpInfo(orgId, roleId, adminRolesAddPermissionsRequest);
         return localVarResp.getData();
     }
 
     /**
      * Add permission(s) to a role
-     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param adminRolesAddPermissionsRequest  (required)
      * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -191,21 +205,22 @@ public class AdminRolesApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Added; message reports how many permissions were added </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<MessageResponse> adminRolesAddPermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        okhttp3.Call localVarCall = adminRolesAddPermissionsValidateBeforeCall(orgId, roleId, null);
+    public ApiResponse<MessageResponse> adminRolesAddPermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminRolesAddPermissionsValidateBeforeCall(orgId, roleId, adminRolesAddPermissionsRequest, null);
         Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Add permission(s) to a role (asynchronously)
-     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param adminRolesAddPermissionsRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -215,13 +230,13 @@ public class AdminRolesApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Added; message reports how many permissions were added </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesAddPermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<MessageResponse> _callback) throws ApiException {
+    public okhttp3.Call adminRolesAddPermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminRolesAddPermissionsValidateBeforeCall(orgId, roleId, _callback);
+        okhttp3.Call localVarCall = adminRolesAddPermissionsValidateBeforeCall(orgId, roleId, adminRolesAddPermissionsRequest, _callback);
         Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -230,6 +245,7 @@ public class AdminRolesApi {
      * Build call for adminRolesAddUser
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param adminRolesAddUserRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -240,7 +256,7 @@ public class AdminRolesApi {
         <tr><td> 200 </td><td> Assigned </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesAddUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminRolesAddUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesAddUserRequest adminRolesAddUserRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -254,7 +270,7 @@ public class AdminRolesApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminRolesAddUserRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/roles/{roleId}/users"
@@ -276,6 +292,7 @@ public class AdminRolesApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -287,7 +304,7 @@ public class AdminRolesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminRolesAddUserValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminRolesAddUserValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesAddUserRequest adminRolesAddUserRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminRolesAddUser(Async)");
@@ -298,7 +315,12 @@ public class AdminRolesApi {
             throw new ApiException("Missing the required parameter 'roleId' when calling adminRolesAddUser(Async)");
         }
 
-        return adminRolesAddUserCall(orgId, roleId, _callback);
+        // verify the required parameter 'adminRolesAddUserRequest' is set
+        if (adminRolesAddUserRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminRolesAddUserRequest' when calling adminRolesAddUser(Async)");
+        }
+
+        return adminRolesAddUserCall(orgId, roleId, adminRolesAddUserRequest, _callback);
 
     }
 
@@ -307,6 +329,7 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param adminRolesAddUserRequest  (required)
      * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -316,8 +339,8 @@ public class AdminRolesApi {
         <tr><td> 200 </td><td> Assigned </td><td>  -  </td></tr>
      </table>
      */
-    public MessageResponse adminRolesAddUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        ApiResponse<MessageResponse> localVarResp = adminRolesAddUserWithHttpInfo(orgId, roleId);
+    public MessageResponse adminRolesAddUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesAddUserRequest adminRolesAddUserRequest) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminRolesAddUserWithHttpInfo(orgId, roleId, adminRolesAddUserRequest);
         return localVarResp.getData();
     }
 
@@ -326,6 +349,7 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param adminRolesAddUserRequest  (required)
      * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -335,8 +359,8 @@ public class AdminRolesApi {
         <tr><td> 200 </td><td> Assigned </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<MessageResponse> adminRolesAddUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        okhttp3.Call localVarCall = adminRolesAddUserValidateBeforeCall(orgId, roleId, null);
+    public ApiResponse<MessageResponse> adminRolesAddUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesAddUserRequest adminRolesAddUserRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminRolesAddUserValidateBeforeCall(orgId, roleId, adminRolesAddUserRequest, null);
         Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -346,6 +370,7 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param adminRolesAddUserRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -356,9 +381,9 @@ public class AdminRolesApi {
         <tr><td> 200 </td><td> Assigned </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesAddUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<MessageResponse> _callback) throws ApiException {
+    public okhttp3.Call adminRolesAddUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesAddUserRequest adminRolesAddUserRequest, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminRolesAddUserValidateBeforeCall(orgId, roleId, _callback);
+        okhttp3.Call localVarCall = adminRolesAddUserValidateBeforeCall(orgId, roleId, adminRolesAddUserRequest, _callback);
         Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -366,6 +391,7 @@ public class AdminRolesApi {
     /**
      * Build call for adminRolesCreate
      * @param orgId  (required)
+     * @param adminRolesCreateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -376,7 +402,7 @@ public class AdminRolesApi {
         <tr><td> 201 </td><td> Created role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminRolesCreateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminRolesCreateRequest adminRolesCreateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -390,7 +416,7 @@ public class AdminRolesApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminRolesCreateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/roles"
@@ -411,6 +437,7 @@ public class AdminRolesApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -422,20 +449,26 @@ public class AdminRolesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminRolesCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminRolesCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminRolesCreateRequest adminRolesCreateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminRolesCreate(Async)");
         }
 
-        return adminRolesCreateCall(orgId, _callback);
+        // verify the required parameter 'adminRolesCreateRequest' is set
+        if (adminRolesCreateRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminRolesCreateRequest' when calling adminRolesCreate(Async)");
+        }
+
+        return adminRolesCreateCall(orgId, adminRolesCreateRequest, _callback);
 
     }
 
     /**
      * Create a new role
-     * Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+     * Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
      * @param orgId  (required)
+     * @param adminRolesCreateRequest  (required)
      * @return AdminRolesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -445,15 +478,16 @@ public class AdminRolesApi {
         <tr><td> 201 </td><td> Created role </td><td>  -  </td></tr>
      </table>
      */
-    public AdminRolesCreateResponse adminRolesCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<AdminRolesCreateResponse> localVarResp = adminRolesCreateWithHttpInfo(orgId);
+    public AdminRolesCreateResponse adminRolesCreate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminRolesCreateRequest adminRolesCreateRequest) throws ApiException {
+        ApiResponse<AdminRolesCreateResponse> localVarResp = adminRolesCreateWithHttpInfo(orgId, adminRolesCreateRequest);
         return localVarResp.getData();
     }
 
     /**
      * Create a new role
-     * Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+     * Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
      * @param orgId  (required)
+     * @param adminRolesCreateRequest  (required)
      * @return ApiResponse&lt;AdminRolesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -463,16 +497,17 @@ public class AdminRolesApi {
         <tr><td> 201 </td><td> Created role </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminRolesCreateResponse> adminRolesCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = adminRolesCreateValidateBeforeCall(orgId, null);
+    public ApiResponse<AdminRolesCreateResponse> adminRolesCreateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminRolesCreateRequest adminRolesCreateRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminRolesCreateValidateBeforeCall(orgId, adminRolesCreateRequest, null);
         Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Create a new role (asynchronously)
-     * Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+     * Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
      * @param orgId  (required)
+     * @param adminRolesCreateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -483,9 +518,9 @@ public class AdminRolesApi {
         <tr><td> 201 </td><td> Created role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminRolesCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call adminRolesCreateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminRolesCreateRequest adminRolesCreateRequest, final ApiCallback<AdminRolesCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminRolesCreateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = adminRolesCreateValidateBeforeCall(orgId, adminRolesCreateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1108,7 +1143,7 @@ public class AdminRolesApi {
     }
 
     /**
-     * List all roles in the tenant
+     * List all roles in the organization
      * 
      * @param orgId  (required)
      * @return AdminRolesListResponse
@@ -1126,7 +1161,7 @@ public class AdminRolesApi {
     }
 
     /**
-     * List all roles in the tenant
+     * List all roles in the organization
      * 
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminRolesListResponse&gt;
@@ -1145,7 +1180,7 @@ public class AdminRolesApi {
     }
 
     /**
-     * List all roles in the tenant (asynchronously)
+     * List all roles in the organization (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1463,6 +1498,7 @@ public class AdminRolesApi {
      * Build call for adminRolesUpdatePermissions
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param adminRolesUpdatePermissionsRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1472,11 +1508,11 @@ public class AdminRolesApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A new built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesUpdatePermissionsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminRolesUpdatePermissionsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1490,7 +1526,7 @@ public class AdminRolesApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminRolesUpdatePermissionsRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions"
@@ -1512,6 +1548,7 @@ public class AdminRolesApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1523,7 +1560,7 @@ public class AdminRolesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminRolesUpdatePermissionsValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminRolesUpdatePermissionsValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminRolesUpdatePermissions(Async)");
@@ -1534,15 +1571,21 @@ public class AdminRolesApi {
             throw new ApiException("Missing the required parameter 'roleId' when calling adminRolesUpdatePermissions(Async)");
         }
 
-        return adminRolesUpdatePermissionsCall(orgId, roleId, _callback);
+        // verify the required parameter 'adminRolesUpdatePermissionsRequest' is set
+        if (adminRolesUpdatePermissionsRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminRolesUpdatePermissionsRequest' when calling adminRolesUpdatePermissions(Async)");
+        }
+
+        return adminRolesUpdatePermissionsCall(orgId, roleId, adminRolesUpdatePermissionsRequest, _callback);
 
     }
 
     /**
      * Update role permissions (replaces all)
-     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param adminRolesUpdatePermissionsRequest  (required)
      * @return AdminRolesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1551,20 +1594,21 @@ public class AdminRolesApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A new built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
-    public AdminRolesCreateResponse adminRolesUpdatePermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        ApiResponse<AdminRolesCreateResponse> localVarResp = adminRolesUpdatePermissionsWithHttpInfo(orgId, roleId);
+    public AdminRolesCreateResponse adminRolesUpdatePermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest) throws ApiException {
+        ApiResponse<AdminRolesCreateResponse> localVarResp = adminRolesUpdatePermissionsWithHttpInfo(orgId, roleId, adminRolesUpdatePermissionsRequest);
         return localVarResp.getData();
     }
 
     /**
      * Update role permissions (replaces all)
-     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param adminRolesUpdatePermissionsRequest  (required)
      * @return ApiResponse&lt;AdminRolesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1573,21 +1617,22 @@ public class AdminRolesApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A new built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminRolesCreateResponse> adminRolesUpdatePermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        okhttp3.Call localVarCall = adminRolesUpdatePermissionsValidateBeforeCall(orgId, roleId, null);
+    public ApiResponse<AdminRolesCreateResponse> adminRolesUpdatePermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminRolesUpdatePermissionsValidateBeforeCall(orgId, roleId, adminRolesUpdatePermissionsRequest, null);
         Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Update role permissions (replaces all) (asynchronously)
-     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+     * Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param adminRolesUpdatePermissionsRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1597,13 +1642,13 @@ public class AdminRolesApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> A new built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Role not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesUpdatePermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<AdminRolesCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call adminRolesUpdatePermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest, final ApiCallback<AdminRolesCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminRolesUpdatePermissionsValidateBeforeCall(orgId, roleId, _callback);
+        okhttp3.Call localVarCall = adminRolesUpdatePermissionsValidateBeforeCall(orgId, roleId, adminRolesUpdatePermissionsRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1612,6 +1657,7 @@ public class AdminRolesApi {
      * Build call for patchAdminRolesUpdate
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1622,7 +1668,7 @@ public class AdminRolesApi {
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminRolesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminRolesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1636,7 +1682,7 @@ public class AdminRolesApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminOrgRolesUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/roles/{roleId}"
@@ -1658,6 +1704,7 @@ public class AdminRolesApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1669,7 +1716,7 @@ public class AdminRolesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminRolesUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminRolesUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminRolesUpdate(Async)");
@@ -1680,7 +1727,12 @@ public class AdminRolesApi {
             throw new ApiException("Missing the required parameter 'roleId' when calling patchAdminRolesUpdate(Async)");
         }
 
-        return patchAdminRolesUpdateCall(orgId, roleId, _callback);
+        // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+        if (putAdminOrgRolesUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminOrgRolesUpdateRequest' when calling patchAdminRolesUpdate(Async)");
+        }
+
+        return patchAdminRolesUpdateCall(orgId, roleId, putAdminOrgRolesUpdateRequest, _callback);
 
     }
 
@@ -1689,6 +1741,7 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @return AdminRolesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1698,8 +1751,8 @@ public class AdminRolesApi {
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public AdminRolesCreateResponse patchAdminRolesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        ApiResponse<AdminRolesCreateResponse> localVarResp = patchAdminRolesUpdateWithHttpInfo(orgId, roleId);
+    public AdminRolesCreateResponse patchAdminRolesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest) throws ApiException {
+        ApiResponse<AdminRolesCreateResponse> localVarResp = patchAdminRolesUpdateWithHttpInfo(orgId, roleId, putAdminOrgRolesUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -1708,6 +1761,7 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @return ApiResponse&lt;AdminRolesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1717,8 +1771,8 @@ public class AdminRolesApi {
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminRolesCreateResponse> patchAdminRolesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminRolesUpdateValidateBeforeCall(orgId, roleId, null);
+    public ApiResponse<AdminRolesCreateResponse> patchAdminRolesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminRolesUpdateValidateBeforeCall(orgId, roleId, putAdminOrgRolesUpdateRequest, null);
         Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1728,6 +1782,7 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1738,9 +1793,9 @@ public class AdminRolesApi {
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminRolesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<AdminRolesCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminRolesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, final ApiCallback<AdminRolesCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminRolesUpdateValidateBeforeCall(orgId, roleId, _callback);
+        okhttp3.Call localVarCall = patchAdminRolesUpdateValidateBeforeCall(orgId, roleId, putAdminOrgRolesUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1749,6 +1804,7 @@ public class AdminRolesApi {
      * Build call for putAdminRolesUpdate
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1759,7 +1815,7 @@ public class AdminRolesApi {
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminRolesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminRolesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1773,7 +1829,7 @@ public class AdminRolesApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminOrgRolesUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/roles/{roleId}"
@@ -1795,6 +1851,7 @@ public class AdminRolesApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1806,7 +1863,7 @@ public class AdminRolesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminRolesUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminRolesUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminRolesUpdate(Async)");
@@ -1817,7 +1874,12 @@ public class AdminRolesApi {
             throw new ApiException("Missing the required parameter 'roleId' when calling putAdminRolesUpdate(Async)");
         }
 
-        return putAdminRolesUpdateCall(orgId, roleId, _callback);
+        // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+        if (putAdminOrgRolesUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminOrgRolesUpdateRequest' when calling putAdminRolesUpdate(Async)");
+        }
+
+        return putAdminRolesUpdateCall(orgId, roleId, putAdminOrgRolesUpdateRequest, _callback);
 
     }
 
@@ -1826,6 +1888,7 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @return AdminRolesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1835,8 +1898,8 @@ public class AdminRolesApi {
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public AdminRolesCreateResponse putAdminRolesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        ApiResponse<AdminRolesCreateResponse> localVarResp = putAdminRolesUpdateWithHttpInfo(orgId, roleId);
+    public AdminRolesCreateResponse putAdminRolesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest) throws ApiException {
+        ApiResponse<AdminRolesCreateResponse> localVarResp = putAdminRolesUpdateWithHttpInfo(orgId, roleId, putAdminOrgRolesUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -1845,6 +1908,7 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @return ApiResponse&lt;AdminRolesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1854,8 +1918,8 @@ public class AdminRolesApi {
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminRolesCreateResponse> putAdminRolesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminRolesUpdateValidateBeforeCall(orgId, roleId, null);
+    public ApiResponse<AdminRolesCreateResponse> putAdminRolesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminRolesUpdateValidateBeforeCall(orgId, roleId, putAdminOrgRolesUpdateRequest, null);
         Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1865,6 +1929,7 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @param putAdminOrgRolesUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1875,9 +1940,9 @@ public class AdminRolesApi {
         <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminRolesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<AdminRolesCreateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminRolesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, final ApiCallback<AdminRolesCreateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminRolesUpdateValidateBeforeCall(orgId, roleId, _callback);
+        okhttp3.Call localVarCall = putAdminRolesUpdateValidateBeforeCall(orgId, roleId, putAdminOrgRolesUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

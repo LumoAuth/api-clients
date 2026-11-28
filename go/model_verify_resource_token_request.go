@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -13,6 +13,8 @@ package lumoauthclient
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the VerifyResourceTokenRequest type satisfies the MappedNullable interface at compile time
@@ -20,20 +22,28 @@ var _ MappedNullable = &VerifyResourceTokenRequest{}
 
 // VerifyResourceTokenRequest struct for VerifyResourceTokenRequest
 type VerifyResourceTokenRequest struct {
+	// Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
+	Resource string `json:"resource"`
 	// The resource token to validate.
-	ResourceToken *string `json:"resource_token,omitempty"`
+	ResourceToken string `json:"resource_token"`
 	// Agent identifier the token must be bound to.
-	Agent *string `json:"agent,omitempty"`
+	Agent string `json:"agent"`
 	// JWK thumbprint of the agent key.
-	AgentJkt *string `json:"agent_jkt,omitempty"`
+	AgentJkt string `json:"agent_jkt"`
 }
+
+type _VerifyResourceTokenRequest VerifyResourceTokenRequest
 
 // NewVerifyResourceTokenRequest instantiates a new VerifyResourceTokenRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewVerifyResourceTokenRequest() *VerifyResourceTokenRequest {
+func NewVerifyResourceTokenRequest(resource string, resourceToken string, agent string, agentJkt string) *VerifyResourceTokenRequest {
 	this := VerifyResourceTokenRequest{}
+	this.Resource = resource
+	this.ResourceToken = resourceToken
+	this.Agent = agent
+	this.AgentJkt = agentJkt
 	return &this
 }
 
@@ -45,100 +55,100 @@ func NewVerifyResourceTokenRequestWithDefaults() *VerifyResourceTokenRequest {
 	return &this
 }
 
-// GetResourceToken returns the ResourceToken field value if set, zero value otherwise.
-func (o *VerifyResourceTokenRequest) GetResourceToken() string {
-	if o == nil || IsNil(o.ResourceToken) {
+// GetResource returns the Resource field value
+func (o *VerifyResourceTokenRequest) GetResource() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.ResourceToken
+
+	return o.Resource
 }
 
-// GetResourceTokenOk returns a tuple with the ResourceToken field value if set, nil otherwise
+// GetResourceOk returns a tuple with the Resource field value
+// and a boolean to check if the value has been set.
+func (o *VerifyResourceTokenRequest) GetResourceOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Resource, true
+}
+
+// SetResource sets field value
+func (o *VerifyResourceTokenRequest) SetResource(v string) {
+	o.Resource = v
+}
+
+// GetResourceToken returns the ResourceToken field value
+func (o *VerifyResourceTokenRequest) GetResourceToken() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.ResourceToken
+}
+
+// GetResourceTokenOk returns a tuple with the ResourceToken field value
 // and a boolean to check if the value has been set.
 func (o *VerifyResourceTokenRequest) GetResourceTokenOk() (*string, bool) {
-	if o == nil || IsNil(o.ResourceToken) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ResourceToken, true
+	return &o.ResourceToken, true
 }
 
-// HasResourceToken returns a boolean if a field has been set.
-func (o *VerifyResourceTokenRequest) HasResourceToken() bool {
-	if o != nil && !IsNil(o.ResourceToken) {
-		return true
-	}
-
-	return false
-}
-
-// SetResourceToken gets a reference to the given string and assigns it to the ResourceToken field.
+// SetResourceToken sets field value
 func (o *VerifyResourceTokenRequest) SetResourceToken(v string) {
-	o.ResourceToken = &v
+	o.ResourceToken = v
 }
 
-// GetAgent returns the Agent field value if set, zero value otherwise.
+// GetAgent returns the Agent field value
 func (o *VerifyResourceTokenRequest) GetAgent() string {
-	if o == nil || IsNil(o.Agent) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Agent
+
+	return o.Agent
 }
 
-// GetAgentOk returns a tuple with the Agent field value if set, nil otherwise
+// GetAgentOk returns a tuple with the Agent field value
 // and a boolean to check if the value has been set.
 func (o *VerifyResourceTokenRequest) GetAgentOk() (*string, bool) {
-	if o == nil || IsNil(o.Agent) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Agent, true
+	return &o.Agent, true
 }
 
-// HasAgent returns a boolean if a field has been set.
-func (o *VerifyResourceTokenRequest) HasAgent() bool {
-	if o != nil && !IsNil(o.Agent) {
-		return true
-	}
-
-	return false
-}
-
-// SetAgent gets a reference to the given string and assigns it to the Agent field.
+// SetAgent sets field value
 func (o *VerifyResourceTokenRequest) SetAgent(v string) {
-	o.Agent = &v
+	o.Agent = v
 }
 
-// GetAgentJkt returns the AgentJkt field value if set, zero value otherwise.
+// GetAgentJkt returns the AgentJkt field value
 func (o *VerifyResourceTokenRequest) GetAgentJkt() string {
-	if o == nil || IsNil(o.AgentJkt) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.AgentJkt
+
+	return o.AgentJkt
 }
 
-// GetAgentJktOk returns a tuple with the AgentJkt field value if set, nil otherwise
+// GetAgentJktOk returns a tuple with the AgentJkt field value
 // and a boolean to check if the value has been set.
 func (o *VerifyResourceTokenRequest) GetAgentJktOk() (*string, bool) {
-	if o == nil || IsNil(o.AgentJkt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.AgentJkt, true
+	return &o.AgentJkt, true
 }
 
-// HasAgentJkt returns a boolean if a field has been set.
-func (o *VerifyResourceTokenRequest) HasAgentJkt() bool {
-	if o != nil && !IsNil(o.AgentJkt) {
-		return true
-	}
-
-	return false
-}
-
-// SetAgentJkt gets a reference to the given string and assigns it to the AgentJkt field.
+// SetAgentJkt sets field value
 func (o *VerifyResourceTokenRequest) SetAgentJkt(v string) {
-	o.AgentJkt = &v
+	o.AgentJkt = v
 }
 
 func (o VerifyResourceTokenRequest) MarshalJSON() ([]byte, error) {
@@ -151,16 +161,51 @@ func (o VerifyResourceTokenRequest) MarshalJSON() ([]byte, error) {
 
 func (o VerifyResourceTokenRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.ResourceToken) {
-		toSerialize["resource_token"] = o.ResourceToken
-	}
-	if !IsNil(o.Agent) {
-		toSerialize["agent"] = o.Agent
-	}
-	if !IsNil(o.AgentJkt) {
-		toSerialize["agent_jkt"] = o.AgentJkt
-	}
+	toSerialize["resource"] = o.Resource
+	toSerialize["resource_token"] = o.ResourceToken
+	toSerialize["agent"] = o.Agent
+	toSerialize["agent_jkt"] = o.AgentJkt
 	return toSerialize, nil
+}
+
+func (o *VerifyResourceTokenRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"resource",
+		"resource_token",
+		"agent",
+		"agent_jkt",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varVerifyResourceTokenRequest := _VerifyResourceTokenRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varVerifyResourceTokenRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = VerifyResourceTokenRequest(varVerifyResourceTokenRequest)
+
+	return err
 }
 
 type NullableVerifyResourceTokenRequest struct {

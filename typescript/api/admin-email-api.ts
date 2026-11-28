@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -24,7 +24,11 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { AdminEmailTemplatesListResponse } from '../models';
 // @ts-ignore
+import type { AdminEmailTemplatesPreviewRequest } from '../models';
+// @ts-ignore
 import type { AdminEmailTemplatesPreviewResponse } from '../models';
+// @ts-ignore
+import type { AdminEmailTemplatesUpsertRequest } from '../models';
 // @ts-ignore
 import type { AdminEmailTemplatesVariablesResponse } from '../models';
 // @ts-ignore
@@ -193,10 +197,11 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
          * @summary Render an email template with sample data
          * @param {string} orgId 
          * @param {string} type 
+         * @param {AdminEmailTemplatesPreviewRequest} [adminEmailTemplatesPreviewRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminEmailTemplatesPreview: async (orgId: string, type: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminEmailTemplatesPreview: async (orgId: string, type: string, adminEmailTemplatesPreviewRequest?: AdminEmailTemplatesPreviewRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminEmailTemplatesPreview', 'orgId', orgId)
             // verify required parameter 'type' is not null or undefined
@@ -224,9 +229,12 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminEmailTemplatesPreviewRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -238,14 +246,17 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
          * @summary Create or replace the custom email template for a type
          * @param {string} orgId 
          * @param {string} type 
+         * @param {AdminEmailTemplatesUpsertRequest} adminEmailTemplatesUpsertRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminEmailTemplatesUpsert: async (orgId: string, type: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminEmailTemplatesUpsert: async (orgId: string, type: string, adminEmailTemplatesUpsertRequest: AdminEmailTemplatesUpsertRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminEmailTemplatesUpsert', 'orgId', orgId)
             // verify required parameter 'type' is not null or undefined
             assertParamExists('adminEmailTemplatesUpsert', 'type', type)
+            // verify required parameter 'adminEmailTemplatesUpsertRequest' is not null or undefined
+            assertParamExists('adminEmailTemplatesUpsert', 'adminEmailTemplatesUpsertRequest', adminEmailTemplatesUpsertRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/email-templates/{type}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"type"}}`, encodeURIComponent(String(type)));
@@ -269,9 +280,12 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminEmailTemplatesUpsertRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -383,11 +397,12 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
          * @summary Render an email template with sample data
          * @param {string} orgId 
          * @param {string} type 
+         * @param {AdminEmailTemplatesPreviewRequest} [adminEmailTemplatesPreviewRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminEmailTemplatesPreview(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminEmailTemplatesPreviewResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesPreview(orgId, type, options);
+        async adminEmailTemplatesPreview(orgId: string, type: string, adminEmailTemplatesPreviewRequest?: AdminEmailTemplatesPreviewRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminEmailTemplatesPreviewResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesPreview(orgId, type, adminEmailTemplatesPreviewRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminEmailApi.adminEmailTemplatesPreview']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -397,11 +412,12 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
          * @summary Create or replace the custom email template for a type
          * @param {string} orgId 
          * @param {string} type 
+         * @param {AdminEmailTemplatesUpsertRequest} adminEmailTemplatesUpsertRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminEmailTemplatesUpsert(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmailTemplate>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesUpsert(orgId, type, options);
+        async adminEmailTemplatesUpsert(orgId: string, type: string, adminEmailTemplatesUpsertRequest: AdminEmailTemplatesUpsertRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmailTemplate>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesUpsert(orgId, type, adminEmailTemplatesUpsertRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminEmailApi.adminEmailTemplatesUpsert']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -468,7 +484,7 @@ export const AdminEmailApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         adminEmailTemplatesPreview(requestParameters: AdminEmailApiAdminEmailTemplatesPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminEmailTemplatesPreviewResponse> {
-            return localVarFp.adminEmailTemplatesPreview(requestParameters.orgId, requestParameters.type, options).then((request) => request(axios, basePath));
+            return localVarFp.adminEmailTemplatesPreview(requestParameters.orgId, requestParameters.type, requestParameters.adminEmailTemplatesPreviewRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
@@ -478,7 +494,7 @@ export const AdminEmailApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         adminEmailTemplatesUpsert(requestParameters: AdminEmailApiAdminEmailTemplatesUpsertRequest, options?: RawAxiosRequestConfig): AxiosPromise<EmailTemplate> {
-            return localVarFp.adminEmailTemplatesUpsert(requestParameters.orgId, requestParameters.type, options).then((request) => request(axios, basePath));
+            return localVarFp.adminEmailTemplatesUpsert(requestParameters.orgId, requestParameters.type, requestParameters.adminEmailTemplatesUpsertRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Needs `settings.manage` and `users.delete`, as the email template pages in the portal do.
@@ -664,6 +680,13 @@ export interface AdminEmailApiAdminEmailTemplatesPreviewRequest {
      * @memberof AdminEmailApiAdminEmailTemplatesPreview
      */
     readonly type: string
+
+    /**
+     * 
+     * @type {AdminEmailTemplatesPreviewRequest}
+     * @memberof AdminEmailApiAdminEmailTemplatesPreview
+     */
+    readonly adminEmailTemplatesPreviewRequest?: AdminEmailTemplatesPreviewRequest
 }
 
 /**
@@ -685,6 +708,13 @@ export interface AdminEmailApiAdminEmailTemplatesUpsertRequest {
      * @memberof AdminEmailApiAdminEmailTemplatesUpsert
      */
     readonly type: string
+
+    /**
+     * 
+     * @type {AdminEmailTemplatesUpsertRequest}
+     * @memberof AdminEmailApiAdminEmailTemplatesUpsert
+     */
+    readonly adminEmailTemplatesUpsertRequest: AdminEmailTemplatesUpsertRequest
 }
 
 /**
@@ -760,7 +790,7 @@ export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
      * @memberof AdminEmailApi
      */
     public adminEmailTemplatesPreview(requestParameters: AdminEmailApiAdminEmailTemplatesPreviewRequest, options?: RawAxiosRequestConfig) {
-        return AdminEmailApiFp(this.configuration).adminEmailTemplatesPreview(requestParameters.orgId, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+        return AdminEmailApiFp(this.configuration).adminEmailTemplatesPreview(requestParameters.orgId, requestParameters.type, requestParameters.adminEmailTemplatesPreviewRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -772,7 +802,7 @@ export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
      * @memberof AdminEmailApi
      */
     public adminEmailTemplatesUpsert(requestParameters: AdminEmailApiAdminEmailTemplatesUpsertRequest, options?: RawAxiosRequestConfig) {
-        return AdminEmailApiFp(this.configuration).adminEmailTemplatesUpsert(requestParameters.orgId, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+        return AdminEmailApiFp(this.configuration).adminEmailTemplatesUpsert(requestParameters.orgId, requestParameters.type, requestParameters.adminEmailTemplatesUpsertRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

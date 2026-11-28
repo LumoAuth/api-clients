@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -234,6 +234,7 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [AdminEmailTemplatesPreviewRequest] :admin_email_templates_preview_request 
     # @return [AdminEmailTemplatesPreviewResponse]
     def admin_email_templates_preview(org_id, type, opts = {})
       data, _status_code, _headers = admin_email_templates_preview_with_http_info(org_id, type, opts)
@@ -244,6 +245,7 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [AdminEmailTemplatesPreviewRequest] :admin_email_templates_preview_request 
     # @return [Array<(AdminEmailTemplatesPreviewResponse, Integer, Hash)>] AdminEmailTemplatesPreviewResponse data, response status code and response headers
     def admin_email_templates_preview_with_http_info(org_id, type, opts = {})
       if @api_client.config.debugging
@@ -267,12 +269,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'admin_email_templates_preview_request'])
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminEmailTemplatesPreviewResponse'
@@ -301,10 +308,11 @@ module LumoAuthApiClient
     # Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
     # @param org_id [String] 
     # @param type [String] 
+    # @param admin_email_templates_upsert_request [AdminEmailTemplatesUpsertRequest] 
     # @param [Hash] opts the optional parameters
     # @return [EmailTemplate]
-    def admin_email_templates_upsert(org_id, type, opts = {})
-      data, _status_code, _headers = admin_email_templates_upsert_with_http_info(org_id, type, opts)
+    def admin_email_templates_upsert(org_id, type, admin_email_templates_upsert_request, opts = {})
+      data, _status_code, _headers = admin_email_templates_upsert_with_http_info(org_id, type, admin_email_templates_upsert_request, opts)
       data
     end
 
@@ -312,9 +320,10 @@ module LumoAuthApiClient
     # Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
     # @param org_id [String] 
     # @param type [String] 
+    # @param admin_email_templates_upsert_request [AdminEmailTemplatesUpsertRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(EmailTemplate, Integer, Hash)>] EmailTemplate data, response status code and response headers
-    def admin_email_templates_upsert_with_http_info(org_id, type, opts = {})
+    def admin_email_templates_upsert_with_http_info(org_id, type, admin_email_templates_upsert_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminEmailApi.admin_email_templates_upsert ...'
       end
@@ -326,6 +335,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && type.nil?
         fail ArgumentError, "Missing the required parameter 'type' when calling AdminEmailApi.admin_email_templates_upsert"
       end
+      # verify the required parameter 'admin_email_templates_upsert_request' is set
+      if @api_client.config.client_side_validation && admin_email_templates_upsert_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_email_templates_upsert_request' when calling AdminEmailApi.admin_email_templates_upsert"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/email-templates/{type}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'type' + '}', CGI.escape(type.to_s))
 
@@ -336,12 +349,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_email_templates_upsert_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'EmailTemplate'

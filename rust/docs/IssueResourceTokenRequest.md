@@ -4,8 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**agent** | Option<**String**> | Agent identifier the resource token is bound to. | [optional]
-**agent_jkt** | Option<**String**> | JWK thumbprint of the agent key (PoP binding). | [optional]
+**resource** | **String** | Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource. | 
+**agent** | **String** | Agent identifier the resource token is bound to. | 
+**agent_jkt** | **String** | JWK thumbprint of the agent key (PoP binding). | 
 **scope** | Option<**String**> | Optional space-delimited requested scopes. | [optional]
 **auth_request_url** | Option<**String**> | Optional auth request URL to embed in the token. | [optional]
 **auth_server** | Option<**String**> | Optional auth server URL for the aud claim; defaults to this issuer. | [optional]
