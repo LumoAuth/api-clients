@@ -126,7 +126,7 @@ No authorization required
 
 <a id="backchannelauthorize"></a>
 # **BackchannelAuthorize**
-> BackchannelAuthorizeResponse BackchannelAuthorize (string orgId)
+> BackchannelAuthorizeResponse BackchannelAuthorize (string orgId, string scope, string? loginHint = null, string? loginHintToken = null, string? idTokenHint = null, string? bindingMessage = null, string? acrValues = null, int? requestedExpiry = null, string? clientNotificationToken = null, string? authorizationDetails = null, string? clientId = null, string? clientSecret = null, string? clientAssertionType = null, string? clientAssertion = null)
 
 CIBA backchannel authentication request
 
@@ -158,11 +158,24 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new OAuthApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var scope = "scope_example";  // string | 
+            var loginHint = "loginHint_example";  // string? |  (optional) 
+            var loginHintToken = "loginHintToken_example";  // string? |  (optional) 
+            var idTokenHint = "idTokenHint_example";  // string? |  (optional) 
+            var bindingMessage = "bindingMessage_example";  // string? |  (optional) 
+            var acrValues = "acrValues_example";  // string? |  (optional) 
+            var requestedExpiry = 56;  // int? |  (optional) 
+            var clientNotificationToken = "clientNotificationToken_example";  // string? |  (optional) 
+            var authorizationDetails = "authorizationDetails_example";  // string? |  (optional) 
+            var clientId = "clientId_example";  // string? | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) 
+            var clientSecret = "clientSecret_example";  // string? | client_secret_post (optional) 
+            var clientAssertionType = "clientAssertionType_example";  // string? |  (optional) 
+            var clientAssertion = "clientAssertion_example";  // string? | private_key_jwt (RFC 7523) (optional) 
 
             try
             {
                 // CIBA backchannel authentication request
-                BackchannelAuthorizeResponse result = apiInstance.BackchannelAuthorize(orgId);
+                BackchannelAuthorizeResponse result = apiInstance.BackchannelAuthorize(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -183,7 +196,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // CIBA backchannel authentication request
-    ApiResponse<BackchannelAuthorizeResponse> response = apiInstance.BackchannelAuthorizeWithHttpInfo(orgId);
+    ApiResponse<BackchannelAuthorizeResponse> response = apiInstance.BackchannelAuthorizeWithHttpInfo(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -201,6 +214,19 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **scope** | **string** |  |  |
+| **loginHint** | **string?** |  | [optional]  |
+| **loginHintToken** | **string?** |  | [optional]  |
+| **idTokenHint** | **string?** |  | [optional]  |
+| **bindingMessage** | **string?** |  | [optional]  |
+| **acrValues** | **string?** |  | [optional]  |
+| **requestedExpiry** | **int?** |  | [optional]  |
+| **clientNotificationToken** | **string?** |  | [optional]  |
+| **authorizationDetails** | **string?** |  | [optional]  |
+| **clientId** | **string?** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional]  |
+| **clientSecret** | **string?** | client_secret_post | [optional]  |
+| **clientAssertionType** | **string?** |  | [optional]  |
+| **clientAssertion** | **string?** | private_key_jwt (RFC 7523) | [optional]  |
 
 ### Return type
 
@@ -212,7 +238,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
@@ -330,7 +356,7 @@ No authorization required
 
 <a id="deviceauthorization"></a>
 # **DeviceAuthorization**
-> DeviceAuthorizationResponse DeviceAuthorization (string orgId)
+> DeviceAuthorizationResponse DeviceAuthorization (string orgId, string? clientId = null, string? clientSecret = null, string? clientAssertionType = null, string? clientAssertion = null, string? scope = null, string? resource = null, string? authorizationDetails = null)
 
 Device authorization request (RFC 8628)
 
@@ -362,11 +388,18 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new OAuthApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var clientId = "clientId_example";  // string? | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) 
+            var clientSecret = "clientSecret_example";  // string? | client_secret_post (optional) 
+            var clientAssertionType = "clientAssertionType_example";  // string? |  (optional) 
+            var clientAssertion = "clientAssertion_example";  // string? | private_key_jwt (RFC 7523) (optional) 
+            var scope = "scope_example";  // string? | Space-separated scopes. (optional) 
+            var resource = "resource_example";  // string? | RFC 8707 resource indicator. (optional) 
+            var authorizationDetails = "authorizationDetails_example";  // string? | RFC 9396, a JSON array as text. (optional) 
 
             try
             {
                 // Device authorization request (RFC 8628)
-                DeviceAuthorizationResponse result = apiInstance.DeviceAuthorization(orgId);
+                DeviceAuthorizationResponse result = apiInstance.DeviceAuthorization(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, authorizationDetails);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -387,7 +420,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Device authorization request (RFC 8628)
-    ApiResponse<DeviceAuthorizationResponse> response = apiInstance.DeviceAuthorizationWithHttpInfo(orgId);
+    ApiResponse<DeviceAuthorizationResponse> response = apiInstance.DeviceAuthorizationWithHttpInfo(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, authorizationDetails);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -405,6 +438,13 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **clientId** | **string?** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional]  |
+| **clientSecret** | **string?** | client_secret_post | [optional]  |
+| **clientAssertionType** | **string?** |  | [optional]  |
+| **clientAssertion** | **string?** | private_key_jwt (RFC 7523) | [optional]  |
+| **scope** | **string?** | Space-separated scopes. | [optional]  |
+| **resource** | **string?** | RFC 8707 resource indicator. | [optional]  |
+| **authorizationDetails** | **string?** | RFC 9396, a JSON array as text. | [optional]  |
 
 ### Return type
 
@@ -416,7 +456,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
@@ -731,7 +771,7 @@ No authorization required
 
 <a id="introspect"></a>
 # **Introspect**
-> IntrospectResponse Introspect (string orgId)
+> IntrospectResponse Introspect (string orgId, string token, string? tokenTypeHint = null, string? clientId = null, string? clientSecret = null, string? clientAssertionType = null, string? clientAssertion = null)
 
 Token introspection (RFC 7662)
 
@@ -763,11 +803,17 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new OAuthApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var token = "token_example";  // string | 
+            var tokenTypeHint = "access_token";  // string? |  (optional) 
+            var clientId = "clientId_example";  // string? | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) 
+            var clientSecret = "clientSecret_example";  // string? | client_secret_post (optional) 
+            var clientAssertionType = "clientAssertionType_example";  // string? |  (optional) 
+            var clientAssertion = "clientAssertion_example";  // string? | private_key_jwt (RFC 7523) (optional) 
 
             try
             {
                 // Token introspection (RFC 7662)
-                IntrospectResponse result = apiInstance.Introspect(orgId);
+                IntrospectResponse result = apiInstance.Introspect(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -788,7 +834,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Token introspection (RFC 7662)
-    ApiResponse<IntrospectResponse> response = apiInstance.IntrospectWithHttpInfo(orgId);
+    ApiResponse<IntrospectResponse> response = apiInstance.IntrospectWithHttpInfo(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -806,6 +852,12 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **token** | **string** |  |  |
+| **tokenTypeHint** | **string?** |  | [optional]  |
+| **clientId** | **string?** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional]  |
+| **clientSecret** | **string?** | client_secret_post | [optional]  |
+| **clientAssertionType** | **string?** |  | [optional]  |
+| **clientAssertion** | **string?** | private_key_jwt (RFC 7523) | [optional]  |
 
 ### Return type
 
@@ -817,7 +869,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
@@ -833,7 +885,7 @@ catch (ApiException e)
 
 <a id="par"></a>
 # **Par**
-> ParResponse Par (string orgId)
+> ParResponse Par (string orgId, string? responseType = null, string? redirectUri = null, string? scope = null, string? state = null, string? nonce = null, string? codeChallenge = null, string? codeChallengeMethod = null, string? request = null, string? resource = null, string? authorizationDetails = null, string? prompt = null, string? loginHint = null, string? clientId = null, string? clientSecret = null, string? clientAssertionType = null, string? clientAssertion = null)
 
 Pushed authorization request (RFC 9126)
 
@@ -865,11 +917,27 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new OAuthApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var responseType = "responseType_example";  // string? |  (optional) 
+            var redirectUri = "redirectUri_example";  // string? |  (optional) 
+            var scope = "scope_example";  // string? |  (optional) 
+            var state = "state_example";  // string? |  (optional) 
+            var nonce = "nonce_example";  // string? |  (optional) 
+            var codeChallenge = "codeChallenge_example";  // string? |  (optional) 
+            var codeChallengeMethod = "codeChallengeMethod_example";  // string? |  (optional) 
+            var request = "request_example";  // string? | A signed request object (JAR, RFC 9101). (optional) 
+            var resource = "resource_example";  // string? |  (optional) 
+            var authorizationDetails = "authorizationDetails_example";  // string? |  (optional) 
+            var prompt = "prompt_example";  // string? |  (optional) 
+            var loginHint = "loginHint_example";  // string? |  (optional) 
+            var clientId = "clientId_example";  // string? | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) 
+            var clientSecret = "clientSecret_example";  // string? | client_secret_post (optional) 
+            var clientAssertionType = "clientAssertionType_example";  // string? |  (optional) 
+            var clientAssertion = "clientAssertion_example";  // string? | private_key_jwt (RFC 7523) (optional) 
 
             try
             {
                 // Pushed authorization request (RFC 9126)
-                ParResponse result = apiInstance.Par(orgId);
+                ParResponse result = apiInstance.Par(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, authorizationDetails, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -890,7 +958,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Pushed authorization request (RFC 9126)
-    ApiResponse<ParResponse> response = apiInstance.ParWithHttpInfo(orgId);
+    ApiResponse<ParResponse> response = apiInstance.ParWithHttpInfo(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, authorizationDetails, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -908,6 +976,22 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **responseType** | **string?** |  | [optional]  |
+| **redirectUri** | **string?** |  | [optional]  |
+| **scope** | **string?** |  | [optional]  |
+| **state** | **string?** |  | [optional]  |
+| **nonce** | **string?** |  | [optional]  |
+| **codeChallenge** | **string?** |  | [optional]  |
+| **codeChallengeMethod** | **string?** |  | [optional]  |
+| **request** | **string?** | A signed request object (JAR, RFC 9101). | [optional]  |
+| **resource** | **string?** |  | [optional]  |
+| **authorizationDetails** | **string?** |  | [optional]  |
+| **prompt** | **string?** |  | [optional]  |
+| **loginHint** | **string?** |  | [optional]  |
+| **clientId** | **string?** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional]  |
+| **clientSecret** | **string?** | client_secret_post | [optional]  |
+| **clientAssertionType** | **string?** |  | [optional]  |
+| **clientAssertion** | **string?** | private_key_jwt (RFC 7523) | [optional]  |
 
 ### Return type
 
@@ -919,7 +1003,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
@@ -935,7 +1019,7 @@ catch (ApiException e)
 
 <a id="registerclient"></a>
 # **RegisterClient**
-> RegisterClientResponse RegisterClient (string orgId)
+> RegisterClientResponse RegisterClient (string orgId, RegisterClientRequest registerClientRequest)
 
 Dynamic client registration (RFC 7591 / OIDC DCR)
 
@@ -970,11 +1054,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new OAuthApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var registerClientRequest = new RegisterClientRequest(); // RegisterClientRequest | RFC 7591 client metadata.
 
             try
             {
                 // Dynamic client registration (RFC 7591 / OIDC DCR)
-                RegisterClientResponse result = apiInstance.RegisterClient(orgId);
+                RegisterClientResponse result = apiInstance.RegisterClient(orgId, registerClientRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -995,7 +1080,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Dynamic client registration (RFC 7591 / OIDC DCR)
-    ApiResponse<RegisterClientResponse> response = apiInstance.RegisterClientWithHttpInfo(orgId);
+    ApiResponse<RegisterClientResponse> response = apiInstance.RegisterClientWithHttpInfo(orgId, registerClientRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1013,6 +1098,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **registerClientRequest** | [**RegisterClientRequest**](RegisterClientRequest.md) | RFC 7591 client metadata. |  |
 
 ### Return type
 
@@ -1024,7 +1110,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1142,7 +1228,7 @@ No authorization required
 
 <a id="revoke"></a>
 # **Revoke**
-> Object Revoke (string orgId)
+> Object Revoke (string orgId, string token, string? tokenTypeHint = null, string? clientId = null, string? clientSecret = null, string? clientAssertionType = null, string? clientAssertion = null)
 
 Token revocation (RFC 7009)
 
@@ -1174,11 +1260,17 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new OAuthApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var token = "token_example";  // string | 
+            var tokenTypeHint = "access_token";  // string? |  (optional) 
+            var clientId = "clientId_example";  // string? | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) 
+            var clientSecret = "clientSecret_example";  // string? | client_secret_post (optional) 
+            var clientAssertionType = "clientAssertionType_example";  // string? |  (optional) 
+            var clientAssertion = "clientAssertion_example";  // string? | private_key_jwt (RFC 7523) (optional) 
 
             try
             {
                 // Token revocation (RFC 7009)
-                Object result = apiInstance.Revoke(orgId);
+                Object result = apiInstance.Revoke(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1199,7 +1291,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Token revocation (RFC 7009)
-    ApiResponse<Object> response = apiInstance.RevokeWithHttpInfo(orgId);
+    ApiResponse<Object> response = apiInstance.RevokeWithHttpInfo(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1217,6 +1309,12 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **token** | **string** |  |  |
+| **tokenTypeHint** | **string?** |  | [optional]  |
+| **clientId** | **string?** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional]  |
+| **clientSecret** | **string?** | client_secret_post | [optional]  |
+| **clientAssertionType** | **string?** |  | [optional]  |
+| **clientAssertion** | **string?** | private_key_jwt (RFC 7523) | [optional]  |
 
 ### Return type
 
@@ -1228,15 +1326,15 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). |  -  |
-| **400** | invalid_request (token parameter missing) or unsupported_token_type. |  -  |
+| **200** | The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. |  -  |
+| **400** | invalid_request (token parameter missing), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). |  -  |
 | **401** | invalid_client — client authentication failed. |  -  |
 | **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
@@ -1719,7 +1817,7 @@ No authorization required
 
 <a id="submitloginjson"></a>
 # **SubmitLoginJson**
-> SubmitLoginJsonResponse SubmitLoginJson (string orgId)
+> SubmitLoginJsonResponse SubmitLoginJson (string orgId, SubmitLoginJsonRequest submitLoginJsonRequest)
 
 Programmatic (JSON) login for the authorization flow
 
@@ -1747,11 +1845,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new OAuthApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var submitLoginJsonRequest = new SubmitLoginJsonRequest(); // SubmitLoginJsonRequest | 
 
             try
             {
                 // Programmatic (JSON) login for the authorization flow
-                SubmitLoginJsonResponse result = apiInstance.SubmitLoginJson(orgId);
+                SubmitLoginJsonResponse result = apiInstance.SubmitLoginJson(orgId, submitLoginJsonRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1772,7 +1871,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Programmatic (JSON) login for the authorization flow
-    ApiResponse<SubmitLoginJsonResponse> response = apiInstance.SubmitLoginJsonWithHttpInfo(orgId);
+    ApiResponse<SubmitLoginJsonResponse> response = apiInstance.SubmitLoginJsonWithHttpInfo(orgId, submitLoginJsonRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1790,6 +1889,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **submitLoginJsonRequest** | [**SubmitLoginJsonRequest**](SubmitLoginJsonRequest.md) |  |  |
 
 ### Return type
 
@@ -1801,7 +1901,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1916,7 +2016,7 @@ No authorization required
 
 <a id="token"></a>
 # **Token**
-> TokenResponse Token (string orgId)
+> TokenResponse Token (string orgId, string grantType, string? code = null, string? redirectUri = null, string? codeVerifier = null, string? refreshToken = null, string? deviceCode = null, string? authReqId = null, string? scope = null, string? resource = null, string? subjectToken = null, string? subjectTokenType = null, string? actorToken = null, string? actorTokenType = null, string? requestedTokenType = null, string? assertion = null, string? clientId = null, string? clientSecret = null, string? clientAssertionType = null, string? clientAssertion = null)
 
 OAuth 2.1 token endpoint
 
@@ -1948,11 +2048,30 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new OAuthApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var grantType = "grantType_example";  // string | 
+            var code = "code_example";  // string? |  (optional) 
+            var redirectUri = "redirectUri_example";  // string? |  (optional) 
+            var codeVerifier = "codeVerifier_example";  // string? |  (optional) 
+            var refreshToken = "refreshToken_example";  // string? |  (optional) 
+            var deviceCode = "deviceCode_example";  // string? |  (optional) 
+            var authReqId = "authReqId_example";  // string? | CIBA (optional) 
+            var scope = "scope_example";  // string? |  (optional) 
+            var resource = "resource_example";  // string? |  (optional) 
+            var subjectToken = "subjectToken_example";  // string? | Token exchange (RFC 8693) (optional) 
+            var subjectTokenType = "subjectTokenType_example";  // string? |  (optional) 
+            var actorToken = "actorToken_example";  // string? |  (optional) 
+            var actorTokenType = "actorTokenType_example";  // string? |  (optional) 
+            var requestedTokenType = "requestedTokenType_example";  // string? |  (optional) 
+            var assertion = "assertion_example";  // string? | JWT bearer / ID-JAG grant (optional) 
+            var clientId = "clientId_example";  // string? | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional) 
+            var clientSecret = "clientSecret_example";  // string? | client_secret_post (optional) 
+            var clientAssertionType = "clientAssertionType_example";  // string? |  (optional) 
+            var clientAssertion = "clientAssertion_example";  // string? | private_key_jwt (RFC 7523) (optional) 
 
             try
             {
                 // OAuth 2.1 token endpoint
-                TokenResponse result = apiInstance.Token(orgId);
+                TokenResponse result = apiInstance.Token(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1973,7 +2092,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // OAuth 2.1 token endpoint
-    ApiResponse<TokenResponse> response = apiInstance.TokenWithHttpInfo(orgId);
+    ApiResponse<TokenResponse> response = apiInstance.TokenWithHttpInfo(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1991,6 +2110,25 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **grantType** | **string** |  |  |
+| **code** | **string?** |  | [optional]  |
+| **redirectUri** | **string?** |  | [optional]  |
+| **codeVerifier** | **string?** |  | [optional]  |
+| **refreshToken** | **string?** |  | [optional]  |
+| **deviceCode** | **string?** |  | [optional]  |
+| **authReqId** | **string?** | CIBA | [optional]  |
+| **scope** | **string?** |  | [optional]  |
+| **resource** | **string?** |  | [optional]  |
+| **subjectToken** | **string?** | Token exchange (RFC 8693) | [optional]  |
+| **subjectTokenType** | **string?** |  | [optional]  |
+| **actorToken** | **string?** |  | [optional]  |
+| **actorTokenType** | **string?** |  | [optional]  |
+| **requestedTokenType** | **string?** |  | [optional]  |
+| **assertion** | **string?** | JWT bearer / ID-JAG grant | [optional]  |
+| **clientId** | **string?** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional]  |
+| **clientSecret** | **string?** | client_secret_post | [optional]  |
+| **clientAssertionType** | **string?** |  | [optional]  |
+| **clientAssertion** | **string?** | private_key_jwt (RFC 7523) | [optional]  |
 
 ### Return type
 
@@ -2002,7 +2140,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 

@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -187,7 +187,7 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+         * Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
          * @summary List active sessions
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -274,7 +274,7 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * Signs out all users. Requires `confirm: true` in the body.
-         * @summary Revoke every session in the tenant
+         * @summary Revoke every session in the organization
          * @param {string} orgId 
          * @param {AdminSessionsRevokeAllRequest} adminSessionsRevokeAllRequest 
          * @param {*} [options] Override http request option.
@@ -361,8 +361,8 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * Paginated OAuth access tokens issued by the tenant\'s clients. Filters: `revoked` (bool), `clientId`, `userId`.
-         * @summary List access tokens
+         * Paginated OPAQUE access tokens issued by the organization\'s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user\'s or a client\'s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
+         * @summary List stored (opaque) access tokens
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -582,7 +582,7 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Revokes the user\'s opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
          * @summary Revoke all tokens of a user
          * @param {string} orgId 
          * @param {string} userId 
@@ -627,7 +627,7 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Revokes the user\'s opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
          * @summary Revoke all tokens of a user (POST alias)
          * @param {string} orgId 
          * @param {string} userId 
@@ -723,7 +723,7 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+         * Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
          * @summary List active sessions
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
@@ -751,7 +751,7 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * Signs out all users. Requires `confirm: true` in the body.
-         * @summary Revoke every session in the tenant
+         * @summary Revoke every session in the organization
          * @param {string} orgId 
          * @param {AdminSessionsRevokeAllRequest} adminSessionsRevokeAllRequest 
          * @param {*} [options] Override http request option.
@@ -777,8 +777,8 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Paginated OAuth access tokens issued by the tenant\'s clients. Filters: `revoked` (bool), `clientId`, `userId`.
-         * @summary List access tokens
+         * Paginated OPAQUE access tokens issued by the organization\'s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user\'s or a client\'s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
+         * @summary List stored (opaque) access tokens
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -846,7 +846,7 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Revokes the user\'s opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
          * @summary Revoke all tokens of a user
          * @param {string} orgId 
          * @param {string} userId 
@@ -860,7 +860,7 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Revokes the user\'s opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
          * @summary Revoke all tokens of a user (POST alias)
          * @param {string} orgId 
          * @param {string} userId 
@@ -914,7 +914,7 @@ export const AdminSessionsApiFactory = function (configuration?: Configuration, 
             return localVarFp.adminSessionsCount(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+         * Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
          * @summary List active sessions
          * @param {AdminSessionsApiAdminSessionsListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -935,7 +935,7 @@ export const AdminSessionsApiFactory = function (configuration?: Configuration, 
         },
         /**
          * Signs out all users. Requires `confirm: true` in the body.
-         * @summary Revoke every session in the tenant
+         * @summary Revoke every session in the organization
          * @param {AdminSessionsApiAdminSessionsRevokeAllRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -954,8 +954,8 @@ export const AdminSessionsApiFactory = function (configuration?: Configuration, 
             return localVarFp.adminSessionsStats(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Paginated OAuth access tokens issued by the tenant\'s clients. Filters: `revoked` (bool), `clientId`, `userId`.
-         * @summary List access tokens
+         * Paginated OPAQUE access tokens issued by the organization\'s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user\'s or a client\'s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
+         * @summary List stored (opaque) access tokens
          * @param {AdminSessionsApiAdminTokensListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1004,7 +1004,7 @@ export const AdminSessionsApiFactory = function (configuration?: Configuration, 
             return localVarFp.adminUserSessionsRevokePost(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Revokes the user\'s opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
          * @summary Revoke all tokens of a user
          * @param {AdminSessionsApiAdminUserTokensRevokeAllRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1014,7 +1014,7 @@ export const AdminSessionsApiFactory = function (configuration?: Configuration, 
             return localVarFp.adminUserTokensRevokeAll(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Revokes the user\'s opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
          * @summary Revoke all tokens of a user (POST alias)
          * @param {AdminSessionsApiAdminUserTokensRevokePostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1063,7 +1063,7 @@ export interface AdminSessionsApiInterface {
     adminSessionsCount(requestParameters: AdminSessionsApiAdminSessionsCountRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSessionsCountResponse>;
 
     /**
-     * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+     * Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
      * @summary List active sessions
      * @param {AdminSessionsApiAdminSessionsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1084,7 +1084,7 @@ export interface AdminSessionsApiInterface {
 
     /**
      * Signs out all users. Requires `confirm: true` in the body.
-     * @summary Revoke every session in the tenant
+     * @summary Revoke every session in the organization
      * @param {AdminSessionsApiAdminSessionsRevokeAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1103,8 +1103,8 @@ export interface AdminSessionsApiInterface {
     adminSessionsStats(requestParameters: AdminSessionsApiAdminSessionsStatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSessionsStatsResponse>;
 
     /**
-     * Paginated OAuth access tokens issued by the tenant\'s clients. Filters: `revoked` (bool), `clientId`, `userId`.
-     * @summary List access tokens
+     * Paginated OPAQUE access tokens issued by the organization\'s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user\'s or a client\'s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
+     * @summary List stored (opaque) access tokens
      * @param {AdminSessionsApiAdminTokensListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1153,7 +1153,7 @@ export interface AdminSessionsApiInterface {
     adminUserSessionsRevokePost(requestParameters: AdminSessionsApiAdminUserSessionsRevokePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserSessionsRevokePostResponse>;
 
     /**
-     * 
+     * Revokes the user\'s opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
      * @summary Revoke all tokens of a user
      * @param {AdminSessionsApiAdminUserTokensRevokeAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1163,7 +1163,7 @@ export interface AdminSessionsApiInterface {
     adminUserTokensRevokeAll(requestParameters: AdminSessionsApiAdminUserTokensRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserTokensRevokeAllResponse>;
 
     /**
-     * 
+     * Revokes the user\'s opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
      * @summary Revoke all tokens of a user (POST alias)
      * @param {AdminSessionsApiAdminUserTokensRevokePostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1484,7 +1484,7 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
     }
 
     /**
-     * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+     * Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
      * @summary List active sessions
      * @param {AdminSessionsApiAdminSessionsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1509,7 +1509,7 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
 
     /**
      * Signs out all users. Requires `confirm: true` in the body.
-     * @summary Revoke every session in the tenant
+     * @summary Revoke every session in the organization
      * @param {AdminSessionsApiAdminSessionsRevokeAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1532,8 +1532,8 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
     }
 
     /**
-     * Paginated OAuth access tokens issued by the tenant\'s clients. Filters: `revoked` (bool), `clientId`, `userId`.
-     * @summary List access tokens
+     * Paginated OPAQUE access tokens issued by the organization\'s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user\'s or a client\'s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
+     * @summary List stored (opaque) access tokens
      * @param {AdminSessionsApiAdminTokensListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1592,7 +1592,7 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
     }
 
     /**
-     * 
+     * Revokes the user\'s opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
      * @summary Revoke all tokens of a user
      * @param {AdminSessionsApiAdminUserTokensRevokeAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1604,7 +1604,7 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
     }
 
     /**
-     * 
+     * Revokes the user\'s opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
      * @summary Revoke all tokens of a user (POST alias)
      * @param {AdminSessionsApiAdminUserTokensRevokePostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

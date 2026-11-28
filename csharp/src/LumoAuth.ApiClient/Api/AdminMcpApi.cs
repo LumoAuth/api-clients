@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -36,8 +36,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="mcpServerWrite"></param>
         /// <returns>AdminMcpServersCreateResponse</returns>
-        AdminMcpServersCreateResponse AdminMcpServersCreate(string orgId);
+        AdminMcpServersCreateResponse AdminMcpServersCreate(string orgId, McpServerWrite mcpServerWrite);
 
         /// <summary>
         /// Register an MCP server
@@ -47,8 +48,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="mcpServerWrite"></param>
         /// <returns>ApiResponse of AdminMcpServersCreateResponse</returns>
-        ApiResponse<AdminMcpServersCreateResponse> AdminMcpServersCreateWithHttpInfo(string orgId);
+        ApiResponse<AdminMcpServersCreateResponse> AdminMcpServersCreateWithHttpInfo(string orgId, McpServerWrite mcpServerWrite);
         /// <summary>
         /// Delete an MCP server
         /// </summary>
@@ -175,6 +177,53 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <returns>ApiResponse of AdminMcpServersListResponse</returns>
         ApiResponse<AdminMcpServersListResponse> AdminMcpServersListWithHttpInfo(string orgId);
+        /// <summary>
+        /// Update an MCP server
+        /// </summary>
+        /// <remarks>
+        /// Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <returns>AdminMcpServersCreateResponse</returns>
+        AdminMcpServersCreateResponse PatchAdminMcpServersUpdate(string orgId, string serverId, McpServerWrite mcpServerWrite);
+
+        /// <summary>
+        /// Update an MCP server
+        /// </summary>
+        /// <remarks>
+        /// Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <returns>ApiResponse of AdminMcpServersCreateResponse</returns>
+        ApiResponse<AdminMcpServersCreateResponse> PatchAdminMcpServersUpdateWithHttpInfo(string orgId, string serverId, McpServerWrite mcpServerWrite);
+        /// <summary>
+        /// Update an MCP server (same as PATCH: only the fields that are sent change)
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <returns>AdminMcpServersCreateResponse</returns>
+        AdminMcpServersCreateResponse PutAdminMcpServersUpdate(string orgId, string serverId, McpServerWrite mcpServerWrite);
+
+        /// <summary>
+        /// Update an MCP server (same as PATCH: only the fields that are sent change)
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <returns>ApiResponse of AdminMcpServersCreateResponse</returns>
+        ApiResponse<AdminMcpServersCreateResponse> PutAdminMcpServersUpdateWithHttpInfo(string orgId, string serverId, McpServerWrite mcpServerWrite);
         #endregion Synchronous Operations
     }
 
@@ -192,9 +241,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="mcpServerWrite"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminMcpServersCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminMcpServersCreateResponse> AdminMcpServersCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminMcpServersCreateResponse> AdminMcpServersCreateAsync(string orgId, McpServerWrite mcpServerWrite, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Register an MCP server
@@ -204,9 +254,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="mcpServerWrite"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminMcpServersCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminMcpServersCreateResponse>> AdminMcpServersCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminMcpServersCreateResponse>> AdminMcpServersCreateWithHttpInfoAsync(string orgId, McpServerWrite mcpServerWrite, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete an MCP server
         /// </summary>
@@ -363,6 +414,60 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminMcpServersListResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminMcpServersListResponse>> AdminMcpServersListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Update an MCP server
+        /// </summary>
+        /// <remarks>
+        /// Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminMcpServersCreateResponse</returns>
+        System.Threading.Tasks.Task<AdminMcpServersCreateResponse> PatchAdminMcpServersUpdateAsync(string orgId, string serverId, McpServerWrite mcpServerWrite, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Update an MCP server
+        /// </summary>
+        /// <remarks>
+        /// Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminMcpServersCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminMcpServersCreateResponse>> PatchAdminMcpServersUpdateWithHttpInfoAsync(string orgId, string serverId, McpServerWrite mcpServerWrite, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Update an MCP server (same as PATCH: only the fields that are sent change)
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminMcpServersCreateResponse</returns>
+        System.Threading.Tasks.Task<AdminMcpServersCreateResponse> PutAdminMcpServersUpdateAsync(string orgId, string serverId, McpServerWrite mcpServerWrite, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Update an MCP server (same as PATCH: only the fields that are sent change)
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminMcpServersCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminMcpServersCreateResponse>> PutAdminMcpServersUpdateWithHttpInfoAsync(string orgId, string serverId, McpServerWrite mcpServerWrite, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -581,10 +686,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="mcpServerWrite"></param>
         /// <returns>AdminMcpServersCreateResponse</returns>
-        public AdminMcpServersCreateResponse AdminMcpServersCreate(string orgId)
+        public AdminMcpServersCreateResponse AdminMcpServersCreate(string orgId, McpServerWrite mcpServerWrite)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> localVarResponse = AdminMcpServersCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> localVarResponse = AdminMcpServersCreateWithHttpInfo(orgId, mcpServerWrite);
             return localVarResponse.Data;
         }
 
@@ -593,16 +699,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="mcpServerWrite"></param>
         /// <returns>ApiResponse of AdminMcpServersCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> AdminMcpServersCreateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> AdminMcpServersCreateWithHttpInfo(string orgId, McpServerWrite mcpServerWrite)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminMcpApi->AdminMcpServersCreate");
 
+            // verify the required parameter 'mcpServerWrite' is set
+            if (mcpServerWrite == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'mcpServerWrite' when calling AdminMcpApi->AdminMcpServersCreate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -617,6 +729,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = mcpServerWrite;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -647,11 +760,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="mcpServerWrite"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminMcpServersCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminMcpServersCreateResponse> AdminMcpServersCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminMcpServersCreateResponse> AdminMcpServersCreateAsync(string orgId, McpServerWrite mcpServerWrite, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> localVarResponse = await AdminMcpServersCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> localVarResponse = await AdminMcpServersCreateWithHttpInfoAsync(orgId, mcpServerWrite, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -660,18 +774,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="mcpServerWrite"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminMcpServersCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse>> AdminMcpServersCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse>> AdminMcpServersCreateWithHttpInfoAsync(string orgId, McpServerWrite mcpServerWrite, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminMcpApi->AdminMcpServersCreate");
 
+            // verify the required parameter 'mcpServerWrite' is set
+            if (mcpServerWrite == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'mcpServerWrite' when calling AdminMcpApi->AdminMcpServersCreate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -687,6 +807,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = mcpServerWrite;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1655,6 +1776,340 @@ namespace LumoAuth.ApiClient.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("AdminMcpServersList", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Update an MCP server Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <returns>AdminMcpServersCreateResponse</returns>
+        public AdminMcpServersCreateResponse PatchAdminMcpServersUpdate(string orgId, string serverId, McpServerWrite mcpServerWrite)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> localVarResponse = PatchAdminMcpServersUpdateWithHttpInfo(orgId, serverId, mcpServerWrite);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Update an MCP server Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <returns>ApiResponse of AdminMcpServersCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> PatchAdminMcpServersUpdateWithHttpInfo(string orgId, string serverId, McpServerWrite mcpServerWrite)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminMcpApi->PatchAdminMcpServersUpdate");
+
+            // verify the required parameter 'serverId' is set
+            if (serverId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'serverId' when calling AdminMcpApi->PatchAdminMcpServersUpdate");
+
+            // verify the required parameter 'mcpServerWrite' is set
+            if (mcpServerWrite == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'mcpServerWrite' when calling AdminMcpApi->PatchAdminMcpServersUpdate");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("serverId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(serverId)); // path parameter
+            localVarRequestOptions.Data = mcpServerWrite;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Patch<AdminMcpServersCreateResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("PatchAdminMcpServersUpdate", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Update an MCP server Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminMcpServersCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AdminMcpServersCreateResponse> PatchAdminMcpServersUpdateAsync(string orgId, string serverId, McpServerWrite mcpServerWrite, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> localVarResponse = await PatchAdminMcpServersUpdateWithHttpInfoAsync(orgId, serverId, mcpServerWrite, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Update an MCP server Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminMcpServersCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse>> PatchAdminMcpServersUpdateWithHttpInfoAsync(string orgId, string serverId, McpServerWrite mcpServerWrite, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminMcpApi->PatchAdminMcpServersUpdate");
+
+            // verify the required parameter 'serverId' is set
+            if (serverId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'serverId' when calling AdminMcpApi->PatchAdminMcpServersUpdate");
+
+            // verify the required parameter 'mcpServerWrite' is set
+            if (mcpServerWrite == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'mcpServerWrite' when calling AdminMcpApi->PatchAdminMcpServersUpdate");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("serverId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(serverId)); // path parameter
+            localVarRequestOptions.Data = mcpServerWrite;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PatchAsync<AdminMcpServersCreateResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("PatchAdminMcpServersUpdate", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Update an MCP server (same as PATCH: only the fields that are sent change) 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <returns>AdminMcpServersCreateResponse</returns>
+        public AdminMcpServersCreateResponse PutAdminMcpServersUpdate(string orgId, string serverId, McpServerWrite mcpServerWrite)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> localVarResponse = PutAdminMcpServersUpdateWithHttpInfo(orgId, serverId, mcpServerWrite);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Update an MCP server (same as PATCH: only the fields that are sent change) 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <returns>ApiResponse of AdminMcpServersCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> PutAdminMcpServersUpdateWithHttpInfo(string orgId, string serverId, McpServerWrite mcpServerWrite)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminMcpApi->PutAdminMcpServersUpdate");
+
+            // verify the required parameter 'serverId' is set
+            if (serverId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'serverId' when calling AdminMcpApi->PutAdminMcpServersUpdate");
+
+            // verify the required parameter 'mcpServerWrite' is set
+            if (mcpServerWrite == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'mcpServerWrite' when calling AdminMcpApi->PutAdminMcpServersUpdate");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("serverId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(serverId)); // path parameter
+            localVarRequestOptions.Data = mcpServerWrite;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Put<AdminMcpServersCreateResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("PutAdminMcpServersUpdate", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Update an MCP server (same as PATCH: only the fields that are sent change) 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminMcpServersCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AdminMcpServersCreateResponse> PutAdminMcpServersUpdateAsync(string orgId, string serverId, McpServerWrite mcpServerWrite, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> localVarResponse = await PutAdminMcpServersUpdateWithHttpInfoAsync(orgId, serverId, mcpServerWrite, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Update an MCP server (same as PATCH: only the fields that are sent change) 
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerWrite"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminMcpServersCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse>> PutAdminMcpServersUpdateWithHttpInfoAsync(string orgId, string serverId, McpServerWrite mcpServerWrite, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminMcpApi->PutAdminMcpServersUpdate");
+
+            // verify the required parameter 'serverId' is set
+            if (serverId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'serverId' when calling AdminMcpApi->PutAdminMcpServersUpdate");
+
+            // verify the required parameter 'mcpServerWrite' is set
+            if (mcpServerWrite == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'mcpServerWrite' when calling AdminMcpApi->PutAdminMcpServersUpdate");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("serverId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(serverId)); // path parameter
+            localVarRequestOptions.Data = mcpServerWrite;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PutAsync<AdminMcpServersCreateResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("PutAdminMcpServersUpdate", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 

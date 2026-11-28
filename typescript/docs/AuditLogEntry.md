@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **targetId** | **string** |  | [optional] [default to undefined]
 **targetName** | **string** |  | [optional] [default to undefined]
 **ipAddress** | **string** |  | [optional] [default to undefined]
+**traceId** | **string** | W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none | [optional] [default to undefined]
 **eventTime** | **string** | Detailed responses only | [optional] [default to undefined]
 **durationMs** | **number** | Detailed responses only | [optional] [default to undefined]
 **initiatedBy** | **string** | Detailed responses only | [optional] [default to undefined]
@@ -54,6 +55,7 @@ const instance: AuditLogEntry = {
     targetId,
     targetName,
     ipAddress,
+    traceId,
     eventTime,
     durationMs,
     initiatedBy,

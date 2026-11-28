@@ -27,7 +27,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 ## `checkAbac()`
 
 ```php
-checkAbac($orgId): \LumoAuth\ApiClient\Model\CheckAbacResponse
+checkAbac($orgId, $checkAbacRequest): \LumoAuth\ApiClient\Model\CheckAbacResponse
 ```
 
 Evaluate an ABAC policy decision for the caller
@@ -52,9 +52,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AuthorizationApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$checkAbacRequest = new \LumoAuth\ApiClient\Model\CheckAbacRequest(); // \LumoAuth\ApiClient\Model\CheckAbacRequest
 
 try {
-    $result = $apiInstance->checkAbac($orgId);
+    $result = $apiInstance->checkAbac($orgId, $checkAbacRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationApi->checkAbac: ', $e->getMessage(), PHP_EOL;
@@ -66,6 +67,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **checkAbacRequest** | [**\LumoAuth\ApiClient\Model\CheckAbacRequest**](../Model/CheckAbacRequest.md)|  | |
 
 ### Return type
 
@@ -77,7 +79,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -87,7 +89,7 @@ try {
 ## `checkAbacBulk()`
 
 ```php
-checkAbacBulk($orgId): \LumoAuth\ApiClient\Model\CheckAbacBulkResponse
+checkAbacBulk($orgId, $checkAbacBulkRequest): \LumoAuth\ApiClient\Model\CheckAbacBulkResponse
 ```
 
 Evaluate up to 100 ABAC checks for the caller in one call
@@ -112,9 +114,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AuthorizationApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$checkAbacBulkRequest = new \LumoAuth\ApiClient\Model\CheckAbacBulkRequest(); // \LumoAuth\ApiClient\Model\CheckAbacBulkRequest
 
 try {
-    $result = $apiInstance->checkAbacBulk($orgId);
+    $result = $apiInstance->checkAbacBulk($orgId, $checkAbacBulkRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationApi->checkAbacBulk: ', $e->getMessage(), PHP_EOL;
@@ -126,6 +129,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **checkAbacBulkRequest** | [**\LumoAuth\ApiClient\Model\CheckAbacBulkRequest**](../Model/CheckAbacBulkRequest.md)|  | |
 
 ### Return type
 
@@ -137,7 +141,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -147,7 +151,7 @@ try {
 ## `checkAllPermissions()`
 
 ```php
-checkAllPermissions(): \LumoAuth\ApiClient\Model\CheckAnyPermissionResponse
+checkAllPermissions($checkPermissionsBulkRequest): \LumoAuth\ApiClient\Model\CheckAnyPermissionResponse
 ```
 
 Check whether the subject holds all of the permissions
@@ -176,9 +180,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AuthorizationApi(
     new GuzzleHttp\Client(),
     $config
 );
+$checkPermissionsBulkRequest = new \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest(); // \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest
 
 try {
-    $result = $apiInstance->checkAllPermissions();
+    $result = $apiInstance->checkAllPermissions($checkPermissionsBulkRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationApi->checkAllPermissions: ', $e->getMessage(), PHP_EOL;
@@ -187,7 +192,9 @@ try {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **checkPermissionsBulkRequest** | [**\LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest**](../Model/CheckPermissionsBulkRequest.md)|  | |
 
 ### Return type
 
@@ -199,7 +206,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -209,7 +216,7 @@ This endpoint does not need any parameter.
 ## `checkAnyPermission()`
 
 ```php
-checkAnyPermission(): \LumoAuth\ApiClient\Model\CheckAnyPermissionResponse
+checkAnyPermission($checkPermissionsBulkRequest): \LumoAuth\ApiClient\Model\CheckAnyPermissionResponse
 ```
 
 Check whether the subject holds any of the permissions
@@ -238,9 +245,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AuthorizationApi(
     new GuzzleHttp\Client(),
     $config
 );
+$checkPermissionsBulkRequest = new \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest(); // \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest
 
 try {
-    $result = $apiInstance->checkAnyPermission();
+    $result = $apiInstance->checkAnyPermission($checkPermissionsBulkRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationApi->checkAnyPermission: ', $e->getMessage(), PHP_EOL;
@@ -249,7 +257,9 @@ try {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **checkPermissionsBulkRequest** | [**\LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest**](../Model/CheckPermissionsBulkRequest.md)|  | |
 
 ### Return type
 
@@ -261,7 +271,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -271,7 +281,7 @@ This endpoint does not need any parameter.
 ## `checkPermission()`
 
 ```php
-checkPermission(): \LumoAuth\ApiClient\Model\CheckPermissionResponse
+checkPermission($checkPermissionRequest): \LumoAuth\ApiClient\Model\CheckPermissionResponse
 ```
 
 Check one permission
@@ -300,9 +310,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AuthorizationApi(
     new GuzzleHttp\Client(),
     $config
 );
+$checkPermissionRequest = new \LumoAuth\ApiClient\Model\CheckPermissionRequest(); // \LumoAuth\ApiClient\Model\CheckPermissionRequest
 
 try {
-    $result = $apiInstance->checkPermission();
+    $result = $apiInstance->checkPermission($checkPermissionRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationApi->checkPermission: ', $e->getMessage(), PHP_EOL;
@@ -311,7 +322,9 @@ try {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **checkPermissionRequest** | [**\LumoAuth\ApiClient\Model\CheckPermissionRequest**](../Model/CheckPermissionRequest.md)|  | |
 
 ### Return type
 
@@ -323,7 +336,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -333,7 +346,7 @@ This endpoint does not need any parameter.
 ## `checkPermissionsBulk()`
 
 ```php
-checkPermissionsBulk(): \LumoAuth\ApiClient\Model\CheckPermissionsBulkResponse
+checkPermissionsBulk($checkPermissionsBulkRequest): \LumoAuth\ApiClient\Model\CheckPermissionsBulkResponse
 ```
 
 Check up to 100 permissions in one call
@@ -362,9 +375,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AuthorizationApi(
     new GuzzleHttp\Client(),
     $config
 );
+$checkPermissionsBulkRequest = new \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest(); // \LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest
 
 try {
-    $result = $apiInstance->checkPermissionsBulk();
+    $result = $apiInstance->checkPermissionsBulk($checkPermissionsBulkRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationApi->checkPermissionsBulk: ', $e->getMessage(), PHP_EOL;
@@ -373,7 +387,9 @@ try {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **checkPermissionsBulkRequest** | [**\LumoAuth\ApiClient\Model\CheckPermissionsBulkRequest**](../Model/CheckPermissionsBulkRequest.md)|  | |
 
 ### Return type
 
@@ -385,7 +401,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -395,7 +411,7 @@ This endpoint does not need any parameter.
 ## `checkRelation()`
 
 ```php
-checkRelation(): \LumoAuth\ApiClient\Model\CheckRelationResponse
+checkRelation($checkRelationRequest): \LumoAuth\ApiClient\Model\CheckRelationResponse
 ```
 
 Zanzibar relationship check
@@ -424,9 +440,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AuthorizationApi(
     new GuzzleHttp\Client(),
     $config
 );
+$checkRelationRequest = new \LumoAuth\ApiClient\Model\CheckRelationRequest(); // \LumoAuth\ApiClient\Model\CheckRelationRequest
 
 try {
-    $result = $apiInstance->checkRelation();
+    $result = $apiInstance->checkRelation($checkRelationRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationApi->checkRelation: ', $e->getMessage(), PHP_EOL;
@@ -435,7 +452,9 @@ try {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **checkRelationRequest** | [**\LumoAuth\ApiClient\Model\CheckRelationRequest**](../Model/CheckRelationRequest.md)|  | |
 
 ### Return type
 
@@ -447,7 +466,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -457,7 +476,7 @@ This endpoint does not need any parameter.
 ## `checkRelationScoped()`
 
 ```php
-checkRelationScoped($orgId): \LumoAuth\ApiClient\Model\CheckRelationScopedResponse
+checkRelationScoped($orgId, $checkRelationScopedRequest): \LumoAuth\ApiClient\Model\CheckRelationScopedResponse
 ```
 
 Zanzibar relationship check
@@ -485,9 +504,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AuthorizationApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$checkRelationScopedRequest = new \LumoAuth\ApiClient\Model\CheckRelationScopedRequest(); // \LumoAuth\ApiClient\Model\CheckRelationScopedRequest
 
 try {
-    $result = $apiInstance->checkRelationScoped($orgId);
+    $result = $apiInstance->checkRelationScoped($orgId, $checkRelationScopedRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationApi->checkRelationScoped: ', $e->getMessage(), PHP_EOL;
@@ -499,6 +519,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **checkRelationScopedRequest** | [**\LumoAuth\ApiClient\Model\CheckRelationScopedRequest**](../Model/CheckRelationScopedRequest.md)|  | |
 
 ### Return type
 
@@ -510,7 +531,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -520,7 +541,7 @@ try {
 ## `evaluate()`
 
 ```php
-evaluate(): \LumoAuth\ApiClient\Model\AuthZenDecision
+evaluate($evaluateRequest): \LumoAuth\ApiClient\Model\AuthZenDecision
 ```
 
 AuthZEN 1.0 access evaluation
@@ -549,9 +570,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AuthorizationApi(
     new GuzzleHttp\Client(),
     $config
 );
+$evaluateRequest = new \LumoAuth\ApiClient\Model\EvaluateRequest(); // \LumoAuth\ApiClient\Model\EvaluateRequest | AuthZEN Authorization API 1.0 evaluation request.
 
 try {
-    $result = $apiInstance->evaluate();
+    $result = $apiInstance->evaluate($evaluateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationApi->evaluate: ', $e->getMessage(), PHP_EOL;
@@ -560,7 +582,9 @@ try {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **evaluateRequest** | [**\LumoAuth\ApiClient\Model\EvaluateRequest**](../Model/EvaluateRequest.md)| AuthZEN Authorization API 1.0 evaluation request. | |
 
 ### Return type
 
@@ -572,7 +596,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -582,7 +606,7 @@ This endpoint does not need any parameter.
 ## `evaluateBatch()`
 
 ```php
-evaluateBatch(): \LumoAuth\ApiClient\Model\EvaluateBatchResponse
+evaluateBatch($evaluateBatchRequest): \LumoAuth\ApiClient\Model\EvaluateBatchResponse
 ```
 
 AuthZEN 1.0 boxcarred access evaluations
@@ -611,9 +635,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AuthorizationApi(
     new GuzzleHttp\Client(),
     $config
 );
+$evaluateBatchRequest = new \LumoAuth\ApiClient\Model\EvaluateBatchRequest(); // \LumoAuth\ApiClient\Model\EvaluateBatchRequest | AuthZEN Authorization API 1.0 batch evaluation request.
 
 try {
-    $result = $apiInstance->evaluateBatch();
+    $result = $apiInstance->evaluateBatch($evaluateBatchRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationApi->evaluateBatch: ', $e->getMessage(), PHP_EOL;
@@ -622,7 +647,9 @@ try {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **evaluateBatchRequest** | [**\LumoAuth\ApiClient\Model\EvaluateBatchRequest**](../Model/EvaluateBatchRequest.md)| AuthZEN Authorization API 1.0 batch evaluation request. | |
 
 ### Return type
 
@@ -634,7 +661,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1024,7 +1051,7 @@ This endpoint does not need any parameter.
 ## `setResourceAttribute()`
 
 ```php
-setResourceAttribute($orgId, $resourceType, $resourceId, $attributeSlug): \LumoAuth\ApiClient\Model\SetResourceAttributeResponse
+setResourceAttribute($orgId, $resourceType, $resourceId, $attributeSlug, $setResourceAttributeRequest): \LumoAuth\ApiClient\Model\SetResourceAttributeResponse
 ```
 
 Set a resource attribute
@@ -1052,9 +1079,10 @@ $orgId = 'orgId_example'; // string
 $resourceType = 'resourceType_example'; // string
 $resourceId = 'resourceId_example'; // string
 $attributeSlug = 'attributeSlug_example'; // string
+$setResourceAttributeRequest = new \LumoAuth\ApiClient\Model\SetResourceAttributeRequest(); // \LumoAuth\ApiClient\Model\SetResourceAttributeRequest
 
 try {
-    $result = $apiInstance->setResourceAttribute($orgId, $resourceType, $resourceId, $attributeSlug);
+    $result = $apiInstance->setResourceAttribute($orgId, $resourceType, $resourceId, $attributeSlug, $setResourceAttributeRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationApi->setResourceAttribute: ', $e->getMessage(), PHP_EOL;
@@ -1069,6 +1097,7 @@ try {
 | **resourceType** | **string**|  | |
 | **resourceId** | **string**|  | |
 | **attributeSlug** | **string**|  | |
+| **setResourceAttributeRequest** | [**\LumoAuth\ApiClient\Model\SetResourceAttributeRequest**](../Model/SetResourceAttributeRequest.md)|  | |
 
 ### Return type
 
@@ -1080,7 +1109,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1090,7 +1119,7 @@ try {
 ## `setUserAttribute()`
 
 ```php
-setUserAttribute($orgId, $userId, $attributeSlug): \LumoAuth\ApiClient\Model\SetUserAttributeResponse
+setUserAttribute($orgId, $userId, $attributeSlug, $setResourceAttributeRequest): \LumoAuth\ApiClient\Model\SetUserAttributeResponse
 ```
 
 Set a user attribute
@@ -1117,9 +1146,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AuthorizationApi(
 $orgId = 'orgId_example'; // string
 $userId = 'userId_example'; // string
 $attributeSlug = 'attributeSlug_example'; // string
+$setResourceAttributeRequest = new \LumoAuth\ApiClient\Model\SetResourceAttributeRequest(); // \LumoAuth\ApiClient\Model\SetResourceAttributeRequest
 
 try {
-    $result = $apiInstance->setUserAttribute($orgId, $userId, $attributeSlug);
+    $result = $apiInstance->setUserAttribute($orgId, $userId, $attributeSlug, $setResourceAttributeRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthorizationApi->setUserAttribute: ', $e->getMessage(), PHP_EOL;
@@ -1133,6 +1163,7 @@ try {
 | **orgId** | **string**|  | |
 | **userId** | **string**|  | |
 | **attributeSlug** | **string**|  | |
+| **setResourceAttributeRequest** | [**\LumoAuth\ApiClient\Model\SetResourceAttributeRequest**](../Model/SetResourceAttributeRequest.md)|  | |
 
 ### Return type
 
@@ -1144,7 +1175,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

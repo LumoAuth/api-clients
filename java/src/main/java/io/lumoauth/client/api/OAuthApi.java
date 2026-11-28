@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -33,12 +33,15 @@ import io.lumoauth.client.model.CheckEmailFirstResponse;
 import io.lumoauth.client.model.DeviceAuthorizationResponse;
 import io.lumoauth.client.model.IntrospectResponse;
 import io.lumoauth.client.model.ParResponse;
+import io.lumoauth.client.model.RegisterClientRequest;
 import io.lumoauth.client.model.RegisterClientResponse;
 import io.lumoauth.client.model.RegisteredClientMetadata;
 import io.lumoauth.client.model.RequestMagicLinkRequest;
 import io.lumoauth.client.model.RequestMagicLinkResponse;
+import io.lumoauth.client.model.SubmitLoginJsonRequest;
 import io.lumoauth.client.model.SubmitLoginJsonResponse;
 import io.lumoauth.client.model.TokenResponse;
+import java.net.URI;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -229,6 +232,19 @@ public class OAuthApi {
     /**
      * Build call for backchannelAuthorize
      * @param orgId  (required)
+     * @param scope  (required)
+     * @param loginHint  (optional)
+     * @param loginHintToken  (optional)
+     * @param idTokenHint  (optional)
+     * @param bindingMessage  (optional)
+     * @param acrValues  (optional)
+     * @param requestedExpiry  (optional)
+     * @param clientNotificationToken  (optional)
+     * @param authorizationDetails  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -243,7 +259,7 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call backchannelAuthorizeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call backchannelAuthorizeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String scope, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String loginHintToken, @javax.annotation.Nullable String idTokenHint, @javax.annotation.Nullable String bindingMessage, @javax.annotation.Nullable String acrValues, @javax.annotation.Nullable Integer requestedExpiry, @javax.annotation.Nullable String clientNotificationToken, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -269,6 +285,58 @@ public class OAuthApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (scope != null) {
+            localVarFormParams.put("scope", scope);
+        }
+
+        if (loginHint != null) {
+            localVarFormParams.put("login_hint", loginHint);
+        }
+
+        if (loginHintToken != null) {
+            localVarFormParams.put("login_hint_token", loginHintToken);
+        }
+
+        if (idTokenHint != null) {
+            localVarFormParams.put("id_token_hint", idTokenHint);
+        }
+
+        if (bindingMessage != null) {
+            localVarFormParams.put("binding_message", bindingMessage);
+        }
+
+        if (acrValues != null) {
+            localVarFormParams.put("acr_values", acrValues);
+        }
+
+        if (requestedExpiry != null) {
+            localVarFormParams.put("requested_expiry", requestedExpiry);
+        }
+
+        if (clientNotificationToken != null) {
+            localVarFormParams.put("client_notification_token", clientNotificationToken);
+        }
+
+        if (authorizationDetails != null) {
+            localVarFormParams.put("authorization_details", authorizationDetails);
+        }
+
+        if (clientId != null) {
+            localVarFormParams.put("client_id", clientId);
+        }
+
+        if (clientSecret != null) {
+            localVarFormParams.put("client_secret", clientSecret);
+        }
+
+        if (clientAssertionType != null) {
+            localVarFormParams.put("client_assertion_type", clientAssertionType);
+        }
+
+        if (clientAssertion != null) {
+            localVarFormParams.put("client_assertion", clientAssertion);
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -278,6 +346,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/x-www-form-urlencoded"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -289,13 +358,18 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call backchannelAuthorizeValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call backchannelAuthorizeValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String scope, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String loginHintToken, @javax.annotation.Nullable String idTokenHint, @javax.annotation.Nullable String bindingMessage, @javax.annotation.Nullable String acrValues, @javax.annotation.Nullable Integer requestedExpiry, @javax.annotation.Nullable String clientNotificationToken, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling backchannelAuthorize(Async)");
         }
 
-        return backchannelAuthorizeCall(orgId, _callback);
+        // verify the required parameter 'scope' is set
+        if (scope == null) {
+            throw new ApiException("Missing the required parameter 'scope' when calling backchannelAuthorize(Async)");
+        }
+
+        return backchannelAuthorizeCall(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
 
     }
 
@@ -303,6 +377,19 @@ public class OAuthApi {
      * CIBA backchannel authentication request
      * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
      * @param orgId  (required)
+     * @param scope  (required)
+     * @param loginHint  (optional)
+     * @param loginHintToken  (optional)
+     * @param idTokenHint  (optional)
+     * @param bindingMessage  (optional)
+     * @param acrValues  (optional)
+     * @param requestedExpiry  (optional)
+     * @param clientNotificationToken  (optional)
+     * @param authorizationDetails  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return BackchannelAuthorizeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -316,8 +403,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
-    public BackchannelAuthorizeResponse backchannelAuthorize(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<BackchannelAuthorizeResponse> localVarResp = backchannelAuthorizeWithHttpInfo(orgId);
+    public BackchannelAuthorizeResponse backchannelAuthorize(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String scope, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String loginHintToken, @javax.annotation.Nullable String idTokenHint, @javax.annotation.Nullable String bindingMessage, @javax.annotation.Nullable String acrValues, @javax.annotation.Nullable Integer requestedExpiry, @javax.annotation.Nullable String clientNotificationToken, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        ApiResponse<BackchannelAuthorizeResponse> localVarResp = backchannelAuthorizeWithHttpInfo(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion);
         return localVarResp.getData();
     }
 
@@ -325,6 +412,19 @@ public class OAuthApi {
      * CIBA backchannel authentication request
      * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
      * @param orgId  (required)
+     * @param scope  (required)
+     * @param loginHint  (optional)
+     * @param loginHintToken  (optional)
+     * @param idTokenHint  (optional)
+     * @param bindingMessage  (optional)
+     * @param acrValues  (optional)
+     * @param requestedExpiry  (optional)
+     * @param clientNotificationToken  (optional)
+     * @param authorizationDetails  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return ApiResponse&lt;BackchannelAuthorizeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -338,8 +438,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<BackchannelAuthorizeResponse> backchannelAuthorizeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = backchannelAuthorizeValidateBeforeCall(orgId, null);
+    public ApiResponse<BackchannelAuthorizeResponse> backchannelAuthorizeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String scope, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String loginHintToken, @javax.annotation.Nullable String idTokenHint, @javax.annotation.Nullable String bindingMessage, @javax.annotation.Nullable String acrValues, @javax.annotation.Nullable Integer requestedExpiry, @javax.annotation.Nullable String clientNotificationToken, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        okhttp3.Call localVarCall = backchannelAuthorizeValidateBeforeCall(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion, null);
         Type localVarReturnType = new TypeToken<BackchannelAuthorizeResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -348,6 +448,19 @@ public class OAuthApi {
      * CIBA backchannel authentication request (asynchronously)
      * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
      * @param orgId  (required)
+     * @param scope  (required)
+     * @param loginHint  (optional)
+     * @param loginHintToken  (optional)
+     * @param idTokenHint  (optional)
+     * @param bindingMessage  (optional)
+     * @param acrValues  (optional)
+     * @param requestedExpiry  (optional)
+     * @param clientNotificationToken  (optional)
+     * @param authorizationDetails  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -362,9 +475,9 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call backchannelAuthorizeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<BackchannelAuthorizeResponse> _callback) throws ApiException {
+    public okhttp3.Call backchannelAuthorizeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String scope, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String loginHintToken, @javax.annotation.Nullable String idTokenHint, @javax.annotation.Nullable String bindingMessage, @javax.annotation.Nullable String acrValues, @javax.annotation.Nullable Integer requestedExpiry, @javax.annotation.Nullable String clientNotificationToken, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback<BackchannelAuthorizeResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = backchannelAuthorizeValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = backchannelAuthorizeValidateBeforeCall(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
         Type localVarReturnType = new TypeToken<BackchannelAuthorizeResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -525,6 +638,13 @@ public class OAuthApi {
     /**
      * Build call for deviceAuthorization
      * @param orgId  (required)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
+     * @param scope Space-separated scopes. (optional)
+     * @param resource RFC 8707 resource indicator. (optional)
+     * @param authorizationDetails RFC 9396, a JSON array as text. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -538,7 +658,7 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deviceAuthorizationCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call deviceAuthorizationCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String authorizationDetails, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -564,6 +684,34 @@ public class OAuthApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (clientId != null) {
+            localVarFormParams.put("client_id", clientId);
+        }
+
+        if (clientSecret != null) {
+            localVarFormParams.put("client_secret", clientSecret);
+        }
+
+        if (clientAssertionType != null) {
+            localVarFormParams.put("client_assertion_type", clientAssertionType);
+        }
+
+        if (clientAssertion != null) {
+            localVarFormParams.put("client_assertion", clientAssertion);
+        }
+
+        if (scope != null) {
+            localVarFormParams.put("scope", scope);
+        }
+
+        if (resource != null) {
+            localVarFormParams.put("resource", resource);
+        }
+
+        if (authorizationDetails != null) {
+            localVarFormParams.put("authorization_details", authorizationDetails);
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -573,6 +721,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/x-www-form-urlencoded"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -584,13 +733,13 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call deviceAuthorizationValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call deviceAuthorizationValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String authorizationDetails, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling deviceAuthorization(Async)");
         }
 
-        return deviceAuthorizationCall(orgId, _callback);
+        return deviceAuthorizationCall(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, authorizationDetails, _callback);
 
     }
 
@@ -598,6 +747,13 @@ public class OAuthApi {
      * Device authorization request (RFC 8628)
      * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
      * @param orgId  (required)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
+     * @param scope Space-separated scopes. (optional)
+     * @param resource RFC 8707 resource indicator. (optional)
+     * @param authorizationDetails RFC 9396, a JSON array as text. (optional)
      * @return DeviceAuthorizationResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -610,8 +766,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public DeviceAuthorizationResponse deviceAuthorization(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<DeviceAuthorizationResponse> localVarResp = deviceAuthorizationWithHttpInfo(orgId);
+    public DeviceAuthorizationResponse deviceAuthorization(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String authorizationDetails) throws ApiException {
+        ApiResponse<DeviceAuthorizationResponse> localVarResp = deviceAuthorizationWithHttpInfo(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, authorizationDetails);
         return localVarResp.getData();
     }
 
@@ -619,6 +775,13 @@ public class OAuthApi {
      * Device authorization request (RFC 8628)
      * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
      * @param orgId  (required)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
+     * @param scope Space-separated scopes. (optional)
+     * @param resource RFC 8707 resource indicator. (optional)
+     * @param authorizationDetails RFC 9396, a JSON array as text. (optional)
      * @return ApiResponse&lt;DeviceAuthorizationResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -631,8 +794,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DeviceAuthorizationResponse> deviceAuthorizationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = deviceAuthorizationValidateBeforeCall(orgId, null);
+    public ApiResponse<DeviceAuthorizationResponse> deviceAuthorizationWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String authorizationDetails) throws ApiException {
+        okhttp3.Call localVarCall = deviceAuthorizationValidateBeforeCall(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, authorizationDetails, null);
         Type localVarReturnType = new TypeToken<DeviceAuthorizationResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -641,6 +804,13 @@ public class OAuthApi {
      * Device authorization request (RFC 8628) (asynchronously)
      * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
      * @param orgId  (required)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
+     * @param scope Space-separated scopes. (optional)
+     * @param resource RFC 8707 resource indicator. (optional)
+     * @param authorizationDetails RFC 9396, a JSON array as text. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -654,9 +824,9 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deviceAuthorizationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<DeviceAuthorizationResponse> _callback) throws ApiException {
+    public okhttp3.Call deviceAuthorizationAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String authorizationDetails, final ApiCallback<DeviceAuthorizationResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = deviceAuthorizationValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = deviceAuthorizationValidateBeforeCall(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, authorizationDetails, _callback);
         Type localVarReturnType = new TypeToken<DeviceAuthorizationResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1075,6 +1245,12 @@ public class OAuthApi {
     /**
      * Build call for introspect
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1088,7 +1264,7 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call introspectCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call introspectCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1114,6 +1290,30 @@ public class OAuthApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (token != null) {
+            localVarFormParams.put("token", token);
+        }
+
+        if (tokenTypeHint != null) {
+            localVarFormParams.put("token_type_hint", tokenTypeHint);
+        }
+
+        if (clientId != null) {
+            localVarFormParams.put("client_id", clientId);
+        }
+
+        if (clientSecret != null) {
+            localVarFormParams.put("client_secret", clientSecret);
+        }
+
+        if (clientAssertionType != null) {
+            localVarFormParams.put("client_assertion_type", clientAssertionType);
+        }
+
+        if (clientAssertion != null) {
+            localVarFormParams.put("client_assertion", clientAssertion);
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1123,6 +1323,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/x-www-form-urlencoded"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1134,13 +1335,18 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call introspectValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call introspectValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling introspect(Async)");
         }
 
-        return introspectCall(orgId, _callback);
+        // verify the required parameter 'token' is set
+        if (token == null) {
+            throw new ApiException("Missing the required parameter 'token' when calling introspect(Async)");
+        }
+
+        return introspectCall(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
 
     }
 
@@ -1148,6 +1354,12 @@ public class OAuthApi {
      * Token introspection (RFC 7662)
      * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return IntrospectResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1160,8 +1372,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public IntrospectResponse introspect(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<IntrospectResponse> localVarResp = introspectWithHttpInfo(orgId);
+    public IntrospectResponse introspect(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        ApiResponse<IntrospectResponse> localVarResp = introspectWithHttpInfo(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
         return localVarResp.getData();
     }
 
@@ -1169,6 +1381,12 @@ public class OAuthApi {
      * Token introspection (RFC 7662)
      * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return ApiResponse&lt;IntrospectResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1181,8 +1399,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<IntrospectResponse> introspectWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = introspectValidateBeforeCall(orgId, null);
+    public ApiResponse<IntrospectResponse> introspectWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        okhttp3.Call localVarCall = introspectValidateBeforeCall(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, null);
         Type localVarReturnType = new TypeToken<IntrospectResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1191,6 +1409,12 @@ public class OAuthApi {
      * Token introspection (RFC 7662) (asynchronously)
      * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1204,9 +1428,9 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call introspectAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<IntrospectResponse> _callback) throws ApiException {
+    public okhttp3.Call introspectAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback<IntrospectResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = introspectValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = introspectValidateBeforeCall(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
         Type localVarReturnType = new TypeToken<IntrospectResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1214,6 +1438,22 @@ public class OAuthApi {
     /**
      * Build call for par
      * @param orgId  (required)
+     * @param responseType  (optional)
+     * @param redirectUri  (optional)
+     * @param scope  (optional)
+     * @param state  (optional)
+     * @param nonce  (optional)
+     * @param codeChallenge  (optional)
+     * @param codeChallengeMethod  (optional)
+     * @param request A signed request object (JAR, RFC 9101). (optional)
+     * @param resource  (optional)
+     * @param authorizationDetails  (optional)
+     * @param prompt  (optional)
+     * @param loginHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1227,7 +1467,7 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call parCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call parCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String responseType, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String scope, @javax.annotation.Nullable String state, @javax.annotation.Nullable String nonce, @javax.annotation.Nullable String codeChallenge, @javax.annotation.Nullable String codeChallengeMethod, @javax.annotation.Nullable String request, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String prompt, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1253,6 +1493,70 @@ public class OAuthApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (responseType != null) {
+            localVarFormParams.put("response_type", responseType);
+        }
+
+        if (redirectUri != null) {
+            localVarFormParams.put("redirect_uri", redirectUri);
+        }
+
+        if (scope != null) {
+            localVarFormParams.put("scope", scope);
+        }
+
+        if (state != null) {
+            localVarFormParams.put("state", state);
+        }
+
+        if (nonce != null) {
+            localVarFormParams.put("nonce", nonce);
+        }
+
+        if (codeChallenge != null) {
+            localVarFormParams.put("code_challenge", codeChallenge);
+        }
+
+        if (codeChallengeMethod != null) {
+            localVarFormParams.put("code_challenge_method", codeChallengeMethod);
+        }
+
+        if (request != null) {
+            localVarFormParams.put("request", request);
+        }
+
+        if (resource != null) {
+            localVarFormParams.put("resource", resource);
+        }
+
+        if (authorizationDetails != null) {
+            localVarFormParams.put("authorization_details", authorizationDetails);
+        }
+
+        if (prompt != null) {
+            localVarFormParams.put("prompt", prompt);
+        }
+
+        if (loginHint != null) {
+            localVarFormParams.put("login_hint", loginHint);
+        }
+
+        if (clientId != null) {
+            localVarFormParams.put("client_id", clientId);
+        }
+
+        if (clientSecret != null) {
+            localVarFormParams.put("client_secret", clientSecret);
+        }
+
+        if (clientAssertionType != null) {
+            localVarFormParams.put("client_assertion_type", clientAssertionType);
+        }
+
+        if (clientAssertion != null) {
+            localVarFormParams.put("client_assertion", clientAssertion);
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1262,6 +1566,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/x-www-form-urlencoded"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1273,13 +1578,13 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call parValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call parValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String responseType, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String scope, @javax.annotation.Nullable String state, @javax.annotation.Nullable String nonce, @javax.annotation.Nullable String codeChallenge, @javax.annotation.Nullable String codeChallengeMethod, @javax.annotation.Nullable String request, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String prompt, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling par(Async)");
         }
 
-        return parCall(orgId, _callback);
+        return parCall(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, authorizationDetails, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
 
     }
 
@@ -1287,6 +1592,22 @@ public class OAuthApi {
      * Pushed authorization request (RFC 9126)
      * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
      * @param orgId  (required)
+     * @param responseType  (optional)
+     * @param redirectUri  (optional)
+     * @param scope  (optional)
+     * @param state  (optional)
+     * @param nonce  (optional)
+     * @param codeChallenge  (optional)
+     * @param codeChallengeMethod  (optional)
+     * @param request A signed request object (JAR, RFC 9101). (optional)
+     * @param resource  (optional)
+     * @param authorizationDetails  (optional)
+     * @param prompt  (optional)
+     * @param loginHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return ParResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1299,8 +1620,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ParResponse par(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<ParResponse> localVarResp = parWithHttpInfo(orgId);
+    public ParResponse par(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String responseType, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String scope, @javax.annotation.Nullable String state, @javax.annotation.Nullable String nonce, @javax.annotation.Nullable String codeChallenge, @javax.annotation.Nullable String codeChallengeMethod, @javax.annotation.Nullable String request, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String prompt, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        ApiResponse<ParResponse> localVarResp = parWithHttpInfo(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, authorizationDetails, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion);
         return localVarResp.getData();
     }
 
@@ -1308,6 +1629,22 @@ public class OAuthApi {
      * Pushed authorization request (RFC 9126)
      * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
      * @param orgId  (required)
+     * @param responseType  (optional)
+     * @param redirectUri  (optional)
+     * @param scope  (optional)
+     * @param state  (optional)
+     * @param nonce  (optional)
+     * @param codeChallenge  (optional)
+     * @param codeChallengeMethod  (optional)
+     * @param request A signed request object (JAR, RFC 9101). (optional)
+     * @param resource  (optional)
+     * @param authorizationDetails  (optional)
+     * @param prompt  (optional)
+     * @param loginHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return ApiResponse&lt;ParResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1320,8 +1657,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<ParResponse> parWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = parValidateBeforeCall(orgId, null);
+    public ApiResponse<ParResponse> parWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String responseType, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String scope, @javax.annotation.Nullable String state, @javax.annotation.Nullable String nonce, @javax.annotation.Nullable String codeChallenge, @javax.annotation.Nullable String codeChallengeMethod, @javax.annotation.Nullable String request, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String prompt, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        okhttp3.Call localVarCall = parValidateBeforeCall(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, authorizationDetails, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion, null);
         Type localVarReturnType = new TypeToken<ParResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1330,6 +1667,22 @@ public class OAuthApi {
      * Pushed authorization request (RFC 9126) (asynchronously)
      * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
      * @param orgId  (required)
+     * @param responseType  (optional)
+     * @param redirectUri  (optional)
+     * @param scope  (optional)
+     * @param state  (optional)
+     * @param nonce  (optional)
+     * @param codeChallenge  (optional)
+     * @param codeChallengeMethod  (optional)
+     * @param request A signed request object (JAR, RFC 9101). (optional)
+     * @param resource  (optional)
+     * @param authorizationDetails  (optional)
+     * @param prompt  (optional)
+     * @param loginHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1343,9 +1696,9 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call parAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<ParResponse> _callback) throws ApiException {
+    public okhttp3.Call parAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String responseType, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String scope, @javax.annotation.Nullable String state, @javax.annotation.Nullable String nonce, @javax.annotation.Nullable String codeChallenge, @javax.annotation.Nullable String codeChallengeMethod, @javax.annotation.Nullable String request, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String prompt, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback<ParResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = parValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = parValidateBeforeCall(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, authorizationDetails, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
         Type localVarReturnType = new TypeToken<ParResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1353,6 +1706,7 @@ public class OAuthApi {
     /**
      * Build call for registerClient
      * @param orgId  (required)
+     * @param registerClientRequest RFC 7591 client metadata. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1367,7 +1721,7 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call registerClientCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call registerClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterClientRequest registerClientRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1381,7 +1735,7 @@ public class OAuthApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = registerClientRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/connect/register"
@@ -1402,6 +1756,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1413,13 +1768,18 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call registerClientValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call registerClientValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterClientRequest registerClientRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling registerClient(Async)");
         }
 
-        return registerClientCall(orgId, _callback);
+        // verify the required parameter 'registerClientRequest' is set
+        if (registerClientRequest == null) {
+            throw new ApiException("Missing the required parameter 'registerClientRequest' when calling registerClient(Async)");
+        }
+
+        return registerClientCall(orgId, registerClientRequest, _callback);
 
     }
 
@@ -1427,6 +1787,7 @@ public class OAuthApi {
      * Dynamic client registration (RFC 7591 / OIDC DCR)
      * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
      * @param orgId  (required)
+     * @param registerClientRequest RFC 7591 client metadata. (required)
      * @return RegisterClientResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1440,8 +1801,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public RegisterClientResponse registerClient(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<RegisterClientResponse> localVarResp = registerClientWithHttpInfo(orgId);
+    public RegisterClientResponse registerClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterClientRequest registerClientRequest) throws ApiException {
+        ApiResponse<RegisterClientResponse> localVarResp = registerClientWithHttpInfo(orgId, registerClientRequest);
         return localVarResp.getData();
     }
 
@@ -1449,6 +1810,7 @@ public class OAuthApi {
      * Dynamic client registration (RFC 7591 / OIDC DCR)
      * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
      * @param orgId  (required)
+     * @param registerClientRequest RFC 7591 client metadata. (required)
      * @return ApiResponse&lt;RegisterClientResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1462,8 +1824,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<RegisterClientResponse> registerClientWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = registerClientValidateBeforeCall(orgId, null);
+    public ApiResponse<RegisterClientResponse> registerClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterClientRequest registerClientRequest) throws ApiException {
+        okhttp3.Call localVarCall = registerClientValidateBeforeCall(orgId, registerClientRequest, null);
         Type localVarReturnType = new TypeToken<RegisterClientResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1472,6 +1834,7 @@ public class OAuthApi {
      * Dynamic client registration (RFC 7591 / OIDC DCR) (asynchronously)
      * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
      * @param orgId  (required)
+     * @param registerClientRequest RFC 7591 client metadata. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1486,9 +1849,9 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call registerClientAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<RegisterClientResponse> _callback) throws ApiException {
+    public okhttp3.Call registerClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterClientRequest registerClientRequest, final ApiCallback<RegisterClientResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = registerClientValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = registerClientValidateBeforeCall(orgId, registerClientRequest, _callback);
         Type localVarReturnType = new TypeToken<RegisterClientResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1649,6 +2012,12 @@ public class OAuthApi {
     /**
      * Build call for revoke
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1656,13 +2025,13 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (token parameter missing), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call revokeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call revokeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1688,6 +2057,30 @@ public class OAuthApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (token != null) {
+            localVarFormParams.put("token", token);
+        }
+
+        if (tokenTypeHint != null) {
+            localVarFormParams.put("token_type_hint", tokenTypeHint);
+        }
+
+        if (clientId != null) {
+            localVarFormParams.put("client_id", clientId);
+        }
+
+        if (clientSecret != null) {
+            localVarFormParams.put("client_secret", clientSecret);
+        }
+
+        if (clientAssertionType != null) {
+            localVarFormParams.put("client_assertion_type", clientAssertionType);
+        }
+
+        if (clientAssertion != null) {
+            localVarFormParams.put("client_assertion", clientAssertion);
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1697,6 +2090,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/x-www-form-urlencoded"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1708,13 +2102,18 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call revokeValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call revokeValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling revoke(Async)");
         }
 
-        return revokeCall(orgId, _callback);
+        // verify the required parameter 'token' is set
+        if (token == null) {
+            throw new ApiException("Missing the required parameter 'token' when calling revoke(Async)");
+        }
+
+        return revokeCall(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
 
     }
 
@@ -1722,20 +2121,26 @@ public class OAuthApi {
      * Token revocation (RFC 7009)
      * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (token parameter missing), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public Object revoke(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<Object> localVarResp = revokeWithHttpInfo(orgId);
+    public Object revoke(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        ApiResponse<Object> localVarResp = revokeWithHttpInfo(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
         return localVarResp.getData();
     }
 
@@ -1743,20 +2148,26 @@ public class OAuthApi {
      * Token revocation (RFC 7009)
      * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (token parameter missing), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> revokeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = revokeValidateBeforeCall(orgId, null);
+    public ApiResponse<Object> revokeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        okhttp3.Call localVarCall = revokeValidateBeforeCall(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, null);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1765,6 +2176,12 @@ public class OAuthApi {
      * Token revocation (RFC 7009) (asynchronously)
      * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1772,15 +2189,15 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (token parameter missing), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call revokeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call revokeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback<Object> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = revokeValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = revokeValidateBeforeCall(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2462,6 +2879,7 @@ public class OAuthApi {
     /**
      * Build call for submitLoginJson
      * @param orgId  (required)
+     * @param submitLoginJsonRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2477,7 +2895,7 @@ public class OAuthApi {
         <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call submitLoginJsonCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call submitLoginJsonCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull SubmitLoginJsonRequest submitLoginJsonRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2491,7 +2909,7 @@ public class OAuthApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = submitLoginJsonRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/oauth/login/json"
@@ -2512,6 +2930,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2523,13 +2942,18 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call submitLoginJsonValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call submitLoginJsonValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull SubmitLoginJsonRequest submitLoginJsonRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling submitLoginJson(Async)");
         }
 
-        return submitLoginJsonCall(orgId, _callback);
+        // verify the required parameter 'submitLoginJsonRequest' is set
+        if (submitLoginJsonRequest == null) {
+            throw new ApiException("Missing the required parameter 'submitLoginJsonRequest' when calling submitLoginJson(Async)");
+        }
+
+        return submitLoginJsonCall(orgId, submitLoginJsonRequest, _callback);
 
     }
 
@@ -2537,6 +2961,7 @@ public class OAuthApi {
      * Programmatic (JSON) login for the authorization flow
      * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
      * @param orgId  (required)
+     * @param submitLoginJsonRequest  (required)
      * @return SubmitLoginJsonResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2551,8 +2976,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
      */
-    public SubmitLoginJsonResponse submitLoginJson(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<SubmitLoginJsonResponse> localVarResp = submitLoginJsonWithHttpInfo(orgId);
+    public SubmitLoginJsonResponse submitLoginJson(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull SubmitLoginJsonRequest submitLoginJsonRequest) throws ApiException {
+        ApiResponse<SubmitLoginJsonResponse> localVarResp = submitLoginJsonWithHttpInfo(orgId, submitLoginJsonRequest);
         return localVarResp.getData();
     }
 
@@ -2560,6 +2985,7 @@ public class OAuthApi {
      * Programmatic (JSON) login for the authorization flow
      * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
      * @param orgId  (required)
+     * @param submitLoginJsonRequest  (required)
      * @return ApiResponse&lt;SubmitLoginJsonResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2574,8 +3000,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<SubmitLoginJsonResponse> submitLoginJsonWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = submitLoginJsonValidateBeforeCall(orgId, null);
+    public ApiResponse<SubmitLoginJsonResponse> submitLoginJsonWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull SubmitLoginJsonRequest submitLoginJsonRequest) throws ApiException {
+        okhttp3.Call localVarCall = submitLoginJsonValidateBeforeCall(orgId, submitLoginJsonRequest, null);
         Type localVarReturnType = new TypeToken<SubmitLoginJsonResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2584,6 +3010,7 @@ public class OAuthApi {
      * Programmatic (JSON) login for the authorization flow (asynchronously)
      * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
      * @param orgId  (required)
+     * @param submitLoginJsonRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2599,9 +3026,9 @@ public class OAuthApi {
         <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call submitLoginJsonAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<SubmitLoginJsonResponse> _callback) throws ApiException {
+    public okhttp3.Call submitLoginJsonAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull SubmitLoginJsonRequest submitLoginJsonRequest, final ApiCallback<SubmitLoginJsonResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = submitLoginJsonValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = submitLoginJsonValidateBeforeCall(orgId, submitLoginJsonRequest, _callback);
         Type localVarReturnType = new TypeToken<SubmitLoginJsonResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2744,6 +3171,25 @@ public class OAuthApi {
     /**
      * Build call for token
      * @param orgId  (required)
+     * @param grantType  (required)
+     * @param code  (optional)
+     * @param redirectUri  (optional)
+     * @param codeVerifier  (optional)
+     * @param refreshToken  (optional)
+     * @param deviceCode  (optional)
+     * @param authReqId CIBA (optional)
+     * @param scope  (optional)
+     * @param resource  (optional)
+     * @param subjectToken Token exchange (RFC 8693) (optional)
+     * @param subjectTokenType  (optional)
+     * @param actorToken  (optional)
+     * @param actorTokenType  (optional)
+     * @param requestedTokenType  (optional)
+     * @param assertion JWT bearer / ID-JAG grant (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2758,7 +3204,7 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call tokenCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call tokenCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String grantType, @javax.annotation.Nullable String code, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String codeVerifier, @javax.annotation.Nullable String refreshToken, @javax.annotation.Nullable String deviceCode, @javax.annotation.Nullable String authReqId, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String subjectToken, @javax.annotation.Nullable String subjectTokenType, @javax.annotation.Nullable String actorToken, @javax.annotation.Nullable String actorTokenType, @javax.annotation.Nullable String requestedTokenType, @javax.annotation.Nullable String assertion, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2784,6 +3230,82 @@ public class OAuthApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (grantType != null) {
+            localVarFormParams.put("grant_type", grantType);
+        }
+
+        if (code != null) {
+            localVarFormParams.put("code", code);
+        }
+
+        if (redirectUri != null) {
+            localVarFormParams.put("redirect_uri", redirectUri);
+        }
+
+        if (codeVerifier != null) {
+            localVarFormParams.put("code_verifier", codeVerifier);
+        }
+
+        if (refreshToken != null) {
+            localVarFormParams.put("refresh_token", refreshToken);
+        }
+
+        if (deviceCode != null) {
+            localVarFormParams.put("device_code", deviceCode);
+        }
+
+        if (authReqId != null) {
+            localVarFormParams.put("auth_req_id", authReqId);
+        }
+
+        if (scope != null) {
+            localVarFormParams.put("scope", scope);
+        }
+
+        if (resource != null) {
+            localVarFormParams.put("resource", resource);
+        }
+
+        if (subjectToken != null) {
+            localVarFormParams.put("subject_token", subjectToken);
+        }
+
+        if (subjectTokenType != null) {
+            localVarFormParams.put("subject_token_type", subjectTokenType);
+        }
+
+        if (actorToken != null) {
+            localVarFormParams.put("actor_token", actorToken);
+        }
+
+        if (actorTokenType != null) {
+            localVarFormParams.put("actor_token_type", actorTokenType);
+        }
+
+        if (requestedTokenType != null) {
+            localVarFormParams.put("requested_token_type", requestedTokenType);
+        }
+
+        if (assertion != null) {
+            localVarFormParams.put("assertion", assertion);
+        }
+
+        if (clientId != null) {
+            localVarFormParams.put("client_id", clientId);
+        }
+
+        if (clientSecret != null) {
+            localVarFormParams.put("client_secret", clientSecret);
+        }
+
+        if (clientAssertionType != null) {
+            localVarFormParams.put("client_assertion_type", clientAssertionType);
+        }
+
+        if (clientAssertion != null) {
+            localVarFormParams.put("client_assertion", clientAssertion);
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -2793,6 +3315,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/x-www-form-urlencoded"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2804,13 +3327,18 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call tokenValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call tokenValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String grantType, @javax.annotation.Nullable String code, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String codeVerifier, @javax.annotation.Nullable String refreshToken, @javax.annotation.Nullable String deviceCode, @javax.annotation.Nullable String authReqId, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String subjectToken, @javax.annotation.Nullable String subjectTokenType, @javax.annotation.Nullable String actorToken, @javax.annotation.Nullable String actorTokenType, @javax.annotation.Nullable String requestedTokenType, @javax.annotation.Nullable String assertion, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling token(Async)");
         }
 
-        return tokenCall(orgId, _callback);
+        // verify the required parameter 'grantType' is set
+        if (grantType == null) {
+            throw new ApiException("Missing the required parameter 'grantType' when calling token(Async)");
+        }
+
+        return tokenCall(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
 
     }
 
@@ -2818,6 +3346,25 @@ public class OAuthApi {
      * OAuth 2.1 token endpoint
      * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
      * @param orgId  (required)
+     * @param grantType  (required)
+     * @param code  (optional)
+     * @param redirectUri  (optional)
+     * @param codeVerifier  (optional)
+     * @param refreshToken  (optional)
+     * @param deviceCode  (optional)
+     * @param authReqId CIBA (optional)
+     * @param scope  (optional)
+     * @param resource  (optional)
+     * @param subjectToken Token exchange (RFC 8693) (optional)
+     * @param subjectTokenType  (optional)
+     * @param actorToken  (optional)
+     * @param actorTokenType  (optional)
+     * @param requestedTokenType  (optional)
+     * @param assertion JWT bearer / ID-JAG grant (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return TokenResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2831,8 +3378,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public TokenResponse token(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<TokenResponse> localVarResp = tokenWithHttpInfo(orgId);
+    public TokenResponse token(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String grantType, @javax.annotation.Nullable String code, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String codeVerifier, @javax.annotation.Nullable String refreshToken, @javax.annotation.Nullable String deviceCode, @javax.annotation.Nullable String authReqId, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String subjectToken, @javax.annotation.Nullable String subjectTokenType, @javax.annotation.Nullable String actorToken, @javax.annotation.Nullable String actorTokenType, @javax.annotation.Nullable String requestedTokenType, @javax.annotation.Nullable String assertion, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        ApiResponse<TokenResponse> localVarResp = tokenWithHttpInfo(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion);
         return localVarResp.getData();
     }
 
@@ -2840,6 +3387,25 @@ public class OAuthApi {
      * OAuth 2.1 token endpoint
      * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
      * @param orgId  (required)
+     * @param grantType  (required)
+     * @param code  (optional)
+     * @param redirectUri  (optional)
+     * @param codeVerifier  (optional)
+     * @param refreshToken  (optional)
+     * @param deviceCode  (optional)
+     * @param authReqId CIBA (optional)
+     * @param scope  (optional)
+     * @param resource  (optional)
+     * @param subjectToken Token exchange (RFC 8693) (optional)
+     * @param subjectTokenType  (optional)
+     * @param actorToken  (optional)
+     * @param actorTokenType  (optional)
+     * @param requestedTokenType  (optional)
+     * @param assertion JWT bearer / ID-JAG grant (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return ApiResponse&lt;TokenResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2853,8 +3419,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<TokenResponse> tokenWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = tokenValidateBeforeCall(orgId, null);
+    public ApiResponse<TokenResponse> tokenWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String grantType, @javax.annotation.Nullable String code, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String codeVerifier, @javax.annotation.Nullable String refreshToken, @javax.annotation.Nullable String deviceCode, @javax.annotation.Nullable String authReqId, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String subjectToken, @javax.annotation.Nullable String subjectTokenType, @javax.annotation.Nullable String actorToken, @javax.annotation.Nullable String actorTokenType, @javax.annotation.Nullable String requestedTokenType, @javax.annotation.Nullable String assertion, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        okhttp3.Call localVarCall = tokenValidateBeforeCall(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion, null);
         Type localVarReturnType = new TypeToken<TokenResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2863,6 +3429,25 @@ public class OAuthApi {
      * OAuth 2.1 token endpoint (asynchronously)
      * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
      * @param orgId  (required)
+     * @param grantType  (required)
+     * @param code  (optional)
+     * @param redirectUri  (optional)
+     * @param codeVerifier  (optional)
+     * @param refreshToken  (optional)
+     * @param deviceCode  (optional)
+     * @param authReqId CIBA (optional)
+     * @param scope  (optional)
+     * @param resource  (optional)
+     * @param subjectToken Token exchange (RFC 8693) (optional)
+     * @param subjectTokenType  (optional)
+     * @param actorToken  (optional)
+     * @param actorTokenType  (optional)
+     * @param requestedTokenType  (optional)
+     * @param assertion JWT bearer / ID-JAG grant (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2877,9 +3462,9 @@ public class OAuthApi {
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call tokenAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<TokenResponse> _callback) throws ApiException {
+    public okhttp3.Call tokenAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String grantType, @javax.annotation.Nullable String code, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String codeVerifier, @javax.annotation.Nullable String refreshToken, @javax.annotation.Nullable String deviceCode, @javax.annotation.Nullable String authReqId, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String subjectToken, @javax.annotation.Nullable String subjectTokenType, @javax.annotation.Nullable String actorToken, @javax.annotation.Nullable String actorTokenType, @javax.annotation.Nullable String requestedTokenType, @javax.annotation.Nullable String assertion, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback<TokenResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = tokenValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = tokenValidateBeforeCall(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
         Type localVarReturnType = new TypeToken<TokenResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

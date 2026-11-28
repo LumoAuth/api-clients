@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -193,9 +193,10 @@ pub async fn admin_social_providers_callback_urls(configuration: &configuration:
     }
 }
 
-pub async fn admin_social_providers_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSocialProvidersCreateResponse, Error<AdminSocialProvidersCreateError>> {
+pub async fn admin_social_providers_create(configuration: &configuration::Configuration, org_id: &str, admin_social_providers_create_request: models::AdminSocialProvidersCreateRequest) -> Result<models::AdminSocialProvidersCreateResponse, Error<AdminSocialProvidersCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_admin_social_providers_create_request = admin_social_providers_create_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/social-providers", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -214,6 +215,7 @@ pub async fn admin_social_providers_create(configuration: &configuration::Config
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_social_providers_create_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -526,10 +528,11 @@ pub async fn admin_social_providers_types(configuration: &configuration::Configu
     }
 }
 
-pub async fn patch_admin_social_providers_update(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<models::AdminSocialProvidersCreateResponse, Error<PatchAdminSocialProvidersUpdateError>> {
+pub async fn patch_admin_social_providers_update(configuration: &configuration::Configuration, org_id: &str, provider_id: &str, put_admin_social_providers_update_request: models::PutAdminSocialProvidersUpdateRequest) -> Result<models::AdminSocialProvidersCreateResponse, Error<PatchAdminSocialProvidersUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_provider_id = provider_id;
+    let p_put_admin_social_providers_update_request = put_admin_social_providers_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), providerId=crate::apis::urlencode(p_provider_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -548,6 +551,7 @@ pub async fn patch_admin_social_providers_update(configuration: &configuration::
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_social_providers_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -574,10 +578,11 @@ pub async fn patch_admin_social_providers_update(configuration: &configuration::
     }
 }
 
-pub async fn put_admin_social_providers_update(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<models::AdminSocialProvidersCreateResponse, Error<PutAdminSocialProvidersUpdateError>> {
+pub async fn put_admin_social_providers_update(configuration: &configuration::Configuration, org_id: &str, provider_id: &str, put_admin_social_providers_update_request: models::PutAdminSocialProvidersUpdateRequest) -> Result<models::AdminSocialProvidersCreateResponse, Error<PutAdminSocialProvidersUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_provider_id = provider_id;
+    let p_put_admin_social_providers_update_request = put_admin_social_providers_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), providerId=crate::apis::urlencode(p_provider_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -596,6 +601,7 @@ pub async fn put_admin_social_providers_update(configuration: &configuration::Co
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_social_providers_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -40,7 +40,7 @@ type AdminGroupsAPI interface {
 	/*
 	AdminGroupsAddRole Add a single role to a group
 
-	A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+	A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -56,7 +56,7 @@ type AdminGroupsAPI interface {
 	/*
 	AdminGroupsCreate Create a new group
 
-	Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+	Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -125,7 +125,7 @@ type AdminGroupsAPI interface {
 	AdminGroupsGroupsGetRolesExecute(r ApiAdminGroupsGroupsGetRolesRequest) (*AdminGroupsGroupsGetRolesResponse, *http.Response, error)
 
 	/*
-	AdminGroupsList List all groups in the tenant
+	AdminGroupsList List all groups in the organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -170,7 +170,7 @@ type AdminGroupsAPI interface {
 	/*
 	AdminGroupsUpdateRoles Update group roles (replaces all existing roles)
 
-	`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+	`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -220,6 +220,12 @@ type ApiAdminGroupsAddMembersRequest struct {
 	ApiService AdminGroupsAPI
 	orgId string
 	groupId string
+	adminGroupsAddMembersRequest *AdminGroupsAddMembersRequest
+}
+
+func (r ApiAdminGroupsAddMembersRequest) AdminGroupsAddMembersRequest(adminGroupsAddMembersRequest AdminGroupsAddMembersRequest) ApiAdminGroupsAddMembersRequest {
+	r.adminGroupsAddMembersRequest = &adminGroupsAddMembersRequest
+	return r
 }
 
 func (r ApiAdminGroupsAddMembersRequest) Execute() (*AdminGroupsCreateResponse, *http.Response, error) {
@@ -265,9 +271,12 @@ func (a *AdminGroupsAPIService) AdminGroupsAddMembersExecute(r ApiAdminGroupsAdd
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminGroupsAddMembersRequest == nil {
+		return localVarReturnValue, nil, reportError("adminGroupsAddMembersRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -283,6 +292,8 @@ func (a *AdminGroupsAPIService) AdminGroupsAddMembersExecute(r ApiAdminGroupsAdd
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminGroupsAddMembersRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -339,6 +350,12 @@ type ApiAdminGroupsAddRoleRequest struct {
 	ApiService AdminGroupsAPI
 	orgId string
 	groupId string
+	adminGroupsAddRoleRequest *AdminGroupsAddRoleRequest
+}
+
+func (r ApiAdminGroupsAddRoleRequest) AdminGroupsAddRoleRequest(adminGroupsAddRoleRequest AdminGroupsAddRoleRequest) ApiAdminGroupsAddRoleRequest {
+	r.adminGroupsAddRoleRequest = &adminGroupsAddRoleRequest
+	return r
 }
 
 func (r ApiAdminGroupsAddRoleRequest) Execute() (*MessageResponse, *http.Response, error) {
@@ -348,7 +365,7 @@ func (r ApiAdminGroupsAddRoleRequest) Execute() (*MessageResponse, *http.Respons
 /*
 AdminGroupsAddRole Add a single role to a group
 
-A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -386,9 +403,12 @@ func (a *AdminGroupsAPIService) AdminGroupsAddRoleExecute(r ApiAdminGroupsAddRol
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminGroupsAddRoleRequest == nil {
+		return localVarReturnValue, nil, reportError("adminGroupsAddRoleRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -404,6 +424,8 @@ func (a *AdminGroupsAPIService) AdminGroupsAddRoleExecute(r ApiAdminGroupsAddRol
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminGroupsAddRoleRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -459,6 +481,12 @@ type ApiAdminGroupsCreateRequest struct {
 	ctx context.Context
 	ApiService AdminGroupsAPI
 	orgId string
+	adminGroupsCreateRequest *AdminGroupsCreateRequest
+}
+
+func (r ApiAdminGroupsCreateRequest) AdminGroupsCreateRequest(adminGroupsCreateRequest AdminGroupsCreateRequest) ApiAdminGroupsCreateRequest {
+	r.adminGroupsCreateRequest = &adminGroupsCreateRequest
+	return r
 }
 
 func (r ApiAdminGroupsCreateRequest) Execute() (*AdminGroupsCreateResponse, *http.Response, error) {
@@ -468,7 +496,7 @@ func (r ApiAdminGroupsCreateRequest) Execute() (*AdminGroupsCreateResponse, *htt
 /*
 AdminGroupsCreate Create a new group
 
-Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -503,9 +531,12 @@ func (a *AdminGroupsAPIService) AdminGroupsCreateExecute(r ApiAdminGroupsCreateR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminGroupsCreateRequest == nil {
+		return localVarReturnValue, nil, reportError("adminGroupsCreateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -521,6 +552,8 @@ func (a *AdminGroupsAPIService) AdminGroupsCreateExecute(r ApiAdminGroupsCreateR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminGroupsCreateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1059,7 +1092,7 @@ func (r ApiAdminGroupsListRequest) Execute() (*AdminGroupsListResponse, *http.Re
 }
 
 /*
-AdminGroupsList List all groups in the tenant
+AdminGroupsList List all groups in the organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1414,6 +1447,12 @@ type ApiAdminGroupsUpdateRolesRequest struct {
 	ApiService AdminGroupsAPI
 	orgId string
 	groupId string
+	adminGroupsUpdateRolesRequest *AdminGroupsUpdateRolesRequest
+}
+
+func (r ApiAdminGroupsUpdateRolesRequest) AdminGroupsUpdateRolesRequest(adminGroupsUpdateRolesRequest AdminGroupsUpdateRolesRequest) ApiAdminGroupsUpdateRolesRequest {
+	r.adminGroupsUpdateRolesRequest = &adminGroupsUpdateRolesRequest
+	return r
 }
 
 func (r ApiAdminGroupsUpdateRolesRequest) Execute() (*AdminGroupsCreateResponse, *http.Response, error) {
@@ -1423,7 +1462,7 @@ func (r ApiAdminGroupsUpdateRolesRequest) Execute() (*AdminGroupsCreateResponse,
 /*
 AdminGroupsUpdateRoles Update group roles (replaces all existing roles)
 
-`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1461,9 +1500,12 @@ func (a *AdminGroupsAPIService) AdminGroupsUpdateRolesExecute(r ApiAdminGroupsUp
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminGroupsUpdateRolesRequest == nil {
+		return localVarReturnValue, nil, reportError("adminGroupsUpdateRolesRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1479,6 +1521,8 @@ func (a *AdminGroupsAPIService) AdminGroupsUpdateRolesExecute(r ApiAdminGroupsUp
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminGroupsUpdateRolesRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1535,6 +1579,12 @@ type ApiPatchAdminGroupsUpdateRequest struct {
 	ApiService AdminGroupsAPI
 	orgId string
 	groupId string
+	putAdminGroupsUpdateRequest *PutAdminGroupsUpdateRequest
+}
+
+func (r ApiPatchAdminGroupsUpdateRequest) PutAdminGroupsUpdateRequest(putAdminGroupsUpdateRequest PutAdminGroupsUpdateRequest) ApiPatchAdminGroupsUpdateRequest {
+	r.putAdminGroupsUpdateRequest = &putAdminGroupsUpdateRequest
+	return r
 }
 
 func (r ApiPatchAdminGroupsUpdateRequest) Execute() (*AdminGroupsCreateResponse, *http.Response, error) {
@@ -1580,9 +1630,12 @@ func (a *AdminGroupsAPIService) PatchAdminGroupsUpdateExecute(r ApiPatchAdminGro
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminGroupsUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminGroupsUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1598,6 +1651,8 @@ func (a *AdminGroupsAPIService) PatchAdminGroupsUpdateExecute(r ApiPatchAdminGro
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminGroupsUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1654,6 +1709,12 @@ type ApiPutAdminGroupsUpdateRequest struct {
 	ApiService AdminGroupsAPI
 	orgId string
 	groupId string
+	putAdminGroupsUpdateRequest *PutAdminGroupsUpdateRequest
+}
+
+func (r ApiPutAdminGroupsUpdateRequest) PutAdminGroupsUpdateRequest(putAdminGroupsUpdateRequest PutAdminGroupsUpdateRequest) ApiPutAdminGroupsUpdateRequest {
+	r.putAdminGroupsUpdateRequest = &putAdminGroupsUpdateRequest
+	return r
 }
 
 func (r ApiPutAdminGroupsUpdateRequest) Execute() (*AdminGroupsCreateResponse, *http.Response, error) {
@@ -1699,9 +1760,12 @@ func (a *AdminGroupsAPIService) PutAdminGroupsUpdateExecute(r ApiPutAdminGroupsU
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminGroupsUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminGroupsUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1717,6 +1781,8 @@ func (a *AdminGroupsAPIService) PutAdminGroupsUpdateExecute(r ApiPutAdminGroupsU
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminGroupsUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

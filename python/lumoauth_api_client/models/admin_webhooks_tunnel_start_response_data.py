@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -30,7 +30,8 @@ class AdminWebhooksTunnelStartResponseData(BaseModel):
     webhook_id: Optional[StrictInt] = None
     session_id: Optional[StrictStr] = None
     tunnel_url: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["webhook_id", "session_id", "tunnel_url"]
+    signing_secret: Optional[StrictStr] = Field(default=None, description="The secret that signs the tunnel's deliveries (X-LumoAuth-Signature). Shown once.")
+    __properties: ClassVar[List[str]] = ["webhook_id", "session_id", "tunnel_url", "signing_secret"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -85,7 +86,8 @@ class AdminWebhooksTunnelStartResponseData(BaseModel):
         _obj = cls.model_validate({
             "webhook_id": obj.get("webhook_id"),
             "session_id": obj.get("session_id"),
-            "tunnel_url": obj.get("tunnel_url")
+            "tunnel_url": obj.get("tunnel_url"),
+            "signing_secret": obj.get("signing_secret")
         })
         return _obj
 

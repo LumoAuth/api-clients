@@ -9,9 +9,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**AdminSessionsCount**](AdminSessionsApi.md#adminsessionscount) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Active session count |
 | [**AdminSessionsList**](AdminSessionsApi.md#adminsessionslist) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions |
 | [**AdminSessionsRevoke**](AdminSessionsApi.md#adminsessionsrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a session |
-| [**AdminSessionsRevokeAll**](AdminSessionsApi.md#adminsessionsrevokeall) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the tenant |
+| [**AdminSessionsRevokeAll**](AdminSessionsApi.md#adminsessionsrevokeall) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the organization |
 | [**AdminSessionsStats**](AdminSessionsApi.md#adminsessionsstats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Session statistics |
-| [**AdminTokensList**](AdminSessionsApi.md#admintokenslist) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens |
+| [**AdminTokensList**](AdminSessionsApi.md#admintokenslist) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List stored (opaque) access tokens |
 | [**AdminTokensRevoke**](AdminSessionsApi.md#admintokensrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/tokens/{tokenId} | Revoke a token |
 | [**AdminUserSessionsList**](AdminSessionsApi.md#adminusersessionslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | List a user&#39;s active sessions |
 | [**AdminUserSessionsRevokeAll**](AdminSessionsApi.md#adminusersessionsrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions of a user |
@@ -331,7 +331,7 @@ catch (ApiException e)
 
 List active sessions
 
-Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
 ### Example
 ```csharp
@@ -535,7 +535,7 @@ catch (ApiException e)
 # **AdminSessionsRevokeAll**
 > AdminSessionsRevokeAllResponse AdminSessionsRevokeAll (string orgId, AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest)
 
-Revoke every session in the tenant
+Revoke every session in the organization
 
 Signs out all users. Requires `confirm: true` in the body.
 
@@ -572,7 +572,7 @@ namespace Example
 
             try
             {
-                // Revoke every session in the tenant
+                // Revoke every session in the organization
                 AdminSessionsRevokeAllResponse result = apiInstance.AdminSessionsRevokeAll(orgId, adminSessionsRevokeAllRequest);
                 Debug.WriteLine(result);
             }
@@ -593,7 +593,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Revoke every session in the tenant
+    // Revoke every session in the organization
     ApiResponse<AdminSessionsRevokeAllResponse> response = apiInstance.AdminSessionsRevokeAllWithHttpInfo(orgId, adminSessionsRevokeAllRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
@@ -740,9 +740,9 @@ catch (ApiException e)
 # **AdminTokensList**
 > AdminTokensListResponse AdminTokensList (string orgId)
 
-List access tokens
+List stored (opaque) access tokens
 
-Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
+Paginated OPAQUE access tokens issued by the organization's clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user's or a client's tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
 
 ### Example
 ```csharp
@@ -776,7 +776,7 @@ namespace Example
 
             try
             {
-                // List access tokens
+                // List stored (opaque) access tokens
                 AdminTokensListResponse result = apiInstance.AdminTokensList(orgId);
                 Debug.WriteLine(result);
             }
@@ -797,7 +797,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List access tokens
+    // List stored (opaque) access tokens
     ApiResponse<AdminTokensListResponse> response = apiInstance.AdminTokensListWithHttpInfo(orgId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
@@ -1261,6 +1261,8 @@ catch (ApiException e)
 
 Revoke all tokens of a user
 
+Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
+
 ### Example
 ```csharp
 using System.Collections.Generic;
@@ -1364,6 +1366,8 @@ catch (ApiException e)
 > AdminUserTokensRevokePostResponse AdminUserTokensRevokePost (string orgId, string userId)
 
 Revoke all tokens of a user (POST alias)
+
+Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
 ### Example
 ```csharp

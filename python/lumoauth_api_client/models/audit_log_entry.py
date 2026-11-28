@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -42,6 +42,7 @@ class AuditLogEntry(BaseModel):
     target_id: Optional[StrictStr] = Field(default=None, alias="targetId")
     target_name: Optional[StrictStr] = Field(default=None, alias="targetName")
     ip_address: Optional[StrictStr] = Field(default=None, alias="ipAddress")
+    trace_id: Optional[StrictStr] = Field(default=None, description="W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none", alias="traceId")
     event_time: Optional[datetime] = Field(default=None, description="Detailed responses only", alias="eventTime")
     duration_ms: Optional[StrictInt] = Field(default=None, description="Detailed responses only", alias="durationMs")
     initiated_by: Optional[StrictStr] = Field(default=None, description="Detailed responses only", alias="initiatedBy")
@@ -56,7 +57,7 @@ class AuditLogEntry(BaseModel):
     new_value: Optional[Dict[str, Any]] = Field(default=None, description="Detailed responses only", alias="newValue")
     changes: Optional[Dict[str, Any]] = Field(default=None, description="Detailed responses only")
     context: Optional[Dict[str, Any]] = Field(default=None, description="Detailed responses only")
-    __properties: ClassVar[List[str]] = ["id", "createdAt", "eventType", "action", "severity", "message", "actorId", "actorName", "actorType", "authMethod", "targetType", "targetId", "targetName", "ipAddress", "eventTime", "durationMs", "initiatedBy", "clientId", "userAgent", "geoLocation", "sessionId", "requestId", "status", "statusReason", "oldValue", "newValue", "changes", "context"]
+    __properties: ClassVar[List[str]] = ["id", "createdAt", "eventType", "action", "severity", "message", "actorId", "actorName", "actorType", "authMethod", "targetType", "targetId", "targetName", "ipAddress", "traceId", "eventTime", "durationMs", "initiatedBy", "clientId", "userAgent", "geoLocation", "sessionId", "requestId", "status", "statusReason", "oldValue", "newValue", "changes", "context"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -157,6 +158,11 @@ class AuditLogEntry(BaseModel):
         if self.ip_address is None and "ip_address" in self.model_fields_set:
             _dict['ipAddress'] = None
 
+        # set to None if trace_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.trace_id is None and "trace_id" in self.model_fields_set:
+            _dict['traceId'] = None
+
         # set to None if event_time (nullable) is None
         # and model_fields_set contains the field
         if self.event_time is None and "event_time" in self.model_fields_set:
@@ -253,6 +259,7 @@ class AuditLogEntry(BaseModel):
             "targetId": obj.get("targetId"),
             "targetName": obj.get("targetName"),
             "ipAddress": obj.get("ipAddress"),
+            "traceId": obj.get("traceId"),
             "eventTime": obj.get("eventTime"),
             "durationMs": obj.get("durationMs"),
             "initiatedBy": obj.get("initiatedBy"),

@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -20,23 +20,25 @@ module LumoAuthApiClient
       @api_client = api_client
     end
     # Add permission(s) to a role
-    # Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+    # Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization's own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
     # @param org_id [String] 
     # @param role_id [String] 
+    # @param admin_roles_add_permissions_request [AdminRolesAddPermissionsRequest] 
     # @param [Hash] opts the optional parameters
     # @return [MessageResponse]
-    def admin_roles_add_permissions(org_id, role_id, opts = {})
-      data, _status_code, _headers = admin_roles_add_permissions_with_http_info(org_id, role_id, opts)
+    def admin_roles_add_permissions(org_id, role_id, admin_roles_add_permissions_request, opts = {})
+      data, _status_code, _headers = admin_roles_add_permissions_with_http_info(org_id, role_id, admin_roles_add_permissions_request, opts)
       data
     end
 
     # Add permission(s) to a role
-    # Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+    # Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
     # @param org_id [String] 
     # @param role_id [String] 
+    # @param admin_roles_add_permissions_request [AdminRolesAddPermissionsRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
-    def admin_roles_add_permissions_with_http_info(org_id, role_id, opts = {})
+    def admin_roles_add_permissions_with_http_info(org_id, role_id, admin_roles_add_permissions_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_add_permissions ...'
       end
@@ -48,6 +50,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && role_id.nil?
         fail ArgumentError, "Missing the required parameter 'role_id' when calling AdminRolesApi.admin_roles_add_permissions"
       end
+      # verify the required parameter 'admin_roles_add_permissions_request' is set
+      if @api_client.config.client_side_validation && admin_roles_add_permissions_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_roles_add_permissions_request' when calling AdminRolesApi.admin_roles_add_permissions"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'roleId' + '}', CGI.escape(role_id.to_s))
 
@@ -58,12 +64,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_roles_add_permissions_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'MessageResponse'
@@ -91,19 +102,21 @@ module LumoAuthApiClient
     # Assign a user to a role
     # @param org_id [String] 
     # @param role_id [String] 
+    # @param admin_roles_add_user_request [AdminRolesAddUserRequest] 
     # @param [Hash] opts the optional parameters
     # @return [MessageResponse]
-    def admin_roles_add_user(org_id, role_id, opts = {})
-      data, _status_code, _headers = admin_roles_add_user_with_http_info(org_id, role_id, opts)
+    def admin_roles_add_user(org_id, role_id, admin_roles_add_user_request, opts = {})
+      data, _status_code, _headers = admin_roles_add_user_with_http_info(org_id, role_id, admin_roles_add_user_request, opts)
       data
     end
 
     # Assign a user to a role
     # @param org_id [String] 
     # @param role_id [String] 
+    # @param admin_roles_add_user_request [AdminRolesAddUserRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
-    def admin_roles_add_user_with_http_info(org_id, role_id, opts = {})
+    def admin_roles_add_user_with_http_info(org_id, role_id, admin_roles_add_user_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_add_user ...'
       end
@@ -115,6 +128,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && role_id.nil?
         fail ArgumentError, "Missing the required parameter 'role_id' when calling AdminRolesApi.admin_roles_add_user"
       end
+      # verify the required parameter 'admin_roles_add_user_request' is set
+      if @api_client.config.client_side_validation && admin_roles_add_user_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_roles_add_user_request' when calling AdminRolesApi.admin_roles_add_user"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/roles/{roleId}/users'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'roleId' + '}', CGI.escape(role_id.to_s))
 
@@ -125,12 +142,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_roles_add_user_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'MessageResponse'
@@ -156,27 +178,33 @@ module LumoAuthApiClient
     end
 
     # Create a new role
-    # Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+    # Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization's own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
     # @param org_id [String] 
+    # @param admin_roles_create_request [AdminRolesCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminRolesCreateResponse]
-    def admin_roles_create(org_id, opts = {})
-      data, _status_code, _headers = admin_roles_create_with_http_info(org_id, opts)
+    def admin_roles_create(org_id, admin_roles_create_request, opts = {})
+      data, _status_code, _headers = admin_roles_create_with_http_info(org_id, admin_roles_create_request, opts)
       data
     end
 
     # Create a new role
-    # Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+    # Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
     # @param org_id [String] 
+    # @param admin_roles_create_request [AdminRolesCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminRolesCreateResponse, Integer, Hash)>] AdminRolesCreateResponse data, response status code and response headers
-    def admin_roles_create_with_http_info(org_id, opts = {})
+    def admin_roles_create_with_http_info(org_id, admin_roles_create_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_create ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminRolesApi.admin_roles_create"
+      end
+      # verify the required parameter 'admin_roles_create_request' is set
+      if @api_client.config.client_side_validation && admin_roles_create_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_roles_create_request' when calling AdminRolesApi.admin_roles_create"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/roles'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -188,12 +216,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_roles_create_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminRolesCreateResponse'
@@ -486,7 +519,7 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List all roles in the tenant
+    # List all roles in the organization
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminRolesListResponse]
@@ -495,7 +528,7 @@ module LumoAuthApiClient
       data
     end
 
-    # List all roles in the tenant
+    # List all roles in the organization
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminRolesListResponse, Integer, Hash)>] AdminRolesListResponse data, response status code and response headers
@@ -701,23 +734,25 @@ module LumoAuthApiClient
     end
 
     # Update role permissions (replaces all)
-    # Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+    # Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization's own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
     # @param org_id [String] 
     # @param role_id [String] 
+    # @param admin_roles_update_permissions_request [AdminRolesUpdatePermissionsRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminRolesCreateResponse]
-    def admin_roles_update_permissions(org_id, role_id, opts = {})
-      data, _status_code, _headers = admin_roles_update_permissions_with_http_info(org_id, role_id, opts)
+    def admin_roles_update_permissions(org_id, role_id, admin_roles_update_permissions_request, opts = {})
+      data, _status_code, _headers = admin_roles_update_permissions_with_http_info(org_id, role_id, admin_roles_update_permissions_request, opts)
       data
     end
 
     # Update role permissions (replaces all)
-    # Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+    # Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
     # @param org_id [String] 
     # @param role_id [String] 
+    # @param admin_roles_update_permissions_request [AdminRolesUpdatePermissionsRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminRolesCreateResponse, Integer, Hash)>] AdminRolesCreateResponse data, response status code and response headers
-    def admin_roles_update_permissions_with_http_info(org_id, role_id, opts = {})
+    def admin_roles_update_permissions_with_http_info(org_id, role_id, admin_roles_update_permissions_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_update_permissions ...'
       end
@@ -729,6 +764,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && role_id.nil?
         fail ArgumentError, "Missing the required parameter 'role_id' when calling AdminRolesApi.admin_roles_update_permissions"
       end
+      # verify the required parameter 'admin_roles_update_permissions_request' is set
+      if @api_client.config.client_side_validation && admin_roles_update_permissions_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_roles_update_permissions_request' when calling AdminRolesApi.admin_roles_update_permissions"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'roleId' + '}', CGI.escape(role_id.to_s))
 
@@ -739,12 +778,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_roles_update_permissions_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminRolesCreateResponse'
@@ -772,19 +816,21 @@ module LumoAuthApiClient
     # Update an existing role
     # @param org_id [String] 
     # @param role_id [String] 
+    # @param put_admin_org_roles_update_request [PutAdminOrgRolesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminRolesCreateResponse]
-    def patch_admin_roles_update(org_id, role_id, opts = {})
-      data, _status_code, _headers = patch_admin_roles_update_with_http_info(org_id, role_id, opts)
+    def patch_admin_roles_update(org_id, role_id, put_admin_org_roles_update_request, opts = {})
+      data, _status_code, _headers = patch_admin_roles_update_with_http_info(org_id, role_id, put_admin_org_roles_update_request, opts)
       data
     end
 
     # Update an existing role
     # @param org_id [String] 
     # @param role_id [String] 
+    # @param put_admin_org_roles_update_request [PutAdminOrgRolesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminRolesCreateResponse, Integer, Hash)>] AdminRolesCreateResponse data, response status code and response headers
-    def patch_admin_roles_update_with_http_info(org_id, role_id, opts = {})
+    def patch_admin_roles_update_with_http_info(org_id, role_id, put_admin_org_roles_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.patch_admin_roles_update ...'
       end
@@ -796,6 +842,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && role_id.nil?
         fail ArgumentError, "Missing the required parameter 'role_id' when calling AdminRolesApi.patch_admin_roles_update"
       end
+      # verify the required parameter 'put_admin_org_roles_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_org_roles_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_org_roles_update_request' when calling AdminRolesApi.patch_admin_roles_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/roles/{roleId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'roleId' + '}', CGI.escape(role_id.to_s))
 
@@ -806,12 +856,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_org_roles_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminRolesCreateResponse'
@@ -839,19 +894,21 @@ module LumoAuthApiClient
     # Update an existing role
     # @param org_id [String] 
     # @param role_id [String] 
+    # @param put_admin_org_roles_update_request [PutAdminOrgRolesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminRolesCreateResponse]
-    def put_admin_roles_update(org_id, role_id, opts = {})
-      data, _status_code, _headers = put_admin_roles_update_with_http_info(org_id, role_id, opts)
+    def put_admin_roles_update(org_id, role_id, put_admin_org_roles_update_request, opts = {})
+      data, _status_code, _headers = put_admin_roles_update_with_http_info(org_id, role_id, put_admin_org_roles_update_request, opts)
       data
     end
 
     # Update an existing role
     # @param org_id [String] 
     # @param role_id [String] 
+    # @param put_admin_org_roles_update_request [PutAdminOrgRolesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminRolesCreateResponse, Integer, Hash)>] AdminRolesCreateResponse data, response status code and response headers
-    def put_admin_roles_update_with_http_info(org_id, role_id, opts = {})
+    def put_admin_roles_update_with_http_info(org_id, role_id, put_admin_org_roles_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.put_admin_roles_update ...'
       end
@@ -863,6 +920,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && role_id.nil?
         fail ArgumentError, "Missing the required parameter 'role_id' when calling AdminRolesApi.put_admin_roles_update"
       end
+      # verify the required parameter 'put_admin_org_roles_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_org_roles_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_org_roles_update_request' when calling AdminRolesApi.put_admin_roles_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/roles/{roleId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'roleId' + '}', CGI.escape(role_id.to_s))
 
@@ -873,12 +934,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_org_roles_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminRolesCreateResponse'

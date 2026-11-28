@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -19,7 +19,7 @@ import (
 // checks if the TenantProfile type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TenantProfile{}
 
-// TenantProfile The organization (tenant) record as returned by the settings endpoints.
+// TenantProfile The organization record as returned by the settings endpoints.
 type TenantProfile struct {
 	Id *int32 `json:"id,omitempty"`
 	Slug *string `json:"slug,omitempty"`

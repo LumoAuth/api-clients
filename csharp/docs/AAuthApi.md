@@ -111,7 +111,7 @@ void (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **302** | Redirect to the tenant portal AAuth consent page for the given request_token. |  * Location -  <br>  |
+| **302** | Redirect to the AAuth consent page of the organization&#39;s portal for the given request_token. |  * Location -  <br>  |
 | **400** | Missing request_token query parameter. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -301,7 +301,7 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Metadata documents for all active agents of this tenant (Section 8.1). |  -  |
+| **200** | Metadata documents for all active agents of this organization (Section 8.1). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -772,7 +772,7 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Metadata documents for all active resources of this tenant (Section 8.3). |  -  |
+| **200** | Metadata documents for all active resources of this organization (Section 8.3). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1275,7 +1275,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | A resource token binding the agent request to the resource identity. |  -  |
-| **400** | Invalid JSON body, missing agent/agent_jkt, or unsupported scope. |  -  |
+| **400** | Invalid JSON body, missing resource, agent or agent_jkt, or unsupported scope. |  -  |
 | **401** | Resource authentication (HTTP message signature) failed. |  -  |
 | **429** | Rate limit exceeded. |  -  |
 
@@ -1583,7 +1583,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Introspection result; active&#x3D;false with an error when the token is invalid. |  -  |
-| **400** | Missing resource_token, agent, or agent_jkt. |  -  |
+| **400** | Missing resource, resource_token, agent, or agent_jkt. |  -  |
 | **401** | Resource authentication failed. |  -  |
 | **403** | Resource token is not valid for the authenticated resource. |  -  |
 | **429** | Rate limit exceeded. |  -  |

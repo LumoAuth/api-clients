@@ -99,7 +99,7 @@ No authorization required
 
 ## BackchannelAuthorize
 
-> BackchannelAuthorizeResponse BackchannelAuthorize(ctx, orgId).Execute()
+> BackchannelAuthorizeResponse BackchannelAuthorize(ctx, orgId).Scope(scope).LoginHint(loginHint).LoginHintToken(loginHintToken).IdTokenHint(idTokenHint).BindingMessage(bindingMessage).AcrValues(acrValues).RequestedExpiry(requestedExpiry).ClientNotificationToken(clientNotificationToken).AuthorizationDetails(authorizationDetails).ClientId(clientId).ClientSecret(clientSecret).ClientAssertionType(clientAssertionType).ClientAssertion(clientAssertion).Execute()
 
 CIBA backchannel authentication request
 
@@ -119,10 +119,23 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	scope := "scope_example" // string | 
+	loginHint := "loginHint_example" // string |  (optional)
+	loginHintToken := "loginHintToken_example" // string |  (optional)
+	idTokenHint := "idTokenHint_example" // string |  (optional)
+	bindingMessage := "bindingMessage_example" // string |  (optional)
+	acrValues := "acrValues_example" // string |  (optional)
+	requestedExpiry := int32(56) // int32 |  (optional)
+	clientNotificationToken := "clientNotificationToken_example" // string |  (optional)
+	authorizationDetails := "authorizationDetails_example" // string |  (optional)
+	clientId := "clientId_example" // string | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+	clientSecret := "clientSecret_example" // string | client_secret_post (optional)
+	clientAssertionType := "clientAssertionType_example" // string |  (optional)
+	clientAssertion := "clientAssertion_example" // string | private_key_jwt (RFC 7523) (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.OAuthAPI.BackchannelAuthorize(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.BackchannelAuthorize(context.Background(), orgId).Scope(scope).LoginHint(loginHint).LoginHintToken(loginHintToken).IdTokenHint(idTokenHint).BindingMessage(bindingMessage).AcrValues(acrValues).RequestedExpiry(requestedExpiry).ClientNotificationToken(clientNotificationToken).AuthorizationDetails(authorizationDetails).ClientId(clientId).ClientSecret(clientSecret).ClientAssertionType(clientAssertionType).ClientAssertion(clientAssertion).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.BackchannelAuthorize``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -148,6 +161,19 @@ Other parameters are passed through a pointer to a apiBackchannelAuthorizeReques
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **scope** | **string** |  | 
+ **loginHint** | **string** |  | 
+ **loginHintToken** | **string** |  | 
+ **idTokenHint** | **string** |  | 
+ **bindingMessage** | **string** |  | 
+ **acrValues** | **string** |  | 
+ **requestedExpiry** | **int32** |  | 
+ **clientNotificationToken** | **string** |  | 
+ **authorizationDetails** | **string** |  | 
+ **clientId** | **string** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | 
+ **clientSecret** | **string** | client_secret_post | 
+ **clientAssertionType** | **string** |  | 
+ **clientAssertion** | **string** | private_key_jwt (RFC 7523) | 
 
 ### Return type
 
@@ -159,7 +185,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -241,7 +267,7 @@ No authorization required
 
 ## DeviceAuthorization
 
-> DeviceAuthorizationResponse DeviceAuthorization(ctx, orgId).Execute()
+> DeviceAuthorizationResponse DeviceAuthorization(ctx, orgId).ClientId(clientId).ClientSecret(clientSecret).ClientAssertionType(clientAssertionType).ClientAssertion(clientAssertion).Scope(scope).Resource(resource).AuthorizationDetails(authorizationDetails).Execute()
 
 Device authorization request (RFC 8628)
 
@@ -261,10 +287,17 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	clientId := "clientId_example" // string | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+	clientSecret := "clientSecret_example" // string | client_secret_post (optional)
+	clientAssertionType := "clientAssertionType_example" // string |  (optional)
+	clientAssertion := "clientAssertion_example" // string | private_key_jwt (RFC 7523) (optional)
+	scope := "scope_example" // string | Space-separated scopes. (optional)
+	resource := "resource_example" // string | RFC 8707 resource indicator. (optional)
+	authorizationDetails := "authorizationDetails_example" // string | RFC 9396, a JSON array as text. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.OAuthAPI.DeviceAuthorization(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.DeviceAuthorization(context.Background(), orgId).ClientId(clientId).ClientSecret(clientSecret).ClientAssertionType(clientAssertionType).ClientAssertion(clientAssertion).Scope(scope).Resource(resource).AuthorizationDetails(authorizationDetails).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.DeviceAuthorization``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -290,6 +323,13 @@ Other parameters are passed through a pointer to a apiDeviceAuthorizationRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **clientId** | **string** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | 
+ **clientSecret** | **string** | client_secret_post | 
+ **clientAssertionType** | **string** |  | 
+ **clientAssertion** | **string** | private_key_jwt (RFC 7523) | 
+ **scope** | **string** | Space-separated scopes. | 
+ **resource** | **string** | RFC 8707 resource indicator. | 
+ **authorizationDetails** | **string** | RFC 9396, a JSON array as text. | 
 
 ### Return type
 
@@ -301,7 +341,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -524,7 +564,7 @@ No authorization required
 
 ## Introspect
 
-> IntrospectResponse Introspect(ctx, orgId).Execute()
+> IntrospectResponse Introspect(ctx, orgId).Token(token).TokenTypeHint(tokenTypeHint).ClientId(clientId).ClientSecret(clientSecret).ClientAssertionType(clientAssertionType).ClientAssertion(clientAssertion).Execute()
 
 Token introspection (RFC 7662)
 
@@ -544,10 +584,16 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	token := "token_example" // string | 
+	tokenTypeHint := "tokenTypeHint_example" // string |  (optional)
+	clientId := "clientId_example" // string | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+	clientSecret := "clientSecret_example" // string | client_secret_post (optional)
+	clientAssertionType := "clientAssertionType_example" // string |  (optional)
+	clientAssertion := "clientAssertion_example" // string | private_key_jwt (RFC 7523) (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.OAuthAPI.Introspect(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.Introspect(context.Background(), orgId).Token(token).TokenTypeHint(tokenTypeHint).ClientId(clientId).ClientSecret(clientSecret).ClientAssertionType(clientAssertionType).ClientAssertion(clientAssertion).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.Introspect``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -573,6 +619,12 @@ Other parameters are passed through a pointer to a apiIntrospectRequest struct v
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **token** | **string** |  | 
+ **tokenTypeHint** | **string** |  | 
+ **clientId** | **string** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | 
+ **clientSecret** | **string** | client_secret_post | 
+ **clientAssertionType** | **string** |  | 
+ **clientAssertion** | **string** | private_key_jwt (RFC 7523) | 
 
 ### Return type
 
@@ -584,7 +636,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -594,7 +646,7 @@ Name | Type | Description  | Notes
 
 ## Par
 
-> ParResponse Par(ctx, orgId).Execute()
+> ParResponse Par(ctx, orgId).ResponseType(responseType).RedirectUri(redirectUri).Scope(scope).State(state).Nonce(nonce).CodeChallenge(codeChallenge).CodeChallengeMethod(codeChallengeMethod).Request(request).Resource(resource).AuthorizationDetails(authorizationDetails).Prompt(prompt).LoginHint(loginHint).ClientId(clientId).ClientSecret(clientSecret).ClientAssertionType(clientAssertionType).ClientAssertion(clientAssertion).Execute()
 
 Pushed authorization request (RFC 9126)
 
@@ -614,10 +666,26 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	responseType := "responseType_example" // string |  (optional)
+	redirectUri := "redirectUri_example" // string |  (optional)
+	scope := "scope_example" // string |  (optional)
+	state := "state_example" // string |  (optional)
+	nonce := "nonce_example" // string |  (optional)
+	codeChallenge := "codeChallenge_example" // string |  (optional)
+	codeChallengeMethod := "codeChallengeMethod_example" // string |  (optional)
+	request := "request_example" // string | A signed request object (JAR, RFC 9101). (optional)
+	resource := "resource_example" // string |  (optional)
+	authorizationDetails := "authorizationDetails_example" // string |  (optional)
+	prompt := "prompt_example" // string |  (optional)
+	loginHint := "loginHint_example" // string |  (optional)
+	clientId := "clientId_example" // string | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+	clientSecret := "clientSecret_example" // string | client_secret_post (optional)
+	clientAssertionType := "clientAssertionType_example" // string |  (optional)
+	clientAssertion := "clientAssertion_example" // string | private_key_jwt (RFC 7523) (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.OAuthAPI.Par(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.Par(context.Background(), orgId).ResponseType(responseType).RedirectUri(redirectUri).Scope(scope).State(state).Nonce(nonce).CodeChallenge(codeChallenge).CodeChallengeMethod(codeChallengeMethod).Request(request).Resource(resource).AuthorizationDetails(authorizationDetails).Prompt(prompt).LoginHint(loginHint).ClientId(clientId).ClientSecret(clientSecret).ClientAssertionType(clientAssertionType).ClientAssertion(clientAssertion).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.Par``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -643,6 +711,22 @@ Other parameters are passed through a pointer to a apiParRequest struct via the 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **responseType** | **string** |  | 
+ **redirectUri** | **string** |  | 
+ **scope** | **string** |  | 
+ **state** | **string** |  | 
+ **nonce** | **string** |  | 
+ **codeChallenge** | **string** |  | 
+ **codeChallengeMethod** | **string** |  | 
+ **request** | **string** | A signed request object (JAR, RFC 9101). | 
+ **resource** | **string** |  | 
+ **authorizationDetails** | **string** |  | 
+ **prompt** | **string** |  | 
+ **loginHint** | **string** |  | 
+ **clientId** | **string** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | 
+ **clientSecret** | **string** | client_secret_post | 
+ **clientAssertionType** | **string** |  | 
+ **clientAssertion** | **string** | private_key_jwt (RFC 7523) | 
 
 ### Return type
 
@@ -654,7 +738,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -664,7 +748,7 @@ Name | Type | Description  | Notes
 
 ## RegisterClient
 
-> RegisterClientResponse RegisterClient(ctx, orgId).Execute()
+> RegisterClientResponse RegisterClient(ctx, orgId).RegisterClientRequest(registerClientRequest).Execute()
 
 Dynamic client registration (RFC 7591 / OIDC DCR)
 
@@ -684,10 +768,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	registerClientRequest := *openapiclient.NewRegisterClientRequest() // RegisterClientRequest | RFC 7591 client metadata.
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.OAuthAPI.RegisterClient(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.RegisterClient(context.Background(), orgId).RegisterClientRequest(registerClientRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.RegisterClient``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -713,6 +798,7 @@ Other parameters are passed through a pointer to a apiRegisterClientRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **registerClientRequest** | [**RegisterClientRequest**](RegisterClientRequest.md) | RFC 7591 client metadata. | 
 
 ### Return type
 
@@ -724,7 +810,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -806,7 +892,7 @@ No authorization required
 
 ## Revoke
 
-> map[string]interface{} Revoke(ctx, orgId).Execute()
+> map[string]interface{} Revoke(ctx, orgId).Token(token).TokenTypeHint(tokenTypeHint).ClientId(clientId).ClientSecret(clientSecret).ClientAssertionType(clientAssertionType).ClientAssertion(clientAssertion).Execute()
 
 Token revocation (RFC 7009)
 
@@ -826,10 +912,16 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	token := "token_example" // string | 
+	tokenTypeHint := "tokenTypeHint_example" // string |  (optional)
+	clientId := "clientId_example" // string | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+	clientSecret := "clientSecret_example" // string | client_secret_post (optional)
+	clientAssertionType := "clientAssertionType_example" // string |  (optional)
+	clientAssertion := "clientAssertion_example" // string | private_key_jwt (RFC 7523) (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.OAuthAPI.Revoke(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.Revoke(context.Background(), orgId).Token(token).TokenTypeHint(tokenTypeHint).ClientId(clientId).ClientSecret(clientSecret).ClientAssertionType(clientAssertionType).ClientAssertion(clientAssertion).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.Revoke``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -855,6 +947,12 @@ Other parameters are passed through a pointer to a apiRevokeRequest struct via t
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **token** | **string** |  | 
+ **tokenTypeHint** | **string** |  | 
+ **clientId** | **string** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | 
+ **clientSecret** | **string** | client_secret_post | 
+ **clientAssertionType** | **string** |  | 
+ **clientAssertion** | **string** | private_key_jwt (RFC 7523) | 
 
 ### Return type
 
@@ -866,7 +964,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1229,7 +1327,7 @@ No authorization required
 
 ## SubmitLoginJson
 
-> SubmitLoginJsonResponse SubmitLoginJson(ctx, orgId).Execute()
+> SubmitLoginJsonResponse SubmitLoginJson(ctx, orgId).SubmitLoginJsonRequest(submitLoginJsonRequest).Execute()
 
 Programmatic (JSON) login for the authorization flow
 
@@ -1249,10 +1347,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	submitLoginJsonRequest := *openapiclient.NewSubmitLoginJsonRequest("Email_example", "Password_example") // SubmitLoginJsonRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.OAuthAPI.SubmitLoginJson(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.SubmitLoginJson(context.Background(), orgId).SubmitLoginJsonRequest(submitLoginJsonRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.SubmitLoginJson``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1278,6 +1377,7 @@ Other parameters are passed through a pointer to a apiSubmitLoginJsonRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **submitLoginJsonRequest** | [**SubmitLoginJsonRequest**](SubmitLoginJsonRequest.md) |  | 
 
 ### Return type
 
@@ -1289,7 +1389,7 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1369,7 +1469,7 @@ No authorization required
 
 ## Token
 
-> TokenResponse Token(ctx, orgId).Execute()
+> TokenResponse Token(ctx, orgId).GrantType(grantType).Code(code).RedirectUri(redirectUri).CodeVerifier(codeVerifier).RefreshToken(refreshToken).DeviceCode(deviceCode).AuthReqId(authReqId).Scope(scope).Resource(resource).SubjectToken(subjectToken).SubjectTokenType(subjectTokenType).ActorToken(actorToken).ActorTokenType(actorTokenType).RequestedTokenType(requestedTokenType).Assertion(assertion).ClientId(clientId).ClientSecret(clientSecret).ClientAssertionType(clientAssertionType).ClientAssertion(clientAssertion).Execute()
 
 OAuth 2.1 token endpoint
 
@@ -1389,10 +1489,29 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	grantType := "grantType_example" // string | 
+	code := "code_example" // string |  (optional)
+	redirectUri := "redirectUri_example" // string |  (optional)
+	codeVerifier := "codeVerifier_example" // string |  (optional)
+	refreshToken := "refreshToken_example" // string |  (optional)
+	deviceCode := "deviceCode_example" // string |  (optional)
+	authReqId := "authReqId_example" // string | CIBA (optional)
+	scope := "scope_example" // string |  (optional)
+	resource := "resource_example" // string |  (optional)
+	subjectToken := "subjectToken_example" // string | Token exchange (RFC 8693) (optional)
+	subjectTokenType := "subjectTokenType_example" // string |  (optional)
+	actorToken := "actorToken_example" // string |  (optional)
+	actorTokenType := "actorTokenType_example" // string |  (optional)
+	requestedTokenType := "requestedTokenType_example" // string |  (optional)
+	assertion := "assertion_example" // string | JWT bearer / ID-JAG grant (optional)
+	clientId := "clientId_example" // string | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+	clientSecret := "clientSecret_example" // string | client_secret_post (optional)
+	clientAssertionType := "clientAssertionType_example" // string |  (optional)
+	clientAssertion := "clientAssertion_example" // string | private_key_jwt (RFC 7523) (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.OAuthAPI.Token(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.Token(context.Background(), orgId).GrantType(grantType).Code(code).RedirectUri(redirectUri).CodeVerifier(codeVerifier).RefreshToken(refreshToken).DeviceCode(deviceCode).AuthReqId(authReqId).Scope(scope).Resource(resource).SubjectToken(subjectToken).SubjectTokenType(subjectTokenType).ActorToken(actorToken).ActorTokenType(actorTokenType).RequestedTokenType(requestedTokenType).Assertion(assertion).ClientId(clientId).ClientSecret(clientSecret).ClientAssertionType(clientAssertionType).ClientAssertion(clientAssertion).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.Token``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1418,6 +1537,25 @@ Other parameters are passed through a pointer to a apiTokenRequest struct via th
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **grantType** | **string** |  | 
+ **code** | **string** |  | 
+ **redirectUri** | **string** |  | 
+ **codeVerifier** | **string** |  | 
+ **refreshToken** | **string** |  | 
+ **deviceCode** | **string** |  | 
+ **authReqId** | **string** | CIBA | 
+ **scope** | **string** |  | 
+ **resource** | **string** |  | 
+ **subjectToken** | **string** | Token exchange (RFC 8693) | 
+ **subjectTokenType** | **string** |  | 
+ **actorToken** | **string** |  | 
+ **actorTokenType** | **string** |  | 
+ **requestedTokenType** | **string** |  | 
+ **assertion** | **string** | JWT bearer / ID-JAG grant | 
+ **clientId** | **string** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | 
+ **clientSecret** | **string** | client_secret_post | 
+ **clientAssertionType** | **string** |  | 
+ **clientAssertion** | **string** | private_key_jwt (RFC 7523) | 
 
 ### Return type
 
@@ -1429,7 +1567,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

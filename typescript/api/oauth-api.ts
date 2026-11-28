@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -34,6 +34,8 @@ import type { IntrospectResponse } from '../models';
 // @ts-ignore
 import type { ParResponse } from '../models';
 // @ts-ignore
+import type { RegisterClientRequest } from '../models';
+// @ts-ignore
 import type { RegisterClientResponse } from '../models';
 // @ts-ignore
 import type { RegisteredClientMetadata } from '../models';
@@ -41,6 +43,8 @@ import type { RegisteredClientMetadata } from '../models';
 import type { RequestMagicLinkRequest } from '../models';
 // @ts-ignore
 import type { RequestMagicLinkResponse } from '../models';
+// @ts-ignore
+import type { SubmitLoginJsonRequest } from '../models';
 // @ts-ignore
 import type { SubmitLoginJsonResponse } from '../models';
 // @ts-ignore
@@ -89,12 +93,27 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
          * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
          * @summary CIBA backchannel authentication request
          * @param {string} orgId 
+         * @param {string} scope 
+         * @param {string} [loginHint] 
+         * @param {string} [loginHintToken] 
+         * @param {string} [idTokenHint] 
+         * @param {string} [bindingMessage] 
+         * @param {string} [acrValues] 
+         * @param {number} [requestedExpiry] 
+         * @param {string} [clientNotificationToken] 
+         * @param {string} [authorizationDetails] 
+         * @param {string} [clientId] Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+         * @param {string} [clientSecret] client_secret_post
+         * @param {string} [clientAssertionType] 
+         * @param {string} [clientAssertion] private_key_jwt (RFC 7523)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        backchannelAuthorize: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        backchannelAuthorize: async (orgId: string, scope: string, loginHint?: string, loginHintToken?: string, idTokenHint?: string, bindingMessage?: string, acrValues?: string, requestedExpiry?: number, clientNotificationToken?: string, authorizationDetails?: string, clientId?: string, clientSecret?: string, clientAssertionType?: string, clientAssertion?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('backchannelAuthorize', 'orgId', orgId)
+            // verify required parameter 'scope' is not null or undefined
+            assertParamExists('backchannelAuthorize', 'scope', scope)
             const localVarPath = `/orgs/{orgId}/api/v1/oauth/bc-authorize`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -107,16 +126,72 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new URLSearchParams();
 
             // authentication ClientAuth required
             // http basic authentication required
             setBasicAuthToObject(localVarRequestOptions, configuration)
 
 
+            if (scope !== undefined) { 
+                localVarFormParams.set('scope', scope as any);
+            }
+    
+            if (loginHint !== undefined) { 
+                localVarFormParams.set('login_hint', loginHint as any);
+            }
+    
+            if (loginHintToken !== undefined) { 
+                localVarFormParams.set('login_hint_token', loginHintToken as any);
+            }
+    
+            if (idTokenHint !== undefined) { 
+                localVarFormParams.set('id_token_hint', idTokenHint as any);
+            }
+    
+            if (bindingMessage !== undefined) { 
+                localVarFormParams.set('binding_message', bindingMessage as any);
+            }
+    
+            if (acrValues !== undefined) { 
+                localVarFormParams.set('acr_values', acrValues as any);
+            }
+    
+            if (requestedExpiry !== undefined) { 
+                localVarFormParams.set('requested_expiry', requestedExpiry as any);
+            }
+    
+            if (clientNotificationToken !== undefined) { 
+                localVarFormParams.set('client_notification_token', clientNotificationToken as any);
+            }
+    
+            if (authorizationDetails !== undefined) { 
+                localVarFormParams.set('authorization_details', authorizationDetails as any);
+            }
+    
+            if (clientId !== undefined) { 
+                localVarFormParams.set('client_id', clientId as any);
+            }
+    
+            if (clientSecret !== undefined) { 
+                localVarFormParams.set('client_secret', clientSecret as any);
+            }
+    
+            if (clientAssertionType !== undefined) { 
+                localVarFormParams.set('client_assertion_type', clientAssertionType as any);
+            }
+    
+            if (clientAssertion !== undefined) { 
+                localVarFormParams.set('client_assertion', clientAssertion as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams.toString();
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -167,10 +242,17 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
          * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
          * @summary Device authorization request (RFC 8628)
          * @param {string} orgId 
+         * @param {string} [clientId] Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+         * @param {string} [clientSecret] client_secret_post
+         * @param {string} [clientAssertionType] 
+         * @param {string} [clientAssertion] private_key_jwt (RFC 7523)
+         * @param {string} [scope] Space-separated scopes.
+         * @param {string} [resource] RFC 8707 resource indicator.
+         * @param {string} [authorizationDetails] RFC 9396, a JSON array as text.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deviceAuthorization: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deviceAuthorization: async (orgId: string, clientId?: string, clientSecret?: string, clientAssertionType?: string, clientAssertion?: string, scope?: string, resource?: string, authorizationDetails?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('deviceAuthorization', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/oauth/device_authorization`
@@ -185,16 +267,48 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new URLSearchParams();
 
             // authentication ClientAuth required
             // http basic authentication required
             setBasicAuthToObject(localVarRequestOptions, configuration)
 
 
+            if (clientId !== undefined) { 
+                localVarFormParams.set('client_id', clientId as any);
+            }
+    
+            if (clientSecret !== undefined) { 
+                localVarFormParams.set('client_secret', clientSecret as any);
+            }
+    
+            if (clientAssertionType !== undefined) { 
+                localVarFormParams.set('client_assertion_type', clientAssertionType as any);
+            }
+    
+            if (clientAssertion !== undefined) { 
+                localVarFormParams.set('client_assertion', clientAssertion as any);
+            }
+    
+            if (scope !== undefined) { 
+                localVarFormParams.set('scope', scope as any);
+            }
+    
+            if (resource !== undefined) { 
+                localVarFormParams.set('resource', resource as any);
+            }
+    
+            if (authorizationDetails !== undefined) { 
+                localVarFormParams.set('authorization_details', authorizationDetails as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams.toString();
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -318,12 +432,20 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
          * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
          * @summary Token introspection (RFC 7662)
          * @param {string} orgId 
+         * @param {string} token 
+         * @param {IntrospectTokenTypeHint} [tokenTypeHint] 
+         * @param {string} [clientId] Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+         * @param {string} [clientSecret] client_secret_post
+         * @param {string} [clientAssertionType] 
+         * @param {string} [clientAssertion] private_key_jwt (RFC 7523)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        introspect: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        introspect: async (orgId: string, token: string, tokenTypeHint?: IntrospectTokenTypeHint, clientId?: string, clientSecret?: string, clientAssertionType?: string, clientAssertion?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('introspect', 'orgId', orgId)
+            // verify required parameter 'token' is not null or undefined
+            assertParamExists('introspect', 'token', token)
             const localVarPath = `/orgs/{orgId}/api/v1/oauth/introspect`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -336,16 +458,44 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new URLSearchParams();
 
             // authentication ClientAuth required
             // http basic authentication required
             setBasicAuthToObject(localVarRequestOptions, configuration)
 
 
+            if (token !== undefined) { 
+                localVarFormParams.set('token', token as any);
+            }
+    
+            if (tokenTypeHint !== undefined) { 
+                localVarFormParams.set('token_type_hint', tokenTypeHint as any);
+            }
+    
+            if (clientId !== undefined) { 
+                localVarFormParams.set('client_id', clientId as any);
+            }
+    
+            if (clientSecret !== undefined) { 
+                localVarFormParams.set('client_secret', clientSecret as any);
+            }
+    
+            if (clientAssertionType !== undefined) { 
+                localVarFormParams.set('client_assertion_type', clientAssertionType as any);
+            }
+    
+            if (clientAssertion !== undefined) { 
+                localVarFormParams.set('client_assertion', clientAssertion as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams.toString();
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -356,10 +506,26 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
          * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
          * @summary Pushed authorization request (RFC 9126)
          * @param {string} orgId 
+         * @param {string} [responseType] 
+         * @param {string} [redirectUri] 
+         * @param {string} [scope] 
+         * @param {string} [state] 
+         * @param {string} [nonce] 
+         * @param {string} [codeChallenge] 
+         * @param {string} [codeChallengeMethod] 
+         * @param {string} [request] A signed request object (JAR, RFC 9101).
+         * @param {string} [resource] 
+         * @param {string} [authorizationDetails] 
+         * @param {string} [prompt] 
+         * @param {string} [loginHint] 
+         * @param {string} [clientId] Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+         * @param {string} [clientSecret] client_secret_post
+         * @param {string} [clientAssertionType] 
+         * @param {string} [clientAssertion] private_key_jwt (RFC 7523)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        par: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        par: async (orgId: string, responseType?: string, redirectUri?: string, scope?: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, request?: string, resource?: string, authorizationDetails?: string, prompt?: string, loginHint?: string, clientId?: string, clientSecret?: string, clientAssertionType?: string, clientAssertion?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('par', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/oauth/par`
@@ -374,16 +540,84 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new URLSearchParams();
 
             // authentication ClientAuth required
             // http basic authentication required
             setBasicAuthToObject(localVarRequestOptions, configuration)
 
 
+            if (responseType !== undefined) { 
+                localVarFormParams.set('response_type', responseType as any);
+            }
+    
+            if (redirectUri !== undefined) { 
+                localVarFormParams.set('redirect_uri', redirectUri as any);
+            }
+    
+            if (scope !== undefined) { 
+                localVarFormParams.set('scope', scope as any);
+            }
+    
+            if (state !== undefined) { 
+                localVarFormParams.set('state', state as any);
+            }
+    
+            if (nonce !== undefined) { 
+                localVarFormParams.set('nonce', nonce as any);
+            }
+    
+            if (codeChallenge !== undefined) { 
+                localVarFormParams.set('code_challenge', codeChallenge as any);
+            }
+    
+            if (codeChallengeMethod !== undefined) { 
+                localVarFormParams.set('code_challenge_method', codeChallengeMethod as any);
+            }
+    
+            if (request !== undefined) { 
+                localVarFormParams.set('request', request as any);
+            }
+    
+            if (resource !== undefined) { 
+                localVarFormParams.set('resource', resource as any);
+            }
+    
+            if (authorizationDetails !== undefined) { 
+                localVarFormParams.set('authorization_details', authorizationDetails as any);
+            }
+    
+            if (prompt !== undefined) { 
+                localVarFormParams.set('prompt', prompt as any);
+            }
+    
+            if (loginHint !== undefined) { 
+                localVarFormParams.set('login_hint', loginHint as any);
+            }
+    
+            if (clientId !== undefined) { 
+                localVarFormParams.set('client_id', clientId as any);
+            }
+    
+            if (clientSecret !== undefined) { 
+                localVarFormParams.set('client_secret', clientSecret as any);
+            }
+    
+            if (clientAssertionType !== undefined) { 
+                localVarFormParams.set('client_assertion_type', clientAssertionType as any);
+            }
+    
+            if (clientAssertion !== undefined) { 
+                localVarFormParams.set('client_assertion', clientAssertion as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams.toString();
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -394,12 +628,15 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
          * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization\'s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
          * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
          * @param {string} orgId 
+         * @param {RegisterClientRequest} registerClientRequest RFC 7591 client metadata.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerClient: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        registerClient: async (orgId: string, registerClientRequest: RegisterClientRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('registerClient', 'orgId', orgId)
+            // verify required parameter 'registerClientRequest' is not null or undefined
+            assertParamExists('registerClient', 'registerClientRequest', registerClientRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/connect/register`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -422,9 +659,12 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(registerClientRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -475,12 +715,20 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
          * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
          * @summary Token revocation (RFC 7009)
          * @param {string} orgId 
+         * @param {string} token 
+         * @param {RevokeTokenTypeHint} [tokenTypeHint] 
+         * @param {string} [clientId] Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+         * @param {string} [clientSecret] client_secret_post
+         * @param {string} [clientAssertionType] 
+         * @param {string} [clientAssertion] private_key_jwt (RFC 7523)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        revoke: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        revoke: async (orgId: string, token: string, tokenTypeHint?: RevokeTokenTypeHint, clientId?: string, clientSecret?: string, clientAssertionType?: string, clientAssertion?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('revoke', 'orgId', orgId)
+            // verify required parameter 'token' is not null or undefined
+            assertParamExists('revoke', 'token', token)
             const localVarPath = `/orgs/{orgId}/api/v1/oauth/revoke`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -493,16 +741,44 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new URLSearchParams();
 
             // authentication ClientAuth required
             // http basic authentication required
             setBasicAuthToObject(localVarRequestOptions, configuration)
 
 
+            if (token !== undefined) { 
+                localVarFormParams.set('token', token as any);
+            }
+    
+            if (tokenTypeHint !== undefined) { 
+                localVarFormParams.set('token_type_hint', tokenTypeHint as any);
+            }
+    
+            if (clientId !== undefined) { 
+                localVarFormParams.set('client_id', clientId as any);
+            }
+    
+            if (clientSecret !== undefined) { 
+                localVarFormParams.set('client_secret', clientSecret as any);
+            }
+    
+            if (clientAssertionType !== undefined) { 
+                localVarFormParams.set('client_assertion_type', clientAssertionType as any);
+            }
+    
+            if (clientAssertion !== undefined) { 
+                localVarFormParams.set('client_assertion', clientAssertion as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams.toString();
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -695,12 +971,15 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
          * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
          * @summary Programmatic (JSON) login for the authorization flow
          * @param {string} orgId 
+         * @param {SubmitLoginJsonRequest} submitLoginJsonRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        submitLoginJson: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        submitLoginJson: async (orgId: string, submitLoginJsonRequest: SubmitLoginJsonRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('submitLoginJson', 'orgId', orgId)
+            // verify required parameter 'submitLoginJsonRequest' is not null or undefined
+            assertParamExists('submitLoginJson', 'submitLoginJsonRequest', submitLoginJsonRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/oauth/login/json`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -716,9 +995,12 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(submitLoginJsonRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -763,12 +1045,33 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
          * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
          * @summary OAuth 2.1 token endpoint
          * @param {string} orgId 
+         * @param {string} grantType 
+         * @param {string} [code] 
+         * @param {string} [redirectUri] 
+         * @param {string} [codeVerifier] 
+         * @param {string} [refreshToken] 
+         * @param {string} [deviceCode] 
+         * @param {string} [authReqId] CIBA
+         * @param {string} [scope] 
+         * @param {string} [resource] 
+         * @param {string} [subjectToken] Token exchange (RFC 8693)
+         * @param {string} [subjectTokenType] 
+         * @param {string} [actorToken] 
+         * @param {string} [actorTokenType] 
+         * @param {string} [requestedTokenType] 
+         * @param {string} [assertion] JWT bearer / ID-JAG grant
+         * @param {string} [clientId] Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+         * @param {string} [clientSecret] client_secret_post
+         * @param {string} [clientAssertionType] 
+         * @param {string} [clientAssertion] private_key_jwt (RFC 7523)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        token: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        token: async (orgId: string, grantType: string, code?: string, redirectUri?: string, codeVerifier?: string, refreshToken?: string, deviceCode?: string, authReqId?: string, scope?: string, resource?: string, subjectToken?: string, subjectTokenType?: string, actorToken?: string, actorTokenType?: string, requestedTokenType?: string, assertion?: string, clientId?: string, clientSecret?: string, clientAssertionType?: string, clientAssertion?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('token', 'orgId', orgId)
+            // verify required parameter 'grantType' is not null or undefined
+            assertParamExists('token', 'grantType', grantType)
             const localVarPath = `/orgs/{orgId}/api/v1/oauth/token`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -781,16 +1084,96 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new URLSearchParams();
 
             // authentication ClientAuth required
             // http basic authentication required
             setBasicAuthToObject(localVarRequestOptions, configuration)
 
 
+            if (grantType !== undefined) { 
+                localVarFormParams.set('grant_type', grantType as any);
+            }
+    
+            if (code !== undefined) { 
+                localVarFormParams.set('code', code as any);
+            }
+    
+            if (redirectUri !== undefined) { 
+                localVarFormParams.set('redirect_uri', redirectUri as any);
+            }
+    
+            if (codeVerifier !== undefined) { 
+                localVarFormParams.set('code_verifier', codeVerifier as any);
+            }
+    
+            if (refreshToken !== undefined) { 
+                localVarFormParams.set('refresh_token', refreshToken as any);
+            }
+    
+            if (deviceCode !== undefined) { 
+                localVarFormParams.set('device_code', deviceCode as any);
+            }
+    
+            if (authReqId !== undefined) { 
+                localVarFormParams.set('auth_req_id', authReqId as any);
+            }
+    
+            if (scope !== undefined) { 
+                localVarFormParams.set('scope', scope as any);
+            }
+    
+            if (resource !== undefined) { 
+                localVarFormParams.set('resource', resource as any);
+            }
+    
+            if (subjectToken !== undefined) { 
+                localVarFormParams.set('subject_token', subjectToken as any);
+            }
+    
+            if (subjectTokenType !== undefined) { 
+                localVarFormParams.set('subject_token_type', subjectTokenType as any);
+            }
+    
+            if (actorToken !== undefined) { 
+                localVarFormParams.set('actor_token', actorToken as any);
+            }
+    
+            if (actorTokenType !== undefined) { 
+                localVarFormParams.set('actor_token_type', actorTokenType as any);
+            }
+    
+            if (requestedTokenType !== undefined) { 
+                localVarFormParams.set('requested_token_type', requestedTokenType as any);
+            }
+    
+            if (assertion !== undefined) { 
+                localVarFormParams.set('assertion', assertion as any);
+            }
+    
+            if (clientId !== undefined) { 
+                localVarFormParams.set('client_id', clientId as any);
+            }
+    
+            if (clientSecret !== undefined) { 
+                localVarFormParams.set('client_secret', clientSecret as any);
+            }
+    
+            if (clientAssertionType !== undefined) { 
+                localVarFormParams.set('client_assertion_type', clientAssertionType as any);
+            }
+    
+            if (clientAssertion !== undefined) { 
+                localVarFormParams.set('client_assertion', clientAssertion as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams.toString();
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -824,11 +1207,24 @@ export const OAuthApiFp = function(configuration?: Configuration) {
          * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
          * @summary CIBA backchannel authentication request
          * @param {string} orgId 
+         * @param {string} scope 
+         * @param {string} [loginHint] 
+         * @param {string} [loginHintToken] 
+         * @param {string} [idTokenHint] 
+         * @param {string} [bindingMessage] 
+         * @param {string} [acrValues] 
+         * @param {number} [requestedExpiry] 
+         * @param {string} [clientNotificationToken] 
+         * @param {string} [authorizationDetails] 
+         * @param {string} [clientId] Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+         * @param {string} [clientSecret] client_secret_post
+         * @param {string} [clientAssertionType] 
+         * @param {string} [clientAssertion] private_key_jwt (RFC 7523)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async backchannelAuthorize(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BackchannelAuthorizeResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.backchannelAuthorize(orgId, options);
+        async backchannelAuthorize(orgId: string, scope: string, loginHint?: string, loginHintToken?: string, idTokenHint?: string, bindingMessage?: string, acrValues?: string, requestedExpiry?: number, clientNotificationToken?: string, authorizationDetails?: string, clientId?: string, clientSecret?: string, clientAssertionType?: string, clientAssertion?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BackchannelAuthorizeResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.backchannelAuthorize(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.backchannelAuthorize']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -851,11 +1247,18 @@ export const OAuthApiFp = function(configuration?: Configuration) {
          * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
          * @summary Device authorization request (RFC 8628)
          * @param {string} orgId 
+         * @param {string} [clientId] Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+         * @param {string} [clientSecret] client_secret_post
+         * @param {string} [clientAssertionType] 
+         * @param {string} [clientAssertion] private_key_jwt (RFC 7523)
+         * @param {string} [scope] Space-separated scopes.
+         * @param {string} [resource] RFC 8707 resource indicator.
+         * @param {string} [authorizationDetails] RFC 9396, a JSON array as text.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deviceAuthorization(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeviceAuthorizationResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deviceAuthorization(orgId, options);
+        async deviceAuthorization(orgId: string, clientId?: string, clientSecret?: string, clientAssertionType?: string, clientAssertion?: string, scope?: string, resource?: string, authorizationDetails?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeviceAuthorizationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deviceAuthorization(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, authorizationDetails, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.deviceAuthorization']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -904,11 +1307,17 @@ export const OAuthApiFp = function(configuration?: Configuration) {
          * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
          * @summary Token introspection (RFC 7662)
          * @param {string} orgId 
+         * @param {string} token 
+         * @param {IntrospectTokenTypeHint} [tokenTypeHint] 
+         * @param {string} [clientId] Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+         * @param {string} [clientSecret] client_secret_post
+         * @param {string} [clientAssertionType] 
+         * @param {string} [clientAssertion] private_key_jwt (RFC 7523)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async introspect(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IntrospectResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.introspect(orgId, options);
+        async introspect(orgId: string, token: string, tokenTypeHint?: IntrospectTokenTypeHint, clientId?: string, clientSecret?: string, clientAssertionType?: string, clientAssertion?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IntrospectResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.introspect(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.introspect']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -917,11 +1326,27 @@ export const OAuthApiFp = function(configuration?: Configuration) {
          * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
          * @summary Pushed authorization request (RFC 9126)
          * @param {string} orgId 
+         * @param {string} [responseType] 
+         * @param {string} [redirectUri] 
+         * @param {string} [scope] 
+         * @param {string} [state] 
+         * @param {string} [nonce] 
+         * @param {string} [codeChallenge] 
+         * @param {string} [codeChallengeMethod] 
+         * @param {string} [request] A signed request object (JAR, RFC 9101).
+         * @param {string} [resource] 
+         * @param {string} [authorizationDetails] 
+         * @param {string} [prompt] 
+         * @param {string} [loginHint] 
+         * @param {string} [clientId] Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+         * @param {string} [clientSecret] client_secret_post
+         * @param {string} [clientAssertionType] 
+         * @param {string} [clientAssertion] private_key_jwt (RFC 7523)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async par(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ParResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.par(orgId, options);
+        async par(orgId: string, responseType?: string, redirectUri?: string, scope?: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, request?: string, resource?: string, authorizationDetails?: string, prompt?: string, loginHint?: string, clientId?: string, clientSecret?: string, clientAssertionType?: string, clientAssertion?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ParResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.par(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, authorizationDetails, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.par']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -930,11 +1355,12 @@ export const OAuthApiFp = function(configuration?: Configuration) {
          * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization\'s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
          * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
          * @param {string} orgId 
+         * @param {RegisterClientRequest} registerClientRequest RFC 7591 client metadata.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async registerClient(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterClientResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.registerClient(orgId, options);
+        async registerClient(orgId: string, registerClientRequest: RegisterClientRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterClientResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.registerClient(orgId, registerClientRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.registerClient']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -957,11 +1383,17 @@ export const OAuthApiFp = function(configuration?: Configuration) {
          * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
          * @summary Token revocation (RFC 7009)
          * @param {string} orgId 
+         * @param {string} token 
+         * @param {RevokeTokenTypeHint} [tokenTypeHint] 
+         * @param {string} [clientId] Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+         * @param {string} [clientSecret] client_secret_post
+         * @param {string} [clientAssertionType] 
+         * @param {string} [clientAssertion] private_key_jwt (RFC 7523)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async revoke(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.revoke(orgId, options);
+        async revoke(orgId: string, token: string, tokenTypeHint?: RevokeTokenTypeHint, clientId?: string, clientSecret?: string, clientAssertionType?: string, clientAssertion?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.revoke(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.revoke']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1038,11 +1470,12 @@ export const OAuthApiFp = function(configuration?: Configuration) {
          * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
          * @summary Programmatic (JSON) login for the authorization flow
          * @param {string} orgId 
+         * @param {SubmitLoginJsonRequest} submitLoginJsonRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async submitLoginJson(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubmitLoginJsonResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.submitLoginJson(orgId, options);
+        async submitLoginJson(orgId: string, submitLoginJsonRequest: SubmitLoginJsonRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubmitLoginJsonResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.submitLoginJson(orgId, submitLoginJsonRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.submitLoginJson']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1064,11 +1497,30 @@ export const OAuthApiFp = function(configuration?: Configuration) {
          * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
          * @summary OAuth 2.1 token endpoint
          * @param {string} orgId 
+         * @param {string} grantType 
+         * @param {string} [code] 
+         * @param {string} [redirectUri] 
+         * @param {string} [codeVerifier] 
+         * @param {string} [refreshToken] 
+         * @param {string} [deviceCode] 
+         * @param {string} [authReqId] CIBA
+         * @param {string} [scope] 
+         * @param {string} [resource] 
+         * @param {string} [subjectToken] Token exchange (RFC 8693)
+         * @param {string} [subjectTokenType] 
+         * @param {string} [actorToken] 
+         * @param {string} [actorTokenType] 
+         * @param {string} [requestedTokenType] 
+         * @param {string} [assertion] JWT bearer / ID-JAG grant
+         * @param {string} [clientId] Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+         * @param {string} [clientSecret] client_secret_post
+         * @param {string} [clientAssertionType] 
+         * @param {string} [clientAssertion] private_key_jwt (RFC 7523)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async token(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.token(orgId, options);
+        async token(orgId: string, grantType: string, code?: string, redirectUri?: string, codeVerifier?: string, refreshToken?: string, deviceCode?: string, authReqId?: string, scope?: string, resource?: string, subjectToken?: string, subjectTokenType?: string, actorToken?: string, actorTokenType?: string, requestedTokenType?: string, assertion?: string, clientId?: string, clientSecret?: string, clientAssertionType?: string, clientAssertion?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.token(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.token']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1101,7 +1553,7 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         backchannelAuthorize(requestParameters: OAuthApiBackchannelAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<BackchannelAuthorizeResponse> {
-            return localVarFp.backchannelAuthorize(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.backchannelAuthorize(requestParameters.orgId, requestParameters.scope, requestParameters.loginHint, requestParameters.loginHintToken, requestParameters.idTokenHint, requestParameters.bindingMessage, requestParameters.acrValues, requestParameters.requestedExpiry, requestParameters.clientNotificationToken, requestParameters.authorizationDetails, requestParameters.clientId, requestParameters.clientSecret, requestParameters.clientAssertionType, requestParameters.clientAssertion, options).then((request) => request(axios, basePath));
         },
         /**
          * For applications that render their own sign-in form. Returns the sign-in methods that the organization offers, so that the form can show the next step after an address was typed. The answer does not depend on the address: `exists` is always `true`, and a known address and a new one get the same answer. Takes no credential and signs nobody in. A browser request must come from one of the allowed origins of the application named by `client_id`.
@@ -1121,7 +1573,7 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         deviceAuthorization(requestParameters: OAuthApiDeviceAuthorizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeviceAuthorizationResponse> {
-            return localVarFp.deviceAuthorization(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.deviceAuthorization(requestParameters.orgId, requestParameters.clientId, requestParameters.clientSecret, requestParameters.clientAssertionType, requestParameters.clientAssertion, requestParameters.scope, requestParameters.resource, requestParameters.authorizationDetails, options).then((request) => request(axios, basePath));
         },
         /**
          * Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
@@ -1161,7 +1613,7 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         introspect(requestParameters: OAuthApiIntrospectRequest, options?: RawAxiosRequestConfig): AxiosPromise<IntrospectResponse> {
-            return localVarFp.introspect(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.introspect(requestParameters.orgId, requestParameters.token, requestParameters.tokenTypeHint, requestParameters.clientId, requestParameters.clientSecret, requestParameters.clientAssertionType, requestParameters.clientAssertion, options).then((request) => request(axios, basePath));
         },
         /**
          * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
@@ -1171,7 +1623,7 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         par(requestParameters: OAuthApiParRequest, options?: RawAxiosRequestConfig): AxiosPromise<ParResponse> {
-            return localVarFp.par(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.par(requestParameters.orgId, requestParameters.responseType, requestParameters.redirectUri, requestParameters.scope, requestParameters.state, requestParameters.nonce, requestParameters.codeChallenge, requestParameters.codeChallengeMethod, requestParameters.request, requestParameters.resource, requestParameters.authorizationDetails, requestParameters.prompt, requestParameters.loginHint, requestParameters.clientId, requestParameters.clientSecret, requestParameters.clientAssertionType, requestParameters.clientAssertion, options).then((request) => request(axios, basePath));
         },
         /**
          * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization\'s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
@@ -1181,7 +1633,7 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         registerClient(requestParameters: OAuthApiRegisterClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterClientResponse> {
-            return localVarFp.registerClient(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.registerClient(requestParameters.orgId, requestParameters.registerClientRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * For applications that render their own sign-in form. Mails a single-use sign-in link to the address when it belongs to an account of the organization, and gives the same answer when it does not. Signs nobody in and mints no tokens: the person opens the link, confirms on the hosted page, and is then sent to `return_to`, where the application starts its normal authorization flow. A browser request must come from one of the allowed origins of the application named by `client_id`.
@@ -1201,7 +1653,7 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         revoke(requestParameters: OAuthApiRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.revoke(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.revoke(requestParameters.orgId, requestParameters.token, requestParameters.tokenTypeHint, requestParameters.clientId, requestParameters.clientSecret, requestParameters.clientAssertionType, requestParameters.clientAssertion, options).then((request) => request(axios, basePath));
         },
         /**
          * Receives the provider\'s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
@@ -1261,7 +1713,7 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         submitLoginJson(requestParameters: OAuthApiSubmitLoginJsonRequest, options?: RawAxiosRequestConfig): AxiosPromise<SubmitLoginJsonResponse> {
-            return localVarFp.submitLoginJson(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.submitLoginJson(requestParameters.orgId, requestParameters.submitLoginJsonRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
@@ -1281,7 +1733,7 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         token(requestParameters: OAuthApiTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenResponse> {
-            return localVarFp.token(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.token(requestParameters.orgId, requestParameters.grantType, requestParameters.code, requestParameters.redirectUri, requestParameters.codeVerifier, requestParameters.refreshToken, requestParameters.deviceCode, requestParameters.authReqId, requestParameters.scope, requestParameters.resource, requestParameters.subjectToken, requestParameters.subjectTokenType, requestParameters.actorToken, requestParameters.actorTokenType, requestParameters.requestedTokenType, requestParameters.assertion, requestParameters.clientId, requestParameters.clientSecret, requestParameters.clientAssertionType, requestParameters.clientAssertion, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1520,6 +1972,97 @@ export interface OAuthApiBackchannelAuthorizeRequest {
      * @memberof OAuthApiBackchannelAuthorize
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiBackchannelAuthorize
+     */
+    readonly scope: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiBackchannelAuthorize
+     */
+    readonly loginHint?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiBackchannelAuthorize
+     */
+    readonly loginHintToken?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiBackchannelAuthorize
+     */
+    readonly idTokenHint?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiBackchannelAuthorize
+     */
+    readonly bindingMessage?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiBackchannelAuthorize
+     */
+    readonly acrValues?: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof OAuthApiBackchannelAuthorize
+     */
+    readonly requestedExpiry?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiBackchannelAuthorize
+     */
+    readonly clientNotificationToken?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiBackchannelAuthorize
+     */
+    readonly authorizationDetails?: string
+
+    /**
+     * Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+     * @type {string}
+     * @memberof OAuthApiBackchannelAuthorize
+     */
+    readonly clientId?: string
+
+    /**
+     * client_secret_post
+     * @type {string}
+     * @memberof OAuthApiBackchannelAuthorize
+     */
+    readonly clientSecret?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiBackchannelAuthorize
+     */
+    readonly clientAssertionType?: string
+
+    /**
+     * private_key_jwt (RFC 7523)
+     * @type {string}
+     * @memberof OAuthApiBackchannelAuthorize
+     */
+    readonly clientAssertion?: string
 }
 
 /**
@@ -1555,6 +2098,55 @@ export interface OAuthApiDeviceAuthorizationRequest {
      * @memberof OAuthApiDeviceAuthorization
      */
     readonly orgId: string
+
+    /**
+     * Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+     * @type {string}
+     * @memberof OAuthApiDeviceAuthorization
+     */
+    readonly clientId?: string
+
+    /**
+     * client_secret_post
+     * @type {string}
+     * @memberof OAuthApiDeviceAuthorization
+     */
+    readonly clientSecret?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiDeviceAuthorization
+     */
+    readonly clientAssertionType?: string
+
+    /**
+     * private_key_jwt (RFC 7523)
+     * @type {string}
+     * @memberof OAuthApiDeviceAuthorization
+     */
+    readonly clientAssertion?: string
+
+    /**
+     * Space-separated scopes.
+     * @type {string}
+     * @memberof OAuthApiDeviceAuthorization
+     */
+    readonly scope?: string
+
+    /**
+     * RFC 8707 resource indicator.
+     * @type {string}
+     * @memberof OAuthApiDeviceAuthorization
+     */
+    readonly resource?: string
+
+    /**
+     * RFC 9396, a JSON array as text.
+     * @type {string}
+     * @memberof OAuthApiDeviceAuthorization
+     */
+    readonly authorizationDetails?: string
 }
 
 /**
@@ -1618,6 +2210,48 @@ export interface OAuthApiIntrospectRequest {
      * @memberof OAuthApiIntrospect
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiIntrospect
+     */
+    readonly token: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiIntrospect
+     */
+    readonly tokenTypeHint?: IntrospectTokenTypeHint
+
+    /**
+     * Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+     * @type {string}
+     * @memberof OAuthApiIntrospect
+     */
+    readonly clientId?: string
+
+    /**
+     * client_secret_post
+     * @type {string}
+     * @memberof OAuthApiIntrospect
+     */
+    readonly clientSecret?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiIntrospect
+     */
+    readonly clientAssertionType?: string
+
+    /**
+     * private_key_jwt (RFC 7523)
+     * @type {string}
+     * @memberof OAuthApiIntrospect
+     */
+    readonly clientAssertion?: string
 }
 
 /**
@@ -1632,6 +2266,118 @@ export interface OAuthApiParRequest {
      * @memberof OAuthApiPar
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly responseType?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly redirectUri?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly scope?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly state?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly nonce?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly codeChallenge?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly codeChallengeMethod?: string
+
+    /**
+     * A signed request object (JAR, RFC 9101).
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly request?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly resource?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly authorizationDetails?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly prompt?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly loginHint?: string
+
+    /**
+     * Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly clientId?: string
+
+    /**
+     * client_secret_post
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly clientSecret?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly clientAssertionType?: string
+
+    /**
+     * private_key_jwt (RFC 7523)
+     * @type {string}
+     * @memberof OAuthApiPar
+     */
+    readonly clientAssertion?: string
 }
 
 /**
@@ -1646,6 +2392,13 @@ export interface OAuthApiRegisterClientRequest {
      * @memberof OAuthApiRegisterClient
      */
     readonly orgId: string
+
+    /**
+     * RFC 7591 client metadata.
+     * @type {RegisterClientRequest}
+     * @memberof OAuthApiRegisterClient
+     */
+    readonly registerClientRequest: RegisterClientRequest
 }
 
 /**
@@ -1681,6 +2434,48 @@ export interface OAuthApiRevokeRequest {
      * @memberof OAuthApiRevoke
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiRevoke
+     */
+    readonly token: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiRevoke
+     */
+    readonly tokenTypeHint?: RevokeTokenTypeHint
+
+    /**
+     * Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+     * @type {string}
+     * @memberof OAuthApiRevoke
+     */
+    readonly clientId?: string
+
+    /**
+     * client_secret_post
+     * @type {string}
+     * @memberof OAuthApiRevoke
+     */
+    readonly clientSecret?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiRevoke
+     */
+    readonly clientAssertionType?: string
+
+    /**
+     * private_key_jwt (RFC 7523)
+     * @type {string}
+     * @memberof OAuthApiRevoke
+     */
+    readonly clientAssertion?: string
 }
 
 /**
@@ -1786,6 +2581,13 @@ export interface OAuthApiSubmitLoginJsonRequest {
      * @memberof OAuthApiSubmitLoginJson
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {SubmitLoginJsonRequest}
+     * @memberof OAuthApiSubmitLoginJson
+     */
+    readonly submitLoginJsonRequest: SubmitLoginJsonRequest
 }
 
 /**
@@ -1814,6 +2616,139 @@ export interface OAuthApiTokenRequest {
      * @memberof OAuthApiToken
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly grantType: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly code?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly redirectUri?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly codeVerifier?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly refreshToken?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly deviceCode?: string
+
+    /**
+     * CIBA
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly authReqId?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly scope?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly resource?: string
+
+    /**
+     * Token exchange (RFC 8693)
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly subjectToken?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly subjectTokenType?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly actorToken?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly actorTokenType?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly requestedTokenType?: string
+
+    /**
+     * JWT bearer / ID-JAG grant
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly assertion?: string
+
+    /**
+     * Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly clientId?: string
+
+    /**
+     * client_secret_post
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly clientSecret?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly clientAssertionType?: string
+
+    /**
+     * private_key_jwt (RFC 7523)
+     * @type {string}
+     * @memberof OAuthApiToken
+     */
+    readonly clientAssertion?: string
 }
 
 /**
@@ -1844,7 +2779,7 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
      * @memberof OAuthApi
      */
     public backchannelAuthorize(requestParameters: OAuthApiBackchannelAuthorizeRequest, options?: RawAxiosRequestConfig) {
-        return OAuthApiFp(this.configuration).backchannelAuthorize(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return OAuthApiFp(this.configuration).backchannelAuthorize(requestParameters.orgId, requestParameters.scope, requestParameters.loginHint, requestParameters.loginHintToken, requestParameters.idTokenHint, requestParameters.bindingMessage, requestParameters.acrValues, requestParameters.requestedExpiry, requestParameters.clientNotificationToken, requestParameters.authorizationDetails, requestParameters.clientId, requestParameters.clientSecret, requestParameters.clientAssertionType, requestParameters.clientAssertion, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1868,7 +2803,7 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
      * @memberof OAuthApi
      */
     public deviceAuthorization(requestParameters: OAuthApiDeviceAuthorizationRequest, options?: RawAxiosRequestConfig) {
-        return OAuthApiFp(this.configuration).deviceAuthorization(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return OAuthApiFp(this.configuration).deviceAuthorization(requestParameters.orgId, requestParameters.clientId, requestParameters.clientSecret, requestParameters.clientAssertionType, requestParameters.clientAssertion, requestParameters.scope, requestParameters.resource, requestParameters.authorizationDetails, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1916,7 +2851,7 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
      * @memberof OAuthApi
      */
     public introspect(requestParameters: OAuthApiIntrospectRequest, options?: RawAxiosRequestConfig) {
-        return OAuthApiFp(this.configuration).introspect(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return OAuthApiFp(this.configuration).introspect(requestParameters.orgId, requestParameters.token, requestParameters.tokenTypeHint, requestParameters.clientId, requestParameters.clientSecret, requestParameters.clientAssertionType, requestParameters.clientAssertion, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1928,7 +2863,7 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
      * @memberof OAuthApi
      */
     public par(requestParameters: OAuthApiParRequest, options?: RawAxiosRequestConfig) {
-        return OAuthApiFp(this.configuration).par(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return OAuthApiFp(this.configuration).par(requestParameters.orgId, requestParameters.responseType, requestParameters.redirectUri, requestParameters.scope, requestParameters.state, requestParameters.nonce, requestParameters.codeChallenge, requestParameters.codeChallengeMethod, requestParameters.request, requestParameters.resource, requestParameters.authorizationDetails, requestParameters.prompt, requestParameters.loginHint, requestParameters.clientId, requestParameters.clientSecret, requestParameters.clientAssertionType, requestParameters.clientAssertion, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1940,7 +2875,7 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
      * @memberof OAuthApi
      */
     public registerClient(requestParameters: OAuthApiRegisterClientRequest, options?: RawAxiosRequestConfig) {
-        return OAuthApiFp(this.configuration).registerClient(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return OAuthApiFp(this.configuration).registerClient(requestParameters.orgId, requestParameters.registerClientRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1964,7 +2899,7 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
      * @memberof OAuthApi
      */
     public revoke(requestParameters: OAuthApiRevokeRequest, options?: RawAxiosRequestConfig) {
-        return OAuthApiFp(this.configuration).revoke(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return OAuthApiFp(this.configuration).revoke(requestParameters.orgId, requestParameters.token, requestParameters.tokenTypeHint, requestParameters.clientId, requestParameters.clientSecret, requestParameters.clientAssertionType, requestParameters.clientAssertion, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2036,7 +2971,7 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
      * @memberof OAuthApi
      */
     public submitLoginJson(requestParameters: OAuthApiSubmitLoginJsonRequest, options?: RawAxiosRequestConfig) {
-        return OAuthApiFp(this.configuration).submitLoginJson(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return OAuthApiFp(this.configuration).submitLoginJson(requestParameters.orgId, requestParameters.submitLoginJsonRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2060,7 +2995,23 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
      * @memberof OAuthApi
      */
     public token(requestParameters: OAuthApiTokenRequest, options?: RawAxiosRequestConfig) {
-        return OAuthApiFp(this.configuration).token(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return OAuthApiFp(this.configuration).token(requestParameters.orgId, requestParameters.grantType, requestParameters.code, requestParameters.redirectUri, requestParameters.codeVerifier, requestParameters.refreshToken, requestParameters.deviceCode, requestParameters.authReqId, requestParameters.scope, requestParameters.resource, requestParameters.subjectToken, requestParameters.subjectTokenType, requestParameters.actorToken, requestParameters.actorTokenType, requestParameters.requestedTokenType, requestParameters.assertion, requestParameters.clientId, requestParameters.clientSecret, requestParameters.clientAssertionType, requestParameters.clientAssertion, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
+/**
+  * @export
+  * @enum {string}
+  */
+export enum IntrospectTokenTypeHint {
+    ACCESS_TOKEN = 'access_token',
+    REFRESH_TOKEN = 'refresh_token'
+}
+/**
+  * @export
+  * @enum {string}
+  */
+export enum RevokeTokenTypeHint {
+    ACCESS_TOKEN = 'access_token',
+    REFRESH_TOKEN = 'refresh_token'
+}

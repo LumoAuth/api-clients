@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -15,6 +15,9 @@ use serde::{Deserialize, Serialize};
 pub struct CreateTaskResponse {
     #[serde(rename = "task_id", skip_serializing_if = "Option::is_none")]
     pub task_id: Option<String>,
+    /// The parent task, or null for a task without one.
+    #[serde(rename = "parent_task_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub parent_task_id: Option<Option<String>>,
     #[serde(rename = "caep_session_id", skip_serializing_if = "Option::is_none")]
     pub caep_session_id: Option<String>,
     #[serde(rename = "expires_at", skip_serializing_if = "Option::is_none")]
@@ -31,6 +34,7 @@ impl CreateTaskResponse {
     pub fn new() -> CreateTaskResponse {
         CreateTaskResponse {
             task_id: None,
+            parent_task_id: None,
             caep_session_id: None,
             expires_at: None,
             agent_id: None,

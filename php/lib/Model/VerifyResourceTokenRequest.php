@@ -13,7 +13,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -58,6 +58,7 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
       * @var string[]
       */
     protected static $openAPITypes = [
+        'resource' => 'string',
         'resourceToken' => 'string',
         'agent' => 'string',
         'agentJkt' => 'string'
@@ -71,6 +72,7 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
+        'resource' => null,
         'resourceToken' => null,
         'agent' => null,
         'agentJkt' => null
@@ -82,6 +84,7 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
       * @var boolean[]
       */
     protected static array $openAPINullables = [
+        'resource' => false,
         'resourceToken' => false,
         'agent' => false,
         'agentJkt' => false
@@ -173,6 +176,7 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
      * @var string[]
      */
     protected static $attributeMap = [
+        'resource' => 'resource',
         'resourceToken' => 'resource_token',
         'agent' => 'agent',
         'agentJkt' => 'agent_jkt'
@@ -184,6 +188,7 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
      * @var string[]
      */
     protected static $setters = [
+        'resource' => 'setResource',
         'resourceToken' => 'setResourceToken',
         'agent' => 'setAgent',
         'agentJkt' => 'setAgentJkt'
@@ -195,6 +200,7 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
      * @var string[]
      */
     protected static $getters = [
+        'resource' => 'getResource',
         'resourceToken' => 'getResourceToken',
         'agent' => 'getAgent',
         'agentJkt' => 'getAgentJkt'
@@ -257,6 +263,7 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
      */
     public function __construct(?array $data = null)
     {
+        $this->setIfExists('resource', $data ?? [], null);
         $this->setIfExists('resourceToken', $data ?? [], null);
         $this->setIfExists('agent', $data ?? [], null);
         $this->setIfExists('agentJkt', $data ?? [], null);
@@ -289,6 +296,18 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
     {
         $invalidProperties = [];
 
+        if ($this->container['resource'] === null) {
+            $invalidProperties[] = "'resource' can't be null";
+        }
+        if ($this->container['resourceToken'] === null) {
+            $invalidProperties[] = "'resourceToken' can't be null";
+        }
+        if ($this->container['agent'] === null) {
+            $invalidProperties[] = "'agent' can't be null";
+        }
+        if ($this->container['agentJkt'] === null) {
+            $invalidProperties[] = "'agentJkt' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -305,9 +324,36 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
 
 
     /**
+     * Gets resource
+     *
+     * @return string
+     */
+    public function getResource()
+    {
+        return $this->container['resource'];
+    }
+
+    /**
+     * Sets resource
+     *
+     * @param string $resource Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
+     *
+     * @return self
+     */
+    public function setResource($resource)
+    {
+        if (is_null($resource)) {
+            throw new \InvalidArgumentException('non-nullable resource cannot be null');
+        }
+        $this->container['resource'] = $resource;
+
+        return $this;
+    }
+
+    /**
      * Gets resourceToken
      *
-     * @return string|null
+     * @return string
      */
     public function getResourceToken()
     {
@@ -317,7 +363,7 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Sets resourceToken
      *
-     * @param string|null $resourceToken The resource token to validate.
+     * @param string $resourceToken The resource token to validate.
      *
      * @return self
      */
@@ -334,7 +380,7 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Gets agent
      *
-     * @return string|null
+     * @return string
      */
     public function getAgent()
     {
@@ -344,7 +390,7 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Sets agent
      *
-     * @param string|null $agent Agent identifier the token must be bound to.
+     * @param string $agent Agent identifier the token must be bound to.
      *
      * @return self
      */
@@ -361,7 +407,7 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Gets agentJkt
      *
-     * @return string|null
+     * @return string
      */
     public function getAgentJkt()
     {
@@ -371,7 +417,7 @@ class VerifyResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Sets agentJkt
      *
-     * @param string|null $agentJkt JWK thumbprint of the agent key.
+     * @param string $agentJkt JWK thumbprint of the agent key.
      *
      * @return self
      */

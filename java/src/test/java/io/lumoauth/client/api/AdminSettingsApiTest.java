@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -17,6 +17,8 @@ import io.lumoauth.client.ApiException;
 import io.lumoauth.client.model.AdminAnalyticsDashboardResponse;
 import io.lumoauth.client.model.AdminAnalyticsLoginsResponse;
 import io.lumoauth.client.model.AdminAnalyticsUsersResponse;
+import io.lumoauth.client.model.AdminInitialAccessTokensCreateResponse;
+import io.lumoauth.client.model.AdminInitialAccessTokensListResponse;
 import io.lumoauth.client.model.AdminSettingsAllResponse;
 import io.lumoauth.client.model.AdminSettingsAuthenticationGetResponse;
 import io.lumoauth.client.model.AdminSettingsBrandingGetResponse;
@@ -25,6 +27,9 @@ import io.lumoauth.client.model.AdminSettingsGeneralGetResponse;
 import io.lumoauth.client.model.AdminSettingsScimGetResponse;
 import io.lumoauth.client.model.AdminSettingsSecurityGetResponse;
 import io.lumoauth.client.model.AdminTenantGetResponse;
+import io.lumoauth.client.model.AuthenticationSettings;
+import io.lumoauth.client.model.BrandingSettings;
+import io.lumoauth.client.model.MessageResponse;
 import io.lumoauth.client.model.PutAdminSettingsAuthenticationUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsBrandingUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsEmailUpdateRequest;
@@ -32,8 +37,11 @@ import io.lumoauth.client.model.PutAdminSettingsEmailUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsGeneralUpdateRequest;
 import io.lumoauth.client.model.PutAdminSettingsGeneralUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsScimUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsSecurityUpdateRequest;
 import io.lumoauth.client.model.PutAdminSettingsSecurityUpdateResponse;
+import io.lumoauth.client.model.PutAdminTenantUpdateRequest;
 import io.lumoauth.client.model.PutAdminTenantUpdateResponse;
+import io.lumoauth.client.model.ScimSettings;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -89,7 +97,50 @@ public class AdminSettingsApiTest {
     }
 
     /**
-     * Get organization (tenant) profile
+     * Create an initial access token for dynamic client registration
+     *
+     * Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminInitialAccessTokensCreateTest() throws ApiException {
+        String orgId = null;
+        AdminInitialAccessTokensCreateResponse response = api.adminInitialAccessTokensCreate(orgId);
+        // TODO: test validations
+    }
+
+    /**
+     * Delete an initial access token of dynamic client registration
+     *
+     * The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminInitialAccessTokensDeleteTest() throws ApiException {
+        String orgId = null;
+        String tokenId = null;
+        MessageResponse response = api.adminInitialAccessTokensDelete(orgId, tokenId);
+        // TODO: test validations
+    }
+
+    /**
+     * List the initial access tokens of dynamic client registration
+     *
+     * Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminInitialAccessTokensListTest() throws ApiException {
+        String orgId = null;
+        AdminInitialAccessTokensListResponse response = api.adminInitialAccessTokensList(orgId);
+        // TODO: test validations
+    }
+
+    /**
+     * Get organization profile
      *
      * @throws ApiException if the Api call fails
      */
@@ -201,7 +252,7 @@ public class AdminSettingsApiTest {
     }
 
     /**
-     * Get organization (tenant) profile
+     * Get organization profile
      *
      * @throws ApiException if the Api call fails
      */
@@ -213,38 +264,45 @@ public class AdminSettingsApiTest {
     }
 
     /**
-     * Update organization (tenant) name and settings
+     * Update the organization&#39;s name and settings
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void patchAdminOrganizationUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminTenantUpdateResponse response = api.patchAdminOrganizationUpdate(orgId);
+        PutAdminTenantUpdateRequest putAdminTenantUpdateRequest = null;
+        PutAdminTenantUpdateResponse response = api.patchAdminOrganizationUpdate(orgId, putAdminTenantUpdateRequest);
         // TODO: test validations
     }
 
     /**
      * Update authentication settings
      *
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void patchAdminSettingsAuthUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsAuthenticationUpdateResponse response = api.patchAdminSettingsAuthUpdate(orgId);
+        AuthenticationSettings authenticationSettings = null;
+        PutAdminSettingsAuthenticationUpdateResponse response = api.patchAdminSettingsAuthUpdate(orgId, authenticationSettings);
         // TODO: test validations
     }
 
     /**
      * Update authentication settings (alias for settings/auth)
      *
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void patchAdminSettingsAuthenticationUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsAuthenticationUpdateResponse response = api.patchAdminSettingsAuthenticationUpdate(orgId);
+        AuthenticationSettings authenticationSettings = null;
+        PutAdminSettingsAuthenticationUpdateResponse response = api.patchAdminSettingsAuthenticationUpdate(orgId, authenticationSettings);
         // TODO: test validations
     }
 
@@ -258,7 +316,8 @@ public class AdminSettingsApiTest {
     @Test
     public void patchAdminSettingsBrandingUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsBrandingUpdateResponse response = api.patchAdminSettingsBrandingUpdate(orgId);
+        BrandingSettings brandingSettings = null;
+        PutAdminSettingsBrandingUpdateResponse response = api.patchAdminSettingsBrandingUpdate(orgId, brandingSettings);
         // TODO: test validations
     }
 
@@ -300,7 +359,8 @@ public class AdminSettingsApiTest {
     @Test
     public void patchAdminSettingsScimUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsScimUpdateResponse response = api.patchAdminSettingsScimUpdate(orgId);
+        ScimSettings scimSettings = null;
+        PutAdminSettingsScimUpdateResponse response = api.patchAdminSettingsScimUpdate(orgId, scimSettings);
         // TODO: test validations
     }
 
@@ -312,55 +372,64 @@ public class AdminSettingsApiTest {
     @Test
     public void patchAdminSettingsSecurityUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsSecurityUpdateResponse response = api.patchAdminSettingsSecurityUpdate(orgId);
+        PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest = null;
+        PutAdminSettingsSecurityUpdateResponse response = api.patchAdminSettingsSecurityUpdate(orgId, putAdminSettingsSecurityUpdateRequest);
         // TODO: test validations
     }
 
     /**
-     * Update organization (tenant) name and settings
+     * Update the organization&#39;s name and settings
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void patchAdminTenantUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminTenantUpdateResponse response = api.patchAdminTenantUpdate(orgId);
+        PutAdminTenantUpdateRequest putAdminTenantUpdateRequest = null;
+        PutAdminTenantUpdateResponse response = api.patchAdminTenantUpdate(orgId, putAdminTenantUpdateRequest);
         // TODO: test validations
     }
 
     /**
-     * Update organization (tenant) name and settings
+     * Update the organization&#39;s name and settings
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void putAdminOrganizationUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminTenantUpdateResponse response = api.putAdminOrganizationUpdate(orgId);
+        PutAdminTenantUpdateRequest putAdminTenantUpdateRequest = null;
+        PutAdminTenantUpdateResponse response = api.putAdminOrganizationUpdate(orgId, putAdminTenantUpdateRequest);
         // TODO: test validations
     }
 
     /**
      * Update authentication settings
      *
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void putAdminSettingsAuthUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsAuthenticationUpdateResponse response = api.putAdminSettingsAuthUpdate(orgId);
+        AuthenticationSettings authenticationSettings = null;
+        PutAdminSettingsAuthenticationUpdateResponse response = api.putAdminSettingsAuthUpdate(orgId, authenticationSettings);
         // TODO: test validations
     }
 
     /**
      * Update authentication settings (alias for settings/auth)
      *
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void putAdminSettingsAuthenticationUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsAuthenticationUpdateResponse response = api.putAdminSettingsAuthenticationUpdate(orgId);
+        AuthenticationSettings authenticationSettings = null;
+        PutAdminSettingsAuthenticationUpdateResponse response = api.putAdminSettingsAuthenticationUpdate(orgId, authenticationSettings);
         // TODO: test validations
     }
 
@@ -374,7 +443,8 @@ public class AdminSettingsApiTest {
     @Test
     public void putAdminSettingsBrandingUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsBrandingUpdateResponse response = api.putAdminSettingsBrandingUpdate(orgId);
+        BrandingSettings brandingSettings = null;
+        PutAdminSettingsBrandingUpdateResponse response = api.putAdminSettingsBrandingUpdate(orgId, brandingSettings);
         // TODO: test validations
     }
 
@@ -416,7 +486,8 @@ public class AdminSettingsApiTest {
     @Test
     public void putAdminSettingsScimUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsScimUpdateResponse response = api.putAdminSettingsScimUpdate(orgId);
+        ScimSettings scimSettings = null;
+        PutAdminSettingsScimUpdateResponse response = api.putAdminSettingsScimUpdate(orgId, scimSettings);
         // TODO: test validations
     }
 
@@ -428,19 +499,21 @@ public class AdminSettingsApiTest {
     @Test
     public void putAdminSettingsSecurityUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminSettingsSecurityUpdateResponse response = api.putAdminSettingsSecurityUpdate(orgId);
+        PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest = null;
+        PutAdminSettingsSecurityUpdateResponse response = api.putAdminSettingsSecurityUpdate(orgId, putAdminSettingsSecurityUpdateRequest);
         // TODO: test validations
     }
 
     /**
-     * Update organization (tenant) name and settings
+     * Update the organization&#39;s name and settings
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void putAdminTenantUpdateTest() throws ApiException {
         String orgId = null;
-        PutAdminTenantUpdateResponse response = api.putAdminTenantUpdate(orgId);
+        PutAdminTenantUpdateRequest putAdminTenantUpdateRequest = null;
+        PutAdminTenantUpdateResponse response = api.putAdminTenantUpdate(orgId, putAdminTenantUpdateRequest);
         // TODO: test validations
     }
 

@@ -15,17 +15,21 @@ public struct AdminWebhooksTunnelStartResponseData: Codable, JSONEncodable, Hash
     public var webhookId: Int?
     public var sessionId: String?
     public var tunnelUrl: String?
+    /** The secret that signs the tunnel's deliveries (X-LumoAuth-Signature). Shown once. */
+    public var signingSecret: String?
 
-    public init(webhookId: Int? = nil, sessionId: String? = nil, tunnelUrl: String? = nil) {
+    public init(webhookId: Int? = nil, sessionId: String? = nil, tunnelUrl: String? = nil, signingSecret: String? = nil) {
         self.webhookId = webhookId
         self.sessionId = sessionId
         self.tunnelUrl = tunnelUrl
+        self.signingSecret = signingSecret
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case webhookId = "webhook_id"
         case sessionId = "session_id"
         case tunnelUrl = "tunnel_url"
+        case signingSecret = "signing_secret"
     }
 
     // Encodable protocol methods
@@ -35,6 +39,7 @@ public struct AdminWebhooksTunnelStartResponseData: Codable, JSONEncodable, Hash
         try container.encodeIfPresent(webhookId, forKey: .webhookId)
         try container.encodeIfPresent(sessionId, forKey: .sessionId)
         try container.encodeIfPresent(tunnelUrl, forKey: .tunnelUrl)
+        try container.encodeIfPresent(signingSecret, forKey: .signingSecret)
     }
 }
 

@@ -17,11 +17,12 @@ open class AdminUsersAPI {
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter addUserGroupRequest: (body)  
      - returns: AddUserGroupResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func addUserGroup(orgId: String, userId: String) async throws -> AddUserGroupResponse {
-        return try await addUserGroupWithRequestBuilder(orgId: orgId, userId: userId).execute().body
+    open class func addUserGroup(orgId: String, userId: String, addUserGroupRequest: AddUserGroupRequest) async throws -> AddUserGroupResponse {
+        return try await addUserGroupWithRequestBuilder(orgId: orgId, userId: userId, addUserGroupRequest: addUserGroupRequest).execute().body
     }
 
     /**
@@ -35,9 +36,10 @@ open class AdminUsersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter addUserGroupRequest: (body)  
      - returns: RequestBuilder<AddUserGroupResponse> 
      */
-    open class func addUserGroupWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<AddUserGroupResponse> {
+    open class func addUserGroupWithRequestBuilder(orgId: String, userId: String, addUserGroupRequest: AddUserGroupRequest) -> RequestBuilder<AddUserGroupResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}/groups"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -46,12 +48,12 @@ open class AdminUsersAPI {
         let userIdPostEscape = userIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{userId}", with: userIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: addUserGroupRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -66,17 +68,18 @@ open class AdminUsersAPI {
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter addUserPermissionRequest: (body)  
      - returns: AddUserPermissionResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func addUserPermission(orgId: String, userId: String) async throws -> AddUserPermissionResponse {
-        return try await addUserPermissionWithRequestBuilder(orgId: orgId, userId: userId).execute().body
+    open class func addUserPermission(orgId: String, userId: String, addUserPermissionRequest: AddUserPermissionRequest) async throws -> AddUserPermissionResponse {
+        return try await addUserPermissionWithRequestBuilder(orgId: orgId, userId: userId, addUserPermissionRequest: addUserPermissionRequest).execute().body
     }
 
     /**
      Assign a permission to a user
      - POST /orgs/{orgId}/api/v1/admin/users/{userId}/permissions
-     - Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+     - Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -85,9 +88,10 @@ open class AdminUsersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter addUserPermissionRequest: (body)  
      - returns: RequestBuilder<AddUserPermissionResponse> 
      */
-    open class func addUserPermissionWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<AddUserPermissionResponse> {
+    open class func addUserPermissionWithRequestBuilder(orgId: String, userId: String, addUserPermissionRequest: AddUserPermissionRequest) -> RequestBuilder<AddUserPermissionResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}/permissions"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -96,12 +100,12 @@ open class AdminUsersAPI {
         let userIdPostEscape = userIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{userId}", with: userIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: addUserPermissionRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -116,11 +120,12 @@ open class AdminUsersAPI {
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter addUserRoleRequest: (body)  
      - returns: AddUserRoleResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func addUserRole(orgId: String, userId: String) async throws -> AddUserRoleResponse {
-        return try await addUserRoleWithRequestBuilder(orgId: orgId, userId: userId).execute().body
+    open class func addUserRole(orgId: String, userId: String, addUserRoleRequest: AddUserRoleRequest) async throws -> AddUserRoleResponse {
+        return try await addUserRoleWithRequestBuilder(orgId: orgId, userId: userId, addUserRoleRequest: addUserRoleRequest).execute().body
     }
 
     /**
@@ -134,9 +139,10 @@ open class AdminUsersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter addUserRoleRequest: (body)  
      - returns: RequestBuilder<AddUserRoleResponse> 
      */
-    open class func addUserRoleWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<AddUserRoleResponse> {
+    open class func addUserRoleWithRequestBuilder(orgId: String, userId: String, addUserRoleRequest: AddUserRoleRequest) -> RequestBuilder<AddUserRoleResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}/roles"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -145,12 +151,12 @@ open class AdminUsersAPI {
         let userIdPostEscape = userIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{userId}", with: userIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: addUserRoleRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -527,11 +533,12 @@ open class AdminUsersAPI {
      Create a user
      
      - parameter orgId: (path)  
+     - parameter createUserRequest: (body)  
      - returns: CreateUserResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func createUser(orgId: String) async throws -> CreateUserResponse {
-        return try await createUserWithRequestBuilder(orgId: orgId).execute().body
+    open class func createUser(orgId: String, createUserRequest: CreateUserRequest) async throws -> CreateUserResponse {
+        return try await createUserWithRequestBuilder(orgId: orgId, createUserRequest: createUserRequest).execute().body
     }
 
     /**
@@ -544,20 +551,21 @@ open class AdminUsersAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter createUserRequest: (body)  
      - returns: RequestBuilder<CreateUserResponse> 
      */
-    open class func createUserWithRequestBuilder(orgId: String) -> RequestBuilder<CreateUserResponse> {
+    open class func createUserWithRequestBuilder(orgId: String, createUserRequest: CreateUserRequest) -> RequestBuilder<CreateUserResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: createUserRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -967,11 +975,12 @@ open class AdminUsersAPI {
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter updateUserRequest: (body) Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. 
      - returns: UpdateUserResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchUser(orgId: String, userId: String) async throws -> UpdateUserResponse {
-        return try await patchUserWithRequestBuilder(orgId: orgId, userId: userId).execute().body
+    open class func patchUser(orgId: String, userId: String, updateUserRequest: UpdateUserRequest) async throws -> UpdateUserResponse {
+        return try await patchUserWithRequestBuilder(orgId: orgId, userId: userId, updateUserRequest: updateUserRequest).execute().body
     }
 
     /**
@@ -986,9 +995,10 @@ open class AdminUsersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter updateUserRequest: (body) Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. 
      - returns: RequestBuilder<UpdateUserResponse> 
      */
-    open class func patchUserWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<UpdateUserResponse> {
+    open class func patchUserWithRequestBuilder(orgId: String, userId: String, updateUserRequest: UpdateUserRequest) -> RequestBuilder<UpdateUserResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -997,12 +1007,12 @@ open class AdminUsersAPI {
         let userIdPostEscape = userIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{userId}", with: userIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: updateUserRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1280,11 +1290,12 @@ open class AdminUsersAPI {
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter setUserPasswordPostRequest: (body)  
      - returns: SetUserPasswordPostResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func setUserPassword(orgId: String, userId: String) async throws -> SetUserPasswordPostResponse {
-        return try await setUserPasswordWithRequestBuilder(orgId: orgId, userId: userId).execute().body
+    open class func setUserPassword(orgId: String, userId: String, setUserPasswordPostRequest: SetUserPasswordPostRequest) async throws -> SetUserPasswordPostResponse {
+        return try await setUserPasswordWithRequestBuilder(orgId: orgId, userId: userId, setUserPasswordPostRequest: setUserPasswordPostRequest).execute().body
     }
 
     /**
@@ -1299,9 +1310,10 @@ open class AdminUsersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter setUserPasswordPostRequest: (body)  
      - returns: RequestBuilder<SetUserPasswordPostResponse> 
      */
-    open class func setUserPasswordWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<SetUserPasswordPostResponse> {
+    open class func setUserPasswordWithRequestBuilder(orgId: String, userId: String, setUserPasswordPostRequest: SetUserPasswordPostRequest) -> RequestBuilder<SetUserPasswordPostResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}/password"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -1310,12 +1322,12 @@ open class AdminUsersAPI {
         let userIdPostEscape = userIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{userId}", with: userIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: setUserPasswordPostRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1330,11 +1342,12 @@ open class AdminUsersAPI {
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter setUserPasswordPostRequest: (body)  
      - returns: SetUserPasswordPostResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func setUserPasswordPost(orgId: String, userId: String) async throws -> SetUserPasswordPostResponse {
-        return try await setUserPasswordPostWithRequestBuilder(orgId: orgId, userId: userId).execute().body
+    open class func setUserPasswordPost(orgId: String, userId: String, setUserPasswordPostRequest: SetUserPasswordPostRequest) async throws -> SetUserPasswordPostResponse {
+        return try await setUserPasswordPostWithRequestBuilder(orgId: orgId, userId: userId, setUserPasswordPostRequest: setUserPasswordPostRequest).execute().body
     }
 
     /**
@@ -1349,9 +1362,10 @@ open class AdminUsersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter setUserPasswordPostRequest: (body)  
      - returns: RequestBuilder<SetUserPasswordPostResponse> 
      */
-    open class func setUserPasswordPostWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<SetUserPasswordPostResponse> {
+    open class func setUserPasswordPostWithRequestBuilder(orgId: String, userId: String, setUserPasswordPostRequest: SetUserPasswordPostRequest) -> RequestBuilder<SetUserPasswordPostResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}/password"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -1360,12 +1374,12 @@ open class AdminUsersAPI {
         let userIdPostEscape = userIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{userId}", with: userIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: setUserPasswordPostRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1478,11 +1492,12 @@ open class AdminUsersAPI {
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter updateUserRequest: (body) Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. 
      - returns: UpdateUserResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func updateUser(orgId: String, userId: String) async throws -> UpdateUserResponse {
-        return try await updateUserWithRequestBuilder(orgId: orgId, userId: userId).execute().body
+    open class func updateUser(orgId: String, userId: String, updateUserRequest: UpdateUserRequest) async throws -> UpdateUserResponse {
+        return try await updateUserWithRequestBuilder(orgId: orgId, userId: userId, updateUserRequest: updateUserRequest).execute().body
     }
 
     /**
@@ -1497,9 +1512,10 @@ open class AdminUsersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter updateUserRequest: (body) Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. 
      - returns: RequestBuilder<UpdateUserResponse> 
      */
-    open class func updateUserWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<UpdateUserResponse> {
+    open class func updateUserWithRequestBuilder(orgId: String, userId: String, updateUserRequest: UpdateUserRequest) -> RequestBuilder<UpdateUserResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -1508,12 +1524,12 @@ open class AdminUsersAPI {
         let userIdPostEscape = userIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{userId}", with: userIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: updateUserRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1528,11 +1544,12 @@ open class AdminUsersAPI {
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter updateUserGroupsRequest: (body)  
      - returns: UpdateUserGroupsResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func updateUserGroups(orgId: String, userId: String) async throws -> UpdateUserGroupsResponse {
-        return try await updateUserGroupsWithRequestBuilder(orgId: orgId, userId: userId).execute().body
+    open class func updateUserGroups(orgId: String, userId: String, updateUserGroupsRequest: UpdateUserGroupsRequest) async throws -> UpdateUserGroupsResponse {
+        return try await updateUserGroupsWithRequestBuilder(orgId: orgId, userId: userId, updateUserGroupsRequest: updateUserGroupsRequest).execute().body
     }
 
     /**
@@ -1546,9 +1563,10 @@ open class AdminUsersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter updateUserGroupsRequest: (body)  
      - returns: RequestBuilder<UpdateUserGroupsResponse> 
      */
-    open class func updateUserGroupsWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<UpdateUserGroupsResponse> {
+    open class func updateUserGroupsWithRequestBuilder(orgId: String, userId: String, updateUserGroupsRequest: UpdateUserGroupsRequest) -> RequestBuilder<UpdateUserGroupsResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}/groups"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -1557,12 +1575,12 @@ open class AdminUsersAPI {
         let userIdPostEscape = userIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{userId}", with: userIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: updateUserGroupsRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1577,11 +1595,12 @@ open class AdminUsersAPI {
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter adminGroupsUpdateRolesRequest: (body)  
      - returns: UpdateUserRolesResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func updateUserRoles(orgId: String, userId: String) async throws -> UpdateUserRolesResponse {
-        return try await updateUserRolesWithRequestBuilder(orgId: orgId, userId: userId).execute().body
+    open class func updateUserRoles(orgId: String, userId: String, adminGroupsUpdateRolesRequest: AdminGroupsUpdateRolesRequest) async throws -> UpdateUserRolesResponse {
+        return try await updateUserRolesWithRequestBuilder(orgId: orgId, userId: userId, adminGroupsUpdateRolesRequest: adminGroupsUpdateRolesRequest).execute().body
     }
 
     /**
@@ -1595,9 +1614,10 @@ open class AdminUsersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
+     - parameter adminGroupsUpdateRolesRequest: (body)  
      - returns: RequestBuilder<UpdateUserRolesResponse> 
      */
-    open class func updateUserRolesWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<UpdateUserRolesResponse> {
+    open class func updateUserRolesWithRequestBuilder(orgId: String, userId: String, adminGroupsUpdateRolesRequest: AdminGroupsUpdateRolesRequest) -> RequestBuilder<UpdateUserRolesResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}/roles"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -1606,12 +1626,12 @@ open class AdminUsersAPI {
         let userIdPostEscape = userIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{userId}", with: userIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminGroupsUpdateRolesRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

@@ -26,7 +26,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="checkAbac"></a>
 # **checkAbac**
-> CheckAbacResponse checkAbac(orgId)
+> CheckAbacResponse checkAbac(orgId, checkAbacRequest)
 
 Evaluate an ABAC policy decision for the caller
 
@@ -53,8 +53,9 @@ public class Example {
 
     AuthorizationApi apiInstance = new AuthorizationApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    CheckAbacRequest checkAbacRequest = new CheckAbacRequest(); // CheckAbacRequest | 
     try {
-      CheckAbacResponse result = apiInstance.checkAbac(orgId);
+      CheckAbacResponse result = apiInstance.checkAbac(orgId, checkAbacRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthorizationApi#checkAbac");
@@ -72,6 +73,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **checkAbacRequest** | [**CheckAbacRequest**](CheckAbacRequest.md)|  | |
 
 ### Return type
 
@@ -83,7 +85,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -93,7 +95,7 @@ public class Example {
 
 <a id="checkAbacBulk"></a>
 # **checkAbacBulk**
-> CheckAbacBulkResponse checkAbacBulk(orgId)
+> CheckAbacBulkResponse checkAbacBulk(orgId, checkAbacBulkRequest)
 
 Evaluate up to 100 ABAC checks for the caller in one call
 
@@ -120,8 +122,9 @@ public class Example {
 
     AuthorizationApi apiInstance = new AuthorizationApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    CheckAbacBulkRequest checkAbacBulkRequest = new CheckAbacBulkRequest(); // CheckAbacBulkRequest | 
     try {
-      CheckAbacBulkResponse result = apiInstance.checkAbacBulk(orgId);
+      CheckAbacBulkResponse result = apiInstance.checkAbacBulk(orgId, checkAbacBulkRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthorizationApi#checkAbacBulk");
@@ -139,6 +142,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **checkAbacBulkRequest** | [**CheckAbacBulkRequest**](CheckAbacBulkRequest.md)|  | |
 
 ### Return type
 
@@ -150,7 +154,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -160,7 +164,7 @@ public class Example {
 
 <a id="checkAllPermissions"></a>
 # **checkAllPermissions**
-> CheckAnyPermissionResponse checkAllPermissions()
+> CheckAnyPermissionResponse checkAllPermissions(checkPermissionsBulkRequest)
 
 Check whether the subject holds all of the permissions
 
@@ -192,8 +196,9 @@ public class Example {
     BearerAuth.setBearerToken("BEARER TOKEN");
 
     AuthorizationApi apiInstance = new AuthorizationApi(defaultClient);
+    CheckPermissionsBulkRequest checkPermissionsBulkRequest = new CheckPermissionsBulkRequest(); // CheckPermissionsBulkRequest | 
     try {
-      CheckAnyPermissionResponse result = apiInstance.checkAllPermissions();
+      CheckAnyPermissionResponse result = apiInstance.checkAllPermissions(checkPermissionsBulkRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthorizationApi#checkAllPermissions");
@@ -207,7 +212,10 @@ public class Example {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **checkPermissionsBulkRequest** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md)|  | |
 
 ### Return type
 
@@ -219,7 +227,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -229,7 +237,7 @@ This endpoint does not need any parameter.
 
 <a id="checkAnyPermission"></a>
 # **checkAnyPermission**
-> CheckAnyPermissionResponse checkAnyPermission()
+> CheckAnyPermissionResponse checkAnyPermission(checkPermissionsBulkRequest)
 
 Check whether the subject holds any of the permissions
 
@@ -261,8 +269,9 @@ public class Example {
     BearerAuth.setBearerToken("BEARER TOKEN");
 
     AuthorizationApi apiInstance = new AuthorizationApi(defaultClient);
+    CheckPermissionsBulkRequest checkPermissionsBulkRequest = new CheckPermissionsBulkRequest(); // CheckPermissionsBulkRequest | 
     try {
-      CheckAnyPermissionResponse result = apiInstance.checkAnyPermission();
+      CheckAnyPermissionResponse result = apiInstance.checkAnyPermission(checkPermissionsBulkRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthorizationApi#checkAnyPermission");
@@ -276,7 +285,10 @@ public class Example {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **checkPermissionsBulkRequest** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md)|  | |
 
 ### Return type
 
@@ -288,7 +300,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -298,7 +310,7 @@ This endpoint does not need any parameter.
 
 <a id="checkPermission"></a>
 # **checkPermission**
-> CheckPermissionResponse checkPermission()
+> CheckPermissionResponse checkPermission(checkPermissionRequest)
 
 Check one permission
 
@@ -330,8 +342,9 @@ public class Example {
     BearerAuth.setBearerToken("BEARER TOKEN");
 
     AuthorizationApi apiInstance = new AuthorizationApi(defaultClient);
+    CheckPermissionRequest checkPermissionRequest = new CheckPermissionRequest(); // CheckPermissionRequest | 
     try {
-      CheckPermissionResponse result = apiInstance.checkPermission();
+      CheckPermissionResponse result = apiInstance.checkPermission(checkPermissionRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthorizationApi#checkPermission");
@@ -345,7 +358,10 @@ public class Example {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **checkPermissionRequest** | [**CheckPermissionRequest**](CheckPermissionRequest.md)|  | |
 
 ### Return type
 
@@ -357,7 +373,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -367,7 +383,7 @@ This endpoint does not need any parameter.
 
 <a id="checkPermissionsBulk"></a>
 # **checkPermissionsBulk**
-> CheckPermissionsBulkResponse checkPermissionsBulk()
+> CheckPermissionsBulkResponse checkPermissionsBulk(checkPermissionsBulkRequest)
 
 Check up to 100 permissions in one call
 
@@ -399,8 +415,9 @@ public class Example {
     BearerAuth.setBearerToken("BEARER TOKEN");
 
     AuthorizationApi apiInstance = new AuthorizationApi(defaultClient);
+    CheckPermissionsBulkRequest checkPermissionsBulkRequest = new CheckPermissionsBulkRequest(); // CheckPermissionsBulkRequest | 
     try {
-      CheckPermissionsBulkResponse result = apiInstance.checkPermissionsBulk();
+      CheckPermissionsBulkResponse result = apiInstance.checkPermissionsBulk(checkPermissionsBulkRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthorizationApi#checkPermissionsBulk");
@@ -414,7 +431,10 @@ public class Example {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **checkPermissionsBulkRequest** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md)|  | |
 
 ### Return type
 
@@ -426,7 +446,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -436,7 +456,7 @@ This endpoint does not need any parameter.
 
 <a id="checkRelation"></a>
 # **checkRelation**
-> CheckRelationResponse checkRelation()
+> CheckRelationResponse checkRelation(checkRelationRequest)
 
 Zanzibar relationship check
 
@@ -468,8 +488,9 @@ public class Example {
     BearerAuth.setBearerToken("BEARER TOKEN");
 
     AuthorizationApi apiInstance = new AuthorizationApi(defaultClient);
+    CheckRelationRequest checkRelationRequest = new CheckRelationRequest(); // CheckRelationRequest | 
     try {
-      CheckRelationResponse result = apiInstance.checkRelation();
+      CheckRelationResponse result = apiInstance.checkRelation(checkRelationRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthorizationApi#checkRelation");
@@ -483,7 +504,10 @@ public class Example {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **checkRelationRequest** | [**CheckRelationRequest**](CheckRelationRequest.md)|  | |
 
 ### Return type
 
@@ -495,7 +519,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -505,7 +529,7 @@ This endpoint does not need any parameter.
 
 <a id="checkRelationScoped"></a>
 # **checkRelationScoped**
-> CheckRelationScopedResponse checkRelationScoped(orgId)
+> CheckRelationScopedResponse checkRelationScoped(orgId, checkRelationScopedRequest)
 
 Zanzibar relationship check
 
@@ -536,8 +560,9 @@ public class Example {
 
     AuthorizationApi apiInstance = new AuthorizationApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    CheckRelationScopedRequest checkRelationScopedRequest = new CheckRelationScopedRequest(); // CheckRelationScopedRequest | 
     try {
-      CheckRelationScopedResponse result = apiInstance.checkRelationScoped(orgId);
+      CheckRelationScopedResponse result = apiInstance.checkRelationScoped(orgId, checkRelationScopedRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthorizationApi#checkRelationScoped");
@@ -555,6 +580,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **checkRelationScopedRequest** | [**CheckRelationScopedRequest**](CheckRelationScopedRequest.md)|  | |
 
 ### Return type
 
@@ -566,7 +592,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -576,7 +602,7 @@ public class Example {
 
 <a id="evaluate"></a>
 # **evaluate**
-> AuthZenDecision evaluate()
+> AuthZenDecision evaluate(evaluateRequest)
 
 AuthZEN 1.0 access evaluation
 
@@ -608,8 +634,9 @@ public class Example {
     BearerAuth.setBearerToken("BEARER TOKEN");
 
     AuthorizationApi apiInstance = new AuthorizationApi(defaultClient);
+    EvaluateRequest evaluateRequest = new EvaluateRequest(); // EvaluateRequest | AuthZEN Authorization API 1.0 evaluation request.
     try {
-      AuthZenDecision result = apiInstance.evaluate();
+      AuthZenDecision result = apiInstance.evaluate(evaluateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthorizationApi#evaluate");
@@ -623,7 +650,10 @@ public class Example {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **evaluateRequest** | [**EvaluateRequest**](EvaluateRequest.md)| AuthZEN Authorization API 1.0 evaluation request. | |
 
 ### Return type
 
@@ -635,7 +665,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -645,7 +675,7 @@ This endpoint does not need any parameter.
 
 <a id="evaluateBatch"></a>
 # **evaluateBatch**
-> EvaluateBatchResponse evaluateBatch()
+> EvaluateBatchResponse evaluateBatch(evaluateBatchRequest)
 
 AuthZEN 1.0 boxcarred access evaluations
 
@@ -677,8 +707,9 @@ public class Example {
     BearerAuth.setBearerToken("BEARER TOKEN");
 
     AuthorizationApi apiInstance = new AuthorizationApi(defaultClient);
+    EvaluateBatchRequest evaluateBatchRequest = new EvaluateBatchRequest(); // EvaluateBatchRequest | AuthZEN Authorization API 1.0 batch evaluation request.
     try {
-      EvaluateBatchResponse result = apiInstance.evaluateBatch();
+      EvaluateBatchResponse result = apiInstance.evaluateBatch(evaluateBatchRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthorizationApi#evaluateBatch");
@@ -692,7 +723,10 @@ public class Example {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **evaluateBatchRequest** | [**EvaluateBatchRequest**](EvaluateBatchRequest.md)| AuthZEN Authorization API 1.0 batch evaluation request. | |
 
 ### Return type
 
@@ -704,7 +738,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -929,7 +963,7 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Built-in identity attributes plus trait_&lt;key&gt; entries and tenant-defined custom attributes |  -  |
+| **200** | Built-in identity attributes plus trait_&lt;key&gt; entries and custom attributes that the organization defined |  -  |
 
 <a id="getResourceAttributes"></a>
 # **getResourceAttributes**
@@ -1069,7 +1103,7 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Definitions (tenant-defined and global) |  -  |
+| **200** | Definitions (the organization&#39;s own and the built-in ones) |  -  |
 
 <a id="listPermissions"></a>
 # **listPermissions**
@@ -1142,7 +1176,7 @@ This endpoint does not need any parameter.
 
 <a id="setResourceAttribute"></a>
 # **setResourceAttribute**
-> SetResourceAttributeResponse setResourceAttribute(orgId, resourceType, resourceId, attributeSlug)
+> SetResourceAttributeResponse setResourceAttribute(orgId, resourceType, resourceId, attributeSlug, setResourceAttributeRequest)
 
 Set a resource attribute
 
@@ -1172,8 +1206,9 @@ public class Example {
     String resourceType = "resourceType_example"; // String | 
     String resourceId = "resourceId_example"; // String | 
     String attributeSlug = "attributeSlug_example"; // String | 
+    SetResourceAttributeRequest setResourceAttributeRequest = new SetResourceAttributeRequest(); // SetResourceAttributeRequest | 
     try {
-      SetResourceAttributeResponse result = apiInstance.setResourceAttribute(orgId, resourceType, resourceId, attributeSlug);
+      SetResourceAttributeResponse result = apiInstance.setResourceAttribute(orgId, resourceType, resourceId, attributeSlug, setResourceAttributeRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthorizationApi#setResourceAttribute");
@@ -1194,6 +1229,7 @@ public class Example {
 | **resourceType** | **String**|  | |
 | **resourceId** | **String**|  | |
 | **attributeSlug** | **String**|  | |
+| **setResourceAttributeRequest** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md)|  | |
 
 ### Return type
 
@@ -1205,7 +1241,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1216,7 +1252,7 @@ public class Example {
 
 <a id="setUserAttribute"></a>
 # **setUserAttribute**
-> SetUserAttributeResponse setUserAttribute(orgId, userId, attributeSlug)
+> SetUserAttributeResponse setUserAttribute(orgId, userId, attributeSlug, setResourceAttributeRequest)
 
 Set a user attribute
 
@@ -1245,8 +1281,9 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
     String attributeSlug = "attributeSlug_example"; // String | 
+    SetResourceAttributeRequest setResourceAttributeRequest = new SetResourceAttributeRequest(); // SetResourceAttributeRequest | 
     try {
-      SetUserAttributeResponse result = apiInstance.setUserAttribute(orgId, userId, attributeSlug);
+      SetUserAttributeResponse result = apiInstance.setUserAttribute(orgId, userId, attributeSlug, setResourceAttributeRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthorizationApi#setUserAttribute");
@@ -1266,6 +1303,7 @@ public class Example {
 | **orgId** | **String**|  | |
 | **userId** | **String**|  | |
 | **attributeSlug** | **String**|  | |
+| **setResourceAttributeRequest** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md)|  | |
 
 ### Return type
 
@@ -1277,7 +1315,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

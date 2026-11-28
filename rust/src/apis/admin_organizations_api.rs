@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -195,10 +195,11 @@ pub enum PutAdminOrganizationsUpdateError {
 }
 
 
-pub async fn admin_org_invitations_create(configuration: &configuration::Configuration, org_id: &str, organization_id: &str) -> Result<models::AdminOrgInvitationsCreateResponse, Error<AdminOrgInvitationsCreateError>> {
+pub async fn admin_org_invitations_create(configuration: &configuration::Configuration, org_id: &str, organization_id: &str, admin_org_invitations_create_request: models::AdminOrgInvitationsCreateRequest) -> Result<models::AdminOrgInvitationsCreateResponse, Error<AdminOrgInvitationsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_organization_id = organization_id;
+    let p_admin_org_invitations_create_request = admin_org_invitations_create_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), organizationId=crate::apis::urlencode(p_organization_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -217,6 +218,7 @@ pub async fn admin_org_invitations_create(configuration: &configuration::Configu
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_org_invitations_create_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -389,10 +391,11 @@ pub async fn admin_org_invitations_revoke(configuration: &configuration::Configu
     }
 }
 
-pub async fn admin_org_members_add(configuration: &configuration::Configuration, org_id: &str, organization_id: &str) -> Result<models::AdminOrgMembersAddResponse, Error<AdminOrgMembersAddError>> {
+pub async fn admin_org_members_add(configuration: &configuration::Configuration, org_id: &str, organization_id: &str, admin_org_members_add_request: models::AdminOrgMembersAddRequest) -> Result<models::AdminOrgMembersAddResponse, Error<AdminOrgMembersAddError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_organization_id = organization_id;
+    let p_admin_org_members_add_request = admin_org_members_add_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), organizationId=crate::apis::urlencode(p_organization_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -411,6 +414,7 @@ pub async fn admin_org_members_add(configuration: &configuration::Configuration,
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_org_members_add_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -534,10 +538,11 @@ pub async fn admin_org_members_remove(configuration: &configuration::Configurati
     }
 }
 
-pub async fn admin_org_roles_create(configuration: &configuration::Configuration, org_id: &str, organization_id: &str) -> Result<models::AdminOrgRolesCreateResponse, Error<AdminOrgRolesCreateError>> {
+pub async fn admin_org_roles_create(configuration: &configuration::Configuration, org_id: &str, organization_id: &str, admin_org_roles_create_request: models::AdminOrgRolesCreateRequest) -> Result<models::AdminOrgRolesCreateResponse, Error<AdminOrgRolesCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_organization_id = organization_id;
+    let p_admin_org_roles_create_request = admin_org_roles_create_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), organizationId=crate::apis::urlencode(p_organization_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -556,6 +561,7 @@ pub async fn admin_org_roles_create(configuration: &configuration::Configuration
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_org_roles_create_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -679,9 +685,10 @@ pub async fn admin_org_roles_list(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn admin_organizations_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminOrganizationsCreateResponse, Error<AdminOrganizationsCreateError>> {
+pub async fn admin_organizations_create(configuration: &configuration::Configuration, org_id: &str, admin_organizations_create_request: models::AdminOrganizationsCreateRequest) -> Result<models::AdminOrganizationsCreateResponse, Error<AdminOrganizationsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_admin_organizations_create_request = admin_organizations_create_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/organizations", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -700,6 +707,7 @@ pub async fn admin_organizations_create(configuration: &configuration::Configura
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_organizations_create_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -869,11 +877,12 @@ pub async fn admin_organizations_list(configuration: &configuration::Configurati
     }
 }
 
-pub async fn patch_admin_org_members_update(configuration: &configuration::Configuration, org_id: &str, organization_id: &str, user_id: &str) -> Result<models::PutAdminOrgMembersUpdateResponse, Error<PatchAdminOrgMembersUpdateError>> {
+pub async fn patch_admin_org_members_update(configuration: &configuration::Configuration, org_id: &str, organization_id: &str, user_id: &str, put_admin_org_members_update_request: models::PutAdminOrgMembersUpdateRequest) -> Result<models::PutAdminOrgMembersUpdateResponse, Error<PatchAdminOrgMembersUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_organization_id = organization_id;
     let p_user_id = user_id;
+    let p_put_admin_org_members_update_request = put_admin_org_members_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), organizationId=crate::apis::urlencode(p_organization_id), userId=crate::apis::urlencode(p_user_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -892,6 +901,7 @@ pub async fn patch_admin_org_members_update(configuration: &configuration::Confi
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_org_members_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -918,11 +928,12 @@ pub async fn patch_admin_org_members_update(configuration: &configuration::Confi
     }
 }
 
-pub async fn patch_admin_org_roles_update(configuration: &configuration::Configuration, org_id: &str, organization_id: &str, role_id: &str) -> Result<models::AdminOrgRolesCreateResponse, Error<PatchAdminOrgRolesUpdateError>> {
+pub async fn patch_admin_org_roles_update(configuration: &configuration::Configuration, org_id: &str, organization_id: &str, role_id: &str, put_admin_org_roles_update_request: models::PutAdminOrgRolesUpdateRequest) -> Result<models::AdminOrgRolesCreateResponse, Error<PatchAdminOrgRolesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_organization_id = organization_id;
     let p_role_id = role_id;
+    let p_put_admin_org_roles_update_request = put_admin_org_roles_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), organizationId=crate::apis::urlencode(p_organization_id), roleId=crate::apis::urlencode(p_role_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -941,6 +952,7 @@ pub async fn patch_admin_org_roles_update(configuration: &configuration::Configu
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_org_roles_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -967,10 +979,11 @@ pub async fn patch_admin_org_roles_update(configuration: &configuration::Configu
     }
 }
 
-pub async fn patch_admin_organizations_update(configuration: &configuration::Configuration, org_id: &str, organization_id: &str) -> Result<models::AdminOrganizationsGetResponse, Error<PatchAdminOrganizationsUpdateError>> {
+pub async fn patch_admin_organizations_update(configuration: &configuration::Configuration, org_id: &str, organization_id: &str, put_admin_organizations_update_request: models::PutAdminOrganizationsUpdateRequest) -> Result<models::AdminOrganizationsGetResponse, Error<PatchAdminOrganizationsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_organization_id = organization_id;
+    let p_put_admin_organizations_update_request = put_admin_organizations_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/organizations/{organizationId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), organizationId=crate::apis::urlencode(p_organization_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -989,6 +1002,7 @@ pub async fn patch_admin_organizations_update(configuration: &configuration::Con
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_organizations_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1015,11 +1029,12 @@ pub async fn patch_admin_organizations_update(configuration: &configuration::Con
     }
 }
 
-pub async fn put_admin_org_members_update(configuration: &configuration::Configuration, org_id: &str, organization_id: &str, user_id: &str) -> Result<models::PutAdminOrgMembersUpdateResponse, Error<PutAdminOrgMembersUpdateError>> {
+pub async fn put_admin_org_members_update(configuration: &configuration::Configuration, org_id: &str, organization_id: &str, user_id: &str, put_admin_org_members_update_request: models::PutAdminOrgMembersUpdateRequest) -> Result<models::PutAdminOrgMembersUpdateResponse, Error<PutAdminOrgMembersUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_organization_id = organization_id;
     let p_user_id = user_id;
+    let p_put_admin_org_members_update_request = put_admin_org_members_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), organizationId=crate::apis::urlencode(p_organization_id), userId=crate::apis::urlencode(p_user_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1038,6 +1053,7 @@ pub async fn put_admin_org_members_update(configuration: &configuration::Configu
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_org_members_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1064,11 +1080,12 @@ pub async fn put_admin_org_members_update(configuration: &configuration::Configu
     }
 }
 
-pub async fn put_admin_org_roles_update(configuration: &configuration::Configuration, org_id: &str, organization_id: &str, role_id: &str) -> Result<models::AdminOrgRolesCreateResponse, Error<PutAdminOrgRolesUpdateError>> {
+pub async fn put_admin_org_roles_update(configuration: &configuration::Configuration, org_id: &str, organization_id: &str, role_id: &str, put_admin_org_roles_update_request: models::PutAdminOrgRolesUpdateRequest) -> Result<models::AdminOrgRolesCreateResponse, Error<PutAdminOrgRolesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_organization_id = organization_id;
     let p_role_id = role_id;
+    let p_put_admin_org_roles_update_request = put_admin_org_roles_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), organizationId=crate::apis::urlencode(p_organization_id), roleId=crate::apis::urlencode(p_role_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1087,6 +1104,7 @@ pub async fn put_admin_org_roles_update(configuration: &configuration::Configura
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_org_roles_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1113,10 +1131,11 @@ pub async fn put_admin_org_roles_update(configuration: &configuration::Configura
     }
 }
 
-pub async fn put_admin_organizations_update(configuration: &configuration::Configuration, org_id: &str, organization_id: &str) -> Result<models::AdminOrganizationsGetResponse, Error<PutAdminOrganizationsUpdateError>> {
+pub async fn put_admin_organizations_update(configuration: &configuration::Configuration, org_id: &str, organization_id: &str, put_admin_organizations_update_request: models::PutAdminOrganizationsUpdateRequest) -> Result<models::AdminOrganizationsGetResponse, Error<PutAdminOrganizationsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_organization_id = organization_id;
+    let p_put_admin_organizations_update_request = put_admin_organizations_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/organizations/{organizationId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), organizationId=crate::apis::urlencode(p_organization_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1135,6 +1154,7 @@ pub async fn put_admin_organizations_update(configuration: &configuration::Confi
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_organizations_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

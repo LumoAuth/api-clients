@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -34,8 +34,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgInvitationsCreateRequest"></param>
         /// <returns>AdminOrgInvitationsCreateResponse</returns>
-        AdminOrgInvitationsCreateResponse AdminOrgInvitationsCreate(string orgId, string organizationId);
+        AdminOrgInvitationsCreateResponse AdminOrgInvitationsCreate(string orgId, string organizationId, AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest);
 
         /// <summary>
         /// Invite a user to an organization
@@ -46,8 +47,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgInvitationsCreateRequest"></param>
         /// <returns>ApiResponse of AdminOrgInvitationsCreateResponse</returns>
-        ApiResponse<AdminOrgInvitationsCreateResponse> AdminOrgInvitationsCreateWithHttpInfo(string orgId, string organizationId);
+        ApiResponse<AdminOrgInvitationsCreateResponse> AdminOrgInvitationsCreateWithHttpInfo(string orgId, string organizationId, AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest);
         /// <summary>
         /// List organization invitations
         /// </summary>
@@ -118,8 +120,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgMembersAddRequest"></param>
         /// <returns>AdminOrgMembersAddResponse</returns>
-        AdminOrgMembersAddResponse AdminOrgMembersAdd(string orgId, string organizationId);
+        AdminOrgMembersAddResponse AdminOrgMembersAdd(string orgId, string organizationId, AdminOrgMembersAddRequest adminOrgMembersAddRequest);
 
         /// <summary>
         /// Add a member to an organization
@@ -130,8 +133,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgMembersAddRequest"></param>
         /// <returns>ApiResponse of AdminOrgMembersAddResponse</returns>
-        ApiResponse<AdminOrgMembersAddResponse> AdminOrgMembersAddWithHttpInfo(string orgId, string organizationId);
+        ApiResponse<AdminOrgMembersAddResponse> AdminOrgMembersAddWithHttpInfo(string orgId, string organizationId, AdminOrgMembersAddRequest adminOrgMembersAddRequest);
         /// <summary>
         /// List organization members
         /// </summary>
@@ -180,8 +184,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgRolesCreateRequest"></param>
         /// <returns>AdminOrgRolesCreateResponse</returns>
-        AdminOrgRolesCreateResponse AdminOrgRolesCreate(string orgId, string organizationId);
+        AdminOrgRolesCreateResponse AdminOrgRolesCreate(string orgId, string organizationId, AdminOrgRolesCreateRequest adminOrgRolesCreateRequest);
 
         /// <summary>
         /// Create an organization role
@@ -192,8 +197,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgRolesCreateRequest"></param>
         /// <returns>ApiResponse of AdminOrgRolesCreateResponse</returns>
-        ApiResponse<AdminOrgRolesCreateResponse> AdminOrgRolesCreateWithHttpInfo(string orgId, string organizationId);
+        ApiResponse<AdminOrgRolesCreateResponse> AdminOrgRolesCreateWithHttpInfo(string orgId, string organizationId, AdminOrgRolesCreateRequest adminOrgRolesCreateRequest);
         /// <summary>
         /// Delete an organization role
         /// </summary>
@@ -241,8 +247,9 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminOrganizationsCreateRequest"></param>
         /// <returns>AdminOrganizationsCreateResponse</returns>
-        AdminOrganizationsCreateResponse AdminOrganizationsCreate(string orgId);
+        AdminOrganizationsCreateResponse AdminOrganizationsCreate(string orgId, AdminOrganizationsCreateRequest adminOrganizationsCreateRequest);
 
         /// <summary>
         /// Create an organization
@@ -252,8 +259,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminOrganizationsCreateRequest"></param>
         /// <returns>ApiResponse of AdminOrganizationsCreateResponse</returns>
-        ApiResponse<AdminOrganizationsCreateResponse> AdminOrganizationsCreateWithHttpInfo(string orgId);
+        ApiResponse<AdminOrganizationsCreateResponse> AdminOrganizationsCreateWithHttpInfo(string orgId, AdminOrganizationsCreateRequest adminOrganizationsCreateRequest);
         /// <summary>
         /// Delete an organization
         /// </summary>
@@ -319,8 +327,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <returns>PutAdminOrgMembersUpdateResponse</returns>
-        PutAdminOrgMembersUpdateResponse PatchAdminOrgMembersUpdate(string orgId, string organizationId, string userId);
+        PutAdminOrgMembersUpdateResponse PatchAdminOrgMembersUpdate(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest);
 
         /// <summary>
         /// Update a member&#39;s role or status
@@ -332,8 +341,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminOrgMembersUpdateResponse</returns>
-        ApiResponse<PutAdminOrgMembersUpdateResponse> PatchAdminOrgMembersUpdateWithHttpInfo(string orgId, string organizationId, string userId);
+        ApiResponse<PutAdminOrgMembersUpdateResponse> PatchAdminOrgMembersUpdateWithHttpInfo(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest);
         /// <summary>
         /// Update an organization role
         /// </summary>
@@ -341,8 +351,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>AdminOrgRolesCreateResponse</returns>
-        AdminOrgRolesCreateResponse PatchAdminOrgRolesUpdate(string orgId, string organizationId, string roleId);
+        AdminOrgRolesCreateResponse PatchAdminOrgRolesUpdate(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest);
 
         /// <summary>
         /// Update an organization role
@@ -354,16 +365,18 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>ApiResponse of AdminOrgRolesCreateResponse</returns>
-        ApiResponse<AdminOrgRolesCreateResponse> PatchAdminOrgRolesUpdateWithHttpInfo(string orgId, string organizationId, string roleId);
+        ApiResponse<AdminOrgRolesCreateResponse> PatchAdminOrgRolesUpdateWithHttpInfo(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest);
         /// <summary>
         /// Update an organization
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <returns>AdminOrganizationsGetResponse</returns>
-        AdminOrganizationsGetResponse PatchAdminOrganizationsUpdate(string orgId, string organizationId);
+        AdminOrganizationsGetResponse PatchAdminOrganizationsUpdate(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest);
 
         /// <summary>
         /// Update an organization
@@ -374,8 +387,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <returns>ApiResponse of AdminOrganizationsGetResponse</returns>
-        ApiResponse<AdminOrganizationsGetResponse> PatchAdminOrganizationsUpdateWithHttpInfo(string orgId, string organizationId);
+        ApiResponse<AdminOrganizationsGetResponse> PatchAdminOrganizationsUpdateWithHttpInfo(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest);
         /// <summary>
         /// Update a member&#39;s role or status
         /// </summary>
@@ -383,8 +397,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <returns>PutAdminOrgMembersUpdateResponse</returns>
-        PutAdminOrgMembersUpdateResponse PutAdminOrgMembersUpdate(string orgId, string organizationId, string userId);
+        PutAdminOrgMembersUpdateResponse PutAdminOrgMembersUpdate(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest);
 
         /// <summary>
         /// Update a member&#39;s role or status
@@ -396,8 +411,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminOrgMembersUpdateResponse</returns>
-        ApiResponse<PutAdminOrgMembersUpdateResponse> PutAdminOrgMembersUpdateWithHttpInfo(string orgId, string organizationId, string userId);
+        ApiResponse<PutAdminOrgMembersUpdateResponse> PutAdminOrgMembersUpdateWithHttpInfo(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest);
         /// <summary>
         /// Update an organization role
         /// </summary>
@@ -405,8 +421,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>AdminOrgRolesCreateResponse</returns>
-        AdminOrgRolesCreateResponse PutAdminOrgRolesUpdate(string orgId, string organizationId, string roleId);
+        AdminOrgRolesCreateResponse PutAdminOrgRolesUpdate(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest);
 
         /// <summary>
         /// Update an organization role
@@ -418,16 +435,18 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>ApiResponse of AdminOrgRolesCreateResponse</returns>
-        ApiResponse<AdminOrgRolesCreateResponse> PutAdminOrgRolesUpdateWithHttpInfo(string orgId, string organizationId, string roleId);
+        ApiResponse<AdminOrgRolesCreateResponse> PutAdminOrgRolesUpdateWithHttpInfo(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest);
         /// <summary>
         /// Update an organization
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <returns>AdminOrganizationsGetResponse</returns>
-        AdminOrganizationsGetResponse PutAdminOrganizationsUpdate(string orgId, string organizationId);
+        AdminOrganizationsGetResponse PutAdminOrganizationsUpdate(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest);
 
         /// <summary>
         /// Update an organization
@@ -438,8 +457,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <returns>ApiResponse of AdminOrganizationsGetResponse</returns>
-        ApiResponse<AdminOrganizationsGetResponse> PutAdminOrganizationsUpdateWithHttpInfo(string orgId, string organizationId);
+        ApiResponse<AdminOrganizationsGetResponse> PutAdminOrganizationsUpdateWithHttpInfo(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest);
         #endregion Synchronous Operations
     }
 
@@ -458,9 +478,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgInvitationsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrgInvitationsCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminOrgInvitationsCreateResponse> AdminOrgInvitationsCreateAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminOrgInvitationsCreateResponse> AdminOrgInvitationsCreateAsync(string orgId, string organizationId, AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Invite a user to an organization
@@ -471,9 +492,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgInvitationsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrgInvitationsCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminOrgInvitationsCreateResponse>> AdminOrgInvitationsCreateWithHttpInfoAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminOrgInvitationsCreateResponse>> AdminOrgInvitationsCreateWithHttpInfoAsync(string orgId, string organizationId, AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// List organization invitations
         /// </summary>
@@ -562,9 +584,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgMembersAddRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrgMembersAddResponse</returns>
-        System.Threading.Tasks.Task<AdminOrgMembersAddResponse> AdminOrgMembersAddAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminOrgMembersAddResponse> AdminOrgMembersAddAsync(string orgId, string organizationId, AdminOrgMembersAddRequest adminOrgMembersAddRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add a member to an organization
@@ -575,9 +598,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgMembersAddRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrgMembersAddResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminOrgMembersAddResponse>> AdminOrgMembersAddWithHttpInfoAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminOrgMembersAddResponse>> AdminOrgMembersAddWithHttpInfoAsync(string orgId, string organizationId, AdminOrgMembersAddRequest adminOrgMembersAddRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// List organization members
         /// </summary>
@@ -639,9 +663,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgRolesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrgRolesCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminOrgRolesCreateResponse> AdminOrgRolesCreateAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminOrgRolesCreateResponse> AdminOrgRolesCreateAsync(string orgId, string organizationId, AdminOrgRolesCreateRequest adminOrgRolesCreateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create an organization role
@@ -652,9 +677,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgRolesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrgRolesCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminOrgRolesCreateResponse>> AdminOrgRolesCreateWithHttpInfoAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminOrgRolesCreateResponse>> AdminOrgRolesCreateWithHttpInfoAsync(string orgId, string organizationId, AdminOrgRolesCreateRequest adminOrgRolesCreateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete an organization role
         /// </summary>
@@ -715,9 +741,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminOrganizationsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrganizationsCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminOrganizationsCreateResponse> AdminOrganizationsCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminOrganizationsCreateResponse> AdminOrganizationsCreateAsync(string orgId, AdminOrganizationsCreateRequest adminOrganizationsCreateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create an organization
@@ -727,9 +754,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminOrganizationsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrganizationsCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminOrganizationsCreateResponse>> AdminOrganizationsCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminOrganizationsCreateResponse>> AdminOrganizationsCreateWithHttpInfoAsync(string orgId, AdminOrganizationsCreateRequest adminOrganizationsCreateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete an organization
         /// </summary>
@@ -813,9 +841,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminOrgMembersUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminOrgMembersUpdateResponse> PatchAdminOrgMembersUpdateAsync(string orgId, string organizationId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminOrgMembersUpdateResponse> PatchAdminOrgMembersUpdateAsync(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a member&#39;s role or status
@@ -827,9 +856,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminOrgMembersUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminOrgMembersUpdateResponse>> PatchAdminOrgMembersUpdateWithHttpInfoAsync(string orgId, string organizationId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminOrgMembersUpdateResponse>> PatchAdminOrgMembersUpdateWithHttpInfoAsync(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an organization role
         /// </summary>
@@ -840,9 +870,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrgRolesCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminOrgRolesCreateResponse> PatchAdminOrgRolesUpdateAsync(string orgId, string organizationId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminOrgRolesCreateResponse> PatchAdminOrgRolesUpdateAsync(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an organization role
@@ -854,9 +885,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrgRolesCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminOrgRolesCreateResponse>> PatchAdminOrgRolesUpdateWithHttpInfoAsync(string orgId, string organizationId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminOrgRolesCreateResponse>> PatchAdminOrgRolesUpdateWithHttpInfoAsync(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an organization
         /// </summary>
@@ -866,9 +898,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrganizationsGetResponse</returns>
-        System.Threading.Tasks.Task<AdminOrganizationsGetResponse> PatchAdminOrganizationsUpdateAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminOrganizationsGetResponse> PatchAdminOrganizationsUpdateAsync(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an organization
@@ -879,9 +912,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrganizationsGetResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminOrganizationsGetResponse>> PatchAdminOrganizationsUpdateWithHttpInfoAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminOrganizationsGetResponse>> PatchAdminOrganizationsUpdateWithHttpInfoAsync(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update a member&#39;s role or status
         /// </summary>
@@ -892,9 +926,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminOrgMembersUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminOrgMembersUpdateResponse> PutAdminOrgMembersUpdateAsync(string orgId, string organizationId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminOrgMembersUpdateResponse> PutAdminOrgMembersUpdateAsync(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a member&#39;s role or status
@@ -906,9 +941,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminOrgMembersUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminOrgMembersUpdateResponse>> PutAdminOrgMembersUpdateWithHttpInfoAsync(string orgId, string organizationId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminOrgMembersUpdateResponse>> PutAdminOrgMembersUpdateWithHttpInfoAsync(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an organization role
         /// </summary>
@@ -919,9 +955,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrgRolesCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminOrgRolesCreateResponse> PutAdminOrgRolesUpdateAsync(string orgId, string organizationId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminOrgRolesCreateResponse> PutAdminOrgRolesUpdateAsync(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an organization role
@@ -933,9 +970,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrgRolesCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminOrgRolesCreateResponse>> PutAdminOrgRolesUpdateWithHttpInfoAsync(string orgId, string organizationId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminOrgRolesCreateResponse>> PutAdminOrgRolesUpdateWithHttpInfoAsync(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an organization
         /// </summary>
@@ -945,9 +983,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrganizationsGetResponse</returns>
-        System.Threading.Tasks.Task<AdminOrganizationsGetResponse> PutAdminOrganizationsUpdateAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminOrganizationsGetResponse> PutAdminOrganizationsUpdateAsync(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an organization
@@ -958,9 +997,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrganizationsGetResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminOrganizationsGetResponse>> PutAdminOrganizationsUpdateWithHttpInfoAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminOrganizationsGetResponse>> PutAdminOrganizationsUpdateWithHttpInfoAsync(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -1180,10 +1220,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgInvitationsCreateRequest"></param>
         /// <returns>AdminOrgInvitationsCreateResponse</returns>
-        public AdminOrgInvitationsCreateResponse AdminOrgInvitationsCreate(string orgId, string organizationId)
+        public AdminOrgInvitationsCreateResponse AdminOrgInvitationsCreate(string orgId, string organizationId, AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgInvitationsCreateResponse> localVarResponse = AdminOrgInvitationsCreateWithHttpInfo(orgId, organizationId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgInvitationsCreateResponse> localVarResponse = AdminOrgInvitationsCreateWithHttpInfo(orgId, organizationId, adminOrgInvitationsCreateRequest);
             return localVarResponse.Data;
         }
 
@@ -1193,8 +1234,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgInvitationsCreateRequest"></param>
         /// <returns>ApiResponse of AdminOrgInvitationsCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrgInvitationsCreateResponse> AdminOrgInvitationsCreateWithHttpInfo(string orgId, string organizationId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrgInvitationsCreateResponse> AdminOrgInvitationsCreateWithHttpInfo(string orgId, string organizationId, AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1204,9 +1246,14 @@ namespace LumoAuth.ApiClient.Api
             if (organizationId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'organizationId' when calling AdminOrganizationsApi->AdminOrgInvitationsCreate");
 
+            // verify the required parameter 'adminOrgInvitationsCreateRequest' is set
+            if (adminOrgInvitationsCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminOrgInvitationsCreateRequest' when calling AdminOrganizationsApi->AdminOrgInvitationsCreate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1222,6 +1269,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
+            localVarRequestOptions.Data = adminOrgInvitationsCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1253,11 +1301,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgInvitationsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrgInvitationsCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminOrgInvitationsCreateResponse> AdminOrgInvitationsCreateAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminOrgInvitationsCreateResponse> AdminOrgInvitationsCreateAsync(string orgId, string organizationId, AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgInvitationsCreateResponse> localVarResponse = await AdminOrgInvitationsCreateWithHttpInfoAsync(orgId, organizationId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgInvitationsCreateResponse> localVarResponse = await AdminOrgInvitationsCreateWithHttpInfoAsync(orgId, organizationId, adminOrgInvitationsCreateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1267,9 +1316,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgInvitationsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrgInvitationsCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrgInvitationsCreateResponse>> AdminOrgInvitationsCreateWithHttpInfoAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrgInvitationsCreateResponse>> AdminOrgInvitationsCreateWithHttpInfoAsync(string orgId, string organizationId, AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1279,10 +1329,15 @@ namespace LumoAuth.ApiClient.Api
             if (organizationId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'organizationId' when calling AdminOrganizationsApi->AdminOrgInvitationsCreate");
 
+            // verify the required parameter 'adminOrgInvitationsCreateRequest' is set
+            if (adminOrgInvitationsCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminOrgInvitationsCreateRequest' when calling AdminOrganizationsApi->AdminOrgInvitationsCreate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1299,6 +1354,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
+            localVarRequestOptions.Data = adminOrgInvitationsCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1812,10 +1868,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgMembersAddRequest"></param>
         /// <returns>AdminOrgMembersAddResponse</returns>
-        public AdminOrgMembersAddResponse AdminOrgMembersAdd(string orgId, string organizationId)
+        public AdminOrgMembersAddResponse AdminOrgMembersAdd(string orgId, string organizationId, AdminOrgMembersAddRequest adminOrgMembersAddRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgMembersAddResponse> localVarResponse = AdminOrgMembersAddWithHttpInfo(orgId, organizationId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgMembersAddResponse> localVarResponse = AdminOrgMembersAddWithHttpInfo(orgId, organizationId, adminOrgMembersAddRequest);
             return localVarResponse.Data;
         }
 
@@ -1825,8 +1882,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgMembersAddRequest"></param>
         /// <returns>ApiResponse of AdminOrgMembersAddResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrgMembersAddResponse> AdminOrgMembersAddWithHttpInfo(string orgId, string organizationId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrgMembersAddResponse> AdminOrgMembersAddWithHttpInfo(string orgId, string organizationId, AdminOrgMembersAddRequest adminOrgMembersAddRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1836,9 +1894,14 @@ namespace LumoAuth.ApiClient.Api
             if (organizationId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'organizationId' when calling AdminOrganizationsApi->AdminOrgMembersAdd");
 
+            // verify the required parameter 'adminOrgMembersAddRequest' is set
+            if (adminOrgMembersAddRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminOrgMembersAddRequest' when calling AdminOrganizationsApi->AdminOrgMembersAdd");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1854,6 +1917,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
+            localVarRequestOptions.Data = adminOrgMembersAddRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1885,11 +1949,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgMembersAddRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrgMembersAddResponse</returns>
-        public async System.Threading.Tasks.Task<AdminOrgMembersAddResponse> AdminOrgMembersAddAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminOrgMembersAddResponse> AdminOrgMembersAddAsync(string orgId, string organizationId, AdminOrgMembersAddRequest adminOrgMembersAddRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgMembersAddResponse> localVarResponse = await AdminOrgMembersAddWithHttpInfoAsync(orgId, organizationId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgMembersAddResponse> localVarResponse = await AdminOrgMembersAddWithHttpInfoAsync(orgId, organizationId, adminOrgMembersAddRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1899,9 +1964,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgMembersAddRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrgMembersAddResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrgMembersAddResponse>> AdminOrgMembersAddWithHttpInfoAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrgMembersAddResponse>> AdminOrgMembersAddWithHttpInfoAsync(string orgId, string organizationId, AdminOrgMembersAddRequest adminOrgMembersAddRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1911,10 +1977,15 @@ namespace LumoAuth.ApiClient.Api
             if (organizationId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'organizationId' when calling AdminOrganizationsApi->AdminOrgMembersAdd");
 
+            // verify the required parameter 'adminOrgMembersAddRequest' is set
+            if (adminOrgMembersAddRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminOrgMembersAddRequest' when calling AdminOrganizationsApi->AdminOrgMembersAdd");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1931,6 +2002,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
+            localVarRequestOptions.Data = adminOrgMembersAddRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2279,10 +2351,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgRolesCreateRequest"></param>
         /// <returns>AdminOrgRolesCreateResponse</returns>
-        public AdminOrgRolesCreateResponse AdminOrgRolesCreate(string orgId, string organizationId)
+        public AdminOrgRolesCreateResponse AdminOrgRolesCreate(string orgId, string organizationId, AdminOrgRolesCreateRequest adminOrgRolesCreateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> localVarResponse = AdminOrgRolesCreateWithHttpInfo(orgId, organizationId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> localVarResponse = AdminOrgRolesCreateWithHttpInfo(orgId, organizationId, adminOrgRolesCreateRequest);
             return localVarResponse.Data;
         }
 
@@ -2292,8 +2365,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgRolesCreateRequest"></param>
         /// <returns>ApiResponse of AdminOrgRolesCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> AdminOrgRolesCreateWithHttpInfo(string orgId, string organizationId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> AdminOrgRolesCreateWithHttpInfo(string orgId, string organizationId, AdminOrgRolesCreateRequest adminOrgRolesCreateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2303,9 +2377,14 @@ namespace LumoAuth.ApiClient.Api
             if (organizationId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'organizationId' when calling AdminOrganizationsApi->AdminOrgRolesCreate");
 
+            // verify the required parameter 'adminOrgRolesCreateRequest' is set
+            if (adminOrgRolesCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminOrgRolesCreateRequest' when calling AdminOrganizationsApi->AdminOrgRolesCreate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2321,6 +2400,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
+            localVarRequestOptions.Data = adminOrgRolesCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2352,11 +2432,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgRolesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrgRolesCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminOrgRolesCreateResponse> AdminOrgRolesCreateAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminOrgRolesCreateResponse> AdminOrgRolesCreateAsync(string orgId, string organizationId, AdminOrgRolesCreateRequest adminOrgRolesCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> localVarResponse = await AdminOrgRolesCreateWithHttpInfoAsync(orgId, organizationId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> localVarResponse = await AdminOrgRolesCreateWithHttpInfoAsync(orgId, organizationId, adminOrgRolesCreateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2366,9 +2447,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="adminOrgRolesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrgRolesCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse>> AdminOrgRolesCreateWithHttpInfoAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse>> AdminOrgRolesCreateWithHttpInfoAsync(string orgId, string organizationId, AdminOrgRolesCreateRequest adminOrgRolesCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2378,10 +2460,15 @@ namespace LumoAuth.ApiClient.Api
             if (organizationId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'organizationId' when calling AdminOrganizationsApi->AdminOrgRolesCreate");
 
+            // verify the required parameter 'adminOrgRolesCreateRequest' is set
+            if (adminOrgRolesCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminOrgRolesCreateRequest' when calling AdminOrganizationsApi->AdminOrgRolesCreate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2398,6 +2485,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
+            localVarRequestOptions.Data = adminOrgRolesCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2745,10 +2833,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminOrganizationsCreateRequest"></param>
         /// <returns>AdminOrganizationsCreateResponse</returns>
-        public AdminOrganizationsCreateResponse AdminOrganizationsCreate(string orgId)
+        public AdminOrganizationsCreateResponse AdminOrganizationsCreate(string orgId, AdminOrganizationsCreateRequest adminOrganizationsCreateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsCreateResponse> localVarResponse = AdminOrganizationsCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsCreateResponse> localVarResponse = AdminOrganizationsCreateWithHttpInfo(orgId, adminOrganizationsCreateRequest);
             return localVarResponse.Data;
         }
 
@@ -2757,16 +2846,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminOrganizationsCreateRequest"></param>
         /// <returns>ApiResponse of AdminOrganizationsCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsCreateResponse> AdminOrganizationsCreateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsCreateResponse> AdminOrganizationsCreateWithHttpInfo(string orgId, AdminOrganizationsCreateRequest adminOrganizationsCreateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminOrganizationsApi->AdminOrganizationsCreate");
 
+            // verify the required parameter 'adminOrganizationsCreateRequest' is set
+            if (adminOrganizationsCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminOrganizationsCreateRequest' when calling AdminOrganizationsApi->AdminOrganizationsCreate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2781,6 +2876,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminOrganizationsCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2811,11 +2907,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminOrganizationsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrganizationsCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminOrganizationsCreateResponse> AdminOrganizationsCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminOrganizationsCreateResponse> AdminOrganizationsCreateAsync(string orgId, AdminOrganizationsCreateRequest adminOrganizationsCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsCreateResponse> localVarResponse = await AdminOrganizationsCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsCreateResponse> localVarResponse = await AdminOrganizationsCreateWithHttpInfoAsync(orgId, adminOrganizationsCreateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2824,18 +2921,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminOrganizationsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrganizationsCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsCreateResponse>> AdminOrganizationsCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsCreateResponse>> AdminOrganizationsCreateWithHttpInfoAsync(string orgId, AdminOrganizationsCreateRequest adminOrganizationsCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminOrganizationsApi->AdminOrganizationsCreate");
 
+            // verify the required parameter 'adminOrganizationsCreateRequest' is set
+            if (adminOrganizationsCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminOrganizationsCreateRequest' when calling AdminOrganizationsApi->AdminOrganizationsCreate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2851,6 +2954,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminOrganizationsCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3323,10 +3427,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <returns>PutAdminOrgMembersUpdateResponse</returns>
-        public PutAdminOrgMembersUpdateResponse PatchAdminOrgMembersUpdate(string orgId, string organizationId, string userId)
+        public PutAdminOrgMembersUpdateResponse PatchAdminOrgMembersUpdate(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse> localVarResponse = PatchAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse> localVarResponse = PatchAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -3337,8 +3442,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminOrgMembersUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse> PatchAdminOrgMembersUpdateWithHttpInfo(string orgId, string organizationId, string userId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse> PatchAdminOrgMembersUpdateWithHttpInfo(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3352,9 +3458,14 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminOrganizationsApi->PatchAdminOrgMembersUpdate");
 
+            // verify the required parameter 'putAdminOrgMembersUpdateRequest' is set
+            if (putAdminOrgMembersUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrgMembersUpdateRequest' when calling AdminOrganizationsApi->PatchAdminOrgMembersUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3371,6 +3482,7 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrgMembersUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3403,11 +3515,12 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminOrgMembersUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminOrgMembersUpdateResponse> PatchAdminOrgMembersUpdateAsync(string orgId, string organizationId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminOrgMembersUpdateResponse> PatchAdminOrgMembersUpdateAsync(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse> localVarResponse = await PatchAdminOrgMembersUpdateWithHttpInfoAsync(orgId, organizationId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse> localVarResponse = await PatchAdminOrgMembersUpdateWithHttpInfoAsync(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -3418,9 +3531,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminOrgMembersUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse>> PatchAdminOrgMembersUpdateWithHttpInfoAsync(string orgId, string organizationId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse>> PatchAdminOrgMembersUpdateWithHttpInfoAsync(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3434,10 +3548,15 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminOrganizationsApi->PatchAdminOrgMembersUpdate");
 
+            // verify the required parameter 'putAdminOrgMembersUpdateRequest' is set
+            if (putAdminOrgMembersUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrgMembersUpdateRequest' when calling AdminOrganizationsApi->PatchAdminOrgMembersUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3455,6 +3574,7 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrgMembersUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3488,10 +3608,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>AdminOrgRolesCreateResponse</returns>
-        public AdminOrgRolesCreateResponse PatchAdminOrgRolesUpdate(string orgId, string organizationId, string roleId)
+        public AdminOrgRolesCreateResponse PatchAdminOrgRolesUpdate(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> localVarResponse = PatchAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> localVarResponse = PatchAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -3502,8 +3623,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>ApiResponse of AdminOrgRolesCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> PatchAdminOrgRolesUpdateWithHttpInfo(string orgId, string organizationId, string roleId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> PatchAdminOrgRolesUpdateWithHttpInfo(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3517,9 +3639,14 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminOrganizationsApi->PatchAdminOrgRolesUpdate");
 
+            // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+            if (putAdminOrgRolesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrgRolesUpdateRequest' when calling AdminOrganizationsApi->PatchAdminOrgRolesUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3536,6 +3663,7 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrgRolesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3568,11 +3696,12 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrgRolesCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminOrgRolesCreateResponse> PatchAdminOrgRolesUpdateAsync(string orgId, string organizationId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminOrgRolesCreateResponse> PatchAdminOrgRolesUpdateAsync(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> localVarResponse = await PatchAdminOrgRolesUpdateWithHttpInfoAsync(orgId, organizationId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> localVarResponse = await PatchAdminOrgRolesUpdateWithHttpInfoAsync(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -3583,9 +3712,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrgRolesCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse>> PatchAdminOrgRolesUpdateWithHttpInfoAsync(string orgId, string organizationId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse>> PatchAdminOrgRolesUpdateWithHttpInfoAsync(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3599,10 +3729,15 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminOrganizationsApi->PatchAdminOrgRolesUpdate");
 
+            // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+            if (putAdminOrgRolesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrgRolesUpdateRequest' when calling AdminOrganizationsApi->PatchAdminOrgRolesUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3620,6 +3755,7 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrgRolesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3652,10 +3788,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <returns>AdminOrganizationsGetResponse</returns>
-        public AdminOrganizationsGetResponse PatchAdminOrganizationsUpdate(string orgId, string organizationId)
+        public AdminOrganizationsGetResponse PatchAdminOrganizationsUpdate(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse> localVarResponse = PatchAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse> localVarResponse = PatchAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId, putAdminOrganizationsUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -3665,8 +3802,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <returns>ApiResponse of AdminOrganizationsGetResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse> PatchAdminOrganizationsUpdateWithHttpInfo(string orgId, string organizationId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse> PatchAdminOrganizationsUpdateWithHttpInfo(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3676,9 +3814,14 @@ namespace LumoAuth.ApiClient.Api
             if (organizationId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'organizationId' when calling AdminOrganizationsApi->PatchAdminOrganizationsUpdate");
 
+            // verify the required parameter 'putAdminOrganizationsUpdateRequest' is set
+            if (putAdminOrganizationsUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrganizationsUpdateRequest' when calling AdminOrganizationsApi->PatchAdminOrganizationsUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3694,6 +3837,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrganizationsUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3725,11 +3869,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrganizationsGetResponse</returns>
-        public async System.Threading.Tasks.Task<AdminOrganizationsGetResponse> PatchAdminOrganizationsUpdateAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminOrganizationsGetResponse> PatchAdminOrganizationsUpdateAsync(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse> localVarResponse = await PatchAdminOrganizationsUpdateWithHttpInfoAsync(orgId, organizationId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse> localVarResponse = await PatchAdminOrganizationsUpdateWithHttpInfoAsync(orgId, organizationId, putAdminOrganizationsUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -3739,9 +3884,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrganizationsGetResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse>> PatchAdminOrganizationsUpdateWithHttpInfoAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse>> PatchAdminOrganizationsUpdateWithHttpInfoAsync(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3751,10 +3897,15 @@ namespace LumoAuth.ApiClient.Api
             if (organizationId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'organizationId' when calling AdminOrganizationsApi->PatchAdminOrganizationsUpdate");
 
+            // verify the required parameter 'putAdminOrganizationsUpdateRequest' is set
+            if (putAdminOrganizationsUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrganizationsUpdateRequest' when calling AdminOrganizationsApi->PatchAdminOrganizationsUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3771,6 +3922,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrganizationsUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3804,10 +3956,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <returns>PutAdminOrgMembersUpdateResponse</returns>
-        public PutAdminOrgMembersUpdateResponse PutAdminOrgMembersUpdate(string orgId, string organizationId, string userId)
+        public PutAdminOrgMembersUpdateResponse PutAdminOrgMembersUpdate(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse> localVarResponse = PutAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse> localVarResponse = PutAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -3818,8 +3971,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminOrgMembersUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse> PutAdminOrgMembersUpdateWithHttpInfo(string orgId, string organizationId, string userId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse> PutAdminOrgMembersUpdateWithHttpInfo(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3833,9 +3987,14 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminOrganizationsApi->PutAdminOrgMembersUpdate");
 
+            // verify the required parameter 'putAdminOrgMembersUpdateRequest' is set
+            if (putAdminOrgMembersUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrgMembersUpdateRequest' when calling AdminOrganizationsApi->PutAdminOrgMembersUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3852,6 +4011,7 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrgMembersUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3884,11 +4044,12 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminOrgMembersUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminOrgMembersUpdateResponse> PutAdminOrgMembersUpdateAsync(string orgId, string organizationId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminOrgMembersUpdateResponse> PutAdminOrgMembersUpdateAsync(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse> localVarResponse = await PutAdminOrgMembersUpdateWithHttpInfoAsync(orgId, organizationId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse> localVarResponse = await PutAdminOrgMembersUpdateWithHttpInfoAsync(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -3899,9 +4060,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="userId"></param>
+        /// <param name="putAdminOrgMembersUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminOrgMembersUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse>> PutAdminOrgMembersUpdateWithHttpInfoAsync(string orgId, string organizationId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminOrgMembersUpdateResponse>> PutAdminOrgMembersUpdateWithHttpInfoAsync(string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3915,10 +4077,15 @@ namespace LumoAuth.ApiClient.Api
             if (userId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'userId' when calling AdminOrganizationsApi->PutAdminOrgMembersUpdate");
 
+            // verify the required parameter 'putAdminOrgMembersUpdateRequest' is set
+            if (putAdminOrgMembersUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrgMembersUpdateRequest' when calling AdminOrganizationsApi->PutAdminOrgMembersUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3936,6 +4103,7 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrgMembersUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3969,10 +4137,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>AdminOrgRolesCreateResponse</returns>
-        public AdminOrgRolesCreateResponse PutAdminOrgRolesUpdate(string orgId, string organizationId, string roleId)
+        public AdminOrgRolesCreateResponse PutAdminOrgRolesUpdate(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> localVarResponse = PutAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> localVarResponse = PutAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -3983,8 +4152,9 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <returns>ApiResponse of AdminOrgRolesCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> PutAdminOrgRolesUpdateWithHttpInfo(string orgId, string organizationId, string roleId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> PutAdminOrgRolesUpdateWithHttpInfo(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3998,9 +4168,14 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminOrganizationsApi->PutAdminOrgRolesUpdate");
 
+            // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+            if (putAdminOrgRolesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrgRolesUpdateRequest' when calling AdminOrganizationsApi->PutAdminOrgRolesUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4017,6 +4192,7 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrgRolesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4049,11 +4225,12 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrgRolesCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminOrgRolesCreateResponse> PutAdminOrgRolesUpdateAsync(string orgId, string organizationId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminOrgRolesCreateResponse> PutAdminOrgRolesUpdateAsync(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> localVarResponse = await PutAdminOrgRolesUpdateWithHttpInfoAsync(orgId, organizationId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse> localVarResponse = await PutAdminOrgRolesUpdateWithHttpInfoAsync(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -4064,9 +4241,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
+        /// <param name="putAdminOrgRolesUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrgRolesCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse>> PutAdminOrgRolesUpdateWithHttpInfoAsync(string orgId, string organizationId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrgRolesCreateResponse>> PutAdminOrgRolesUpdateWithHttpInfoAsync(string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -4080,10 +4258,15 @@ namespace LumoAuth.ApiClient.Api
             if (roleId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'roleId' when calling AdminOrganizationsApi->PutAdminOrgRolesUpdate");
 
+            // verify the required parameter 'putAdminOrgRolesUpdateRequest' is set
+            if (putAdminOrgRolesUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrgRolesUpdateRequest' when calling AdminOrganizationsApi->PutAdminOrgRolesUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4101,6 +4284,7 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
             localVarRequestOptions.PathParameters.Add("roleId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(roleId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrgRolesUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4133,10 +4317,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <returns>AdminOrganizationsGetResponse</returns>
-        public AdminOrganizationsGetResponse PutAdminOrganizationsUpdate(string orgId, string organizationId)
+        public AdminOrganizationsGetResponse PutAdminOrganizationsUpdate(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse> localVarResponse = PutAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse> localVarResponse = PutAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId, putAdminOrganizationsUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -4146,8 +4331,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <returns>ApiResponse of AdminOrganizationsGetResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse> PutAdminOrganizationsUpdateWithHttpInfo(string orgId, string organizationId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse> PutAdminOrganizationsUpdateWithHttpInfo(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -4157,9 +4343,14 @@ namespace LumoAuth.ApiClient.Api
             if (organizationId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'organizationId' when calling AdminOrganizationsApi->PutAdminOrganizationsUpdate");
 
+            // verify the required parameter 'putAdminOrganizationsUpdateRequest' is set
+            if (putAdminOrganizationsUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrganizationsUpdateRequest' when calling AdminOrganizationsApi->PutAdminOrganizationsUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4175,6 +4366,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrganizationsUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4206,11 +4398,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminOrganizationsGetResponse</returns>
-        public async System.Threading.Tasks.Task<AdminOrganizationsGetResponse> PutAdminOrganizationsUpdateAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminOrganizationsGetResponse> PutAdminOrganizationsUpdateAsync(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse> localVarResponse = await PutAdminOrganizationsUpdateWithHttpInfoAsync(orgId, organizationId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse> localVarResponse = await PutAdminOrganizationsUpdateWithHttpInfoAsync(orgId, organizationId, putAdminOrganizationsUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -4220,9 +4413,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="organizationId"></param>
+        /// <param name="putAdminOrganizationsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminOrganizationsGetResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse>> PutAdminOrganizationsUpdateWithHttpInfoAsync(string orgId, string organizationId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminOrganizationsGetResponse>> PutAdminOrganizationsUpdateWithHttpInfoAsync(string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -4232,10 +4426,15 @@ namespace LumoAuth.ApiClient.Api
             if (organizationId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'organizationId' when calling AdminOrganizationsApi->PutAdminOrganizationsUpdate");
 
+            // verify the required parameter 'putAdminOrganizationsUpdateRequest' is set
+            if (putAdminOrganizationsUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminOrganizationsUpdateRequest' when calling AdminOrganizationsApi->PutAdminOrganizationsUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4252,6 +4451,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("organizationId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(organizationId)); // path parameter
+            localVarRequestOptions.Data = putAdminOrganizationsUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

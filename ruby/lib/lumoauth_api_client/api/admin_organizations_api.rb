@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -22,19 +22,21 @@ module LumoAuthApiClient
     # Invite a user to an organization
     # @param org_id [String] 
     # @param organization_id [String] 
+    # @param admin_org_invitations_create_request [AdminOrgInvitationsCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminOrgInvitationsCreateResponse]
-    def admin_org_invitations_create(org_id, organization_id, opts = {})
-      data, _status_code, _headers = admin_org_invitations_create_with_http_info(org_id, organization_id, opts)
+    def admin_org_invitations_create(org_id, organization_id, admin_org_invitations_create_request, opts = {})
+      data, _status_code, _headers = admin_org_invitations_create_with_http_info(org_id, organization_id, admin_org_invitations_create_request, opts)
       data
     end
 
     # Invite a user to an organization
     # @param org_id [String] 
     # @param organization_id [String] 
+    # @param admin_org_invitations_create_request [AdminOrgInvitationsCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminOrgInvitationsCreateResponse, Integer, Hash)>] AdminOrgInvitationsCreateResponse data, response status code and response headers
-    def admin_org_invitations_create_with_http_info(org_id, organization_id, opts = {})
+    def admin_org_invitations_create_with_http_info(org_id, organization_id, admin_org_invitations_create_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOrganizationsApi.admin_org_invitations_create ...'
       end
@@ -46,6 +48,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && organization_id.nil?
         fail ArgumentError, "Missing the required parameter 'organization_id' when calling AdminOrganizationsApi.admin_org_invitations_create"
       end
+      # verify the required parameter 'admin_org_invitations_create_request' is set
+      if @api_client.config.client_side_validation && admin_org_invitations_create_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_org_invitations_create_request' when calling AdminOrganizationsApi.admin_org_invitations_create"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s))
 
@@ -56,12 +62,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_org_invitations_create_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminOrgInvitationsCreateResponse'
@@ -312,19 +323,21 @@ module LumoAuthApiClient
     # Add a member to an organization
     # @param org_id [String] 
     # @param organization_id [String] 
+    # @param admin_org_members_add_request [AdminOrgMembersAddRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminOrgMembersAddResponse]
-    def admin_org_members_add(org_id, organization_id, opts = {})
-      data, _status_code, _headers = admin_org_members_add_with_http_info(org_id, organization_id, opts)
+    def admin_org_members_add(org_id, organization_id, admin_org_members_add_request, opts = {})
+      data, _status_code, _headers = admin_org_members_add_with_http_info(org_id, organization_id, admin_org_members_add_request, opts)
       data
     end
 
     # Add a member to an organization
     # @param org_id [String] 
     # @param organization_id [String] 
+    # @param admin_org_members_add_request [AdminOrgMembersAddRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminOrgMembersAddResponse, Integer, Hash)>] AdminOrgMembersAddResponse data, response status code and response headers
-    def admin_org_members_add_with_http_info(org_id, organization_id, opts = {})
+    def admin_org_members_add_with_http_info(org_id, organization_id, admin_org_members_add_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOrganizationsApi.admin_org_members_add ...'
       end
@@ -336,6 +349,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && organization_id.nil?
         fail ArgumentError, "Missing the required parameter 'organization_id' when calling AdminOrganizationsApi.admin_org_members_add"
       end
+      # verify the required parameter 'admin_org_members_add_request' is set
+      if @api_client.config.client_side_validation && admin_org_members_add_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_org_members_add_request' when calling AdminOrganizationsApi.admin_org_members_add"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s))
 
@@ -346,12 +363,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_org_members_add_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminOrgMembersAddResponse'
@@ -519,19 +541,21 @@ module LumoAuthApiClient
     # Create an organization role
     # @param org_id [String] 
     # @param organization_id [String] 
+    # @param admin_org_roles_create_request [AdminOrgRolesCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminOrgRolesCreateResponse]
-    def admin_org_roles_create(org_id, organization_id, opts = {})
-      data, _status_code, _headers = admin_org_roles_create_with_http_info(org_id, organization_id, opts)
+    def admin_org_roles_create(org_id, organization_id, admin_org_roles_create_request, opts = {})
+      data, _status_code, _headers = admin_org_roles_create_with_http_info(org_id, organization_id, admin_org_roles_create_request, opts)
       data
     end
 
     # Create an organization role
     # @param org_id [String] 
     # @param organization_id [String] 
+    # @param admin_org_roles_create_request [AdminOrgRolesCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminOrgRolesCreateResponse, Integer, Hash)>] AdminOrgRolesCreateResponse data, response status code and response headers
-    def admin_org_roles_create_with_http_info(org_id, organization_id, opts = {})
+    def admin_org_roles_create_with_http_info(org_id, organization_id, admin_org_roles_create_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOrganizationsApi.admin_org_roles_create ...'
       end
@@ -543,6 +567,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && organization_id.nil?
         fail ArgumentError, "Missing the required parameter 'organization_id' when calling AdminOrganizationsApi.admin_org_roles_create"
       end
+      # verify the required parameter 'admin_org_roles_create_request' is set
+      if @api_client.config.client_side_validation && admin_org_roles_create_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_org_roles_create_request' when calling AdminOrganizationsApi.admin_org_roles_create"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s))
 
@@ -553,12 +581,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_org_roles_create_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminOrgRolesCreateResponse'
@@ -730,24 +763,30 @@ module LumoAuthApiClient
 
     # Create an organization
     # @param org_id [String] 
+    # @param admin_organizations_create_request [AdminOrganizationsCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminOrganizationsCreateResponse]
-    def admin_organizations_create(org_id, opts = {})
-      data, _status_code, _headers = admin_organizations_create_with_http_info(org_id, opts)
+    def admin_organizations_create(org_id, admin_organizations_create_request, opts = {})
+      data, _status_code, _headers = admin_organizations_create_with_http_info(org_id, admin_organizations_create_request, opts)
       data
     end
 
     # Create an organization
     # @param org_id [String] 
+    # @param admin_organizations_create_request [AdminOrganizationsCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminOrganizationsCreateResponse, Integer, Hash)>] AdminOrganizationsCreateResponse data, response status code and response headers
-    def admin_organizations_create_with_http_info(org_id, opts = {})
+    def admin_organizations_create_with_http_info(org_id, admin_organizations_create_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOrganizationsApi.admin_organizations_create ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminOrganizationsApi.admin_organizations_create"
+      end
+      # verify the required parameter 'admin_organizations_create_request' is set
+      if @api_client.config.client_side_validation && admin_organizations_create_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_organizations_create_request' when calling AdminOrganizationsApi.admin_organizations_create"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -759,12 +798,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_organizations_create_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminOrganizationsCreateResponse'
@@ -988,10 +1032,11 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param organization_id [String] 
     # @param user_id [String] 
+    # @param put_admin_org_members_update_request [PutAdminOrgMembersUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminOrgMembersUpdateResponse]
-    def patch_admin_org_members_update(org_id, organization_id, user_id, opts = {})
-      data, _status_code, _headers = patch_admin_org_members_update_with_http_info(org_id, organization_id, user_id, opts)
+    def patch_admin_org_members_update(org_id, organization_id, user_id, put_admin_org_members_update_request, opts = {})
+      data, _status_code, _headers = patch_admin_org_members_update_with_http_info(org_id, organization_id, user_id, put_admin_org_members_update_request, opts)
       data
     end
 
@@ -999,9 +1044,10 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param organization_id [String] 
     # @param user_id [String] 
+    # @param put_admin_org_members_update_request [PutAdminOrgMembersUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminOrgMembersUpdateResponse, Integer, Hash)>] PutAdminOrgMembersUpdateResponse data, response status code and response headers
-    def patch_admin_org_members_update_with_http_info(org_id, organization_id, user_id, opts = {})
+    def patch_admin_org_members_update_with_http_info(org_id, organization_id, user_id, put_admin_org_members_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOrganizationsApi.patch_admin_org_members_update ...'
       end
@@ -1017,6 +1063,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && user_id.nil?
         fail ArgumentError, "Missing the required parameter 'user_id' when calling AdminOrganizationsApi.patch_admin_org_members_update"
       end
+      # verify the required parameter 'put_admin_org_members_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_org_members_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_org_members_update_request' when calling AdminOrganizationsApi.patch_admin_org_members_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s))
 
@@ -1027,12 +1077,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_org_members_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminOrgMembersUpdateResponse'
@@ -1061,10 +1116,11 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param organization_id [String] 
     # @param role_id [String] 
+    # @param put_admin_org_roles_update_request [PutAdminOrgRolesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminOrgRolesCreateResponse]
-    def patch_admin_org_roles_update(org_id, organization_id, role_id, opts = {})
-      data, _status_code, _headers = patch_admin_org_roles_update_with_http_info(org_id, organization_id, role_id, opts)
+    def patch_admin_org_roles_update(org_id, organization_id, role_id, put_admin_org_roles_update_request, opts = {})
+      data, _status_code, _headers = patch_admin_org_roles_update_with_http_info(org_id, organization_id, role_id, put_admin_org_roles_update_request, opts)
       data
     end
 
@@ -1072,9 +1128,10 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param organization_id [String] 
     # @param role_id [String] 
+    # @param put_admin_org_roles_update_request [PutAdminOrgRolesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminOrgRolesCreateResponse, Integer, Hash)>] AdminOrgRolesCreateResponse data, response status code and response headers
-    def patch_admin_org_roles_update_with_http_info(org_id, organization_id, role_id, opts = {})
+    def patch_admin_org_roles_update_with_http_info(org_id, organization_id, role_id, put_admin_org_roles_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOrganizationsApi.patch_admin_org_roles_update ...'
       end
@@ -1095,6 +1152,10 @@ module LumoAuthApiClient
         fail ArgumentError, "invalid value for 'role_id' when calling AdminOrganizationsApi.patch_admin_org_roles_update, must conform to the pattern #{pattern}."
       end
 
+      # verify the required parameter 'put_admin_org_roles_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_org_roles_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_org_roles_update_request' when calling AdminOrganizationsApi.patch_admin_org_roles_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s)).sub('{' + 'roleId' + '}', CGI.escape(role_id.to_s))
 
@@ -1105,12 +1166,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_org_roles_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminOrgRolesCreateResponse'
@@ -1138,19 +1204,21 @@ module LumoAuthApiClient
     # Update an organization
     # @param org_id [String] 
     # @param organization_id [String] 
+    # @param put_admin_organizations_update_request [PutAdminOrganizationsUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminOrganizationsGetResponse]
-    def patch_admin_organizations_update(org_id, organization_id, opts = {})
-      data, _status_code, _headers = patch_admin_organizations_update_with_http_info(org_id, organization_id, opts)
+    def patch_admin_organizations_update(org_id, organization_id, put_admin_organizations_update_request, opts = {})
+      data, _status_code, _headers = patch_admin_organizations_update_with_http_info(org_id, organization_id, put_admin_organizations_update_request, opts)
       data
     end
 
     # Update an organization
     # @param org_id [String] 
     # @param organization_id [String] 
+    # @param put_admin_organizations_update_request [PutAdminOrganizationsUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminOrganizationsGetResponse, Integer, Hash)>] AdminOrganizationsGetResponse data, response status code and response headers
-    def patch_admin_organizations_update_with_http_info(org_id, organization_id, opts = {})
+    def patch_admin_organizations_update_with_http_info(org_id, organization_id, put_admin_organizations_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOrganizationsApi.patch_admin_organizations_update ...'
       end
@@ -1162,6 +1230,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && organization_id.nil?
         fail ArgumentError, "Missing the required parameter 'organization_id' when calling AdminOrganizationsApi.patch_admin_organizations_update"
       end
+      # verify the required parameter 'put_admin_organizations_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_organizations_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_organizations_update_request' when calling AdminOrganizationsApi.patch_admin_organizations_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s))
 
@@ -1172,12 +1244,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_organizations_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminOrganizationsGetResponse'
@@ -1206,10 +1283,11 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param organization_id [String] 
     # @param user_id [String] 
+    # @param put_admin_org_members_update_request [PutAdminOrgMembersUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminOrgMembersUpdateResponse]
-    def put_admin_org_members_update(org_id, organization_id, user_id, opts = {})
-      data, _status_code, _headers = put_admin_org_members_update_with_http_info(org_id, organization_id, user_id, opts)
+    def put_admin_org_members_update(org_id, organization_id, user_id, put_admin_org_members_update_request, opts = {})
+      data, _status_code, _headers = put_admin_org_members_update_with_http_info(org_id, organization_id, user_id, put_admin_org_members_update_request, opts)
       data
     end
 
@@ -1217,9 +1295,10 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param organization_id [String] 
     # @param user_id [String] 
+    # @param put_admin_org_members_update_request [PutAdminOrgMembersUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminOrgMembersUpdateResponse, Integer, Hash)>] PutAdminOrgMembersUpdateResponse data, response status code and response headers
-    def put_admin_org_members_update_with_http_info(org_id, organization_id, user_id, opts = {})
+    def put_admin_org_members_update_with_http_info(org_id, organization_id, user_id, put_admin_org_members_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOrganizationsApi.put_admin_org_members_update ...'
       end
@@ -1235,6 +1314,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && user_id.nil?
         fail ArgumentError, "Missing the required parameter 'user_id' when calling AdminOrganizationsApi.put_admin_org_members_update"
       end
+      # verify the required parameter 'put_admin_org_members_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_org_members_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_org_members_update_request' when calling AdminOrganizationsApi.put_admin_org_members_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s))
 
@@ -1245,12 +1328,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_org_members_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminOrgMembersUpdateResponse'
@@ -1279,10 +1367,11 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param organization_id [String] 
     # @param role_id [String] 
+    # @param put_admin_org_roles_update_request [PutAdminOrgRolesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminOrgRolesCreateResponse]
-    def put_admin_org_roles_update(org_id, organization_id, role_id, opts = {})
-      data, _status_code, _headers = put_admin_org_roles_update_with_http_info(org_id, organization_id, role_id, opts)
+    def put_admin_org_roles_update(org_id, organization_id, role_id, put_admin_org_roles_update_request, opts = {})
+      data, _status_code, _headers = put_admin_org_roles_update_with_http_info(org_id, organization_id, role_id, put_admin_org_roles_update_request, opts)
       data
     end
 
@@ -1290,9 +1379,10 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param organization_id [String] 
     # @param role_id [String] 
+    # @param put_admin_org_roles_update_request [PutAdminOrgRolesUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminOrgRolesCreateResponse, Integer, Hash)>] AdminOrgRolesCreateResponse data, response status code and response headers
-    def put_admin_org_roles_update_with_http_info(org_id, organization_id, role_id, opts = {})
+    def put_admin_org_roles_update_with_http_info(org_id, organization_id, role_id, put_admin_org_roles_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOrganizationsApi.put_admin_org_roles_update ...'
       end
@@ -1313,6 +1403,10 @@ module LumoAuthApiClient
         fail ArgumentError, "invalid value for 'role_id' when calling AdminOrganizationsApi.put_admin_org_roles_update, must conform to the pattern #{pattern}."
       end
 
+      # verify the required parameter 'put_admin_org_roles_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_org_roles_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_org_roles_update_request' when calling AdminOrganizationsApi.put_admin_org_roles_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s)).sub('{' + 'roleId' + '}', CGI.escape(role_id.to_s))
 
@@ -1323,12 +1417,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_org_roles_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminOrgRolesCreateResponse'
@@ -1356,19 +1455,21 @@ module LumoAuthApiClient
     # Update an organization
     # @param org_id [String] 
     # @param organization_id [String] 
+    # @param put_admin_organizations_update_request [PutAdminOrganizationsUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminOrganizationsGetResponse]
-    def put_admin_organizations_update(org_id, organization_id, opts = {})
-      data, _status_code, _headers = put_admin_organizations_update_with_http_info(org_id, organization_id, opts)
+    def put_admin_organizations_update(org_id, organization_id, put_admin_organizations_update_request, opts = {})
+      data, _status_code, _headers = put_admin_organizations_update_with_http_info(org_id, organization_id, put_admin_organizations_update_request, opts)
       data
     end
 
     # Update an organization
     # @param org_id [String] 
     # @param organization_id [String] 
+    # @param put_admin_organizations_update_request [PutAdminOrganizationsUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminOrganizationsGetResponse, Integer, Hash)>] AdminOrganizationsGetResponse data, response status code and response headers
-    def put_admin_organizations_update_with_http_info(org_id, organization_id, opts = {})
+    def put_admin_organizations_update_with_http_info(org_id, organization_id, put_admin_organizations_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOrganizationsApi.put_admin_organizations_update ...'
       end
@@ -1380,6 +1481,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && organization_id.nil?
         fail ArgumentError, "Missing the required parameter 'organization_id' when calling AdminOrganizationsApi.put_admin_organizations_update"
       end
+      # verify the required parameter 'put_admin_organizations_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_organizations_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_organizations_update_request' when calling AdminOrganizationsApi.put_admin_organizations_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organizations/{organizationId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'organizationId' + '}', CGI.escape(organization_id.to_s))
 
@@ -1390,12 +1495,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_organizations_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminOrganizationsGetResponse'

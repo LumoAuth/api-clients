@@ -4,10 +4,10 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**admin_permissions_create**](AdminPermissionsApi.md#admin_permissions_create) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the tenant |
+| [**admin_permissions_create**](AdminPermissionsApi.md#admin_permissions_create) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the organization |
 | [**admin_permissions_delete**](AdminPermissionsApi.md#admin_permissions_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Delete a custom permission |
 | [**admin_permissions_get**](AdminPermissionsApi.md#admin_permissions_get) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Get a single permission |
-| [**admin_permissions_list**](AdminPermissionsApi.md#admin_permissions_list) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the tenant |
+| [**admin_permissions_list**](AdminPermissionsApi.md#admin_permissions_list) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the organization |
 | [**admin_permissions_update**](AdminPermissionsApi.md#admin_permissions_update) | **PATCH** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Update a permission |
 | [**admin_permissions_usage**](AdminPermissionsApi.md#admin_permissions_usage) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId}/usage | Get permission usage (roles assigned to this permission) |
 | [**admin_scopes_create**](AdminPermissionsApi.md#admin_scopes_create) | **POST** /orgs/{orgId}/api/v1/admin/scopes | Create a custom OAuth scope |
@@ -17,9 +17,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 ## admin_permissions_create
 
-> <AdminPermissionsCreateResponse> admin_permissions_create(org_id)
+> <AdminPermissionsCreateResponse> admin_permissions_create(org_id, admin_permissions_create_request)
 
-Create a custom permission for the tenant
+Create a custom permission for the organization
 
 ### Examples
 
@@ -39,10 +39,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminPermissionsApi.new
 org_id = 'org_id_example' # String | 
+admin_permissions_create_request = LumoAuthApiClient::AdminPermissionsCreateRequest.new({name: 'name_example', slug: 'slug_example'}) # AdminPermissionsCreateRequest | 
 
 begin
-  # Create a custom permission for the tenant
-  result = api_instance.admin_permissions_create(org_id)
+  # Create a custom permission for the organization
+  result = api_instance.admin_permissions_create(org_id, admin_permissions_create_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_create: #{e}"
@@ -53,12 +54,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminPermissionsCreateResponse>, Integer, Hash)> admin_permissions_create_with_http_info(org_id)
+> <Array(<AdminPermissionsCreateResponse>, Integer, Hash)> admin_permissions_create_with_http_info(org_id, admin_permissions_create_request)
 
 ```ruby
 begin
-  # Create a custom permission for the tenant
-  data, status_code, headers = api_instance.admin_permissions_create_with_http_info(org_id)
+  # Create a custom permission for the organization
+  data, status_code, headers = api_instance.admin_permissions_create_with_http_info(org_id, admin_permissions_create_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminPermissionsCreateResponse>
@@ -72,6 +73,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **admin_permissions_create_request** | [**AdminPermissionsCreateRequest**](AdminPermissionsCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -83,7 +85,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -239,7 +241,7 @@ end
 
 > <AdminPermissionsListResponse> admin_permissions_list(org_id)
 
-List all available permissions for the tenant
+List all available permissions for the organization
 
 ### Examples
 
@@ -261,7 +263,7 @@ api_instance = LumoAuthApiClient::AdminPermissionsApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # List all available permissions for the tenant
+  # List all available permissions for the organization
   result = api_instance.admin_permissions_list(org_id)
   p result
 rescue LumoAuthApiClient::ApiError => e
@@ -277,7 +279,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # List all available permissions for the tenant
+  # List all available permissions for the organization
   data, status_code, headers = api_instance.admin_permissions_list_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
@@ -309,7 +311,7 @@ end
 
 ## admin_permissions_update
 
-> <AdminPermissionsCreateResponse> admin_permissions_update(org_id, permission_id)
+> <AdminPermissionsCreateResponse> admin_permissions_update(org_id, permission_id, admin_permissions_update_request)
 
 Update a permission
 
@@ -332,10 +334,11 @@ end
 api_instance = LumoAuthApiClient::AdminPermissionsApi.new
 org_id = 'org_id_example' # String | 
 permission_id = 'permission_id_example' # String | 
+admin_permissions_update_request = LumoAuthApiClient::AdminPermissionsUpdateRequest.new # AdminPermissionsUpdateRequest | 
 
 begin
   # Update a permission
-  result = api_instance.admin_permissions_update(org_id, permission_id)
+  result = api_instance.admin_permissions_update(org_id, permission_id, admin_permissions_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_update: #{e}"
@@ -346,12 +349,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminPermissionsCreateResponse>, Integer, Hash)> admin_permissions_update_with_http_info(org_id, permission_id)
+> <Array(<AdminPermissionsCreateResponse>, Integer, Hash)> admin_permissions_update_with_http_info(org_id, permission_id, admin_permissions_update_request)
 
 ```ruby
 begin
   # Update a permission
-  data, status_code, headers = api_instance.admin_permissions_update_with_http_info(org_id, permission_id)
+  data, status_code, headers = api_instance.admin_permissions_update_with_http_info(org_id, permission_id, admin_permissions_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminPermissionsCreateResponse>
@@ -366,6 +369,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **permission_id** | **String** |  |  |
+| **admin_permissions_update_request** | [**AdminPermissionsUpdateRequest**](AdminPermissionsUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -377,7 +381,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -457,7 +461,7 @@ end
 
 ## admin_scopes_create
 
-> <AdminScopesCreateResponse> admin_scopes_create(org_id)
+> <AdminScopesCreateResponse> admin_scopes_create(org_id, admin_scopes_create_request)
 
 Create a custom OAuth scope
 
@@ -479,10 +483,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminPermissionsApi.new
 org_id = 'org_id_example' # String | 
+admin_scopes_create_request = LumoAuthApiClient::AdminScopesCreateRequest.new({name: 'name_example', description: 'description_example'}) # AdminScopesCreateRequest | 
 
 begin
   # Create a custom OAuth scope
-  result = api_instance.admin_scopes_create(org_id)
+  result = api_instance.admin_scopes_create(org_id, admin_scopes_create_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_scopes_create: #{e}"
@@ -493,12 +498,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminScopesCreateResponse>, Integer, Hash)> admin_scopes_create_with_http_info(org_id)
+> <Array(<AdminScopesCreateResponse>, Integer, Hash)> admin_scopes_create_with_http_info(org_id, admin_scopes_create_request)
 
 ```ruby
 begin
   # Create a custom OAuth scope
-  data, status_code, headers = api_instance.admin_scopes_create_with_http_info(org_id)
+  data, status_code, headers = api_instance.admin_scopes_create_with_http_info(org_id, admin_scopes_create_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminScopesCreateResponse>
@@ -512,6 +517,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **admin_scopes_create_request** | [**AdminScopesCreateRequest**](AdminScopesCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -523,7 +529,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 

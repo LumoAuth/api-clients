@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -22,6 +22,12 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AdminGroupsAddMembersRequest } from '../models';
+// @ts-ignore
+import type { AdminGroupsAddRoleRequest } from '../models';
+// @ts-ignore
+import type { AdminGroupsCreateRequest } from '../models';
+// @ts-ignore
 import type { AdminGroupsCreateResponse } from '../models';
 // @ts-ignore
 import type { AdminGroupsGetMembersResponse } from '../models';
@@ -32,7 +38,11 @@ import type { AdminGroupsGroupsGetRolesResponse } from '../models';
 // @ts-ignore
 import type { AdminGroupsListResponse } from '../models';
 // @ts-ignore
+import type { AdminGroupsUpdateRolesRequest } from '../models';
+// @ts-ignore
 import type { MessageResponse } from '../models';
+// @ts-ignore
+import type { PutAdminGroupsUpdateRequest } from '../models';
 /**
  * AdminGroupsApi - axios parameter creator
  * @export
@@ -44,14 +54,17 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Add member(s) to group
          * @param {string} orgId 
          * @param {string} groupId 
+         * @param {AdminGroupsAddMembersRequest} adminGroupsAddMembersRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsAddMembers: async (orgId: string, groupId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminGroupsAddMembers: async (orgId: string, groupId: string, adminGroupsAddMembersRequest: AdminGroupsAddMembersRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminGroupsAddMembers', 'orgId', orgId)
             // verify required parameter 'groupId' is not null or undefined
             assertParamExists('adminGroupsAddMembers', 'groupId', groupId)
+            // verify required parameter 'adminGroupsAddMembersRequest' is not null or undefined
+            assertParamExists('adminGroupsAddMembers', 'adminGroupsAddMembersRequest', adminGroupsAddMembersRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/groups/{groupId}/members`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"groupId"}}`, encodeURIComponent(String(groupId)));
@@ -75,9 +88,12 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminGroupsAddMembersRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -85,18 +101,21 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+         * A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
          * @summary Add a single role to a group
          * @param {string} orgId 
          * @param {string} groupId 
+         * @param {AdminGroupsAddRoleRequest} adminGroupsAddRoleRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsAddRole: async (orgId: string, groupId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminGroupsAddRole: async (orgId: string, groupId: string, adminGroupsAddRoleRequest: AdminGroupsAddRoleRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminGroupsAddRole', 'orgId', orgId)
             // verify required parameter 'groupId' is not null or undefined
             assertParamExists('adminGroupsAddRole', 'groupId', groupId)
+            // verify required parameter 'adminGroupsAddRoleRequest' is not null or undefined
+            assertParamExists('adminGroupsAddRole', 'adminGroupsAddRoleRequest', adminGroupsAddRoleRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"groupId"}}`, encodeURIComponent(String(groupId)));
@@ -120,9 +139,12 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminGroupsAddRoleRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -130,15 +152,18 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+         * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
          * @summary Create a new group
          * @param {string} orgId 
+         * @param {AdminGroupsCreateRequest} adminGroupsCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsCreate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminGroupsCreate: async (orgId: string, adminGroupsCreateRequest: AdminGroupsCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminGroupsCreate', 'orgId', orgId)
+            // verify required parameter 'adminGroupsCreateRequest' is not null or undefined
+            assertParamExists('adminGroupsCreate', 'adminGroupsCreateRequest', adminGroupsCreateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/groups`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -161,9 +186,12 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminGroupsCreateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -352,7 +380,7 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
-         * @summary List all groups in the tenant
+         * @summary List all groups in the organization
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -490,18 +518,21 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+         * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
          * @summary Update group roles (replaces all existing roles)
          * @param {string} orgId 
          * @param {string} groupId 
+         * @param {AdminGroupsUpdateRolesRequest} adminGroupsUpdateRolesRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsUpdateRoles: async (orgId: string, groupId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminGroupsUpdateRoles: async (orgId: string, groupId: string, adminGroupsUpdateRolesRequest: AdminGroupsUpdateRolesRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminGroupsUpdateRoles', 'orgId', orgId)
             // verify required parameter 'groupId' is not null or undefined
             assertParamExists('adminGroupsUpdateRoles', 'groupId', groupId)
+            // verify required parameter 'adminGroupsUpdateRolesRequest' is not null or undefined
+            assertParamExists('adminGroupsUpdateRoles', 'adminGroupsUpdateRolesRequest', adminGroupsUpdateRolesRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"groupId"}}`, encodeURIComponent(String(groupId)));
@@ -525,9 +556,12 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminGroupsUpdateRolesRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -539,14 +573,17 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Update an existing group
          * @param {string} orgId 
          * @param {string} groupId 
+         * @param {PutAdminGroupsUpdateRequest} putAdminGroupsUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminGroupsUpdate: async (orgId: string, groupId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminGroupsUpdate: async (orgId: string, groupId: string, putAdminGroupsUpdateRequest: PutAdminGroupsUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminGroupsUpdate', 'orgId', orgId)
             // verify required parameter 'groupId' is not null or undefined
             assertParamExists('patchAdminGroupsUpdate', 'groupId', groupId)
+            // verify required parameter 'putAdminGroupsUpdateRequest' is not null or undefined
+            assertParamExists('patchAdminGroupsUpdate', 'putAdminGroupsUpdateRequest', putAdminGroupsUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/groups/{groupId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"groupId"}}`, encodeURIComponent(String(groupId)));
@@ -570,9 +607,12 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminGroupsUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -584,14 +624,17 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Update an existing group
          * @param {string} orgId 
          * @param {string} groupId 
+         * @param {PutAdminGroupsUpdateRequest} putAdminGroupsUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminGroupsUpdate: async (orgId: string, groupId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminGroupsUpdate: async (orgId: string, groupId: string, putAdminGroupsUpdateRequest: PutAdminGroupsUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminGroupsUpdate', 'orgId', orgId)
             // verify required parameter 'groupId' is not null or undefined
             assertParamExists('putAdminGroupsUpdate', 'groupId', groupId)
+            // verify required parameter 'putAdminGroupsUpdateRequest' is not null or undefined
+            assertParamExists('putAdminGroupsUpdate', 'putAdminGroupsUpdateRequest', putAdminGroupsUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/groups/{groupId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"groupId"}}`, encodeURIComponent(String(groupId)));
@@ -615,9 +658,12 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminGroupsUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -639,38 +685,41 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @summary Add member(s) to group
          * @param {string} orgId 
          * @param {string} groupId 
+         * @param {AdminGroupsAddMembersRequest} adminGroupsAddMembersRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsAddMembers(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsAddMembers(orgId, groupId, options);
+        async adminGroupsAddMembers(orgId: string, groupId: string, adminGroupsAddMembersRequest: AdminGroupsAddMembersRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsAddMembers(orgId, groupId, adminGroupsAddMembersRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsAddMembers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+         * A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
          * @summary Add a single role to a group
          * @param {string} orgId 
          * @param {string} groupId 
+         * @param {AdminGroupsAddRoleRequest} adminGroupsAddRoleRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsAddRole(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsAddRole(orgId, groupId, options);
+        async adminGroupsAddRole(orgId: string, groupId: string, adminGroupsAddRoleRequest: AdminGroupsAddRoleRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsAddRole(orgId, groupId, adminGroupsAddRoleRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsAddRole']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+         * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
          * @summary Create a new group
          * @param {string} orgId 
+         * @param {AdminGroupsCreateRequest} adminGroupsCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsCreate(orgId, options);
+        async adminGroupsCreate(orgId: string, adminGroupsCreateRequest: AdminGroupsCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsCreate(orgId, adminGroupsCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsCreate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -733,7 +782,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List all groups in the tenant
+         * @summary List all groups in the organization
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -775,15 +824,16 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+         * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
          * @summary Update group roles (replaces all existing roles)
          * @param {string} orgId 
          * @param {string} groupId 
+         * @param {AdminGroupsUpdateRolesRequest} adminGroupsUpdateRolesRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsUpdateRoles(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsUpdateRoles(orgId, groupId, options);
+        async adminGroupsUpdateRoles(orgId: string, groupId: string, adminGroupsUpdateRolesRequest: AdminGroupsUpdateRolesRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsUpdateRoles(orgId, groupId, adminGroupsUpdateRolesRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsUpdateRoles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -793,11 +843,12 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @summary Update an existing group
          * @param {string} orgId 
          * @param {string} groupId 
+         * @param {PutAdminGroupsUpdateRequest} putAdminGroupsUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminGroupsUpdate(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminGroupsUpdate(orgId, groupId, options);
+        async patchAdminGroupsUpdate(orgId: string, groupId: string, putAdminGroupsUpdateRequest: PutAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminGroupsUpdate(orgId, groupId, putAdminGroupsUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.patchAdminGroupsUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -807,11 +858,12 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @summary Update an existing group
          * @param {string} orgId 
          * @param {string} groupId 
+         * @param {PutAdminGroupsUpdateRequest} putAdminGroupsUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminGroupsUpdate(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminGroupsUpdate(orgId, groupId, options);
+        async putAdminGroupsUpdate(orgId: string, groupId: string, putAdminGroupsUpdateRequest: PutAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminGroupsUpdate(orgId, groupId, putAdminGroupsUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.putAdminGroupsUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -834,27 +886,27 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         adminGroupsAddMembers(requestParameters: AdminGroupsApiAdminGroupsAddMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse> {
-            return localVarFp.adminGroupsAddMembers(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminGroupsAddMembers(requestParameters.orgId, requestParameters.groupId, requestParameters.adminGroupsAddMembersRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+         * A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
          * @summary Add a single role to a group
          * @param {AdminGroupsApiAdminGroupsAddRoleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         adminGroupsAddRole(requestParameters: AdminGroupsApiAdminGroupsAddRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
-            return localVarFp.adminGroupsAddRole(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminGroupsAddRole(requestParameters.orgId, requestParameters.groupId, requestParameters.adminGroupsAddRoleRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+         * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
          * @summary Create a new group
          * @param {AdminGroupsApiAdminGroupsCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         adminGroupsCreate(requestParameters: AdminGroupsApiAdminGroupsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse> {
-            return localVarFp.adminGroupsCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminGroupsCreate(requestParameters.orgId, requestParameters.adminGroupsCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -898,7 +950,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
         },
         /**
          * 
-         * @summary List all groups in the tenant
+         * @summary List all groups in the organization
          * @param {AdminGroupsApiAdminGroupsListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -927,14 +979,14 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.adminGroupsRemoveRole(requestParameters.orgId, requestParameters.groupId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
-         * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+         * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
          * @summary Update group roles (replaces all existing roles)
          * @param {AdminGroupsApiAdminGroupsUpdateRolesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         adminGroupsUpdateRoles(requestParameters: AdminGroupsApiAdminGroupsUpdateRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse> {
-            return localVarFp.adminGroupsUpdateRoles(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminGroupsUpdateRoles(requestParameters.orgId, requestParameters.groupId, requestParameters.adminGroupsUpdateRolesRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -944,7 +996,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         patchAdminGroupsUpdate(requestParameters: AdminGroupsApiPatchAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse> {
-            return localVarFp.patchAdminGroupsUpdate(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminGroupsUpdate(requestParameters.orgId, requestParameters.groupId, requestParameters.putAdminGroupsUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -954,7 +1006,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         putAdminGroupsUpdate(requestParameters: AdminGroupsApiPutAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse> {
-            return localVarFp.putAdminGroupsUpdate(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminGroupsUpdate(requestParameters.orgId, requestParameters.groupId, requestParameters.putAdminGroupsUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -976,7 +1028,7 @@ export interface AdminGroupsApiInterface {
     adminGroupsAddMembers(requestParameters: AdminGroupsApiAdminGroupsAddMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse>;
 
     /**
-     * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+     * A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
      * @summary Add a single role to a group
      * @param {AdminGroupsApiAdminGroupsAddRoleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -986,7 +1038,7 @@ export interface AdminGroupsApiInterface {
     adminGroupsAddRole(requestParameters: AdminGroupsApiAdminGroupsAddRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
-     * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+     * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
      * @summary Create a new group
      * @param {AdminGroupsApiAdminGroupsCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1037,7 +1089,7 @@ export interface AdminGroupsApiInterface {
 
     /**
      * 
-     * @summary List all groups in the tenant
+     * @summary List all groups in the organization
      * @param {AdminGroupsApiAdminGroupsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1066,7 +1118,7 @@ export interface AdminGroupsApiInterface {
     adminGroupsRemoveRole(requestParameters: AdminGroupsApiAdminGroupsRemoveRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
-     * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+     * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
      * @summary Update group roles (replaces all existing roles)
      * @param {AdminGroupsApiAdminGroupsUpdateRolesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1116,6 +1168,13 @@ export interface AdminGroupsApiAdminGroupsAddMembersRequest {
      * @memberof AdminGroupsApiAdminGroupsAddMembers
      */
     readonly groupId: string
+
+    /**
+     * 
+     * @type {AdminGroupsAddMembersRequest}
+     * @memberof AdminGroupsApiAdminGroupsAddMembers
+     */
+    readonly adminGroupsAddMembersRequest: AdminGroupsAddMembersRequest
 }
 
 /**
@@ -1137,6 +1196,13 @@ export interface AdminGroupsApiAdminGroupsAddRoleRequest {
      * @memberof AdminGroupsApiAdminGroupsAddRole
      */
     readonly groupId: string
+
+    /**
+     * 
+     * @type {AdminGroupsAddRoleRequest}
+     * @memberof AdminGroupsApiAdminGroupsAddRole
+     */
+    readonly adminGroupsAddRoleRequest: AdminGroupsAddRoleRequest
 }
 
 /**
@@ -1151,6 +1217,13 @@ export interface AdminGroupsApiAdminGroupsCreateRequest {
      * @memberof AdminGroupsApiAdminGroupsCreate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {AdminGroupsCreateRequest}
+     * @memberof AdminGroupsApiAdminGroupsCreate
+     */
+    readonly adminGroupsCreateRequest: AdminGroupsCreateRequest
 }
 
 /**
@@ -1326,6 +1399,13 @@ export interface AdminGroupsApiAdminGroupsUpdateRolesRequest {
      * @memberof AdminGroupsApiAdminGroupsUpdateRoles
      */
     readonly groupId: string
+
+    /**
+     * 
+     * @type {AdminGroupsUpdateRolesRequest}
+     * @memberof AdminGroupsApiAdminGroupsUpdateRoles
+     */
+    readonly adminGroupsUpdateRolesRequest: AdminGroupsUpdateRolesRequest
 }
 
 /**
@@ -1347,6 +1427,13 @@ export interface AdminGroupsApiPatchAdminGroupsUpdateRequest {
      * @memberof AdminGroupsApiPatchAdminGroupsUpdate
      */
     readonly groupId: string
+
+    /**
+     * 
+     * @type {PutAdminGroupsUpdateRequest}
+     * @memberof AdminGroupsApiPatchAdminGroupsUpdate
+     */
+    readonly putAdminGroupsUpdateRequest: PutAdminGroupsUpdateRequest
 }
 
 /**
@@ -1368,6 +1455,13 @@ export interface AdminGroupsApiPutAdminGroupsUpdateRequest {
      * @memberof AdminGroupsApiPutAdminGroupsUpdate
      */
     readonly groupId: string
+
+    /**
+     * 
+     * @type {PutAdminGroupsUpdateRequest}
+     * @memberof AdminGroupsApiPutAdminGroupsUpdate
+     */
+    readonly putAdminGroupsUpdateRequest: PutAdminGroupsUpdateRequest
 }
 
 /**
@@ -1386,11 +1480,11 @@ export class AdminGroupsApi extends BaseAPI implements AdminGroupsApiInterface {
      * @memberof AdminGroupsApi
      */
     public adminGroupsAddMembers(requestParameters: AdminGroupsApiAdminGroupsAddMembersRequest, options?: RawAxiosRequestConfig) {
-        return AdminGroupsApiFp(this.configuration).adminGroupsAddMembers(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(this.axios, this.basePath));
+        return AdminGroupsApiFp(this.configuration).adminGroupsAddMembers(requestParameters.orgId, requestParameters.groupId, requestParameters.adminGroupsAddMembersRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+     * A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
      * @summary Add a single role to a group
      * @param {AdminGroupsApiAdminGroupsAddRoleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1398,11 +1492,11 @@ export class AdminGroupsApi extends BaseAPI implements AdminGroupsApiInterface {
      * @memberof AdminGroupsApi
      */
     public adminGroupsAddRole(requestParameters: AdminGroupsApiAdminGroupsAddRoleRequest, options?: RawAxiosRequestConfig) {
-        return AdminGroupsApiFp(this.configuration).adminGroupsAddRole(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(this.axios, this.basePath));
+        return AdminGroupsApiFp(this.configuration).adminGroupsAddRole(requestParameters.orgId, requestParameters.groupId, requestParameters.adminGroupsAddRoleRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+     * Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
      * @summary Create a new group
      * @param {AdminGroupsApiAdminGroupsCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1410,7 +1504,7 @@ export class AdminGroupsApi extends BaseAPI implements AdminGroupsApiInterface {
      * @memberof AdminGroupsApi
      */
     public adminGroupsCreate(requestParameters: AdminGroupsApiAdminGroupsCreateRequest, options?: RawAxiosRequestConfig) {
-        return AdminGroupsApiFp(this.configuration).adminGroupsCreate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminGroupsApiFp(this.configuration).adminGroupsCreate(requestParameters.orgId, requestParameters.adminGroupsCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1463,7 +1557,7 @@ export class AdminGroupsApi extends BaseAPI implements AdminGroupsApiInterface {
 
     /**
      * 
-     * @summary List all groups in the tenant
+     * @summary List all groups in the organization
      * @param {AdminGroupsApiAdminGroupsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1498,7 +1592,7 @@ export class AdminGroupsApi extends BaseAPI implements AdminGroupsApiInterface {
     }
 
     /**
-     * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+     * `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization\'s own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
      * @summary Update group roles (replaces all existing roles)
      * @param {AdminGroupsApiAdminGroupsUpdateRolesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1506,7 +1600,7 @@ export class AdminGroupsApi extends BaseAPI implements AdminGroupsApiInterface {
      * @memberof AdminGroupsApi
      */
     public adminGroupsUpdateRoles(requestParameters: AdminGroupsApiAdminGroupsUpdateRolesRequest, options?: RawAxiosRequestConfig) {
-        return AdminGroupsApiFp(this.configuration).adminGroupsUpdateRoles(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(this.axios, this.basePath));
+        return AdminGroupsApiFp(this.configuration).adminGroupsUpdateRoles(requestParameters.orgId, requestParameters.groupId, requestParameters.adminGroupsUpdateRolesRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1518,7 +1612,7 @@ export class AdminGroupsApi extends BaseAPI implements AdminGroupsApiInterface {
      * @memberof AdminGroupsApi
      */
     public patchAdminGroupsUpdate(requestParameters: AdminGroupsApiPatchAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminGroupsApiFp(this.configuration).patchAdminGroupsUpdate(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(this.axios, this.basePath));
+        return AdminGroupsApiFp(this.configuration).patchAdminGroupsUpdate(requestParameters.orgId, requestParameters.groupId, requestParameters.putAdminGroupsUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1530,7 +1624,7 @@ export class AdminGroupsApi extends BaseAPI implements AdminGroupsApiInterface {
      * @memberof AdminGroupsApi
      */
     public putAdminGroupsUpdate(requestParameters: AdminGroupsApiPutAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminGroupsApiFp(this.configuration).putAdminGroupsUpdate(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(this.axios, this.basePath));
+        return AdminGroupsApiFp(this.configuration).putAdminGroupsUpdate(requestParameters.orgId, requestParameters.groupId, requestParameters.putAdminGroupsUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

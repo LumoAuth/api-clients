@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,8 +27,8 @@ class VerifyAuthTokenRequest(BaseModel):
     """
     VerifyAuthTokenRequest
     """ # noqa: E501
-    auth_token: Optional[StrictStr] = Field(default=None, description="The auth token presented by the agent.")
-    resource: Optional[StrictStr] = Field(default=None, description="Resource identifier; defaults to the authenticated resource.")
+    auth_token: StrictStr = Field(description="The auth token presented by the agent.")
+    resource: StrictStr = Field(description="Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource.")
     __properties: ClassVar[List[str]] = ["auth_token", "resource"]
 
     model_config = ConfigDict(

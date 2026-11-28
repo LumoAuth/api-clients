@@ -79,7 +79,7 @@ No authorization required
 
 JSON Web Key Set (RFC 7517)
 
-Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
 
 ### Example
 ```java
@@ -258,5 +258,5 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Transmitter configuration |  -  |
-| **404** | Tenant not found |  -  |
+| **404** | Organization not found |  -  |
 

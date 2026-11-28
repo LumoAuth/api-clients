@@ -4,7 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_audit_logs_actions**](AdminAuditLogsApi.md#admin_audit_logs_actions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant
+[**admin_audit_logs_actions**](AdminAuditLogsApi.md#admin_audit_logs_actions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the organization
 [**admin_audit_logs_export**](AdminAuditLogsApi.md#admin_audit_logs_export) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON
 [**admin_audit_logs_get**](AdminAuditLogsApi.md#admin_audit_logs_get) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry
 [**admin_audit_logs_list**](AdminAuditLogsApi.md#admin_audit_logs_list) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries
@@ -18,7 +18,7 @@ Method | HTTP request | Description
 ## admin_audit_logs_actions
 
 > models::AdminAuditLogsActionsResponse admin_audit_logs_actions(org_id)
-List the distinct audit action types recorded for the tenant
+List the distinct audit action types recorded for the organization
 
 ### Parameters
 
@@ -45,7 +45,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_audit_logs_export
 
-> String admin_audit_logs_export(org_id)
+> String admin_audit_logs_export(org_id, format, event_type, action, actor_id, target_type, target_id, severity, status, ip_address, search, trace_id, from, to)
 Export audit logs as CSV (default) or JSON
 
 Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
@@ -56,6 +56,19 @@ Needs `audit.export` and `audit.view`, as the export on the portal's audit log p
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**format** | Option<**String**> | csv (default) or json. |  |[default to csv]
+**event_type** | Option<**String**> | Exact event type, for example user.login. |  |
+**action** | Option<**String**> | The short verb of the event (as GET /audit-logs/actions lists them). |  |
+**actor_id** | Option<**String**> | Who acted: a user, API key or agent id. Also accepted as userId. |  |
+**target_type** | Option<**String**> | Kind of the subject of the event. Also accepted as resourceType. |  |
+**target_id** | Option<**String**> | The subject of the event, for example the user of a login.failed entry. |  |
+**severity** | Option<**String**> |  |  |
+**status** | Option<**String**> | Result of the event. |  |
+**ip_address** | Option<**String**> |  |  |
+**search** | Option<**String**> | Text in the message, error message, event type, actor id or name, target name, client id or trace ID. |  |
+**trace_id** | Option<**String**> | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). |  |
+**from** | Option<**String**> | Entries at or after this time (ISO 8601). Also accepted as startDate. |  |
+**to** | Option<**String**> | Entries at or before this time (ISO 8601). Also accepted as endDate. |  |
 
 ### Return type
 
@@ -104,7 +117,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_audit_logs_list
 
-> models::AdminAuditLogsListResponse admin_audit_logs_list(org_id)
+> models::AdminAuditLogsListResponse admin_audit_logs_list(org_id, page, limit, event_type, action, actor_id, target_type, target_id, severity, status, ip_address, search, trace_id, from, to)
 List audit log entries
 
 ### Parameters
@@ -113,6 +126,20 @@ List audit log entries
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**page** | Option<**i32**> |  |  |[default to 1]
+**limit** | Option<**i32**> |  |  |[default to 25]
+**event_type** | Option<**String**> | Exact event type, for example user.login. |  |
+**action** | Option<**String**> | The short verb of the event (as GET /audit-logs/actions lists them). |  |
+**actor_id** | Option<**String**> | Who acted: a user, API key or agent id. Also accepted as userId. |  |
+**target_type** | Option<**String**> | Kind of the subject of the event. Also accepted as resourceType. |  |
+**target_id** | Option<**String**> | The subject of the event, for example the user of a login.failed entry. |  |
+**severity** | Option<**String**> |  |  |
+**status** | Option<**String**> | Result of the event. |  |
+**ip_address** | Option<**String**> |  |  |
+**search** | Option<**String**> | Text in the message, error message, event type, actor id or name, target name, client id or trace ID. |  |
+**trace_id** | Option<**String**> | Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). |  |
+**from** | Option<**String**> | Entries at or after this time (ISO 8601). Also accepted as startDate. |  |
+**to** | Option<**String**> | Entries at or before this time (ISO 8601). Also accepted as endDate. |  |
 
 ### Return type
 
@@ -188,7 +215,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_audit_logs_retention_update
 
-> models::AdminAuditLogsRetentionResponse patch_admin_audit_logs_retention_update(org_id)
+> models::AdminAuditLogsRetentionResponse patch_admin_audit_logs_retention_update(org_id, put_admin_audit_logs_retention_update_request)
 Update audit log retention settings
 
 Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
@@ -199,6 +226,7 @@ Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the port
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**put_admin_audit_logs_retention_update_request** | [**PutAdminAuditLogsRetentionUpdateRequest**](PutAdminAuditLogsRetentionUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -210,7 +238,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -218,7 +246,7 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_audit_logs_retention_update
 
-> models::AdminAuditLogsRetentionResponse put_admin_audit_logs_retention_update(org_id)
+> models::AdminAuditLogsRetentionResponse put_admin_audit_logs_retention_update(org_id, put_admin_audit_logs_retention_update_request)
 Update audit log retention settings
 
 Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
@@ -229,6 +257,7 @@ Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the port
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**put_admin_audit_logs_retention_update_request** | [**PutAdminAuditLogsRetentionUpdateRequest**](PutAdminAuditLogsRetentionUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -240,7 +269,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

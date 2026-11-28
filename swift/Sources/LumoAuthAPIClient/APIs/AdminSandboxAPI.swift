@@ -13,7 +13,7 @@ import AnyCodable
 open class AdminSandboxAPI {
 
     /**
-     Destroy a sandbox tenant
+     Destroy a sandbox organization
      
      - parameter orgId: (path)  
      - parameter sandboxSlug: (path)  
@@ -25,7 +25,7 @@ open class AdminSandboxAPI {
     }
 
     /**
-     Destroy a sandbox tenant
+     Destroy a sandbox organization
      - POST /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -62,7 +62,7 @@ open class AdminSandboxAPI {
     }
 
     /**
-     List the caller's sandbox tenants
+     List the caller's sandbox organizations
      
      - parameter orgId: (path)  
      - returns: AdminSandboxListResponse
@@ -73,7 +73,7 @@ open class AdminSandboxAPI {
     }
 
     /**
-     List the caller's sandbox tenants
+     List the caller's sandbox organizations
      - GET /orgs/{orgId}/api/v1/admin/sandbox
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -106,7 +106,7 @@ open class AdminSandboxAPI {
     }
 
     /**
-     Spawn a sandbox tenant
+     Spawn a sandbox organization
      
      - parameter orgId: (path)  
      - parameter adminSandboxSpawnRequest: (body)  (optional)
@@ -118,7 +118,7 @@ open class AdminSandboxAPI {
     }
 
     /**
-     Spawn a sandbox tenant
+     Spawn a sandbox organization
      - POST /orgs/{orgId}/api/v1/admin/sandbox/spawn
      - Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
      - API Key:

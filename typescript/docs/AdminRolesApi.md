@@ -11,7 +11,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**adminRolesGet**](#adminrolesget) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Get a single role by ID or slug|
 |[**adminRolesGetPermissions**](#adminrolesgetpermissions) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Get role permissions|
 |[**adminRolesGetUsers**](#adminrolesgetusers) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users | Get users assigned to a role|
-|[**adminRolesList**](#adminroleslist) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the tenant|
+|[**adminRolesList**](#adminroleslist) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the organization|
 |[**adminRolesRemovePermission**](#adminrolesremovepermission) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId} | Remove a permission from a role|
 |[**adminRolesRemoveUser**](#adminrolesremoveuser) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId} | Remove a user from a role|
 |[**adminRolesUpdatePermissions**](#adminrolesupdatepermissions) | **PUT** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Update role permissions (replaces all)|
@@ -19,16 +19,17 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**putAdminRolesUpdate**](#putadminrolesupdate) | **PUT** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Update an existing role|
 
 # **adminRolesAddPermissions**
-> MessageResponse adminRolesAddPermissions()
+> MessageResponse adminRolesAddPermissions(adminRolesAddPermissionsRequest)
 
-Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization\'s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 ### Example
 
 ```typescript
 import {
     AdminRolesApi,
-    Configuration
+    Configuration,
+    AdminRolesAddPermissionsRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -36,10 +37,12 @@ const apiInstance = new AdminRolesApi(configuration);
 
 let orgId: string; // (default to undefined)
 let roleId: string; // (default to undefined)
+let adminRolesAddPermissionsRequest: AdminRolesAddPermissionsRequest; //
 
 const { status, data } = await apiInstance.adminRolesAddPermissions(
     orgId,
-    roleId
+    roleId,
+    adminRolesAddPermissionsRequest
 );
 ```
 
@@ -47,6 +50,7 @@ const { status, data } = await apiInstance.adminRolesAddPermissions(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminRolesAddPermissionsRequest** | **AdminRolesAddPermissionsRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **roleId** | [**string**] |  | defaults to undefined|
 
@@ -61,7 +65,7 @@ const { status, data } = await apiInstance.adminRolesAddPermissions(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -70,13 +74,13 @@ const { status, data } = await apiInstance.adminRolesAddPermissions(
 |-------------|-------------|------------------|
 |**200** | Added; message reports how many permissions were added |  -  |
 |**400** | No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform |  -  |
-|**403** | A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
+|**403** | A built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
 |**404** | Role not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesAddUser**
-> MessageResponse adminRolesAddUser()
+> MessageResponse adminRolesAddUser(adminRolesAddUserRequest)
 
 
 ### Example
@@ -84,7 +88,8 @@ const { status, data } = await apiInstance.adminRolesAddPermissions(
 ```typescript
 import {
     AdminRolesApi,
-    Configuration
+    Configuration,
+    AdminRolesAddUserRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -92,10 +97,12 @@ const apiInstance = new AdminRolesApi(configuration);
 
 let orgId: string; // (default to undefined)
 let roleId: string; // (default to undefined)
+let adminRolesAddUserRequest: AdminRolesAddUserRequest; //
 
 const { status, data } = await apiInstance.adminRolesAddUser(
     orgId,
-    roleId
+    roleId,
+    adminRolesAddUserRequest
 );
 ```
 
@@ -103,6 +110,7 @@ const { status, data } = await apiInstance.adminRolesAddUser(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminRolesAddUserRequest** | **AdminRolesAddUserRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **roleId** | [**string**] |  | defaults to undefined|
 
@@ -117,7 +125,7 @@ const { status, data } = await apiInstance.adminRolesAddUser(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -129,25 +137,28 @@ const { status, data } = await apiInstance.adminRolesAddUser(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesCreate**
-> AdminRolesCreateResponse adminRolesCreate()
+> AdminRolesCreateResponse adminRolesCreate(adminRolesCreateRequest)
 
-Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization\'s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
 ### Example
 
 ```typescript
 import {
     AdminRolesApi,
-    Configuration
+    Configuration,
+    AdminRolesCreateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminRolesApi(configuration);
 
 let orgId: string; // (default to undefined)
+let adminRolesCreateRequest: AdminRolesCreateRequest; //
 
 const { status, data } = await apiInstance.adminRolesCreate(
-    orgId
+    orgId,
+    adminRolesCreateRequest
 );
 ```
 
@@ -155,6 +166,7 @@ const { status, data } = await apiInstance.adminRolesCreate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminRolesCreateRequest** | **AdminRolesCreateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -168,7 +180,7 @@ const { status, data } = await apiInstance.adminRolesCreate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -555,16 +567,17 @@ const { status, data } = await apiInstance.adminRolesRemoveUser(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesUpdatePermissions**
-> AdminRolesCreateResponse adminRolesUpdatePermissions()
+> AdminRolesCreateResponse adminRolesUpdatePermissions(adminRolesUpdatePermissionsRequest)
 
-Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization\'s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 ### Example
 
 ```typescript
 import {
     AdminRolesApi,
-    Configuration
+    Configuration,
+    AdminRolesUpdatePermissionsRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -572,10 +585,12 @@ const apiInstance = new AdminRolesApi(configuration);
 
 let orgId: string; // (default to undefined)
 let roleId: string; // (default to undefined)
+let adminRolesUpdatePermissionsRequest: AdminRolesUpdatePermissionsRequest; //
 
 const { status, data } = await apiInstance.adminRolesUpdatePermissions(
     orgId,
-    roleId
+    roleId,
+    adminRolesUpdatePermissionsRequest
 );
 ```
 
@@ -583,6 +598,7 @@ const { status, data } = await apiInstance.adminRolesUpdatePermissions(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminRolesUpdatePermissionsRequest** | **AdminRolesUpdatePermissionsRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **roleId** | [**string**] |  | defaults to undefined|
 
@@ -597,7 +613,7 @@ const { status, data } = await apiInstance.adminRolesUpdatePermissions(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -606,13 +622,13 @@ const { status, data } = await apiInstance.adminRolesUpdatePermissions(
 |-------------|-------------|------------------|
 |**200** | Updated role |  -  |
 |**400** | permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform |  -  |
-|**403** | A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
+|**403** | A new built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
 |**404** | Role not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminRolesUpdate**
-> AdminRolesCreateResponse patchAdminRolesUpdate()
+> AdminRolesCreateResponse patchAdminRolesUpdate(putAdminOrgRolesUpdateRequest)
 
 
 ### Example
@@ -620,7 +636,8 @@ const { status, data } = await apiInstance.adminRolesUpdatePermissions(
 ```typescript
 import {
     AdminRolesApi,
-    Configuration
+    Configuration,
+    PutAdminOrgRolesUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -628,10 +645,12 @@ const apiInstance = new AdminRolesApi(configuration);
 
 let orgId: string; // (default to undefined)
 let roleId: string; // (default to undefined)
+let putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest; //
 
 const { status, data } = await apiInstance.patchAdminRolesUpdate(
     orgId,
-    roleId
+    roleId,
+    putAdminOrgRolesUpdateRequest
 );
 ```
 
@@ -639,6 +658,7 @@ const { status, data } = await apiInstance.patchAdminRolesUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminOrgRolesUpdateRequest** | **PutAdminOrgRolesUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **roleId** | [**string**] |  | defaults to undefined|
 
@@ -653,7 +673,7 @@ const { status, data } = await apiInstance.patchAdminRolesUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -665,7 +685,7 @@ const { status, data } = await apiInstance.patchAdminRolesUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminRolesUpdate**
-> AdminRolesCreateResponse putAdminRolesUpdate()
+> AdminRolesCreateResponse putAdminRolesUpdate(putAdminOrgRolesUpdateRequest)
 
 
 ### Example
@@ -673,7 +693,8 @@ const { status, data } = await apiInstance.patchAdminRolesUpdate(
 ```typescript
 import {
     AdminRolesApi,
-    Configuration
+    Configuration,
+    PutAdminOrgRolesUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -681,10 +702,12 @@ const apiInstance = new AdminRolesApi(configuration);
 
 let orgId: string; // (default to undefined)
 let roleId: string; // (default to undefined)
+let putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest; //
 
 const { status, data } = await apiInstance.putAdminRolesUpdate(
     orgId,
-    roleId
+    roleId,
+    putAdminOrgRolesUpdateRequest
 );
 ```
 
@@ -692,6 +715,7 @@ const { status, data } = await apiInstance.putAdminRolesUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminOrgRolesUpdateRequest** | **PutAdminOrgRolesUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **roleId** | [**string**] |  | defaults to undefined|
 
@@ -706,7 +730,7 @@ const { status, data } = await apiInstance.putAdminRolesUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

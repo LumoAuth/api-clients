@@ -16,11 +16,12 @@ open class AdminMcpAPI {
      Register an MCP server
      
      - parameter orgId: (path)  
+     - parameter mcpServerWrite: (body)  
      - returns: AdminMcpServersCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminMcpServersCreate(orgId: String) async throws -> AdminMcpServersCreateResponse {
-        return try await adminMcpServersCreateWithRequestBuilder(orgId: orgId).execute().body
+    open class func adminMcpServersCreate(orgId: String, mcpServerWrite: McpServerWrite) async throws -> AdminMcpServersCreateResponse {
+        return try await adminMcpServersCreateWithRequestBuilder(orgId: orgId, mcpServerWrite: mcpServerWrite).execute().body
     }
 
     /**
@@ -34,20 +35,21 @@ open class AdminMcpAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter mcpServerWrite: (body)  
      - returns: RequestBuilder<AdminMcpServersCreateResponse> 
      */
-    open class func adminMcpServersCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminMcpServersCreateResponse> {
+    open class func adminMcpServersCreateWithRequestBuilder(orgId: String, mcpServerWrite: McpServerWrite) -> RequestBuilder<AdminMcpServersCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/mcp/servers"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: mcpServerWrite)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -361,5 +363,108 @@ open class AdminMcpAPI {
         let localVariableRequestBuilder: RequestBuilder<AdminMcpServersListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Update an MCP server
+     
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter mcpServerWrite: (body)  
+     - returns: AdminMcpServersCreateResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func patchAdminMcpServersUpdate(orgId: String, serverId: String, mcpServerWrite: McpServerWrite) async throws -> AdminMcpServersCreateResponse {
+        return try await patchAdminMcpServersUpdateWithRequestBuilder(orgId: orgId, serverId: serverId, mcpServerWrite: mcpServerWrite).execute().body
+    }
+
+    /**
+     Update an MCP server
+     - PATCH /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}
+     - Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter mcpServerWrite: (body)  
+     - returns: RequestBuilder<AdminMcpServersCreateResponse> 
+     */
+    open class func patchAdminMcpServersUpdateWithRequestBuilder(orgId: String, serverId: String, mcpServerWrite: McpServerWrite) -> RequestBuilder<AdminMcpServersCreateResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let serverIdPreEscape = "\(APIHelper.mapValueToPathItem(serverId))"
+        let serverIdPostEscape = serverIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{serverId}", with: serverIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: mcpServerWrite)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminMcpServersCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Update an MCP server (same as PATCH: only the fields that are sent change)
+     
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter mcpServerWrite: (body)  
+     - returns: AdminMcpServersCreateResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func putAdminMcpServersUpdate(orgId: String, serverId: String, mcpServerWrite: McpServerWrite) async throws -> AdminMcpServersCreateResponse {
+        return try await putAdminMcpServersUpdateWithRequestBuilder(orgId: orgId, serverId: serverId, mcpServerWrite: mcpServerWrite).execute().body
+    }
+
+    /**
+     Update an MCP server (same as PATCH: only the fields that are sent change)
+     - PUT /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter mcpServerWrite: (body)  
+     - returns: RequestBuilder<AdminMcpServersCreateResponse> 
+     */
+    open class func putAdminMcpServersUpdateWithRequestBuilder(orgId: String, serverId: String, mcpServerWrite: McpServerWrite) -> RequestBuilder<AdminMcpServersCreateResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let serverIdPreEscape = "\(APIHelper.mapValueToPathItem(serverId))"
+        let serverIdPostEscape = serverIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{serverId}", with: serverIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: mcpServerWrite)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminMcpServersCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 }

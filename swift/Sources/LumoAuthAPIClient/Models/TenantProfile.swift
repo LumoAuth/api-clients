@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-/** The organization (tenant) record as returned by the settings endpoints. */
+/** The organization record as returned by the settings endpoints. */
 public struct TenantProfile: Codable, JSONEncodable, Hashable {
 
     public var id: Int?

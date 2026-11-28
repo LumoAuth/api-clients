@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -767,15 +767,16 @@ class AdminOAuthClientsApi
      * Create an OAuth client
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createClient'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\CreateClientResponse
      */
-    public function createClient($orgId, string $contentType = self::contentTypes['createClient'][0])
+    public function createClient($orgId, $oAuthClientWrite, string $contentType = self::contentTypes['createClient'][0])
     {
-        list($response) = $this->createClientWithHttpInfo($orgId, $contentType);
+        list($response) = $this->createClientWithHttpInfo($orgId, $oAuthClientWrite, $contentType);
         return $response;
     }
 
@@ -785,15 +786,16 @@ class AdminOAuthClientsApi
      * Create an OAuth client
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createClient'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\CreateClientResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createClientWithHttpInfo($orgId, string $contentType = self::contentTypes['createClient'][0])
+    public function createClientWithHttpInfo($orgId, $oAuthClientWrite, string $contentType = self::contentTypes['createClient'][0])
     {
-        $request = $this->createClientRequest($orgId, $contentType);
+        $request = $this->createClientRequest($orgId, $oAuthClientWrite, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -870,14 +872,15 @@ class AdminOAuthClientsApi
      * Create an OAuth client
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createClient'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createClientAsync($orgId, string $contentType = self::contentTypes['createClient'][0])
+    public function createClientAsync($orgId, $oAuthClientWrite, string $contentType = self::contentTypes['createClient'][0])
     {
-        return $this->createClientAsyncWithHttpInfo($orgId, $contentType)
+        return $this->createClientAsyncWithHttpInfo($orgId, $oAuthClientWrite, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -891,15 +894,16 @@ class AdminOAuthClientsApi
      * Create an OAuth client
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createClient'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createClientAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['createClient'][0])
+    public function createClientAsyncWithHttpInfo($orgId, $oAuthClientWrite, string $contentType = self::contentTypes['createClient'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\CreateClientResponse';
-        $request = $this->createClientRequest($orgId, $contentType);
+        $request = $this->createClientRequest($orgId, $oAuthClientWrite, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -941,18 +945,26 @@ class AdminOAuthClientsApi
      * Create request for operation 'createClient'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createClient'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createClientRequest($orgId, string $contentType = self::contentTypes['createClient'][0])
+    public function createClientRequest($orgId, $oAuthClientWrite, string $contentType = self::contentTypes['createClient'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling createClient'
+            );
+        }
+
+        // verify the required parameter 'oAuthClientWrite' is set
+        if ($oAuthClientWrite === null || (is_array($oAuthClientWrite) && count($oAuthClientWrite) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $oAuthClientWrite when calling createClient'
             );
         }
 
@@ -983,7 +995,14 @@ class AdminOAuthClientsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($oAuthClientWrite)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($oAuthClientWrite));
+            } else {
+                $httpBody = $oAuthClientWrite;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -3117,15 +3136,16 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $clientId clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchClient'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\UpdateClientResponse
      */
-    public function patchClient($orgId, $clientId, string $contentType = self::contentTypes['patchClient'][0])
+    public function patchClient($orgId, $clientId, $oAuthClientWrite, string $contentType = self::contentTypes['patchClient'][0])
     {
-        list($response) = $this->patchClientWithHttpInfo($orgId, $clientId, $contentType);
+        list($response) = $this->patchClientWithHttpInfo($orgId, $clientId, $oAuthClientWrite, $contentType);
         return $response;
     }
 
@@ -3136,15 +3156,16 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchClient'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\UpdateClientResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function patchClientWithHttpInfo($orgId, $clientId, string $contentType = self::contentTypes['patchClient'][0])
+    public function patchClientWithHttpInfo($orgId, $clientId, $oAuthClientWrite, string $contentType = self::contentTypes['patchClient'][0])
     {
-        $request = $this->patchClientRequest($orgId, $clientId, $contentType);
+        $request = $this->patchClientRequest($orgId, $clientId, $oAuthClientWrite, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3222,14 +3243,15 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchClient'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchClientAsync($orgId, $clientId, string $contentType = self::contentTypes['patchClient'][0])
+    public function patchClientAsync($orgId, $clientId, $oAuthClientWrite, string $contentType = self::contentTypes['patchClient'][0])
     {
-        return $this->patchClientAsyncWithHttpInfo($orgId, $clientId, $contentType)
+        return $this->patchClientAsyncWithHttpInfo($orgId, $clientId, $oAuthClientWrite, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3244,15 +3266,16 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchClient'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchClientAsyncWithHttpInfo($orgId, $clientId, string $contentType = self::contentTypes['patchClient'][0])
+    public function patchClientAsyncWithHttpInfo($orgId, $clientId, $oAuthClientWrite, string $contentType = self::contentTypes['patchClient'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\UpdateClientResponse';
-        $request = $this->patchClientRequest($orgId, $clientId, $contentType);
+        $request = $this->patchClientRequest($orgId, $clientId, $oAuthClientWrite, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3295,12 +3318,13 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchClient'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function patchClientRequest($orgId, $clientId, string $contentType = self::contentTypes['patchClient'][0])
+    public function patchClientRequest($orgId, $clientId, $oAuthClientWrite, string $contentType = self::contentTypes['patchClient'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -3314,6 +3338,13 @@ class AdminOAuthClientsApi
         if ($clientId === null || (is_array($clientId) && count($clientId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $clientId when calling patchClient'
+            );
+        }
+
+        // verify the required parameter 'oAuthClientWrite' is set
+        if ($oAuthClientWrite === null || (is_array($oAuthClientWrite) && count($oAuthClientWrite) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $oAuthClientWrite when calling patchClient'
             );
         }
 
@@ -3352,7 +3383,14 @@ class AdminOAuthClientsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($oAuthClientWrite)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($oAuthClientWrite));
+            } else {
+                $httpBody = $oAuthClientWrite;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -4021,15 +4059,16 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $clientId clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetClientScopesRequest $setClientScopesRequest setClientScopesRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setClientScopes'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return |\LumoAuth\ApiClient\Model\SetClientScopesResponse
      */
-    public function setClientScopes($orgId, $clientId, string $contentType = self::contentTypes['setClientScopes'][0])
+    public function setClientScopes($orgId, $clientId, $setClientScopesRequest, string $contentType = self::contentTypes['setClientScopes'][0])
     {
-        list($response) = $this->setClientScopesWithHttpInfo($orgId, $clientId, $contentType);
+        list($response) = $this->setClientScopesWithHttpInfo($orgId, $clientId, $setClientScopesRequest, $contentType);
         return $response;
     }
 
@@ -4040,15 +4079,16 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetClientScopesRequest $setClientScopesRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setClientScopes'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of |\LumoAuth\ApiClient\Model\SetClientScopesResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function setClientScopesWithHttpInfo($orgId, $clientId, string $contentType = self::contentTypes['setClientScopes'][0])
+    public function setClientScopesWithHttpInfo($orgId, $clientId, $setClientScopesRequest, string $contentType = self::contentTypes['setClientScopes'][0])
     {
-        $request = $this->setClientScopesRequest($orgId, $clientId, $contentType);
+        $request = $this->setClientScopesRequest($orgId, $clientId, $setClientScopesRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4126,14 +4166,15 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetClientScopesRequest $setClientScopesRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setClientScopes'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function setClientScopesAsync($orgId, $clientId, string $contentType = self::contentTypes['setClientScopes'][0])
+    public function setClientScopesAsync($orgId, $clientId, $setClientScopesRequest, string $contentType = self::contentTypes['setClientScopes'][0])
     {
-        return $this->setClientScopesAsyncWithHttpInfo($orgId, $clientId, $contentType)
+        return $this->setClientScopesAsyncWithHttpInfo($orgId, $clientId, $setClientScopesRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4148,15 +4189,16 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetClientScopesRequest $setClientScopesRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setClientScopes'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function setClientScopesAsyncWithHttpInfo($orgId, $clientId, string $contentType = self::contentTypes['setClientScopes'][0])
+    public function setClientScopesAsyncWithHttpInfo($orgId, $clientId, $setClientScopesRequest, string $contentType = self::contentTypes['setClientScopes'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\SetClientScopesResponse';
-        $request = $this->setClientScopesRequest($orgId, $clientId, $contentType);
+        $request = $this->setClientScopesRequest($orgId, $clientId, $setClientScopesRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -4199,12 +4241,13 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\SetClientScopesRequest $setClientScopesRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setClientScopes'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function setClientScopesRequest($orgId, $clientId, string $contentType = self::contentTypes['setClientScopes'][0])
+    public function setClientScopesRequest($orgId, $clientId, $setClientScopesRequest, string $contentType = self::contentTypes['setClientScopes'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -4218,6 +4261,13 @@ class AdminOAuthClientsApi
         if ($clientId === null || (is_array($clientId) && count($clientId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $clientId when calling setClientScopes'
+            );
+        }
+
+        // verify the required parameter 'setClientScopesRequest' is set
+        if ($setClientScopesRequest === null || (is_array($setClientScopesRequest) && count($setClientScopesRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $setClientScopesRequest when calling setClientScopes'
             );
         }
 
@@ -4256,7 +4306,14 @@ class AdminOAuthClientsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($setClientScopesRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($setClientScopesRequest));
+            } else {
+                $httpBody = $setClientScopesRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -4318,15 +4375,16 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $clientId clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateClient'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\UpdateClientResponse
      */
-    public function updateClient($orgId, $clientId, string $contentType = self::contentTypes['updateClient'][0])
+    public function updateClient($orgId, $clientId, $oAuthClientWrite, string $contentType = self::contentTypes['updateClient'][0])
     {
-        list($response) = $this->updateClientWithHttpInfo($orgId, $clientId, $contentType);
+        list($response) = $this->updateClientWithHttpInfo($orgId, $clientId, $oAuthClientWrite, $contentType);
         return $response;
     }
 
@@ -4337,15 +4395,16 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateClient'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\UpdateClientResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function updateClientWithHttpInfo($orgId, $clientId, string $contentType = self::contentTypes['updateClient'][0])
+    public function updateClientWithHttpInfo($orgId, $clientId, $oAuthClientWrite, string $contentType = self::contentTypes['updateClient'][0])
     {
-        $request = $this->updateClientRequest($orgId, $clientId, $contentType);
+        $request = $this->updateClientRequest($orgId, $clientId, $oAuthClientWrite, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4423,14 +4482,15 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateClient'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateClientAsync($orgId, $clientId, string $contentType = self::contentTypes['updateClient'][0])
+    public function updateClientAsync($orgId, $clientId, $oAuthClientWrite, string $contentType = self::contentTypes['updateClient'][0])
     {
-        return $this->updateClientAsyncWithHttpInfo($orgId, $clientId, $contentType)
+        return $this->updateClientAsyncWithHttpInfo($orgId, $clientId, $oAuthClientWrite, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4445,15 +4505,16 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateClient'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateClientAsyncWithHttpInfo($orgId, $clientId, string $contentType = self::contentTypes['updateClient'][0])
+    public function updateClientAsyncWithHttpInfo($orgId, $clientId, $oAuthClientWrite, string $contentType = self::contentTypes['updateClient'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\UpdateClientResponse';
-        $request = $this->updateClientRequest($orgId, $clientId, $contentType);
+        $request = $this->updateClientRequest($orgId, $clientId, $oAuthClientWrite, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -4496,12 +4557,13 @@ class AdminOAuthClientsApi
      *
      * @param  string $orgId (required)
      * @param  string $clientId (required)
+     * @param  \LumoAuth\ApiClient\Model\OAuthClientWrite $oAuthClientWrite (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateClient'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function updateClientRequest($orgId, $clientId, string $contentType = self::contentTypes['updateClient'][0])
+    public function updateClientRequest($orgId, $clientId, $oAuthClientWrite, string $contentType = self::contentTypes['updateClient'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -4515,6 +4577,13 @@ class AdminOAuthClientsApi
         if ($clientId === null || (is_array($clientId) && count($clientId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $clientId when calling updateClient'
+            );
+        }
+
+        // verify the required parameter 'oAuthClientWrite' is set
+        if ($oAuthClientWrite === null || (is_array($oAuthClientWrite) && count($oAuthClientWrite) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $oAuthClientWrite when calling updateClient'
             );
         }
 
@@ -4553,7 +4622,14 @@ class AdminOAuthClientsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($oAuthClientWrite)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($oAuthClientWrite));
+            } else {
+                $httpBody = $oAuthClientWrite;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

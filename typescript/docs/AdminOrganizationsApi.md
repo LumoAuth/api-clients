@@ -26,7 +26,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**putAdminOrganizationsUpdate**](#putadminorganizationsupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization|
 
 # **adminOrgInvitationsCreate**
-> AdminOrgInvitationsCreateResponse adminOrgInvitationsCreate()
+> AdminOrgInvitationsCreateResponse adminOrgInvitationsCreate(adminOrgInvitationsCreateRequest)
 
 
 ### Example
@@ -34,7 +34,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 ```typescript
 import {
     AdminOrganizationsApi,
-    Configuration
+    Configuration,
+    AdminOrgInvitationsCreateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -42,10 +43,12 @@ const apiInstance = new AdminOrganizationsApi(configuration);
 
 let orgId: string; // (default to undefined)
 let organizationId: string; // (default to undefined)
+let adminOrgInvitationsCreateRequest: AdminOrgInvitationsCreateRequest; //
 
 const { status, data } = await apiInstance.adminOrgInvitationsCreate(
     orgId,
-    organizationId
+    organizationId,
+    adminOrgInvitationsCreateRequest
 );
 ```
 
@@ -53,6 +56,7 @@ const { status, data } = await apiInstance.adminOrgInvitationsCreate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminOrgInvitationsCreateRequest** | **AdminOrgInvitationsCreateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **organizationId** | [**string**] |  | defaults to undefined|
 
@@ -67,7 +71,7 @@ const { status, data } = await apiInstance.adminOrgInvitationsCreate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -253,7 +257,7 @@ const { status, data } = await apiInstance.adminOrgInvitationsRevoke(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrgMembersAdd**
-> AdminOrgMembersAddResponse adminOrgMembersAdd()
+> AdminOrgMembersAddResponse adminOrgMembersAdd(adminOrgMembersAddRequest)
 
 
 ### Example
@@ -261,7 +265,8 @@ const { status, data } = await apiInstance.adminOrgInvitationsRevoke(
 ```typescript
 import {
     AdminOrganizationsApi,
-    Configuration
+    Configuration,
+    AdminOrgMembersAddRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -269,10 +274,12 @@ const apiInstance = new AdminOrganizationsApi(configuration);
 
 let orgId: string; // (default to undefined)
 let organizationId: string; // (default to undefined)
+let adminOrgMembersAddRequest: AdminOrgMembersAddRequest; //
 
 const { status, data } = await apiInstance.adminOrgMembersAdd(
     orgId,
-    organizationId
+    organizationId,
+    adminOrgMembersAddRequest
 );
 ```
 
@@ -280,6 +287,7 @@ const { status, data } = await apiInstance.adminOrgMembersAdd(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminOrgMembersAddRequest** | **AdminOrgMembersAddRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **organizationId** | [**string**] |  | defaults to undefined|
 
@@ -294,7 +302,7 @@ const { status, data } = await apiInstance.adminOrgMembersAdd(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -420,7 +428,7 @@ const { status, data } = await apiInstance.adminOrgMembersRemove(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrgRolesCreate**
-> AdminOrgRolesCreateResponse adminOrgRolesCreate()
+> AdminOrgRolesCreateResponse adminOrgRolesCreate(adminOrgRolesCreateRequest)
 
 
 ### Example
@@ -428,7 +436,8 @@ const { status, data } = await apiInstance.adminOrgMembersRemove(
 ```typescript
 import {
     AdminOrganizationsApi,
-    Configuration
+    Configuration,
+    AdminOrgRolesCreateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -436,10 +445,12 @@ const apiInstance = new AdminOrganizationsApi(configuration);
 
 let orgId: string; // (default to undefined)
 let organizationId: string; // (default to undefined)
+let adminOrgRolesCreateRequest: AdminOrgRolesCreateRequest; //
 
 const { status, data } = await apiInstance.adminOrgRolesCreate(
     orgId,
-    organizationId
+    organizationId,
+    adminOrgRolesCreateRequest
 );
 ```
 
@@ -447,6 +458,7 @@ const { status, data } = await apiInstance.adminOrgRolesCreate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminOrgRolesCreateRequest** | **AdminOrgRolesCreateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **organizationId** | [**string**] |  | defaults to undefined|
 
@@ -461,7 +473,7 @@ const { status, data } = await apiInstance.adminOrgRolesCreate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -588,7 +600,7 @@ const { status, data } = await apiInstance.adminOrgRolesList(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrganizationsCreate**
-> AdminOrganizationsCreateResponse adminOrganizationsCreate()
+> AdminOrganizationsCreateResponse adminOrganizationsCreate(adminOrganizationsCreateRequest)
 
 
 ### Example
@@ -596,16 +608,19 @@ const { status, data } = await apiInstance.adminOrgRolesList(
 ```typescript
 import {
     AdminOrganizationsApi,
-    Configuration
+    Configuration,
+    AdminOrganizationsCreateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminOrganizationsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let adminOrganizationsCreateRequest: AdminOrganizationsCreateRequest; //
 
 const { status, data } = await apiInstance.adminOrganizationsCreate(
-    orgId
+    orgId,
+    adminOrganizationsCreateRequest
 );
 ```
 
@@ -613,6 +628,7 @@ const { status, data } = await apiInstance.adminOrganizationsCreate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminOrganizationsCreateRequest** | **AdminOrganizationsCreateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -626,7 +642,7 @@ const { status, data } = await apiInstance.adminOrganizationsCreate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -799,7 +815,7 @@ const { status, data } = await apiInstance.adminOrganizationsList(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminOrgMembersUpdate**
-> PutAdminOrgMembersUpdateResponse patchAdminOrgMembersUpdate()
+> PutAdminOrgMembersUpdateResponse patchAdminOrgMembersUpdate(putAdminOrgMembersUpdateRequest)
 
 
 ### Example
@@ -807,7 +823,8 @@ const { status, data } = await apiInstance.adminOrganizationsList(
 ```typescript
 import {
     AdminOrganizationsApi,
-    Configuration
+    Configuration,
+    PutAdminOrgMembersUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -816,11 +833,13 @@ const apiInstance = new AdminOrganizationsApi(configuration);
 let orgId: string; // (default to undefined)
 let organizationId: string; // (default to undefined)
 let userId: string; // (default to undefined)
+let putAdminOrgMembersUpdateRequest: PutAdminOrgMembersUpdateRequest; //
 
 const { status, data } = await apiInstance.patchAdminOrgMembersUpdate(
     orgId,
     organizationId,
-    userId
+    userId,
+    putAdminOrgMembersUpdateRequest
 );
 ```
 
@@ -828,6 +847,7 @@ const { status, data } = await apiInstance.patchAdminOrgMembersUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminOrgMembersUpdateRequest** | **PutAdminOrgMembersUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **organizationId** | [**string**] |  | defaults to undefined|
 | **userId** | [**string**] |  | defaults to undefined|
@@ -843,7 +863,7 @@ const { status, data } = await apiInstance.patchAdminOrgMembersUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -857,7 +877,7 @@ const { status, data } = await apiInstance.patchAdminOrgMembersUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminOrgRolesUpdate**
-> AdminOrgRolesCreateResponse patchAdminOrgRolesUpdate()
+> AdminOrgRolesCreateResponse patchAdminOrgRolesUpdate(putAdminOrgRolesUpdateRequest)
 
 
 ### Example
@@ -865,7 +885,8 @@ const { status, data } = await apiInstance.patchAdminOrgMembersUpdate(
 ```typescript
 import {
     AdminOrganizationsApi,
-    Configuration
+    Configuration,
+    PutAdminOrgRolesUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -874,11 +895,13 @@ const apiInstance = new AdminOrganizationsApi(configuration);
 let orgId: string; // (default to undefined)
 let organizationId: string; // (default to undefined)
 let roleId: string; // (default to undefined)
+let putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest; //
 
 const { status, data } = await apiInstance.patchAdminOrgRolesUpdate(
     orgId,
     organizationId,
-    roleId
+    roleId,
+    putAdminOrgRolesUpdateRequest
 );
 ```
 
@@ -886,6 +909,7 @@ const { status, data } = await apiInstance.patchAdminOrgRolesUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminOrgRolesUpdateRequest** | **PutAdminOrgRolesUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **organizationId** | [**string**] |  | defaults to undefined|
 | **roleId** | [**string**] |  | defaults to undefined|
@@ -901,7 +925,7 @@ const { status, data } = await apiInstance.patchAdminOrgRolesUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -915,7 +939,7 @@ const { status, data } = await apiInstance.patchAdminOrgRolesUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminOrganizationsUpdate**
-> AdminOrganizationsGetResponse patchAdminOrganizationsUpdate()
+> AdminOrganizationsGetResponse patchAdminOrganizationsUpdate(putAdminOrganizationsUpdateRequest)
 
 
 ### Example
@@ -923,7 +947,8 @@ const { status, data } = await apiInstance.patchAdminOrgRolesUpdate(
 ```typescript
 import {
     AdminOrganizationsApi,
-    Configuration
+    Configuration,
+    PutAdminOrganizationsUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -931,10 +956,12 @@ const apiInstance = new AdminOrganizationsApi(configuration);
 
 let orgId: string; // (default to undefined)
 let organizationId: string; // (default to undefined)
+let putAdminOrganizationsUpdateRequest: PutAdminOrganizationsUpdateRequest; //
 
 const { status, data } = await apiInstance.patchAdminOrganizationsUpdate(
     orgId,
-    organizationId
+    organizationId,
+    putAdminOrganizationsUpdateRequest
 );
 ```
 
@@ -942,6 +969,7 @@ const { status, data } = await apiInstance.patchAdminOrganizationsUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminOrganizationsUpdateRequest** | **PutAdminOrganizationsUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **organizationId** | [**string**] |  | defaults to undefined|
 
@@ -956,7 +984,7 @@ const { status, data } = await apiInstance.patchAdminOrganizationsUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -971,7 +999,7 @@ const { status, data } = await apiInstance.patchAdminOrganizationsUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminOrgMembersUpdate**
-> PutAdminOrgMembersUpdateResponse putAdminOrgMembersUpdate()
+> PutAdminOrgMembersUpdateResponse putAdminOrgMembersUpdate(putAdminOrgMembersUpdateRequest)
 
 
 ### Example
@@ -979,7 +1007,8 @@ const { status, data } = await apiInstance.patchAdminOrganizationsUpdate(
 ```typescript
 import {
     AdminOrganizationsApi,
-    Configuration
+    Configuration,
+    PutAdminOrgMembersUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -988,11 +1017,13 @@ const apiInstance = new AdminOrganizationsApi(configuration);
 let orgId: string; // (default to undefined)
 let organizationId: string; // (default to undefined)
 let userId: string; // (default to undefined)
+let putAdminOrgMembersUpdateRequest: PutAdminOrgMembersUpdateRequest; //
 
 const { status, data } = await apiInstance.putAdminOrgMembersUpdate(
     orgId,
     organizationId,
-    userId
+    userId,
+    putAdminOrgMembersUpdateRequest
 );
 ```
 
@@ -1000,6 +1031,7 @@ const { status, data } = await apiInstance.putAdminOrgMembersUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminOrgMembersUpdateRequest** | **PutAdminOrgMembersUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **organizationId** | [**string**] |  | defaults to undefined|
 | **userId** | [**string**] |  | defaults to undefined|
@@ -1015,7 +1047,7 @@ const { status, data } = await apiInstance.putAdminOrgMembersUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1029,7 +1061,7 @@ const { status, data } = await apiInstance.putAdminOrgMembersUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminOrgRolesUpdate**
-> AdminOrgRolesCreateResponse putAdminOrgRolesUpdate()
+> AdminOrgRolesCreateResponse putAdminOrgRolesUpdate(putAdminOrgRolesUpdateRequest)
 
 
 ### Example
@@ -1037,7 +1069,8 @@ const { status, data } = await apiInstance.putAdminOrgMembersUpdate(
 ```typescript
 import {
     AdminOrganizationsApi,
-    Configuration
+    Configuration,
+    PutAdminOrgRolesUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -1046,11 +1079,13 @@ const apiInstance = new AdminOrganizationsApi(configuration);
 let orgId: string; // (default to undefined)
 let organizationId: string; // (default to undefined)
 let roleId: string; // (default to undefined)
+let putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest; //
 
 const { status, data } = await apiInstance.putAdminOrgRolesUpdate(
     orgId,
     organizationId,
-    roleId
+    roleId,
+    putAdminOrgRolesUpdateRequest
 );
 ```
 
@@ -1058,6 +1093,7 @@ const { status, data } = await apiInstance.putAdminOrgRolesUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminOrgRolesUpdateRequest** | **PutAdminOrgRolesUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **organizationId** | [**string**] |  | defaults to undefined|
 | **roleId** | [**string**] |  | defaults to undefined|
@@ -1073,7 +1109,7 @@ const { status, data } = await apiInstance.putAdminOrgRolesUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1087,7 +1123,7 @@ const { status, data } = await apiInstance.putAdminOrgRolesUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminOrganizationsUpdate**
-> AdminOrganizationsGetResponse putAdminOrganizationsUpdate()
+> AdminOrganizationsGetResponse putAdminOrganizationsUpdate(putAdminOrganizationsUpdateRequest)
 
 
 ### Example
@@ -1095,7 +1131,8 @@ const { status, data } = await apiInstance.putAdminOrgRolesUpdate(
 ```typescript
 import {
     AdminOrganizationsApi,
-    Configuration
+    Configuration,
+    PutAdminOrganizationsUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -1103,10 +1140,12 @@ const apiInstance = new AdminOrganizationsApi(configuration);
 
 let orgId: string; // (default to undefined)
 let organizationId: string; // (default to undefined)
+let putAdminOrganizationsUpdateRequest: PutAdminOrganizationsUpdateRequest; //
 
 const { status, data } = await apiInstance.putAdminOrganizationsUpdate(
     orgId,
-    organizationId
+    organizationId,
+    putAdminOrganizationsUpdateRequest
 );
 ```
 
@@ -1114,6 +1153,7 @@ const { status, data } = await apiInstance.putAdminOrganizationsUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAdminOrganizationsUpdateRequest** | **PutAdminOrganizationsUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **organizationId** | [**string**] |  | defaults to undefined|
 
@@ -1128,7 +1168,7 @@ const { status, data } = await apiInstance.putAdminOrganizationsUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

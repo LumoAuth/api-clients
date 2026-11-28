@@ -11,11 +11,13 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**adminMcpServersGrantsRemove**](AdminMcpApi.md#adminMcpServersGrantsRemove) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Remove every grant of an agent on an MCP server |
 | [**adminMcpServersGrantsSet**](AdminMcpApi.md#adminMcpServersGrantsSet) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Set the tools of an MCP server that an agent may call |
 | [**adminMcpServersList**](AdminMcpApi.md#adminMcpServersList) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers |
+| [**patchAdminMcpServersUpdate**](AdminMcpApi.md#patchAdminMcpServersUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server |
+| [**putAdminMcpServersUpdate**](AdminMcpApi.md#putAdminMcpServersUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server (same as PATCH: only the fields that are sent change) |
 
 
 <a id="adminMcpServersCreate"></a>
 # **adminMcpServersCreate**
-> AdminMcpServersCreateResponse adminMcpServersCreate(orgId)
+> AdminMcpServersCreateResponse adminMcpServersCreate(orgId, mcpServerWrite)
 
 Register an MCP server
 
@@ -48,8 +50,9 @@ public class Example {
 
     AdminMcpApi apiInstance = new AdminMcpApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    McpServerWrite mcpServerWrite = new McpServerWrite(); // McpServerWrite | 
     try {
-      AdminMcpServersCreateResponse result = apiInstance.adminMcpServersCreate(orgId);
+      AdminMcpServersCreateResponse result = apiInstance.adminMcpServersCreate(orgId, mcpServerWrite);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminMcpApi#adminMcpServersCreate");
@@ -67,6 +70,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **mcpServerWrite** | [**McpServerWrite**](McpServerWrite.md)|  | |
 
 ### Return type
 
@@ -78,7 +82,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -539,4 +543,162 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | MCP servers |  -  |
+
+<a id="patchAdminMcpServersUpdate"></a>
+# **patchAdminMcpServersUpdate**
+> AdminMcpServersCreateResponse patchAdminMcpServersUpdate(orgId, serverId, mcpServerWrite)
+
+Update an MCP server
+
+Only the fields that are sent change; each is judged as on create. &#x60;resource_uri&#x60; cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+
+### Example
+```java
+// Import classes:
+import io.lumoauth.client.ApiClient;
+import io.lumoauth.client.ApiException;
+import io.lumoauth.client.Configuration;
+import io.lumoauth.client.auth.*;
+import io.lumoauth.client.models.*;
+import io.lumoauth.client.api.AdminMcpApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://app.lumoauth.dev");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    AdminMcpApi apiInstance = new AdminMcpApi(defaultClient);
+    String orgId = "orgId_example"; // String | 
+    String serverId = "serverId_example"; // String | 
+    McpServerWrite mcpServerWrite = new McpServerWrite(); // McpServerWrite | 
+    try {
+      AdminMcpServersCreateResponse result = apiInstance.patchAdminMcpServersUpdate(orgId, serverId, mcpServerWrite);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling AdminMcpApi#patchAdminMcpServersUpdate");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | **String**|  | |
+| **serverId** | **String**|  | |
+| **mcpServerWrite** | [**McpServerWrite**](McpServerWrite.md)|  | |
+
+### Return type
+
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Updated MCP server |  -  |
+| **400** | resource_uri changed, a switch that is not a JSON boolean, or a field that cannot be set (include_scope_in_challenge, bearer_methods_supported) |  -  |
+| **404** | MCP server not found |  -  |
+| **422** | validation_error |  -  |
+
+<a id="putAdminMcpServersUpdate"></a>
+# **putAdminMcpServersUpdate**
+> AdminMcpServersCreateResponse putAdminMcpServersUpdate(orgId, serverId, mcpServerWrite)
+
+Update an MCP server (same as PATCH: only the fields that are sent change)
+
+### Example
+```java
+// Import classes:
+import io.lumoauth.client.ApiClient;
+import io.lumoauth.client.ApiException;
+import io.lumoauth.client.Configuration;
+import io.lumoauth.client.auth.*;
+import io.lumoauth.client.models.*;
+import io.lumoauth.client.api.AdminMcpApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://app.lumoauth.dev");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    AdminMcpApi apiInstance = new AdminMcpApi(defaultClient);
+    String orgId = "orgId_example"; // String | 
+    String serverId = "serverId_example"; // String | 
+    McpServerWrite mcpServerWrite = new McpServerWrite(); // McpServerWrite | 
+    try {
+      AdminMcpServersCreateResponse result = apiInstance.putAdminMcpServersUpdate(orgId, serverId, mcpServerWrite);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling AdminMcpApi#putAdminMcpServersUpdate");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | **String**|  | |
+| **serverId** | **String**|  | |
+| **mcpServerWrite** | [**McpServerWrite**](McpServerWrite.md)|  | |
+
+### Return type
+
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Updated MCP server |  -  |
+| **400** | resource_uri changed, or a field that cannot be set |  -  |
+| **404** | MCP server not found |  -  |
+| **422** | validation_error |  -  |
 

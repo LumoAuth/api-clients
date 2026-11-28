@@ -75,7 +75,7 @@ const { status, data } = await apiInstance.adminAgentsActivate(
 |**400** | The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -131,7 +131,7 @@ const { status, data } = await apiInstance.adminAgentsAgentsDisable(
 |**200** | Agent disabled. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -188,7 +188,7 @@ const { status, data } = await apiInstance.adminAgentsAgentsEnable(
 |**400** | The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -249,7 +249,7 @@ const { status, data } = await apiInstance.adminAgentsAgentsRotateKey(
 |**400** | The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -307,7 +307,7 @@ const { status, data } = await apiInstance.adminAgentsCreate(
 |**400** | Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero). |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant not found. |  -  |
+|**404** | Organization not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -363,7 +363,7 @@ const { status, data } = await apiInstance.adminAgentsDeactivate(
 |**200** | Agent deactivated. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -419,7 +419,7 @@ const { status, data } = await apiInstance.adminAgentsDelete(
 |**200** | Agent deleted. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -480,7 +480,7 @@ const { status, data } = await apiInstance.adminAgentsGenerateToken(
 |**400** | Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent\&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 |**429** | budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -537,7 +537,7 @@ const { status, data } = await apiInstance.adminAgentsGet(
 |**200** | The agent record. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -593,7 +593,7 @@ const { status, data } = await apiInstance.adminAgentsGetScopes(
 |**200** | Agent scopes/capabilities. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -652,7 +652,7 @@ const { status, data } = await apiInstance.adminAgentsList(
 |**200** | Paginated list of agents. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant not found. |  -  |
+|**404** | Organization not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -714,7 +714,7 @@ const { status, data } = await apiInstance.adminAgentsReportUsage(
 |**400** | tokens or cost_usd is missing, negative, too large or not a number. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -770,7 +770,7 @@ const { status, data } = await apiInstance.adminAgentsRevokeKey(
 |**200** | Agent API key revoked (nullified). |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -831,7 +831,7 @@ const { status, data } = await apiInstance.adminAgentsRotateCredentials(
 |**400** | Credentials cannot be rotated for this agent (invalid identity type). |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -892,7 +892,7 @@ const { status, data } = await apiInstance.adminAgentsSetScopes(
 |**400** | scopes array is required. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -953,7 +953,7 @@ const { status, data } = await apiInstance.patchAdminAgentsUpdate(
 |**400** | Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1014,7 +1014,7 @@ const { status, data } = await apiInstance.putAdminAgentsUpdate(
 |**400** | Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
-|**404** | Tenant or agent not found. |  -  |
+|**404** | Organization or agent not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

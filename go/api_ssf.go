@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -85,6 +85,12 @@ type ApiCreateStreamConfigRequest struct {
 	ctx context.Context
 	ApiService SsfAPI
 	orgId string
+	createStreamConfigRequest *CreateStreamConfigRequest
+}
+
+func (r ApiCreateStreamConfigRequest) CreateStreamConfigRequest(createStreamConfigRequest CreateStreamConfigRequest) ApiCreateStreamConfigRequest {
+	r.createStreamConfigRequest = &createStreamConfigRequest
+	return r
 }
 
 func (r ApiCreateStreamConfigRequest) Execute() (*SsfStream, *http.Response, error) {
@@ -127,9 +133,12 @@ func (a *SsfAPIService) CreateStreamConfigExecute(r ApiCreateStreamConfigRequest
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.createStreamConfigRequest == nil {
+		return localVarReturnValue, nil, reportError("createStreamConfigRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -145,6 +154,8 @@ func (a *SsfAPIService) CreateStreamConfigExecute(r ApiCreateStreamConfigRequest
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.createStreamConfigRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -440,6 +451,12 @@ type ApiVerifyStreamRequest struct {
 	ctx context.Context
 	ApiService SsfAPI
 	orgId string
+	verifyStreamRequest *VerifyStreamRequest
+}
+
+func (r ApiVerifyStreamRequest) VerifyStreamRequest(verifyStreamRequest VerifyStreamRequest) ApiVerifyStreamRequest {
+	r.verifyStreamRequest = &verifyStreamRequest
+	return r
 }
 
 func (r ApiVerifyStreamRequest) Execute() (*http.Response, error) {
@@ -484,7 +501,7 @@ func (a *SsfAPIService) VerifyStreamExecute(r ApiVerifyStreamRequest) (*http.Res
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -500,6 +517,8 @@ func (a *SsfAPIService) VerifyStreamExecute(r ApiVerifyStreamRequest) (*http.Res
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.verifyStreamRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -21,7 +21,9 @@ from pydantic import Field, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_email_templates_list_response import AdminEmailTemplatesListResponse
+from lumoauth_api_client.models.admin_email_templates_preview_request import AdminEmailTemplatesPreviewRequest
 from lumoauth_api_client.models.admin_email_templates_preview_response import AdminEmailTemplatesPreviewResponse
+from lumoauth_api_client.models.admin_email_templates_upsert_request import AdminEmailTemplatesUpsertRequest
 from lumoauth_api_client.models.admin_email_templates_variables_response import AdminEmailTemplatesVariablesResponse
 from lumoauth_api_client.models.email_template import EmailTemplate
 from lumoauth_api_client.models.message_response import MessageResponse
@@ -936,6 +938,7 @@ class AdminEmailApi:
         self,
         org_id: StrictStr,
         type: StrictStr,
+        admin_email_templates_preview_request: Optional[AdminEmailTemplatesPreviewRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -956,6 +959,8 @@ class AdminEmailApi:
         :type org_id: str
         :param type: (required)
         :type type: str
+        :param admin_email_templates_preview_request:
+        :type admin_email_templates_preview_request: AdminEmailTemplatesPreviewRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -981,6 +986,7 @@ class AdminEmailApi:
         _param = self._admin_email_templates_preview_serialize(
             org_id=org_id,
             type=type,
+            admin_email_templates_preview_request=admin_email_templates_preview_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1007,6 +1013,7 @@ class AdminEmailApi:
         self,
         org_id: StrictStr,
         type: StrictStr,
+        admin_email_templates_preview_request: Optional[AdminEmailTemplatesPreviewRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1027,6 +1034,8 @@ class AdminEmailApi:
         :type org_id: str
         :param type: (required)
         :type type: str
+        :param admin_email_templates_preview_request:
+        :type admin_email_templates_preview_request: AdminEmailTemplatesPreviewRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1052,6 +1061,7 @@ class AdminEmailApi:
         _param = self._admin_email_templates_preview_serialize(
             org_id=org_id,
             type=type,
+            admin_email_templates_preview_request=admin_email_templates_preview_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1078,6 +1088,7 @@ class AdminEmailApi:
         self,
         org_id: StrictStr,
         type: StrictStr,
+        admin_email_templates_preview_request: Optional[AdminEmailTemplatesPreviewRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1098,6 +1109,8 @@ class AdminEmailApi:
         :type org_id: str
         :param type: (required)
         :type type: str
+        :param admin_email_templates_preview_request:
+        :type admin_email_templates_preview_request: AdminEmailTemplatesPreviewRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1123,6 +1136,7 @@ class AdminEmailApi:
         _param = self._admin_email_templates_preview_serialize(
             org_id=org_id,
             type=type,
+            admin_email_templates_preview_request=admin_email_templates_preview_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1144,6 +1158,7 @@ class AdminEmailApi:
         self,
         org_id,
         type,
+        admin_email_templates_preview_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1173,6 +1188,8 @@ class AdminEmailApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_email_templates_preview_request is not None:
+            _body_params = admin_email_templates_preview_request
 
 
         # set the HTTP header `Accept`
@@ -1183,6 +1200,19 @@ class AdminEmailApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1213,6 +1243,7 @@ class AdminEmailApi:
         self,
         org_id: StrictStr,
         type: StrictStr,
+        admin_email_templates_upsert_request: AdminEmailTemplatesUpsertRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1234,6 +1265,8 @@ class AdminEmailApi:
         :type org_id: str
         :param type: (required)
         :type type: str
+        :param admin_email_templates_upsert_request: (required)
+        :type admin_email_templates_upsert_request: AdminEmailTemplatesUpsertRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1259,6 +1292,7 @@ class AdminEmailApi:
         _param = self._admin_email_templates_upsert_serialize(
             org_id=org_id,
             type=type,
+            admin_email_templates_upsert_request=admin_email_templates_upsert_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1286,6 +1320,7 @@ class AdminEmailApi:
         self,
         org_id: StrictStr,
         type: StrictStr,
+        admin_email_templates_upsert_request: AdminEmailTemplatesUpsertRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1307,6 +1342,8 @@ class AdminEmailApi:
         :type org_id: str
         :param type: (required)
         :type type: str
+        :param admin_email_templates_upsert_request: (required)
+        :type admin_email_templates_upsert_request: AdminEmailTemplatesUpsertRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1332,6 +1369,7 @@ class AdminEmailApi:
         _param = self._admin_email_templates_upsert_serialize(
             org_id=org_id,
             type=type,
+            admin_email_templates_upsert_request=admin_email_templates_upsert_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1359,6 +1397,7 @@ class AdminEmailApi:
         self,
         org_id: StrictStr,
         type: StrictStr,
+        admin_email_templates_upsert_request: AdminEmailTemplatesUpsertRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1380,6 +1419,8 @@ class AdminEmailApi:
         :type org_id: str
         :param type: (required)
         :type type: str
+        :param admin_email_templates_upsert_request: (required)
+        :type admin_email_templates_upsert_request: AdminEmailTemplatesUpsertRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1405,6 +1446,7 @@ class AdminEmailApi:
         _param = self._admin_email_templates_upsert_serialize(
             org_id=org_id,
             type=type,
+            admin_email_templates_upsert_request=admin_email_templates_upsert_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1427,6 +1469,7 @@ class AdminEmailApi:
         self,
         org_id,
         type,
+        admin_email_templates_upsert_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1456,6 +1499,8 @@ class AdminEmailApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_email_templates_upsert_request is not None:
+            _body_params = admin_email_templates_upsert_request
 
 
         # set the HTTP header `Accept`
@@ -1466,6 +1511,19 @@ class AdminEmailApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

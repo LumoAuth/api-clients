@@ -11,11 +11,13 @@ Method | HTTP request | Description
 [**adminMcpServersGrantsRemove**](AdminMcpAPI.md#adminmcpserversgrantsremove) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Remove every grant of an agent on an MCP server
 [**adminMcpServersGrantsSet**](AdminMcpAPI.md#adminmcpserversgrantsset) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Set the tools of an MCP server that an agent may call
 [**adminMcpServersList**](AdminMcpAPI.md#adminmcpserverslist) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers
+[**patchAdminMcpServersUpdate**](AdminMcpAPI.md#patchadminmcpserversupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server
+[**putAdminMcpServersUpdate**](AdminMcpAPI.md#putadminmcpserversupdate) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server (same as PATCH: only the fields that are sent change)
 
 
 # **adminMcpServersCreate**
 ```swift
-    open class func adminMcpServersCreate(orgId: String, completion: @escaping (_ data: AdminMcpServersCreateResponse?, _ error: Error?) -> Void)
+    open class func adminMcpServersCreate(orgId: String, mcpServerWrite: McpServerWrite, completion: @escaping (_ data: AdminMcpServersCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Register an MCP server
@@ -28,9 +30,10 @@ The `resource_uri` is stored and returned in canonical form: lower-case scheme a
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let mcpServerWrite = McpServerWrite(name: "name_example", resourceUri: "resourceUri_example", description: "description_example", endpointUrl: "endpointUrl_example", transport: "transport_example", authMode: "authMode_example", status: "status_example", scopesSupported: McpServerWrite_scopes_supported(), basicScopes: McpServerWrite_basic_scopes(), scopeDescriptions: "TODO", allowedClientIds: ["allowedClientIds_example"], toolAuthorizerClientIds: ["toolAuthorizerClientIds_example"], tokenLifetime: 123, requirePkce: false, requireResourceParam: false, requireDpop: false) // McpServerWrite | 
 
 // Register an MCP server
-AdminMcpAPI.adminMcpServersCreate(orgId: orgId) { (response, error) in
+AdminMcpAPI.adminMcpServersCreate(orgId: orgId, mcpServerWrite: mcpServerWrite) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -47,6 +50,7 @@ AdminMcpAPI.adminMcpServersCreate(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **mcpServerWrite** | [**McpServerWrite**](McpServerWrite.md) |  | 
 
 ### Return type
 
@@ -58,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -365,6 +369,112 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **patchAdminMcpServersUpdate**
+```swift
+    open class func patchAdminMcpServersUpdate(orgId: String, serverId: String, mcpServerWrite: McpServerWrite, completion: @escaping (_ data: AdminMcpServersCreateResponse?, _ error: Error?) -> Void)
+```
+
+Update an MCP server
+
+Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import LumoAuthAPIClient
+
+let orgId = "orgId_example" // String | 
+let serverId = "serverId_example" // String | 
+let mcpServerWrite = McpServerWrite(name: "name_example", resourceUri: "resourceUri_example", description: "description_example", endpointUrl: "endpointUrl_example", transport: "transport_example", authMode: "authMode_example", status: "status_example", scopesSupported: McpServerWrite_scopes_supported(), basicScopes: McpServerWrite_basic_scopes(), scopeDescriptions: "TODO", allowedClientIds: ["allowedClientIds_example"], toolAuthorizerClientIds: ["toolAuthorizerClientIds_example"], tokenLifetime: 123, requirePkce: false, requireResourceParam: false, requireDpop: false) // McpServerWrite | 
+
+// Update an MCP server
+AdminMcpAPI.patchAdminMcpServersUpdate(orgId: orgId, serverId: serverId, mcpServerWrite: mcpServerWrite) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **String** |  | 
+ **serverId** | **String** |  | 
+ **mcpServerWrite** | [**McpServerWrite**](McpServerWrite.md) |  | 
+
+### Return type
+
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **putAdminMcpServersUpdate**
+```swift
+    open class func putAdminMcpServersUpdate(orgId: String, serverId: String, mcpServerWrite: McpServerWrite, completion: @escaping (_ data: AdminMcpServersCreateResponse?, _ error: Error?) -> Void)
+```
+
+Update an MCP server (same as PATCH: only the fields that are sent change)
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import LumoAuthAPIClient
+
+let orgId = "orgId_example" // String | 
+let serverId = "serverId_example" // String | 
+let mcpServerWrite = McpServerWrite(name: "name_example", resourceUri: "resourceUri_example", description: "description_example", endpointUrl: "endpointUrl_example", transport: "transport_example", authMode: "authMode_example", status: "status_example", scopesSupported: McpServerWrite_scopes_supported(), basicScopes: McpServerWrite_basic_scopes(), scopeDescriptions: "TODO", allowedClientIds: ["allowedClientIds_example"], toolAuthorizerClientIds: ["toolAuthorizerClientIds_example"], tokenLifetime: 123, requirePkce: false, requireResourceParam: false, requireDpop: false) // McpServerWrite | 
+
+// Update an MCP server (same as PATCH: only the fields that are sent change)
+AdminMcpAPI.putAdminMcpServersUpdate(orgId: orgId, serverId: serverId, mcpServerWrite: mcpServerWrite) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **String** |  | 
+ **serverId** | **String** |  | 
+ **mcpServerWrite** | [**McpServerWrite**](McpServerWrite.md) |  | 
+
+### Return type
+
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

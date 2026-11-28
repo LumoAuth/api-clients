@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -24,7 +24,7 @@ type CreateTaskRequest struct {
 	Name *string `json:"name,omitempty"`
 	// Optional task type for categorization.
 	Type *string `json:"type,omitempty"`
-	// Optional parent task id for nested agent chains.
+	// Optional. The task_id of an open task of this organization, for a task that is one step of that task. The new task expires no later than its parent and ends when the parent ends. A chain holds at most 5 tasks.
 	ParentTaskId *string `json:"parent_task_id,omitempty"`
 	// Optional delegation user email (requires delegation permission).
 	OnBehalfOf *string `json:"on_behalf_of,omitempty"`

@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -17,23 +17,33 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr, field_validator
+from pydantic import Field, StrictStr, field_validator
 from typing import Optional
+from typing_extensions import Annotated
 from lumoauth_api_client.models.auth_zen_decision import AuthZenDecision
+from lumoauth_api_client.models.check_abac_bulk_request import CheckAbacBulkRequest
 from lumoauth_api_client.models.check_abac_bulk_response import CheckAbacBulkResponse
+from lumoauth_api_client.models.check_abac_request import CheckAbacRequest
 from lumoauth_api_client.models.check_abac_response import CheckAbacResponse
 from lumoauth_api_client.models.check_any_permission_response import CheckAnyPermissionResponse
+from lumoauth_api_client.models.check_permission_request import CheckPermissionRequest
 from lumoauth_api_client.models.check_permission_response import CheckPermissionResponse
+from lumoauth_api_client.models.check_permissions_bulk_request import CheckPermissionsBulkRequest
 from lumoauth_api_client.models.check_permissions_bulk_response import CheckPermissionsBulkResponse
+from lumoauth_api_client.models.check_relation_request import CheckRelationRequest
 from lumoauth_api_client.models.check_relation_response import CheckRelationResponse
+from lumoauth_api_client.models.check_relation_scoped_request import CheckRelationScopedRequest
 from lumoauth_api_client.models.check_relation_scoped_response import CheckRelationScopedResponse
+from lumoauth_api_client.models.evaluate_batch_request import EvaluateBatchRequest
 from lumoauth_api_client.models.evaluate_batch_response import EvaluateBatchResponse
+from lumoauth_api_client.models.evaluate_request import EvaluateRequest
 from lumoauth_api_client.models.expand_relation_request import ExpandRelationRequest
 from lumoauth_api_client.models.expand_relation_response import ExpandRelationResponse
 from lumoauth_api_client.models.get_my_attributes_response import GetMyAttributesResponse
 from lumoauth_api_client.models.get_resource_attributes_response import GetResourceAttributesResponse
 from lumoauth_api_client.models.list_attribute_definitions_response import ListAttributeDefinitionsResponse
 from lumoauth_api_client.models.list_permissions_response import ListPermissionsResponse
+from lumoauth_api_client.models.set_resource_attribute_request import SetResourceAttributeRequest
 from lumoauth_api_client.models.set_resource_attribute_response import SetResourceAttributeResponse
 from lumoauth_api_client.models.set_user_attribute_response import SetUserAttributeResponse
 
@@ -59,6 +69,7 @@ class AuthorizationApi:
     def check_abac(
         self,
         org_id: StrictStr,
+        check_abac_request: CheckAbacRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -78,6 +89,8 @@ class AuthorizationApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param check_abac_request: (required)
+        :type check_abac_request: CheckAbacRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -102,6 +115,7 @@ class AuthorizationApi:
 
         _param = self._check_abac_serialize(
             org_id=org_id,
+            check_abac_request=check_abac_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -126,6 +140,7 @@ class AuthorizationApi:
     def check_abac_with_http_info(
         self,
         org_id: StrictStr,
+        check_abac_request: CheckAbacRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -145,6 +160,8 @@ class AuthorizationApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param check_abac_request: (required)
+        :type check_abac_request: CheckAbacRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -169,6 +186,7 @@ class AuthorizationApi:
 
         _param = self._check_abac_serialize(
             org_id=org_id,
+            check_abac_request=check_abac_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -193,6 +211,7 @@ class AuthorizationApi:
     def check_abac_without_preload_content(
         self,
         org_id: StrictStr,
+        check_abac_request: CheckAbacRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -212,6 +231,8 @@ class AuthorizationApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param check_abac_request: (required)
+        :type check_abac_request: CheckAbacRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -236,6 +257,7 @@ class AuthorizationApi:
 
         _param = self._check_abac_serialize(
             org_id=org_id,
+            check_abac_request=check_abac_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -255,6 +277,7 @@ class AuthorizationApi:
     def _check_abac_serialize(
         self,
         org_id,
+        check_abac_request,
         _request_auth,
         _content_type,
         _headers,
@@ -282,6 +305,8 @@ class AuthorizationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if check_abac_request is not None:
+            _body_params = check_abac_request
 
 
         # set the HTTP header `Accept`
@@ -292,6 +317,19 @@ class AuthorizationApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -320,6 +358,7 @@ class AuthorizationApi:
     def check_abac_bulk(
         self,
         org_id: StrictStr,
+        check_abac_bulk_request: CheckAbacBulkRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -339,6 +378,8 @@ class AuthorizationApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param check_abac_bulk_request: (required)
+        :type check_abac_bulk_request: CheckAbacBulkRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -363,6 +404,7 @@ class AuthorizationApi:
 
         _param = self._check_abac_bulk_serialize(
             org_id=org_id,
+            check_abac_bulk_request=check_abac_bulk_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -387,6 +429,7 @@ class AuthorizationApi:
     def check_abac_bulk_with_http_info(
         self,
         org_id: StrictStr,
+        check_abac_bulk_request: CheckAbacBulkRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -406,6 +449,8 @@ class AuthorizationApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param check_abac_bulk_request: (required)
+        :type check_abac_bulk_request: CheckAbacBulkRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -430,6 +475,7 @@ class AuthorizationApi:
 
         _param = self._check_abac_bulk_serialize(
             org_id=org_id,
+            check_abac_bulk_request=check_abac_bulk_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -454,6 +500,7 @@ class AuthorizationApi:
     def check_abac_bulk_without_preload_content(
         self,
         org_id: StrictStr,
+        check_abac_bulk_request: CheckAbacBulkRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -473,6 +520,8 @@ class AuthorizationApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param check_abac_bulk_request: (required)
+        :type check_abac_bulk_request: CheckAbacBulkRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -497,6 +546,7 @@ class AuthorizationApi:
 
         _param = self._check_abac_bulk_serialize(
             org_id=org_id,
+            check_abac_bulk_request=check_abac_bulk_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -516,6 +566,7 @@ class AuthorizationApi:
     def _check_abac_bulk_serialize(
         self,
         org_id,
+        check_abac_bulk_request,
         _request_auth,
         _content_type,
         _headers,
@@ -543,6 +594,8 @@ class AuthorizationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if check_abac_bulk_request is not None:
+            _body_params = check_abac_bulk_request
 
 
         # set the HTTP header `Accept`
@@ -553,6 +606,19 @@ class AuthorizationApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -580,6 +646,7 @@ class AuthorizationApi:
     @validate_call
     def check_all_permissions(
         self,
+        check_permissions_bulk_request: CheckPermissionsBulkRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -597,6 +664,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
+        :param check_permissions_bulk_request: (required)
+        :type check_permissions_bulk_request: CheckPermissionsBulkRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -620,6 +689,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_all_permissions_serialize(
+            check_permissions_bulk_request=check_permissions_bulk_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -643,6 +713,7 @@ class AuthorizationApi:
     @validate_call
     def check_all_permissions_with_http_info(
         self,
+        check_permissions_bulk_request: CheckPermissionsBulkRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -660,6 +731,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
+        :param check_permissions_bulk_request: (required)
+        :type check_permissions_bulk_request: CheckPermissionsBulkRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -683,6 +756,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_all_permissions_serialize(
+            check_permissions_bulk_request=check_permissions_bulk_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -706,6 +780,7 @@ class AuthorizationApi:
     @validate_call
     def check_all_permissions_without_preload_content(
         self,
+        check_permissions_bulk_request: CheckPermissionsBulkRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -723,6 +798,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
+        :param check_permissions_bulk_request: (required)
+        :type check_permissions_bulk_request: CheckPermissionsBulkRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -746,6 +823,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_all_permissions_serialize(
+            check_permissions_bulk_request=check_permissions_bulk_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -764,6 +842,7 @@ class AuthorizationApi:
 
     def _check_all_permissions_serialize(
         self,
+        check_permissions_bulk_request,
         _request_auth,
         _content_type,
         _headers,
@@ -789,6 +868,8 @@ class AuthorizationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if check_permissions_bulk_request is not None:
+            _body_params = check_permissions_bulk_request
 
 
         # set the HTTP header `Accept`
@@ -799,6 +880,19 @@ class AuthorizationApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -827,6 +921,7 @@ class AuthorizationApi:
     @validate_call
     def check_any_permission(
         self,
+        check_permissions_bulk_request: CheckPermissionsBulkRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -844,6 +939,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
+        :param check_permissions_bulk_request: (required)
+        :type check_permissions_bulk_request: CheckPermissionsBulkRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -867,6 +964,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_any_permission_serialize(
+            check_permissions_bulk_request=check_permissions_bulk_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -890,6 +988,7 @@ class AuthorizationApi:
     @validate_call
     def check_any_permission_with_http_info(
         self,
+        check_permissions_bulk_request: CheckPermissionsBulkRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -907,6 +1006,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
+        :param check_permissions_bulk_request: (required)
+        :type check_permissions_bulk_request: CheckPermissionsBulkRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -930,6 +1031,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_any_permission_serialize(
+            check_permissions_bulk_request=check_permissions_bulk_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -953,6 +1055,7 @@ class AuthorizationApi:
     @validate_call
     def check_any_permission_without_preload_content(
         self,
+        check_permissions_bulk_request: CheckPermissionsBulkRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -970,6 +1073,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
+        :param check_permissions_bulk_request: (required)
+        :type check_permissions_bulk_request: CheckPermissionsBulkRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -993,6 +1098,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_any_permission_serialize(
+            check_permissions_bulk_request=check_permissions_bulk_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1011,6 +1117,7 @@ class AuthorizationApi:
 
     def _check_any_permission_serialize(
         self,
+        check_permissions_bulk_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1036,6 +1143,8 @@ class AuthorizationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if check_permissions_bulk_request is not None:
+            _body_params = check_permissions_bulk_request
 
 
         # set the HTTP header `Accept`
@@ -1046,6 +1155,19 @@ class AuthorizationApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1074,6 +1196,7 @@ class AuthorizationApi:
     @validate_call
     def check_permission(
         self,
+        check_permission_request: CheckPermissionRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1091,6 +1214,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
 
+        :param check_permission_request: (required)
+        :type check_permission_request: CheckPermissionRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1114,6 +1239,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_permission_serialize(
+            check_permission_request=check_permission_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1137,6 +1263,7 @@ class AuthorizationApi:
     @validate_call
     def check_permission_with_http_info(
         self,
+        check_permission_request: CheckPermissionRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1154,6 +1281,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
 
+        :param check_permission_request: (required)
+        :type check_permission_request: CheckPermissionRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1177,6 +1306,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_permission_serialize(
+            check_permission_request=check_permission_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1200,6 +1330,7 @@ class AuthorizationApi:
     @validate_call
     def check_permission_without_preload_content(
         self,
+        check_permission_request: CheckPermissionRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1217,6 +1348,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
 
+        :param check_permission_request: (required)
+        :type check_permission_request: CheckPermissionRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1240,6 +1373,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_permission_serialize(
+            check_permission_request=check_permission_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1258,6 +1392,7 @@ class AuthorizationApi:
 
     def _check_permission_serialize(
         self,
+        check_permission_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1283,6 +1418,8 @@ class AuthorizationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if check_permission_request is not None:
+            _body_params = check_permission_request
 
 
         # set the HTTP header `Accept`
@@ -1293,6 +1430,19 @@ class AuthorizationApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1321,6 +1471,7 @@ class AuthorizationApi:
     @validate_call
     def check_permissions_bulk(
         self,
+        check_permissions_bulk_request: CheckPermissionsBulkRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1338,6 +1489,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
+        :param check_permissions_bulk_request: (required)
+        :type check_permissions_bulk_request: CheckPermissionsBulkRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1361,6 +1514,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_permissions_bulk_serialize(
+            check_permissions_bulk_request=check_permissions_bulk_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1384,6 +1538,7 @@ class AuthorizationApi:
     @validate_call
     def check_permissions_bulk_with_http_info(
         self,
+        check_permissions_bulk_request: CheckPermissionsBulkRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1401,6 +1556,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
+        :param check_permissions_bulk_request: (required)
+        :type check_permissions_bulk_request: CheckPermissionsBulkRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1424,6 +1581,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_permissions_bulk_serialize(
+            check_permissions_bulk_request=check_permissions_bulk_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1447,6 +1605,7 @@ class AuthorizationApi:
     @validate_call
     def check_permissions_bulk_without_preload_content(
         self,
+        check_permissions_bulk_request: CheckPermissionsBulkRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1464,6 +1623,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
+        :param check_permissions_bulk_request: (required)
+        :type check_permissions_bulk_request: CheckPermissionsBulkRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1487,6 +1648,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_permissions_bulk_serialize(
+            check_permissions_bulk_request=check_permissions_bulk_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1505,6 +1667,7 @@ class AuthorizationApi:
 
     def _check_permissions_bulk_serialize(
         self,
+        check_permissions_bulk_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1530,6 +1693,8 @@ class AuthorizationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if check_permissions_bulk_request is not None:
+            _body_params = check_permissions_bulk_request
 
 
         # set the HTTP header `Accept`
@@ -1540,6 +1705,19 @@ class AuthorizationApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1568,6 +1746,7 @@ class AuthorizationApi:
     @validate_call
     def check_relation(
         self,
+        check_relation_request: CheckRelationRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1585,6 +1764,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
 
+        :param check_relation_request: (required)
+        :type check_relation_request: CheckRelationRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1608,6 +1789,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_relation_serialize(
+            check_relation_request=check_relation_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1631,6 +1813,7 @@ class AuthorizationApi:
     @validate_call
     def check_relation_with_http_info(
         self,
+        check_relation_request: CheckRelationRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1648,6 +1831,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
 
+        :param check_relation_request: (required)
+        :type check_relation_request: CheckRelationRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1671,6 +1856,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_relation_serialize(
+            check_relation_request=check_relation_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1694,6 +1880,7 @@ class AuthorizationApi:
     @validate_call
     def check_relation_without_preload_content(
         self,
+        check_relation_request: CheckRelationRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1711,6 +1898,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
 
+        :param check_relation_request: (required)
+        :type check_relation_request: CheckRelationRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1734,6 +1923,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._check_relation_serialize(
+            check_relation_request=check_relation_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1752,6 +1942,7 @@ class AuthorizationApi:
 
     def _check_relation_serialize(
         self,
+        check_relation_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1777,6 +1968,8 @@ class AuthorizationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if check_relation_request is not None:
+            _body_params = check_relation_request
 
 
         # set the HTTP header `Accept`
@@ -1787,6 +1980,19 @@ class AuthorizationApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1816,6 +2022,7 @@ class AuthorizationApi:
     def check_relation_scoped(
         self,
         org_id: StrictStr,
+        check_relation_scoped_request: CheckRelationScopedRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1834,6 +2041,8 @@ class AuthorizationApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param check_relation_scoped_request: (required)
+        :type check_relation_scoped_request: CheckRelationScopedRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1858,6 +2067,7 @@ class AuthorizationApi:
 
         _param = self._check_relation_scoped_serialize(
             org_id=org_id,
+            check_relation_scoped_request=check_relation_scoped_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1882,6 +2092,7 @@ class AuthorizationApi:
     def check_relation_scoped_with_http_info(
         self,
         org_id: StrictStr,
+        check_relation_scoped_request: CheckRelationScopedRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1900,6 +2111,8 @@ class AuthorizationApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param check_relation_scoped_request: (required)
+        :type check_relation_scoped_request: CheckRelationScopedRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1924,6 +2137,7 @@ class AuthorizationApi:
 
         _param = self._check_relation_scoped_serialize(
             org_id=org_id,
+            check_relation_scoped_request=check_relation_scoped_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1948,6 +2162,7 @@ class AuthorizationApi:
     def check_relation_scoped_without_preload_content(
         self,
         org_id: StrictStr,
+        check_relation_scoped_request: CheckRelationScopedRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1966,6 +2181,8 @@ class AuthorizationApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param check_relation_scoped_request: (required)
+        :type check_relation_scoped_request: CheckRelationScopedRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1990,6 +2207,7 @@ class AuthorizationApi:
 
         _param = self._check_relation_scoped_serialize(
             org_id=org_id,
+            check_relation_scoped_request=check_relation_scoped_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2009,6 +2227,7 @@ class AuthorizationApi:
     def _check_relation_scoped_serialize(
         self,
         org_id,
+        check_relation_scoped_request,
         _request_auth,
         _content_type,
         _headers,
@@ -2036,6 +2255,8 @@ class AuthorizationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if check_relation_scoped_request is not None:
+            _body_params = check_relation_scoped_request
 
 
         # set the HTTP header `Accept`
@@ -2046,6 +2267,19 @@ class AuthorizationApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2074,6 +2308,7 @@ class AuthorizationApi:
     @validate_call
     def evaluate(
         self,
+        evaluate_request: Annotated[EvaluateRequest, Field(description="AuthZEN Authorization API 1.0 evaluation request.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2091,6 +2326,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
 
+        :param evaluate_request: AuthZEN Authorization API 1.0 evaluation request. (required)
+        :type evaluate_request: EvaluateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2114,6 +2351,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._evaluate_serialize(
+            evaluate_request=evaluate_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2137,6 +2375,7 @@ class AuthorizationApi:
     @validate_call
     def evaluate_with_http_info(
         self,
+        evaluate_request: Annotated[EvaluateRequest, Field(description="AuthZEN Authorization API 1.0 evaluation request.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2154,6 +2393,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
 
+        :param evaluate_request: AuthZEN Authorization API 1.0 evaluation request. (required)
+        :type evaluate_request: EvaluateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2177,6 +2418,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._evaluate_serialize(
+            evaluate_request=evaluate_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2200,6 +2442,7 @@ class AuthorizationApi:
     @validate_call
     def evaluate_without_preload_content(
         self,
+        evaluate_request: Annotated[EvaluateRequest, Field(description="AuthZEN Authorization API 1.0 evaluation request.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2217,6 +2460,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
 
+        :param evaluate_request: AuthZEN Authorization API 1.0 evaluation request. (required)
+        :type evaluate_request: EvaluateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2240,6 +2485,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._evaluate_serialize(
+            evaluate_request=evaluate_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2258,6 +2504,7 @@ class AuthorizationApi:
 
     def _evaluate_serialize(
         self,
+        evaluate_request,
         _request_auth,
         _content_type,
         _headers,
@@ -2283,6 +2530,8 @@ class AuthorizationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if evaluate_request is not None:
+            _body_params = evaluate_request
 
 
         # set the HTTP header `Accept`
@@ -2293,6 +2542,19 @@ class AuthorizationApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2321,6 +2583,7 @@ class AuthorizationApi:
     @validate_call
     def evaluate_batch(
         self,
+        evaluate_batch_request: Annotated[EvaluateBatchRequest, Field(description="AuthZEN Authorization API 1.0 batch evaluation request.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2338,6 +2601,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
 
+        :param evaluate_batch_request: AuthZEN Authorization API 1.0 batch evaluation request. (required)
+        :type evaluate_batch_request: EvaluateBatchRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2361,6 +2626,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._evaluate_batch_serialize(
+            evaluate_batch_request=evaluate_batch_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2384,6 +2650,7 @@ class AuthorizationApi:
     @validate_call
     def evaluate_batch_with_http_info(
         self,
+        evaluate_batch_request: Annotated[EvaluateBatchRequest, Field(description="AuthZEN Authorization API 1.0 batch evaluation request.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2401,6 +2668,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
 
+        :param evaluate_batch_request: AuthZEN Authorization API 1.0 batch evaluation request. (required)
+        :type evaluate_batch_request: EvaluateBatchRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2424,6 +2693,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._evaluate_batch_serialize(
+            evaluate_batch_request=evaluate_batch_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2447,6 +2717,7 @@ class AuthorizationApi:
     @validate_call
     def evaluate_batch_without_preload_content(
         self,
+        evaluate_batch_request: Annotated[EvaluateBatchRequest, Field(description="AuthZEN Authorization API 1.0 batch evaluation request.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2464,6 +2735,8 @@ class AuthorizationApi:
 
         POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
 
+        :param evaluate_batch_request: AuthZEN Authorization API 1.0 batch evaluation request. (required)
+        :type evaluate_batch_request: EvaluateBatchRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2487,6 +2760,7 @@ class AuthorizationApi:
         """ # noqa: E501
 
         _param = self._evaluate_batch_serialize(
+            evaluate_batch_request=evaluate_batch_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2505,6 +2779,7 @@ class AuthorizationApi:
 
     def _evaluate_batch_serialize(
         self,
+        evaluate_batch_request,
         _request_auth,
         _content_type,
         _headers,
@@ -2530,6 +2805,8 @@ class AuthorizationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if evaluate_batch_request is not None:
+            _body_params = evaluate_batch_request
 
 
         # set the HTTP header `Accept`
@@ -2540,6 +2817,19 @@ class AuthorizationApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -4226,6 +4516,7 @@ class AuthorizationApi:
         resource_type: StrictStr,
         resource_id: StrictStr,
         attribute_slug: StrictStr,
+        set_resource_attribute_request: SetResourceAttributeRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4251,6 +4542,8 @@ class AuthorizationApi:
         :type resource_id: str
         :param attribute_slug: (required)
         :type attribute_slug: str
+        :param set_resource_attribute_request: (required)
+        :type set_resource_attribute_request: SetResourceAttributeRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4278,6 +4571,7 @@ class AuthorizationApi:
             resource_type=resource_type,
             resource_id=resource_id,
             attribute_slug=attribute_slug,
+            set_resource_attribute_request=set_resource_attribute_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4306,6 +4600,7 @@ class AuthorizationApi:
         resource_type: StrictStr,
         resource_id: StrictStr,
         attribute_slug: StrictStr,
+        set_resource_attribute_request: SetResourceAttributeRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4331,6 +4626,8 @@ class AuthorizationApi:
         :type resource_id: str
         :param attribute_slug: (required)
         :type attribute_slug: str
+        :param set_resource_attribute_request: (required)
+        :type set_resource_attribute_request: SetResourceAttributeRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4358,6 +4655,7 @@ class AuthorizationApi:
             resource_type=resource_type,
             resource_id=resource_id,
             attribute_slug=attribute_slug,
+            set_resource_attribute_request=set_resource_attribute_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4386,6 +4684,7 @@ class AuthorizationApi:
         resource_type: StrictStr,
         resource_id: StrictStr,
         attribute_slug: StrictStr,
+        set_resource_attribute_request: SetResourceAttributeRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4411,6 +4710,8 @@ class AuthorizationApi:
         :type resource_id: str
         :param attribute_slug: (required)
         :type attribute_slug: str
+        :param set_resource_attribute_request: (required)
+        :type set_resource_attribute_request: SetResourceAttributeRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4438,6 +4739,7 @@ class AuthorizationApi:
             resource_type=resource_type,
             resource_id=resource_id,
             attribute_slug=attribute_slug,
+            set_resource_attribute_request=set_resource_attribute_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4461,6 +4763,7 @@ class AuthorizationApi:
         resource_type,
         resource_id,
         attribute_slug,
+        set_resource_attribute_request,
         _request_auth,
         _content_type,
         _headers,
@@ -4494,6 +4797,8 @@ class AuthorizationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if set_resource_attribute_request is not None:
+            _body_params = set_resource_attribute_request
 
 
         # set the HTTP header `Accept`
@@ -4504,6 +4809,19 @@ class AuthorizationApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -4534,6 +4852,7 @@ class AuthorizationApi:
         org_id: StrictStr,
         user_id: StrictStr,
         attribute_slug: StrictStr,
+        set_resource_attribute_request: SetResourceAttributeRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4557,6 +4876,8 @@ class AuthorizationApi:
         :type user_id: str
         :param attribute_slug: (required)
         :type attribute_slug: str
+        :param set_resource_attribute_request: (required)
+        :type set_resource_attribute_request: SetResourceAttributeRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4583,6 +4904,7 @@ class AuthorizationApi:
             org_id=org_id,
             user_id=user_id,
             attribute_slug=attribute_slug,
+            set_resource_attribute_request=set_resource_attribute_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4610,6 +4932,7 @@ class AuthorizationApi:
         org_id: StrictStr,
         user_id: StrictStr,
         attribute_slug: StrictStr,
+        set_resource_attribute_request: SetResourceAttributeRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4633,6 +4956,8 @@ class AuthorizationApi:
         :type user_id: str
         :param attribute_slug: (required)
         :type attribute_slug: str
+        :param set_resource_attribute_request: (required)
+        :type set_resource_attribute_request: SetResourceAttributeRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4659,6 +4984,7 @@ class AuthorizationApi:
             org_id=org_id,
             user_id=user_id,
             attribute_slug=attribute_slug,
+            set_resource_attribute_request=set_resource_attribute_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4686,6 +5012,7 @@ class AuthorizationApi:
         org_id: StrictStr,
         user_id: StrictStr,
         attribute_slug: StrictStr,
+        set_resource_attribute_request: SetResourceAttributeRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4709,6 +5036,8 @@ class AuthorizationApi:
         :type user_id: str
         :param attribute_slug: (required)
         :type attribute_slug: str
+        :param set_resource_attribute_request: (required)
+        :type set_resource_attribute_request: SetResourceAttributeRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4735,6 +5064,7 @@ class AuthorizationApi:
             org_id=org_id,
             user_id=user_id,
             attribute_slug=attribute_slug,
+            set_resource_attribute_request=set_resource_attribute_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4757,6 +5087,7 @@ class AuthorizationApi:
         org_id,
         user_id,
         attribute_slug,
+        set_resource_attribute_request,
         _request_auth,
         _content_type,
         _headers,
@@ -4788,6 +5119,8 @@ class AuthorizationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if set_resource_attribute_request is not None:
+            _body_params = set_resource_attribute_request
 
 
         # set the HTTP header `Accept`
@@ -4798,6 +5131,19 @@ class AuthorizationApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

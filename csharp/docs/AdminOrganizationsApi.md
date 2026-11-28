@@ -27,7 +27,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminorginvitationscreate"></a>
 # **AdminOrgInvitationsCreate**
-> AdminOrgInvitationsCreateResponse AdminOrgInvitationsCreate (string orgId, string organizationId)
+> AdminOrgInvitationsCreateResponse AdminOrgInvitationsCreate (string orgId, string organizationId, AdminOrgInvitationsCreateRequest adminOrgInvitationsCreateRequest)
 
 Invite a user to an organization
 
@@ -61,11 +61,12 @@ namespace Example
             var apiInstance = new AdminOrganizationsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var organizationId = "organizationId_example";  // string | 
+            var adminOrgInvitationsCreateRequest = new AdminOrgInvitationsCreateRequest(); // AdminOrgInvitationsCreateRequest | 
 
             try
             {
                 // Invite a user to an organization
-                AdminOrgInvitationsCreateResponse result = apiInstance.AdminOrgInvitationsCreate(orgId, organizationId);
+                AdminOrgInvitationsCreateResponse result = apiInstance.AdminOrgInvitationsCreate(orgId, organizationId, adminOrgInvitationsCreateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -86,7 +87,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Invite a user to an organization
-    ApiResponse<AdminOrgInvitationsCreateResponse> response = apiInstance.AdminOrgInvitationsCreateWithHttpInfo(orgId, organizationId);
+    ApiResponse<AdminOrgInvitationsCreateResponse> response = apiInstance.AdminOrgInvitationsCreateWithHttpInfo(orgId, organizationId, adminOrgInvitationsCreateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -105,6 +106,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **organizationId** | **string** |  |  |
+| **adminOrgInvitationsCreateRequest** | [**AdminOrgInvitationsCreateRequest**](AdminOrgInvitationsCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -116,7 +118,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -448,7 +450,7 @@ catch (ApiException e)
 
 <a id="adminorgmembersadd"></a>
 # **AdminOrgMembersAdd**
-> AdminOrgMembersAddResponse AdminOrgMembersAdd (string orgId, string organizationId)
+> AdminOrgMembersAddResponse AdminOrgMembersAdd (string orgId, string organizationId, AdminOrgMembersAddRequest adminOrgMembersAddRequest)
 
 Add a member to an organization
 
@@ -482,11 +484,12 @@ namespace Example
             var apiInstance = new AdminOrganizationsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var organizationId = "organizationId_example";  // string | 
+            var adminOrgMembersAddRequest = new AdminOrgMembersAddRequest(); // AdminOrgMembersAddRequest | 
 
             try
             {
                 // Add a member to an organization
-                AdminOrgMembersAddResponse result = apiInstance.AdminOrgMembersAdd(orgId, organizationId);
+                AdminOrgMembersAddResponse result = apiInstance.AdminOrgMembersAdd(orgId, organizationId, adminOrgMembersAddRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -507,7 +510,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Add a member to an organization
-    ApiResponse<AdminOrgMembersAddResponse> response = apiInstance.AdminOrgMembersAddWithHttpInfo(orgId, organizationId);
+    ApiResponse<AdminOrgMembersAddResponse> response = apiInstance.AdminOrgMembersAddWithHttpInfo(orgId, organizationId, adminOrgMembersAddRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -526,6 +529,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **organizationId** | **string** |  |  |
+| **adminOrgMembersAddRequest** | [**AdminOrgMembersAddRequest**](AdminOrgMembersAddRequest.md) |  |  |
 
 ### Return type
 
@@ -537,7 +541,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -761,7 +765,7 @@ catch (ApiException e)
 
 <a id="adminorgrolescreate"></a>
 # **AdminOrgRolesCreate**
-> AdminOrgRolesCreateResponse AdminOrgRolesCreate (string orgId, string organizationId)
+> AdminOrgRolesCreateResponse AdminOrgRolesCreate (string orgId, string organizationId, AdminOrgRolesCreateRequest adminOrgRolesCreateRequest)
 
 Create an organization role
 
@@ -795,11 +799,12 @@ namespace Example
             var apiInstance = new AdminOrganizationsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var organizationId = "organizationId_example";  // string | 
+            var adminOrgRolesCreateRequest = new AdminOrgRolesCreateRequest(); // AdminOrgRolesCreateRequest | 
 
             try
             {
                 // Create an organization role
-                AdminOrgRolesCreateResponse result = apiInstance.AdminOrgRolesCreate(orgId, organizationId);
+                AdminOrgRolesCreateResponse result = apiInstance.AdminOrgRolesCreate(orgId, organizationId, adminOrgRolesCreateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -820,7 +825,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create an organization role
-    ApiResponse<AdminOrgRolesCreateResponse> response = apiInstance.AdminOrgRolesCreateWithHttpInfo(orgId, organizationId);
+    ApiResponse<AdminOrgRolesCreateResponse> response = apiInstance.AdminOrgRolesCreateWithHttpInfo(orgId, organizationId, adminOrgRolesCreateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -839,6 +844,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **organizationId** | **string** |  |  |
+| **adminOrgRolesCreateRequest** | [**AdminOrgRolesCreateRequest**](AdminOrgRolesCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -850,7 +856,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1075,7 +1081,7 @@ catch (ApiException e)
 
 <a id="adminorganizationscreate"></a>
 # **AdminOrganizationsCreate**
-> AdminOrganizationsCreateResponse AdminOrganizationsCreate (string orgId)
+> AdminOrganizationsCreateResponse AdminOrganizationsCreate (string orgId, AdminOrganizationsCreateRequest adminOrganizationsCreateRequest)
 
 Create an organization
 
@@ -1108,11 +1114,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminOrganizationsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var adminOrganizationsCreateRequest = new AdminOrganizationsCreateRequest(); // AdminOrganizationsCreateRequest | 
 
             try
             {
                 // Create an organization
-                AdminOrganizationsCreateResponse result = apiInstance.AdminOrganizationsCreate(orgId);
+                AdminOrganizationsCreateResponse result = apiInstance.AdminOrganizationsCreate(orgId, adminOrganizationsCreateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1133,7 +1140,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create an organization
-    ApiResponse<AdminOrganizationsCreateResponse> response = apiInstance.AdminOrganizationsCreateWithHttpInfo(orgId);
+    ApiResponse<AdminOrganizationsCreateResponse> response = apiInstance.AdminOrganizationsCreateWithHttpInfo(orgId, adminOrganizationsCreateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1151,6 +1158,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **adminOrganizationsCreateRequest** | [**AdminOrganizationsCreateRequest**](AdminOrganizationsCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -1162,7 +1170,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1484,7 +1492,7 @@ catch (ApiException e)
 
 <a id="patchadminorgmembersupdate"></a>
 # **PatchAdminOrgMembersUpdate**
-> PutAdminOrgMembersUpdateResponse PatchAdminOrgMembersUpdate (string orgId, string organizationId, string userId)
+> PutAdminOrgMembersUpdateResponse PatchAdminOrgMembersUpdate (string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest)
 
 Update a member's role or status
 
@@ -1519,11 +1527,12 @@ namespace Example
             var orgId = "orgId_example";  // string | 
             var organizationId = "organizationId_example";  // string | 
             var userId = "userId_example";  // string | 
+            var putAdminOrgMembersUpdateRequest = new PutAdminOrgMembersUpdateRequest(); // PutAdminOrgMembersUpdateRequest | 
 
             try
             {
                 // Update a member's role or status
-                PutAdminOrgMembersUpdateResponse result = apiInstance.PatchAdminOrgMembersUpdate(orgId, organizationId, userId);
+                PutAdminOrgMembersUpdateResponse result = apiInstance.PatchAdminOrgMembersUpdate(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1544,7 +1553,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update a member's role or status
-    ApiResponse<PutAdminOrgMembersUpdateResponse> response = apiInstance.PatchAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId);
+    ApiResponse<PutAdminOrgMembersUpdateResponse> response = apiInstance.PatchAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1564,6 +1573,7 @@ catch (ApiException e)
 | **orgId** | **string** |  |  |
 | **organizationId** | **string** |  |  |
 | **userId** | **string** |  |  |
+| **putAdminOrgMembersUpdateRequest** | [**PutAdminOrgMembersUpdateRequest**](PutAdminOrgMembersUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1575,7 +1585,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1590,7 +1600,7 @@ catch (ApiException e)
 
 <a id="patchadminorgrolesupdate"></a>
 # **PatchAdminOrgRolesUpdate**
-> AdminOrgRolesCreateResponse PatchAdminOrgRolesUpdate (string orgId, string organizationId, string roleId)
+> AdminOrgRolesCreateResponse PatchAdminOrgRolesUpdate (string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest)
 
 Update an organization role
 
@@ -1625,11 +1635,12 @@ namespace Example
             var orgId = "orgId_example";  // string | 
             var organizationId = "organizationId_example";  // string | 
             var roleId = "roleId_example";  // string | 
+            var putAdminOrgRolesUpdateRequest = new PutAdminOrgRolesUpdateRequest(); // PutAdminOrgRolesUpdateRequest | 
 
             try
             {
                 // Update an organization role
-                AdminOrgRolesCreateResponse result = apiInstance.PatchAdminOrgRolesUpdate(orgId, organizationId, roleId);
+                AdminOrgRolesCreateResponse result = apiInstance.PatchAdminOrgRolesUpdate(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1650,7 +1661,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an organization role
-    ApiResponse<AdminOrgRolesCreateResponse> response = apiInstance.PatchAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId);
+    ApiResponse<AdminOrgRolesCreateResponse> response = apiInstance.PatchAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1670,6 +1681,7 @@ catch (ApiException e)
 | **orgId** | **string** |  |  |
 | **organizationId** | **string** |  |  |
 | **roleId** | **string** |  |  |
+| **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1681,7 +1693,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1696,7 +1708,7 @@ catch (ApiException e)
 
 <a id="patchadminorganizationsupdate"></a>
 # **PatchAdminOrganizationsUpdate**
-> AdminOrganizationsGetResponse PatchAdminOrganizationsUpdate (string orgId, string organizationId)
+> AdminOrganizationsGetResponse PatchAdminOrganizationsUpdate (string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest)
 
 Update an organization
 
@@ -1730,11 +1742,12 @@ namespace Example
             var apiInstance = new AdminOrganizationsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var organizationId = "organizationId_example";  // string | 
+            var putAdminOrganizationsUpdateRequest = new PutAdminOrganizationsUpdateRequest(); // PutAdminOrganizationsUpdateRequest | 
 
             try
             {
                 // Update an organization
-                AdminOrganizationsGetResponse result = apiInstance.PatchAdminOrganizationsUpdate(orgId, organizationId);
+                AdminOrganizationsGetResponse result = apiInstance.PatchAdminOrganizationsUpdate(orgId, organizationId, putAdminOrganizationsUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1755,7 +1768,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an organization
-    ApiResponse<AdminOrganizationsGetResponse> response = apiInstance.PatchAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId);
+    ApiResponse<AdminOrganizationsGetResponse> response = apiInstance.PatchAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId, putAdminOrganizationsUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1774,6 +1787,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **organizationId** | **string** |  |  |
+| **putAdminOrganizationsUpdateRequest** | [**PutAdminOrganizationsUpdateRequest**](PutAdminOrganizationsUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1785,7 +1799,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1801,7 +1815,7 @@ catch (ApiException e)
 
 <a id="putadminorgmembersupdate"></a>
 # **PutAdminOrgMembersUpdate**
-> PutAdminOrgMembersUpdateResponse PutAdminOrgMembersUpdate (string orgId, string organizationId, string userId)
+> PutAdminOrgMembersUpdateResponse PutAdminOrgMembersUpdate (string orgId, string organizationId, string userId, PutAdminOrgMembersUpdateRequest putAdminOrgMembersUpdateRequest)
 
 Update a member's role or status
 
@@ -1836,11 +1850,12 @@ namespace Example
             var orgId = "orgId_example";  // string | 
             var organizationId = "organizationId_example";  // string | 
             var userId = "userId_example";  // string | 
+            var putAdminOrgMembersUpdateRequest = new PutAdminOrgMembersUpdateRequest(); // PutAdminOrgMembersUpdateRequest | 
 
             try
             {
                 // Update a member's role or status
-                PutAdminOrgMembersUpdateResponse result = apiInstance.PutAdminOrgMembersUpdate(orgId, organizationId, userId);
+                PutAdminOrgMembersUpdateResponse result = apiInstance.PutAdminOrgMembersUpdate(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1861,7 +1876,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update a member's role or status
-    ApiResponse<PutAdminOrgMembersUpdateResponse> response = apiInstance.PutAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId);
+    ApiResponse<PutAdminOrgMembersUpdateResponse> response = apiInstance.PutAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1881,6 +1896,7 @@ catch (ApiException e)
 | **orgId** | **string** |  |  |
 | **organizationId** | **string** |  |  |
 | **userId** | **string** |  |  |
+| **putAdminOrgMembersUpdateRequest** | [**PutAdminOrgMembersUpdateRequest**](PutAdminOrgMembersUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1892,7 +1908,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1907,7 +1923,7 @@ catch (ApiException e)
 
 <a id="putadminorgrolesupdate"></a>
 # **PutAdminOrgRolesUpdate**
-> AdminOrgRolesCreateResponse PutAdminOrgRolesUpdate (string orgId, string organizationId, string roleId)
+> AdminOrgRolesCreateResponse PutAdminOrgRolesUpdate (string orgId, string organizationId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest)
 
 Update an organization role
 
@@ -1942,11 +1958,12 @@ namespace Example
             var orgId = "orgId_example";  // string | 
             var organizationId = "organizationId_example";  // string | 
             var roleId = "roleId_example";  // string | 
+            var putAdminOrgRolesUpdateRequest = new PutAdminOrgRolesUpdateRequest(); // PutAdminOrgRolesUpdateRequest | 
 
             try
             {
                 // Update an organization role
-                AdminOrgRolesCreateResponse result = apiInstance.PutAdminOrgRolesUpdate(orgId, organizationId, roleId);
+                AdminOrgRolesCreateResponse result = apiInstance.PutAdminOrgRolesUpdate(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1967,7 +1984,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an organization role
-    ApiResponse<AdminOrgRolesCreateResponse> response = apiInstance.PutAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId);
+    ApiResponse<AdminOrgRolesCreateResponse> response = apiInstance.PutAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1987,6 +2004,7 @@ catch (ApiException e)
 | **orgId** | **string** |  |  |
 | **organizationId** | **string** |  |  |
 | **roleId** | **string** |  |  |
+| **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1998,7 +2016,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2013,7 +2031,7 @@ catch (ApiException e)
 
 <a id="putadminorganizationsupdate"></a>
 # **PutAdminOrganizationsUpdate**
-> AdminOrganizationsGetResponse PutAdminOrganizationsUpdate (string orgId, string organizationId)
+> AdminOrganizationsGetResponse PutAdminOrganizationsUpdate (string orgId, string organizationId, PutAdminOrganizationsUpdateRequest putAdminOrganizationsUpdateRequest)
 
 Update an organization
 
@@ -2047,11 +2065,12 @@ namespace Example
             var apiInstance = new AdminOrganizationsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var organizationId = "organizationId_example";  // string | 
+            var putAdminOrganizationsUpdateRequest = new PutAdminOrganizationsUpdateRequest(); // PutAdminOrganizationsUpdateRequest | 
 
             try
             {
                 // Update an organization
-                AdminOrganizationsGetResponse result = apiInstance.PutAdminOrganizationsUpdate(orgId, organizationId);
+                AdminOrganizationsGetResponse result = apiInstance.PutAdminOrganizationsUpdate(orgId, organizationId, putAdminOrganizationsUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2072,7 +2091,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an organization
-    ApiResponse<AdminOrganizationsGetResponse> response = apiInstance.PutAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId);
+    ApiResponse<AdminOrganizationsGetResponse> response = apiInstance.PutAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId, putAdminOrganizationsUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2091,6 +2110,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **organizationId** | **string** |  |  |
+| **putAdminOrganizationsUpdateRequest** | [**PutAdminOrganizationsUpdateRequest**](PutAdminOrganizationsUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -2102,7 +2122,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

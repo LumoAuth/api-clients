@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **target_id** | Option<**String**> |  | [optional]
 **target_name** | Option<**String**> |  | [optional]
 **ip_address** | Option<**String**> |  | [optional]
+**trace_id** | Option<**String**> | W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none | [optional]
 **event_time** | Option<**String**> | Detailed responses only | [optional]
 **duration_ms** | Option<**i32**> | Detailed responses only | [optional]
 **initiated_by** | Option<**String**> | Detailed responses only | [optional]

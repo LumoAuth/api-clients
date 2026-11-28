@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -381,6 +381,12 @@ type ApiCheckAbacRequest struct {
 	ctx context.Context
 	ApiService AuthorizationAPI
 	orgId string
+	checkAbacRequest *CheckAbacRequest
+}
+
+func (r ApiCheckAbacRequest) CheckAbacRequest(checkAbacRequest CheckAbacRequest) ApiCheckAbacRequest {
+	r.checkAbacRequest = &checkAbacRequest
+	return r
 }
 
 func (r ApiCheckAbacRequest) Execute() (*CheckAbacResponse, *http.Response, error) {
@@ -433,9 +439,12 @@ func (a *AuthorizationAPIService) CheckAbacExecute(r ApiCheckAbacRequest) (*Chec
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.checkAbacRequest == nil {
+		return localVarReturnValue, nil, reportError("checkAbacRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -451,6 +460,8 @@ func (a *AuthorizationAPIService) CheckAbacExecute(r ApiCheckAbacRequest) (*Chec
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.checkAbacRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -492,6 +503,12 @@ type ApiCheckAbacBulkRequest struct {
 	ctx context.Context
 	ApiService AuthorizationAPI
 	orgId string
+	checkAbacBulkRequest *CheckAbacBulkRequest
+}
+
+func (r ApiCheckAbacBulkRequest) CheckAbacBulkRequest(checkAbacBulkRequest CheckAbacBulkRequest) ApiCheckAbacBulkRequest {
+	r.checkAbacBulkRequest = &checkAbacBulkRequest
+	return r
 }
 
 func (r ApiCheckAbacBulkRequest) Execute() (*CheckAbacBulkResponse, *http.Response, error) {
@@ -543,9 +560,12 @@ func (a *AuthorizationAPIService) CheckAbacBulkExecute(r ApiCheckAbacBulkRequest
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.checkAbacBulkRequest == nil {
+		return localVarReturnValue, nil, reportError("checkAbacBulkRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -561,6 +581,8 @@ func (a *AuthorizationAPIService) CheckAbacBulkExecute(r ApiCheckAbacBulkRequest
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.checkAbacBulkRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -601,6 +623,12 @@ func (a *AuthorizationAPIService) CheckAbacBulkExecute(r ApiCheckAbacBulkRequest
 type ApiCheckAllPermissionsRequest struct {
 	ctx context.Context
 	ApiService AuthorizationAPI
+	checkPermissionsBulkRequest *CheckPermissionsBulkRequest
+}
+
+func (r ApiCheckAllPermissionsRequest) CheckPermissionsBulkRequest(checkPermissionsBulkRequest CheckPermissionsBulkRequest) ApiCheckAllPermissionsRequest {
+	r.checkPermissionsBulkRequest = &checkPermissionsBulkRequest
+	return r
 }
 
 func (r ApiCheckAllPermissionsRequest) Execute() (*CheckAnyPermissionResponse, *http.Response, error) {
@@ -647,9 +675,12 @@ func (a *AuthorizationAPIService) CheckAllPermissionsExecute(r ApiCheckAllPermis
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.checkPermissionsBulkRequest == nil {
+		return localVarReturnValue, nil, reportError("checkPermissionsBulkRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -665,6 +696,8 @@ func (a *AuthorizationAPIService) CheckAllPermissionsExecute(r ApiCheckAllPermis
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.checkPermissionsBulkRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -719,6 +752,12 @@ func (a *AuthorizationAPIService) CheckAllPermissionsExecute(r ApiCheckAllPermis
 type ApiCheckAnyPermissionRequest struct {
 	ctx context.Context
 	ApiService AuthorizationAPI
+	checkPermissionsBulkRequest *CheckPermissionsBulkRequest
+}
+
+func (r ApiCheckAnyPermissionRequest) CheckPermissionsBulkRequest(checkPermissionsBulkRequest CheckPermissionsBulkRequest) ApiCheckAnyPermissionRequest {
+	r.checkPermissionsBulkRequest = &checkPermissionsBulkRequest
+	return r
 }
 
 func (r ApiCheckAnyPermissionRequest) Execute() (*CheckAnyPermissionResponse, *http.Response, error) {
@@ -765,9 +804,12 @@ func (a *AuthorizationAPIService) CheckAnyPermissionExecute(r ApiCheckAnyPermiss
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.checkPermissionsBulkRequest == nil {
+		return localVarReturnValue, nil, reportError("checkPermissionsBulkRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -783,6 +825,8 @@ func (a *AuthorizationAPIService) CheckAnyPermissionExecute(r ApiCheckAnyPermiss
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.checkPermissionsBulkRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -837,6 +881,12 @@ func (a *AuthorizationAPIService) CheckAnyPermissionExecute(r ApiCheckAnyPermiss
 type ApiCheckPermissionRequest struct {
 	ctx context.Context
 	ApiService AuthorizationAPI
+	checkPermissionRequest *CheckPermissionRequest
+}
+
+func (r ApiCheckPermissionRequest) CheckPermissionRequest(checkPermissionRequest CheckPermissionRequest) ApiCheckPermissionRequest {
+	r.checkPermissionRequest = &checkPermissionRequest
+	return r
 }
 
 func (r ApiCheckPermissionRequest) Execute() (*CheckPermissionResponse, *http.Response, error) {
@@ -888,9 +938,12 @@ func (a *AuthorizationAPIService) CheckPermissionExecute(r ApiCheckPermissionReq
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.checkPermissionRequest == nil {
+		return localVarReturnValue, nil, reportError("checkPermissionRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -906,6 +959,8 @@ func (a *AuthorizationAPIService) CheckPermissionExecute(r ApiCheckPermissionReq
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.checkPermissionRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -960,6 +1015,12 @@ func (a *AuthorizationAPIService) CheckPermissionExecute(r ApiCheckPermissionReq
 type ApiCheckPermissionsBulkRequest struct {
 	ctx context.Context
 	ApiService AuthorizationAPI
+	checkPermissionsBulkRequest *CheckPermissionsBulkRequest
+}
+
+func (r ApiCheckPermissionsBulkRequest) CheckPermissionsBulkRequest(checkPermissionsBulkRequest CheckPermissionsBulkRequest) ApiCheckPermissionsBulkRequest {
+	r.checkPermissionsBulkRequest = &checkPermissionsBulkRequest
+	return r
 }
 
 func (r ApiCheckPermissionsBulkRequest) Execute() (*CheckPermissionsBulkResponse, *http.Response, error) {
@@ -1006,9 +1067,12 @@ func (a *AuthorizationAPIService) CheckPermissionsBulkExecute(r ApiCheckPermissi
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.checkPermissionsBulkRequest == nil {
+		return localVarReturnValue, nil, reportError("checkPermissionsBulkRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1024,6 +1088,8 @@ func (a *AuthorizationAPIService) CheckPermissionsBulkExecute(r ApiCheckPermissi
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.checkPermissionsBulkRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1078,6 +1144,12 @@ func (a *AuthorizationAPIService) CheckPermissionsBulkExecute(r ApiCheckPermissi
 type ApiCheckRelationRequest struct {
 	ctx context.Context
 	ApiService AuthorizationAPI
+	checkRelationRequest *CheckRelationRequest
+}
+
+func (r ApiCheckRelationRequest) CheckRelationRequest(checkRelationRequest CheckRelationRequest) ApiCheckRelationRequest {
+	r.checkRelationRequest = &checkRelationRequest
+	return r
 }
 
 func (r ApiCheckRelationRequest) Execute() (*CheckRelationResponse, *http.Response, error) {
@@ -1124,9 +1196,12 @@ func (a *AuthorizationAPIService) CheckRelationExecute(r ApiCheckRelationRequest
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.checkRelationRequest == nil {
+		return localVarReturnValue, nil, reportError("checkRelationRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1142,6 +1217,8 @@ func (a *AuthorizationAPIService) CheckRelationExecute(r ApiCheckRelationRequest
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.checkRelationRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1197,6 +1274,12 @@ type ApiCheckRelationScopedRequest struct {
 	ctx context.Context
 	ApiService AuthorizationAPI
 	orgId string
+	checkRelationScopedRequest *CheckRelationScopedRequest
+}
+
+func (r ApiCheckRelationScopedRequest) CheckRelationScopedRequest(checkRelationScopedRequest CheckRelationScopedRequest) ApiCheckRelationScopedRequest {
+	r.checkRelationScopedRequest = &checkRelationScopedRequest
+	return r
 }
 
 func (r ApiCheckRelationScopedRequest) Execute() (*CheckRelationScopedResponse, *http.Response, error) {
@@ -1239,9 +1322,12 @@ func (a *AuthorizationAPIService) CheckRelationScopedExecute(r ApiCheckRelationS
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.checkRelationScopedRequest == nil {
+		return localVarReturnValue, nil, reportError("checkRelationScopedRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1257,6 +1343,8 @@ func (a *AuthorizationAPIService) CheckRelationScopedExecute(r ApiCheckRelationS
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.checkRelationScopedRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1311,6 +1399,13 @@ func (a *AuthorizationAPIService) CheckRelationScopedExecute(r ApiCheckRelationS
 type ApiEvaluateRequest struct {
 	ctx context.Context
 	ApiService AuthorizationAPI
+	evaluateRequest *EvaluateRequest
+}
+
+// AuthZEN Authorization API 1.0 evaluation request.
+func (r ApiEvaluateRequest) EvaluateRequest(evaluateRequest EvaluateRequest) ApiEvaluateRequest {
+	r.evaluateRequest = &evaluateRequest
+	return r
 }
 
 func (r ApiEvaluateRequest) Execute() (*AuthZenDecision, *http.Response, error) {
@@ -1359,9 +1454,12 @@ func (a *AuthorizationAPIService) EvaluateExecute(r ApiEvaluateRequest) (*AuthZe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.evaluateRequest == nil {
+		return localVarReturnValue, nil, reportError("evaluateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1377,6 +1475,8 @@ func (a *AuthorizationAPIService) EvaluateExecute(r ApiEvaluateRequest) (*AuthZe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.evaluateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1431,6 +1531,13 @@ func (a *AuthorizationAPIService) EvaluateExecute(r ApiEvaluateRequest) (*AuthZe
 type ApiEvaluateBatchRequest struct {
 	ctx context.Context
 	ApiService AuthorizationAPI
+	evaluateBatchRequest *EvaluateBatchRequest
+}
+
+// AuthZEN Authorization API 1.0 batch evaluation request.
+func (r ApiEvaluateBatchRequest) EvaluateBatchRequest(evaluateBatchRequest EvaluateBatchRequest) ApiEvaluateBatchRequest {
+	r.evaluateBatchRequest = &evaluateBatchRequest
+	return r
 }
 
 func (r ApiEvaluateBatchRequest) Execute() (*EvaluateBatchResponse, *http.Response, error) {
@@ -1480,9 +1587,12 @@ func (a *AuthorizationAPIService) EvaluateBatchExecute(r ApiEvaluateBatchRequest
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.evaluateBatchRequest == nil {
+		return localVarReturnValue, nil, reportError("evaluateBatchRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1498,6 +1608,8 @@ func (a *AuthorizationAPIService) EvaluateBatchExecute(r ApiEvaluateBatchRequest
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.evaluateBatchRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2269,6 +2381,12 @@ type ApiSetResourceAttributeRequest struct {
 	resourceType string
 	resourceId string
 	attributeSlug string
+	setResourceAttributeRequest *SetResourceAttributeRequest
+}
+
+func (r ApiSetResourceAttributeRequest) SetResourceAttributeRequest(setResourceAttributeRequest SetResourceAttributeRequest) ApiSetResourceAttributeRequest {
+	r.setResourceAttributeRequest = &setResourceAttributeRequest
+	return r
 }
 
 func (r ApiSetResourceAttributeRequest) Execute() (*SetResourceAttributeResponse, *http.Response, error) {
@@ -2323,9 +2441,12 @@ func (a *AuthorizationAPIService) SetResourceAttributeExecute(r ApiSetResourceAt
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.setResourceAttributeRequest == nil {
+		return localVarReturnValue, nil, reportError("setResourceAttributeRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2341,6 +2462,8 @@ func (a *AuthorizationAPIService) SetResourceAttributeExecute(r ApiSetResourceAt
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.setResourceAttributeRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2384,6 +2507,12 @@ type ApiSetUserAttributeRequest struct {
 	orgId string
 	userId string
 	attributeSlug string
+	setResourceAttributeRequest *SetResourceAttributeRequest
+}
+
+func (r ApiSetUserAttributeRequest) SetResourceAttributeRequest(setResourceAttributeRequest SetResourceAttributeRequest) ApiSetUserAttributeRequest {
+	r.setResourceAttributeRequest = &setResourceAttributeRequest
+	return r
 }
 
 func (r ApiSetUserAttributeRequest) Execute() (*SetUserAttributeResponse, *http.Response, error) {
@@ -2435,9 +2564,12 @@ func (a *AuthorizationAPIService) SetUserAttributeExecute(r ApiSetUserAttributeR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.setResourceAttributeRequest == nil {
+		return localVarReturnValue, nil, reportError("setResourceAttributeRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2453,6 +2585,8 @@ func (a *AuthorizationAPIService) SetUserAttributeExecute(r ApiSetUserAttributeR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.setResourceAttributeRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

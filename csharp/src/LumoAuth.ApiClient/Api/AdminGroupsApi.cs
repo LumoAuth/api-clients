@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -34,8 +34,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddMembersRequest"></param>
         /// <returns>AdminGroupsCreateResponse</returns>
-        AdminGroupsCreateResponse AdminGroupsAddMembers(string orgId, string groupId);
+        AdminGroupsCreateResponse AdminGroupsAddMembers(string orgId, string groupId, AdminGroupsAddMembersRequest adminGroupsAddMembersRequest);
 
         /// <summary>
         /// Add member(s) to group
@@ -46,52 +47,57 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddMembersRequest"></param>
         /// <returns>ApiResponse of AdminGroupsCreateResponse</returns>
-        ApiResponse<AdminGroupsCreateResponse> AdminGroupsAddMembersWithHttpInfo(string orgId, string groupId);
+        ApiResponse<AdminGroupsCreateResponse> AdminGroupsAddMembersWithHttpInfo(string orgId, string groupId, AdminGroupsAddMembersRequest adminGroupsAddMembersRequest);
         /// <summary>
         /// Add a single role to a group
         /// </summary>
         /// <remarks>
-        /// A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddRoleRequest"></param>
         /// <returns>MessageResponse</returns>
-        MessageResponse AdminGroupsAddRole(string orgId, string groupId);
+        MessageResponse AdminGroupsAddRole(string orgId, string groupId, AdminGroupsAddRoleRequest adminGroupsAddRoleRequest);
 
         /// <summary>
         /// Add a single role to a group
         /// </summary>
         /// <remarks>
-        /// A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddRoleRequest"></param>
         /// <returns>ApiResponse of MessageResponse</returns>
-        ApiResponse<MessageResponse> AdminGroupsAddRoleWithHttpInfo(string orgId, string groupId);
+        ApiResponse<MessageResponse> AdminGroupsAddRoleWithHttpInfo(string orgId, string groupId, AdminGroupsAddRoleRequest adminGroupsAddRoleRequest);
         /// <summary>
         /// Create a new group
         /// </summary>
         /// <remarks>
-        /// Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminGroupsCreateRequest"></param>
         /// <returns>AdminGroupsCreateResponse</returns>
-        AdminGroupsCreateResponse AdminGroupsCreate(string orgId);
+        AdminGroupsCreateResponse AdminGroupsCreate(string orgId, AdminGroupsCreateRequest adminGroupsCreateRequest);
 
         /// <summary>
         /// Create a new group
         /// </summary>
         /// <remarks>
-        /// Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminGroupsCreateRequest"></param>
         /// <returns>ApiResponse of AdminGroupsCreateResponse</returns>
-        ApiResponse<AdminGroupsCreateResponse> AdminGroupsCreateWithHttpInfo(string orgId);
+        ApiResponse<AdminGroupsCreateResponse> AdminGroupsCreateWithHttpInfo(string orgId, AdminGroupsCreateRequest adminGroupsCreateRequest);
         /// <summary>
         /// Delete a group
         /// </summary>
@@ -173,7 +179,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of AdminGroupsGroupsGetRolesResponse</returns>
         ApiResponse<AdminGroupsGroupsGetRolesResponse> AdminGroupsGroupsGetRolesWithHttpInfo(string orgId, string groupId);
         /// <summary>
-        /// List all groups in the tenant
+        /// List all groups in the organization
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -181,7 +187,7 @@ namespace LumoAuth.ApiClient.Api
         AdminGroupsListResponse AdminGroupsList(string orgId);
 
         /// <summary>
-        /// List all groups in the tenant
+        /// List all groups in the organization
         /// </summary>
         /// <remarks>
         /// 
@@ -238,33 +244,36 @@ namespace LumoAuth.ApiClient.Api
         /// Update group roles (replaces all existing roles)
         /// </summary>
         /// <remarks>
-        /// &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+        /// &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <returns>AdminGroupsCreateResponse</returns>
-        AdminGroupsCreateResponse AdminGroupsUpdateRoles(string orgId, string groupId);
+        AdminGroupsCreateResponse AdminGroupsUpdateRoles(string orgId, string groupId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest);
 
         /// <summary>
         /// Update group roles (replaces all existing roles)
         /// </summary>
         /// <remarks>
-        /// &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+        /// &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <returns>ApiResponse of AdminGroupsCreateResponse</returns>
-        ApiResponse<AdminGroupsCreateResponse> AdminGroupsUpdateRolesWithHttpInfo(string orgId, string groupId);
+        ApiResponse<AdminGroupsCreateResponse> AdminGroupsUpdateRolesWithHttpInfo(string orgId, string groupId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest);
         /// <summary>
         /// Update an existing group
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <returns>AdminGroupsCreateResponse</returns>
-        AdminGroupsCreateResponse PatchAdminGroupsUpdate(string orgId, string groupId);
+        AdminGroupsCreateResponse PatchAdminGroupsUpdate(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest);
 
         /// <summary>
         /// Update an existing group
@@ -275,16 +284,18 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <returns>ApiResponse of AdminGroupsCreateResponse</returns>
-        ApiResponse<AdminGroupsCreateResponse> PatchAdminGroupsUpdateWithHttpInfo(string orgId, string groupId);
+        ApiResponse<AdminGroupsCreateResponse> PatchAdminGroupsUpdateWithHttpInfo(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest);
         /// <summary>
         /// Update an existing group
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <returns>AdminGroupsCreateResponse</returns>
-        AdminGroupsCreateResponse PutAdminGroupsUpdate(string orgId, string groupId);
+        AdminGroupsCreateResponse PutAdminGroupsUpdate(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest);
 
         /// <summary>
         /// Update an existing group
@@ -295,8 +306,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <returns>ApiResponse of AdminGroupsCreateResponse</returns>
-        ApiResponse<AdminGroupsCreateResponse> PutAdminGroupsUpdateWithHttpInfo(string orgId, string groupId);
+        ApiResponse<AdminGroupsCreateResponse> PutAdminGroupsUpdateWithHttpInfo(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest);
         #endregion Synchronous Operations
     }
 
@@ -315,9 +327,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddMembersRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminGroupsCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminGroupsCreateResponse> AdminGroupsAddMembersAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminGroupsCreateResponse> AdminGroupsAddMembersAsync(string orgId, string groupId, AdminGroupsAddMembersRequest adminGroupsAddMembersRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add member(s) to group
@@ -328,57 +341,62 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddMembersRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminGroupsCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminGroupsCreateResponse>> AdminGroupsAddMembersWithHttpInfoAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminGroupsCreateResponse>> AdminGroupsAddMembersWithHttpInfoAsync(string orgId, string groupId, AdminGroupsAddMembersRequest adminGroupsAddMembersRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Add a single role to a group
         /// </summary>
         /// <remarks>
-        /// A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddRoleRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MessageResponse</returns>
-        System.Threading.Tasks.Task<MessageResponse> AdminGroupsAddRoleAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<MessageResponse> AdminGroupsAddRoleAsync(string orgId, string groupId, AdminGroupsAddRoleRequest adminGroupsAddRoleRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add a single role to a group
         /// </summary>
         /// <remarks>
-        /// A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddRoleRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MessageResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminGroupsAddRoleWithHttpInfoAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminGroupsAddRoleWithHttpInfoAsync(string orgId, string groupId, AdminGroupsAddRoleRequest adminGroupsAddRoleRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Create a new group
         /// </summary>
         /// <remarks>
-        /// Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminGroupsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminGroupsCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminGroupsCreateResponse> AdminGroupsCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminGroupsCreateResponse> AdminGroupsCreateAsync(string orgId, AdminGroupsCreateRequest adminGroupsCreateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a new group
         /// </summary>
         /// <remarks>
-        /// Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminGroupsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminGroupsCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminGroupsCreateResponse>> AdminGroupsCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminGroupsCreateResponse>> AdminGroupsCreateWithHttpInfoAsync(string orgId, AdminGroupsCreateRequest adminGroupsCreateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete a group
         /// </summary>
@@ -480,7 +498,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (AdminGroupsGroupsGetRolesResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminGroupsGroupsGetRolesResponse>> AdminGroupsGroupsGetRolesWithHttpInfoAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// List all groups in the tenant
+        /// List all groups in the organization
         /// </summary>
         /// <remarks>
         /// 
@@ -492,7 +510,7 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task<AdminGroupsListResponse> AdminGroupsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List all groups in the tenant
+        /// List all groups in the organization
         /// </summary>
         /// <remarks>
         /// 
@@ -560,27 +578,29 @@ namespace LumoAuth.ApiClient.Api
         /// Update group roles (replaces all existing roles)
         /// </summary>
         /// <remarks>
-        /// &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+        /// &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminGroupsCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminGroupsCreateResponse> AdminGroupsUpdateRolesAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminGroupsCreateResponse> AdminGroupsUpdateRolesAsync(string orgId, string groupId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update group roles (replaces all existing roles)
         /// </summary>
         /// <remarks>
-        /// &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+        /// &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminGroupsCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminGroupsCreateResponse>> AdminGroupsUpdateRolesWithHttpInfoAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminGroupsCreateResponse>> AdminGroupsUpdateRolesWithHttpInfoAsync(string orgId, string groupId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an existing group
         /// </summary>
@@ -590,9 +610,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminGroupsCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminGroupsCreateResponse> PatchAdminGroupsUpdateAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminGroupsCreateResponse> PatchAdminGroupsUpdateAsync(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an existing group
@@ -603,9 +624,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminGroupsCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminGroupsCreateResponse>> PatchAdminGroupsUpdateWithHttpInfoAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminGroupsCreateResponse>> PatchAdminGroupsUpdateWithHttpInfoAsync(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an existing group
         /// </summary>
@@ -615,9 +637,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminGroupsCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminGroupsCreateResponse> PutAdminGroupsUpdateAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminGroupsCreateResponse> PutAdminGroupsUpdateAsync(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an existing group
@@ -628,9 +651,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminGroupsCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminGroupsCreateResponse>> PutAdminGroupsUpdateWithHttpInfoAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminGroupsCreateResponse>> PutAdminGroupsUpdateWithHttpInfoAsync(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -850,10 +874,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddMembersRequest"></param>
         /// <returns>AdminGroupsCreateResponse</returns>
-        public AdminGroupsCreateResponse AdminGroupsAddMembers(string orgId, string groupId)
+        public AdminGroupsCreateResponse AdminGroupsAddMembers(string orgId, string groupId, AdminGroupsAddMembersRequest adminGroupsAddMembersRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = AdminGroupsAddMembersWithHttpInfo(orgId, groupId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = AdminGroupsAddMembersWithHttpInfo(orgId, groupId, adminGroupsAddMembersRequest);
             return localVarResponse.Data;
         }
 
@@ -863,8 +888,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddMembersRequest"></param>
         /// <returns>ApiResponse of AdminGroupsCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> AdminGroupsAddMembersWithHttpInfo(string orgId, string groupId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> AdminGroupsAddMembersWithHttpInfo(string orgId, string groupId, AdminGroupsAddMembersRequest adminGroupsAddMembersRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -874,9 +900,14 @@ namespace LumoAuth.ApiClient.Api
             if (groupId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'groupId' when calling AdminGroupsApi->AdminGroupsAddMembers");
 
+            // verify the required parameter 'adminGroupsAddMembersRequest' is set
+            if (adminGroupsAddMembersRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminGroupsAddMembersRequest' when calling AdminGroupsApi->AdminGroupsAddMembers");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -892,6 +923,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("groupId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(groupId)); // path parameter
+            localVarRequestOptions.Data = adminGroupsAddMembersRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -923,11 +955,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddMembersRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminGroupsCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminGroupsCreateResponse> AdminGroupsAddMembersAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminGroupsCreateResponse> AdminGroupsAddMembersAsync(string orgId, string groupId, AdminGroupsAddMembersRequest adminGroupsAddMembersRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = await AdminGroupsAddMembersWithHttpInfoAsync(orgId, groupId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = await AdminGroupsAddMembersWithHttpInfoAsync(orgId, groupId, adminGroupsAddMembersRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -937,9 +970,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddMembersRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminGroupsCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse>> AdminGroupsAddMembersWithHttpInfoAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse>> AdminGroupsAddMembersWithHttpInfoAsync(string orgId, string groupId, AdminGroupsAddMembersRequest adminGroupsAddMembersRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -949,10 +983,15 @@ namespace LumoAuth.ApiClient.Api
             if (groupId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'groupId' when calling AdminGroupsApi->AdminGroupsAddMembers");
 
+            // verify the required parameter 'adminGroupsAddMembersRequest' is set
+            if (adminGroupsAddMembersRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminGroupsAddMembersRequest' when calling AdminGroupsApi->AdminGroupsAddMembers");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -969,6 +1008,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("groupId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(groupId)); // path parameter
+            localVarRequestOptions.Data = adminGroupsAddMembersRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -996,26 +1036,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Add a single role to a group A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// Add a single role to a group A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddRoleRequest"></param>
         /// <returns>MessageResponse</returns>
-        public MessageResponse AdminGroupsAddRole(string orgId, string groupId)
+        public MessageResponse AdminGroupsAddRole(string orgId, string groupId, AdminGroupsAddRoleRequest adminGroupsAddRoleRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminGroupsAddRoleWithHttpInfo(orgId, groupId);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminGroupsAddRoleWithHttpInfo(orgId, groupId, adminGroupsAddRoleRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Add a single role to a group A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// Add a single role to a group A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddRoleRequest"></param>
         /// <returns>ApiResponse of MessageResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminGroupsAddRoleWithHttpInfo(string orgId, string groupId)
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminGroupsAddRoleWithHttpInfo(string orgId, string groupId, AdminGroupsAddRoleRequest adminGroupsAddRoleRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1025,9 +1067,14 @@ namespace LumoAuth.ApiClient.Api
             if (groupId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'groupId' when calling AdminGroupsApi->AdminGroupsAddRole");
 
+            // verify the required parameter 'adminGroupsAddRoleRequest' is set
+            if (adminGroupsAddRoleRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminGroupsAddRoleRequest' when calling AdminGroupsApi->AdminGroupsAddRole");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1043,6 +1090,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("groupId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(groupId)); // path parameter
+            localVarRequestOptions.Data = adminGroupsAddRoleRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1069,28 +1117,30 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Add a single role to a group A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// Add a single role to a group A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddRoleRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MessageResponse</returns>
-        public async System.Threading.Tasks.Task<MessageResponse> AdminGroupsAddRoleAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<MessageResponse> AdminGroupsAddRoleAsync(string orgId, string groupId, AdminGroupsAddRoleRequest adminGroupsAddRoleRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminGroupsAddRoleWithHttpInfoAsync(orgId, groupId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminGroupsAddRoleWithHttpInfoAsync(orgId, groupId, adminGroupsAddRoleRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Add a single role to a group A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// Add a single role to a group A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsAddRoleRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MessageResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminGroupsAddRoleWithHttpInfoAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminGroupsAddRoleWithHttpInfoAsync(string orgId, string groupId, AdminGroupsAddRoleRequest adminGroupsAddRoleRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1100,10 +1150,15 @@ namespace LumoAuth.ApiClient.Api
             if (groupId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'groupId' when calling AdminGroupsApi->AdminGroupsAddRole");
 
+            // verify the required parameter 'adminGroupsAddRoleRequest' is set
+            if (adminGroupsAddRoleRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminGroupsAddRoleRequest' when calling AdminGroupsApi->AdminGroupsAddRole");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1120,6 +1175,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("groupId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(groupId)); // path parameter
+            localVarRequestOptions.Data = adminGroupsAddRoleRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1147,32 +1203,39 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new group Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// Create a new group Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminGroupsCreateRequest"></param>
         /// <returns>AdminGroupsCreateResponse</returns>
-        public AdminGroupsCreateResponse AdminGroupsCreate(string orgId)
+        public AdminGroupsCreateResponse AdminGroupsCreate(string orgId, AdminGroupsCreateRequest adminGroupsCreateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = AdminGroupsCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = AdminGroupsCreateWithHttpInfo(orgId, adminGroupsCreateRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a new group Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// Create a new group Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminGroupsCreateRequest"></param>
         /// <returns>ApiResponse of AdminGroupsCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> AdminGroupsCreateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> AdminGroupsCreateWithHttpInfo(string orgId, AdminGroupsCreateRequest adminGroupsCreateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminGroupsApi->AdminGroupsCreate");
 
+            // verify the required parameter 'adminGroupsCreateRequest' is set
+            if (adminGroupsCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminGroupsCreateRequest' when calling AdminGroupsApi->AdminGroupsCreate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1187,6 +1250,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminGroupsCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1213,35 +1277,42 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new group Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// Create a new group Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminGroupsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminGroupsCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminGroupsCreateResponse> AdminGroupsCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminGroupsCreateResponse> AdminGroupsCreateAsync(string orgId, AdminGroupsCreateRequest adminGroupsCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = await AdminGroupsCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = await AdminGroupsCreateWithHttpInfoAsync(orgId, adminGroupsCreateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a new group Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+        /// Create a new group Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminGroupsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminGroupsCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse>> AdminGroupsCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse>> AdminGroupsCreateWithHttpInfoAsync(string orgId, AdminGroupsCreateRequest adminGroupsCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminGroupsApi->AdminGroupsCreate");
 
+            // verify the required parameter 'adminGroupsCreateRequest' is set
+            if (adminGroupsCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminGroupsCreateRequest' when calling AdminGroupsApi->AdminGroupsCreate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1257,6 +1328,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminGroupsCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1888,7 +1960,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all groups in the tenant 
+        /// List all groups in the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1900,7 +1972,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all groups in the tenant 
+        /// List all groups in the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1954,7 +2026,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all groups in the tenant 
+        /// List all groups in the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1967,7 +2039,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all groups in the tenant 
+        /// List all groups in the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2355,26 +2427,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update group roles (replaces all existing roles) &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+        /// Update group roles (replaces all existing roles) &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <returns>AdminGroupsCreateResponse</returns>
-        public AdminGroupsCreateResponse AdminGroupsUpdateRoles(string orgId, string groupId)
+        public AdminGroupsCreateResponse AdminGroupsUpdateRoles(string orgId, string groupId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = AdminGroupsUpdateRolesWithHttpInfo(orgId, groupId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = AdminGroupsUpdateRolesWithHttpInfo(orgId, groupId, adminGroupsUpdateRolesRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update group roles (replaces all existing roles) &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+        /// Update group roles (replaces all existing roles) &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <returns>ApiResponse of AdminGroupsCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> AdminGroupsUpdateRolesWithHttpInfo(string orgId, string groupId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> AdminGroupsUpdateRolesWithHttpInfo(string orgId, string groupId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2384,9 +2458,14 @@ namespace LumoAuth.ApiClient.Api
             if (groupId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'groupId' when calling AdminGroupsApi->AdminGroupsUpdateRoles");
 
+            // verify the required parameter 'adminGroupsUpdateRolesRequest' is set
+            if (adminGroupsUpdateRolesRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminGroupsUpdateRolesRequest' when calling AdminGroupsApi->AdminGroupsUpdateRoles");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2402,6 +2481,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("groupId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(groupId)); // path parameter
+            localVarRequestOptions.Data = adminGroupsUpdateRolesRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2428,28 +2508,30 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update group roles (replaces all existing roles) &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+        /// Update group roles (replaces all existing roles) &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminGroupsCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminGroupsCreateResponse> AdminGroupsUpdateRolesAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminGroupsCreateResponse> AdminGroupsUpdateRolesAsync(string orgId, string groupId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = await AdminGroupsUpdateRolesWithHttpInfoAsync(orgId, groupId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = await AdminGroupsUpdateRolesWithHttpInfoAsync(orgId, groupId, adminGroupsUpdateRolesRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update group roles (replaces all existing roles) &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+        /// Update group roles (replaces all existing roles) &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="adminGroupsUpdateRolesRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminGroupsCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse>> AdminGroupsUpdateRolesWithHttpInfoAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse>> AdminGroupsUpdateRolesWithHttpInfoAsync(string orgId, string groupId, AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2459,10 +2541,15 @@ namespace LumoAuth.ApiClient.Api
             if (groupId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'groupId' when calling AdminGroupsApi->AdminGroupsUpdateRoles");
 
+            // verify the required parameter 'adminGroupsUpdateRolesRequest' is set
+            if (adminGroupsUpdateRolesRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminGroupsUpdateRolesRequest' when calling AdminGroupsApi->AdminGroupsUpdateRoles");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2479,6 +2566,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("groupId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(groupId)); // path parameter
+            localVarRequestOptions.Data = adminGroupsUpdateRolesRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2511,10 +2599,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <returns>AdminGroupsCreateResponse</returns>
-        public AdminGroupsCreateResponse PatchAdminGroupsUpdate(string orgId, string groupId)
+        public AdminGroupsCreateResponse PatchAdminGroupsUpdate(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = PatchAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = PatchAdminGroupsUpdateWithHttpInfo(orgId, groupId, putAdminGroupsUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -2524,8 +2613,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <returns>ApiResponse of AdminGroupsCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> PatchAdminGroupsUpdateWithHttpInfo(string orgId, string groupId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> PatchAdminGroupsUpdateWithHttpInfo(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2535,9 +2625,14 @@ namespace LumoAuth.ApiClient.Api
             if (groupId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'groupId' when calling AdminGroupsApi->PatchAdminGroupsUpdate");
 
+            // verify the required parameter 'putAdminGroupsUpdateRequest' is set
+            if (putAdminGroupsUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminGroupsUpdateRequest' when calling AdminGroupsApi->PatchAdminGroupsUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2553,6 +2648,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("groupId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(groupId)); // path parameter
+            localVarRequestOptions.Data = putAdminGroupsUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2584,11 +2680,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminGroupsCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminGroupsCreateResponse> PatchAdminGroupsUpdateAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminGroupsCreateResponse> PatchAdminGroupsUpdateAsync(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = await PatchAdminGroupsUpdateWithHttpInfoAsync(orgId, groupId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = await PatchAdminGroupsUpdateWithHttpInfoAsync(orgId, groupId, putAdminGroupsUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2598,9 +2695,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminGroupsCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse>> PatchAdminGroupsUpdateWithHttpInfoAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse>> PatchAdminGroupsUpdateWithHttpInfoAsync(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2610,10 +2708,15 @@ namespace LumoAuth.ApiClient.Api
             if (groupId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'groupId' when calling AdminGroupsApi->PatchAdminGroupsUpdate");
 
+            // verify the required parameter 'putAdminGroupsUpdateRequest' is set
+            if (putAdminGroupsUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminGroupsUpdateRequest' when calling AdminGroupsApi->PatchAdminGroupsUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2630,6 +2733,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("groupId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(groupId)); // path parameter
+            localVarRequestOptions.Data = putAdminGroupsUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2662,10 +2766,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <returns>AdminGroupsCreateResponse</returns>
-        public AdminGroupsCreateResponse PutAdminGroupsUpdate(string orgId, string groupId)
+        public AdminGroupsCreateResponse PutAdminGroupsUpdate(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = PutAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = PutAdminGroupsUpdateWithHttpInfo(orgId, groupId, putAdminGroupsUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -2675,8 +2780,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <returns>ApiResponse of AdminGroupsCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> PutAdminGroupsUpdateWithHttpInfo(string orgId, string groupId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> PutAdminGroupsUpdateWithHttpInfo(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2686,9 +2792,14 @@ namespace LumoAuth.ApiClient.Api
             if (groupId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'groupId' when calling AdminGroupsApi->PutAdminGroupsUpdate");
 
+            // verify the required parameter 'putAdminGroupsUpdateRequest' is set
+            if (putAdminGroupsUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminGroupsUpdateRequest' when calling AdminGroupsApi->PutAdminGroupsUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2704,6 +2815,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("groupId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(groupId)); // path parameter
+            localVarRequestOptions.Data = putAdminGroupsUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2735,11 +2847,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminGroupsCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminGroupsCreateResponse> PutAdminGroupsUpdateAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminGroupsCreateResponse> PutAdminGroupsUpdateAsync(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = await PutAdminGroupsUpdateWithHttpInfoAsync(orgId, groupId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse> localVarResponse = await PutAdminGroupsUpdateWithHttpInfoAsync(orgId, groupId, putAdminGroupsUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2749,9 +2862,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="groupId"></param>
+        /// <param name="putAdminGroupsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminGroupsCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse>> PutAdminGroupsUpdateWithHttpInfoAsync(string orgId, string groupId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminGroupsCreateResponse>> PutAdminGroupsUpdateWithHttpInfoAsync(string orgId, string groupId, PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2761,10 +2875,15 @@ namespace LumoAuth.ApiClient.Api
             if (groupId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'groupId' when calling AdminGroupsApi->PutAdminGroupsUpdate");
 
+            // verify the required parameter 'putAdminGroupsUpdateRequest' is set
+            if (putAdminGroupsUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminGroupsUpdateRequest' when calling AdminGroupsApi->PutAdminGroupsUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2781,6 +2900,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("groupId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(groupId)); // path parameter
+            localVarRequestOptions.Data = putAdminGroupsUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -34,6 +34,7 @@ from lumoauth_api_client.models.get_approval_status_response import GetApprovalS
 from lumoauth_api_client.models.get_current_agent_response import GetCurrentAgentResponse
 from lumoauth_api_client.models.poll_agent_enrollment_request import PollAgentEnrollmentRequest
 from lumoauth_api_client.models.poll_agent_enrollment_response import PollAgentEnrollmentResponse
+from lumoauth_api_client.models.register_agent_request import RegisterAgentRequest
 from lumoauth_api_client.models.register_agent_response import RegisterAgentResponse
 from lumoauth_api_client.models.report_agent_usage_response import ReportAgentUsageResponse
 from lumoauth_api_client.models.signed_agent_card import SignedAgentCard
@@ -2711,6 +2712,7 @@ class AgentsApi:
     def register_agent(
         self,
         org_id: StrictStr,
+        register_agent_request: RegisterAgentRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2729,6 +2731,8 @@ class AgentsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param register_agent_request: (required)
+        :type register_agent_request: RegisterAgentRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2753,6 +2757,7 @@ class AgentsApi:
 
         _param = self._register_agent_serialize(
             org_id=org_id,
+            register_agent_request=register_agent_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2777,6 +2782,7 @@ class AgentsApi:
     def register_agent_with_http_info(
         self,
         org_id: StrictStr,
+        register_agent_request: RegisterAgentRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2795,6 +2801,8 @@ class AgentsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param register_agent_request: (required)
+        :type register_agent_request: RegisterAgentRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2819,6 +2827,7 @@ class AgentsApi:
 
         _param = self._register_agent_serialize(
             org_id=org_id,
+            register_agent_request=register_agent_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2843,6 +2852,7 @@ class AgentsApi:
     def register_agent_without_preload_content(
         self,
         org_id: StrictStr,
+        register_agent_request: RegisterAgentRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2861,6 +2871,8 @@ class AgentsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param register_agent_request: (required)
+        :type register_agent_request: RegisterAgentRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2885,6 +2897,7 @@ class AgentsApi:
 
         _param = self._register_agent_serialize(
             org_id=org_id,
+            register_agent_request=register_agent_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2904,6 +2917,7 @@ class AgentsApi:
     def _register_agent_serialize(
         self,
         org_id,
+        register_agent_request,
         _request_auth,
         _content_type,
         _headers,
@@ -2931,6 +2945,8 @@ class AgentsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if register_agent_request is not None:
+            _body_params = register_agent_request
 
 
         # set the HTTP header `Accept`
@@ -2941,6 +2957,19 @@ class AgentsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

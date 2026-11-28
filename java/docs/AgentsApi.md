@@ -255,7 +255,7 @@ public class Example {
 | **401** | attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. |  -  |
 | **403** | access_policy_denied — a conditional access policy refused the agent (reason code included). |  -  |
 | **404** | tenant_not_found. |  -  |
-| **429** | rate_limit_exceeded (Retry-After: 60). |  -  |
+| **429** | rate_limit_exceeded (Retry-After: 60), or budget_exceeded: the agent&#39;s budget is spent (Retry-After: seconds until the spent window ends). |  -  |
 
 <a id="authorizeMcp"></a>
 # **authorizeMcp**
@@ -410,10 +410,10 @@ public class Example {
 | **201** | Approval request created and delivered (see &#x60;delivery&#x60;). |  -  |
 | **202** | User has no push device; an email sign-in fallback link was sent. |  -  |
 | **400** | Invalid JSON, task_id, reason, impact, expires_in or meta (invalid_meta names the field), or missing on_behalf_of. |  -  |
-| **403** | Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. |  -  |
-| **404** | Tenant or target user not found. |  -  |
+| **403** | Caller is not an agent, belongs to another organization, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. |  -  |
+| **404** | Organization or target user not found. |  -  |
 | **428** | User has no enrolled push device, no approval channel receives the request, and the email fallback could not be sent. |  -  |
-| **429** | Rate limited (per tenant/agent/user). |  -  |
+| **429** | Rate limited (per organization, agent and user). |  -  |
 
 <a id="getAgentCard"></a>
 # **getAgentCard**
@@ -554,7 +554,7 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | Current status of the approval request. |  -  |
 | **403** | Caller is not an agent, or the request belongs to another agent. |  -  |
-| **404** | Tenant or approval request not found. |  -  |
+| **404** | Organization or approval request not found. |  -  |
 
 <a id="getCurrentAgent"></a>
 # **getCurrentAgent**
@@ -699,7 +699,7 @@ No authorization required
 
 <a id="registerAgent"></a>
 # **registerAgent**
-> RegisterAgentResponse registerAgent(orgId)
+> RegisterAgentResponse registerAgent(orgId, registerAgentRequest)
 
 Register (or re-register) an agent
 
@@ -730,8 +730,9 @@ public class Example {
 
     AgentsApi apiInstance = new AgentsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    RegisterAgentRequest registerAgentRequest = new RegisterAgentRequest(); // RegisterAgentRequest | 
     try {
-      RegisterAgentResponse result = apiInstance.registerAgent(orgId);
+      RegisterAgentResponse result = apiInstance.registerAgent(orgId, registerAgentRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AgentsApi#registerAgent");
@@ -749,6 +750,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **registerAgentRequest** | [**RegisterAgentRequest**](RegisterAgentRequest.md)|  | |
 
 ### Return type
 
@@ -760,7 +762,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

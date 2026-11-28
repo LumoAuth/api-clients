@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -15,20 +15,29 @@ package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
 import io.lumoauth.client.model.AuthZenDecision;
+import io.lumoauth.client.model.CheckAbacBulkRequest;
 import io.lumoauth.client.model.CheckAbacBulkResponse;
+import io.lumoauth.client.model.CheckAbacRequest;
 import io.lumoauth.client.model.CheckAbacResponse;
 import io.lumoauth.client.model.CheckAnyPermissionResponse;
+import io.lumoauth.client.model.CheckPermissionRequest;
 import io.lumoauth.client.model.CheckPermissionResponse;
+import io.lumoauth.client.model.CheckPermissionsBulkRequest;
 import io.lumoauth.client.model.CheckPermissionsBulkResponse;
+import io.lumoauth.client.model.CheckRelationRequest;
 import io.lumoauth.client.model.CheckRelationResponse;
+import io.lumoauth.client.model.CheckRelationScopedRequest;
 import io.lumoauth.client.model.CheckRelationScopedResponse;
+import io.lumoauth.client.model.EvaluateBatchRequest;
 import io.lumoauth.client.model.EvaluateBatchResponse;
+import io.lumoauth.client.model.EvaluateRequest;
 import io.lumoauth.client.model.ExpandRelationRequest;
 import io.lumoauth.client.model.ExpandRelationResponse;
 import io.lumoauth.client.model.GetMyAttributesResponse;
 import io.lumoauth.client.model.GetResourceAttributesResponse;
 import io.lumoauth.client.model.ListAttributeDefinitionsResponse;
 import io.lumoauth.client.model.ListPermissionsResponse;
+import io.lumoauth.client.model.SetResourceAttributeRequest;
 import io.lumoauth.client.model.SetResourceAttributeResponse;
 import io.lumoauth.client.model.SetUserAttributeResponse;
 import org.junit.jupiter.api.Disabled;
@@ -57,7 +66,8 @@ public class AuthorizationApiTest {
     @Test
     public void checkAbacTest() throws ApiException {
         String orgId = null;
-        CheckAbacResponse response = api.checkAbac(orgId);
+        CheckAbacRequest checkAbacRequest = null;
+        CheckAbacResponse response = api.checkAbac(orgId, checkAbacRequest);
         // TODO: test validations
     }
 
@@ -71,7 +81,8 @@ public class AuthorizationApiTest {
     @Test
     public void checkAbacBulkTest() throws ApiException {
         String orgId = null;
-        CheckAbacBulkResponse response = api.checkAbacBulk(orgId);
+        CheckAbacBulkRequest checkAbacBulkRequest = null;
+        CheckAbacBulkResponse response = api.checkAbacBulk(orgId, checkAbacBulkRequest);
         // TODO: test validations
     }
 
@@ -84,7 +95,8 @@ public class AuthorizationApiTest {
      */
     @Test
     public void checkAllPermissionsTest() throws ApiException {
-        CheckAnyPermissionResponse response = api.checkAllPermissions();
+        CheckPermissionsBulkRequest checkPermissionsBulkRequest = null;
+        CheckAnyPermissionResponse response = api.checkAllPermissions(checkPermissionsBulkRequest);
         // TODO: test validations
     }
 
@@ -97,7 +109,8 @@ public class AuthorizationApiTest {
      */
     @Test
     public void checkAnyPermissionTest() throws ApiException {
-        CheckAnyPermissionResponse response = api.checkAnyPermission();
+        CheckPermissionsBulkRequest checkPermissionsBulkRequest = null;
+        CheckAnyPermissionResponse response = api.checkAnyPermission(checkPermissionsBulkRequest);
         // TODO: test validations
     }
 
@@ -110,7 +123,8 @@ public class AuthorizationApiTest {
      */
     @Test
     public void checkPermissionTest() throws ApiException {
-        CheckPermissionResponse response = api.checkPermission();
+        CheckPermissionRequest checkPermissionRequest = null;
+        CheckPermissionResponse response = api.checkPermission(checkPermissionRequest);
         // TODO: test validations
     }
 
@@ -123,7 +137,8 @@ public class AuthorizationApiTest {
      */
     @Test
     public void checkPermissionsBulkTest() throws ApiException {
-        CheckPermissionsBulkResponse response = api.checkPermissionsBulk();
+        CheckPermissionsBulkRequest checkPermissionsBulkRequest = null;
+        CheckPermissionsBulkResponse response = api.checkPermissionsBulk(checkPermissionsBulkRequest);
         // TODO: test validations
     }
 
@@ -136,7 +151,8 @@ public class AuthorizationApiTest {
      */
     @Test
     public void checkRelationTest() throws ApiException {
-        CheckRelationResponse response = api.checkRelation();
+        CheckRelationRequest checkRelationRequest = null;
+        CheckRelationResponse response = api.checkRelation(checkRelationRequest);
         // TODO: test validations
     }
 
@@ -148,7 +164,8 @@ public class AuthorizationApiTest {
     @Test
     public void checkRelationScopedTest() throws ApiException {
         String orgId = null;
-        CheckRelationScopedResponse response = api.checkRelationScoped(orgId);
+        CheckRelationScopedRequest checkRelationScopedRequest = null;
+        CheckRelationScopedResponse response = api.checkRelationScoped(orgId, checkRelationScopedRequest);
         // TODO: test validations
     }
 
@@ -161,7 +178,8 @@ public class AuthorizationApiTest {
      */
     @Test
     public void evaluateTest() throws ApiException {
-        AuthZenDecision response = api.evaluate();
+        EvaluateRequest evaluateRequest = null;
+        AuthZenDecision response = api.evaluate(evaluateRequest);
         // TODO: test validations
     }
 
@@ -174,7 +192,8 @@ public class AuthorizationApiTest {
      */
     @Test
     public void evaluateBatchTest() throws ApiException {
-        EvaluateBatchResponse response = api.evaluateBatch();
+        EvaluateBatchRequest evaluateBatchRequest = null;
+        EvaluateBatchResponse response = api.evaluateBatch(evaluateBatchRequest);
         // TODO: test validations
     }
 
@@ -278,7 +297,8 @@ public class AuthorizationApiTest {
         String resourceType = null;
         String resourceId = null;
         String attributeSlug = null;
-        SetResourceAttributeResponse response = api.setResourceAttribute(orgId, resourceType, resourceId, attributeSlug);
+        SetResourceAttributeRequest setResourceAttributeRequest = null;
+        SetResourceAttributeResponse response = api.setResourceAttribute(orgId, resourceType, resourceId, attributeSlug, setResourceAttributeRequest);
         // TODO: test validations
     }
 
@@ -294,7 +314,8 @@ public class AuthorizationApiTest {
         String orgId = null;
         String userId = null;
         String attributeSlug = null;
-        SetUserAttributeResponse response = api.setUserAttribute(orgId, userId, attributeSlug);
+        SetResourceAttributeRequest setResourceAttributeRequest = null;
+        SetUserAttributeResponse response = api.setUserAttribute(orgId, userId, attributeSlug, setResourceAttributeRequest);
         // TODO: test validations
     }
 

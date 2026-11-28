@@ -13,7 +13,7 @@ import AnyCodable
 open class AdminAuditLogsAPI {
 
     /**
-     List the distinct audit action types recorded for the tenant
+     List the distinct audit action types recorded for the organization
      
      - parameter orgId: (path)  
      - returns: AdminAuditLogsActionsResponse
@@ -24,7 +24,7 @@ open class AdminAuditLogsAPI {
     }
 
     /**
-     List the distinct audit action types recorded for the tenant
+     List the distinct audit action types recorded for the organization
      - GET /orgs/{orgId}/api/v1/admin/audit-logs/actions
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -57,14 +57,57 @@ open class AdminAuditLogsAPI {
     }
 
     /**
+     * enum for parameter format
+     */
+    public enum Format_adminAuditLogsExport: String, CaseIterable {
+        case csv = "csv"
+        case json = "json"
+    }
+
+    /**
+     * enum for parameter severity
+     */
+    public enum Severity_adminAuditLogsExport: String, CaseIterable {
+        case debug = "debug"
+        case info = "info"
+        case notice = "notice"
+        case warning = "warning"
+        case error = "error"
+        case critical = "critical"
+    }
+
+    /**
+     * enum for parameter status
+     */
+    public enum Status_adminAuditLogsExport: String, CaseIterable {
+        case success = "success"
+        case failure = "failure"
+        case pending = "pending"
+        case partial = "partial"
+    }
+
+    /**
      Export audit logs as CSV (default) or JSON
      
      - parameter orgId: (path)  
+     - parameter format: (query) csv (default) or json. (optional, default to .csv)
+     - parameter eventType: (query) Exact event type, for example user.login. (optional)
+     - parameter action: (query) The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     - parameter actorId: (query) Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     - parameter targetType: (query) Kind of the subject of the event. Also accepted as resourceType. (optional)
+     - parameter targetId: (query) The subject of the event, for example the user of a login.failed entry. (optional)
+     - parameter severity: (query)  (optional)
+     - parameter status: (query) Result of the event. (optional)
+     - parameter ipAddress: (query)  (optional)
+     - parameter search: (query) Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     - parameter traceId: (query) Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     - parameter from: (query) Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     - parameter to: (query) Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      - returns: String
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminAuditLogsExport(orgId: String) async throws -> String {
-        return try await adminAuditLogsExportWithRequestBuilder(orgId: orgId).execute().body
+    open class func adminAuditLogsExport(orgId: String, format: Format_adminAuditLogsExport? = nil, eventType: String? = nil, action: String? = nil, actorId: String? = nil, targetType: String? = nil, targetId: String? = nil, severity: Severity_adminAuditLogsExport? = nil, status: Status_adminAuditLogsExport? = nil, ipAddress: String? = nil, search: String? = nil, traceId: String? = nil, from: Date? = nil, to: Date? = nil) async throws -> String {
+        return try await adminAuditLogsExportWithRequestBuilder(orgId: orgId, format: format, eventType: eventType, action: action, actorId: actorId, targetType: targetType, targetId: targetId, severity: severity, status: status, ipAddress: ipAddress, search: search, traceId: traceId, from: from, to: to).execute().body
     }
 
     /**
@@ -78,9 +121,22 @@ open class AdminAuditLogsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter format: (query) csv (default) or json. (optional, default to .csv)
+     - parameter eventType: (query) Exact event type, for example user.login. (optional)
+     - parameter action: (query) The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     - parameter actorId: (query) Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     - parameter targetType: (query) Kind of the subject of the event. Also accepted as resourceType. (optional)
+     - parameter targetId: (query) The subject of the event, for example the user of a login.failed entry. (optional)
+     - parameter severity: (query)  (optional)
+     - parameter status: (query) Result of the event. (optional)
+     - parameter ipAddress: (query)  (optional)
+     - parameter search: (query) Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     - parameter traceId: (query) Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     - parameter from: (query) Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     - parameter to: (query) Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      - returns: RequestBuilder<String> 
      */
-    open class func adminAuditLogsExportWithRequestBuilder(orgId: String) -> RequestBuilder<String> {
+    open class func adminAuditLogsExportWithRequestBuilder(orgId: String, format: Format_adminAuditLogsExport? = nil, eventType: String? = nil, action: String? = nil, actorId: String? = nil, targetType: String? = nil, targetId: String? = nil, severity: Severity_adminAuditLogsExport? = nil, status: Status_adminAuditLogsExport? = nil, ipAddress: String? = nil, search: String? = nil, traceId: String? = nil, from: Date? = nil, to: Date? = nil) -> RequestBuilder<String> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/audit-logs/export"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -88,7 +144,22 @@ open class AdminAuditLogsAPI {
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "format": (wrappedValue: format?.encodeToJSON(), isExplode: true),
+            "eventType": (wrappedValue: eventType?.encodeToJSON(), isExplode: true),
+            "action": (wrappedValue: action?.encodeToJSON(), isExplode: true),
+            "actorId": (wrappedValue: actorId?.encodeToJSON(), isExplode: true),
+            "targetType": (wrappedValue: targetType?.encodeToJSON(), isExplode: true),
+            "targetId": (wrappedValue: targetId?.encodeToJSON(), isExplode: true),
+            "severity": (wrappedValue: severity?.encodeToJSON(), isExplode: true),
+            "status": (wrappedValue: status?.encodeToJSON(), isExplode: true),
+            "ipAddress": (wrappedValue: ipAddress?.encodeToJSON(), isExplode: true),
+            "search": (wrappedValue: search?.encodeToJSON(), isExplode: true),
+            "traceId": (wrappedValue: traceId?.encodeToJSON(), isExplode: true),
+            "from": (wrappedValue: from?.encodeToJSON(), isExplode: true),
+            "to": (wrappedValue: to?.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             :
@@ -151,14 +222,50 @@ open class AdminAuditLogsAPI {
     }
 
     /**
+     * enum for parameter severity
+     */
+    public enum Severity_adminAuditLogsList: String, CaseIterable {
+        case debug = "debug"
+        case info = "info"
+        case notice = "notice"
+        case warning = "warning"
+        case error = "error"
+        case critical = "critical"
+    }
+
+    /**
+     * enum for parameter status
+     */
+    public enum Status_adminAuditLogsList: String, CaseIterable {
+        case success = "success"
+        case failure = "failure"
+        case pending = "pending"
+        case partial = "partial"
+    }
+
+    /**
      List audit log entries
      
      - parameter orgId: (path)  
+     - parameter page: (query)  (optional, default to 1)
+     - parameter limit: (query)  (optional, default to 25)
+     - parameter eventType: (query) Exact event type, for example user.login. (optional)
+     - parameter action: (query) The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     - parameter actorId: (query) Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     - parameter targetType: (query) Kind of the subject of the event. Also accepted as resourceType. (optional)
+     - parameter targetId: (query) The subject of the event, for example the user of a login.failed entry. (optional)
+     - parameter severity: (query)  (optional)
+     - parameter status: (query) Result of the event. (optional)
+     - parameter ipAddress: (query)  (optional)
+     - parameter search: (query) Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     - parameter traceId: (query) Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     - parameter from: (query) Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     - parameter to: (query) Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      - returns: AdminAuditLogsListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminAuditLogsList(orgId: String) async throws -> AdminAuditLogsListResponse {
-        return try await adminAuditLogsListWithRequestBuilder(orgId: orgId).execute().body
+    open class func adminAuditLogsList(orgId: String, page: Int? = nil, limit: Int? = nil, eventType: String? = nil, action: String? = nil, actorId: String? = nil, targetType: String? = nil, targetId: String? = nil, severity: Severity_adminAuditLogsList? = nil, status: Status_adminAuditLogsList? = nil, ipAddress: String? = nil, search: String? = nil, traceId: String? = nil, from: Date? = nil, to: Date? = nil) async throws -> AdminAuditLogsListResponse {
+        return try await adminAuditLogsListWithRequestBuilder(orgId: orgId, page: page, limit: limit, eventType: eventType, action: action, actorId: actorId, targetType: targetType, targetId: targetId, severity: severity, status: status, ipAddress: ipAddress, search: search, traceId: traceId, from: from, to: to).execute().body
     }
 
     /**
@@ -171,9 +278,23 @@ open class AdminAuditLogsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter page: (query)  (optional, default to 1)
+     - parameter limit: (query)  (optional, default to 25)
+     - parameter eventType: (query) Exact event type, for example user.login. (optional)
+     - parameter action: (query) The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     - parameter actorId: (query) Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     - parameter targetType: (query) Kind of the subject of the event. Also accepted as resourceType. (optional)
+     - parameter targetId: (query) The subject of the event, for example the user of a login.failed entry. (optional)
+     - parameter severity: (query)  (optional)
+     - parameter status: (query) Result of the event. (optional)
+     - parameter ipAddress: (query)  (optional)
+     - parameter search: (query) Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     - parameter traceId: (query) Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     - parameter from: (query) Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     - parameter to: (query) Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      - returns: RequestBuilder<AdminAuditLogsListResponse> 
      */
-    open class func adminAuditLogsListWithRequestBuilder(orgId: String) -> RequestBuilder<AdminAuditLogsListResponse> {
+    open class func adminAuditLogsListWithRequestBuilder(orgId: String, page: Int? = nil, limit: Int? = nil, eventType: String? = nil, action: String? = nil, actorId: String? = nil, targetType: String? = nil, targetId: String? = nil, severity: Severity_adminAuditLogsList? = nil, status: Status_adminAuditLogsList? = nil, ipAddress: String? = nil, search: String? = nil, traceId: String? = nil, from: Date? = nil, to: Date? = nil) -> RequestBuilder<AdminAuditLogsListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/audit-logs"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -181,7 +302,23 @@ open class AdminAuditLogsAPI {
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "page": (wrappedValue: page?.encodeToJSON(), isExplode: true),
+            "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
+            "eventType": (wrappedValue: eventType?.encodeToJSON(), isExplode: true),
+            "action": (wrappedValue: action?.encodeToJSON(), isExplode: true),
+            "actorId": (wrappedValue: actorId?.encodeToJSON(), isExplode: true),
+            "targetType": (wrappedValue: targetType?.encodeToJSON(), isExplode: true),
+            "targetId": (wrappedValue: targetId?.encodeToJSON(), isExplode: true),
+            "severity": (wrappedValue: severity?.encodeToJSON(), isExplode: true),
+            "status": (wrappedValue: status?.encodeToJSON(), isExplode: true),
+            "ipAddress": (wrappedValue: ipAddress?.encodeToJSON(), isExplode: true),
+            "search": (wrappedValue: search?.encodeToJSON(), isExplode: true),
+            "traceId": (wrappedValue: traceId?.encodeToJSON(), isExplode: true),
+            "from": (wrappedValue: from?.encodeToJSON(), isExplode: true),
+            "to": (wrappedValue: to?.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             :
@@ -286,11 +423,12 @@ open class AdminAuditLogsAPI {
      Update audit log retention settings
      
      - parameter orgId: (path)  
+     - parameter putAdminAuditLogsRetentionUpdateRequest: (body)  
      - returns: AdminAuditLogsRetentionResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminAuditLogsRetentionUpdate(orgId: String) async throws -> AdminAuditLogsRetentionResponse {
-        return try await patchAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func patchAdminAuditLogsRetentionUpdate(orgId: String, putAdminAuditLogsRetentionUpdateRequest: PutAdminAuditLogsRetentionUpdateRequest) async throws -> AdminAuditLogsRetentionResponse {
+        return try await patchAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: orgId, putAdminAuditLogsRetentionUpdateRequest: putAdminAuditLogsRetentionUpdateRequest).execute().body
     }
 
     /**
@@ -304,20 +442,21 @@ open class AdminAuditLogsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter putAdminAuditLogsRetentionUpdateRequest: (body)  
      - returns: RequestBuilder<AdminAuditLogsRetentionResponse> 
      */
-    open class func patchAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminAuditLogsRetentionResponse> {
+    open class func patchAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: String, putAdminAuditLogsRetentionUpdateRequest: PutAdminAuditLogsRetentionUpdateRequest) -> RequestBuilder<AdminAuditLogsRetentionResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/audit-logs/retention"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminAuditLogsRetentionUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -331,11 +470,12 @@ open class AdminAuditLogsAPI {
      Update audit log retention settings
      
      - parameter orgId: (path)  
+     - parameter putAdminAuditLogsRetentionUpdateRequest: (body)  
      - returns: AdminAuditLogsRetentionResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminAuditLogsRetentionUpdate(orgId: String) async throws -> AdminAuditLogsRetentionResponse {
-        return try await putAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func putAdminAuditLogsRetentionUpdate(orgId: String, putAdminAuditLogsRetentionUpdateRequest: PutAdminAuditLogsRetentionUpdateRequest) async throws -> AdminAuditLogsRetentionResponse {
+        return try await putAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: orgId, putAdminAuditLogsRetentionUpdateRequest: putAdminAuditLogsRetentionUpdateRequest).execute().body
     }
 
     /**
@@ -349,20 +489,21 @@ open class AdminAuditLogsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter putAdminAuditLogsRetentionUpdateRequest: (body)  
      - returns: RequestBuilder<AdminAuditLogsRetentionResponse> 
      */
-    open class func putAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminAuditLogsRetentionResponse> {
+    open class func putAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: String, putAdminAuditLogsRetentionUpdateRequest: PutAdminAuditLogsRetentionUpdateRequest) -> RequestBuilder<AdminAuditLogsRetentionResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/audit-logs/retention"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminAuditLogsRetentionUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

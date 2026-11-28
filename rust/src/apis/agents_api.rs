@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -567,9 +567,10 @@ pub async fn poll_agent_enrollment(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn register_agent(configuration: &configuration::Configuration, org_id: &str) -> Result<models::RegisterAgentResponse, Error<RegisterAgentError>> {
+pub async fn register_agent(configuration: &configuration::Configuration, org_id: &str, register_agent_request: models::RegisterAgentRequest) -> Result<models::RegisterAgentResponse, Error<RegisterAgentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_register_agent_request = register_agent_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/agents/register", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -588,6 +589,7 @@ pub async fn register_agent(configuration: &configuration::Configuration, org_id
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_register_agent_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

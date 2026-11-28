@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -22,6 +22,8 @@ var _ MappedNullable = &CreateTaskResponse{}
 // CreateTaskResponse struct for CreateTaskResponse
 type CreateTaskResponse struct {
 	TaskId *string `json:"task_id,omitempty"`
+	// The parent task, or null for a task without one.
+	ParentTaskId NullableString `json:"parent_task_id,omitempty"`
 	CaepSessionId *string `json:"caep_session_id,omitempty"`
 	ExpiresAt *time.Time `json:"expires_at,omitempty"`
 	AgentId *string `json:"agent_id,omitempty"`
@@ -76,6 +78,48 @@ func (o *CreateTaskResponse) HasTaskId() bool {
 // SetTaskId gets a reference to the given string and assigns it to the TaskId field.
 func (o *CreateTaskResponse) SetTaskId(v string) {
 	o.TaskId = &v
+}
+
+// GetParentTaskId returns the ParentTaskId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateTaskResponse) GetParentTaskId() string {
+	if o == nil || IsNil(o.ParentTaskId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ParentTaskId.Get()
+}
+
+// GetParentTaskIdOk returns a tuple with the ParentTaskId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateTaskResponse) GetParentTaskIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ParentTaskId.Get(), o.ParentTaskId.IsSet()
+}
+
+// HasParentTaskId returns a boolean if a field has been set.
+func (o *CreateTaskResponse) HasParentTaskId() bool {
+	if o != nil && o.ParentTaskId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetParentTaskId gets a reference to the given NullableString and assigns it to the ParentTaskId field.
+func (o *CreateTaskResponse) SetParentTaskId(v string) {
+	o.ParentTaskId.Set(&v)
+}
+// SetParentTaskIdNil sets the value for ParentTaskId to be an explicit nil
+func (o *CreateTaskResponse) SetParentTaskIdNil() {
+	o.ParentTaskId.Set(nil)
+}
+
+// UnsetParentTaskId ensures that no value is present for ParentTaskId, not even an explicit nil
+func (o *CreateTaskResponse) UnsetParentTaskId() {
+	o.ParentTaskId.Unset()
 }
 
 // GetCaepSessionId returns the CaepSessionId field value if set, zero value otherwise.
@@ -250,6 +294,9 @@ func (o CreateTaskResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.TaskId) {
 		toSerialize["task_id"] = o.TaskId
+	}
+	if o.ParentTaskId.IsSet() {
+		toSerialize["parent_task_id"] = o.ParentTaskId.Get()
 	}
 	if !IsNil(o.CaepSessionId) {
 		toSerialize["caep_session_id"] = o.CaepSessionId

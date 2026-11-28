@@ -632,7 +632,7 @@ Called by a registered resource to create a resource token binding an agent's re
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
-let issueResourceTokenRequest = IssueResourceTokenRequest(agent: "agent_example", agentJkt: "agentJkt_example", scope: "scope_example", authRequestUrl: "authRequestUrl_example", authServer: "authServer_example") // IssueResourceTokenRequest | 
+let issueResourceTokenRequest = IssueResourceTokenRequest(resource: "resource_example", agent: "agent_example", agentJkt: "agentJkt_example", scope: "scope_example", authRequestUrl: "authRequestUrl_example", authServer: "authServer_example") // IssueResourceTokenRequest | 
 
 // Resource Token Endpoint (Section 6)
 AAuthAPI.issueResourceToken(orgId: orgId, issueResourceTokenRequest: issueResourceTokenRequest) { (response, error) in
@@ -786,7 +786,7 @@ A convenience endpoint—resources can also validate locally.
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
-let verifyResourceTokenRequest = VerifyResourceTokenRequest(resourceToken: "resourceToken_example", agent: "agent_example", agentJkt: "agentJkt_example") // VerifyResourceTokenRequest | 
+let verifyResourceTokenRequest = VerifyResourceTokenRequest(resource: "resource_example", resourceToken: "resourceToken_example", agent: "agent_example", agentJkt: "agentJkt_example") // VerifyResourceTokenRequest | 
 
 // Resource Token Verification (for resources to validate their own tokens).
 AAuthAPI.verifyResourceToken(orgId: orgId, verifyResourceTokenRequest: verifyResourceTokenRequest) { (response, error) in

@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -48,16 +48,21 @@ import io.lumoauth.client.JSON;
 /**
  * IssueResourceTokenRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-28T05:25:48.073972593Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class IssueResourceTokenRequest {
+  public static final String SERIALIZED_NAME_RESOURCE = "resource";
+  @SerializedName(SERIALIZED_NAME_RESOURCE)
+  @javax.annotation.Nonnull
+  private String resource;
+
   public static final String SERIALIZED_NAME_AGENT = "agent";
   @SerializedName(SERIALIZED_NAME_AGENT)
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   private String agent;
 
   public static final String SERIALIZED_NAME_AGENT_JKT = "agent_jkt";
   @SerializedName(SERIALIZED_NAME_AGENT_JKT)
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   private String agentJkt;
 
   public static final String SERIALIZED_NAME_SCOPE = "scope";
@@ -78,7 +83,26 @@ public class IssueResourceTokenRequest {
   public IssueResourceTokenRequest() {
   }
 
-  public IssueResourceTokenRequest agent(@javax.annotation.Nullable String agent) {
+  public IssueResourceTokenRequest resource(@javax.annotation.Nonnull String resource) {
+    this.resource = resource;
+    return this;
+  }
+
+  /**
+   * Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
+   * @return resource
+   */
+  @javax.annotation.Nonnull
+  public String getResource() {
+    return resource;
+  }
+
+  public void setResource(@javax.annotation.Nonnull String resource) {
+    this.resource = resource;
+  }
+
+
+  public IssueResourceTokenRequest agent(@javax.annotation.Nonnull String agent) {
     this.agent = agent;
     return this;
   }
@@ -87,17 +111,17 @@ public class IssueResourceTokenRequest {
    * Agent identifier the resource token is bound to.
    * @return agent
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public String getAgent() {
     return agent;
   }
 
-  public void setAgent(@javax.annotation.Nullable String agent) {
+  public void setAgent(@javax.annotation.Nonnull String agent) {
     this.agent = agent;
   }
 
 
-  public IssueResourceTokenRequest agentJkt(@javax.annotation.Nullable String agentJkt) {
+  public IssueResourceTokenRequest agentJkt(@javax.annotation.Nonnull String agentJkt) {
     this.agentJkt = agentJkt;
     return this;
   }
@@ -106,12 +130,12 @@ public class IssueResourceTokenRequest {
    * JWK thumbprint of the agent key (PoP binding).
    * @return agentJkt
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public String getAgentJkt() {
     return agentJkt;
   }
 
-  public void setAgentJkt(@javax.annotation.Nullable String agentJkt) {
+  public void setAgentJkt(@javax.annotation.Nonnull String agentJkt) {
     this.agentJkt = agentJkt;
   }
 
@@ -183,7 +207,8 @@ public class IssueResourceTokenRequest {
       return false;
     }
     IssueResourceTokenRequest issueResourceTokenRequest = (IssueResourceTokenRequest) o;
-    return Objects.equals(this.agent, issueResourceTokenRequest.agent) &&
+    return Objects.equals(this.resource, issueResourceTokenRequest.resource) &&
+        Objects.equals(this.agent, issueResourceTokenRequest.agent) &&
         Objects.equals(this.agentJkt, issueResourceTokenRequest.agentJkt) &&
         Objects.equals(this.scope, issueResourceTokenRequest.scope) &&
         Objects.equals(this.authRequestUrl, issueResourceTokenRequest.authRequestUrl) &&
@@ -192,13 +217,14 @@ public class IssueResourceTokenRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(agent, agentJkt, scope, authRequestUrl, authServer);
+    return Objects.hash(resource, agent, agentJkt, scope, authRequestUrl, authServer);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class IssueResourceTokenRequest {\n");
+    sb.append("    resource: ").append(toIndentedString(resource)).append("\n");
     sb.append("    agent: ").append(toIndentedString(agent)).append("\n");
     sb.append("    agentJkt: ").append(toIndentedString(agentJkt)).append("\n");
     sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
@@ -225,10 +251,10 @@ public class IssueResourceTokenRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("agent", "agent_jkt", "scope", "auth_request_url", "auth_server"));
+    openapiFields = new HashSet<String>(Arrays.asList("resource", "agent", "agent_jkt", "scope", "auth_request_url", "auth_server"));
 
     // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>(0);
+    openapiRequiredFields = new HashSet<String>(Arrays.asList("resource", "agent", "agent_jkt"));
   }
 
   /**
@@ -251,11 +277,21 @@ public class IssueResourceTokenRequest {
           throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IssueResourceTokenRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+
+      // check to make sure all required properties/fields are present in the JSON string
+      for (String requiredField : IssueResourceTokenRequest.openapiRequiredFields) {
+        if (jsonElement.getAsJsonObject().get(requiredField) == null) {
+          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonElement.toString()));
+        }
+      }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
-      if ((jsonObj.get("agent") != null && !jsonObj.get("agent").isJsonNull()) && !jsonObj.get("agent").isJsonPrimitive()) {
+      if (!jsonObj.get("resource").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `resource` to be a primitive type in the JSON string but got `%s`", jsonObj.get("resource").toString()));
+      }
+      if (!jsonObj.get("agent").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `agent` to be a primitive type in the JSON string but got `%s`", jsonObj.get("agent").toString()));
       }
-      if ((jsonObj.get("agent_jkt") != null && !jsonObj.get("agent_jkt").isJsonNull()) && !jsonObj.get("agent_jkt").isJsonPrimitive()) {
+      if (!jsonObj.get("agent_jkt").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `agent_jkt` to be a primitive type in the JSON string but got `%s`", jsonObj.get("agent_jkt").toString()));
       }
       if ((jsonObj.get("scope") != null && !jsonObj.get("scope").isJsonNull()) && !jsonObj.get("scope").isJsonPrimitive()) {

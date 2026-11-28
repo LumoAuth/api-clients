@@ -25,7 +25,7 @@ Method | HTTP request | Description
 
 
 # **check_abac**
-> CheckAbacResponse check_abac(org_id)
+> CheckAbacResponse check_abac(org_id, check_abac_request)
 
 Evaluate an ABAC policy decision for the caller
 
@@ -45,6 +45,7 @@ Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_abac_request import CheckAbacRequest
 from lumoauth_api_client.models.check_abac_response import CheckAbacResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -70,10 +71,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
     org_id = 'org_id_example' # str | 
+    check_abac_request = lumoauth_api_client.CheckAbacRequest() # CheckAbacRequest | 
 
     try:
         # Evaluate an ABAC policy decision for the caller
-        api_response = api_instance.check_abac(org_id)
+        api_response = api_instance.check_abac(org_id, check_abac_request)
         print("The response of AuthorizationApi->check_abac:\n")
         pprint(api_response)
     except Exception as e:
@@ -88,6 +90,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **check_abac_request** | [**CheckAbacRequest**](CheckAbacRequest.md)|  | 
 
 ### Return type
 
@@ -99,7 +102,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -111,7 +114,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_abac_bulk**
-> CheckAbacBulkResponse check_abac_bulk(org_id)
+> CheckAbacBulkResponse check_abac_bulk(org_id, check_abac_bulk_request)
 
 Evaluate up to 100 ABAC checks for the caller in one call
 
@@ -130,6 +133,7 @@ Body: {
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_abac_bulk_request import CheckAbacBulkRequest
 from lumoauth_api_client.models.check_abac_bulk_response import CheckAbacBulkResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -155,10 +159,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
     org_id = 'org_id_example' # str | 
+    check_abac_bulk_request = lumoauth_api_client.CheckAbacBulkRequest() # CheckAbacBulkRequest | 
 
     try:
         # Evaluate up to 100 ABAC checks for the caller in one call
-        api_response = api_instance.check_abac_bulk(org_id)
+        api_response = api_instance.check_abac_bulk(org_id, check_abac_bulk_request)
         print("The response of AuthorizationApi->check_abac_bulk:\n")
         pprint(api_response)
     except Exception as e:
@@ -173,6 +178,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **check_abac_bulk_request** | [**CheckAbacBulkRequest**](CheckAbacBulkRequest.md)|  | 
 
 ### Return type
 
@@ -184,7 +190,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -196,7 +202,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_all_permissions**
-> CheckAnyPermissionResponse check_all_permissions()
+> CheckAnyPermissionResponse check_all_permissions(check_permissions_bulk_request)
 
 Check whether the subject holds all of the permissions
 
@@ -215,6 +221,7 @@ Body: {
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.check_any_permission_response import CheckAnyPermissionResponse
+from lumoauth_api_client.models.check_permissions_bulk_request import CheckPermissionsBulkRequest
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -244,10 +251,11 @@ configuration = lumoauth_api_client.Configuration(
 with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
+    check_permissions_bulk_request = lumoauth_api_client.CheckPermissionsBulkRequest() # CheckPermissionsBulkRequest | 
 
     try:
         # Check whether the subject holds all of the permissions
-        api_response = api_instance.check_all_permissions()
+        api_response = api_instance.check_all_permissions(check_permissions_bulk_request)
         print("The response of AuthorizationApi->check_all_permissions:\n")
         pprint(api_response)
     except Exception as e:
@@ -258,7 +266,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **check_permissions_bulk_request** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md)|  | 
 
 ### Return type
 
@@ -270,7 +281,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -282,7 +293,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_any_permission**
-> CheckAnyPermissionResponse check_any_permission()
+> CheckAnyPermissionResponse check_any_permission(check_permissions_bulk_request)
 
 Check whether the subject holds any of the permissions
 
@@ -301,6 +312,7 @@ Body: {
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.check_any_permission_response import CheckAnyPermissionResponse
+from lumoauth_api_client.models.check_permissions_bulk_request import CheckPermissionsBulkRequest
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -330,10 +342,11 @@ configuration = lumoauth_api_client.Configuration(
 with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
+    check_permissions_bulk_request = lumoauth_api_client.CheckPermissionsBulkRequest() # CheckPermissionsBulkRequest | 
 
     try:
         # Check whether the subject holds any of the permissions
-        api_response = api_instance.check_any_permission()
+        api_response = api_instance.check_any_permission(check_permissions_bulk_request)
         print("The response of AuthorizationApi->check_any_permission:\n")
         pprint(api_response)
     except Exception as e:
@@ -344,7 +357,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **check_permissions_bulk_request** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md)|  | 
 
 ### Return type
 
@@ -356,7 +372,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -368,7 +384,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_permission**
-> CheckPermissionResponse check_permission()
+> CheckPermissionResponse check_permission(check_permission_request)
 
 Check one permission
 
@@ -391,6 +407,7 @@ ThirdPartySubjectGuard.
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_permission_request import CheckPermissionRequest
 from lumoauth_api_client.models.check_permission_response import CheckPermissionResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -421,10 +438,11 @@ configuration = lumoauth_api_client.Configuration(
 with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
+    check_permission_request = lumoauth_api_client.CheckPermissionRequest() # CheckPermissionRequest | 
 
     try:
         # Check one permission
-        api_response = api_instance.check_permission()
+        api_response = api_instance.check_permission(check_permission_request)
         print("The response of AuthorizationApi->check_permission:\n")
         pprint(api_response)
     except Exception as e:
@@ -435,7 +453,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **check_permission_request** | [**CheckPermissionRequest**](CheckPermissionRequest.md)|  | 
 
 ### Return type
 
@@ -447,7 +468,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -459,7 +480,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_permissions_bulk**
-> CheckPermissionsBulkResponse check_permissions_bulk()
+> CheckPermissionsBulkResponse check_permissions_bulk(check_permissions_bulk_request)
 
 Check up to 100 permissions in one call
 
@@ -477,6 +498,7 @@ Body: {
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_permissions_bulk_request import CheckPermissionsBulkRequest
 from lumoauth_api_client.models.check_permissions_bulk_response import CheckPermissionsBulkResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -507,10 +529,11 @@ configuration = lumoauth_api_client.Configuration(
 with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
+    check_permissions_bulk_request = lumoauth_api_client.CheckPermissionsBulkRequest() # CheckPermissionsBulkRequest | 
 
     try:
         # Check up to 100 permissions in one call
-        api_response = api_instance.check_permissions_bulk()
+        api_response = api_instance.check_permissions_bulk(check_permissions_bulk_request)
         print("The response of AuthorizationApi->check_permissions_bulk:\n")
         pprint(api_response)
     except Exception as e:
@@ -521,7 +544,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **check_permissions_bulk_request** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md)|  | 
 
 ### Return type
 
@@ -533,7 +559,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -545,7 +571,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_relation**
-> CheckRelationResponse check_relation()
+> CheckRelationResponse check_relation(check_relation_request)
 
 Zanzibar relationship check
 
@@ -563,6 +589,7 @@ Body: {
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_relation_request import CheckRelationRequest
 from lumoauth_api_client.models.check_relation_response import CheckRelationResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -593,10 +620,11 @@ configuration = lumoauth_api_client.Configuration(
 with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
+    check_relation_request = lumoauth_api_client.CheckRelationRequest() # CheckRelationRequest | 
 
     try:
         # Zanzibar relationship check
-        api_response = api_instance.check_relation()
+        api_response = api_instance.check_relation(check_relation_request)
         print("The response of AuthorizationApi->check_relation:\n")
         pprint(api_response)
     except Exception as e:
@@ -607,7 +635,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **check_relation_request** | [**CheckRelationRequest**](CheckRelationRequest.md)|  | 
 
 ### Return type
 
@@ -619,7 +650,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -631,7 +662,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_relation_scoped**
-> CheckRelationScopedResponse check_relation_scoped(org_id)
+> CheckRelationScopedResponse check_relation_scoped(org_id, check_relation_scoped_request)
 
 Zanzibar relationship check
 
@@ -642,6 +673,7 @@ Zanzibar relationship check
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_relation_scoped_request import CheckRelationScopedRequest
 from lumoauth_api_client.models.check_relation_scoped_response import CheckRelationScopedResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -673,10 +705,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
     org_id = 'org_id_example' # str | 
+    check_relation_scoped_request = lumoauth_api_client.CheckRelationScopedRequest() # CheckRelationScopedRequest | 
 
     try:
         # Zanzibar relationship check
-        api_response = api_instance.check_relation_scoped(org_id)
+        api_response = api_instance.check_relation_scoped(org_id, check_relation_scoped_request)
         print("The response of AuthorizationApi->check_relation_scoped:\n")
         pprint(api_response)
     except Exception as e:
@@ -691,6 +724,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **check_relation_scoped_request** | [**CheckRelationScopedRequest**](CheckRelationScopedRequest.md)|  | 
 
 ### Return type
 
@@ -702,7 +736,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -714,7 +748,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **evaluate**
-> AuthZenDecision evaluate()
+> AuthZenDecision evaluate(evaluate_request)
 
 AuthZEN 1.0 access evaluation
 
@@ -735,6 +769,7 @@ Response: {"decision": true|false, "context": {...}?}
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.auth_zen_decision import AuthZenDecision
+from lumoauth_api_client.models.evaluate_request import EvaluateRequest
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -764,10 +799,11 @@ configuration = lumoauth_api_client.Configuration(
 with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
+    evaluate_request = lumoauth_api_client.EvaluateRequest() # EvaluateRequest | AuthZEN Authorization API 1.0 evaluation request.
 
     try:
         # AuthZEN 1.0 access evaluation
-        api_response = api_instance.evaluate()
+        api_response = api_instance.evaluate(evaluate_request)
         print("The response of AuthorizationApi->evaluate:\n")
         pprint(api_response)
     except Exception as e:
@@ -778,7 +814,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **evaluate_request** | [**EvaluateRequest**](EvaluateRequest.md)| AuthZEN Authorization API 1.0 evaluation request. | 
 
 ### Return type
 
@@ -790,7 +829,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -802,7 +841,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **evaluate_batch**
-> EvaluateBatchResponse evaluate_batch()
+> EvaluateBatchResponse evaluate_batch(evaluate_batch_request)
 
 AuthZEN 1.0 boxcarred access evaluations
 
@@ -823,6 +862,7 @@ Response: {"evaluations": [{"decision": ...}, ...]} preserving order.
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.evaluate_batch_request import EvaluateBatchRequest
 from lumoauth_api_client.models.evaluate_batch_response import EvaluateBatchResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -853,10 +893,11 @@ configuration = lumoauth_api_client.Configuration(
 with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
+    evaluate_batch_request = lumoauth_api_client.EvaluateBatchRequest() # EvaluateBatchRequest | AuthZEN Authorization API 1.0 batch evaluation request.
 
     try:
         # AuthZEN 1.0 boxcarred access evaluations
-        api_response = api_instance.evaluate_batch()
+        api_response = api_instance.evaluate_batch(evaluate_batch_request)
         print("The response of AuthorizationApi->evaluate_batch:\n")
         pprint(api_response)
     except Exception as e:
@@ -867,7 +908,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **evaluate_batch_request** | [**EvaluateBatchRequest**](EvaluateBatchRequest.md)| AuthZEN Authorization API 1.0 batch evaluation request. | 
 
 ### Return type
 
@@ -879,7 +923,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1160,7 +1204,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Built-in identity attributes plus trait_&lt;key&gt; entries and tenant-defined custom attributes |  -  |
+**200** | Built-in identity attributes plus trait_&lt;key&gt; entries and custom attributes that the organization defined |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1323,7 +1367,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Definitions (tenant-defined and global) |  -  |
+**200** | Definitions (the organization&#39;s own and the built-in ones) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1412,7 +1456,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **set_resource_attribute**
-> SetResourceAttributeResponse set_resource_attribute(org_id, resource_type, resource_id, attribute_slug)
+> SetResourceAttributeResponse set_resource_attribute(org_id, resource_type, resource_id, attribute_slug, set_resource_attribute_request)
 
 Set a resource attribute
 
@@ -1425,6 +1469,7 @@ Body: { value: any }
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.set_resource_attribute_request import SetResourceAttributeRequest
 from lumoauth_api_client.models.set_resource_attribute_response import SetResourceAttributeResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1453,10 +1498,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     resource_type = 'resource_type_example' # str | 
     resource_id = 'resource_id_example' # str | 
     attribute_slug = 'attribute_slug_example' # str | 
+    set_resource_attribute_request = lumoauth_api_client.SetResourceAttributeRequest() # SetResourceAttributeRequest | 
 
     try:
         # Set a resource attribute
-        api_response = api_instance.set_resource_attribute(org_id, resource_type, resource_id, attribute_slug)
+        api_response = api_instance.set_resource_attribute(org_id, resource_type, resource_id, attribute_slug, set_resource_attribute_request)
         print("The response of AuthorizationApi->set_resource_attribute:\n")
         pprint(api_response)
     except Exception as e:
@@ -1474,6 +1520,7 @@ Name | Type | Description  | Notes
  **resource_type** | **str**|  | 
  **resource_id** | **str**|  | 
  **attribute_slug** | **str**|  | 
+ **set_resource_attribute_request** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md)|  | 
 
 ### Return type
 
@@ -1485,7 +1532,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1498,7 +1545,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **set_user_attribute**
-> SetUserAttributeResponse set_user_attribute(org_id, user_id, attribute_slug)
+> SetUserAttributeResponse set_user_attribute(org_id, user_id, attribute_slug, set_resource_attribute_request)
 
 Set a user attribute
 
@@ -1511,6 +1558,7 @@ Body: { value: any }
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.set_resource_attribute_request import SetResourceAttributeRequest
 from lumoauth_api_client.models.set_user_attribute_response import SetUserAttributeResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1538,10 +1586,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
     user_id = 'user_id_example' # str | 
     attribute_slug = 'attribute_slug_example' # str | 
+    set_resource_attribute_request = lumoauth_api_client.SetResourceAttributeRequest() # SetResourceAttributeRequest | 
 
     try:
         # Set a user attribute
-        api_response = api_instance.set_user_attribute(org_id, user_id, attribute_slug)
+        api_response = api_instance.set_user_attribute(org_id, user_id, attribute_slug, set_resource_attribute_request)
         print("The response of AuthorizationApi->set_user_attribute:\n")
         pprint(api_response)
     except Exception as e:
@@ -1558,6 +1607,7 @@ Name | Type | Description  | Notes
  **org_id** | **str**|  | 
  **user_id** | **str**|  | 
  **attribute_slug** | **str**|  | 
+ **set_resource_attribute_request** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md)|  | 
 
 ### Return type
 
@@ -1569,7 +1619,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -234,8 +234,9 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerAgentRequest"></param>
         /// <returns>RegisterAgentResponse</returns>
-        RegisterAgentResponse RegisterAgent(string orgId);
+        RegisterAgentResponse RegisterAgent(string orgId, RegisterAgentRequest registerAgentRequest);
 
         /// <summary>
         /// Register (or re-register) an agent
@@ -245,8 +246,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerAgentRequest"></param>
         /// <returns>ApiResponse of RegisterAgentResponse</returns>
-        ApiResponse<RegisterAgentResponse> RegisterAgentWithHttpInfo(string orgId);
+        ApiResponse<RegisterAgentResponse> RegisterAgentWithHttpInfo(string orgId, RegisterAgentRequest registerAgentRequest);
         /// <summary>
         /// Report the model tokens and cost that the agent used
         /// </summary>
@@ -558,9 +560,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerAgentRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of RegisterAgentResponse</returns>
-        System.Threading.Tasks.Task<RegisterAgentResponse> RegisterAgentAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<RegisterAgentResponse> RegisterAgentAsync(string orgId, RegisterAgentRequest registerAgentRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Register (or re-register) an agent
@@ -570,9 +573,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerAgentRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (RegisterAgentResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RegisterAgentResponse>> RegisterAgentWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<RegisterAgentResponse>> RegisterAgentWithHttpInfoAsync(string orgId, RegisterAgentRequest registerAgentRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Report the model tokens and cost that the agent used
         /// </summary>
@@ -2193,10 +2197,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerAgentRequest"></param>
         /// <returns>RegisterAgentResponse</returns>
-        public RegisterAgentResponse RegisterAgent(string orgId)
+        public RegisterAgentResponse RegisterAgent(string orgId, RegisterAgentRequest registerAgentRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<RegisterAgentResponse> localVarResponse = RegisterAgentWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<RegisterAgentResponse> localVarResponse = RegisterAgentWithHttpInfo(orgId, registerAgentRequest);
             return localVarResponse.Data;
         }
 
@@ -2205,16 +2210,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerAgentRequest"></param>
         /// <returns>ApiResponse of RegisterAgentResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<RegisterAgentResponse> RegisterAgentWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<RegisterAgentResponse> RegisterAgentWithHttpInfo(string orgId, RegisterAgentRequest registerAgentRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AgentsApi->RegisterAgent");
 
+            // verify the required parameter 'registerAgentRequest' is set
+            if (registerAgentRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'registerAgentRequest' when calling AgentsApi->RegisterAgent");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2229,6 +2240,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = registerAgentRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2259,11 +2271,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerAgentRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of RegisterAgentResponse</returns>
-        public async System.Threading.Tasks.Task<RegisterAgentResponse> RegisterAgentAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<RegisterAgentResponse> RegisterAgentAsync(string orgId, RegisterAgentRequest registerAgentRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<RegisterAgentResponse> localVarResponse = await RegisterAgentWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<RegisterAgentResponse> localVarResponse = await RegisterAgentWithHttpInfoAsync(orgId, registerAgentRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2272,18 +2285,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerAgentRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (RegisterAgentResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<RegisterAgentResponse>> RegisterAgentWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<RegisterAgentResponse>> RegisterAgentWithHttpInfoAsync(string orgId, RegisterAgentRequest registerAgentRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AgentsApi->RegisterAgent");
 
+            // verify the required parameter 'registerAgentRequest' is set
+            if (registerAgentRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'registerAgentRequest' when calling AgentsApi->RegisterAgent");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2299,6 +2318,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = registerAgentRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

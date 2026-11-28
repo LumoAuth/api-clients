@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -30,6 +30,7 @@ import io.lumoauth.client.model.GetApprovalStatusResponse;
 import io.lumoauth.client.model.GetCurrentAgentResponse;
 import io.lumoauth.client.model.PollAgentEnrollmentRequest;
 import io.lumoauth.client.model.PollAgentEnrollmentResponse;
+import io.lumoauth.client.model.RegisterAgentRequest;
 import io.lumoauth.client.model.RegisterAgentResponse;
 import io.lumoauth.client.model.ReportAgentUsageResponse;
 import io.lumoauth.client.model.SignedAgentCard;
@@ -187,7 +188,8 @@ public class AgentsApiTest {
     @Test
     public void registerAgentTest() throws ApiException {
         String orgId = null;
-        RegisterAgentResponse response = api.registerAgent(orgId);
+        RegisterAgentRequest registerAgentRequest = null;
+        RegisterAgentResponse response = api.registerAgent(orgId, registerAgentRequest);
         // TODO: test validations
     }
 

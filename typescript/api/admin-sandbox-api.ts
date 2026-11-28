@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -37,7 +37,7 @@ export const AdminSandboxApiAxiosParamCreator = function (configuration?: Config
     return {
         /**
          * 
-         * @summary Destroy a sandbox tenant
+         * @summary Destroy a sandbox organization
          * @param {string} orgId 
          * @param {string} sandboxSlug 
          * @param {*} [options] Override http request option.
@@ -82,7 +82,7 @@ export const AdminSandboxApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * 
-         * @summary List the caller\'s sandbox tenants
+         * @summary List the caller\'s sandbox organizations
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -123,7 +123,7 @@ export const AdminSandboxApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
-         * @summary Spawn a sandbox tenant
+         * @summary Spawn a sandbox organization
          * @param {string} orgId 
          * @param {AdminSandboxSpawnRequest} [adminSandboxSpawnRequest] 
          * @param {*} [options] Override http request option.
@@ -178,7 +178,7 @@ export const AdminSandboxApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Destroy a sandbox tenant
+         * @summary Destroy a sandbox organization
          * @param {string} orgId 
          * @param {string} sandboxSlug 
          * @param {*} [options] Override http request option.
@@ -192,7 +192,7 @@ export const AdminSandboxApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List the caller\'s sandbox tenants
+         * @summary List the caller\'s sandbox organizations
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -205,7 +205,7 @@ export const AdminSandboxApiFp = function(configuration?: Configuration) {
         },
         /**
          * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
-         * @summary Spawn a sandbox tenant
+         * @summary Spawn a sandbox organization
          * @param {string} orgId 
          * @param {AdminSandboxSpawnRequest} [adminSandboxSpawnRequest] 
          * @param {*} [options] Override http request option.
@@ -229,7 +229,7 @@ export const AdminSandboxApiFactory = function (configuration?: Configuration, b
     return {
         /**
          * 
-         * @summary Destroy a sandbox tenant
+         * @summary Destroy a sandbox organization
          * @param {AdminSandboxApiAdminSandboxDestroyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -239,7 +239,7 @@ export const AdminSandboxApiFactory = function (configuration?: Configuration, b
         },
         /**
          * 
-         * @summary List the caller\'s sandbox tenants
+         * @summary List the caller\'s sandbox organizations
          * @param {AdminSandboxApiAdminSandboxListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -249,7 +249,7 @@ export const AdminSandboxApiFactory = function (configuration?: Configuration, b
         },
         /**
          * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
-         * @summary Spawn a sandbox tenant
+         * @summary Spawn a sandbox organization
          * @param {AdminSandboxApiAdminSandboxSpawnRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -268,7 +268,7 @@ export const AdminSandboxApiFactory = function (configuration?: Configuration, b
 export interface AdminSandboxApiInterface {
     /**
      * 
-     * @summary Destroy a sandbox tenant
+     * @summary Destroy a sandbox organization
      * @param {AdminSandboxApiAdminSandboxDestroyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -278,7 +278,7 @@ export interface AdminSandboxApiInterface {
 
     /**
      * 
-     * @summary List the caller\'s sandbox tenants
+     * @summary List the caller\'s sandbox organizations
      * @param {AdminSandboxApiAdminSandboxListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -288,7 +288,7 @@ export interface AdminSandboxApiInterface {
 
     /**
      * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
-     * @summary Spawn a sandbox tenant
+     * @summary Spawn a sandbox organization
      * @param {AdminSandboxApiAdminSandboxSpawnRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -363,7 +363,7 @@ export interface AdminSandboxApiAdminSandboxSpawnRequest {
 export class AdminSandboxApi extends BaseAPI implements AdminSandboxApiInterface {
     /**
      * 
-     * @summary Destroy a sandbox tenant
+     * @summary Destroy a sandbox organization
      * @param {AdminSandboxApiAdminSandboxDestroyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -375,7 +375,7 @@ export class AdminSandboxApi extends BaseAPI implements AdminSandboxApiInterface
 
     /**
      * 
-     * @summary List the caller\'s sandbox tenants
+     * @summary List the caller\'s sandbox organizations
      * @param {AdminSandboxApiAdminSandboxListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -387,7 +387,7 @@ export class AdminSandboxApi extends BaseAPI implements AdminSandboxApiInterface
 
     /**
      * Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
-     * @summary Spawn a sandbox tenant
+     * @summary Spawn a sandbox organization
      * @param {AdminSandboxApiAdminSandboxSpawnRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

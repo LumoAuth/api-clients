@@ -25,7 +25,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminWebhooksCreate"></a>
 # **adminWebhooksCreate**
-> AdminWebhooksCreateResponse adminWebhooksCreate(orgId)
+> AdminWebhooksCreateResponse adminWebhooksCreate(orgId, adminWebhooksCreateRequest)
 
 Create a webhook
 
@@ -58,8 +58,9 @@ public class Example {
 
     AdminWebhooksApi apiInstance = new AdminWebhooksApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AdminWebhooksCreateRequest adminWebhooksCreateRequest = new AdminWebhooksCreateRequest(); // AdminWebhooksCreateRequest | 
     try {
-      AdminWebhooksCreateResponse result = apiInstance.adminWebhooksCreate(orgId);
+      AdminWebhooksCreateResponse result = apiInstance.adminWebhooksCreate(orgId, adminWebhooksCreateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksCreate");
@@ -77,6 +78,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **adminWebhooksCreateRequest** | [**AdminWebhooksCreateRequest**](AdminWebhooksCreateRequest.md)|  | |
 
 ### Return type
 
@@ -88,7 +90,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -554,7 +556,7 @@ public class Example {
 
 List webhooks
 
-Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
 
 ### Example
 ```java
@@ -780,7 +782,7 @@ public class Example {
 
 Start a webhook tunnel
 
-Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 
 ### Example
 ```java
@@ -997,7 +999,7 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. |  -  |
+| **200** | Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery, in order, whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at, body, headers}&#x60;. &#x60;payload&#x60; is the event data and &#x60;received_at&#x60; is RFC 3339. &#x60;body&#x60; is the signed request body as a string (the envelope &#x60;{event, timestamp, tenant, data}&#x60;, exactly the bytes that the signature covers: send it unchanged) and &#x60;headers&#x60; the request headers of a real delivery (&#x60;X-LumoAuth-Signature&#x60;, &#x60;X-LumoAuth-Timestamp&#x60;, &#x60;X-LumoAuth-Delivery&#x60;, &#x60;X-LumoAuth-Event&#x60;, &#x60;Content-Type&#x60;, &#x60;User-Agent&#x60;); both are null for a delivery without a stored request. A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. |  -  |
 | **400** | Not a tunnel webhook |  -  |
 | **404** | Webhook not found |  -  |
 
@@ -1151,7 +1153,7 @@ public class Example {
 
 <a id="patchAdminWebhooksUpdate"></a>
 # **patchAdminWebhooksUpdate**
-> PutAdminWebhooksUpdateResponse patchAdminWebhooksUpdate(orgId, webhookId)
+> PutAdminWebhooksUpdateResponse patchAdminWebhooksUpdate(orgId, webhookId, putAdminWebhooksUpdateRequest)
 
 Partially update a webhook
 
@@ -1183,8 +1185,9 @@ public class Example {
     AdminWebhooksApi apiInstance = new AdminWebhooksApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String webhookId = "webhookId_example"; // String | 
+    PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest = new PutAdminWebhooksUpdateRequest(); // PutAdminWebhooksUpdateRequest | 
     try {
-      PutAdminWebhooksUpdateResponse result = apiInstance.patchAdminWebhooksUpdate(orgId, webhookId);
+      PutAdminWebhooksUpdateResponse result = apiInstance.patchAdminWebhooksUpdate(orgId, webhookId, putAdminWebhooksUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#patchAdminWebhooksUpdate");
@@ -1203,6 +1206,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **webhookId** | **String**|  | |
+| **putAdminWebhooksUpdateRequest** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1214,7 +1218,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1225,7 +1229,7 @@ public class Example {
 
 <a id="putAdminWebhooksUpdate"></a>
 # **putAdminWebhooksUpdate**
-> PutAdminWebhooksUpdateResponse putAdminWebhooksUpdate(orgId, webhookId)
+> PutAdminWebhooksUpdateResponse putAdminWebhooksUpdate(orgId, webhookId, putAdminWebhooksUpdateRequest)
 
 Update a webhook
 
@@ -1259,8 +1263,9 @@ public class Example {
     AdminWebhooksApi apiInstance = new AdminWebhooksApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String webhookId = "webhookId_example"; // String | 
+    PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest = new PutAdminWebhooksUpdateRequest(); // PutAdminWebhooksUpdateRequest | 
     try {
-      PutAdminWebhooksUpdateResponse result = apiInstance.putAdminWebhooksUpdate(orgId, webhookId);
+      PutAdminWebhooksUpdateResponse result = apiInstance.putAdminWebhooksUpdate(orgId, webhookId, putAdminWebhooksUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#putAdminWebhooksUpdate");
@@ -1279,6 +1284,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **webhookId** | **String**|  | |
+| **putAdminWebhooksUpdateRequest** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1290,7 +1296,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

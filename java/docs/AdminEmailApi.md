@@ -245,7 +245,7 @@ public class Example {
 
 <a id="adminEmailTemplatesPreview"></a>
 # **adminEmailTemplatesPreview**
-> AdminEmailTemplatesPreviewResponse adminEmailTemplatesPreview(orgId, type)
+> AdminEmailTemplatesPreviewResponse adminEmailTemplatesPreview(orgId, type, adminEmailTemplatesPreviewRequest)
 
 Render an email template with sample data
 
@@ -277,8 +277,9 @@ public class Example {
     AdminEmailApi apiInstance = new AdminEmailApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String type = "type_example"; // String | 
+    AdminEmailTemplatesPreviewRequest adminEmailTemplatesPreviewRequest = new AdminEmailTemplatesPreviewRequest(); // AdminEmailTemplatesPreviewRequest | 
     try {
-      AdminEmailTemplatesPreviewResponse result = apiInstance.adminEmailTemplatesPreview(orgId, type);
+      AdminEmailTemplatesPreviewResponse result = apiInstance.adminEmailTemplatesPreview(orgId, type, adminEmailTemplatesPreviewRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminEmailApi#adminEmailTemplatesPreview");
@@ -297,6 +298,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **type** | **String**|  | |
+| **adminEmailTemplatesPreviewRequest** | [**AdminEmailTemplatesPreviewRequest**](AdminEmailTemplatesPreviewRequest.md)|  | [optional] |
 
 ### Return type
 
@@ -308,7 +310,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -319,7 +321,7 @@ public class Example {
 
 <a id="adminEmailTemplatesUpsert"></a>
 # **adminEmailTemplatesUpsert**
-> EmailTemplate adminEmailTemplatesUpsert(orgId, type)
+> EmailTemplate adminEmailTemplatesUpsert(orgId, type, adminEmailTemplatesUpsertRequest)
 
 Create or replace the custom email template for a type
 
@@ -353,8 +355,9 @@ public class Example {
     AdminEmailApi apiInstance = new AdminEmailApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String type = "type_example"; // String | 
+    AdminEmailTemplatesUpsertRequest adminEmailTemplatesUpsertRequest = new AdminEmailTemplatesUpsertRequest(); // AdminEmailTemplatesUpsertRequest | 
     try {
-      EmailTemplate result = apiInstance.adminEmailTemplatesUpsert(orgId, type);
+      EmailTemplate result = apiInstance.adminEmailTemplatesUpsert(orgId, type, adminEmailTemplatesUpsertRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminEmailApi#adminEmailTemplatesUpsert");
@@ -373,6 +376,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **type** | **String**|  | |
+| **adminEmailTemplatesUpsertRequest** | [**AdminEmailTemplatesUpsertRequest**](AdminEmailTemplatesUpsertRequest.md)|  | |
 
 ### Return type
 
@@ -384,7 +388,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -22,25 +22,31 @@ module LumoAuthApiClient
     # Create a webhook
     # Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and `configuration`. The signing secret is generated server-side and returned once in this response only: a `secret` in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
     # @param org_id [String] 
+    # @param admin_webhooks_create_request [AdminWebhooksCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminWebhooksCreateResponse]
-    def admin_webhooks_create(org_id, opts = {})
-      data, _status_code, _headers = admin_webhooks_create_with_http_info(org_id, opts)
+    def admin_webhooks_create(org_id, admin_webhooks_create_request, opts = {})
+      data, _status_code, _headers = admin_webhooks_create_with_http_info(org_id, admin_webhooks_create_request, opts)
       data
     end
 
     # Create a webhook
     # Accepts &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60; and &#x60;configuration&#x60;. The signing secret is generated server-side and returned once in this response only: a &#x60;secret&#x60; in the request, an unknown field and an event name that is not in the catalogue are refused with 400.
     # @param org_id [String] 
+    # @param admin_webhooks_create_request [AdminWebhooksCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminWebhooksCreateResponse, Integer, Hash)>] AdminWebhooksCreateResponse data, response status code and response headers
-    def admin_webhooks_create_with_http_info(org_id, opts = {})
+    def admin_webhooks_create_with_http_info(org_id, admin_webhooks_create_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_create ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminWebhooksApi.admin_webhooks_create"
+      end
+      # verify the required parameter 'admin_webhooks_create_request' is set
+      if @api_client.config.client_side_validation && admin_webhooks_create_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_webhooks_create_request' when calling AdminWebhooksApi.admin_webhooks_create"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -52,12 +58,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_webhooks_create_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminWebhooksCreateResponse'
@@ -522,7 +533,7 @@ module LumoAuthApiClient
     end
 
     # List webhooks
-    # Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+    # Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminWebhooksListResponse]
@@ -532,7 +543,7 @@ module LumoAuthApiClient
     end
 
     # List webhooks
-    # Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
+    # Paginated list of the organization&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminWebhooksListResponse, Integer, Hash)>] AdminWebhooksListResponse data, response status code and response headers
@@ -733,7 +744,7 @@ module LumoAuthApiClient
     end
 
     # Start a webhook tunnel
-    # Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+    # Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminWebhooksTunnelStartResponse]
@@ -743,7 +754,7 @@ module LumoAuthApiClient
     end
 
     # Start a webhook tunnel
-    # Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+    # Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;, with its own signing secret, returned once as &#x60;signing_secret&#x60;. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminWebhooksTunnelStartResponse, Integer, Hash)>] AdminWebhooksTunnelStartResponse data, response status code and response headers
@@ -1090,19 +1101,21 @@ module LumoAuthApiClient
     # Partially update a webhook
     # @param org_id [String] 
     # @param webhook_id [String] 
+    # @param put_admin_webhooks_update_request [PutAdminWebhooksUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminWebhooksUpdateResponse]
-    def patch_admin_webhooks_update(org_id, webhook_id, opts = {})
-      data, _status_code, _headers = patch_admin_webhooks_update_with_http_info(org_id, webhook_id, opts)
+    def patch_admin_webhooks_update(org_id, webhook_id, put_admin_webhooks_update_request, opts = {})
+      data, _status_code, _headers = patch_admin_webhooks_update_with_http_info(org_id, webhook_id, put_admin_webhooks_update_request, opts)
       data
     end
 
     # Partially update a webhook
     # @param org_id [String] 
     # @param webhook_id [String] 
+    # @param put_admin_webhooks_update_request [PutAdminWebhooksUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminWebhooksUpdateResponse, Integer, Hash)>] PutAdminWebhooksUpdateResponse data, response status code and response headers
-    def patch_admin_webhooks_update_with_http_info(org_id, webhook_id, opts = {})
+    def patch_admin_webhooks_update_with_http_info(org_id, webhook_id, put_admin_webhooks_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.patch_admin_webhooks_update ...'
       end
@@ -1119,6 +1132,10 @@ module LumoAuthApiClient
         fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.patch_admin_webhooks_update, must conform to the pattern #{pattern}."
       end
 
+      # verify the required parameter 'put_admin_webhooks_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_webhooks_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_webhooks_update_request' when calling AdminWebhooksApi.patch_admin_webhooks_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'webhookId' + '}', CGI.escape(webhook_id.to_s))
 
@@ -1129,12 +1146,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_webhooks_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminWebhooksUpdateResponse'
@@ -1163,10 +1185,11 @@ module LumoAuthApiClient
     # Changes only the fields that are sent: `url`, `events`, `isActive` (also as `active` or `enabled`), `type`, `configuration`, `rotateSecret`. A new `url` for a webhook that has a signing secret needs `rotateSecret: true`; the response then carries the new `secret` once. Unknown fields, `secret` and event names that are not in the catalogue are refused with 400.
     # @param org_id [String] 
     # @param webhook_id [String] 
+    # @param put_admin_webhooks_update_request [PutAdminWebhooksUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminWebhooksUpdateResponse]
-    def put_admin_webhooks_update(org_id, webhook_id, opts = {})
-      data, _status_code, _headers = put_admin_webhooks_update_with_http_info(org_id, webhook_id, opts)
+    def put_admin_webhooks_update(org_id, webhook_id, put_admin_webhooks_update_request, opts = {})
+      data, _status_code, _headers = put_admin_webhooks_update_with_http_info(org_id, webhook_id, put_admin_webhooks_update_request, opts)
       data
     end
 
@@ -1174,9 +1197,10 @@ module LumoAuthApiClient
     # Changes only the fields that are sent: &#x60;url&#x60;, &#x60;events&#x60;, &#x60;isActive&#x60; (also as &#x60;active&#x60; or &#x60;enabled&#x60;), &#x60;type&#x60;, &#x60;configuration&#x60;, &#x60;rotateSecret&#x60;. A new &#x60;url&#x60; for a webhook that has a signing secret needs &#x60;rotateSecret: true&#x60;; the response then carries the new &#x60;secret&#x60; once. Unknown fields, &#x60;secret&#x60; and event names that are not in the catalogue are refused with 400.
     # @param org_id [String] 
     # @param webhook_id [String] 
+    # @param put_admin_webhooks_update_request [PutAdminWebhooksUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminWebhooksUpdateResponse, Integer, Hash)>] PutAdminWebhooksUpdateResponse data, response status code and response headers
-    def put_admin_webhooks_update_with_http_info(org_id, webhook_id, opts = {})
+    def put_admin_webhooks_update_with_http_info(org_id, webhook_id, put_admin_webhooks_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.put_admin_webhooks_update ...'
       end
@@ -1193,6 +1217,10 @@ module LumoAuthApiClient
         fail ArgumentError, "invalid value for 'webhook_id' when calling AdminWebhooksApi.put_admin_webhooks_update, must conform to the pattern #{pattern}."
       end
 
+      # verify the required parameter 'put_admin_webhooks_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_webhooks_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_webhooks_update_request' when calling AdminWebhooksApi.put_admin_webhooks_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'webhookId' + '}', CGI.escape(webhook_id.to_s))
 
@@ -1203,12 +1231,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_webhooks_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminWebhooksUpdateResponse'

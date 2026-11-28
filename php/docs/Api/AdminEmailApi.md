@@ -220,7 +220,7 @@ try {
 ## `adminEmailTemplatesPreview()`
 
 ```php
-adminEmailTemplatesPreview($orgId, $type): \LumoAuth\ApiClient\Model\AdminEmailTemplatesPreviewResponse
+adminEmailTemplatesPreview($orgId, $type, $adminEmailTemplatesPreviewRequest): \LumoAuth\ApiClient\Model\AdminEmailTemplatesPreviewResponse
 ```
 
 Render an email template with sample data
@@ -249,9 +249,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminEmailApi(
 );
 $orgId = 'orgId_example'; // string
 $type = 'type_example'; // string
+$adminEmailTemplatesPreviewRequest = new \LumoAuth\ApiClient\Model\AdminEmailTemplatesPreviewRequest(); // \LumoAuth\ApiClient\Model\AdminEmailTemplatesPreviewRequest
 
 try {
-    $result = $apiInstance->adminEmailTemplatesPreview($orgId, $type);
+    $result = $apiInstance->adminEmailTemplatesPreview($orgId, $type, $adminEmailTemplatesPreviewRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminEmailApi->adminEmailTemplatesPreview: ', $e->getMessage(), PHP_EOL;
@@ -264,6 +265,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **type** | **string**|  | |
+| **adminEmailTemplatesPreviewRequest** | [**\LumoAuth\ApiClient\Model\AdminEmailTemplatesPreviewRequest**](../Model/AdminEmailTemplatesPreviewRequest.md)|  | [optional] |
 
 ### Return type
 
@@ -275,7 +277,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -285,7 +287,7 @@ try {
 ## `adminEmailTemplatesUpsert()`
 
 ```php
-adminEmailTemplatesUpsert($orgId, $type): \LumoAuth\ApiClient\Model\EmailTemplate
+adminEmailTemplatesUpsert($orgId, $type, $adminEmailTemplatesUpsertRequest): \LumoAuth\ApiClient\Model\EmailTemplate
 ```
 
 Create or replace the custom email template for a type
@@ -316,9 +318,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminEmailApi(
 );
 $orgId = 'orgId_example'; // string
 $type = 'type_example'; // string
+$adminEmailTemplatesUpsertRequest = new \LumoAuth\ApiClient\Model\AdminEmailTemplatesUpsertRequest(); // \LumoAuth\ApiClient\Model\AdminEmailTemplatesUpsertRequest
 
 try {
-    $result = $apiInstance->adminEmailTemplatesUpsert($orgId, $type);
+    $result = $apiInstance->adminEmailTemplatesUpsert($orgId, $type, $adminEmailTemplatesUpsertRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminEmailApi->adminEmailTemplatesUpsert: ', $e->getMessage(), PHP_EOL;
@@ -331,6 +334,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **type** | **string**|  | |
+| **adminEmailTemplatesUpsertRequest** | [**\LumoAuth\ApiClient\Model\AdminEmailTemplatesUpsertRequest**](../Model/AdminEmailTemplatesUpsertRequest.md)|  | |
 
 ### Return type
 
@@ -342,7 +346,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

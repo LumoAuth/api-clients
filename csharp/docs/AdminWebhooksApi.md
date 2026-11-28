@@ -24,7 +24,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminwebhookscreate"></a>
 # **AdminWebhooksCreate**
-> AdminWebhooksCreateResponse AdminWebhooksCreate (string orgId)
+> AdminWebhooksCreateResponse AdminWebhooksCreate (string orgId, AdminWebhooksCreateRequest adminWebhooksCreateRequest)
 
 Create a webhook
 
@@ -59,11 +59,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminWebhooksApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var adminWebhooksCreateRequest = new AdminWebhooksCreateRequest(); // AdminWebhooksCreateRequest | 
 
             try
             {
                 // Create a webhook
-                AdminWebhooksCreateResponse result = apiInstance.AdminWebhooksCreate(orgId);
+                AdminWebhooksCreateResponse result = apiInstance.AdminWebhooksCreate(orgId, adminWebhooksCreateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -84,7 +85,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create a webhook
-    ApiResponse<AdminWebhooksCreateResponse> response = apiInstance.AdminWebhooksCreateWithHttpInfo(orgId);
+    ApiResponse<AdminWebhooksCreateResponse> response = apiInstance.AdminWebhooksCreateWithHttpInfo(orgId, adminWebhooksCreateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -102,6 +103,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **adminWebhooksCreateRequest** | [**AdminWebhooksCreateRequest**](AdminWebhooksCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -113,7 +115,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -756,7 +758,7 @@ catch (ApiException e)
 
 List webhooks
 
-Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
 ### Example
 ```csharp
@@ -1069,7 +1071,7 @@ catch (ApiException e)
 
 Start a webhook tunnel
 
-Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 
 ### Example
 ```csharp
@@ -1371,7 +1373,7 @@ catch (ApiException e)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. |  -  |
+| **200** | Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery, in order, whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at, body, headers}&#x60;. &#x60;payload&#x60; is the event data and &#x60;received_at&#x60; is RFC 3339. &#x60;body&#x60; is the signed request body as a string (the envelope &#x60;{event, timestamp, tenant, data}&#x60;, exactly the bytes that the signature covers: send it unchanged) and &#x60;headers&#x60; the request headers of a real delivery (&#x60;X-LumoAuth-Signature&#x60;, &#x60;X-LumoAuth-Timestamp&#x60;, &#x60;X-LumoAuth-Delivery&#x60;, &#x60;X-LumoAuth-Event&#x60;, &#x60;Content-Type&#x60;, &#x60;User-Agent&#x60;); both are null for a delivery without a stored request. A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. |  -  |
 | **400** | Not a tunnel webhook |  -  |
 | **404** | Webhook not found |  -  |
 
@@ -1585,7 +1587,7 @@ catch (ApiException e)
 
 <a id="patchadminwebhooksupdate"></a>
 # **PatchAdminWebhooksUpdate**
-> PutAdminWebhooksUpdateResponse PatchAdminWebhooksUpdate (string orgId, string webhookId)
+> PutAdminWebhooksUpdateResponse PatchAdminWebhooksUpdate (string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest)
 
 Partially update a webhook
 
@@ -1619,11 +1621,12 @@ namespace Example
             var apiInstance = new AdminWebhooksApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var webhookId = "webhookId_example";  // string | 
+            var putAdminWebhooksUpdateRequest = new PutAdminWebhooksUpdateRequest(); // PutAdminWebhooksUpdateRequest | 
 
             try
             {
                 // Partially update a webhook
-                PutAdminWebhooksUpdateResponse result = apiInstance.PatchAdminWebhooksUpdate(orgId, webhookId);
+                PutAdminWebhooksUpdateResponse result = apiInstance.PatchAdminWebhooksUpdate(orgId, webhookId, putAdminWebhooksUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1644,7 +1647,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Partially update a webhook
-    ApiResponse<PutAdminWebhooksUpdateResponse> response = apiInstance.PatchAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+    ApiResponse<PutAdminWebhooksUpdateResponse> response = apiInstance.PatchAdminWebhooksUpdateWithHttpInfo(orgId, webhookId, putAdminWebhooksUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1663,6 +1666,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **webhookId** | **string** |  |  |
+| **putAdminWebhooksUpdateRequest** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1674,7 +1678,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1688,7 +1692,7 @@ catch (ApiException e)
 
 <a id="putadminwebhooksupdate"></a>
 # **PutAdminWebhooksUpdate**
-> PutAdminWebhooksUpdateResponse PutAdminWebhooksUpdate (string orgId, string webhookId)
+> PutAdminWebhooksUpdateResponse PutAdminWebhooksUpdate (string orgId, string webhookId, PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest)
 
 Update a webhook
 
@@ -1724,11 +1728,12 @@ namespace Example
             var apiInstance = new AdminWebhooksApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var webhookId = "webhookId_example";  // string | 
+            var putAdminWebhooksUpdateRequest = new PutAdminWebhooksUpdateRequest(); // PutAdminWebhooksUpdateRequest | 
 
             try
             {
                 // Update a webhook
-                PutAdminWebhooksUpdateResponse result = apiInstance.PutAdminWebhooksUpdate(orgId, webhookId);
+                PutAdminWebhooksUpdateResponse result = apiInstance.PutAdminWebhooksUpdate(orgId, webhookId, putAdminWebhooksUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1749,7 +1754,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update a webhook
-    ApiResponse<PutAdminWebhooksUpdateResponse> response = apiInstance.PutAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+    ApiResponse<PutAdminWebhooksUpdateResponse> response = apiInstance.PutAdminWebhooksUpdateWithHttpInfo(orgId, webhookId, putAdminWebhooksUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1768,6 +1773,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **webhookId** | **string** |  |  |
+| **putAdminWebhooksUpdateRequest** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1779,7 +1785,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

@@ -11,10 +11,12 @@ Method | HTTP request | Description
 [**admin_mcp_servers_grants_remove**](AdminMcpApi.md#admin_mcp_servers_grants_remove) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Remove every grant of an agent on an MCP server
 [**admin_mcp_servers_grants_set**](AdminMcpApi.md#admin_mcp_servers_grants_set) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Set the tools of an MCP server that an agent may call
 [**admin_mcp_servers_list**](AdminMcpApi.md#admin_mcp_servers_list) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers
+[**patch_admin_mcp_servers_update**](AdminMcpApi.md#patch_admin_mcp_servers_update) | **PATCH** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server
+[**put_admin_mcp_servers_update**](AdminMcpApi.md#put_admin_mcp_servers_update) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server (same as PATCH: only the fields that are sent change)
 
 
 # **admin_mcp_servers_create**
-> AdminMcpServersCreateResponse admin_mcp_servers_create(org_id)
+> AdminMcpServersCreateResponse admin_mcp_servers_create(org_id, mcp_server_write)
 
 Register an MCP server
 
@@ -28,6 +30,7 @@ The `resource_uri` is stored and returned in canonical form: lower-case scheme a
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.admin_mcp_servers_create_response import AdminMcpServersCreateResponse
+from lumoauth_api_client.models.mcp_server_write import McpServerWrite
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -58,10 +61,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminMcpApi(api_client)
     org_id = 'org_id_example' # str | 
+    mcp_server_write = lumoauth_api_client.McpServerWrite() # McpServerWrite | 
 
     try:
         # Register an MCP server
-        api_response = api_instance.admin_mcp_servers_create(org_id)
+        api_response = api_instance.admin_mcp_servers_create(org_id, mcp_server_write)
         print("The response of AdminMcpApi->admin_mcp_servers_create:\n")
         pprint(api_response)
     except Exception as e:
@@ -76,6 +80,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **mcp_server_write** | [**McpServerWrite**](McpServerWrite.md)|  | 
 
 ### Return type
 
@@ -87,7 +92,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -622,6 +627,190 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | MCP servers |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **patch_admin_mcp_servers_update**
+> AdminMcpServersCreateResponse patch_admin_mcp_servers_update(org_id, server_id, mcp_server_write)
+
+Update an MCP server
+
+Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.admin_mcp_servers_create_response import AdminMcpServersCreateResponse
+from lumoauth_api_client.models.mcp_server_write import McpServerWrite
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = lumoauth_api_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.AdminMcpApi(api_client)
+    org_id = 'org_id_example' # str | 
+    server_id = 'server_id_example' # str | 
+    mcp_server_write = lumoauth_api_client.McpServerWrite() # McpServerWrite | 
+
+    try:
+        # Update an MCP server
+        api_response = api_instance.patch_admin_mcp_servers_update(org_id, server_id, mcp_server_write)
+        print("The response of AdminMcpApi->patch_admin_mcp_servers_update:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminMcpApi->patch_admin_mcp_servers_update: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**|  | 
+ **server_id** | **str**|  | 
+ **mcp_server_write** | [**McpServerWrite**](McpServerWrite.md)|  | 
+
+### Return type
+
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Updated MCP server |  -  |
+**400** | resource_uri changed, a switch that is not a JSON boolean, or a field that cannot be set (include_scope_in_challenge, bearer_methods_supported) |  -  |
+**404** | MCP server not found |  -  |
+**422** | validation_error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **put_admin_mcp_servers_update**
+> AdminMcpServersCreateResponse put_admin_mcp_servers_update(org_id, server_id, mcp_server_write)
+
+Update an MCP server (same as PATCH: only the fields that are sent change)
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.admin_mcp_servers_create_response import AdminMcpServersCreateResponse
+from lumoauth_api_client.models.mcp_server_write import McpServerWrite
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = lumoauth_api_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.AdminMcpApi(api_client)
+    org_id = 'org_id_example' # str | 
+    server_id = 'server_id_example' # str | 
+    mcp_server_write = lumoauth_api_client.McpServerWrite() # McpServerWrite | 
+
+    try:
+        # Update an MCP server (same as PATCH: only the fields that are sent change)
+        api_response = api_instance.put_admin_mcp_servers_update(org_id, server_id, mcp_server_write)
+        print("The response of AdminMcpApi->put_admin_mcp_servers_update:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminMcpApi->put_admin_mcp_servers_update: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**|  | 
+ **server_id** | **str**|  | 
+ **mcp_server_write** | [**McpServerWrite**](McpServerWrite.md)|  | 
+
+### Return type
+
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Updated MCP server |  -  |
+**400** | resource_uri changed, or a field that cannot be set |  -  |
+**404** | MCP server not found |  -  |
+**422** | validation_error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

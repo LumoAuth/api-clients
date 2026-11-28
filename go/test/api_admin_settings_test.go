@@ -64,6 +64,49 @@ func Test_lumoauthclient_AdminSettingsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test AdminSettingsAPIService AdminInitialAccessTokensCreate", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+
+		resp, httpRes, err := apiClient.AdminSettingsAPI.AdminInitialAccessTokensCreate(context.Background(), orgId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AdminSettingsAPIService AdminInitialAccessTokensDelete", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+		var tokenId string
+
+		resp, httpRes, err := apiClient.AdminSettingsAPI.AdminInitialAccessTokensDelete(context.Background(), orgId, tokenId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AdminSettingsAPIService AdminInitialAccessTokensList", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+
+		resp, httpRes, err := apiClient.AdminSettingsAPI.AdminInitialAccessTokensList(context.Background(), orgId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AdminSettingsAPIService AdminOrganizationGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

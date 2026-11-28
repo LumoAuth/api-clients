@@ -20,7 +20,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="abacattributescreate"></a>
 # **AbacAttributesCreate**
-> AbacAttributesCreateResponse AbacAttributesCreate (string orgId)
+> AbacAttributesCreateResponse AbacAttributesCreate (string orgId, AbacAttributesCreateRequest abacAttributesCreateRequest)
 
 Create an attribute definition
 
@@ -53,11 +53,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminAbacApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var abacAttributesCreateRequest = new AbacAttributesCreateRequest(); // AbacAttributesCreateRequest | 
 
             try
             {
                 // Create an attribute definition
-                AbacAttributesCreateResponse result = apiInstance.AbacAttributesCreate(orgId);
+                AbacAttributesCreateResponse result = apiInstance.AbacAttributesCreate(orgId, abacAttributesCreateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -78,7 +79,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create an attribute definition
-    ApiResponse<AbacAttributesCreateResponse> response = apiInstance.AbacAttributesCreateWithHttpInfo(orgId);
+    ApiResponse<AbacAttributesCreateResponse> response = apiInstance.AbacAttributesCreateWithHttpInfo(orgId, abacAttributesCreateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -96,6 +97,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **abacAttributesCreateRequest** | [**AbacAttributesCreateRequest**](AbacAttributesCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -107,7 +109,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -429,7 +431,7 @@ catch (ApiException e)
 
 <a id="abacpoliciescreate"></a>
 # **AbacPoliciesCreate**
-> AbacPoliciesCreateResponse AbacPoliciesCreate (string orgId)
+> AbacPoliciesCreateResponse AbacPoliciesCreate (string orgId, AbacPoliciesCreateRequest abacPoliciesCreateRequest)
 
 Create an ABAC policy
 
@@ -462,11 +464,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminAbacApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var abacPoliciesCreateRequest = new AbacPoliciesCreateRequest(); // AbacPoliciesCreateRequest | 
 
             try
             {
                 // Create an ABAC policy
-                AbacPoliciesCreateResponse result = apiInstance.AbacPoliciesCreate(orgId);
+                AbacPoliciesCreateResponse result = apiInstance.AbacPoliciesCreate(orgId, abacPoliciesCreateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -487,7 +490,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create an ABAC policy
-    ApiResponse<AbacPoliciesCreateResponse> response = apiInstance.AbacPoliciesCreateWithHttpInfo(orgId);
+    ApiResponse<AbacPoliciesCreateResponse> response = apiInstance.AbacPoliciesCreateWithHttpInfo(orgId, abacPoliciesCreateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -505,6 +508,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **abacPoliciesCreateRequest** | [**AbacPoliciesCreateRequest**](AbacPoliciesCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -516,7 +520,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -944,7 +948,7 @@ catch (ApiException e)
 
 <a id="patchabacattributesupdate"></a>
 # **PatchAbacAttributesUpdate**
-> PutAbacAttributesUpdateResponse PatchAbacAttributesUpdate (string orgId, string id)
+> PutAbacAttributesUpdateResponse PatchAbacAttributesUpdate (string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest)
 
 Partially update an attribute definition
 
@@ -978,11 +982,12 @@ namespace Example
             var apiInstance = new AdminAbacApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var id = "id_example";  // string | 
+            var putAbacAttributesUpdateRequest = new PutAbacAttributesUpdateRequest(); // PutAbacAttributesUpdateRequest | 
 
             try
             {
                 // Partially update an attribute definition
-                PutAbacAttributesUpdateResponse result = apiInstance.PatchAbacAttributesUpdate(orgId, id);
+                PutAbacAttributesUpdateResponse result = apiInstance.PatchAbacAttributesUpdate(orgId, id, putAbacAttributesUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1003,7 +1008,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Partially update an attribute definition
-    ApiResponse<PutAbacAttributesUpdateResponse> response = apiInstance.PatchAbacAttributesUpdateWithHttpInfo(orgId, id);
+    ApiResponse<PutAbacAttributesUpdateResponse> response = apiInstance.PatchAbacAttributesUpdateWithHttpInfo(orgId, id, putAbacAttributesUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1022,6 +1027,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **id** | **string** |  |  |
+| **putAbacAttributesUpdateRequest** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1033,7 +1039,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1048,7 +1054,7 @@ catch (ApiException e)
 
 <a id="patchabacpoliciesupdate"></a>
 # **PatchAbacPoliciesUpdate**
-> PutAbacPoliciesUpdateResponse PatchAbacPoliciesUpdate (string orgId, string id)
+> PutAbacPoliciesUpdateResponse PatchAbacPoliciesUpdate (string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest)
 
 Partially update an ABAC policy
 
@@ -1082,11 +1088,12 @@ namespace Example
             var apiInstance = new AdminAbacApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var id = "id_example";  // string | 
+            var putAbacPoliciesUpdateRequest = new PutAbacPoliciesUpdateRequest(); // PutAbacPoliciesUpdateRequest | 
 
             try
             {
                 // Partially update an ABAC policy
-                PutAbacPoliciesUpdateResponse result = apiInstance.PatchAbacPoliciesUpdate(orgId, id);
+                PutAbacPoliciesUpdateResponse result = apiInstance.PatchAbacPoliciesUpdate(orgId, id, putAbacPoliciesUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1107,7 +1114,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Partially update an ABAC policy
-    ApiResponse<PutAbacPoliciesUpdateResponse> response = apiInstance.PatchAbacPoliciesUpdateWithHttpInfo(orgId, id);
+    ApiResponse<PutAbacPoliciesUpdateResponse> response = apiInstance.PatchAbacPoliciesUpdateWithHttpInfo(orgId, id, putAbacPoliciesUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1126,6 +1133,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **id** | **string** |  |  |
+| **putAbacPoliciesUpdateRequest** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1137,7 +1145,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1153,7 +1161,7 @@ catch (ApiException e)
 
 <a id="putabacattributesupdate"></a>
 # **PutAbacAttributesUpdate**
-> PutAbacAttributesUpdateResponse PutAbacAttributesUpdate (string orgId, string id)
+> PutAbacAttributesUpdateResponse PutAbacAttributesUpdate (string orgId, string id, PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest)
 
 Update an attribute definition
 
@@ -1187,11 +1195,12 @@ namespace Example
             var apiInstance = new AdminAbacApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var id = "id_example";  // string | 
+            var putAbacAttributesUpdateRequest = new PutAbacAttributesUpdateRequest(); // PutAbacAttributesUpdateRequest | 
 
             try
             {
                 // Update an attribute definition
-                PutAbacAttributesUpdateResponse result = apiInstance.PutAbacAttributesUpdate(orgId, id);
+                PutAbacAttributesUpdateResponse result = apiInstance.PutAbacAttributesUpdate(orgId, id, putAbacAttributesUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1212,7 +1221,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an attribute definition
-    ApiResponse<PutAbacAttributesUpdateResponse> response = apiInstance.PutAbacAttributesUpdateWithHttpInfo(orgId, id);
+    ApiResponse<PutAbacAttributesUpdateResponse> response = apiInstance.PutAbacAttributesUpdateWithHttpInfo(orgId, id, putAbacAttributesUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1231,6 +1240,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **id** | **string** |  |  |
+| **putAbacAttributesUpdateRequest** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1242,7 +1252,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1257,7 +1267,7 @@ catch (ApiException e)
 
 <a id="putabacpoliciesupdate"></a>
 # **PutAbacPoliciesUpdate**
-> PutAbacPoliciesUpdateResponse PutAbacPoliciesUpdate (string orgId, string id)
+> PutAbacPoliciesUpdateResponse PutAbacPoliciesUpdate (string orgId, string id, PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest)
 
 Update an ABAC policy
 
@@ -1291,11 +1301,12 @@ namespace Example
             var apiInstance = new AdminAbacApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var id = "id_example";  // string | 
+            var putAbacPoliciesUpdateRequest = new PutAbacPoliciesUpdateRequest(); // PutAbacPoliciesUpdateRequest | 
 
             try
             {
                 // Update an ABAC policy
-                PutAbacPoliciesUpdateResponse result = apiInstance.PutAbacPoliciesUpdate(orgId, id);
+                PutAbacPoliciesUpdateResponse result = apiInstance.PutAbacPoliciesUpdate(orgId, id, putAbacPoliciesUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1316,7 +1327,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an ABAC policy
-    ApiResponse<PutAbacPoliciesUpdateResponse> response = apiInstance.PutAbacPoliciesUpdateWithHttpInfo(orgId, id);
+    ApiResponse<PutAbacPoliciesUpdateResponse> response = apiInstance.PutAbacPoliciesUpdateWithHttpInfo(orgId, id, putAbacPoliciesUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1335,6 +1346,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **id** | **string** |  |  |
+| **putAbacPoliciesUpdateRequest** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1346,7 +1358,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

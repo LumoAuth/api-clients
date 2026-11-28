@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -74,11 +74,32 @@ pub enum AdminMcpServersListError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`patch_admin_mcp_servers_update`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PatchAdminMcpServersUpdateError {
+    Status400(),
+    Status404(),
+    Status422(),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`put_admin_mcp_servers_update`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PutAdminMcpServersUpdateError {
+    Status400(),
+    Status404(),
+    Status422(),
+    UnknownValue(serde_json::Value),
+}
+
 
 /// The `resource_uri` is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
-pub async fn admin_mcp_servers_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminMcpServersCreateResponse, Error<AdminMcpServersCreateError>> {
+pub async fn admin_mcp_servers_create(configuration: &configuration::Configuration, org_id: &str, mcp_server_write: models::McpServerWrite) -> Result<models::AdminMcpServersCreateResponse, Error<AdminMcpServersCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_mcp_server_write = mcp_server_write;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/mcp/servers", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -97,6 +118,7 @@ pub async fn admin_mcp_servers_create(configuration: &configuration::Configurati
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_mcp_server_write);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -414,6 +436,107 @@ pub async fn admin_mcp_servers_list(configuration: &configuration::Configuration
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminMcpServersListError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+pub async fn patch_admin_mcp_servers_update(configuration: &configuration::Configuration, org_id: &str, server_id: &str, mcp_server_write: models::McpServerWrite) -> Result<models::AdminMcpServersCreateResponse, Error<PatchAdminMcpServersUpdateError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_server_id = server_id;
+    let p_mcp_server_write = mcp_server_write;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), serverId=crate::apis::urlencode(p_server_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+    req_builder = req_builder.json(&p_mcp_server_write);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminMcpServersCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminMcpServersCreateResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<PatchAdminMcpServersUpdateError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn put_admin_mcp_servers_update(configuration: &configuration::Configuration, org_id: &str, server_id: &str, mcp_server_write: models::McpServerWrite) -> Result<models::AdminMcpServersCreateResponse, Error<PutAdminMcpServersUpdateError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_server_id = server_id;
+    let p_mcp_server_write = mcp_server_write;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), serverId=crate::apis::urlencode(p_server_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+    req_builder = req_builder.json(&p_mcp_server_write);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminMcpServersCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminMcpServersCreateResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<PutAdminMcpServersUpdateError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

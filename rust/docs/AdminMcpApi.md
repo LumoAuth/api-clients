@@ -11,12 +11,14 @@ Method | HTTP request | Description
 [**admin_mcp_servers_grants_remove**](AdminMcpApi.md#admin_mcp_servers_grants_remove) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Remove every grant of an agent on an MCP server
 [**admin_mcp_servers_grants_set**](AdminMcpApi.md#admin_mcp_servers_grants_set) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Set the tools of an MCP server that an agent may call
 [**admin_mcp_servers_list**](AdminMcpApi.md#admin_mcp_servers_list) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers
+[**patch_admin_mcp_servers_update**](AdminMcpApi.md#patch_admin_mcp_servers_update) | **PATCH** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server
+[**put_admin_mcp_servers_update**](AdminMcpApi.md#put_admin_mcp_servers_update) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server (same as PATCH: only the fields that are sent change)
 
 
 
 ## admin_mcp_servers_create
 
-> models::AdminMcpServersCreateResponse admin_mcp_servers_create(org_id)
+> models::AdminMcpServersCreateResponse admin_mcp_servers_create(org_id, mcp_server_write)
 Register an MCP server
 
 The `resource_uri` is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
@@ -27,6 +29,7 @@ The `resource_uri` is stored and returned in canonical form: lower-case scheme a
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**mcp_server_write** | [**McpServerWrite**](McpServerWrite.md) |  | [required] |
 
 ### Return type
 
@@ -38,7 +41,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -216,6 +219,68 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## patch_admin_mcp_servers_update
+
+> models::AdminMcpServersCreateResponse patch_admin_mcp_servers_update(org_id, server_id, mcp_server_write)
+Update an MCP server
+
+Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**org_id** | **String** |  | [required] |
+**server_id** | **String** |  | [required] |
+**mcp_server_write** | [**McpServerWrite**](McpServerWrite.md) |  | [required] |
+
+### Return type
+
+[**models::AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## put_admin_mcp_servers_update
+
+> models::AdminMcpServersCreateResponse put_admin_mcp_servers_update(org_id, server_id, mcp_server_write)
+Update an MCP server (same as PATCH: only the fields that are sent change)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**org_id** | **String** |  | [required] |
+**server_id** | **String** |  | [required] |
+**mcp_server_write** | [**McpServerWrite**](McpServerWrite.md) |  | [required] |
+
+### Return type
+
+[**models::AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

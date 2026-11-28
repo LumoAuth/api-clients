@@ -237,7 +237,7 @@ Name | Type | Description  | Notes
 
 ## AdminEmailTemplatesPreview
 
-> AdminEmailTemplatesPreviewResponse AdminEmailTemplatesPreview(ctx, orgId, type_).Execute()
+> AdminEmailTemplatesPreviewResponse AdminEmailTemplatesPreview(ctx, orgId, type_).AdminEmailTemplatesPreviewRequest(adminEmailTemplatesPreviewRequest).Execute()
 
 Render an email template with sample data
 
@@ -256,10 +256,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	type_ := "type__example" // string | 
+	adminEmailTemplatesPreviewRequest := *openapiclient.NewAdminEmailTemplatesPreviewRequest() // AdminEmailTemplatesPreviewRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminEmailAPI.AdminEmailTemplatesPreview(context.Background(), orgId, type_).Execute()
+	resp, r, err := apiClient.AdminEmailAPI.AdminEmailTemplatesPreview(context.Background(), orgId, type_).AdminEmailTemplatesPreviewRequest(adminEmailTemplatesPreviewRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminEmailAPI.AdminEmailTemplatesPreview``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -287,6 +288,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **adminEmailTemplatesPreviewRequest** | [**AdminEmailTemplatesPreviewRequest**](AdminEmailTemplatesPreviewRequest.md) |  | 
 
 ### Return type
 
@@ -298,7 +300,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -308,7 +310,7 @@ Name | Type | Description  | Notes
 
 ## AdminEmailTemplatesUpsert
 
-> EmailTemplate AdminEmailTemplatesUpsert(ctx, orgId, type_).Execute()
+> EmailTemplate AdminEmailTemplatesUpsert(ctx, orgId, type_).AdminEmailTemplatesUpsertRequest(adminEmailTemplatesUpsertRequest).Execute()
 
 Create or replace the custom email template for a type
 
@@ -329,10 +331,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	type_ := "type__example" // string | 
+	adminEmailTemplatesUpsertRequest := *openapiclient.NewAdminEmailTemplatesUpsertRequest("Subject_example", "BodyHtml_example") // AdminEmailTemplatesUpsertRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminEmailAPI.AdminEmailTemplatesUpsert(context.Background(), orgId, type_).Execute()
+	resp, r, err := apiClient.AdminEmailAPI.AdminEmailTemplatesUpsert(context.Background(), orgId, type_).AdminEmailTemplatesUpsertRequest(adminEmailTemplatesUpsertRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminEmailAPI.AdminEmailTemplatesUpsert``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -360,6 +363,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **adminEmailTemplatesUpsertRequest** | [**AdminEmailTemplatesUpsertRequest**](AdminEmailTemplatesUpsertRequest.md) |  | 
 
 ### Return type
 
@@ -371,7 +375,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

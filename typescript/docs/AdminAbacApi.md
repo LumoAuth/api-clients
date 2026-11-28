@@ -19,7 +19,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**putAbacPoliciesUpdate**](#putabacpoliciesupdate) | **PUT** /orgs/{orgId}/api/v1/abac/policies/{id} | Update an ABAC policy|
 
 # **abacAttributesCreate**
-> AbacAttributesCreateResponse abacAttributesCreate()
+> AbacAttributesCreateResponse abacAttributesCreate(abacAttributesCreateRequest)
 
 
 ### Example
@@ -27,16 +27,19 @@ All URIs are relative to *https://app.lumoauth.dev*
 ```typescript
 import {
     AdminAbacApi,
-    Configuration
+    Configuration,
+    AbacAttributesCreateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminAbacApi(configuration);
 
 let orgId: string; // (default to undefined)
+let abacAttributesCreateRequest: AbacAttributesCreateRequest; //
 
 const { status, data } = await apiInstance.abacAttributesCreate(
-    orgId
+    orgId,
+    abacAttributesCreateRequest
 );
 ```
 
@@ -44,6 +47,7 @@ const { status, data } = await apiInstance.abacAttributesCreate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **abacAttributesCreateRequest** | **AbacAttributesCreateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -57,7 +61,7 @@ const { status, data } = await apiInstance.abacAttributesCreate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -230,7 +234,7 @@ const { status, data } = await apiInstance.abacAttributesList(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abacPoliciesCreate**
-> AbacPoliciesCreateResponse abacPoliciesCreate()
+> AbacPoliciesCreateResponse abacPoliciesCreate(abacPoliciesCreateRequest)
 
 
 ### Example
@@ -238,16 +242,19 @@ const { status, data } = await apiInstance.abacAttributesList(
 ```typescript
 import {
     AdminAbacApi,
-    Configuration
+    Configuration,
+    AbacPoliciesCreateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminAbacApi(configuration);
 
 let orgId: string; // (default to undefined)
+let abacPoliciesCreateRequest: AbacPoliciesCreateRequest; //
 
 const { status, data } = await apiInstance.abacPoliciesCreate(
-    orgId
+    orgId,
+    abacPoliciesCreateRequest
 );
 ```
 
@@ -255,6 +262,7 @@ const { status, data } = await apiInstance.abacPoliciesCreate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **abacPoliciesCreateRequest** | **AbacPoliciesCreateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -268,7 +276,7 @@ const { status, data } = await apiInstance.abacPoliciesCreate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -499,7 +507,7 @@ const { status, data } = await apiInstance.abacPoliciesToggle(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAbacAttributesUpdate**
-> PutAbacAttributesUpdateResponse patchAbacAttributesUpdate()
+> PutAbacAttributesUpdateResponse patchAbacAttributesUpdate(putAbacAttributesUpdateRequest)
 
 
 ### Example
@@ -507,7 +515,8 @@ const { status, data } = await apiInstance.abacPoliciesToggle(
 ```typescript
 import {
     AdminAbacApi,
-    Configuration
+    Configuration,
+    PutAbacAttributesUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -515,10 +524,12 @@ const apiInstance = new AdminAbacApi(configuration);
 
 let orgId: string; // (default to undefined)
 let id: string; // (default to undefined)
+let putAbacAttributesUpdateRequest: PutAbacAttributesUpdateRequest; //
 
 const { status, data } = await apiInstance.patchAbacAttributesUpdate(
     orgId,
-    id
+    id,
+    putAbacAttributesUpdateRequest
 );
 ```
 
@@ -526,6 +537,7 @@ const { status, data } = await apiInstance.patchAbacAttributesUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAbacAttributesUpdateRequest** | **PutAbacAttributesUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **id** | [**string**] |  | defaults to undefined|
 
@@ -540,7 +552,7 @@ const { status, data } = await apiInstance.patchAbacAttributesUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -554,7 +566,7 @@ const { status, data } = await apiInstance.patchAbacAttributesUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAbacPoliciesUpdate**
-> PutAbacPoliciesUpdateResponse patchAbacPoliciesUpdate()
+> PutAbacPoliciesUpdateResponse patchAbacPoliciesUpdate(putAbacPoliciesUpdateRequest)
 
 
 ### Example
@@ -562,7 +574,8 @@ const { status, data } = await apiInstance.patchAbacAttributesUpdate(
 ```typescript
 import {
     AdminAbacApi,
-    Configuration
+    Configuration,
+    PutAbacPoliciesUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -570,10 +583,12 @@ const apiInstance = new AdminAbacApi(configuration);
 
 let orgId: string; // (default to undefined)
 let id: string; // (default to undefined)
+let putAbacPoliciesUpdateRequest: PutAbacPoliciesUpdateRequest; //
 
 const { status, data } = await apiInstance.patchAbacPoliciesUpdate(
     orgId,
-    id
+    id,
+    putAbacPoliciesUpdateRequest
 );
 ```
 
@@ -581,6 +596,7 @@ const { status, data } = await apiInstance.patchAbacPoliciesUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAbacPoliciesUpdateRequest** | **PutAbacPoliciesUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **id** | [**string**] |  | defaults to undefined|
 
@@ -595,7 +611,7 @@ const { status, data } = await apiInstance.patchAbacPoliciesUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -610,7 +626,7 @@ const { status, data } = await apiInstance.patchAbacPoliciesUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAbacAttributesUpdate**
-> PutAbacAttributesUpdateResponse putAbacAttributesUpdate()
+> PutAbacAttributesUpdateResponse putAbacAttributesUpdate(putAbacAttributesUpdateRequest)
 
 
 ### Example
@@ -618,7 +634,8 @@ const { status, data } = await apiInstance.patchAbacPoliciesUpdate(
 ```typescript
 import {
     AdminAbacApi,
-    Configuration
+    Configuration,
+    PutAbacAttributesUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -626,10 +643,12 @@ const apiInstance = new AdminAbacApi(configuration);
 
 let orgId: string; // (default to undefined)
 let id: string; // (default to undefined)
+let putAbacAttributesUpdateRequest: PutAbacAttributesUpdateRequest; //
 
 const { status, data } = await apiInstance.putAbacAttributesUpdate(
     orgId,
-    id
+    id,
+    putAbacAttributesUpdateRequest
 );
 ```
 
@@ -637,6 +656,7 @@ const { status, data } = await apiInstance.putAbacAttributesUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAbacAttributesUpdateRequest** | **PutAbacAttributesUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **id** | [**string**] |  | defaults to undefined|
 
@@ -651,7 +671,7 @@ const { status, data } = await apiInstance.putAbacAttributesUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -665,7 +685,7 @@ const { status, data } = await apiInstance.putAbacAttributesUpdate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAbacPoliciesUpdate**
-> PutAbacPoliciesUpdateResponse putAbacPoliciesUpdate()
+> PutAbacPoliciesUpdateResponse putAbacPoliciesUpdate(putAbacPoliciesUpdateRequest)
 
 
 ### Example
@@ -673,7 +693,8 @@ const { status, data } = await apiInstance.putAbacAttributesUpdate(
 ```typescript
 import {
     AdminAbacApi,
-    Configuration
+    Configuration,
+    PutAbacPoliciesUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -681,10 +702,12 @@ const apiInstance = new AdminAbacApi(configuration);
 
 let orgId: string; // (default to undefined)
 let id: string; // (default to undefined)
+let putAbacPoliciesUpdateRequest: PutAbacPoliciesUpdateRequest; //
 
 const { status, data } = await apiInstance.putAbacPoliciesUpdate(
     orgId,
-    id
+    id,
+    putAbacPoliciesUpdateRequest
 );
 ```
 
@@ -692,6 +715,7 @@ const { status, data } = await apiInstance.putAbacPoliciesUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **putAbacPoliciesUpdateRequest** | **PutAbacPoliciesUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **id** | [**string**] |  | defaults to undefined|
 
@@ -706,7 +730,7 @@ const { status, data } = await apiInstance.putAbacPoliciesUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

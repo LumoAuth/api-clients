@@ -16,11 +16,12 @@ open class AdminAbacAPI {
      Create an attribute definition
      
      - parameter orgId: (path)  
+     - parameter abacAttributesCreateRequest: (body)  
      - returns: AbacAttributesCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func abacAttributesCreate(orgId: String) async throws -> AbacAttributesCreateResponse {
-        return try await abacAttributesCreateWithRequestBuilder(orgId: orgId).execute().body
+    open class func abacAttributesCreate(orgId: String, abacAttributesCreateRequest: AbacAttributesCreateRequest) async throws -> AbacAttributesCreateResponse {
+        return try await abacAttributesCreateWithRequestBuilder(orgId: orgId, abacAttributesCreateRequest: abacAttributesCreateRequest).execute().body
     }
 
     /**
@@ -33,20 +34,21 @@ open class AdminAbacAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter abacAttributesCreateRequest: (body)  
      - returns: RequestBuilder<AbacAttributesCreateResponse> 
      */
-    open class func abacAttributesCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AbacAttributesCreateResponse> {
+    open class func abacAttributesCreateWithRequestBuilder(orgId: String, abacAttributesCreateRequest: AbacAttributesCreateRequest) -> RequestBuilder<AbacAttributesCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/abac/attributes"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: abacAttributesCreateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -202,11 +204,12 @@ open class AdminAbacAPI {
      Create an ABAC policy
      
      - parameter orgId: (path)  
+     - parameter abacPoliciesCreateRequest: (body)  
      - returns: AbacPoliciesCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func abacPoliciesCreate(orgId: String) async throws -> AbacPoliciesCreateResponse {
-        return try await abacPoliciesCreateWithRequestBuilder(orgId: orgId).execute().body
+    open class func abacPoliciesCreate(orgId: String, abacPoliciesCreateRequest: AbacPoliciesCreateRequest) async throws -> AbacPoliciesCreateResponse {
+        return try await abacPoliciesCreateWithRequestBuilder(orgId: orgId, abacPoliciesCreateRequest: abacPoliciesCreateRequest).execute().body
     }
 
     /**
@@ -219,20 +222,21 @@ open class AdminAbacAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter abacPoliciesCreateRequest: (body)  
      - returns: RequestBuilder<AbacPoliciesCreateResponse> 
      */
-    open class func abacPoliciesCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AbacPoliciesCreateResponse> {
+    open class func abacPoliciesCreateWithRequestBuilder(orgId: String, abacPoliciesCreateRequest: AbacPoliciesCreateRequest) -> RequestBuilder<AbacPoliciesCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/abac/policies"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: abacPoliciesCreateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -443,11 +447,12 @@ open class AdminAbacAPI {
      
      - parameter orgId: (path)  
      - parameter id: (path)  
+     - parameter putAbacAttributesUpdateRequest: (body)  
      - returns: PutAbacAttributesUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAbacAttributesUpdate(orgId: String, id: String) async throws -> PutAbacAttributesUpdateResponse {
-        return try await patchAbacAttributesUpdateWithRequestBuilder(orgId: orgId, id: id).execute().body
+    open class func patchAbacAttributesUpdate(orgId: String, id: String, putAbacAttributesUpdateRequest: PutAbacAttributesUpdateRequest) async throws -> PutAbacAttributesUpdateResponse {
+        return try await patchAbacAttributesUpdateWithRequestBuilder(orgId: orgId, id: id, putAbacAttributesUpdateRequest: putAbacAttributesUpdateRequest).execute().body
     }
 
     /**
@@ -461,9 +466,10 @@ open class AdminAbacAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter id: (path)  
+     - parameter putAbacAttributesUpdateRequest: (body)  
      - returns: RequestBuilder<PutAbacAttributesUpdateResponse> 
      */
-    open class func patchAbacAttributesUpdateWithRequestBuilder(orgId: String, id: String) -> RequestBuilder<PutAbacAttributesUpdateResponse> {
+    open class func patchAbacAttributesUpdateWithRequestBuilder(orgId: String, id: String, putAbacAttributesUpdateRequest: PutAbacAttributesUpdateRequest) -> RequestBuilder<PutAbacAttributesUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/abac/attributes/{id}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -472,12 +478,12 @@ open class AdminAbacAPI {
         let idPostEscape = idPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{id}", with: idPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAbacAttributesUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -492,11 +498,12 @@ open class AdminAbacAPI {
      
      - parameter orgId: (path)  
      - parameter id: (path)  
+     - parameter putAbacPoliciesUpdateRequest: (body)  
      - returns: PutAbacPoliciesUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAbacPoliciesUpdate(orgId: String, id: String) async throws -> PutAbacPoliciesUpdateResponse {
-        return try await patchAbacPoliciesUpdateWithRequestBuilder(orgId: orgId, id: id).execute().body
+    open class func patchAbacPoliciesUpdate(orgId: String, id: String, putAbacPoliciesUpdateRequest: PutAbacPoliciesUpdateRequest) async throws -> PutAbacPoliciesUpdateResponse {
+        return try await patchAbacPoliciesUpdateWithRequestBuilder(orgId: orgId, id: id, putAbacPoliciesUpdateRequest: putAbacPoliciesUpdateRequest).execute().body
     }
 
     /**
@@ -510,9 +517,10 @@ open class AdminAbacAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter id: (path)  
+     - parameter putAbacPoliciesUpdateRequest: (body)  
      - returns: RequestBuilder<PutAbacPoliciesUpdateResponse> 
      */
-    open class func patchAbacPoliciesUpdateWithRequestBuilder(orgId: String, id: String) -> RequestBuilder<PutAbacPoliciesUpdateResponse> {
+    open class func patchAbacPoliciesUpdateWithRequestBuilder(orgId: String, id: String, putAbacPoliciesUpdateRequest: PutAbacPoliciesUpdateRequest) -> RequestBuilder<PutAbacPoliciesUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/abac/policies/{id}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -521,12 +529,12 @@ open class AdminAbacAPI {
         let idPostEscape = idPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{id}", with: idPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAbacPoliciesUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -541,11 +549,12 @@ open class AdminAbacAPI {
      
      - parameter orgId: (path)  
      - parameter id: (path)  
+     - parameter putAbacAttributesUpdateRequest: (body)  
      - returns: PutAbacAttributesUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAbacAttributesUpdate(orgId: String, id: String) async throws -> PutAbacAttributesUpdateResponse {
-        return try await putAbacAttributesUpdateWithRequestBuilder(orgId: orgId, id: id).execute().body
+    open class func putAbacAttributesUpdate(orgId: String, id: String, putAbacAttributesUpdateRequest: PutAbacAttributesUpdateRequest) async throws -> PutAbacAttributesUpdateResponse {
+        return try await putAbacAttributesUpdateWithRequestBuilder(orgId: orgId, id: id, putAbacAttributesUpdateRequest: putAbacAttributesUpdateRequest).execute().body
     }
 
     /**
@@ -559,9 +568,10 @@ open class AdminAbacAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter id: (path)  
+     - parameter putAbacAttributesUpdateRequest: (body)  
      - returns: RequestBuilder<PutAbacAttributesUpdateResponse> 
      */
-    open class func putAbacAttributesUpdateWithRequestBuilder(orgId: String, id: String) -> RequestBuilder<PutAbacAttributesUpdateResponse> {
+    open class func putAbacAttributesUpdateWithRequestBuilder(orgId: String, id: String, putAbacAttributesUpdateRequest: PutAbacAttributesUpdateRequest) -> RequestBuilder<PutAbacAttributesUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/abac/attributes/{id}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -570,12 +580,12 @@ open class AdminAbacAPI {
         let idPostEscape = idPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{id}", with: idPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAbacAttributesUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -590,11 +600,12 @@ open class AdminAbacAPI {
      
      - parameter orgId: (path)  
      - parameter id: (path)  
+     - parameter putAbacPoliciesUpdateRequest: (body)  
      - returns: PutAbacPoliciesUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAbacPoliciesUpdate(orgId: String, id: String) async throws -> PutAbacPoliciesUpdateResponse {
-        return try await putAbacPoliciesUpdateWithRequestBuilder(orgId: orgId, id: id).execute().body
+    open class func putAbacPoliciesUpdate(orgId: String, id: String, putAbacPoliciesUpdateRequest: PutAbacPoliciesUpdateRequest) async throws -> PutAbacPoliciesUpdateResponse {
+        return try await putAbacPoliciesUpdateWithRequestBuilder(orgId: orgId, id: id, putAbacPoliciesUpdateRequest: putAbacPoliciesUpdateRequest).execute().body
     }
 
     /**
@@ -608,9 +619,10 @@ open class AdminAbacAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter id: (path)  
+     - parameter putAbacPoliciesUpdateRequest: (body)  
      - returns: RequestBuilder<PutAbacPoliciesUpdateResponse> 
      */
-    open class func putAbacPoliciesUpdateWithRequestBuilder(orgId: String, id: String) -> RequestBuilder<PutAbacPoliciesUpdateResponse> {
+    open class func putAbacPoliciesUpdateWithRequestBuilder(orgId: String, id: String, putAbacPoliciesUpdateRequest: PutAbacPoliciesUpdateRequest) -> RequestBuilder<PutAbacPoliciesUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/abac/policies/{id}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -619,12 +631,12 @@ open class AdminAbacAPI {
         let idPostEscape = idPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{id}", with: idPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAbacPoliciesUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

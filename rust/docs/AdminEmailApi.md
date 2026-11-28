@@ -109,7 +109,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_email_templates_preview
 
-> models::AdminEmailTemplatesPreviewResponse admin_email_templates_preview(org_id, r#type)
+> models::AdminEmailTemplatesPreviewResponse admin_email_templates_preview(org_id, r#type, admin_email_templates_preview_request)
 Render an email template with sample data
 
 ### Parameters
@@ -119,6 +119,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **r#type** | **String** |  | [required] |
+**admin_email_templates_preview_request** | Option<[**AdminEmailTemplatesPreviewRequest**](AdminEmailTemplatesPreviewRequest.md)> |  |  |
 
 ### Return type
 
@@ -130,7 +131,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -138,7 +139,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_email_templates_upsert
 
-> models::EmailTemplate admin_email_templates_upsert(org_id, r#type)
+> models::EmailTemplate admin_email_templates_upsert(org_id, r#type, admin_email_templates_upsert_request)
 Create or replace the custom email template for a type
 
 Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
@@ -150,6 +151,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **r#type** | **String** |  | [required] |
+**admin_email_templates_upsert_request** | [**AdminEmailTemplatesUpsertRequest**](AdminEmailTemplatesUpsertRequest.md) |  | [required] |
 
 ### Return type
 
@@ -161,7 +163,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

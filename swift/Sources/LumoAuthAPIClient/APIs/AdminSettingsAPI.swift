@@ -155,7 +155,147 @@ open class AdminSettingsAPI {
     }
 
     /**
-     Get organization (tenant) profile
+     Create an initial access token for dynamic client registration
+     
+     - parameter orgId: (path)  
+     - returns: AdminInitialAccessTokensCreateResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func adminInitialAccessTokensCreate(orgId: String) async throws -> AdminInitialAccessTokensCreateResponse {
+        return try await adminInitialAccessTokensCreateWithRequestBuilder(orgId: orgId).execute().body
+    }
+
+    /**
+     Create an initial access token for dynamic client registration
+     - POST /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens
+     - Generates a token and adds it to the organization's list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - returns: RequestBuilder<AdminInitialAccessTokensCreateResponse> 
+     */
+    open class func adminInitialAccessTokensCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminInitialAccessTokensCreateResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminInitialAccessTokensCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Delete an initial access token of dynamic client registration
+     
+     - parameter orgId: (path)  
+     - parameter tokenId: (path)  
+     - returns: MessageResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func adminInitialAccessTokensDelete(orgId: String, tokenId: String) async throws -> MessageResponse {
+        return try await adminInitialAccessTokensDeleteWithRequestBuilder(orgId: orgId, tokenId: tokenId).execute().body
+    }
+
+    /**
+     Delete an initial access token of dynamic client registration
+     - DELETE /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId}
+     - The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter tokenId: (path)  
+     - returns: RequestBuilder<MessageResponse> 
+     */
+    open class func adminInitialAccessTokensDeleteWithRequestBuilder(orgId: String, tokenId: String) -> RequestBuilder<MessageResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId}"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let tokenIdPreEscape = "\(APIHelper.mapValueToPathItem(tokenId))"
+        let tokenIdPostEscape = tokenIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{tokenId}", with: tokenIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<MessageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     List the initial access tokens of dynamic client registration
+     
+     - parameter orgId: (path)  
+     - returns: AdminInitialAccessTokensListResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func adminInitialAccessTokensList(orgId: String) async throws -> AdminInitialAccessTokensListResponse {
+        return try await adminInitialAccessTokensListWithRequestBuilder(orgId: orgId).execute().body
+    }
+
+    /**
+     List the initial access tokens of dynamic client registration
+     - GET /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens
+     - Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - returns: RequestBuilder<AdminInitialAccessTokensListResponse> 
+     */
+    open class func adminInitialAccessTokensListWithRequestBuilder(orgId: String) -> RequestBuilder<AdminInitialAccessTokensListResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminInitialAccessTokensListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Get organization profile
      
      - parameter orgId: (path)  
      - returns: AdminTenantGetResponse
@@ -166,7 +306,7 @@ open class AdminSettingsAPI {
     }
 
     /**
-     Get organization (tenant) profile
+     Get organization profile
      - GET /orgs/{orgId}/api/v1/admin/organization
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -553,7 +693,7 @@ open class AdminSettingsAPI {
     }
 
     /**
-     Get organization (tenant) profile
+     Get organization profile
      
      - parameter orgId: (path)  
      - returns: AdminTenantGetResponse
@@ -564,7 +704,7 @@ open class AdminSettingsAPI {
     }
 
     /**
-     Get organization (tenant) profile
+     Get organization profile
      - GET /orgs/{orgId}/api/v1/admin/tenant
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -597,18 +737,19 @@ open class AdminSettingsAPI {
     }
 
     /**
-     Update organization (tenant) name and settings
+     Update the organization's name and settings
      
      - parameter orgId: (path)  
+     - parameter putAdminTenantUpdateRequest: (body)  
      - returns: PutAdminTenantUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminOrganizationUpdate(orgId: String) async throws -> PutAdminTenantUpdateResponse {
-        return try await patchAdminOrganizationUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func patchAdminOrganizationUpdate(orgId: String, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest) async throws -> PutAdminTenantUpdateResponse {
+        return try await patchAdminOrganizationUpdateWithRequestBuilder(orgId: orgId, putAdminTenantUpdateRequest: putAdminTenantUpdateRequest).execute().body
     }
 
     /**
-     Update organization (tenant) name and settings
+     Update the organization's name and settings
      - PATCH /orgs/{orgId}/api/v1/admin/organization
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -617,20 +758,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter putAdminTenantUpdateRequest: (body)  
      - returns: RequestBuilder<PutAdminTenantUpdateResponse> 
      */
-    open class func patchAdminOrganizationUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminTenantUpdateResponse> {
+    open class func patchAdminOrganizationUpdateWithRequestBuilder(orgId: String, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest) -> RequestBuilder<PutAdminTenantUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/organization"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminTenantUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -644,16 +786,18 @@ open class AdminSettingsAPI {
      Update authentication settings
      
      - parameter orgId: (path)  
+     - parameter authenticationSettings: (body)  
      - returns: PutAdminSettingsAuthenticationUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminSettingsAuthUpdate(orgId: String) async throws -> PutAdminSettingsAuthenticationUpdateResponse {
-        return try await patchAdminSettingsAuthUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func patchAdminSettingsAuthUpdate(orgId: String, authenticationSettings: AuthenticationSettings) async throws -> PutAdminSettingsAuthenticationUpdateResponse {
+        return try await patchAdminSettingsAuthUpdateWithRequestBuilder(orgId: orgId, authenticationSettings: authenticationSettings).execute().body
     }
 
     /**
      Update authentication settings
      - PATCH /orgs/{orgId}/api/v1/admin/settings/auth
+     - The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -661,20 +805,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter authenticationSettings: (body)  
      - returns: RequestBuilder<PutAdminSettingsAuthenticationUpdateResponse> 
      */
-    open class func patchAdminSettingsAuthUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsAuthenticationUpdateResponse> {
+    open class func patchAdminSettingsAuthUpdateWithRequestBuilder(orgId: String, authenticationSettings: AuthenticationSettings) -> RequestBuilder<PutAdminSettingsAuthenticationUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/auth"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: authenticationSettings)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -688,16 +833,18 @@ open class AdminSettingsAPI {
      Update authentication settings (alias for settings/auth)
      
      - parameter orgId: (path)  
+     - parameter authenticationSettings: (body)  
      - returns: PutAdminSettingsAuthenticationUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminSettingsAuthenticationUpdate(orgId: String) async throws -> PutAdminSettingsAuthenticationUpdateResponse {
-        return try await patchAdminSettingsAuthenticationUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func patchAdminSettingsAuthenticationUpdate(orgId: String, authenticationSettings: AuthenticationSettings) async throws -> PutAdminSettingsAuthenticationUpdateResponse {
+        return try await patchAdminSettingsAuthenticationUpdateWithRequestBuilder(orgId: orgId, authenticationSettings: authenticationSettings).execute().body
     }
 
     /**
      Update authentication settings (alias for settings/auth)
      - PATCH /orgs/{orgId}/api/v1/admin/settings/authentication
+     - The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -705,20 +852,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter authenticationSettings: (body)  
      - returns: RequestBuilder<PutAdminSettingsAuthenticationUpdateResponse> 
      */
-    open class func patchAdminSettingsAuthenticationUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsAuthenticationUpdateResponse> {
+    open class func patchAdminSettingsAuthenticationUpdateWithRequestBuilder(orgId: String, authenticationSettings: AuthenticationSettings) -> RequestBuilder<PutAdminSettingsAuthenticationUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/authentication"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: authenticationSettings)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -732,11 +880,12 @@ open class AdminSettingsAPI {
      Update branding/login page settings
      
      - parameter orgId: (path)  
+     - parameter brandingSettings: (body)  
      - returns: PutAdminSettingsBrandingUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminSettingsBrandingUpdate(orgId: String) async throws -> PutAdminSettingsBrandingUpdateResponse {
-        return try await patchAdminSettingsBrandingUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func patchAdminSettingsBrandingUpdate(orgId: String, brandingSettings: BrandingSettings) async throws -> PutAdminSettingsBrandingUpdateResponse {
+        return try await patchAdminSettingsBrandingUpdateWithRequestBuilder(orgId: orgId, brandingSettings: brandingSettings).execute().body
     }
 
     /**
@@ -750,20 +899,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter brandingSettings: (body)  
      - returns: RequestBuilder<PutAdminSettingsBrandingUpdateResponse> 
      */
-    open class func patchAdminSettingsBrandingUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsBrandingUpdateResponse> {
+    open class func patchAdminSettingsBrandingUpdateWithRequestBuilder(orgId: String, brandingSettings: BrandingSettings) -> RequestBuilder<PutAdminSettingsBrandingUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/branding"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: brandingSettings)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -871,11 +1021,12 @@ open class AdminSettingsAPI {
      Update SCIM settings
      
      - parameter orgId: (path)  
+     - parameter scimSettings: (body)  
      - returns: PutAdminSettingsScimUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminSettingsScimUpdate(orgId: String) async throws -> PutAdminSettingsScimUpdateResponse {
-        return try await patchAdminSettingsScimUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func patchAdminSettingsScimUpdate(orgId: String, scimSettings: ScimSettings) async throws -> PutAdminSettingsScimUpdateResponse {
+        return try await patchAdminSettingsScimUpdateWithRequestBuilder(orgId: orgId, scimSettings: scimSettings).execute().body
     }
 
     /**
@@ -888,20 +1039,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter scimSettings: (body)  
      - returns: RequestBuilder<PutAdminSettingsScimUpdateResponse> 
      */
-    open class func patchAdminSettingsScimUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsScimUpdateResponse> {
+    open class func patchAdminSettingsScimUpdateWithRequestBuilder(orgId: String, scimSettings: ScimSettings) -> RequestBuilder<PutAdminSettingsScimUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/scim"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: scimSettings)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -915,11 +1067,12 @@ open class AdminSettingsAPI {
      Update security settings
      
      - parameter orgId: (path)  
+     - parameter putAdminSettingsSecurityUpdateRequest: (body) Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. 
      - returns: PutAdminSettingsSecurityUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminSettingsSecurityUpdate(orgId: String) async throws -> PutAdminSettingsSecurityUpdateResponse {
-        return try await patchAdminSettingsSecurityUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func patchAdminSettingsSecurityUpdate(orgId: String, putAdminSettingsSecurityUpdateRequest: PutAdminSettingsSecurityUpdateRequest) async throws -> PutAdminSettingsSecurityUpdateResponse {
+        return try await patchAdminSettingsSecurityUpdateWithRequestBuilder(orgId: orgId, putAdminSettingsSecurityUpdateRequest: putAdminSettingsSecurityUpdateRequest).execute().body
     }
 
     /**
@@ -932,20 +1085,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter putAdminSettingsSecurityUpdateRequest: (body) Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. 
      - returns: RequestBuilder<PutAdminSettingsSecurityUpdateResponse> 
      */
-    open class func patchAdminSettingsSecurityUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsSecurityUpdateResponse> {
+    open class func patchAdminSettingsSecurityUpdateWithRequestBuilder(orgId: String, putAdminSettingsSecurityUpdateRequest: PutAdminSettingsSecurityUpdateRequest) -> RequestBuilder<PutAdminSettingsSecurityUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/security"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminSettingsSecurityUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -956,18 +1110,19 @@ open class AdminSettingsAPI {
     }
 
     /**
-     Update organization (tenant) name and settings
+     Update the organization's name and settings
      
      - parameter orgId: (path)  
+     - parameter putAdminTenantUpdateRequest: (body)  
      - returns: PutAdminTenantUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminTenantUpdate(orgId: String) async throws -> PutAdminTenantUpdateResponse {
-        return try await patchAdminTenantUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func patchAdminTenantUpdate(orgId: String, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest) async throws -> PutAdminTenantUpdateResponse {
+        return try await patchAdminTenantUpdateWithRequestBuilder(orgId: orgId, putAdminTenantUpdateRequest: putAdminTenantUpdateRequest).execute().body
     }
 
     /**
-     Update organization (tenant) name and settings
+     Update the organization's name and settings
      - PATCH /orgs/{orgId}/api/v1/admin/tenant
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -976,20 +1131,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter putAdminTenantUpdateRequest: (body)  
      - returns: RequestBuilder<PutAdminTenantUpdateResponse> 
      */
-    open class func patchAdminTenantUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminTenantUpdateResponse> {
+    open class func patchAdminTenantUpdateWithRequestBuilder(orgId: String, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest) -> RequestBuilder<PutAdminTenantUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/tenant"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminTenantUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1000,18 +1156,19 @@ open class AdminSettingsAPI {
     }
 
     /**
-     Update organization (tenant) name and settings
+     Update the organization's name and settings
      
      - parameter orgId: (path)  
+     - parameter putAdminTenantUpdateRequest: (body)  
      - returns: PutAdminTenantUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminOrganizationUpdate(orgId: String) async throws -> PutAdminTenantUpdateResponse {
-        return try await putAdminOrganizationUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func putAdminOrganizationUpdate(orgId: String, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest) async throws -> PutAdminTenantUpdateResponse {
+        return try await putAdminOrganizationUpdateWithRequestBuilder(orgId: orgId, putAdminTenantUpdateRequest: putAdminTenantUpdateRequest).execute().body
     }
 
     /**
-     Update organization (tenant) name and settings
+     Update the organization's name and settings
      - PUT /orgs/{orgId}/api/v1/admin/organization
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -1020,20 +1177,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter putAdminTenantUpdateRequest: (body)  
      - returns: RequestBuilder<PutAdminTenantUpdateResponse> 
      */
-    open class func putAdminOrganizationUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminTenantUpdateResponse> {
+    open class func putAdminOrganizationUpdateWithRequestBuilder(orgId: String, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest) -> RequestBuilder<PutAdminTenantUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/organization"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminTenantUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1047,16 +1205,18 @@ open class AdminSettingsAPI {
      Update authentication settings
      
      - parameter orgId: (path)  
+     - parameter authenticationSettings: (body)  
      - returns: PutAdminSettingsAuthenticationUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminSettingsAuthUpdate(orgId: String) async throws -> PutAdminSettingsAuthenticationUpdateResponse {
-        return try await putAdminSettingsAuthUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func putAdminSettingsAuthUpdate(orgId: String, authenticationSettings: AuthenticationSettings) async throws -> PutAdminSettingsAuthenticationUpdateResponse {
+        return try await putAdminSettingsAuthUpdateWithRequestBuilder(orgId: orgId, authenticationSettings: authenticationSettings).execute().body
     }
 
     /**
      Update authentication settings
      - PUT /orgs/{orgId}/api/v1/admin/settings/auth
+     - The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -1064,20 +1224,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter authenticationSettings: (body)  
      - returns: RequestBuilder<PutAdminSettingsAuthenticationUpdateResponse> 
      */
-    open class func putAdminSettingsAuthUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsAuthenticationUpdateResponse> {
+    open class func putAdminSettingsAuthUpdateWithRequestBuilder(orgId: String, authenticationSettings: AuthenticationSettings) -> RequestBuilder<PutAdminSettingsAuthenticationUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/auth"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: authenticationSettings)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1091,16 +1252,18 @@ open class AdminSettingsAPI {
      Update authentication settings (alias for settings/auth)
      
      - parameter orgId: (path)  
+     - parameter authenticationSettings: (body)  
      - returns: PutAdminSettingsAuthenticationUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminSettingsAuthenticationUpdate(orgId: String) async throws -> PutAdminSettingsAuthenticationUpdateResponse {
-        return try await putAdminSettingsAuthenticationUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func putAdminSettingsAuthenticationUpdate(orgId: String, authenticationSettings: AuthenticationSettings) async throws -> PutAdminSettingsAuthenticationUpdateResponse {
+        return try await putAdminSettingsAuthenticationUpdateWithRequestBuilder(orgId: orgId, authenticationSettings: authenticationSettings).execute().body
     }
 
     /**
      Update authentication settings (alias for settings/auth)
      - PUT /orgs/{orgId}/api/v1/admin/settings/authentication
+     - The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -1108,20 +1271,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter authenticationSettings: (body)  
      - returns: RequestBuilder<PutAdminSettingsAuthenticationUpdateResponse> 
      */
-    open class func putAdminSettingsAuthenticationUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsAuthenticationUpdateResponse> {
+    open class func putAdminSettingsAuthenticationUpdateWithRequestBuilder(orgId: String, authenticationSettings: AuthenticationSettings) -> RequestBuilder<PutAdminSettingsAuthenticationUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/authentication"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: authenticationSettings)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1135,11 +1299,12 @@ open class AdminSettingsAPI {
      Update branding/login page settings
      
      - parameter orgId: (path)  
+     - parameter brandingSettings: (body)  
      - returns: PutAdminSettingsBrandingUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminSettingsBrandingUpdate(orgId: String) async throws -> PutAdminSettingsBrandingUpdateResponse {
-        return try await putAdminSettingsBrandingUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func putAdminSettingsBrandingUpdate(orgId: String, brandingSettings: BrandingSettings) async throws -> PutAdminSettingsBrandingUpdateResponse {
+        return try await putAdminSettingsBrandingUpdateWithRequestBuilder(orgId: orgId, brandingSettings: brandingSettings).execute().body
     }
 
     /**
@@ -1153,20 +1318,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter brandingSettings: (body)  
      - returns: RequestBuilder<PutAdminSettingsBrandingUpdateResponse> 
      */
-    open class func putAdminSettingsBrandingUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsBrandingUpdateResponse> {
+    open class func putAdminSettingsBrandingUpdateWithRequestBuilder(orgId: String, brandingSettings: BrandingSettings) -> RequestBuilder<PutAdminSettingsBrandingUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/branding"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: brandingSettings)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1274,11 +1440,12 @@ open class AdminSettingsAPI {
      Update SCIM settings
      
      - parameter orgId: (path)  
+     - parameter scimSettings: (body)  
      - returns: PutAdminSettingsScimUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminSettingsScimUpdate(orgId: String) async throws -> PutAdminSettingsScimUpdateResponse {
-        return try await putAdminSettingsScimUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func putAdminSettingsScimUpdate(orgId: String, scimSettings: ScimSettings) async throws -> PutAdminSettingsScimUpdateResponse {
+        return try await putAdminSettingsScimUpdateWithRequestBuilder(orgId: orgId, scimSettings: scimSettings).execute().body
     }
 
     /**
@@ -1291,20 +1458,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter scimSettings: (body)  
      - returns: RequestBuilder<PutAdminSettingsScimUpdateResponse> 
      */
-    open class func putAdminSettingsScimUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsScimUpdateResponse> {
+    open class func putAdminSettingsScimUpdateWithRequestBuilder(orgId: String, scimSettings: ScimSettings) -> RequestBuilder<PutAdminSettingsScimUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/scim"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: scimSettings)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1318,11 +1486,12 @@ open class AdminSettingsAPI {
      Update security settings
      
      - parameter orgId: (path)  
+     - parameter putAdminSettingsSecurityUpdateRequest: (body) Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. 
      - returns: PutAdminSettingsSecurityUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminSettingsSecurityUpdate(orgId: String) async throws -> PutAdminSettingsSecurityUpdateResponse {
-        return try await putAdminSettingsSecurityUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func putAdminSettingsSecurityUpdate(orgId: String, putAdminSettingsSecurityUpdateRequest: PutAdminSettingsSecurityUpdateRequest) async throws -> PutAdminSettingsSecurityUpdateResponse {
+        return try await putAdminSettingsSecurityUpdateWithRequestBuilder(orgId: orgId, putAdminSettingsSecurityUpdateRequest: putAdminSettingsSecurityUpdateRequest).execute().body
     }
 
     /**
@@ -1335,20 +1504,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter putAdminSettingsSecurityUpdateRequest: (body) Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. 
      - returns: RequestBuilder<PutAdminSettingsSecurityUpdateResponse> 
      */
-    open class func putAdminSettingsSecurityUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminSettingsSecurityUpdateResponse> {
+    open class func putAdminSettingsSecurityUpdateWithRequestBuilder(orgId: String, putAdminSettingsSecurityUpdateRequest: PutAdminSettingsSecurityUpdateRequest) -> RequestBuilder<PutAdminSettingsSecurityUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/settings/security"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminSettingsSecurityUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1359,18 +1529,19 @@ open class AdminSettingsAPI {
     }
 
     /**
-     Update organization (tenant) name and settings
+     Update the organization's name and settings
      
      - parameter orgId: (path)  
+     - parameter putAdminTenantUpdateRequest: (body)  
      - returns: PutAdminTenantUpdateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminTenantUpdate(orgId: String) async throws -> PutAdminTenantUpdateResponse {
-        return try await putAdminTenantUpdateWithRequestBuilder(orgId: orgId).execute().body
+    open class func putAdminTenantUpdate(orgId: String, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest) async throws -> PutAdminTenantUpdateResponse {
+        return try await putAdminTenantUpdateWithRequestBuilder(orgId: orgId, putAdminTenantUpdateRequest: putAdminTenantUpdateRequest).execute().body
     }
 
     /**
-     Update organization (tenant) name and settings
+     Update the organization's name and settings
      - PUT /orgs/{orgId}/api/v1/admin/tenant
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -1379,20 +1550,21 @@ open class AdminSettingsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter putAdminTenantUpdateRequest: (body)  
      - returns: RequestBuilder<PutAdminTenantUpdateResponse> 
      */
-    open class func putAdminTenantUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<PutAdminTenantUpdateResponse> {
+    open class func putAdminTenantUpdateWithRequestBuilder(orgId: String, putAdminTenantUpdateRequest: PutAdminTenantUpdateRequest) -> RequestBuilder<PutAdminTenantUpdateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/tenant"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminTenantUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

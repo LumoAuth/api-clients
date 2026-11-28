@@ -11,7 +11,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**adminRolesGet()**](AdminRolesApi.md#adminRolesGet) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Get a single role by ID or slug |
 | [**adminRolesGetPermissions()**](AdminRolesApi.md#adminRolesGetPermissions) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Get role permissions |
 | [**adminRolesGetUsers()**](AdminRolesApi.md#adminRolesGetUsers) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users | Get users assigned to a role |
-| [**adminRolesList()**](AdminRolesApi.md#adminRolesList) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the tenant |
+| [**adminRolesList()**](AdminRolesApi.md#adminRolesList) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the organization |
 | [**adminRolesRemovePermission()**](AdminRolesApi.md#adminRolesRemovePermission) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId} | Remove a permission from a role |
 | [**adminRolesRemoveUser()**](AdminRolesApi.md#adminRolesRemoveUser) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId} | Remove a user from a role |
 | [**adminRolesUpdatePermissions()**](AdminRolesApi.md#adminRolesUpdatePermissions) | **PUT** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Update role permissions (replaces all) |
@@ -22,12 +22,12 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 ## `adminRolesAddPermissions()`
 
 ```php
-adminRolesAddPermissions($orgId, $roleId): \LumoAuth\ApiClient\Model\MessageResponse
+adminRolesAddPermissions($orgId, $roleId, $adminRolesAddPermissionsRequest): \LumoAuth\ApiClient\Model\MessageResponse
 ```
 
 Add permission(s) to a role
 
-Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization's own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 ### Example
 
@@ -53,9 +53,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminRolesApi(
 );
 $orgId = 'orgId_example'; // string
 $roleId = 'roleId_example'; // string
+$adminRolesAddPermissionsRequest = new \LumoAuth\ApiClient\Model\AdminRolesAddPermissionsRequest(); // \LumoAuth\ApiClient\Model\AdminRolesAddPermissionsRequest
 
 try {
-    $result = $apiInstance->adminRolesAddPermissions($orgId, $roleId);
+    $result = $apiInstance->adminRolesAddPermissions($orgId, $roleId, $adminRolesAddPermissionsRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminRolesApi->adminRolesAddPermissions: ', $e->getMessage(), PHP_EOL;
@@ -68,6 +69,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **roleId** | **string**|  | |
+| **adminRolesAddPermissionsRequest** | [**\LumoAuth\ApiClient\Model\AdminRolesAddPermissionsRequest**](../Model/AdminRolesAddPermissionsRequest.md)|  | |
 
 ### Return type
 
@@ -79,7 +81,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -89,7 +91,7 @@ try {
 ## `adminRolesAddUser()`
 
 ```php
-adminRolesAddUser($orgId, $roleId): \LumoAuth\ApiClient\Model\MessageResponse
+adminRolesAddUser($orgId, $roleId, $adminRolesAddUserRequest): \LumoAuth\ApiClient\Model\MessageResponse
 ```
 
 Assign a user to a role
@@ -118,9 +120,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminRolesApi(
 );
 $orgId = 'orgId_example'; // string
 $roleId = 'roleId_example'; // string
+$adminRolesAddUserRequest = new \LumoAuth\ApiClient\Model\AdminRolesAddUserRequest(); // \LumoAuth\ApiClient\Model\AdminRolesAddUserRequest
 
 try {
-    $result = $apiInstance->adminRolesAddUser($orgId, $roleId);
+    $result = $apiInstance->adminRolesAddUser($orgId, $roleId, $adminRolesAddUserRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminRolesApi->adminRolesAddUser: ', $e->getMessage(), PHP_EOL;
@@ -133,6 +136,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **roleId** | **string**|  | |
+| **adminRolesAddUserRequest** | [**\LumoAuth\ApiClient\Model\AdminRolesAddUserRequest**](../Model/AdminRolesAddUserRequest.md)|  | |
 
 ### Return type
 
@@ -144,7 +148,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -154,12 +158,12 @@ try {
 ## `adminRolesCreate()`
 
 ```php
-adminRolesCreate($orgId): \LumoAuth\ApiClient\Model\AdminRolesCreateResponse
+adminRolesCreate($orgId, $adminRolesCreateRequest): \LumoAuth\ApiClient\Model\AdminRolesCreateResponse
 ```
 
 Create a new role
 
-Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization's own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
 ### Example
 
@@ -184,9 +188,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminRolesApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$adminRolesCreateRequest = new \LumoAuth\ApiClient\Model\AdminRolesCreateRequest(); // \LumoAuth\ApiClient\Model\AdminRolesCreateRequest
 
 try {
-    $result = $apiInstance->adminRolesCreate($orgId);
+    $result = $apiInstance->adminRolesCreate($orgId, $adminRolesCreateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminRolesApi->adminRolesCreate: ', $e->getMessage(), PHP_EOL;
@@ -198,6 +203,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **adminRolesCreateRequest** | [**\LumoAuth\ApiClient\Model\AdminRolesCreateRequest**](../Model/AdminRolesCreateRequest.md)|  | |
 
 ### Return type
 
@@ -209,7 +215,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -482,7 +488,7 @@ try {
 adminRolesList($orgId): \LumoAuth\ApiClient\Model\AdminRolesListResponse
 ```
 
-List all roles in the tenant
+List all roles in the organization
 
 ### Example
 
@@ -678,12 +684,12 @@ try {
 ## `adminRolesUpdatePermissions()`
 
 ```php
-adminRolesUpdatePermissions($orgId, $roleId): \LumoAuth\ApiClient\Model\AdminRolesCreateResponse
+adminRolesUpdatePermissions($orgId, $roleId, $adminRolesUpdatePermissionsRequest): \LumoAuth\ApiClient\Model\AdminRolesCreateResponse
 ```
 
 Update role permissions (replaces all)
 
-Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization's own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 ### Example
 
@@ -709,9 +715,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminRolesApi(
 );
 $orgId = 'orgId_example'; // string
 $roleId = 'roleId_example'; // string
+$adminRolesUpdatePermissionsRequest = new \LumoAuth\ApiClient\Model\AdminRolesUpdatePermissionsRequest(); // \LumoAuth\ApiClient\Model\AdminRolesUpdatePermissionsRequest
 
 try {
-    $result = $apiInstance->adminRolesUpdatePermissions($orgId, $roleId);
+    $result = $apiInstance->adminRolesUpdatePermissions($orgId, $roleId, $adminRolesUpdatePermissionsRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminRolesApi->adminRolesUpdatePermissions: ', $e->getMessage(), PHP_EOL;
@@ -724,6 +731,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **roleId** | **string**|  | |
+| **adminRolesUpdatePermissionsRequest** | [**\LumoAuth\ApiClient\Model\AdminRolesUpdatePermissionsRequest**](../Model/AdminRolesUpdatePermissionsRequest.md)|  | |
 
 ### Return type
 
@@ -735,7 +743,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -745,7 +753,7 @@ try {
 ## `patchAdminRolesUpdate()`
 
 ```php
-patchAdminRolesUpdate($orgId, $roleId): \LumoAuth\ApiClient\Model\AdminRolesCreateResponse
+patchAdminRolesUpdate($orgId, $roleId, $putAdminOrgRolesUpdateRequest): \LumoAuth\ApiClient\Model\AdminRolesCreateResponse
 ```
 
 Update an existing role
@@ -774,9 +782,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminRolesApi(
 );
 $orgId = 'orgId_example'; // string
 $roleId = 'roleId_example'; // string
+$putAdminOrgRolesUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest
 
 try {
-    $result = $apiInstance->patchAdminRolesUpdate($orgId, $roleId);
+    $result = $apiInstance->patchAdminRolesUpdate($orgId, $roleId, $putAdminOrgRolesUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminRolesApi->patchAdminRolesUpdate: ', $e->getMessage(), PHP_EOL;
@@ -789,6 +798,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **roleId** | **string**|  | |
+| **putAdminOrgRolesUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest**](../Model/PutAdminOrgRolesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -800,7 +810,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -810,7 +820,7 @@ try {
 ## `putAdminRolesUpdate()`
 
 ```php
-putAdminRolesUpdate($orgId, $roleId): \LumoAuth\ApiClient\Model\AdminRolesCreateResponse
+putAdminRolesUpdate($orgId, $roleId, $putAdminOrgRolesUpdateRequest): \LumoAuth\ApiClient\Model\AdminRolesCreateResponse
 ```
 
 Update an existing role
@@ -839,9 +849,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminRolesApi(
 );
 $orgId = 'orgId_example'; // string
 $roleId = 'roleId_example'; // string
+$putAdminOrgRolesUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest
 
 try {
-    $result = $apiInstance->putAdminRolesUpdate($orgId, $roleId);
+    $result = $apiInstance->putAdminRolesUpdate($orgId, $roleId, $putAdminOrgRolesUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminRolesApi->putAdminRolesUpdate: ', $e->getMessage(), PHP_EOL;
@@ -854,6 +865,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **roleId** | **string**|  | |
+| **putAdminOrgRolesUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminOrgRolesUpdateRequest**](../Model/PutAdminOrgRolesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -865,7 +877,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

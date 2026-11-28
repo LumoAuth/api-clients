@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -58,7 +58,7 @@ import io.lumoauth.client.JSON;
 /**
  * The poppy.json of one Company domain (Personal Agent Protocol 3.1), built from the organization&#39;s settings.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-28T05:25:48.073972593Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class PoppyDocument {
   public static final String SERIALIZED_NAME_PROTOCOL_VERSION = "protocol_version";
   @SerializedName(SERIALIZED_NAME_PROTOCOL_VERSION)

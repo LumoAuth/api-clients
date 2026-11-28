@@ -7,7 +7,10 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**adminAnalyticsDashboard()**](AdminSettingsApi.md#adminAnalyticsDashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics |
 | [**adminAnalyticsLogins()**](AdminSettingsApi.md#adminAnalyticsLogins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics |
 | [**adminAnalyticsUsers()**](AdminSettingsApi.md#adminAnalyticsUsers) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics |
-| [**adminOrganizationGet()**](AdminSettingsApi.md#adminOrganizationGet) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile |
+| [**adminInitialAccessTokensCreate()**](AdminSettingsApi.md#adminInitialAccessTokensCreate) | **POST** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | Create an initial access token for dynamic client registration |
+| [**adminInitialAccessTokensDelete()**](AdminSettingsApi.md#adminInitialAccessTokensDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId} | Delete an initial access token of dynamic client registration |
+| [**adminInitialAccessTokensList()**](AdminSettingsApi.md#adminInitialAccessTokensList) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | List the initial access tokens of dynamic client registration |
+| [**adminOrganizationGet()**](AdminSettingsApi.md#adminOrganizationGet) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization profile |
 | [**adminSettingsAll()**](AdminSettingsApi.md#adminSettingsAll) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined) |
 | [**adminSettingsAuthGet()**](AdminSettingsApi.md#adminSettingsAuthGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings |
 | [**adminSettingsAuthenticationGet()**](AdminSettingsApi.md#adminSettingsAuthenticationGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth) |
@@ -16,8 +19,8 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**adminSettingsGeneralGet()**](AdminSettingsApi.md#adminSettingsGeneralGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings |
 | [**adminSettingsScimGet()**](AdminSettingsApi.md#adminSettingsScimGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings |
 | [**adminSettingsSecurityGet()**](AdminSettingsApi.md#adminSettingsSecurityGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings |
-| [**adminTenantGet()**](AdminSettingsApi.md#adminTenantGet) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile |
-| [**patchAdminOrganizationUpdate()**](AdminSettingsApi.md#patchAdminOrganizationUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings |
+| [**adminTenantGet()**](AdminSettingsApi.md#adminTenantGet) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization profile |
+| [**patchAdminOrganizationUpdate()**](AdminSettingsApi.md#patchAdminOrganizationUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update the organization&#39;s name and settings |
 | [**patchAdminSettingsAuthUpdate()**](AdminSettingsApi.md#patchAdminSettingsAuthUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings |
 | [**patchAdminSettingsAuthenticationUpdate()**](AdminSettingsApi.md#patchAdminSettingsAuthenticationUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth) |
 | [**patchAdminSettingsBrandingUpdate()**](AdminSettingsApi.md#patchAdminSettingsBrandingUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings |
@@ -25,8 +28,8 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**patchAdminSettingsGeneralUpdate()**](AdminSettingsApi.md#patchAdminSettingsGeneralUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings |
 | [**patchAdminSettingsScimUpdate()**](AdminSettingsApi.md#patchAdminSettingsScimUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings |
 | [**patchAdminSettingsSecurityUpdate()**](AdminSettingsApi.md#patchAdminSettingsSecurityUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings |
-| [**patchAdminTenantUpdate()**](AdminSettingsApi.md#patchAdminTenantUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings |
-| [**putAdminOrganizationUpdate()**](AdminSettingsApi.md#putAdminOrganizationUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings |
+| [**patchAdminTenantUpdate()**](AdminSettingsApi.md#patchAdminTenantUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update the organization&#39;s name and settings |
+| [**putAdminOrganizationUpdate()**](AdminSettingsApi.md#putAdminOrganizationUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update the organization&#39;s name and settings |
 | [**putAdminSettingsAuthUpdate()**](AdminSettingsApi.md#putAdminSettingsAuthUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings |
 | [**putAdminSettingsAuthenticationUpdate()**](AdminSettingsApi.md#putAdminSettingsAuthenticationUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth) |
 | [**putAdminSettingsBrandingUpdate()**](AdminSettingsApi.md#putAdminSettingsBrandingUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings |
@@ -34,7 +37,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**putAdminSettingsGeneralUpdate()**](AdminSettingsApi.md#putAdminSettingsGeneralUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings |
 | [**putAdminSettingsScimUpdate()**](AdminSettingsApi.md#putAdminSettingsScimUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings |
 | [**putAdminSettingsSecurityUpdate()**](AdminSettingsApi.md#putAdminSettingsSecurityUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings |
-| [**putAdminTenantUpdate()**](AdminSettingsApi.md#putAdminTenantUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings |
+| [**putAdminTenantUpdate()**](AdminSettingsApi.md#putAdminTenantUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update the organization&#39;s name and settings |
 
 
 ## `adminAnalyticsDashboard()`
@@ -230,13 +233,210 @@ try {
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
+## `adminInitialAccessTokensCreate()`
+
+```php
+adminInitialAccessTokensCreate($orgId): \LumoAuth\ApiClient\Model\AdminInitialAccessTokensCreateResponse
+```
+
+Create an initial access token for dynamic client registration
+
+Generates a token and adds it to the organization's list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$orgId = 'orgId_example'; // string
+
+try {
+    $result = $apiInstance->adminInitialAccessTokensCreate($orgId);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AdminSettingsApi->adminInitialAccessTokensCreate: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\AdminInitialAccessTokensCreateResponse**](../Model/AdminInitialAccessTokensCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `adminInitialAccessTokensDelete()`
+
+```php
+adminInitialAccessTokensDelete($orgId, $tokenId): \LumoAuth\ApiClient\Model\MessageResponse
+```
+
+Delete an initial access token of dynamic client registration
+
+The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$orgId = 'orgId_example'; // string
+$tokenId = 'tokenId_example'; // string
+
+try {
+    $result = $apiInstance->adminInitialAccessTokensDelete($orgId, $tokenId);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AdminSettingsApi->adminInitialAccessTokensDelete: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **tokenId** | **string**|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\MessageResponse**](../Model/MessageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `adminInitialAccessTokensList()`
+
+```php
+adminInitialAccessTokensList($orgId): \LumoAuth\ApiClient\Model\AdminInitialAccessTokensListResponse
+```
+
+List the initial access tokens of dynamic client registration
+
+Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$orgId = 'orgId_example'; // string
+
+try {
+    $result = $apiInstance->adminInitialAccessTokensList($orgId);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AdminSettingsApi->adminInitialAccessTokensList: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\AdminInitialAccessTokensListResponse**](../Model/AdminInitialAccessTokensListResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
 ## `adminOrganizationGet()`
 
 ```php
 adminOrganizationGet($orgId): \LumoAuth\ApiClient\Model\AdminTenantGetResponse
 ```
 
-Get organization (tenant) profile
+Get organization profile
 
 ### Example
 
@@ -807,7 +1007,7 @@ try {
 adminTenantGet($orgId): \LumoAuth\ApiClient\Model\AdminTenantGetResponse
 ```
 
-Get organization (tenant) profile
+Get organization profile
 
 ### Example
 
@@ -867,10 +1067,10 @@ try {
 ## `patchAdminOrganizationUpdate()`
 
 ```php
-patchAdminOrganizationUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminTenantUpdateResponse
+patchAdminOrganizationUpdate($orgId, $putAdminTenantUpdateRequest): \LumoAuth\ApiClient\Model\PutAdminTenantUpdateResponse
 ```
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Example
 
@@ -895,9 +1095,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$putAdminTenantUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminTenantUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminTenantUpdateRequest
 
 try {
-    $result = $apiInstance->patchAdminOrganizationUpdate($orgId);
+    $result = $apiInstance->patchAdminOrganizationUpdate($orgId, $putAdminTenantUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->patchAdminOrganizationUpdate: ', $e->getMessage(), PHP_EOL;
@@ -909,6 +1110,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **putAdminTenantUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminTenantUpdateRequest**](../Model/PutAdminTenantUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -920,7 +1122,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -930,10 +1132,12 @@ try {
 ## `patchAdminSettingsAuthUpdate()`
 
 ```php
-patchAdminSettingsAuthUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminSettingsAuthenticationUpdateResponse
+patchAdminSettingsAuthUpdate($orgId, $authenticationSettings): \LumoAuth\ApiClient\Model\PutAdminSettingsAuthenticationUpdateResponse
 ```
 
 Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 
@@ -958,9 +1162,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$authenticationSettings = new \LumoAuth\ApiClient\Model\AuthenticationSettings(); // \LumoAuth\ApiClient\Model\AuthenticationSettings
 
 try {
-    $result = $apiInstance->patchAdminSettingsAuthUpdate($orgId);
+    $result = $apiInstance->patchAdminSettingsAuthUpdate($orgId, $authenticationSettings);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->patchAdminSettingsAuthUpdate: ', $e->getMessage(), PHP_EOL;
@@ -972,6 +1177,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **authenticationSettings** | [**\LumoAuth\ApiClient\Model\AuthenticationSettings**](../Model/AuthenticationSettings.md)|  | |
 
 ### Return type
 
@@ -983,7 +1189,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -993,10 +1199,12 @@ try {
 ## `patchAdminSettingsAuthenticationUpdate()`
 
 ```php
-patchAdminSettingsAuthenticationUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminSettingsAuthenticationUpdateResponse
+patchAdminSettingsAuthenticationUpdate($orgId, $authenticationSettings): \LumoAuth\ApiClient\Model\PutAdminSettingsAuthenticationUpdateResponse
 ```
 
 Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 
@@ -1021,9 +1229,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$authenticationSettings = new \LumoAuth\ApiClient\Model\AuthenticationSettings(); // \LumoAuth\ApiClient\Model\AuthenticationSettings
 
 try {
-    $result = $apiInstance->patchAdminSettingsAuthenticationUpdate($orgId);
+    $result = $apiInstance->patchAdminSettingsAuthenticationUpdate($orgId, $authenticationSettings);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->patchAdminSettingsAuthenticationUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1035,6 +1244,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **authenticationSettings** | [**\LumoAuth\ApiClient\Model\AuthenticationSettings**](../Model/AuthenticationSettings.md)|  | |
 
 ### Return type
 
@@ -1046,7 +1256,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1056,7 +1266,7 @@ try {
 ## `patchAdminSettingsBrandingUpdate()`
 
 ```php
-patchAdminSettingsBrandingUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminSettingsBrandingUpdateResponse
+patchAdminSettingsBrandingUpdate($orgId, $brandingSettings): \LumoAuth\ApiClient\Model\PutAdminSettingsBrandingUpdateResponse
 ```
 
 Update branding/login page settings
@@ -1086,9 +1296,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$brandingSettings = new \LumoAuth\ApiClient\Model\BrandingSettings(); // \LumoAuth\ApiClient\Model\BrandingSettings
 
 try {
-    $result = $apiInstance->patchAdminSettingsBrandingUpdate($orgId);
+    $result = $apiInstance->patchAdminSettingsBrandingUpdate($orgId, $brandingSettings);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->patchAdminSettingsBrandingUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1100,6 +1311,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **brandingSettings** | [**\LumoAuth\ApiClient\Model\BrandingSettings**](../Model/BrandingSettings.md)|  | |
 
 ### Return type
 
@@ -1111,7 +1323,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1255,7 +1467,7 @@ try {
 ## `patchAdminSettingsScimUpdate()`
 
 ```php
-patchAdminSettingsScimUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminSettingsScimUpdateResponse
+patchAdminSettingsScimUpdate($orgId, $scimSettings): \LumoAuth\ApiClient\Model\PutAdminSettingsScimUpdateResponse
 ```
 
 Update SCIM settings
@@ -1283,9 +1495,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$scimSettings = new \LumoAuth\ApiClient\Model\ScimSettings(); // \LumoAuth\ApiClient\Model\ScimSettings
 
 try {
-    $result = $apiInstance->patchAdminSettingsScimUpdate($orgId);
+    $result = $apiInstance->patchAdminSettingsScimUpdate($orgId, $scimSettings);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->patchAdminSettingsScimUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1297,6 +1510,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **scimSettings** | [**\LumoAuth\ApiClient\Model\ScimSettings**](../Model/ScimSettings.md)|  | |
 
 ### Return type
 
@@ -1308,7 +1522,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1318,7 +1532,7 @@ try {
 ## `patchAdminSettingsSecurityUpdate()`
 
 ```php
-patchAdminSettingsSecurityUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminSettingsSecurityUpdateResponse
+patchAdminSettingsSecurityUpdate($orgId, $putAdminSettingsSecurityUpdateRequest): \LumoAuth\ApiClient\Model\PutAdminSettingsSecurityUpdateResponse
 ```
 
 Update security settings
@@ -1346,9 +1560,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$putAdminSettingsSecurityUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminSettingsSecurityUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminSettingsSecurityUpdateRequest | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
 
 try {
-    $result = $apiInstance->patchAdminSettingsSecurityUpdate($orgId);
+    $result = $apiInstance->patchAdminSettingsSecurityUpdate($orgId, $putAdminSettingsSecurityUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->patchAdminSettingsSecurityUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1360,6 +1575,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **putAdminSettingsSecurityUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminSettingsSecurityUpdateRequest**](../Model/PutAdminSettingsSecurityUpdateRequest.md)| Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. | |
 
 ### Return type
 
@@ -1371,7 +1587,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1381,10 +1597,10 @@ try {
 ## `patchAdminTenantUpdate()`
 
 ```php
-patchAdminTenantUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminTenantUpdateResponse
+patchAdminTenantUpdate($orgId, $putAdminTenantUpdateRequest): \LumoAuth\ApiClient\Model\PutAdminTenantUpdateResponse
 ```
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Example
 
@@ -1409,9 +1625,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$putAdminTenantUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminTenantUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminTenantUpdateRequest
 
 try {
-    $result = $apiInstance->patchAdminTenantUpdate($orgId);
+    $result = $apiInstance->patchAdminTenantUpdate($orgId, $putAdminTenantUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->patchAdminTenantUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1423,6 +1640,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **putAdminTenantUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminTenantUpdateRequest**](../Model/PutAdminTenantUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1434,7 +1652,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1444,10 +1662,10 @@ try {
 ## `putAdminOrganizationUpdate()`
 
 ```php
-putAdminOrganizationUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminTenantUpdateResponse
+putAdminOrganizationUpdate($orgId, $putAdminTenantUpdateRequest): \LumoAuth\ApiClient\Model\PutAdminTenantUpdateResponse
 ```
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Example
 
@@ -1472,9 +1690,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$putAdminTenantUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminTenantUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminTenantUpdateRequest
 
 try {
-    $result = $apiInstance->putAdminOrganizationUpdate($orgId);
+    $result = $apiInstance->putAdminOrganizationUpdate($orgId, $putAdminTenantUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->putAdminOrganizationUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1486,6 +1705,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **putAdminTenantUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminTenantUpdateRequest**](../Model/PutAdminTenantUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1497,7 +1717,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1507,10 +1727,12 @@ try {
 ## `putAdminSettingsAuthUpdate()`
 
 ```php
-putAdminSettingsAuthUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminSettingsAuthenticationUpdateResponse
+putAdminSettingsAuthUpdate($orgId, $authenticationSettings): \LumoAuth\ApiClient\Model\PutAdminSettingsAuthenticationUpdateResponse
 ```
 
 Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 
@@ -1535,9 +1757,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$authenticationSettings = new \LumoAuth\ApiClient\Model\AuthenticationSettings(); // \LumoAuth\ApiClient\Model\AuthenticationSettings
 
 try {
-    $result = $apiInstance->putAdminSettingsAuthUpdate($orgId);
+    $result = $apiInstance->putAdminSettingsAuthUpdate($orgId, $authenticationSettings);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->putAdminSettingsAuthUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1549,6 +1772,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **authenticationSettings** | [**\LumoAuth\ApiClient\Model\AuthenticationSettings**](../Model/AuthenticationSettings.md)|  | |
 
 ### Return type
 
@@ -1560,7 +1784,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1570,10 +1794,12 @@ try {
 ## `putAdminSettingsAuthenticationUpdate()`
 
 ```php
-putAdminSettingsAuthenticationUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminSettingsAuthenticationUpdateResponse
+putAdminSettingsAuthenticationUpdate($orgId, $authenticationSettings): \LumoAuth\ApiClient\Model\PutAdminSettingsAuthenticationUpdateResponse
 ```
 
 Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 
@@ -1598,9 +1824,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$authenticationSettings = new \LumoAuth\ApiClient\Model\AuthenticationSettings(); // \LumoAuth\ApiClient\Model\AuthenticationSettings
 
 try {
-    $result = $apiInstance->putAdminSettingsAuthenticationUpdate($orgId);
+    $result = $apiInstance->putAdminSettingsAuthenticationUpdate($orgId, $authenticationSettings);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->putAdminSettingsAuthenticationUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1612,6 +1839,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **authenticationSettings** | [**\LumoAuth\ApiClient\Model\AuthenticationSettings**](../Model/AuthenticationSettings.md)|  | |
 
 ### Return type
 
@@ -1623,7 +1851,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1633,7 +1861,7 @@ try {
 ## `putAdminSettingsBrandingUpdate()`
 
 ```php
-putAdminSettingsBrandingUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminSettingsBrandingUpdateResponse
+putAdminSettingsBrandingUpdate($orgId, $brandingSettings): \LumoAuth\ApiClient\Model\PutAdminSettingsBrandingUpdateResponse
 ```
 
 Update branding/login page settings
@@ -1663,9 +1891,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$brandingSettings = new \LumoAuth\ApiClient\Model\BrandingSettings(); // \LumoAuth\ApiClient\Model\BrandingSettings
 
 try {
-    $result = $apiInstance->putAdminSettingsBrandingUpdate($orgId);
+    $result = $apiInstance->putAdminSettingsBrandingUpdate($orgId, $brandingSettings);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->putAdminSettingsBrandingUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1677,6 +1906,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **brandingSettings** | [**\LumoAuth\ApiClient\Model\BrandingSettings**](../Model/BrandingSettings.md)|  | |
 
 ### Return type
 
@@ -1688,7 +1918,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1832,7 +2062,7 @@ try {
 ## `putAdminSettingsScimUpdate()`
 
 ```php
-putAdminSettingsScimUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminSettingsScimUpdateResponse
+putAdminSettingsScimUpdate($orgId, $scimSettings): \LumoAuth\ApiClient\Model\PutAdminSettingsScimUpdateResponse
 ```
 
 Update SCIM settings
@@ -1860,9 +2090,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$scimSettings = new \LumoAuth\ApiClient\Model\ScimSettings(); // \LumoAuth\ApiClient\Model\ScimSettings
 
 try {
-    $result = $apiInstance->putAdminSettingsScimUpdate($orgId);
+    $result = $apiInstance->putAdminSettingsScimUpdate($orgId, $scimSettings);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->putAdminSettingsScimUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1874,6 +2105,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **scimSettings** | [**\LumoAuth\ApiClient\Model\ScimSettings**](../Model/ScimSettings.md)|  | |
 
 ### Return type
 
@@ -1885,7 +2117,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1895,7 +2127,7 @@ try {
 ## `putAdminSettingsSecurityUpdate()`
 
 ```php
-putAdminSettingsSecurityUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminSettingsSecurityUpdateResponse
+putAdminSettingsSecurityUpdate($orgId, $putAdminSettingsSecurityUpdateRequest): \LumoAuth\ApiClient\Model\PutAdminSettingsSecurityUpdateResponse
 ```
 
 Update security settings
@@ -1923,9 +2155,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$putAdminSettingsSecurityUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminSettingsSecurityUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminSettingsSecurityUpdateRequest | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
 
 try {
-    $result = $apiInstance->putAdminSettingsSecurityUpdate($orgId);
+    $result = $apiInstance->putAdminSettingsSecurityUpdate($orgId, $putAdminSettingsSecurityUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->putAdminSettingsSecurityUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1937,6 +2170,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **putAdminSettingsSecurityUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminSettingsSecurityUpdateRequest**](../Model/PutAdminSettingsSecurityUpdateRequest.md)| Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. | |
 
 ### Return type
 
@@ -1948,7 +2182,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1958,10 +2192,10 @@ try {
 ## `putAdminTenantUpdate()`
 
 ```php
-putAdminTenantUpdate($orgId): \LumoAuth\ApiClient\Model\PutAdminTenantUpdateResponse
+putAdminTenantUpdate($orgId, $putAdminTenantUpdateRequest): \LumoAuth\ApiClient\Model\PutAdminTenantUpdateResponse
 ```
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Example
 
@@ -1986,9 +2220,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminSettingsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$putAdminTenantUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminTenantUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminTenantUpdateRequest
 
 try {
-    $result = $apiInstance->putAdminTenantUpdate($orgId);
+    $result = $apiInstance->putAdminTenantUpdate($orgId, $putAdminTenantUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminSettingsApi->putAdminTenantUpdate: ', $e->getMessage(), PHP_EOL;
@@ -2000,6 +2235,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **putAdminTenantUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminTenantUpdateRequest**](../Model/PutAdminTenantUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -2011,7 +2247,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

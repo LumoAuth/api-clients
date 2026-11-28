@@ -193,7 +193,7 @@ const { status, data } = await apiInstance.attest(
 |**401** | attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. |  -  |
 |**403** | access_policy_denied — a conditional access policy refused the agent (reason code included). |  -  |
 |**404** | tenant_not_found. |  -  |
-|**429** | rate_limit_exceeded (Retry-After: 60). |  -  |
+|**429** | rate_limit_exceeded (Retry-After: 60), or budget_exceeded: the agent\&#39;s budget is spent (Retry-After: seconds until the spent window ends). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -309,10 +309,10 @@ const { status, data } = await apiInstance.createApproval(
 |**201** | Approval request created and delivered (see &#x60;delivery&#x60;). |  -  |
 |**202** | User has no push device; an email sign-in fallback link was sent. |  -  |
 |**400** | Invalid JSON, task_id, reason, impact, expires_in or meta (invalid_meta names the field), or missing on_behalf_of. |  -  |
-|**403** | Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. |  -  |
-|**404** | Tenant or target user not found. |  -  |
+|**403** | Caller is not an agent, belongs to another organization, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. |  -  |
+|**404** | Organization or target user not found. |  -  |
 |**428** | User has no enrolled push device, no approval channel receives the request, and the email fallback could not be sent. |  -  |
-|**429** | Rate limited (per tenant/agent/user). |  -  |
+|**429** | Rate limited (per organization, agent and user). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -423,7 +423,7 @@ const { status, data } = await apiInstance.getApprovalStatus(
 |-------------|-------------|------------------|
 |**200** | Current status of the approval request. |  -  |
 |**403** | Caller is not an agent, or the request belongs to another agent. |  -  |
-|**404** | Tenant or approval request not found. |  -  |
+|**404** | Organization or approval request not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -538,7 +538,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **registerAgent**
-> RegisterAgentResponse registerAgent()
+> RegisterAgentResponse registerAgent(registerAgentRequest)
 
 
 ### Example
@@ -546,16 +546,19 @@ No authorization required
 ```typescript
 import {
     AgentsApi,
-    Configuration
+    Configuration,
+    RegisterAgentRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AgentsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let registerAgentRequest: RegisterAgentRequest; //
 
 const { status, data } = await apiInstance.registerAgent(
-    orgId
+    orgId,
+    registerAgentRequest
 );
 ```
 
@@ -563,6 +566,7 @@ const { status, data } = await apiInstance.registerAgent(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **registerAgentRequest** | **RegisterAgentRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -576,7 +580,7 @@ const { status, data } = await apiInstance.registerAgent(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

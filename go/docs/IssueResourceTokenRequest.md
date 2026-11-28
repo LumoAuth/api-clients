@@ -4,8 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Agent** | Pointer to **string** | Agent identifier the resource token is bound to. | [optional] 
-**AgentJkt** | Pointer to **string** | JWK thumbprint of the agent key (PoP binding). | [optional] 
+**Resource** | **string** | Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource. | 
+**Agent** | **string** | Agent identifier the resource token is bound to. | 
+**AgentJkt** | **string** | JWK thumbprint of the agent key (PoP binding). | 
 **Scope** | Pointer to **string** | Optional space-delimited requested scopes. | [optional] 
 **AuthRequestUrl** | Pointer to **string** | Optional auth request URL to embed in the token. | [optional] 
 **AuthServer** | Pointer to **string** | Optional auth server URL for the aud claim; defaults to this issuer. | [optional] 
@@ -14,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewIssueResourceTokenRequest
 
-`func NewIssueResourceTokenRequest() *IssueResourceTokenRequest`
+`func NewIssueResourceTokenRequest(resource string, agent string, agentJkt string, ) *IssueResourceTokenRequest`
 
 NewIssueResourceTokenRequest instantiates a new IssueResourceTokenRequest object
 This constructor will assign default values to properties that have it defined,
@@ -28,6 +29,26 @@ will change when the set of required properties is changed
 NewIssueResourceTokenRequestWithDefaults instantiates a new IssueResourceTokenRequest object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetResource
+
+`func (o *IssueResourceTokenRequest) GetResource() string`
+
+GetResource returns the Resource field if non-nil, zero value otherwise.
+
+### GetResourceOk
+
+`func (o *IssueResourceTokenRequest) GetResourceOk() (*string, bool)`
+
+GetResourceOk returns a tuple with the Resource field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResource
+
+`func (o *IssueResourceTokenRequest) SetResource(v string)`
+
+SetResource sets Resource field to given value.
+
 
 ### GetAgent
 
@@ -48,11 +69,6 @@ and a boolean to check if the value has been set.
 
 SetAgent sets Agent field to given value.
 
-### HasAgent
-
-`func (o *IssueResourceTokenRequest) HasAgent() bool`
-
-HasAgent returns a boolean if a field has been set.
 
 ### GetAgentJkt
 
@@ -73,11 +89,6 @@ and a boolean to check if the value has been set.
 
 SetAgentJkt sets AgentJkt field to given value.
 
-### HasAgentJkt
-
-`func (o *IssueResourceTokenRequest) HasAgentJkt() bool`
-
-HasAgentJkt returns a boolean if a field has been set.
 
 ### GetScope
 

@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -28,20 +28,29 @@ import java.io.IOException;
 
 
 import io.lumoauth.client.model.AuthZenDecision;
+import io.lumoauth.client.model.CheckAbacBulkRequest;
 import io.lumoauth.client.model.CheckAbacBulkResponse;
+import io.lumoauth.client.model.CheckAbacRequest;
 import io.lumoauth.client.model.CheckAbacResponse;
 import io.lumoauth.client.model.CheckAnyPermissionResponse;
+import io.lumoauth.client.model.CheckPermissionRequest;
 import io.lumoauth.client.model.CheckPermissionResponse;
+import io.lumoauth.client.model.CheckPermissionsBulkRequest;
 import io.lumoauth.client.model.CheckPermissionsBulkResponse;
+import io.lumoauth.client.model.CheckRelationRequest;
 import io.lumoauth.client.model.CheckRelationResponse;
+import io.lumoauth.client.model.CheckRelationScopedRequest;
 import io.lumoauth.client.model.CheckRelationScopedResponse;
+import io.lumoauth.client.model.EvaluateBatchRequest;
 import io.lumoauth.client.model.EvaluateBatchResponse;
+import io.lumoauth.client.model.EvaluateRequest;
 import io.lumoauth.client.model.ExpandRelationRequest;
 import io.lumoauth.client.model.ExpandRelationResponse;
 import io.lumoauth.client.model.GetMyAttributesResponse;
 import io.lumoauth.client.model.GetResourceAttributesResponse;
 import io.lumoauth.client.model.ListAttributeDefinitionsResponse;
 import io.lumoauth.client.model.ListPermissionsResponse;
+import io.lumoauth.client.model.SetResourceAttributeRequest;
 import io.lumoauth.client.model.SetResourceAttributeResponse;
 import io.lumoauth.client.model.SetUserAttributeResponse;
 
@@ -91,6 +100,7 @@ public class AuthorizationApi {
     /**
      * Build call for checkAbac
      * @param orgId  (required)
+     * @param checkAbacRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -101,7 +111,7 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkAbacCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call checkAbacCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckAbacRequest checkAbacRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -115,7 +125,7 @@ public class AuthorizationApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = checkAbacRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/abac/check"
@@ -136,6 +146,7 @@ public class AuthorizationApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -147,13 +158,18 @@ public class AuthorizationApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call checkAbacValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call checkAbacValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckAbacRequest checkAbacRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling checkAbac(Async)");
         }
 
-        return checkAbacCall(orgId, _callback);
+        // verify the required parameter 'checkAbacRequest' is set
+        if (checkAbacRequest == null) {
+            throw new ApiException("Missing the required parameter 'checkAbacRequest' when calling checkAbac(Async)");
+        }
+
+        return checkAbacCall(orgId, checkAbacRequest, _callback);
 
     }
 
@@ -161,6 +177,7 @@ public class AuthorizationApi {
      * Evaluate an ABAC policy decision for the caller
      * POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
      * @param orgId  (required)
+     * @param checkAbacRequest  (required)
      * @return CheckAbacResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -170,8 +187,8 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public CheckAbacResponse checkAbac(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<CheckAbacResponse> localVarResp = checkAbacWithHttpInfo(orgId);
+    public CheckAbacResponse checkAbac(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckAbacRequest checkAbacRequest) throws ApiException {
+        ApiResponse<CheckAbacResponse> localVarResp = checkAbacWithHttpInfo(orgId, checkAbacRequest);
         return localVarResp.getData();
     }
 
@@ -179,6 +196,7 @@ public class AuthorizationApi {
      * Evaluate an ABAC policy decision for the caller
      * POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
      * @param orgId  (required)
+     * @param checkAbacRequest  (required)
      * @return ApiResponse&lt;CheckAbacResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -188,8 +206,8 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<CheckAbacResponse> checkAbacWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = checkAbacValidateBeforeCall(orgId, null);
+    public ApiResponse<CheckAbacResponse> checkAbacWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckAbacRequest checkAbacRequest) throws ApiException {
+        okhttp3.Call localVarCall = checkAbacValidateBeforeCall(orgId, checkAbacRequest, null);
         Type localVarReturnType = new TypeToken<CheckAbacResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -198,6 +216,7 @@ public class AuthorizationApi {
      * Evaluate an ABAC policy decision for the caller (asynchronously)
      * POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
      * @param orgId  (required)
+     * @param checkAbacRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -208,9 +227,9 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkAbacAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<CheckAbacResponse> _callback) throws ApiException {
+    public okhttp3.Call checkAbacAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckAbacRequest checkAbacRequest, final ApiCallback<CheckAbacResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = checkAbacValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = checkAbacValidateBeforeCall(orgId, checkAbacRequest, _callback);
         Type localVarReturnType = new TypeToken<CheckAbacResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -218,6 +237,7 @@ public class AuthorizationApi {
     /**
      * Build call for checkAbacBulk
      * @param orgId  (required)
+     * @param checkAbacBulkRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -228,7 +248,7 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Per-check decisions in request order </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkAbacBulkCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call checkAbacBulkCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckAbacBulkRequest checkAbacBulkRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -242,7 +262,7 @@ public class AuthorizationApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = checkAbacBulkRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/abac/check-bulk"
@@ -263,6 +283,7 @@ public class AuthorizationApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -274,13 +295,18 @@ public class AuthorizationApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call checkAbacBulkValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call checkAbacBulkValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckAbacBulkRequest checkAbacBulkRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling checkAbacBulk(Async)");
         }
 
-        return checkAbacBulkCall(orgId, _callback);
+        // verify the required parameter 'checkAbacBulkRequest' is set
+        if (checkAbacBulkRequest == null) {
+            throw new ApiException("Missing the required parameter 'checkAbacBulkRequest' when calling checkAbacBulk(Async)");
+        }
+
+        return checkAbacBulkCall(orgId, checkAbacBulkRequest, _callback);
 
     }
 
@@ -288,6 +314,7 @@ public class AuthorizationApi {
      * Evaluate up to 100 ABAC checks for the caller in one call
      * POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
      * @param orgId  (required)
+     * @param checkAbacBulkRequest  (required)
      * @return CheckAbacBulkResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -297,8 +324,8 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Per-check decisions in request order </td><td>  -  </td></tr>
      </table>
      */
-    public CheckAbacBulkResponse checkAbacBulk(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<CheckAbacBulkResponse> localVarResp = checkAbacBulkWithHttpInfo(orgId);
+    public CheckAbacBulkResponse checkAbacBulk(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckAbacBulkRequest checkAbacBulkRequest) throws ApiException {
+        ApiResponse<CheckAbacBulkResponse> localVarResp = checkAbacBulkWithHttpInfo(orgId, checkAbacBulkRequest);
         return localVarResp.getData();
     }
 
@@ -306,6 +333,7 @@ public class AuthorizationApi {
      * Evaluate up to 100 ABAC checks for the caller in one call
      * POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
      * @param orgId  (required)
+     * @param checkAbacBulkRequest  (required)
      * @return ApiResponse&lt;CheckAbacBulkResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -315,8 +343,8 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Per-check decisions in request order </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<CheckAbacBulkResponse> checkAbacBulkWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = checkAbacBulkValidateBeforeCall(orgId, null);
+    public ApiResponse<CheckAbacBulkResponse> checkAbacBulkWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckAbacBulkRequest checkAbacBulkRequest) throws ApiException {
+        okhttp3.Call localVarCall = checkAbacBulkValidateBeforeCall(orgId, checkAbacBulkRequest, null);
         Type localVarReturnType = new TypeToken<CheckAbacBulkResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -325,6 +353,7 @@ public class AuthorizationApi {
      * Evaluate up to 100 ABAC checks for the caller in one call (asynchronously)
      * POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
      * @param orgId  (required)
+     * @param checkAbacBulkRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -335,15 +364,16 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Per-check decisions in request order </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkAbacBulkAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<CheckAbacBulkResponse> _callback) throws ApiException {
+    public okhttp3.Call checkAbacBulkAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckAbacBulkRequest checkAbacBulkRequest, final ApiCallback<CheckAbacBulkResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = checkAbacBulkValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = checkAbacBulkValidateBeforeCall(orgId, checkAbacBulkRequest, _callback);
         Type localVarReturnType = new TypeToken<CheckAbacBulkResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for checkAllPermissions
+     * @param checkPermissionsBulkRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -354,7 +384,7 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkAllPermissionsCall(final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call checkAllPermissionsCall(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -368,7 +398,7 @@ public class AuthorizationApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = checkPermissionsBulkRequest;
 
         // create path and map variables
         String localVarPath = "/api/v1/authz/check-all";
@@ -388,6 +418,7 @@ public class AuthorizationApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -399,14 +430,20 @@ public class AuthorizationApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call checkAllPermissionsValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        return checkAllPermissionsCall(_callback);
+    private okhttp3.Call checkAllPermissionsValidateBeforeCall(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'checkPermissionsBulkRequest' is set
+        if (checkPermissionsBulkRequest == null) {
+            throw new ApiException("Missing the required parameter 'checkPermissionsBulkRequest' when calling checkAllPermissions(Async)");
+        }
+
+        return checkAllPermissionsCall(checkPermissionsBulkRequest, _callback);
 
     }
 
     /**
      * Check whether the subject holds all of the permissions
      * POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+     * @param checkPermissionsBulkRequest  (required)
      * @return CheckAnyPermissionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -416,14 +453,15 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public CheckAnyPermissionResponse checkAllPermissions() throws ApiException {
-        ApiResponse<CheckAnyPermissionResponse> localVarResp = checkAllPermissionsWithHttpInfo();
+    public CheckAnyPermissionResponse checkAllPermissions(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest) throws ApiException {
+        ApiResponse<CheckAnyPermissionResponse> localVarResp = checkAllPermissionsWithHttpInfo(checkPermissionsBulkRequest);
         return localVarResp.getData();
     }
 
     /**
      * Check whether the subject holds all of the permissions
      * POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+     * @param checkPermissionsBulkRequest  (required)
      * @return ApiResponse&lt;CheckAnyPermissionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -433,8 +471,8 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<CheckAnyPermissionResponse> checkAllPermissionsWithHttpInfo() throws ApiException {
-        okhttp3.Call localVarCall = checkAllPermissionsValidateBeforeCall(null);
+    public ApiResponse<CheckAnyPermissionResponse> checkAllPermissionsWithHttpInfo(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest) throws ApiException {
+        okhttp3.Call localVarCall = checkAllPermissionsValidateBeforeCall(checkPermissionsBulkRequest, null);
         Type localVarReturnType = new TypeToken<CheckAnyPermissionResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -442,6 +480,7 @@ public class AuthorizationApi {
     /**
      * Check whether the subject holds all of the permissions (asynchronously)
      * POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+     * @param checkPermissionsBulkRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -452,15 +491,16 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkAllPermissionsAsync(final ApiCallback<CheckAnyPermissionResponse> _callback) throws ApiException {
+    public okhttp3.Call checkAllPermissionsAsync(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest, final ApiCallback<CheckAnyPermissionResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = checkAllPermissionsValidateBeforeCall(_callback);
+        okhttp3.Call localVarCall = checkAllPermissionsValidateBeforeCall(checkPermissionsBulkRequest, _callback);
         Type localVarReturnType = new TypeToken<CheckAnyPermissionResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for checkAnyPermission
+     * @param checkPermissionsBulkRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -471,7 +511,7 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkAnyPermissionCall(final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call checkAnyPermissionCall(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -485,7 +525,7 @@ public class AuthorizationApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = checkPermissionsBulkRequest;
 
         // create path and map variables
         String localVarPath = "/api/v1/authz/check-any";
@@ -505,6 +545,7 @@ public class AuthorizationApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -516,14 +557,20 @@ public class AuthorizationApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call checkAnyPermissionValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        return checkAnyPermissionCall(_callback);
+    private okhttp3.Call checkAnyPermissionValidateBeforeCall(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'checkPermissionsBulkRequest' is set
+        if (checkPermissionsBulkRequest == null) {
+            throw new ApiException("Missing the required parameter 'checkPermissionsBulkRequest' when calling checkAnyPermission(Async)");
+        }
+
+        return checkAnyPermissionCall(checkPermissionsBulkRequest, _callback);
 
     }
 
     /**
      * Check whether the subject holds any of the permissions
      * POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+     * @param checkPermissionsBulkRequest  (required)
      * @return CheckAnyPermissionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -533,14 +580,15 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public CheckAnyPermissionResponse checkAnyPermission() throws ApiException {
-        ApiResponse<CheckAnyPermissionResponse> localVarResp = checkAnyPermissionWithHttpInfo();
+    public CheckAnyPermissionResponse checkAnyPermission(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest) throws ApiException {
+        ApiResponse<CheckAnyPermissionResponse> localVarResp = checkAnyPermissionWithHttpInfo(checkPermissionsBulkRequest);
         return localVarResp.getData();
     }
 
     /**
      * Check whether the subject holds any of the permissions
      * POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+     * @param checkPermissionsBulkRequest  (required)
      * @return ApiResponse&lt;CheckAnyPermissionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -550,8 +598,8 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<CheckAnyPermissionResponse> checkAnyPermissionWithHttpInfo() throws ApiException {
-        okhttp3.Call localVarCall = checkAnyPermissionValidateBeforeCall(null);
+    public ApiResponse<CheckAnyPermissionResponse> checkAnyPermissionWithHttpInfo(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest) throws ApiException {
+        okhttp3.Call localVarCall = checkAnyPermissionValidateBeforeCall(checkPermissionsBulkRequest, null);
         Type localVarReturnType = new TypeToken<CheckAnyPermissionResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -559,6 +607,7 @@ public class AuthorizationApi {
     /**
      * Check whether the subject holds any of the permissions (asynchronously)
      * POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+     * @param checkPermissionsBulkRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -569,15 +618,16 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkAnyPermissionAsync(final ApiCallback<CheckAnyPermissionResponse> _callback) throws ApiException {
+    public okhttp3.Call checkAnyPermissionAsync(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest, final ApiCallback<CheckAnyPermissionResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = checkAnyPermissionValidateBeforeCall(_callback);
+        okhttp3.Call localVarCall = checkAnyPermissionValidateBeforeCall(checkPermissionsBulkRequest, _callback);
         Type localVarReturnType = new TypeToken<CheckAnyPermissionResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for checkPermission
+     * @param checkPermissionRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -588,7 +638,7 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkPermissionCall(final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call checkPermissionCall(@javax.annotation.Nonnull CheckPermissionRequest checkPermissionRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -602,7 +652,7 @@ public class AuthorizationApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = checkPermissionRequest;
 
         // create path and map variables
         String localVarPath = "/api/v1/authz/check";
@@ -622,6 +672,7 @@ public class AuthorizationApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -633,14 +684,20 @@ public class AuthorizationApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call checkPermissionValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        return checkPermissionCall(_callback);
+    private okhttp3.Call checkPermissionValidateBeforeCall(@javax.annotation.Nonnull CheckPermissionRequest checkPermissionRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'checkPermissionRequest' is set
+        if (checkPermissionRequest == null) {
+            throw new ApiException("Missing the required parameter 'checkPermissionRequest' when calling checkPermission(Async)");
+        }
+
+        return checkPermissionCall(checkPermissionRequest, _callback);
 
     }
 
     /**
      * Check one permission
      * POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},        // read: resource_id + defined environment attribute slugs   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
+     * @param checkPermissionRequest  (required)
      * @return CheckPermissionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -650,14 +707,15 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public CheckPermissionResponse checkPermission() throws ApiException {
-        ApiResponse<CheckPermissionResponse> localVarResp = checkPermissionWithHttpInfo();
+    public CheckPermissionResponse checkPermission(@javax.annotation.Nonnull CheckPermissionRequest checkPermissionRequest) throws ApiException {
+        ApiResponse<CheckPermissionResponse> localVarResp = checkPermissionWithHttpInfo(checkPermissionRequest);
         return localVarResp.getData();
     }
 
     /**
      * Check one permission
      * POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},        // read: resource_id + defined environment attribute slugs   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
+     * @param checkPermissionRequest  (required)
      * @return ApiResponse&lt;CheckPermissionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -667,8 +725,8 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<CheckPermissionResponse> checkPermissionWithHttpInfo() throws ApiException {
-        okhttp3.Call localVarCall = checkPermissionValidateBeforeCall(null);
+    public ApiResponse<CheckPermissionResponse> checkPermissionWithHttpInfo(@javax.annotation.Nonnull CheckPermissionRequest checkPermissionRequest) throws ApiException {
+        okhttp3.Call localVarCall = checkPermissionValidateBeforeCall(checkPermissionRequest, null);
         Type localVarReturnType = new TypeToken<CheckPermissionResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -676,6 +734,7 @@ public class AuthorizationApi {
     /**
      * Check one permission (asynchronously)
      * POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},        // read: resource_id + defined environment attribute slugs   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
+     * @param checkPermissionRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -686,15 +745,16 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkPermissionAsync(final ApiCallback<CheckPermissionResponse> _callback) throws ApiException {
+    public okhttp3.Call checkPermissionAsync(@javax.annotation.Nonnull CheckPermissionRequest checkPermissionRequest, final ApiCallback<CheckPermissionResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = checkPermissionValidateBeforeCall(_callback);
+        okhttp3.Call localVarCall = checkPermissionValidateBeforeCall(checkPermissionRequest, _callback);
         Type localVarReturnType = new TypeToken<CheckPermissionResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for checkPermissionsBulk
+     * @param checkPermissionsBulkRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -705,7 +765,7 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Per-permission decisions </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkPermissionsBulkCall(final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call checkPermissionsBulkCall(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -719,7 +779,7 @@ public class AuthorizationApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = checkPermissionsBulkRequest;
 
         // create path and map variables
         String localVarPath = "/api/v1/authz/check-bulk";
@@ -739,6 +799,7 @@ public class AuthorizationApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -750,14 +811,20 @@ public class AuthorizationApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call checkPermissionsBulkValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        return checkPermissionsBulkCall(_callback);
+    private okhttp3.Call checkPermissionsBulkValidateBeforeCall(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'checkPermissionsBulkRequest' is set
+        if (checkPermissionsBulkRequest == null) {
+            throw new ApiException("Missing the required parameter 'checkPermissionsBulkRequest' when calling checkPermissionsBulk(Async)");
+        }
+
+        return checkPermissionsBulkCall(checkPermissionsBulkRequest, _callback);
 
     }
 
     /**
      * Check up to 100 permissions in one call
      * POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+     * @param checkPermissionsBulkRequest  (required)
      * @return CheckPermissionsBulkResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -767,14 +834,15 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Per-permission decisions </td><td>  -  </td></tr>
      </table>
      */
-    public CheckPermissionsBulkResponse checkPermissionsBulk() throws ApiException {
-        ApiResponse<CheckPermissionsBulkResponse> localVarResp = checkPermissionsBulkWithHttpInfo();
+    public CheckPermissionsBulkResponse checkPermissionsBulk(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest) throws ApiException {
+        ApiResponse<CheckPermissionsBulkResponse> localVarResp = checkPermissionsBulkWithHttpInfo(checkPermissionsBulkRequest);
         return localVarResp.getData();
     }
 
     /**
      * Check up to 100 permissions in one call
      * POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+     * @param checkPermissionsBulkRequest  (required)
      * @return ApiResponse&lt;CheckPermissionsBulkResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -784,8 +852,8 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Per-permission decisions </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<CheckPermissionsBulkResponse> checkPermissionsBulkWithHttpInfo() throws ApiException {
-        okhttp3.Call localVarCall = checkPermissionsBulkValidateBeforeCall(null);
+    public ApiResponse<CheckPermissionsBulkResponse> checkPermissionsBulkWithHttpInfo(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest) throws ApiException {
+        okhttp3.Call localVarCall = checkPermissionsBulkValidateBeforeCall(checkPermissionsBulkRequest, null);
         Type localVarReturnType = new TypeToken<CheckPermissionsBulkResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -793,6 +861,7 @@ public class AuthorizationApi {
     /**
      * Check up to 100 permissions in one call (asynchronously)
      * POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;resource_id\&quot;: \&quot;doc-123\&quot;},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
+     * @param checkPermissionsBulkRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -803,15 +872,16 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Per-permission decisions </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkPermissionsBulkAsync(final ApiCallback<CheckPermissionsBulkResponse> _callback) throws ApiException {
+    public okhttp3.Call checkPermissionsBulkAsync(@javax.annotation.Nonnull CheckPermissionsBulkRequest checkPermissionsBulkRequest, final ApiCallback<CheckPermissionsBulkResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = checkPermissionsBulkValidateBeforeCall(_callback);
+        okhttp3.Call localVarCall = checkPermissionsBulkValidateBeforeCall(checkPermissionsBulkRequest, _callback);
         Type localVarReturnType = new TypeToken<CheckPermissionsBulkResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for checkRelation
+     * @param checkRelationRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -822,7 +892,7 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkRelationCall(final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call checkRelationCall(@javax.annotation.Nonnull CheckRelationRequest checkRelationRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -836,7 +906,7 @@ public class AuthorizationApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = checkRelationRequest;
 
         // create path and map variables
         String localVarPath = "/api/v1/authz/zanzibar/check";
@@ -856,6 +926,7 @@ public class AuthorizationApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -867,14 +938,20 @@ public class AuthorizationApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call checkRelationValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        return checkRelationCall(_callback);
+    private okhttp3.Call checkRelationValidateBeforeCall(@javax.annotation.Nonnull CheckRelationRequest checkRelationRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'checkRelationRequest' is set
+        if (checkRelationRequest == null) {
+            throw new ApiException("Missing the required parameter 'checkRelationRequest' when calling checkRelation(Async)");
+        }
+
+        return checkRelationCall(checkRelationRequest, _callback);
 
     }
 
     /**
      * Zanzibar relationship check
      * POST /api/v1/authz/zanzibar/check Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot;,   \&quot;subject\&quot;: \&quot;user:456\&quot; }
+     * @param checkRelationRequest  (required)
      * @return CheckRelationResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -884,14 +961,15 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public CheckRelationResponse checkRelation() throws ApiException {
-        ApiResponse<CheckRelationResponse> localVarResp = checkRelationWithHttpInfo();
+    public CheckRelationResponse checkRelation(@javax.annotation.Nonnull CheckRelationRequest checkRelationRequest) throws ApiException {
+        ApiResponse<CheckRelationResponse> localVarResp = checkRelationWithHttpInfo(checkRelationRequest);
         return localVarResp.getData();
     }
 
     /**
      * Zanzibar relationship check
      * POST /api/v1/authz/zanzibar/check Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot;,   \&quot;subject\&quot;: \&quot;user:456\&quot; }
+     * @param checkRelationRequest  (required)
      * @return ApiResponse&lt;CheckRelationResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -901,8 +979,8 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<CheckRelationResponse> checkRelationWithHttpInfo() throws ApiException {
-        okhttp3.Call localVarCall = checkRelationValidateBeforeCall(null);
+    public ApiResponse<CheckRelationResponse> checkRelationWithHttpInfo(@javax.annotation.Nonnull CheckRelationRequest checkRelationRequest) throws ApiException {
+        okhttp3.Call localVarCall = checkRelationValidateBeforeCall(checkRelationRequest, null);
         Type localVarReturnType = new TypeToken<CheckRelationResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -910,6 +988,7 @@ public class AuthorizationApi {
     /**
      * Zanzibar relationship check (asynchronously)
      * POST /api/v1/authz/zanzibar/check Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot;,   \&quot;subject\&quot;: \&quot;user:456\&quot; }
+     * @param checkRelationRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -920,9 +999,9 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkRelationAsync(final ApiCallback<CheckRelationResponse> _callback) throws ApiException {
+    public okhttp3.Call checkRelationAsync(@javax.annotation.Nonnull CheckRelationRequest checkRelationRequest, final ApiCallback<CheckRelationResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = checkRelationValidateBeforeCall(_callback);
+        okhttp3.Call localVarCall = checkRelationValidateBeforeCall(checkRelationRequest, _callback);
         Type localVarReturnType = new TypeToken<CheckRelationResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -930,6 +1009,7 @@ public class AuthorizationApi {
     /**
      * Build call for checkRelationScoped
      * @param orgId  (required)
+     * @param checkRelationScopedRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -940,7 +1020,7 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkRelationScopedCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call checkRelationScopedCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckRelationScopedRequest checkRelationScopedRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -954,7 +1034,7 @@ public class AuthorizationApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = checkRelationScopedRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/zanzibar/check"
@@ -975,6 +1055,7 @@ public class AuthorizationApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -986,13 +1067,18 @@ public class AuthorizationApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call checkRelationScopedValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call checkRelationScopedValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckRelationScopedRequest checkRelationScopedRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling checkRelationScoped(Async)");
         }
 
-        return checkRelationScopedCall(orgId, _callback);
+        // verify the required parameter 'checkRelationScopedRequest' is set
+        if (checkRelationScopedRequest == null) {
+            throw new ApiException("Missing the required parameter 'checkRelationScopedRequest' when calling checkRelationScoped(Async)");
+        }
+
+        return checkRelationScopedCall(orgId, checkRelationScopedRequest, _callback);
 
     }
 
@@ -1000,6 +1086,7 @@ public class AuthorizationApi {
      * Zanzibar relationship check
      * 
      * @param orgId  (required)
+     * @param checkRelationScopedRequest  (required)
      * @return CheckRelationScopedResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1009,8 +1096,8 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public CheckRelationScopedResponse checkRelationScoped(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<CheckRelationScopedResponse> localVarResp = checkRelationScopedWithHttpInfo(orgId);
+    public CheckRelationScopedResponse checkRelationScoped(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckRelationScopedRequest checkRelationScopedRequest) throws ApiException {
+        ApiResponse<CheckRelationScopedResponse> localVarResp = checkRelationScopedWithHttpInfo(orgId, checkRelationScopedRequest);
         return localVarResp.getData();
     }
 
@@ -1018,6 +1105,7 @@ public class AuthorizationApi {
      * Zanzibar relationship check
      * 
      * @param orgId  (required)
+     * @param checkRelationScopedRequest  (required)
      * @return ApiResponse&lt;CheckRelationScopedResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1027,8 +1115,8 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<CheckRelationScopedResponse> checkRelationScopedWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = checkRelationScopedValidateBeforeCall(orgId, null);
+    public ApiResponse<CheckRelationScopedResponse> checkRelationScopedWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckRelationScopedRequest checkRelationScopedRequest) throws ApiException {
+        okhttp3.Call localVarCall = checkRelationScopedValidateBeforeCall(orgId, checkRelationScopedRequest, null);
         Type localVarReturnType = new TypeToken<CheckRelationScopedResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1037,6 +1125,7 @@ public class AuthorizationApi {
      * Zanzibar relationship check (asynchronously)
      * 
      * @param orgId  (required)
+     * @param checkRelationScopedRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1047,15 +1136,16 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> Decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkRelationScopedAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<CheckRelationScopedResponse> _callback) throws ApiException {
+    public okhttp3.Call checkRelationScopedAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CheckRelationScopedRequest checkRelationScopedRequest, final ApiCallback<CheckRelationScopedResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = checkRelationScopedValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = checkRelationScopedValidateBeforeCall(orgId, checkRelationScopedRequest, _callback);
         Type localVarReturnType = new TypeToken<CheckRelationScopedResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for evaluate
+     * @param evaluateRequest AuthZEN Authorization API 1.0 evaluation request. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1066,7 +1156,7 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> AuthZEN decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call evaluateCall(final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call evaluateCall(@javax.annotation.Nonnull EvaluateRequest evaluateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1080,7 +1170,7 @@ public class AuthorizationApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = evaluateRequest;
 
         // create path and map variables
         String localVarPath = "/api/v1/authz/v1/evaluation";
@@ -1100,6 +1190,7 @@ public class AuthorizationApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1111,14 +1202,20 @@ public class AuthorizationApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call evaluateValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        return evaluateCall(_callback);
+    private okhttp3.Call evaluateValidateBeforeCall(@javax.annotation.Nonnull EvaluateRequest evaluateRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'evaluateRequest' is set
+        if (evaluateRequest == null) {
+            throw new ApiException("Missing the required parameter 'evaluateRequest' when calling evaluate(Async)");
+        }
+
+        return evaluateCall(evaluateRequest, _callback);
 
     }
 
     /**
      * AuthZEN 1.0 access evaluation
      * POST /api/v1/authz/v1/evaluation Body: {   \&quot;subject\&quot;:  {\&quot;type\&quot;: \&quot;user\&quot;|\&quot;agent\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;action\&quot;:   {\&quot;name\&quot;: \&quot;...\&quot;},   \&quot;resource\&quot;: {\&quot;type\&quot;: \&quot;...\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;context\&quot;:  {...} } Response: {\&quot;decision\&quot;: true|false, \&quot;context\&quot;: {...}?}
+     * @param evaluateRequest AuthZEN Authorization API 1.0 evaluation request. (required)
      * @return AuthZenDecision
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1128,14 +1225,15 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> AuthZEN decision </td><td>  -  </td></tr>
      </table>
      */
-    public AuthZenDecision evaluate() throws ApiException {
-        ApiResponse<AuthZenDecision> localVarResp = evaluateWithHttpInfo();
+    public AuthZenDecision evaluate(@javax.annotation.Nonnull EvaluateRequest evaluateRequest) throws ApiException {
+        ApiResponse<AuthZenDecision> localVarResp = evaluateWithHttpInfo(evaluateRequest);
         return localVarResp.getData();
     }
 
     /**
      * AuthZEN 1.0 access evaluation
      * POST /api/v1/authz/v1/evaluation Body: {   \&quot;subject\&quot;:  {\&quot;type\&quot;: \&quot;user\&quot;|\&quot;agent\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;action\&quot;:   {\&quot;name\&quot;: \&quot;...\&quot;},   \&quot;resource\&quot;: {\&quot;type\&quot;: \&quot;...\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;context\&quot;:  {...} } Response: {\&quot;decision\&quot;: true|false, \&quot;context\&quot;: {...}?}
+     * @param evaluateRequest AuthZEN Authorization API 1.0 evaluation request. (required)
      * @return ApiResponse&lt;AuthZenDecision&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1145,8 +1243,8 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> AuthZEN decision </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AuthZenDecision> evaluateWithHttpInfo() throws ApiException {
-        okhttp3.Call localVarCall = evaluateValidateBeforeCall(null);
+    public ApiResponse<AuthZenDecision> evaluateWithHttpInfo(@javax.annotation.Nonnull EvaluateRequest evaluateRequest) throws ApiException {
+        okhttp3.Call localVarCall = evaluateValidateBeforeCall(evaluateRequest, null);
         Type localVarReturnType = new TypeToken<AuthZenDecision>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1154,6 +1252,7 @@ public class AuthorizationApi {
     /**
      * AuthZEN 1.0 access evaluation (asynchronously)
      * POST /api/v1/authz/v1/evaluation Body: {   \&quot;subject\&quot;:  {\&quot;type\&quot;: \&quot;user\&quot;|\&quot;agent\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;action\&quot;:   {\&quot;name\&quot;: \&quot;...\&quot;},   \&quot;resource\&quot;: {\&quot;type\&quot;: \&quot;...\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;context\&quot;:  {...} } Response: {\&quot;decision\&quot;: true|false, \&quot;context\&quot;: {...}?}
+     * @param evaluateRequest AuthZEN Authorization API 1.0 evaluation request. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1164,15 +1263,16 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> AuthZEN decision </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call evaluateAsync(final ApiCallback<AuthZenDecision> _callback) throws ApiException {
+    public okhttp3.Call evaluateAsync(@javax.annotation.Nonnull EvaluateRequest evaluateRequest, final ApiCallback<AuthZenDecision> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = evaluateValidateBeforeCall(_callback);
+        okhttp3.Call localVarCall = evaluateValidateBeforeCall(evaluateRequest, _callback);
         Type localVarReturnType = new TypeToken<AuthZenDecision>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for evaluateBatch
+     * @param evaluateBatchRequest AuthZEN Authorization API 1.0 batch evaluation request. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1183,7 +1283,7 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> One decision per evaluation, in request order </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call evaluateBatchCall(final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call evaluateBatchCall(@javax.annotation.Nonnull EvaluateBatchRequest evaluateBatchRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1197,7 +1297,7 @@ public class AuthorizationApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = evaluateBatchRequest;
 
         // create path and map variables
         String localVarPath = "/api/v1/authz/v1/evaluations";
@@ -1217,6 +1317,7 @@ public class AuthorizationApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1228,14 +1329,20 @@ public class AuthorizationApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call evaluateBatchValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-        return evaluateBatchCall(_callback);
+    private okhttp3.Call evaluateBatchValidateBeforeCall(@javax.annotation.Nonnull EvaluateBatchRequest evaluateBatchRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'evaluateBatchRequest' is set
+        if (evaluateBatchRequest == null) {
+            throw new ApiException("Missing the required parameter 'evaluateBatchRequest' when calling evaluateBatch(Async)");
+        }
+
+        return evaluateBatchCall(evaluateBatchRequest, _callback);
 
     }
 
     /**
      * AuthZEN 1.0 boxcarred access evaluations
      * POST /api/v1/authz/v1/evaluations Body: {   \&quot;subject\&quot;:  {...}?,   // optional defaults, overridden per item   \&quot;action\&quot;:   {...}?,   \&quot;resource\&quot;: {...}?,   \&quot;context\&quot;:  {...}?,   \&quot;evaluations\&quot;: [{...}, ...] } Response: {\&quot;evaluations\&quot;: [{\&quot;decision\&quot;: ...}, ...]} preserving order.
+     * @param evaluateBatchRequest AuthZEN Authorization API 1.0 batch evaluation request. (required)
      * @return EvaluateBatchResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1245,14 +1352,15 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> One decision per evaluation, in request order </td><td>  -  </td></tr>
      </table>
      */
-    public EvaluateBatchResponse evaluateBatch() throws ApiException {
-        ApiResponse<EvaluateBatchResponse> localVarResp = evaluateBatchWithHttpInfo();
+    public EvaluateBatchResponse evaluateBatch(@javax.annotation.Nonnull EvaluateBatchRequest evaluateBatchRequest) throws ApiException {
+        ApiResponse<EvaluateBatchResponse> localVarResp = evaluateBatchWithHttpInfo(evaluateBatchRequest);
         return localVarResp.getData();
     }
 
     /**
      * AuthZEN 1.0 boxcarred access evaluations
      * POST /api/v1/authz/v1/evaluations Body: {   \&quot;subject\&quot;:  {...}?,   // optional defaults, overridden per item   \&quot;action\&quot;:   {...}?,   \&quot;resource\&quot;: {...}?,   \&quot;context\&quot;:  {...}?,   \&quot;evaluations\&quot;: [{...}, ...] } Response: {\&quot;evaluations\&quot;: [{\&quot;decision\&quot;: ...}, ...]} preserving order.
+     * @param evaluateBatchRequest AuthZEN Authorization API 1.0 batch evaluation request. (required)
      * @return ApiResponse&lt;EvaluateBatchResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1262,8 +1370,8 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> One decision per evaluation, in request order </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<EvaluateBatchResponse> evaluateBatchWithHttpInfo() throws ApiException {
-        okhttp3.Call localVarCall = evaluateBatchValidateBeforeCall(null);
+    public ApiResponse<EvaluateBatchResponse> evaluateBatchWithHttpInfo(@javax.annotation.Nonnull EvaluateBatchRequest evaluateBatchRequest) throws ApiException {
+        okhttp3.Call localVarCall = evaluateBatchValidateBeforeCall(evaluateBatchRequest, null);
         Type localVarReturnType = new TypeToken<EvaluateBatchResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1271,6 +1379,7 @@ public class AuthorizationApi {
     /**
      * AuthZEN 1.0 boxcarred access evaluations (asynchronously)
      * POST /api/v1/authz/v1/evaluations Body: {   \&quot;subject\&quot;:  {...}?,   // optional defaults, overridden per item   \&quot;action\&quot;:   {...}?,   \&quot;resource\&quot;: {...}?,   \&quot;context\&quot;:  {...}?,   \&quot;evaluations\&quot;: [{...}, ...] } Response: {\&quot;evaluations\&quot;: [{\&quot;decision\&quot;: ...}, ...]} preserving order.
+     * @param evaluateBatchRequest AuthZEN Authorization API 1.0 batch evaluation request. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1281,9 +1390,9 @@ public class AuthorizationApi {
         <tr><td> 200 </td><td> One decision per evaluation, in request order </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call evaluateBatchAsync(final ApiCallback<EvaluateBatchResponse> _callback) throws ApiException {
+    public okhttp3.Call evaluateBatchAsync(@javax.annotation.Nonnull EvaluateBatchRequest evaluateBatchRequest, final ApiCallback<EvaluateBatchResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = evaluateBatchValidateBeforeCall(_callback);
+        okhttp3.Call localVarCall = evaluateBatchValidateBeforeCall(evaluateBatchRequest, _callback);
         Type localVarReturnType = new TypeToken<EvaluateBatchResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1578,7 +1687,7 @@ public class AuthorizationApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Built-in identity attributes plus trait_&lt;key&gt; entries and tenant-defined custom attributes </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Built-in identity attributes plus trait_&lt;key&gt; entries and custom attributes that the organization defined </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getMyAttributesCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1647,7 +1756,7 @@ public class AuthorizationApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Built-in identity attributes plus trait_&lt;key&gt; entries and tenant-defined custom attributes </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Built-in identity attributes plus trait_&lt;key&gt; entries and custom attributes that the organization defined </td><td>  -  </td></tr>
      </table>
      */
     public GetMyAttributesResponse getMyAttributes(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1665,7 +1774,7 @@ public class AuthorizationApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Built-in identity attributes plus trait_&lt;key&gt; entries and tenant-defined custom attributes </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Built-in identity attributes plus trait_&lt;key&gt; entries and custom attributes that the organization defined </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<GetMyAttributesResponse> getMyAttributesWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1685,7 +1794,7 @@ public class AuthorizationApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Built-in identity attributes plus trait_&lt;key&gt; entries and tenant-defined custom attributes </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Built-in identity attributes plus trait_&lt;key&gt; entries and custom attributes that the organization defined </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getMyAttributesAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<GetMyAttributesResponse> _callback) throws ApiException {
@@ -1853,7 +1962,7 @@ public class AuthorizationApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Definitions (tenant-defined and global) </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Definitions (the organization&#39;s own and the built-in ones) </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listAttributeDefinitionsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String type, final ApiCallback _callback) throws ApiException {
@@ -1927,7 +2036,7 @@ public class AuthorizationApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Definitions (tenant-defined and global) </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Definitions (the organization&#39;s own and the built-in ones) </td><td>  -  </td></tr>
      </table>
      */
     public ListAttributeDefinitionsResponse listAttributeDefinitions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String type) throws ApiException {
@@ -1946,7 +2055,7 @@ public class AuthorizationApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Definitions (tenant-defined and global) </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Definitions (the organization&#39;s own and the built-in ones) </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<ListAttributeDefinitionsResponse> listAttributeDefinitionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String type) throws ApiException {
@@ -1967,7 +2076,7 @@ public class AuthorizationApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Definitions (tenant-defined and global) </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Definitions (the organization&#39;s own and the built-in ones) </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listAttributeDefinitionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String type, final ApiCallback<ListAttributeDefinitionsResponse> _callback) throws ApiException {
@@ -2100,6 +2209,7 @@ public class AuthorizationApi {
      * @param resourceType  (required)
      * @param resourceId  (required)
      * @param attributeSlug  (required)
+     * @param setResourceAttributeRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2111,7 +2221,7 @@ public class AuthorizationApi {
         <tr><td> 403 </td><td> The caller lacks abac.manage, or an active policy for this resource type (or for &#x60;*&#x60;) reads the attribute and covers permissions that the caller does not hold: then only a full administrator, or an administrator who holds &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for each action of that policy, can set the value. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setResourceAttributeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call setResourceAttributeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug, @javax.annotation.Nonnull SetResourceAttributeRequest setResourceAttributeRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2125,7 +2235,7 @@ public class AuthorizationApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = setResourceAttributeRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug}"
@@ -2149,6 +2259,7 @@ public class AuthorizationApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2160,7 +2271,7 @@ public class AuthorizationApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call setResourceAttributeValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call setResourceAttributeValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug, @javax.annotation.Nonnull SetResourceAttributeRequest setResourceAttributeRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling setResourceAttribute(Async)");
@@ -2181,7 +2292,12 @@ public class AuthorizationApi {
             throw new ApiException("Missing the required parameter 'attributeSlug' when calling setResourceAttribute(Async)");
         }
 
-        return setResourceAttributeCall(orgId, resourceType, resourceId, attributeSlug, _callback);
+        // verify the required parameter 'setResourceAttributeRequest' is set
+        if (setResourceAttributeRequest == null) {
+            throw new ApiException("Missing the required parameter 'setResourceAttributeRequest' when calling setResourceAttribute(Async)");
+        }
+
+        return setResourceAttributeCall(orgId, resourceType, resourceId, attributeSlug, setResourceAttributeRequest, _callback);
 
     }
 
@@ -2192,6 +2308,7 @@ public class AuthorizationApi {
      * @param resourceType  (required)
      * @param resourceId  (required)
      * @param attributeSlug  (required)
+     * @param setResourceAttributeRequest  (required)
      * @return SetResourceAttributeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2202,8 +2319,8 @@ public class AuthorizationApi {
         <tr><td> 403 </td><td> The caller lacks abac.manage, or an active policy for this resource type (or for &#x60;*&#x60;) reads the attribute and covers permissions that the caller does not hold: then only a full administrator, or an administrator who holds &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for each action of that policy, can set the value. </td><td>  -  </td></tr>
      </table>
      */
-    public SetResourceAttributeResponse setResourceAttribute(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug) throws ApiException {
-        ApiResponse<SetResourceAttributeResponse> localVarResp = setResourceAttributeWithHttpInfo(orgId, resourceType, resourceId, attributeSlug);
+    public SetResourceAttributeResponse setResourceAttribute(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug, @javax.annotation.Nonnull SetResourceAttributeRequest setResourceAttributeRequest) throws ApiException {
+        ApiResponse<SetResourceAttributeResponse> localVarResp = setResourceAttributeWithHttpInfo(orgId, resourceType, resourceId, attributeSlug, setResourceAttributeRequest);
         return localVarResp.getData();
     }
 
@@ -2214,6 +2331,7 @@ public class AuthorizationApi {
      * @param resourceType  (required)
      * @param resourceId  (required)
      * @param attributeSlug  (required)
+     * @param setResourceAttributeRequest  (required)
      * @return ApiResponse&lt;SetResourceAttributeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2224,8 +2342,8 @@ public class AuthorizationApi {
         <tr><td> 403 </td><td> The caller lacks abac.manage, or an active policy for this resource type (or for &#x60;*&#x60;) reads the attribute and covers permissions that the caller does not hold: then only a full administrator, or an administrator who holds &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for each action of that policy, can set the value. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<SetResourceAttributeResponse> setResourceAttributeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug) throws ApiException {
-        okhttp3.Call localVarCall = setResourceAttributeValidateBeforeCall(orgId, resourceType, resourceId, attributeSlug, null);
+    public ApiResponse<SetResourceAttributeResponse> setResourceAttributeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug, @javax.annotation.Nonnull SetResourceAttributeRequest setResourceAttributeRequest) throws ApiException {
+        okhttp3.Call localVarCall = setResourceAttributeValidateBeforeCall(orgId, resourceType, resourceId, attributeSlug, setResourceAttributeRequest, null);
         Type localVarReturnType = new TypeToken<SetResourceAttributeResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2237,6 +2355,7 @@ public class AuthorizationApi {
      * @param resourceType  (required)
      * @param resourceId  (required)
      * @param attributeSlug  (required)
+     * @param setResourceAttributeRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2248,9 +2367,9 @@ public class AuthorizationApi {
         <tr><td> 403 </td><td> The caller lacks abac.manage, or an active policy for this resource type (or for &#x60;*&#x60;) reads the attribute and covers permissions that the caller does not hold: then only a full administrator, or an administrator who holds &#x60;&lt;resourceType&gt;.&lt;action&gt;&#x60; for each action of that policy, can set the value. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setResourceAttributeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug, final ApiCallback<SetResourceAttributeResponse> _callback) throws ApiException {
+    public okhttp3.Call setResourceAttributeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String resourceType, @javax.annotation.Nonnull String resourceId, @javax.annotation.Nonnull String attributeSlug, @javax.annotation.Nonnull SetResourceAttributeRequest setResourceAttributeRequest, final ApiCallback<SetResourceAttributeResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = setResourceAttributeValidateBeforeCall(orgId, resourceType, resourceId, attributeSlug, _callback);
+        okhttp3.Call localVarCall = setResourceAttributeValidateBeforeCall(orgId, resourceType, resourceId, attributeSlug, setResourceAttributeRequest, _callback);
         Type localVarReturnType = new TypeToken<SetResourceAttributeResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2260,6 +2379,7 @@ public class AuthorizationApi {
      * @param orgId  (required)
      * @param userId  (required)
      * @param attributeSlug  (required)
+     * @param setResourceAttributeRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2271,7 +2391,7 @@ public class AuthorizationApi {
         <tr><td> 403 </td><td> The caller lacks abac.manage or users.edit, sets an attribute on their own account without being a full administrator, does not hold every permission of the target account, or an active policy reads the attribute and covers permissions that the caller does not hold. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setUserAttributeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call setUserAttributeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug, @javax.annotation.Nonnull SetResourceAttributeRequest setResourceAttributeRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2285,7 +2405,7 @@ public class AuthorizationApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = setResourceAttributeRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug}"
@@ -2308,6 +2428,7 @@ public class AuthorizationApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2319,7 +2440,7 @@ public class AuthorizationApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call setUserAttributeValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call setUserAttributeValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug, @javax.annotation.Nonnull SetResourceAttributeRequest setResourceAttributeRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling setUserAttribute(Async)");
@@ -2335,7 +2456,12 @@ public class AuthorizationApi {
             throw new ApiException("Missing the required parameter 'attributeSlug' when calling setUserAttribute(Async)");
         }
 
-        return setUserAttributeCall(orgId, userId, attributeSlug, _callback);
+        // verify the required parameter 'setResourceAttributeRequest' is set
+        if (setResourceAttributeRequest == null) {
+            throw new ApiException("Missing the required parameter 'setResourceAttributeRequest' when calling setUserAttribute(Async)");
+        }
+
+        return setUserAttributeCall(orgId, userId, attributeSlug, setResourceAttributeRequest, _callback);
 
     }
 
@@ -2345,6 +2471,7 @@ public class AuthorizationApi {
      * @param orgId  (required)
      * @param userId  (required)
      * @param attributeSlug  (required)
+     * @param setResourceAttributeRequest  (required)
      * @return SetUserAttributeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2355,8 +2482,8 @@ public class AuthorizationApi {
         <tr><td> 403 </td><td> The caller lacks abac.manage or users.edit, sets an attribute on their own account without being a full administrator, does not hold every permission of the target account, or an active policy reads the attribute and covers permissions that the caller does not hold. </td><td>  -  </td></tr>
      </table>
      */
-    public SetUserAttributeResponse setUserAttribute(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug) throws ApiException {
-        ApiResponse<SetUserAttributeResponse> localVarResp = setUserAttributeWithHttpInfo(orgId, userId, attributeSlug);
+    public SetUserAttributeResponse setUserAttribute(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug, @javax.annotation.Nonnull SetResourceAttributeRequest setResourceAttributeRequest) throws ApiException {
+        ApiResponse<SetUserAttributeResponse> localVarResp = setUserAttributeWithHttpInfo(orgId, userId, attributeSlug, setResourceAttributeRequest);
         return localVarResp.getData();
     }
 
@@ -2366,6 +2493,7 @@ public class AuthorizationApi {
      * @param orgId  (required)
      * @param userId  (required)
      * @param attributeSlug  (required)
+     * @param setResourceAttributeRequest  (required)
      * @return ApiResponse&lt;SetUserAttributeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2376,8 +2504,8 @@ public class AuthorizationApi {
         <tr><td> 403 </td><td> The caller lacks abac.manage or users.edit, sets an attribute on their own account without being a full administrator, does not hold every permission of the target account, or an active policy reads the attribute and covers permissions that the caller does not hold. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<SetUserAttributeResponse> setUserAttributeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug) throws ApiException {
-        okhttp3.Call localVarCall = setUserAttributeValidateBeforeCall(orgId, userId, attributeSlug, null);
+    public ApiResponse<SetUserAttributeResponse> setUserAttributeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug, @javax.annotation.Nonnull SetResourceAttributeRequest setResourceAttributeRequest) throws ApiException {
+        okhttp3.Call localVarCall = setUserAttributeValidateBeforeCall(orgId, userId, attributeSlug, setResourceAttributeRequest, null);
         Type localVarReturnType = new TypeToken<SetUserAttributeResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2388,6 +2516,7 @@ public class AuthorizationApi {
      * @param orgId  (required)
      * @param userId  (required)
      * @param attributeSlug  (required)
+     * @param setResourceAttributeRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2399,9 +2528,9 @@ public class AuthorizationApi {
         <tr><td> 403 </td><td> The caller lacks abac.manage or users.edit, sets an attribute on their own account without being a full administrator, does not hold every permission of the target account, or an active policy reads the attribute and covers permissions that the caller does not hold. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setUserAttributeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug, final ApiCallback<SetUserAttributeResponse> _callback) throws ApiException {
+    public okhttp3.Call setUserAttributeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String attributeSlug, @javax.annotation.Nonnull SetResourceAttributeRequest setResourceAttributeRequest, final ApiCallback<SetUserAttributeResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = setUserAttributeValidateBeforeCall(orgId, userId, attributeSlug, _callback);
+        okhttp3.Call localVarCall = setUserAttributeValidateBeforeCall(orgId, userId, attributeSlug, setResourceAttributeRequest, _callback);
         Type localVarReturnType = new TypeToken<SetUserAttributeResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

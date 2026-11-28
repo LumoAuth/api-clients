@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -215,7 +215,7 @@ module LumoAuthApiClient
     end
 
     # List active sessions
-    # Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+    # Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminSessionsListResponse]
@@ -225,7 +225,7 @@ module LumoAuthApiClient
     end
 
     # List active sessions
-    # Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
+    # Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminSessionsListResponse, Integer, Hash)>] AdminSessionsListResponse data, response status code and response headers
@@ -349,7 +349,7 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Revoke every session in the tenant
+    # Revoke every session in the organization
     # Signs out all users. Requires `confirm: true` in the body.
     # @param org_id [String] 
     # @param admin_sessions_revoke_all_request [AdminSessionsRevokeAllRequest] 
@@ -360,7 +360,7 @@ module LumoAuthApiClient
       data
     end
 
-    # Revoke every session in the tenant
+    # Revoke every session in the organization
     # Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
     # @param org_id [String] 
     # @param admin_sessions_revoke_all_request [AdminSessionsRevokeAllRequest] 
@@ -484,8 +484,8 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List access tokens
-    # Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
+    # List stored (opaque) access tokens
+    # Paginated OPAQUE access tokens issued by the organization's clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user's or a client's tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminTokensListResponse]
@@ -494,8 +494,8 @@ module LumoAuthApiClient
       data
     end
 
-    # List access tokens
-    # Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
+    # List stored (opaque) access tokens
+    # Paginated OPAQUE access tokens issued by the organization&#39;s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user&#39;s or a client&#39;s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminTokensListResponse, Integer, Hash)>] AdminTokensListResponse data, response status code and response headers
@@ -823,6 +823,7 @@ module LumoAuthApiClient
     end
 
     # Revoke all tokens of a user
+    # Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
@@ -833,6 +834,7 @@ module LumoAuthApiClient
     end
 
     # Revoke all tokens of a user
+    # Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
@@ -890,6 +892,7 @@ module LumoAuthApiClient
     end
 
     # Revoke all tokens of a user (POST alias)
+    # Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
@@ -900,6 +903,7 @@ module LumoAuthApiClient
     end
 
     # Revoke all tokens of a user (POST alias)
+    # Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters

@@ -104,11 +104,12 @@ open class AdminIdentityProvidersAPI {
      Create a social login provider
      
      - parameter orgId: (path)  
+     - parameter adminSocialProvidersCreateRequest: (body) An unknown field is refused with 400. 
      - returns: AdminSocialProvidersCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSocialProvidersCreate(orgId: String) async throws -> AdminSocialProvidersCreateResponse {
-        return try await adminSocialProvidersCreateWithRequestBuilder(orgId: orgId).execute().body
+    open class func adminSocialProvidersCreate(orgId: String, adminSocialProvidersCreateRequest: AdminSocialProvidersCreateRequest) async throws -> AdminSocialProvidersCreateResponse {
+        return try await adminSocialProvidersCreateWithRequestBuilder(orgId: orgId, adminSocialProvidersCreateRequest: adminSocialProvidersCreateRequest).execute().body
     }
 
     /**
@@ -121,20 +122,21 @@ open class AdminIdentityProvidersAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter adminSocialProvidersCreateRequest: (body) An unknown field is refused with 400. 
      - returns: RequestBuilder<AdminSocialProvidersCreateResponse> 
      */
-    open class func adminSocialProvidersCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminSocialProvidersCreateResponse> {
+    open class func adminSocialProvidersCreateWithRequestBuilder(orgId: String, adminSocialProvidersCreateRequest: AdminSocialProvidersCreateRequest) -> RequestBuilder<AdminSocialProvidersCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminSocialProvidersCreateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -433,11 +435,12 @@ open class AdminIdentityProvidersAPI {
      
      - parameter orgId: (path)  
      - parameter providerId: (path)  
+     - parameter putAdminSocialProvidersUpdateRequest: (body) Only the fields that are sent change. An unknown field is refused with 400. 
      - returns: AdminSocialProvidersCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminSocialProvidersUpdate(orgId: String, providerId: String) async throws -> AdminSocialProvidersCreateResponse {
-        return try await patchAdminSocialProvidersUpdateWithRequestBuilder(orgId: orgId, providerId: providerId).execute().body
+    open class func patchAdminSocialProvidersUpdate(orgId: String, providerId: String, putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest) async throws -> AdminSocialProvidersCreateResponse {
+        return try await patchAdminSocialProvidersUpdateWithRequestBuilder(orgId: orgId, providerId: providerId, putAdminSocialProvidersUpdateRequest: putAdminSocialProvidersUpdateRequest).execute().body
     }
 
     /**
@@ -451,9 +454,10 @@ open class AdminIdentityProvidersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter providerId: (path)  
+     - parameter putAdminSocialProvidersUpdateRequest: (body) Only the fields that are sent change. An unknown field is refused with 400. 
      - returns: RequestBuilder<AdminSocialProvidersCreateResponse> 
      */
-    open class func patchAdminSocialProvidersUpdateWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<AdminSocialProvidersCreateResponse> {
+    open class func patchAdminSocialProvidersUpdateWithRequestBuilder(orgId: String, providerId: String, putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest) -> RequestBuilder<AdminSocialProvidersCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -462,12 +466,12 @@ open class AdminIdentityProvidersAPI {
         let providerIdPostEscape = providerIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{providerId}", with: providerIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminSocialProvidersUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -482,11 +486,12 @@ open class AdminIdentityProvidersAPI {
      
      - parameter orgId: (path)  
      - parameter providerId: (path)  
+     - parameter putAdminSocialProvidersUpdateRequest: (body) Only the fields that are sent change. An unknown field is refused with 400. 
      - returns: AdminSocialProvidersCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminSocialProvidersUpdate(orgId: String, providerId: String) async throws -> AdminSocialProvidersCreateResponse {
-        return try await putAdminSocialProvidersUpdateWithRequestBuilder(orgId: orgId, providerId: providerId).execute().body
+    open class func putAdminSocialProvidersUpdate(orgId: String, providerId: String, putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest) async throws -> AdminSocialProvidersCreateResponse {
+        return try await putAdminSocialProvidersUpdateWithRequestBuilder(orgId: orgId, providerId: providerId, putAdminSocialProvidersUpdateRequest: putAdminSocialProvidersUpdateRequest).execute().body
     }
 
     /**
@@ -500,9 +505,10 @@ open class AdminIdentityProvidersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter providerId: (path)  
+     - parameter putAdminSocialProvidersUpdateRequest: (body) Only the fields that are sent change. An unknown field is refused with 400. 
      - returns: RequestBuilder<AdminSocialProvidersCreateResponse> 
      */
-    open class func putAdminSocialProvidersUpdateWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<AdminSocialProvidersCreateResponse> {
+    open class func putAdminSocialProvidersUpdateWithRequestBuilder(orgId: String, providerId: String, putAdminSocialProvidersUpdateRequest: PutAdminSocialProvidersUpdateRequest) -> RequestBuilder<AdminSocialProvidersCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -511,12 +517,12 @@ open class AdminIdentityProvidersAPI {
         let providerIdPostEscape = providerIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{providerId}", with: providerIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: putAdminSocialProvidersUpdateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

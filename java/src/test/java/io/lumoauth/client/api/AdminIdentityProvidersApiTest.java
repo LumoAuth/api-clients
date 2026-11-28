@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -16,10 +16,12 @@ package io.lumoauth.client.api;
 import io.lumoauth.client.ApiException;
 import io.lumoauth.client.model.AdminSocialProvidersAvailableResponse;
 import io.lumoauth.client.model.AdminSocialProvidersCallbackUrlsResponse;
+import io.lumoauth.client.model.AdminSocialProvidersCreateRequest;
 import io.lumoauth.client.model.AdminSocialProvidersCreateResponse;
 import io.lumoauth.client.model.AdminSocialProvidersGetResponse;
 import io.lumoauth.client.model.AdminSocialProvidersListResponse;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAdminSocialProvidersUpdateRequest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -68,7 +70,8 @@ public class AdminIdentityProvidersApiTest {
     @Test
     public void adminSocialProvidersCreateTest() throws ApiException {
         String orgId = null;
-        AdminSocialProvidersCreateResponse response = api.adminSocialProvidersCreate(orgId);
+        AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest = null;
+        AdminSocialProvidersCreateResponse response = api.adminSocialProvidersCreate(orgId, adminSocialProvidersCreateRequest);
         // TODO: test validations
     }
 
@@ -157,7 +160,8 @@ public class AdminIdentityProvidersApiTest {
     public void patchAdminSocialProvidersUpdateTest() throws ApiException {
         String orgId = null;
         String providerId = null;
-        AdminSocialProvidersCreateResponse response = api.patchAdminSocialProvidersUpdate(orgId, providerId);
+        PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest = null;
+        AdminSocialProvidersCreateResponse response = api.patchAdminSocialProvidersUpdate(orgId, providerId, putAdminSocialProvidersUpdateRequest);
         // TODO: test validations
     }
 
@@ -170,7 +174,8 @@ public class AdminIdentityProvidersApiTest {
     public void putAdminSocialProvidersUpdateTest() throws ApiException {
         String orgId = null;
         String providerId = null;
-        AdminSocialProvidersCreateResponse response = api.putAdminSocialProvidersUpdate(orgId, providerId);
+        PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest = null;
+        AdminSocialProvidersCreateResponse response = api.putAdminSocialProvidersUpdate(orgId, providerId, putAdminSocialProvidersUpdateRequest);
         // TODO: test validations
     }
 

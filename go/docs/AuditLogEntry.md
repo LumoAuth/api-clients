@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **TargetId** | Pointer to **NullableString** |  | [optional] 
 **TargetName** | Pointer to **NullableString** |  | [optional] 
 **IpAddress** | Pointer to **NullableString** |  | [optional] 
+**TraceId** | Pointer to **NullableString** | W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none | [optional] 
 **EventTime** | Pointer to **NullableTime** | Detailed responses only | [optional] 
 **DurationMs** | Pointer to **NullableInt32** | Detailed responses only | [optional] 
 **InitiatedBy** | Pointer to **NullableString** | Detailed responses only | [optional] 
@@ -512,6 +513,41 @@ HasIpAddress returns a boolean if a field has been set.
 `func (o *AuditLogEntry) UnsetIpAddress()`
 
 UnsetIpAddress ensures that no value is present for IpAddress, not even an explicit nil
+### GetTraceId
+
+`func (o *AuditLogEntry) GetTraceId() string`
+
+GetTraceId returns the TraceId field if non-nil, zero value otherwise.
+
+### GetTraceIdOk
+
+`func (o *AuditLogEntry) GetTraceIdOk() (*string, bool)`
+
+GetTraceIdOk returns a tuple with the TraceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTraceId
+
+`func (o *AuditLogEntry) SetTraceId(v string)`
+
+SetTraceId sets TraceId field to given value.
+
+### HasTraceId
+
+`func (o *AuditLogEntry) HasTraceId() bool`
+
+HasTraceId returns a boolean if a field has been set.
+
+### SetTraceIdNil
+
+`func (o *AuditLogEntry) SetTraceIdNil(b bool)`
+
+ SetTraceIdNil sets the value for TraceId to be an explicit nil
+
+### UnsetTraceId
+`func (o *AuditLogEntry) UnsetTraceId()`
+
+UnsetTraceId ensures that no value is present for TraceId, not even an explicit nil
 ### GetEventTime
 
 `func (o *AuditLogEntry) GetEventTime() time.Time`

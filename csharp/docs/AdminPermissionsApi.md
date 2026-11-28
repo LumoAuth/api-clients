@@ -4,10 +4,10 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AdminPermissionsCreate**](AdminPermissionsApi.md#adminpermissionscreate) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the tenant |
+| [**AdminPermissionsCreate**](AdminPermissionsApi.md#adminpermissionscreate) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the organization |
 | [**AdminPermissionsDelete**](AdminPermissionsApi.md#adminpermissionsdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Delete a custom permission |
 | [**AdminPermissionsGet**](AdminPermissionsApi.md#adminpermissionsget) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Get a single permission |
-| [**AdminPermissionsList**](AdminPermissionsApi.md#adminpermissionslist) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the tenant |
+| [**AdminPermissionsList**](AdminPermissionsApi.md#adminpermissionslist) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the organization |
 | [**AdminPermissionsUpdate**](AdminPermissionsApi.md#adminpermissionsupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Update a permission |
 | [**AdminPermissionsUsage**](AdminPermissionsApi.md#adminpermissionsusage) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId}/usage | Get permission usage (roles assigned to this permission) |
 | [**AdminScopesCreate**](AdminPermissionsApi.md#adminscopescreate) | **POST** /orgs/{orgId}/api/v1/admin/scopes | Create a custom OAuth scope |
@@ -16,9 +16,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminpermissionscreate"></a>
 # **AdminPermissionsCreate**
-> AdminPermissionsCreateResponse AdminPermissionsCreate (string orgId)
+> AdminPermissionsCreateResponse AdminPermissionsCreate (string orgId, AdminPermissionsCreateRequest adminPermissionsCreateRequest)
 
-Create a custom permission for the tenant
+Create a custom permission for the organization
 
 ### Example
 ```csharp
@@ -49,11 +49,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminPermissionsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var adminPermissionsCreateRequest = new AdminPermissionsCreateRequest(); // AdminPermissionsCreateRequest | 
 
             try
             {
-                // Create a custom permission for the tenant
-                AdminPermissionsCreateResponse result = apiInstance.AdminPermissionsCreate(orgId);
+                // Create a custom permission for the organization
+                AdminPermissionsCreateResponse result = apiInstance.AdminPermissionsCreate(orgId, adminPermissionsCreateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -73,8 +74,8 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Create a custom permission for the tenant
-    ApiResponse<AdminPermissionsCreateResponse> response = apiInstance.AdminPermissionsCreateWithHttpInfo(orgId);
+    // Create a custom permission for the organization
+    ApiResponse<AdminPermissionsCreateResponse> response = apiInstance.AdminPermissionsCreateWithHttpInfo(orgId, adminPermissionsCreateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -92,6 +93,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **adminPermissionsCreateRequest** | [**AdminPermissionsCreateRequest**](AdminPermissionsCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -103,7 +105,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -322,7 +324,7 @@ catch (ApiException e)
 # **AdminPermissionsList**
 > AdminPermissionsListResponse AdminPermissionsList (string orgId)
 
-List all available permissions for the tenant
+List all available permissions for the organization
 
 ### Example
 ```csharp
@@ -356,7 +358,7 @@ namespace Example
 
             try
             {
-                // List all available permissions for the tenant
+                // List all available permissions for the organization
                 AdminPermissionsListResponse result = apiInstance.AdminPermissionsList(orgId);
                 Debug.WriteLine(result);
             }
@@ -377,7 +379,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List all available permissions for the tenant
+    // List all available permissions for the organization
     ApiResponse<AdminPermissionsListResponse> response = apiInstance.AdminPermissionsListWithHttpInfo(orgId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
@@ -420,7 +422,7 @@ catch (ApiException e)
 
 <a id="adminpermissionsupdate"></a>
 # **AdminPermissionsUpdate**
-> AdminPermissionsCreateResponse AdminPermissionsUpdate (string orgId, string permissionId)
+> AdminPermissionsCreateResponse AdminPermissionsUpdate (string orgId, string permissionId, AdminPermissionsUpdateRequest adminPermissionsUpdateRequest)
 
 Update a permission
 
@@ -454,11 +456,12 @@ namespace Example
             var apiInstance = new AdminPermissionsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var permissionId = "permissionId_example";  // string | 
+            var adminPermissionsUpdateRequest = new AdminPermissionsUpdateRequest(); // AdminPermissionsUpdateRequest | 
 
             try
             {
                 // Update a permission
-                AdminPermissionsCreateResponse result = apiInstance.AdminPermissionsUpdate(orgId, permissionId);
+                AdminPermissionsCreateResponse result = apiInstance.AdminPermissionsUpdate(orgId, permissionId, adminPermissionsUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -479,7 +482,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update a permission
-    ApiResponse<AdminPermissionsCreateResponse> response = apiInstance.AdminPermissionsUpdateWithHttpInfo(orgId, permissionId);
+    ApiResponse<AdminPermissionsCreateResponse> response = apiInstance.AdminPermissionsUpdateWithHttpInfo(orgId, permissionId, adminPermissionsUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -498,6 +501,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **permissionId** | **string** |  |  |
+| **adminPermissionsUpdateRequest** | [**AdminPermissionsUpdateRequest**](AdminPermissionsUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -509,7 +513,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -624,7 +628,7 @@ catch (ApiException e)
 
 <a id="adminscopescreate"></a>
 # **AdminScopesCreate**
-> AdminScopesCreateResponse AdminScopesCreate (string orgId)
+> AdminScopesCreateResponse AdminScopesCreate (string orgId, AdminScopesCreateRequest adminScopesCreateRequest)
 
 Create a custom OAuth scope
 
@@ -657,11 +661,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminPermissionsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var adminScopesCreateRequest = new AdminScopesCreateRequest(); // AdminScopesCreateRequest | 
 
             try
             {
                 // Create a custom OAuth scope
-                AdminScopesCreateResponse result = apiInstance.AdminScopesCreate(orgId);
+                AdminScopesCreateResponse result = apiInstance.AdminScopesCreate(orgId, adminScopesCreateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -682,7 +687,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create a custom OAuth scope
-    ApiResponse<AdminScopesCreateResponse> response = apiInstance.AdminScopesCreateWithHttpInfo(orgId);
+    ApiResponse<AdminScopesCreateResponse> response = apiInstance.AdminScopesCreateWithHttpInfo(orgId, adminScopesCreateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -700,6 +705,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **adminScopesCreateRequest** | [**AdminScopesCreateRequest**](AdminScopesCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -711,7 +717,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

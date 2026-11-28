@@ -27,7 +27,7 @@ Method | HTTP request | Description
 
 ## check_abac
 
-> models::CheckAbacResponse check_abac(org_id)
+> models::CheckAbacResponse check_abac(org_id, check_abac_request)
 Evaluate an ABAC policy decision for the caller
 
 POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
@@ -38,6 +38,7 @@ POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   reso
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**check_abac_request** | [**CheckAbacRequest**](CheckAbacRequest.md) |  | [required] |
 
 ### Return type
 
@@ -49,7 +50,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -57,7 +58,7 @@ Name | Type | Description  | Required | Notes
 
 ## check_abac_bulk
 
-> models::CheckAbacBulkResponse check_abac_bulk(org_id)
+> models::CheckAbacBulkResponse check_abac_bulk(org_id, check_abac_bulk_request)
 Evaluate up to 100 ABAC checks for the caller in one call
 
 POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
@@ -68,6 +69,7 @@ POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, act
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**check_abac_bulk_request** | [**CheckAbacBulkRequest**](CheckAbacBulkRequest.md) |  | [required] |
 
 ### Return type
 
@@ -79,7 +81,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -87,14 +89,17 @@ Name | Type | Description  | Required | Notes
 
 ## check_all_permissions
 
-> models::CheckAnyPermissionResponse check_all_permissions()
+> models::CheckAnyPermissionResponse check_all_permissions(check_permissions_bulk_request)
 Check whether the subject holds all of the permissions
 
 POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**check_permissions_bulk_request** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  | [required] |
 
 ### Return type
 
@@ -106,7 +111,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -114,14 +119,17 @@ This endpoint does not need any parameter.
 
 ## check_any_permission
 
-> models::CheckAnyPermissionResponse check_any_permission()
+> models::CheckAnyPermissionResponse check_any_permission(check_permissions_bulk_request)
 Check whether the subject holds any of the permissions
 
 POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**check_permissions_bulk_request** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  | [required] |
 
 ### Return type
 
@@ -133,7 +141,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -141,14 +149,17 @@ This endpoint does not need any parameter.
 
 ## check_permission
 
-> models::CheckPermissionResponse check_permission()
+> models::CheckPermissionResponse check_permission(check_permission_request)
 Check one permission
 
 POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**check_permission_request** | [**CheckPermissionRequest**](CheckPermissionRequest.md) |  | [required] |
 
 ### Return type
 
@@ -160,7 +171,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -168,14 +179,17 @@ This endpoint does not need any parameter.
 
 ## check_permissions_bulk
 
-> models::CheckPermissionsBulkResponse check_permissions_bulk()
+> models::CheckPermissionsBulkResponse check_permissions_bulk(check_permissions_bulk_request)
 Check up to 100 permissions in one call
 
 POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**check_permissions_bulk_request** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  | [required] |
 
 ### Return type
 
@@ -187,7 +201,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -195,14 +209,17 @@ This endpoint does not need any parameter.
 
 ## check_relation
 
-> models::CheckRelationResponse check_relation()
+> models::CheckRelationResponse check_relation(check_relation_request)
 Zanzibar relationship check
 
 POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**check_relation_request** | [**CheckRelationRequest**](CheckRelationRequest.md) |  | [required] |
 
 ### Return type
 
@@ -214,7 +231,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -222,7 +239,7 @@ This endpoint does not need any parameter.
 
 ## check_relation_scoped
 
-> models::CheckRelationScopedResponse check_relation_scoped(org_id)
+> models::CheckRelationScopedResponse check_relation_scoped(org_id, check_relation_scoped_request)
 Zanzibar relationship check
 
 ### Parameters
@@ -231,6 +248,7 @@ Zanzibar relationship check
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**check_relation_scoped_request** | [**CheckRelationScopedRequest**](CheckRelationScopedRequest.md) |  | [required] |
 
 ### Return type
 
@@ -242,7 +260,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -250,14 +268,17 @@ Name | Type | Description  | Required | Notes
 
 ## evaluate
 
-> models::AuthZenDecision evaluate()
+> models::AuthZenDecision evaluate(evaluate_request)
 AuthZEN 1.0 access evaluation
 
 POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**evaluate_request** | [**EvaluateRequest**](EvaluateRequest.md) | AuthZEN Authorization API 1.0 evaluation request. | [required] |
 
 ### Return type
 
@@ -269,7 +290,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -277,14 +298,17 @@ This endpoint does not need any parameter.
 
 ## evaluate_batch
 
-> models::EvaluateBatchResponse evaluate_batch()
+> models::EvaluateBatchResponse evaluate_batch(evaluate_batch_request)
 AuthZEN 1.0 boxcarred access evaluations
 
 POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**evaluate_batch_request** | [**EvaluateBatchRequest**](EvaluateBatchRequest.md) | AuthZEN Authorization API 1.0 batch evaluation request. | [required] |
 
 ### Return type
 
@@ -296,7 +320,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -485,7 +509,7 @@ This endpoint does not need any parameter.
 
 ## set_resource_attribute
 
-> models::SetResourceAttributeResponse set_resource_attribute(org_id, resource_type, resource_id, attribute_slug)
+> models::SetResourceAttributeResponse set_resource_attribute(org_id, resource_type, resource_id, attribute_slug, set_resource_attribute_request)
 Set a resource attribute
 
 PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
@@ -499,6 +523,7 @@ Name | Type | Description  | Required | Notes
 **resource_type** | **String** |  | [required] |
 **resource_id** | **String** |  | [required] |
 **attribute_slug** | **String** |  | [required] |
+**set_resource_attribute_request** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md) |  | [required] |
 
 ### Return type
 
@@ -510,7 +535,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -518,7 +543,7 @@ Name | Type | Description  | Required | Notes
 
 ## set_user_attribute
 
-> models::SetUserAttributeResponse set_user_attribute(org_id, user_id, attribute_slug)
+> models::SetUserAttributeResponse set_user_attribute(org_id, user_id, attribute_slug, set_resource_attribute_request)
 Set a user attribute
 
 PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
@@ -531,6 +556,7 @@ Name | Type | Description  | Required | Notes
 **org_id** | **String** |  | [required] |
 **user_id** | **String** |  | [required] |
 **attribute_slug** | **String** |  | [required] |
+**set_resource_attribute_request** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md) |  | [required] |
 
 ### Return type
 
@@ -542,7 +568,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

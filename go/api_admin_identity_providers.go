@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -410,6 +410,13 @@ type ApiAdminSocialProvidersCreateRequest struct {
 	ctx context.Context
 	ApiService AdminIdentityProvidersAPI
 	orgId string
+	adminSocialProvidersCreateRequest *AdminSocialProvidersCreateRequest
+}
+
+// An unknown field is refused with 400.
+func (r ApiAdminSocialProvidersCreateRequest) AdminSocialProvidersCreateRequest(adminSocialProvidersCreateRequest AdminSocialProvidersCreateRequest) ApiAdminSocialProvidersCreateRequest {
+	r.adminSocialProvidersCreateRequest = &adminSocialProvidersCreateRequest
+	return r
 }
 
 func (r ApiAdminSocialProvidersCreateRequest) Execute() (*AdminSocialProvidersCreateResponse, *http.Response, error) {
@@ -452,9 +459,12 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCreateExecute(r A
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminSocialProvidersCreateRequest == nil {
+		return localVarReturnValue, nil, reportError("adminSocialProvidersCreateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -470,6 +480,8 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCreateExecute(r A
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminSocialProvidersCreateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1232,6 +1244,13 @@ type ApiPatchAdminSocialProvidersUpdateRequest struct {
 	ApiService AdminIdentityProvidersAPI
 	orgId string
 	providerId string
+	putAdminSocialProvidersUpdateRequest *PutAdminSocialProvidersUpdateRequest
+}
+
+// Only the fields that are sent change. An unknown field is refused with 400.
+func (r ApiPatchAdminSocialProvidersUpdateRequest) PutAdminSocialProvidersUpdateRequest(putAdminSocialProvidersUpdateRequest PutAdminSocialProvidersUpdateRequest) ApiPatchAdminSocialProvidersUpdateRequest {
+	r.putAdminSocialProvidersUpdateRequest = &putAdminSocialProvidersUpdateRequest
+	return r
 }
 
 func (r ApiPatchAdminSocialProvidersUpdateRequest) Execute() (*AdminSocialProvidersCreateResponse, *http.Response, error) {
@@ -1277,9 +1296,12 @@ func (a *AdminIdentityProvidersAPIService) PatchAdminSocialProvidersUpdateExecut
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminSocialProvidersUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminSocialProvidersUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1295,6 +1317,8 @@ func (a *AdminIdentityProvidersAPIService) PatchAdminSocialProvidersUpdateExecut
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminSocialProvidersUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1351,6 +1375,13 @@ type ApiPutAdminSocialProvidersUpdateRequest struct {
 	ApiService AdminIdentityProvidersAPI
 	orgId string
 	providerId string
+	putAdminSocialProvidersUpdateRequest *PutAdminSocialProvidersUpdateRequest
+}
+
+// Only the fields that are sent change. An unknown field is refused with 400.
+func (r ApiPutAdminSocialProvidersUpdateRequest) PutAdminSocialProvidersUpdateRequest(putAdminSocialProvidersUpdateRequest PutAdminSocialProvidersUpdateRequest) ApiPutAdminSocialProvidersUpdateRequest {
+	r.putAdminSocialProvidersUpdateRequest = &putAdminSocialProvidersUpdateRequest
+	return r
 }
 
 func (r ApiPutAdminSocialProvidersUpdateRequest) Execute() (*AdminSocialProvidersCreateResponse, *http.Response, error) {
@@ -1396,9 +1427,12 @@ func (a *AdminIdentityProvidersAPIService) PutAdminSocialProvidersUpdateExecute(
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminSocialProvidersUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminSocialProvidersUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1414,6 +1448,8 @@ func (a *AdminIdentityProvidersAPIService) PutAdminSocialProvidersUpdateExecute(
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminSocialProvidersUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

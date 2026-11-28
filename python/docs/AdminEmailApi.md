@@ -280,7 +280,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_email_templates_preview**
-> AdminEmailTemplatesPreviewResponse admin_email_templates_preview(org_id, type)
+> AdminEmailTemplatesPreviewResponse admin_email_templates_preview(org_id, type, admin_email_templates_preview_request=admin_email_templates_preview_request)
 
 Render an email template with sample data
 
@@ -291,6 +291,7 @@ Render an email template with sample data
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_email_templates_preview_request import AdminEmailTemplatesPreviewRequest
 from lumoauth_api_client.models.admin_email_templates_preview_response import AdminEmailTemplatesPreviewResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -323,10 +324,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminEmailApi(api_client)
     org_id = 'org_id_example' # str | 
     type = 'type_example' # str | 
+    admin_email_templates_preview_request = lumoauth_api_client.AdminEmailTemplatesPreviewRequest() # AdminEmailTemplatesPreviewRequest |  (optional)
 
     try:
         # Render an email template with sample data
-        api_response = api_instance.admin_email_templates_preview(org_id, type)
+        api_response = api_instance.admin_email_templates_preview(org_id, type, admin_email_templates_preview_request=admin_email_templates_preview_request)
         print("The response of AdminEmailApi->admin_email_templates_preview:\n")
         pprint(api_response)
     except Exception as e:
@@ -342,6 +344,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **type** | **str**|  | 
+ **admin_email_templates_preview_request** | [**AdminEmailTemplatesPreviewRequest**](AdminEmailTemplatesPreviewRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -353,7 +356,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -366,7 +369,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_email_templates_upsert**
-> EmailTemplate admin_email_templates_upsert(org_id, type)
+> EmailTemplate admin_email_templates_upsert(org_id, type, admin_email_templates_upsert_request)
 
 Create or replace the custom email template for a type
 
@@ -379,6 +382,7 @@ Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_email_templates_upsert_request import AdminEmailTemplatesUpsertRequest
 from lumoauth_api_client.models.email_template import EmailTemplate
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -411,10 +415,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminEmailApi(api_client)
     org_id = 'org_id_example' # str | 
     type = 'type_example' # str | 
+    admin_email_templates_upsert_request = lumoauth_api_client.AdminEmailTemplatesUpsertRequest() # AdminEmailTemplatesUpsertRequest | 
 
     try:
         # Create or replace the custom email template for a type
-        api_response = api_instance.admin_email_templates_upsert(org_id, type)
+        api_response = api_instance.admin_email_templates_upsert(org_id, type, admin_email_templates_upsert_request)
         print("The response of AdminEmailApi->admin_email_templates_upsert:\n")
         pprint(api_response)
     except Exception as e:
@@ -430,6 +435,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **type** | **str**|  | 
+ **admin_email_templates_upsert_request** | [**AdminEmailTemplatesUpsertRequest**](AdminEmailTemplatesUpsertRequest.md)|  | 
 
 ### Return type
 
@@ -441,7 +447,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

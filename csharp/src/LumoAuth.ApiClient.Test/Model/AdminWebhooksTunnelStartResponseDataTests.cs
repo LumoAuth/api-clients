@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -80,6 +80,15 @@ namespace LumoAuth.ApiClient.Test.Model
         public void TunnelUrlTest()
         {
             // TODO unit test for the property 'TunnelUrl'
+        }
+
+        /// <summary>
+        /// Test the property 'SigningSecret'
+        /// </summary>
+        [Fact]
+        public void SigningSecretTest()
+        {
+            // TODO unit test for the property 'SigningSecret'
         }
     }
 }

@@ -127,4 +127,34 @@ func Test_lumoauthclient_AdminMcpAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test AdminMcpAPIService PatchAdminMcpServersUpdate", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+		var serverId string
+
+		resp, httpRes, err := apiClient.AdminMcpAPI.PatchAdminMcpServersUpdate(context.Background(), orgId, serverId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AdminMcpAPIService PutAdminMcpServersUpdate", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+		var serverId string
+
+		resp, httpRes, err := apiClient.AdminMcpAPI.PutAdminMcpServersUpdate(context.Background(), orgId, serverId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 }

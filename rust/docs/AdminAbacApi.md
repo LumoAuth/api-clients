@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 ## abac_attributes_create
 
-> models::AbacAttributesCreateResponse abac_attributes_create(org_id)
+> models::AbacAttributesCreateResponse abac_attributes_create(org_id, abac_attributes_create_request)
 Create an attribute definition
 
 ### Parameters
@@ -31,6 +31,7 @@ Create an attribute definition
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**abac_attributes_create_request** | [**AbacAttributesCreateRequest**](AbacAttributesCreateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -42,7 +43,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -136,7 +137,7 @@ Name | Type | Description  | Required | Notes
 
 ## abac_policies_create
 
-> models::AbacPoliciesCreateResponse abac_policies_create(org_id)
+> models::AbacPoliciesCreateResponse abac_policies_create(org_id, abac_policies_create_request)
 Create an ABAC policy
 
 ### Parameters
@@ -145,6 +146,7 @@ Create an ABAC policy
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**abac_policies_create_request** | [**AbacPoliciesCreateRequest**](AbacPoliciesCreateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -156,7 +158,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -280,7 +282,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_abac_attributes_update
 
-> models::PutAbacAttributesUpdateResponse patch_abac_attributes_update(org_id, id)
+> models::PutAbacAttributesUpdateResponse patch_abac_attributes_update(org_id, id, put_abac_attributes_update_request)
 Partially update an attribute definition
 
 ### Parameters
@@ -290,6 +292,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **id** | **String** |  | [required] |
+**put_abac_attributes_update_request** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -301,7 +304,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -309,7 +312,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_abac_policies_update
 
-> models::PutAbacPoliciesUpdateResponse patch_abac_policies_update(org_id, id)
+> models::PutAbacPoliciesUpdateResponse patch_abac_policies_update(org_id, id, put_abac_policies_update_request)
 Partially update an ABAC policy
 
 ### Parameters
@@ -319,6 +322,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **id** | **String** |  | [required] |
+**put_abac_policies_update_request** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -330,7 +334,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -338,7 +342,7 @@ Name | Type | Description  | Required | Notes
 
 ## put_abac_attributes_update
 
-> models::PutAbacAttributesUpdateResponse put_abac_attributes_update(org_id, id)
+> models::PutAbacAttributesUpdateResponse put_abac_attributes_update(org_id, id, put_abac_attributes_update_request)
 Update an attribute definition
 
 ### Parameters
@@ -348,6 +352,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **id** | **String** |  | [required] |
+**put_abac_attributes_update_request** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -359,7 +364,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -367,7 +372,7 @@ Name | Type | Description  | Required | Notes
 
 ## put_abac_policies_update
 
-> models::PutAbacPoliciesUpdateResponse put_abac_policies_update(org_id, id)
+> models::PutAbacPoliciesUpdateResponse put_abac_policies_update(org_id, id, put_abac_policies_update_request)
 Update an ABAC policy
 
 ### Parameters
@@ -377,6 +382,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **id** | **String** |  | [required] |
+**put_abac_policies_update_request** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -388,7 +394,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

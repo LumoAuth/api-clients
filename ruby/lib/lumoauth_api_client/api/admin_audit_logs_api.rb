@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -19,7 +19,7 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # List the distinct audit action types recorded for the tenant
+    # List the distinct audit action types recorded for the organization
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminAuditLogsActionsResponse]
@@ -28,7 +28,7 @@ module LumoAuthApiClient
       data
     end
 
-    # List the distinct audit action types recorded for the tenant
+    # List the distinct audit action types recorded for the organization
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminAuditLogsActionsResponse, Integer, Hash)>] AdminAuditLogsActionsResponse data, response status code and response headers
@@ -84,6 +84,19 @@ module LumoAuthApiClient
     # Needs `audit.export` and `audit.view`, as the export on the portal's audit log page does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :format csv (default) or json. (default to 'csv')
+    # @option opts [String] :event_type Exact event type, for example user.login.
+    # @option opts [String] :action The short verb of the event (as GET /audit-logs/actions lists them).
+    # @option opts [String] :actor_id Who acted: a user, API key or agent id. Also accepted as userId.
+    # @option opts [String] :target_type Kind of the subject of the event. Also accepted as resourceType.
+    # @option opts [String] :target_id The subject of the event, for example the user of a login.failed entry.
+    # @option opts [String] :severity 
+    # @option opts [String] :status Result of the event.
+    # @option opts [String] :ip_address 
+    # @option opts [String] :search Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+    # @option opts [String] :trace_id Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+    # @option opts [Time] :from Entries at or after this time (ISO 8601). Also accepted as startDate.
+    # @option opts [Time] :to Entries at or before this time (ISO 8601). Also accepted as endDate.
     # @return [String]
     def admin_audit_logs_export(org_id, opts = {})
       data, _status_code, _headers = admin_audit_logs_export_with_http_info(org_id, opts)
@@ -94,6 +107,19 @@ module LumoAuthApiClient
     # Needs &#x60;audit.export&#x60; and &#x60;audit.view&#x60;, as the export on the portal&#39;s audit log page does.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :format csv (default) or json. (default to 'csv')
+    # @option opts [String] :event_type Exact event type, for example user.login.
+    # @option opts [String] :action The short verb of the event (as GET /audit-logs/actions lists them).
+    # @option opts [String] :actor_id Who acted: a user, API key or agent id. Also accepted as userId.
+    # @option opts [String] :target_type Kind of the subject of the event. Also accepted as resourceType.
+    # @option opts [String] :target_id The subject of the event, for example the user of a login.failed entry.
+    # @option opts [String] :severity 
+    # @option opts [String] :status Result of the event.
+    # @option opts [String] :ip_address 
+    # @option opts [String] :search Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+    # @option opts [String] :trace_id Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+    # @option opts [Time] :from Entries at or after this time (ISO 8601). Also accepted as startDate.
+    # @option opts [Time] :to Entries at or before this time (ISO 8601). Also accepted as endDate.
     # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
     def admin_audit_logs_export_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -103,11 +129,41 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminAuditLogsApi.admin_audit_logs_export"
       end
+      allowable_values = ["csv", "json"]
+      if @api_client.config.client_side_validation && opts[:'format'] && !allowable_values.include?(opts[:'format'])
+        fail ArgumentError, "invalid value for \"format\", must be one of #{allowable_values}"
+      end
+      allowable_values = ["debug", "info", "notice", "warning", "error", "critical"]
+      if @api_client.config.client_side_validation && opts[:'severity'] && !allowable_values.include?(opts[:'severity'])
+        fail ArgumentError, "invalid value for \"severity\", must be one of #{allowable_values}"
+      end
+      allowable_values = ["success", "failure", "pending", "partial"]
+      if @api_client.config.client_side_validation && opts[:'status'] && !allowable_values.include?(opts[:'status'])
+        fail ArgumentError, "invalid value for \"status\", must be one of #{allowable_values}"
+      end
+      pattern = Regexp.new(/^[0-9a-fA-F]{32}$/)
+      if @api_client.config.client_side_validation && !opts[:'trace_id'].nil? && opts[:'trace_id'] !~ pattern
+        fail ArgumentError, "invalid value for 'opts[:\"trace_id\"]' when calling AdminAuditLogsApi.admin_audit_logs_export, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/audit-logs/export'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'format'] = opts[:'format'] if !opts[:'format'].nil?
+      query_params[:'eventType'] = opts[:'event_type'] if !opts[:'event_type'].nil?
+      query_params[:'action'] = opts[:'action'] if !opts[:'action'].nil?
+      query_params[:'actorId'] = opts[:'actor_id'] if !opts[:'actor_id'].nil?
+      query_params[:'targetType'] = opts[:'target_type'] if !opts[:'target_type'].nil?
+      query_params[:'targetId'] = opts[:'target_id'] if !opts[:'target_id'].nil?
+      query_params[:'severity'] = opts[:'severity'] if !opts[:'severity'].nil?
+      query_params[:'status'] = opts[:'status'] if !opts[:'status'].nil?
+      query_params[:'ipAddress'] = opts[:'ip_address'] if !opts[:'ip_address'].nil?
+      query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
+      query_params[:'traceId'] = opts[:'trace_id'] if !opts[:'trace_id'].nil?
+      query_params[:'from'] = opts[:'from'] if !opts[:'from'].nil?
+      query_params[:'to'] = opts[:'to'] if !opts[:'to'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -218,6 +274,20 @@ module LumoAuthApiClient
     # List audit log entries
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :page  (default to 1)
+    # @option opts [Integer] :limit  (default to 25)
+    # @option opts [String] :event_type Exact event type, for example user.login.
+    # @option opts [String] :action The short verb of the event (as GET /audit-logs/actions lists them).
+    # @option opts [String] :actor_id Who acted: a user, API key or agent id. Also accepted as userId.
+    # @option opts [String] :target_type Kind of the subject of the event. Also accepted as resourceType.
+    # @option opts [String] :target_id The subject of the event, for example the user of a login.failed entry.
+    # @option opts [String] :severity 
+    # @option opts [String] :status Result of the event.
+    # @option opts [String] :ip_address 
+    # @option opts [String] :search Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+    # @option opts [String] :trace_id Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+    # @option opts [Time] :from Entries at or after this time (ISO 8601). Also accepted as startDate.
+    # @option opts [Time] :to Entries at or before this time (ISO 8601). Also accepted as endDate.
     # @return [AdminAuditLogsListResponse]
     def admin_audit_logs_list(org_id, opts = {})
       data, _status_code, _headers = admin_audit_logs_list_with_http_info(org_id, opts)
@@ -227,6 +297,20 @@ module LumoAuthApiClient
     # List audit log entries
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :page  (default to 1)
+    # @option opts [Integer] :limit  (default to 25)
+    # @option opts [String] :event_type Exact event type, for example user.login.
+    # @option opts [String] :action The short verb of the event (as GET /audit-logs/actions lists them).
+    # @option opts [String] :actor_id Who acted: a user, API key or agent id. Also accepted as userId.
+    # @option opts [String] :target_type Kind of the subject of the event. Also accepted as resourceType.
+    # @option opts [String] :target_id The subject of the event, for example the user of a login.failed entry.
+    # @option opts [String] :severity 
+    # @option opts [String] :status Result of the event.
+    # @option opts [String] :ip_address 
+    # @option opts [String] :search Text in the message, error message, event type, actor id or name, target name, client id or trace ID.
+    # @option opts [String] :trace_id Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header).
+    # @option opts [Time] :from Entries at or after this time (ISO 8601). Also accepted as startDate.
+    # @option opts [Time] :to Entries at or before this time (ISO 8601). Also accepted as endDate.
     # @return [Array<(AdminAuditLogsListResponse, Integer, Hash)>] AdminAuditLogsListResponse data, response status code and response headers
     def admin_audit_logs_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -236,11 +320,50 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminAuditLogsApi.admin_audit_logs_list"
       end
+      if @api_client.config.client_side_validation && !opts[:'page'].nil? && opts[:'page'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"page"]" when calling AdminAuditLogsApi.admin_audit_logs_list, must be greater than or equal to 1.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 100
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling AdminAuditLogsApi.admin_audit_logs_list, must be smaller than or equal to 100.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling AdminAuditLogsApi.admin_audit_logs_list, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["debug", "info", "notice", "warning", "error", "critical"]
+      if @api_client.config.client_side_validation && opts[:'severity'] && !allowable_values.include?(opts[:'severity'])
+        fail ArgumentError, "invalid value for \"severity\", must be one of #{allowable_values}"
+      end
+      allowable_values = ["success", "failure", "pending", "partial"]
+      if @api_client.config.client_side_validation && opts[:'status'] && !allowable_values.include?(opts[:'status'])
+        fail ArgumentError, "invalid value for \"status\", must be one of #{allowable_values}"
+      end
+      pattern = Regexp.new(/^[0-9a-fA-F]{32}$/)
+      if @api_client.config.client_side_validation && !opts[:'trace_id'].nil? && opts[:'trace_id'] !~ pattern
+        fail ArgumentError, "invalid value for 'opts[:\"trace_id\"]' when calling AdminAuditLogsApi.admin_audit_logs_list, must conform to the pattern #{pattern}."
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/audit-logs'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'eventType'] = opts[:'event_type'] if !opts[:'event_type'].nil?
+      query_params[:'action'] = opts[:'action'] if !opts[:'action'].nil?
+      query_params[:'actorId'] = opts[:'actor_id'] if !opts[:'actor_id'].nil?
+      query_params[:'targetType'] = opts[:'target_type'] if !opts[:'target_type'].nil?
+      query_params[:'targetId'] = opts[:'target_id'] if !opts[:'target_id'].nil?
+      query_params[:'severity'] = opts[:'severity'] if !opts[:'severity'].nil?
+      query_params[:'status'] = opts[:'status'] if !opts[:'status'].nil?
+      query_params[:'ipAddress'] = opts[:'ip_address'] if !opts[:'ip_address'].nil?
+      query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
+      query_params[:'traceId'] = opts[:'trace_id'] if !opts[:'trace_id'].nil?
+      query_params[:'from'] = opts[:'from'] if !opts[:'from'].nil?
+      query_params[:'to'] = opts[:'to'] if !opts[:'to'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -401,25 +524,31 @@ module LumoAuthApiClient
     # Update audit log retention settings
     # Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
     # @param org_id [String] 
+    # @param put_admin_audit_logs_retention_update_request [PutAdminAuditLogsRetentionUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminAuditLogsRetentionResponse]
-    def patch_admin_audit_logs_retention_update(org_id, opts = {})
-      data, _status_code, _headers = patch_admin_audit_logs_retention_update_with_http_info(org_id, opts)
+    def patch_admin_audit_logs_retention_update(org_id, put_admin_audit_logs_retention_update_request, opts = {})
+      data, _status_code, _headers = patch_admin_audit_logs_retention_update_with_http_info(org_id, put_admin_audit_logs_retention_update_request, opts)
       data
     end
 
     # Update audit log retention settings
     # Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
     # @param org_id [String] 
+    # @param put_admin_audit_logs_retention_update_request [PutAdminAuditLogsRetentionUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminAuditLogsRetentionResponse, Integer, Hash)>] AdminAuditLogsRetentionResponse data, response status code and response headers
-    def patch_admin_audit_logs_retention_update_with_http_info(org_id, opts = {})
+    def patch_admin_audit_logs_retention_update_with_http_info(org_id, put_admin_audit_logs_retention_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAuditLogsApi.patch_admin_audit_logs_retention_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminAuditLogsApi.patch_admin_audit_logs_retention_update"
+      end
+      # verify the required parameter 'put_admin_audit_logs_retention_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_audit_logs_retention_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_audit_logs_retention_update_request' when calling AdminAuditLogsApi.patch_admin_audit_logs_retention_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/audit-logs/retention'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -431,12 +560,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_audit_logs_retention_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminAuditLogsRetentionResponse'
@@ -464,25 +598,31 @@ module LumoAuthApiClient
     # Update audit log retention settings
     # Needs `settings.manage` and `gdpr.manage`, as the GDPR settings page in the portal does.
     # @param org_id [String] 
+    # @param put_admin_audit_logs_retention_update_request [PutAdminAuditLogsRetentionUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminAuditLogsRetentionResponse]
-    def put_admin_audit_logs_retention_update(org_id, opts = {})
-      data, _status_code, _headers = put_admin_audit_logs_retention_update_with_http_info(org_id, opts)
+    def put_admin_audit_logs_retention_update(org_id, put_admin_audit_logs_retention_update_request, opts = {})
+      data, _status_code, _headers = put_admin_audit_logs_retention_update_with_http_info(org_id, put_admin_audit_logs_retention_update_request, opts)
       data
     end
 
     # Update audit log retention settings
     # Needs &#x60;settings.manage&#x60; and &#x60;gdpr.manage&#x60;, as the GDPR settings page in the portal does.
     # @param org_id [String] 
+    # @param put_admin_audit_logs_retention_update_request [PutAdminAuditLogsRetentionUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminAuditLogsRetentionResponse, Integer, Hash)>] AdminAuditLogsRetentionResponse data, response status code and response headers
-    def put_admin_audit_logs_retention_update_with_http_info(org_id, opts = {})
+    def put_admin_audit_logs_retention_update_with_http_info(org_id, put_admin_audit_logs_retention_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAuditLogsApi.put_admin_audit_logs_retention_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminAuditLogsApi.put_admin_audit_logs_retention_update"
+      end
+      # verify the required parameter 'put_admin_audit_logs_retention_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_audit_logs_retention_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_audit_logs_retention_update_request' when calling AdminAuditLogsApi.put_admin_audit_logs_retention_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/audit-logs/retention'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -494,12 +634,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_audit_logs_retention_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminAuditLogsRetentionResponse'

@@ -25,7 +25,7 @@ Method | HTTP request | Description
 
 # **adminWebhooksCreate**
 ```swift
-    open class func adminWebhooksCreate(orgId: String, completion: @escaping (_ data: AdminWebhooksCreateResponse?, _ error: Error?) -> Void)
+    open class func adminWebhooksCreate(orgId: String, adminWebhooksCreateRequest: AdminWebhooksCreateRequest, completion: @escaping (_ data: AdminWebhooksCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Create a webhook
@@ -38,9 +38,10 @@ Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and 
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let adminWebhooksCreateRequest = AdminWebhooksCreateRequest(url: "url_example", events: ["events_example"], isActive: false, type: "type_example", configuration: "TODO") // AdminWebhooksCreateRequest | 
 
 // Create a webhook
-AdminWebhooksAPI.adminWebhooksCreate(orgId: orgId) { (response, error) in
+AdminWebhooksAPI.adminWebhooksCreate(orgId: orgId, adminWebhooksCreateRequest: adminWebhooksCreateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -57,6 +58,7 @@ AdminWebhooksAPI.adminWebhooksCreate(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **adminWebhooksCreateRequest** | [**AdminWebhooksCreateRequest**](AdminWebhooksCreateRequest.md) |  | 
 
 ### Return type
 
@@ -68,7 +70,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -388,7 +390,7 @@ Name | Type | Description  | Notes
 
 List webhooks
 
-Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
 ### Example
 ```swift
@@ -542,7 +544,7 @@ Name | Type | Description  | Notes
 
 Start a webhook tunnel
 
-Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 
 ### Example
 ```swift
@@ -791,7 +793,7 @@ Name | Type | Description  | Notes
 
 # **patchAdminWebhooksUpdate**
 ```swift
-    open class func patchAdminWebhooksUpdate(orgId: String, webhookId: String, completion: @escaping (_ data: PutAdminWebhooksUpdateResponse?, _ error: Error?) -> Void)
+    open class func patchAdminWebhooksUpdate(orgId: String, webhookId: String, putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest, completion: @escaping (_ data: PutAdminWebhooksUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Partially update a webhook
@@ -803,9 +805,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let webhookId = "webhookId_example" // String | 
+let putAdminWebhooksUpdateRequest = PutAdminWebhooksUpdateRequest(url: "url_example", events: ["events_example"], isActive: false, type: "type_example", configuration: "TODO", rotateSecret: false) // PutAdminWebhooksUpdateRequest | 
 
 // Partially update a webhook
-AdminWebhooksAPI.patchAdminWebhooksUpdate(orgId: orgId, webhookId: webhookId) { (response, error) in
+AdminWebhooksAPI.patchAdminWebhooksUpdate(orgId: orgId, webhookId: webhookId, putAdminWebhooksUpdateRequest: putAdminWebhooksUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -823,6 +826,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **webhookId** | **String** |  | 
+ **putAdminWebhooksUpdateRequest** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -834,14 +838,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminWebhooksUpdate**
 ```swift
-    open class func putAdminWebhooksUpdate(orgId: String, webhookId: String, completion: @escaping (_ data: PutAdminWebhooksUpdateResponse?, _ error: Error?) -> Void)
+    open class func putAdminWebhooksUpdate(orgId: String, webhookId: String, putAdminWebhooksUpdateRequest: PutAdminWebhooksUpdateRequest, completion: @escaping (_ data: PutAdminWebhooksUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update a webhook
@@ -855,9 +859,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let webhookId = "webhookId_example" // String | 
+let putAdminWebhooksUpdateRequest = PutAdminWebhooksUpdateRequest(url: "url_example", events: ["events_example"], isActive: false, type: "type_example", configuration: "TODO", rotateSecret: false) // PutAdminWebhooksUpdateRequest | 
 
 // Update a webhook
-AdminWebhooksAPI.putAdminWebhooksUpdate(orgId: orgId, webhookId: webhookId) { (response, error) in
+AdminWebhooksAPI.putAdminWebhooksUpdate(orgId: orgId, webhookId: webhookId, putAdminWebhooksUpdateRequest: putAdminWebhooksUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -875,6 +880,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **webhookId** | **String** |  | 
+ **putAdminWebhooksUpdateRequest** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -886,7 +892,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

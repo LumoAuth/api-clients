@@ -94,7 +94,7 @@ No authorization required
 
 <a id="backchannelAuthorize"></a>
 # **backchannelAuthorize**
-> BackchannelAuthorizeResponse backchannelAuthorize(orgId)
+> BackchannelAuthorizeResponse backchannelAuthorize(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion)
 
 CIBA backchannel authentication request
 
@@ -122,8 +122,21 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String scope = "scope_example"; // String | 
+    String loginHint = "loginHint_example"; // String | 
+    String loginHintToken = "loginHintToken_example"; // String | 
+    String idTokenHint = "idTokenHint_example"; // String | 
+    String bindingMessage = "bindingMessage_example"; // String | 
+    String acrValues = "acrValues_example"; // String | 
+    Integer requestedExpiry = 56; // Integer | 
+    String clientNotificationToken = "clientNotificationToken_example"; // String | 
+    String authorizationDetails = "authorizationDetails_example"; // String | 
+    String clientId = "clientId_example"; // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    String clientSecret = "clientSecret_example"; // String | client_secret_post
+    String clientAssertionType = "clientAssertionType_example"; // String | 
+    String clientAssertion = "clientAssertion_example"; // String | private_key_jwt (RFC 7523)
     try {
-      BackchannelAuthorizeResponse result = apiInstance.backchannelAuthorize(orgId);
+      BackchannelAuthorizeResponse result = apiInstance.backchannelAuthorize(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#backchannelAuthorize");
@@ -141,6 +154,19 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **scope** | **String**|  | |
+| **loginHint** | **String**|  | [optional] |
+| **loginHintToken** | **String**|  | [optional] |
+| **idTokenHint** | **String**|  | [optional] |
+| **bindingMessage** | **String**|  | [optional] |
+| **acrValues** | **String**|  | [optional] |
+| **requestedExpiry** | **Integer**|  | [optional] |
+| **clientNotificationToken** | **String**|  | [optional] |
+| **authorizationDetails** | **String**|  | [optional] |
+| **clientId** | **String**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **String**| client_secret_post | [optional] |
+| **clientAssertionType** | **String**|  | [optional] |
+| **clientAssertion** | **String**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -152,7 +178,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
@@ -234,7 +260,7 @@ No authorization required
 
 <a id="deviceAuthorization"></a>
 # **deviceAuthorization**
-> DeviceAuthorizationResponse deviceAuthorization(orgId)
+> DeviceAuthorizationResponse deviceAuthorization(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, authorizationDetails)
 
 Device authorization request (RFC 8628)
 
@@ -262,8 +288,15 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String clientId = "clientId_example"; // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    String clientSecret = "clientSecret_example"; // String | client_secret_post
+    String clientAssertionType = "clientAssertionType_example"; // String | 
+    String clientAssertion = "clientAssertion_example"; // String | private_key_jwt (RFC 7523)
+    String scope = "scope_example"; // String | Space-separated scopes.
+    URI resource = new URI(); // URI | RFC 8707 resource indicator.
+    String authorizationDetails = "authorizationDetails_example"; // String | RFC 9396, a JSON array as text.
     try {
-      DeviceAuthorizationResponse result = apiInstance.deviceAuthorization(orgId);
+      DeviceAuthorizationResponse result = apiInstance.deviceAuthorization(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, authorizationDetails);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#deviceAuthorization");
@@ -281,6 +314,13 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **clientId** | **String**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **String**| client_secret_post | [optional] |
+| **clientAssertionType** | **String**|  | [optional] |
+| **clientAssertion** | **String**| private_key_jwt (RFC 7523) | [optional] |
+| **scope** | **String**| Space-separated scopes. | [optional] |
+| **resource** | **URI**| RFC 8707 resource indicator. | [optional] |
+| **authorizationDetails** | **String**| RFC 9396, a JSON array as text. | [optional] |
 
 ### Return type
 
@@ -292,7 +332,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
@@ -509,7 +549,7 @@ No authorization required
 
 <a id="introspect"></a>
 # **introspect**
-> IntrospectResponse introspect(orgId)
+> IntrospectResponse introspect(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion)
 
 Token introspection (RFC 7662)
 
@@ -537,8 +577,14 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String token = "token_example"; // String | 
+    String tokenTypeHint = "access_token"; // String | 
+    String clientId = "clientId_example"; // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    String clientSecret = "clientSecret_example"; // String | client_secret_post
+    String clientAssertionType = "clientAssertionType_example"; // String | 
+    String clientAssertion = "clientAssertion_example"; // String | private_key_jwt (RFC 7523)
     try {
-      IntrospectResponse result = apiInstance.introspect(orgId);
+      IntrospectResponse result = apiInstance.introspect(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#introspect");
@@ -556,6 +602,12 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **token** | **String**|  | |
+| **tokenTypeHint** | **String**|  | [optional] [enum: access_token, refresh_token] |
+| **clientId** | **String**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **String**| client_secret_post | [optional] |
+| **clientAssertionType** | **String**|  | [optional] |
+| **clientAssertion** | **String**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -567,7 +619,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
@@ -580,7 +632,7 @@ public class Example {
 
 <a id="par"></a>
 # **par**
-> ParResponse par(orgId)
+> ParResponse par(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, authorizationDetails, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion)
 
 Pushed authorization request (RFC 9126)
 
@@ -608,8 +660,24 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String responseType = "responseType_example"; // String | 
+    URI redirectUri = new URI(); // URI | 
+    String scope = "scope_example"; // String | 
+    String state = "state_example"; // String | 
+    String nonce = "nonce_example"; // String | 
+    String codeChallenge = "codeChallenge_example"; // String | 
+    String codeChallengeMethod = "codeChallengeMethod_example"; // String | 
+    String request = "request_example"; // String | A signed request object (JAR, RFC 9101).
+    URI resource = new URI(); // URI | 
+    String authorizationDetails = "authorizationDetails_example"; // String | 
+    String prompt = "prompt_example"; // String | 
+    String loginHint = "loginHint_example"; // String | 
+    String clientId = "clientId_example"; // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    String clientSecret = "clientSecret_example"; // String | client_secret_post
+    String clientAssertionType = "clientAssertionType_example"; // String | 
+    String clientAssertion = "clientAssertion_example"; // String | private_key_jwt (RFC 7523)
     try {
-      ParResponse result = apiInstance.par(orgId);
+      ParResponse result = apiInstance.par(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, authorizationDetails, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#par");
@@ -627,6 +695,22 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **responseType** | **String**|  | [optional] |
+| **redirectUri** | **URI**|  | [optional] |
+| **scope** | **String**|  | [optional] |
+| **state** | **String**|  | [optional] |
+| **nonce** | **String**|  | [optional] |
+| **codeChallenge** | **String**|  | [optional] |
+| **codeChallengeMethod** | **String**|  | [optional] |
+| **request** | **String**| A signed request object (JAR, RFC 9101). | [optional] |
+| **resource** | **URI**|  | [optional] |
+| **authorizationDetails** | **String**|  | [optional] |
+| **prompt** | **String**|  | [optional] |
+| **loginHint** | **String**|  | [optional] |
+| **clientId** | **String**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **String**| client_secret_post | [optional] |
+| **clientAssertionType** | **String**|  | [optional] |
+| **clientAssertion** | **String**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -638,7 +722,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
@@ -651,7 +735,7 @@ public class Example {
 
 <a id="registerClient"></a>
 # **registerClient**
-> RegisterClientResponse registerClient(orgId)
+> RegisterClientResponse registerClient(orgId, registerClientRequest)
 
 Dynamic client registration (RFC 7591 / OIDC DCR)
 
@@ -684,8 +768,9 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    RegisterClientRequest registerClientRequest = new RegisterClientRequest(); // RegisterClientRequest | RFC 7591 client metadata.
     try {
-      RegisterClientResponse result = apiInstance.registerClient(orgId);
+      RegisterClientResponse result = apiInstance.registerClient(orgId, registerClientRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#registerClient");
@@ -703,6 +788,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **registerClientRequest** | [**RegisterClientRequest**](RegisterClientRequest.md)| RFC 7591 client metadata. | |
 
 ### Return type
 
@@ -714,7 +800,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -796,7 +882,7 @@ No authorization required
 
 <a id="revoke"></a>
 # **revoke**
-> Object revoke(orgId)
+> Object revoke(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion)
 
 Token revocation (RFC 7009)
 
@@ -824,8 +910,14 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String token = "token_example"; // String | 
+    String tokenTypeHint = "access_token"; // String | 
+    String clientId = "clientId_example"; // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    String clientSecret = "clientSecret_example"; // String | client_secret_post
+    String clientAssertionType = "clientAssertionType_example"; // String | 
+    String clientAssertion = "clientAssertion_example"; // String | private_key_jwt (RFC 7523)
     try {
-      Object result = apiInstance.revoke(orgId);
+      Object result = apiInstance.revoke(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#revoke");
@@ -843,6 +935,12 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **token** | **String**|  | |
+| **tokenTypeHint** | **String**|  | [optional] [enum: access_token, refresh_token] |
+| **clientId** | **String**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **String**| client_secret_post | [optional] |
+| **clientAssertionType** | **String**|  | [optional] |
+| **clientAssertion** | **String**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -854,14 +952,14 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). |  -  |
-| **400** | invalid_request (token parameter missing) or unsupported_token_type. |  -  |
+| **200** | The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. |  -  |
+| **400** | invalid_request (token parameter missing), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). |  -  |
 | **401** | invalid_client — client authentication failed. |  -  |
 | **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
@@ -1186,7 +1284,7 @@ No authorization required
 
 <a id="submitLoginJson"></a>
 # **submitLoginJson**
-> SubmitLoginJsonResponse submitLoginJson(orgId)
+> SubmitLoginJsonResponse submitLoginJson(orgId, submitLoginJsonRequest)
 
 Programmatic (JSON) login for the authorization flow
 
@@ -1208,8 +1306,9 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    SubmitLoginJsonRequest submitLoginJsonRequest = new SubmitLoginJsonRequest(); // SubmitLoginJsonRequest | 
     try {
-      SubmitLoginJsonResponse result = apiInstance.submitLoginJson(orgId);
+      SubmitLoginJsonResponse result = apiInstance.submitLoginJson(orgId, submitLoginJsonRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#submitLoginJson");
@@ -1227,6 +1326,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **submitLoginJsonRequest** | [**SubmitLoginJsonRequest**](SubmitLoginJsonRequest.md)|  | |
 
 ### Return type
 
@@ -1238,7 +1338,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1317,7 +1417,7 @@ No authorization required
 
 <a id="token"></a>
 # **token**
-> TokenResponse token(orgId)
+> TokenResponse token(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion)
 
 OAuth 2.1 token endpoint
 
@@ -1345,8 +1445,27 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String grantType = "grantType_example"; // String | 
+    String code = "code_example"; // String | 
+    URI redirectUri = new URI(); // URI | 
+    String codeVerifier = "codeVerifier_example"; // String | 
+    String refreshToken = "refreshToken_example"; // String | 
+    String deviceCode = "deviceCode_example"; // String | 
+    String authReqId = "authReqId_example"; // String | CIBA
+    String scope = "scope_example"; // String | 
+    URI resource = new URI(); // URI | 
+    String subjectToken = "subjectToken_example"; // String | Token exchange (RFC 8693)
+    String subjectTokenType = "subjectTokenType_example"; // String | 
+    String actorToken = "actorToken_example"; // String | 
+    String actorTokenType = "actorTokenType_example"; // String | 
+    String requestedTokenType = "requestedTokenType_example"; // String | 
+    String assertion = "assertion_example"; // String | JWT bearer / ID-JAG grant
+    String clientId = "clientId_example"; // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    String clientSecret = "clientSecret_example"; // String | client_secret_post
+    String clientAssertionType = "clientAssertionType_example"; // String | 
+    String clientAssertion = "clientAssertion_example"; // String | private_key_jwt (RFC 7523)
     try {
-      TokenResponse result = apiInstance.token(orgId);
+      TokenResponse result = apiInstance.token(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#token");
@@ -1364,6 +1483,25 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **grantType** | **String**|  | |
+| **code** | **String**|  | [optional] |
+| **redirectUri** | **URI**|  | [optional] |
+| **codeVerifier** | **String**|  | [optional] |
+| **refreshToken** | **String**|  | [optional] |
+| **deviceCode** | **String**|  | [optional] |
+| **authReqId** | **String**| CIBA | [optional] |
+| **scope** | **String**|  | [optional] |
+| **resource** | **URI**|  | [optional] |
+| **subjectToken** | **String**| Token exchange (RFC 8693) | [optional] |
+| **subjectTokenType** | **String**|  | [optional] |
+| **actorToken** | **String**|  | [optional] |
+| **actorTokenType** | **String**|  | [optional] |
+| **requestedTokenType** | **String**|  | [optional] |
+| **assertion** | **String**| JWT bearer / ID-JAG grant | [optional] |
+| **clientId** | **String**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **String**| client_secret_post | [optional] |
+| **clientAssertionType** | **String**|  | [optional] |
+| **clientAssertion** | **String**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -1375,7 +1513,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details

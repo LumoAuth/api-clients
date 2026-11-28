@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -32,7 +32,7 @@ namespace LumoAuth.ApiClient.Api
         /// Remove one of a user&#39;s authenticators
         /// </summary>
         /// <remarks>
-        /// Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
+        /// Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the organization&#39;s MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -45,7 +45,7 @@ namespace LumoAuth.ApiClient.Api
         /// Remove one of a user&#39;s authenticators
         /// </summary>
         /// <remarks>
-        /// Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
+        /// Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the organization&#39;s MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -176,7 +176,7 @@ namespace LumoAuth.ApiClient.Api
         /// Remove one of a user&#39;s authenticators
         /// </summary>
         /// <remarks>
-        /// Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
+        /// Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the organization&#39;s MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -190,7 +190,7 @@ namespace LumoAuth.ApiClient.Api
         /// Remove one of a user&#39;s authenticators
         /// </summary>
         /// <remarks>
-        /// Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
+        /// Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the organization&#39;s MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -536,7 +536,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Remove one of a user&#39;s authenticators Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
+        /// Remove one of a user&#39;s authenticators Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the organization&#39;s MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -550,7 +550,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Remove one of a user&#39;s authenticators Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
+        /// Remove one of a user&#39;s authenticators Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the organization&#39;s MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -616,7 +616,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Remove one of a user&#39;s authenticators Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
+        /// Remove one of a user&#39;s authenticators Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the organization&#39;s MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -631,7 +631,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Remove one of a user&#39;s authenticators Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
+        /// Remove one of a user&#39;s authenticators Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the organization&#39;s MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>

@@ -10,7 +10,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**verifyStream**](#verifystream) | **POST** /orgs/{orgId}/api/v1/ssf/verify | Request a stream verification event|
 
 # **createStreamConfig**
-> SsfStream createStreamConfig()
+> SsfStream createStreamConfig(createStreamConfigRequest)
 
 
 ### Example
@@ -18,16 +18,19 @@ All URIs are relative to *https://app.lumoauth.dev*
 ```typescript
 import {
     SsfApi,
-    Configuration
+    Configuration,
+    CreateStreamConfigRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new SsfApi(configuration);
 
 let orgId: string; // (default to undefined)
+let createStreamConfigRequest: CreateStreamConfigRequest; //
 
 const { status, data } = await apiInstance.createStreamConfig(
-    orgId
+    orgId,
+    createStreamConfigRequest
 );
 ```
 
@@ -35,6 +38,7 @@ const { status, data } = await apiInstance.createStreamConfig(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **createStreamConfigRequest** | **CreateStreamConfigRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -48,7 +52,7 @@ const { status, data } = await apiInstance.createStreamConfig(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -165,7 +169,7 @@ const { status, data } = await apiInstance.getStreamConfig(
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | A single stream (with stream_id) or all of the tenant\&#39;s streams |  -  |
+|**200** | A single stream (with stream_id) or all of the organization\&#39;s streams |  -  |
 |**404** | Stream not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -180,16 +184,19 @@ Needs `settings.manage`, as the portal does.
 ```typescript
 import {
     SsfApi,
-    Configuration
+    Configuration,
+    VerifyStreamRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new SsfApi(configuration);
 
 let orgId: string; // (default to undefined)
+let verifyStreamRequest: VerifyStreamRequest; // (optional)
 
 const { status, data } = await apiInstance.verifyStream(
-    orgId
+    orgId,
+    verifyStreamRequest
 );
 ```
 
@@ -197,6 +204,7 @@ const { status, data } = await apiInstance.verifyStream(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **verifyStreamRequest** | **VerifyStreamRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -210,7 +218,7 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 

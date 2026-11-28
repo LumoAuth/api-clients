@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { AttestRequestScope } from './attest-request-scope';
 
 /**
  * 
@@ -26,5 +29,11 @@ export interface AttestRequest {
      * @memberof AttestRequest
      */
     'attestation_token': string;
+    /**
+     * 
+     * @type {AttestRequestScope}
+     * @memberof AttestRequest
+     */
+    'scope'?: AttestRequestScope;
 }
 

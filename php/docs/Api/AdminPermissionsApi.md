@@ -4,10 +4,10 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**adminPermissionsCreate()**](AdminPermissionsApi.md#adminPermissionsCreate) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the tenant |
+| [**adminPermissionsCreate()**](AdminPermissionsApi.md#adminPermissionsCreate) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the organization |
 | [**adminPermissionsDelete()**](AdminPermissionsApi.md#adminPermissionsDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Delete a custom permission |
 | [**adminPermissionsGet()**](AdminPermissionsApi.md#adminPermissionsGet) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Get a single permission |
-| [**adminPermissionsList()**](AdminPermissionsApi.md#adminPermissionsList) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the tenant |
+| [**adminPermissionsList()**](AdminPermissionsApi.md#adminPermissionsList) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the organization |
 | [**adminPermissionsUpdate()**](AdminPermissionsApi.md#adminPermissionsUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Update a permission |
 | [**adminPermissionsUsage()**](AdminPermissionsApi.md#adminPermissionsUsage) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId}/usage | Get permission usage (roles assigned to this permission) |
 | [**adminScopesCreate()**](AdminPermissionsApi.md#adminScopesCreate) | **POST** /orgs/{orgId}/api/v1/admin/scopes | Create a custom OAuth scope |
@@ -18,10 +18,10 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 ## `adminPermissionsCreate()`
 
 ```php
-adminPermissionsCreate($orgId): \LumoAuth\ApiClient\Model\AdminPermissionsCreateResponse
+adminPermissionsCreate($orgId, $adminPermissionsCreateRequest): \LumoAuth\ApiClient\Model\AdminPermissionsCreateResponse
 ```
 
-Create a custom permission for the tenant
+Create a custom permission for the organization
 
 ### Example
 
@@ -46,9 +46,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminPermissionsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$adminPermissionsCreateRequest = new \LumoAuth\ApiClient\Model\AdminPermissionsCreateRequest(); // \LumoAuth\ApiClient\Model\AdminPermissionsCreateRequest
 
 try {
-    $result = $apiInstance->adminPermissionsCreate($orgId);
+    $result = $apiInstance->adminPermissionsCreate($orgId, $adminPermissionsCreateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminPermissionsApi->adminPermissionsCreate: ', $e->getMessage(), PHP_EOL;
@@ -60,6 +61,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **adminPermissionsCreateRequest** | [**\LumoAuth\ApiClient\Model\AdminPermissionsCreateRequest**](../Model/AdminPermissionsCreateRequest.md)|  | |
 
 ### Return type
 
@@ -71,7 +73,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -214,7 +216,7 @@ try {
 adminPermissionsList($orgId): \LumoAuth\ApiClient\Model\AdminPermissionsListResponse
 ```
 
-List all available permissions for the tenant
+List all available permissions for the organization
 
 ### Example
 
@@ -274,7 +276,7 @@ try {
 ## `adminPermissionsUpdate()`
 
 ```php
-adminPermissionsUpdate($orgId, $permissionId): \LumoAuth\ApiClient\Model\AdminPermissionsCreateResponse
+adminPermissionsUpdate($orgId, $permissionId, $adminPermissionsUpdateRequest): \LumoAuth\ApiClient\Model\AdminPermissionsCreateResponse
 ```
 
 Update a permission
@@ -303,9 +305,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminPermissionsApi(
 );
 $orgId = 'orgId_example'; // string
 $permissionId = 'permissionId_example'; // string
+$adminPermissionsUpdateRequest = new \LumoAuth\ApiClient\Model\AdminPermissionsUpdateRequest(); // \LumoAuth\ApiClient\Model\AdminPermissionsUpdateRequest
 
 try {
-    $result = $apiInstance->adminPermissionsUpdate($orgId, $permissionId);
+    $result = $apiInstance->adminPermissionsUpdate($orgId, $permissionId, $adminPermissionsUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminPermissionsApi->adminPermissionsUpdate: ', $e->getMessage(), PHP_EOL;
@@ -318,6 +321,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **permissionId** | **string**|  | |
+| **adminPermissionsUpdateRequest** | [**\LumoAuth\ApiClient\Model\AdminPermissionsUpdateRequest**](../Model/AdminPermissionsUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -329,7 +333,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -404,7 +408,7 @@ try {
 ## `adminScopesCreate()`
 
 ```php
-adminScopesCreate($orgId): \LumoAuth\ApiClient\Model\AdminScopesCreateResponse
+adminScopesCreate($orgId, $adminScopesCreateRequest): \LumoAuth\ApiClient\Model\AdminScopesCreateResponse
 ```
 
 Create a custom OAuth scope
@@ -432,9 +436,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminPermissionsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$adminScopesCreateRequest = new \LumoAuth\ApiClient\Model\AdminScopesCreateRequest(); // \LumoAuth\ApiClient\Model\AdminScopesCreateRequest
 
 try {
-    $result = $apiInstance->adminScopesCreate($orgId);
+    $result = $apiInstance->adminScopesCreate($orgId, $adminScopesCreateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminPermissionsApi->adminScopesCreate: ', $e->getMessage(), PHP_EOL;
@@ -446,6 +451,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **adminScopesCreateRequest** | [**\LumoAuth\ApiClient\Model\AdminScopesCreateRequest**](../Model/AdminScopesCreateRequest.md)|  | |
 
 ### Return type
 
@@ -457,7 +463,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

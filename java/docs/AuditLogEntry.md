@@ -21,6 +21,7 @@
 |**targetId** | **String** |  |  [optional] |
 |**targetName** | **String** |  |  [optional] |
 |**ipAddress** | **String** |  |  [optional] |
+|**traceId** | **String** | W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none |  [optional] |
 |**eventTime** | **OffsetDateTime** | Detailed responses only |  [optional] |
 |**durationMs** | **Integer** | Detailed responses only |  [optional] |
 |**initiatedBy** | **String** | Detailed responses only |  [optional] |

@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -22,19 +22,21 @@ module LumoAuthApiClient
     # Add a user to a group
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param add_user_group_request [AddUserGroupRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AddUserGroupResponse]
-    def add_user_group(org_id, user_id, opts = {})
-      data, _status_code, _headers = add_user_group_with_http_info(org_id, user_id, opts)
+    def add_user_group(org_id, user_id, add_user_group_request, opts = {})
+      data, _status_code, _headers = add_user_group_with_http_info(org_id, user_id, add_user_group_request, opts)
       data
     end
 
     # Add a user to a group
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param add_user_group_request [AddUserGroupRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AddUserGroupResponse, Integer, Hash)>] AddUserGroupResponse data, response status code and response headers
-    def add_user_group_with_http_info(org_id, user_id, opts = {})
+    def add_user_group_with_http_info(org_id, user_id, add_user_group_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminUsersApi.add_user_group ...'
       end
@@ -46,6 +48,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && user_id.nil?
         fail ArgumentError, "Missing the required parameter 'user_id' when calling AdminUsersApi.add_user_group"
       end
+      # verify the required parameter 'add_user_group_request' is set
+      if @api_client.config.client_side_validation && add_user_group_request.nil?
+        fail ArgumentError, "Missing the required parameter 'add_user_group_request' when calling AdminUsersApi.add_user_group"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users/{userId}/groups'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s))
 
@@ -56,12 +62,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(add_user_group_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AddUserGroupResponse'
@@ -87,23 +98,25 @@ module LumoAuthApiClient
     end
 
     # Assign a permission to a user
-    # Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+    # Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param add_user_permission_request [AddUserPermissionRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AddUserPermissionResponse]
-    def add_user_permission(org_id, user_id, opts = {})
-      data, _status_code, _headers = add_user_permission_with_http_info(org_id, user_id, opts)
+    def add_user_permission(org_id, user_id, add_user_permission_request, opts = {})
+      data, _status_code, _headers = add_user_permission_with_http_info(org_id, user_id, add_user_permission_request, opts)
       data
     end
 
     # Assign a permission to a user
-    # Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
+    # Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization&#39;s own permissions needs &#x60;roles.assign-permissions&#x60; instead, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60; (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 &#x60;plan_limit_reached&#x60; (&#x60;limit&#x60;: &#x60;admin_seats&#x60;) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (&#x60;limit&#x60;: &#x60;mau&#x60;). A user or permission outside this organization is 404.
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param add_user_permission_request [AddUserPermissionRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AddUserPermissionResponse, Integer, Hash)>] AddUserPermissionResponse data, response status code and response headers
-    def add_user_permission_with_http_info(org_id, user_id, opts = {})
+    def add_user_permission_with_http_info(org_id, user_id, add_user_permission_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminUsersApi.add_user_permission ...'
       end
@@ -115,6 +128,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && user_id.nil?
         fail ArgumentError, "Missing the required parameter 'user_id' when calling AdminUsersApi.add_user_permission"
       end
+      # verify the required parameter 'add_user_permission_request' is set
+      if @api_client.config.client_side_validation && add_user_permission_request.nil?
+        fail ArgumentError, "Missing the required parameter 'add_user_permission_request' when calling AdminUsersApi.add_user_permission"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users/{userId}/permissions'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s))
 
@@ -125,12 +142,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(add_user_permission_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AddUserPermissionResponse'
@@ -158,19 +180,21 @@ module LumoAuthApiClient
     # Assign a role to a user
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param add_user_role_request [AddUserRoleRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AddUserRoleResponse]
-    def add_user_role(org_id, user_id, opts = {})
-      data, _status_code, _headers = add_user_role_with_http_info(org_id, user_id, opts)
+    def add_user_role(org_id, user_id, add_user_role_request, opts = {})
+      data, _status_code, _headers = add_user_role_with_http_info(org_id, user_id, add_user_role_request, opts)
       data
     end
 
     # Assign a role to a user
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param add_user_role_request [AddUserRoleRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AddUserRoleResponse, Integer, Hash)>] AddUserRoleResponse data, response status code and response headers
-    def add_user_role_with_http_info(org_id, user_id, opts = {})
+    def add_user_role_with_http_info(org_id, user_id, add_user_role_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminUsersApi.add_user_role ...'
       end
@@ -182,6 +206,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && user_id.nil?
         fail ArgumentError, "Missing the required parameter 'user_id' when calling AdminUsersApi.add_user_role"
       end
+      # verify the required parameter 'add_user_role_request' is set
+      if @api_client.config.client_side_validation && add_user_role_request.nil?
+        fail ArgumentError, "Missing the required parameter 'add_user_role_request' when calling AdminUsersApi.add_user_role"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users/{userId}/roles'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s))
 
@@ -192,12 +220,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(add_user_role_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AddUserRoleResponse'
@@ -729,24 +762,30 @@ module LumoAuthApiClient
 
     # Create a user
     # @param org_id [String] 
+    # @param create_user_request [CreateUserRequest] 
     # @param [Hash] opts the optional parameters
     # @return [CreateUserResponse]
-    def create_user(org_id, opts = {})
-      data, _status_code, _headers = create_user_with_http_info(org_id, opts)
+    def create_user(org_id, create_user_request, opts = {})
+      data, _status_code, _headers = create_user_with_http_info(org_id, create_user_request, opts)
       data
     end
 
     # Create a user
     # @param org_id [String] 
+    # @param create_user_request [CreateUserRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateUserResponse, Integer, Hash)>] CreateUserResponse data, response status code and response headers
-    def create_user_with_http_info(org_id, opts = {})
+    def create_user_with_http_info(org_id, create_user_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminUsersApi.create_user ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminUsersApi.create_user"
+      end
+      # verify the required parameter 'create_user_request' is set
+      if @api_client.config.client_side_validation && create_user_request.nil?
+        fail ArgumentError, "Missing the required parameter 'create_user_request' when calling AdminUsersApi.create_user"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -758,12 +797,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_user_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CreateUserResponse'
@@ -1311,10 +1355,11 @@ module LumoAuthApiClient
     # Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive`, `staff` or `emailVerified` needs a caller who holds every permission of the user. `staff: true` is refused with 409 for an account that is a member of a customer organization. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param update_user_request [UpdateUserRequest] Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
     # @param [Hash] opts the optional parameters
     # @return [UpdateUserResponse]
-    def patch_user(org_id, user_id, opts = {})
-      data, _status_code, _headers = patch_user_with_http_info(org_id, user_id, opts)
+    def patch_user(org_id, user_id, update_user_request, opts = {})
+      data, _status_code, _headers = patch_user_with_http_info(org_id, user_id, update_user_request, opts)
       data
     end
 
@@ -1322,9 +1367,10 @@ module LumoAuthApiClient
     # Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60;, &#x60;staff&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. &#x60;staff: true&#x60; is refused with 409 for an account that is a member of a customer organization. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param update_user_request [UpdateUserRequest] Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
     # @param [Hash] opts the optional parameters
     # @return [Array<(UpdateUserResponse, Integer, Hash)>] UpdateUserResponse data, response status code and response headers
-    def patch_user_with_http_info(org_id, user_id, opts = {})
+    def patch_user_with_http_info(org_id, user_id, update_user_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminUsersApi.patch_user ...'
       end
@@ -1336,6 +1382,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && user_id.nil?
         fail ArgumentError, "Missing the required parameter 'user_id' when calling AdminUsersApi.patch_user"
       end
+      # verify the required parameter 'update_user_request' is set
+      if @api_client.config.client_side_validation && update_user_request.nil?
+        fail ArgumentError, "Missing the required parameter 'update_user_request' when calling AdminUsersApi.patch_user"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users/{userId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s))
 
@@ -1346,12 +1396,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(update_user_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'UpdateUserResponse'
@@ -1748,10 +1803,11 @@ module LumoAuthApiClient
     # Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param set_user_password_post_request [SetUserPasswordPostRequest] 
     # @param [Hash] opts the optional parameters
     # @return [SetUserPasswordPostResponse]
-    def set_user_password(org_id, user_id, opts = {})
-      data, _status_code, _headers = set_user_password_with_http_info(org_id, user_id, opts)
+    def set_user_password(org_id, user_id, set_user_password_post_request, opts = {})
+      data, _status_code, _headers = set_user_password_with_http_info(org_id, user_id, set_user_password_post_request, opts)
       data
     end
 
@@ -1759,9 +1815,10 @@ module LumoAuthApiClient
     # Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param set_user_password_post_request [SetUserPasswordPostRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(SetUserPasswordPostResponse, Integer, Hash)>] SetUserPasswordPostResponse data, response status code and response headers
-    def set_user_password_with_http_info(org_id, user_id, opts = {})
+    def set_user_password_with_http_info(org_id, user_id, set_user_password_post_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminUsersApi.set_user_password ...'
       end
@@ -1773,6 +1830,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && user_id.nil?
         fail ArgumentError, "Missing the required parameter 'user_id' when calling AdminUsersApi.set_user_password"
       end
+      # verify the required parameter 'set_user_password_post_request' is set
+      if @api_client.config.client_side_validation && set_user_password_post_request.nil?
+        fail ArgumentError, "Missing the required parameter 'set_user_password_post_request' when calling AdminUsersApi.set_user_password"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users/{userId}/password'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s))
 
@@ -1783,12 +1844,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(set_user_password_post_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'SetUserPasswordPostResponse'
@@ -1817,10 +1883,11 @@ module LumoAuthApiClient
     # Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param set_user_password_post_request [SetUserPasswordPostRequest] 
     # @param [Hash] opts the optional parameters
     # @return [SetUserPasswordPostResponse]
-    def set_user_password_post(org_id, user_id, opts = {})
-      data, _status_code, _headers = set_user_password_post_with_http_info(org_id, user_id, opts)
+    def set_user_password_post(org_id, user_id, set_user_password_post_request, opts = {})
+      data, _status_code, _headers = set_user_password_post_with_http_info(org_id, user_id, set_user_password_post_request, opts)
       data
     end
 
@@ -1828,9 +1895,10 @@ module LumoAuthApiClient
     # Needs &#x60;users.edit&#x60;, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param set_user_password_post_request [SetUserPasswordPostRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(SetUserPasswordPostResponse, Integer, Hash)>] SetUserPasswordPostResponse data, response status code and response headers
-    def set_user_password_post_with_http_info(org_id, user_id, opts = {})
+    def set_user_password_post_with_http_info(org_id, user_id, set_user_password_post_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminUsersApi.set_user_password_post ...'
       end
@@ -1842,6 +1910,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && user_id.nil?
         fail ArgumentError, "Missing the required parameter 'user_id' when calling AdminUsersApi.set_user_password_post"
       end
+      # verify the required parameter 'set_user_password_post_request' is set
+      if @api_client.config.client_side_validation && set_user_password_post_request.nil?
+        fail ArgumentError, "Missing the required parameter 'set_user_password_post_request' when calling AdminUsersApi.set_user_password_post"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users/{userId}/password'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s))
 
@@ -1852,12 +1924,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(set_user_password_post_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'SetUserPasswordPostResponse'
@@ -2020,10 +2097,11 @@ module LumoAuthApiClient
     # Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive`, `staff` or `emailVerified` needs a caller who holds every permission of the user. `staff: true` is refused with 409 for an account that is a member of a customer organization. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param update_user_request [UpdateUserRequest] Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
     # @param [Hash] opts the optional parameters
     # @return [UpdateUserResponse]
-    def update_user(org_id, user_id, opts = {})
-      data, _status_code, _headers = update_user_with_http_info(org_id, user_id, opts)
+    def update_user(org_id, user_id, update_user_request, opts = {})
+      data, _status_code, _headers = update_user_with_http_info(org_id, user_id, update_user_request, opts)
       data
     end
 
@@ -2031,9 +2109,10 @@ module LumoAuthApiClient
     # Changes the fields that the request sends. &#x60;password&#x60; is not accepted here (400): set it with PUT /users/{userId}/password. A change of &#x60;email&#x60;, &#x60;phoneNumber&#x60;, &#x60;isActive&#x60;, &#x60;staff&#x60; or &#x60;emailVerified&#x60; needs a caller who holds every permission of the user. &#x60;staff: true&#x60; is refused with 409 for an account that is a member of a customer organization. A change of &#x60;email&#x60; also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;) and, for an administrator who holds a second factor, &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to that check.
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param update_user_request [UpdateUserRequest] Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
     # @param [Hash] opts the optional parameters
     # @return [Array<(UpdateUserResponse, Integer, Hash)>] UpdateUserResponse data, response status code and response headers
-    def update_user_with_http_info(org_id, user_id, opts = {})
+    def update_user_with_http_info(org_id, user_id, update_user_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminUsersApi.update_user ...'
       end
@@ -2045,6 +2124,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && user_id.nil?
         fail ArgumentError, "Missing the required parameter 'user_id' when calling AdminUsersApi.update_user"
       end
+      # verify the required parameter 'update_user_request' is set
+      if @api_client.config.client_side_validation && update_user_request.nil?
+        fail ArgumentError, "Missing the required parameter 'update_user_request' when calling AdminUsersApi.update_user"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users/{userId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s))
 
@@ -2055,12 +2138,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(update_user_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'UpdateUserResponse'
@@ -2088,19 +2176,21 @@ module LumoAuthApiClient
     # Replace a user's groups
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param update_user_groups_request [UpdateUserGroupsRequest] 
     # @param [Hash] opts the optional parameters
     # @return [UpdateUserGroupsResponse]
-    def update_user_groups(org_id, user_id, opts = {})
-      data, _status_code, _headers = update_user_groups_with_http_info(org_id, user_id, opts)
+    def update_user_groups(org_id, user_id, update_user_groups_request, opts = {})
+      data, _status_code, _headers = update_user_groups_with_http_info(org_id, user_id, update_user_groups_request, opts)
       data
     end
 
     # Replace a user&#39;s groups
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param update_user_groups_request [UpdateUserGroupsRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(UpdateUserGroupsResponse, Integer, Hash)>] UpdateUserGroupsResponse data, response status code and response headers
-    def update_user_groups_with_http_info(org_id, user_id, opts = {})
+    def update_user_groups_with_http_info(org_id, user_id, update_user_groups_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminUsersApi.update_user_groups ...'
       end
@@ -2112,6 +2202,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && user_id.nil?
         fail ArgumentError, "Missing the required parameter 'user_id' when calling AdminUsersApi.update_user_groups"
       end
+      # verify the required parameter 'update_user_groups_request' is set
+      if @api_client.config.client_side_validation && update_user_groups_request.nil?
+        fail ArgumentError, "Missing the required parameter 'update_user_groups_request' when calling AdminUsersApi.update_user_groups"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users/{userId}/groups'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s))
 
@@ -2122,12 +2216,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(update_user_groups_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'UpdateUserGroupsResponse'
@@ -2155,19 +2254,21 @@ module LumoAuthApiClient
     # Replace a user's roles
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param admin_groups_update_roles_request [AdminGroupsUpdateRolesRequest] 
     # @param [Hash] opts the optional parameters
     # @return [UpdateUserRolesResponse]
-    def update_user_roles(org_id, user_id, opts = {})
-      data, _status_code, _headers = update_user_roles_with_http_info(org_id, user_id, opts)
+    def update_user_roles(org_id, user_id, admin_groups_update_roles_request, opts = {})
+      data, _status_code, _headers = update_user_roles_with_http_info(org_id, user_id, admin_groups_update_roles_request, opts)
       data
     end
 
     # Replace a user&#39;s roles
     # @param org_id [String] 
     # @param user_id [String] 
+    # @param admin_groups_update_roles_request [AdminGroupsUpdateRolesRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(UpdateUserRolesResponse, Integer, Hash)>] UpdateUserRolesResponse data, response status code and response headers
-    def update_user_roles_with_http_info(org_id, user_id, opts = {})
+    def update_user_roles_with_http_info(org_id, user_id, admin_groups_update_roles_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminUsersApi.update_user_roles ...'
       end
@@ -2179,6 +2280,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && user_id.nil?
         fail ArgumentError, "Missing the required parameter 'user_id' when calling AdminUsersApi.update_user_roles"
       end
+      # verify the required parameter 'admin_groups_update_roles_request' is set
+      if @api_client.config.client_side_validation && admin_groups_update_roles_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_groups_update_roles_request' when calling AdminUsersApi.update_user_roles"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/users/{userId}/roles'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'userId' + '}', CGI.escape(user_id.to_s))
 
@@ -2189,12 +2294,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_groups_update_roles_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'UpdateUserRolesResponse'

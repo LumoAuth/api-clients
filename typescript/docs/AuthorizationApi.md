@@ -24,7 +24,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**setUserAttribute**](#setuserattribute) | **PUT** /orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug} | Set a user attribute|
 
 # **checkAbac**
-> CheckAbacResponse checkAbac()
+> CheckAbacResponse checkAbac(checkAbacRequest)
 
 POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
 
@@ -33,16 +33,19 @@ POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   reso
 ```typescript
 import {
     AuthorizationApi,
-    Configuration
+    Configuration,
+    CheckAbacRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AuthorizationApi(configuration);
 
 let orgId: string; // (default to undefined)
+let checkAbacRequest: CheckAbacRequest; //
 
 const { status, data } = await apiInstance.checkAbac(
-    orgId
+    orgId,
+    checkAbacRequest
 );
 ```
 
@@ -50,6 +53,7 @@ const { status, data } = await apiInstance.checkAbac(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **checkAbacRequest** | **CheckAbacRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -63,7 +67,7 @@ const { status, data } = await apiInstance.checkAbac(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -75,7 +79,7 @@ const { status, data } = await apiInstance.checkAbac(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkAbacBulk**
-> CheckAbacBulkResponse checkAbacBulk()
+> CheckAbacBulkResponse checkAbacBulk(checkAbacBulkRequest)
 
 POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
 
@@ -84,16 +88,19 @@ POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, act
 ```typescript
 import {
     AuthorizationApi,
-    Configuration
+    Configuration,
+    CheckAbacBulkRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AuthorizationApi(configuration);
 
 let orgId: string; // (default to undefined)
+let checkAbacBulkRequest: CheckAbacBulkRequest; //
 
 const { status, data } = await apiInstance.checkAbacBulk(
-    orgId
+    orgId,
+    checkAbacBulkRequest
 );
 ```
 
@@ -101,6 +108,7 @@ const { status, data } = await apiInstance.checkAbacBulk(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **checkAbacBulkRequest** | **CheckAbacBulkRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -114,7 +122,7 @@ const { status, data } = await apiInstance.checkAbacBulk(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -126,7 +134,7 @@ const { status, data } = await apiInstance.checkAbacBulk(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkAllPermissions**
-> CheckAnyPermissionResponse checkAllPermissions()
+> CheckAnyPermissionResponse checkAllPermissions(checkPermissionsBulkRequest)
 
 POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -135,17 +143,25 @@ POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"do
 ```typescript
 import {
     AuthorizationApi,
-    Configuration
+    Configuration,
+    CheckPermissionsBulkRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AuthorizationApi(configuration);
 
-const { status, data } = await apiInstance.checkAllPermissions();
+let checkPermissionsBulkRequest: CheckPermissionsBulkRequest; //
+
+const { status, data } = await apiInstance.checkAllPermissions(
+    checkPermissionsBulkRequest
+);
 ```
 
 ### Parameters
-This endpoint does not have any parameters.
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **checkPermissionsBulkRequest** | **CheckPermissionsBulkRequest**|  | |
 
 
 ### Return type
@@ -158,7 +174,7 @@ This endpoint does not have any parameters.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -170,7 +186,7 @@ This endpoint does not have any parameters.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkAnyPermission**
-> CheckAnyPermissionResponse checkAnyPermission()
+> CheckAnyPermissionResponse checkAnyPermission(checkPermissionsBulkRequest)
 
 POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -179,17 +195,25 @@ POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"do
 ```typescript
 import {
     AuthorizationApi,
-    Configuration
+    Configuration,
+    CheckPermissionsBulkRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AuthorizationApi(configuration);
 
-const { status, data } = await apiInstance.checkAnyPermission();
+let checkPermissionsBulkRequest: CheckPermissionsBulkRequest; //
+
+const { status, data } = await apiInstance.checkAnyPermission(
+    checkPermissionsBulkRequest
+);
 ```
 
 ### Parameters
-This endpoint does not have any parameters.
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **checkPermissionsBulkRequest** | **CheckPermissionsBulkRequest**|  | |
 
 
 ### Return type
@@ -202,7 +226,7 @@ This endpoint does not have any parameters.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -214,7 +238,7 @@ This endpoint does not have any parameters.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkPermission**
-> CheckPermissionResponse checkPermission()
+> CheckPermissionResponse checkPermission(checkPermissionRequest)
 
 POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
 
@@ -223,17 +247,25 @@ POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"contex
 ```typescript
 import {
     AuthorizationApi,
-    Configuration
+    Configuration,
+    CheckPermissionRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AuthorizationApi(configuration);
 
-const { status, data } = await apiInstance.checkPermission();
+let checkPermissionRequest: CheckPermissionRequest; //
+
+const { status, data } = await apiInstance.checkPermission(
+    checkPermissionRequest
+);
 ```
 
 ### Parameters
-This endpoint does not have any parameters.
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **checkPermissionRequest** | **CheckPermissionRequest**|  | |
 
 
 ### Return type
@@ -246,7 +278,7 @@ This endpoint does not have any parameters.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -258,7 +290,7 @@ This endpoint does not have any parameters.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkPermissionsBulk**
-> CheckPermissionsBulkResponse checkPermissionsBulk()
+> CheckPermissionsBulkResponse checkPermissionsBulk(checkPermissionsBulkRequest)
 
 POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -267,17 +299,25 @@ POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"d
 ```typescript
 import {
     AuthorizationApi,
-    Configuration
+    Configuration,
+    CheckPermissionsBulkRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AuthorizationApi(configuration);
 
-const { status, data } = await apiInstance.checkPermissionsBulk();
+let checkPermissionsBulkRequest: CheckPermissionsBulkRequest; //
+
+const { status, data } = await apiInstance.checkPermissionsBulk(
+    checkPermissionsBulkRequest
+);
 ```
 
 ### Parameters
-This endpoint does not have any parameters.
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **checkPermissionsBulkRequest** | **CheckPermissionsBulkRequest**|  | |
 
 
 ### Return type
@@ -290,7 +330,7 @@ This endpoint does not have any parameters.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -302,7 +342,7 @@ This endpoint does not have any parameters.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkRelation**
-> CheckRelationResponse checkRelation()
+> CheckRelationResponse checkRelation(checkRelationRequest)
 
 POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
 
@@ -311,17 +351,25 @@ POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"re
 ```typescript
 import {
     AuthorizationApi,
-    Configuration
+    Configuration,
+    CheckRelationRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AuthorizationApi(configuration);
 
-const { status, data } = await apiInstance.checkRelation();
+let checkRelationRequest: CheckRelationRequest; //
+
+const { status, data } = await apiInstance.checkRelation(
+    checkRelationRequest
+);
 ```
 
 ### Parameters
-This endpoint does not have any parameters.
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **checkRelationRequest** | **CheckRelationRequest**|  | |
 
 
 ### Return type
@@ -334,7 +382,7 @@ This endpoint does not have any parameters.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -346,7 +394,7 @@ This endpoint does not have any parameters.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **checkRelationScoped**
-> CheckRelationScopedResponse checkRelationScoped()
+> CheckRelationScopedResponse checkRelationScoped(checkRelationScopedRequest)
 
 
 ### Example
@@ -354,16 +402,19 @@ This endpoint does not have any parameters.
 ```typescript
 import {
     AuthorizationApi,
-    Configuration
+    Configuration,
+    CheckRelationScopedRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AuthorizationApi(configuration);
 
 let orgId: string; // (default to undefined)
+let checkRelationScopedRequest: CheckRelationScopedRequest; //
 
 const { status, data } = await apiInstance.checkRelationScoped(
-    orgId
+    orgId,
+    checkRelationScopedRequest
 );
 ```
 
@@ -371,6 +422,7 @@ const { status, data } = await apiInstance.checkRelationScoped(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **checkRelationScopedRequest** | **CheckRelationScopedRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -384,7 +436,7 @@ const { status, data } = await apiInstance.checkRelationScoped(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -396,7 +448,7 @@ const { status, data } = await apiInstance.checkRelationScoped(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **evaluate**
-> AuthZenDecision evaluate()
+> AuthZenDecision evaluate(evaluateRequest)
 
 POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
 
@@ -405,17 +457,25 @@ POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"a
 ```typescript
 import {
     AuthorizationApi,
-    Configuration
+    Configuration,
+    EvaluateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AuthorizationApi(configuration);
 
-const { status, data } = await apiInstance.evaluate();
+let evaluateRequest: EvaluateRequest; //AuthZEN Authorization API 1.0 evaluation request.
+
+const { status, data } = await apiInstance.evaluate(
+    evaluateRequest
+);
 ```
 
 ### Parameters
-This endpoint does not have any parameters.
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **evaluateRequest** | **EvaluateRequest**| AuthZEN Authorization API 1.0 evaluation request. | |
 
 
 ### Return type
@@ -428,7 +488,7 @@ This endpoint does not have any parameters.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -440,7 +500,7 @@ This endpoint does not have any parameters.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **evaluateBatch**
-> EvaluateBatchResponse evaluateBatch()
+> EvaluateBatchResponse evaluateBatch(evaluateBatchRequest)
 
 POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
 
@@ -449,17 +509,25 @@ POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional 
 ```typescript
 import {
     AuthorizationApi,
-    Configuration
+    Configuration,
+    EvaluateBatchRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AuthorizationApi(configuration);
 
-const { status, data } = await apiInstance.evaluateBatch();
+let evaluateBatchRequest: EvaluateBatchRequest; //AuthZEN Authorization API 1.0 batch evaluation request.
+
+const { status, data } = await apiInstance.evaluateBatch(
+    evaluateBatchRequest
+);
 ```
 
 ### Parameters
-This endpoint does not have any parameters.
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **evaluateBatchRequest** | **EvaluateBatchRequest**| AuthZEN Authorization API 1.0 batch evaluation request. | |
 
 
 ### Return type
@@ -472,7 +540,7 @@ This endpoint does not have any parameters.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -641,7 +709,7 @@ const { status, data } = await apiInstance.getMyAttributes(
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Built-in identity attributes plus trait_&lt;key&gt; entries and tenant-defined custom attributes |  -  |
+|**200** | Built-in identity attributes plus trait_&lt;key&gt; entries and custom attributes that the organization defined |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -752,7 +820,7 @@ const { status, data } = await apiInstance.listAttributeDefinitions(
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Definitions (tenant-defined and global) |  -  |
+|**200** | Definitions (the organization\&#39;s own and the built-in ones) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -801,7 +869,7 @@ This endpoint does not have any parameters.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **setResourceAttribute**
-> SetResourceAttributeResponse setResourceAttribute()
+> SetResourceAttributeResponse setResourceAttribute(setResourceAttributeRequest)
 
 PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
 
@@ -810,7 +878,8 @@ PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug
 ```typescript
 import {
     AuthorizationApi,
-    Configuration
+    Configuration,
+    SetResourceAttributeRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -820,12 +889,14 @@ let orgId: string; // (default to undefined)
 let resourceType: string; // (default to undefined)
 let resourceId: string; // (default to undefined)
 let attributeSlug: string; // (default to undefined)
+let setResourceAttributeRequest: SetResourceAttributeRequest; //
 
 const { status, data } = await apiInstance.setResourceAttribute(
     orgId,
     resourceType,
     resourceId,
-    attributeSlug
+    attributeSlug,
+    setResourceAttributeRequest
 );
 ```
 
@@ -833,6 +904,7 @@ const { status, data } = await apiInstance.setResourceAttribute(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **setResourceAttributeRequest** | **SetResourceAttributeRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **resourceType** | [**string**] |  | defaults to undefined|
 | **resourceId** | [**string**] |  | defaults to undefined|
@@ -849,7 +921,7 @@ const { status, data } = await apiInstance.setResourceAttribute(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -862,7 +934,7 @@ const { status, data } = await apiInstance.setResourceAttribute(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **setUserAttribute**
-> SetUserAttributeResponse setUserAttribute()
+> SetUserAttributeResponse setUserAttribute(setResourceAttributeRequest)
 
 PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
 
@@ -871,7 +943,8 @@ PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
 ```typescript
 import {
     AuthorizationApi,
-    Configuration
+    Configuration,
+    SetResourceAttributeRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -880,11 +953,13 @@ const apiInstance = new AuthorizationApi(configuration);
 let orgId: string; // (default to undefined)
 let userId: string; // (default to undefined)
 let attributeSlug: string; // (default to undefined)
+let setResourceAttributeRequest: SetResourceAttributeRequest; //
 
 const { status, data } = await apiInstance.setUserAttribute(
     orgId,
     userId,
-    attributeSlug
+    attributeSlug,
+    setResourceAttributeRequest
 );
 ```
 
@@ -892,6 +967,7 @@ const { status, data } = await apiInstance.setUserAttribute(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **setResourceAttributeRequest** | **SetResourceAttributeRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **userId** | [**string**] |  | defaults to undefined|
 | **attributeSlug** | [**string**] |  | defaults to undefined|
@@ -907,7 +983,7 @@ const { status, data } = await apiInstance.setUserAttribute(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

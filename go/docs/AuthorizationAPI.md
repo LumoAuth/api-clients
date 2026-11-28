@@ -27,7 +27,7 @@ Method | HTTP request | Description
 
 ## CheckAbac
 
-> CheckAbacResponse CheckAbac(ctx, orgId).Execute()
+> CheckAbacResponse CheckAbac(ctx, orgId).CheckAbacRequest(checkAbacRequest).Execute()
 
 Evaluate an ABAC policy decision for the caller
 
@@ -47,10 +47,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	checkAbacRequest := *openapiclient.NewCheckAbacRequest("ResourceType_example", "Action_example") // CheckAbacRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthorizationAPI.CheckAbac(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckAbac(context.Background(), orgId).CheckAbacRequest(checkAbacRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckAbac``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -76,6 +77,7 @@ Other parameters are passed through a pointer to a apiCheckAbacRequest struct vi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **checkAbacRequest** | [**CheckAbacRequest**](CheckAbacRequest.md) |  | 
 
 ### Return type
 
@@ -87,7 +89,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -97,7 +99,7 @@ Name | Type | Description  | Notes
 
 ## CheckAbacBulk
 
-> CheckAbacBulkResponse CheckAbacBulk(ctx, orgId).Execute()
+> CheckAbacBulkResponse CheckAbacBulk(ctx, orgId).CheckAbacBulkRequest(checkAbacBulkRequest).Execute()
 
 Evaluate up to 100 ABAC checks for the caller in one call
 
@@ -117,10 +119,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	checkAbacBulkRequest := *openapiclient.NewCheckAbacBulkRequest([]map[string]interface{}{map[string]interface{}{"key": interface{}(123)}}) // CheckAbacBulkRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthorizationAPI.CheckAbacBulk(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckAbacBulk(context.Background(), orgId).CheckAbacBulkRequest(checkAbacBulkRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckAbacBulk``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -146,6 +149,7 @@ Other parameters are passed through a pointer to a apiCheckAbacBulkRequest struc
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **checkAbacBulkRequest** | [**CheckAbacBulkRequest**](CheckAbacBulkRequest.md) |  | 
 
 ### Return type
 
@@ -157,7 +161,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -167,7 +171,7 @@ Name | Type | Description  | Notes
 
 ## CheckAllPermissions
 
-> CheckAnyPermissionResponse CheckAllPermissions(ctx).Execute()
+> CheckAnyPermissionResponse CheckAllPermissions(ctx).CheckPermissionsBulkRequest(checkPermissionsBulkRequest).Execute()
 
 Check whether the subject holds all of the permissions
 
@@ -186,10 +190,11 @@ import (
 )
 
 func main() {
+	checkPermissionsBulkRequest := *openapiclient.NewCheckPermissionsBulkRequest([]string{"Permissions_example"}) // CheckPermissionsBulkRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthorizationAPI.CheckAllPermissions(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckAllPermissions(context.Background()).CheckPermissionsBulkRequest(checkPermissionsBulkRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckAllPermissions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -201,12 +206,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiCheckAllPermissionsRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **checkPermissionsBulkRequest** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  | 
 
 ### Return type
 
@@ -218,7 +227,7 @@ Other parameters are passed through a pointer to a apiCheckAllPermissionsRequest
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -228,7 +237,7 @@ Other parameters are passed through a pointer to a apiCheckAllPermissionsRequest
 
 ## CheckAnyPermission
 
-> CheckAnyPermissionResponse CheckAnyPermission(ctx).Execute()
+> CheckAnyPermissionResponse CheckAnyPermission(ctx).CheckPermissionsBulkRequest(checkPermissionsBulkRequest).Execute()
 
 Check whether the subject holds any of the permissions
 
@@ -247,10 +256,11 @@ import (
 )
 
 func main() {
+	checkPermissionsBulkRequest := *openapiclient.NewCheckPermissionsBulkRequest([]string{"Permissions_example"}) // CheckPermissionsBulkRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthorizationAPI.CheckAnyPermission(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckAnyPermission(context.Background()).CheckPermissionsBulkRequest(checkPermissionsBulkRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckAnyPermission``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -262,12 +272,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiCheckAnyPermissionRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **checkPermissionsBulkRequest** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  | 
 
 ### Return type
 
@@ -279,7 +293,7 @@ Other parameters are passed through a pointer to a apiCheckAnyPermissionRequest 
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -289,7 +303,7 @@ Other parameters are passed through a pointer to a apiCheckAnyPermissionRequest 
 
 ## CheckPermission
 
-> CheckPermissionResponse CheckPermission(ctx).Execute()
+> CheckPermissionResponse CheckPermission(ctx).CheckPermissionRequest(checkPermissionRequest).Execute()
 
 Check one permission
 
@@ -308,10 +322,11 @@ import (
 )
 
 func main() {
+	checkPermissionRequest := *openapiclient.NewCheckPermissionRequest("document.edit") // CheckPermissionRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthorizationAPI.CheckPermission(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckPermission(context.Background()).CheckPermissionRequest(checkPermissionRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckPermission``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -323,12 +338,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiCheckPermissionRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **checkPermissionRequest** | [**CheckPermissionRequest**](CheckPermissionRequest.md) |  | 
 
 ### Return type
 
@@ -340,7 +359,7 @@ Other parameters are passed through a pointer to a apiCheckPermissionRequest str
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -350,7 +369,7 @@ Other parameters are passed through a pointer to a apiCheckPermissionRequest str
 
 ## CheckPermissionsBulk
 
-> CheckPermissionsBulkResponse CheckPermissionsBulk(ctx).Execute()
+> CheckPermissionsBulkResponse CheckPermissionsBulk(ctx).CheckPermissionsBulkRequest(checkPermissionsBulkRequest).Execute()
 
 Check up to 100 permissions in one call
 
@@ -369,10 +388,11 @@ import (
 )
 
 func main() {
+	checkPermissionsBulkRequest := *openapiclient.NewCheckPermissionsBulkRequest([]string{"Permissions_example"}) // CheckPermissionsBulkRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthorizationAPI.CheckPermissionsBulk(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckPermissionsBulk(context.Background()).CheckPermissionsBulkRequest(checkPermissionsBulkRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckPermissionsBulk``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -384,12 +404,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiCheckPermissionsBulkRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **checkPermissionsBulkRequest** | [**CheckPermissionsBulkRequest**](CheckPermissionsBulkRequest.md) |  | 
 
 ### Return type
 
@@ -401,7 +425,7 @@ Other parameters are passed through a pointer to a apiCheckPermissionsBulkReques
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -411,7 +435,7 @@ Other parameters are passed through a pointer to a apiCheckPermissionsBulkReques
 
 ## CheckRelation
 
-> CheckRelationResponse CheckRelation(ctx).Execute()
+> CheckRelationResponse CheckRelation(ctx).CheckRelationRequest(checkRelationRequest).Execute()
 
 Zanzibar relationship check
 
@@ -430,10 +454,11 @@ import (
 )
 
 func main() {
+	checkRelationRequest := *openapiclient.NewCheckRelationRequest("document:123", "viewer", "user:456") // CheckRelationRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthorizationAPI.CheckRelation(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckRelation(context.Background()).CheckRelationRequest(checkRelationRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckRelation``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -445,12 +470,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiCheckRelationRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **checkRelationRequest** | [**CheckRelationRequest**](CheckRelationRequest.md) |  | 
 
 ### Return type
 
@@ -462,7 +491,7 @@ Other parameters are passed through a pointer to a apiCheckRelationRequest struc
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -472,7 +501,7 @@ Other parameters are passed through a pointer to a apiCheckRelationRequest struc
 
 ## CheckRelationScoped
 
-> CheckRelationScopedResponse CheckRelationScoped(ctx, orgId).Execute()
+> CheckRelationScopedResponse CheckRelationScoped(ctx, orgId).CheckRelationScopedRequest(checkRelationScopedRequest).Execute()
 
 Zanzibar relationship check
 
@@ -490,10 +519,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	checkRelationScopedRequest := *openapiclient.NewCheckRelationScopedRequest("document:123", "viewer", "user:456") // CheckRelationScopedRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthorizationAPI.CheckRelationScoped(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckRelationScoped(context.Background(), orgId).CheckRelationScopedRequest(checkRelationScopedRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckRelationScoped``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -519,6 +549,7 @@ Other parameters are passed through a pointer to a apiCheckRelationScopedRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **checkRelationScopedRequest** | [**CheckRelationScopedRequest**](CheckRelationScopedRequest.md) |  | 
 
 ### Return type
 
@@ -530,7 +561,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -540,7 +571,7 @@ Name | Type | Description  | Notes
 
 ## Evaluate
 
-> AuthZenDecision Evaluate(ctx).Execute()
+> AuthZenDecision Evaluate(ctx).EvaluateRequest(evaluateRequest).Execute()
 
 AuthZEN 1.0 access evaluation
 
@@ -559,10 +590,11 @@ import (
 )
 
 func main() {
+	evaluateRequest := *openapiclient.NewEvaluateRequest(map[string]interface{}{"key": interface{}(123)}, map[string]interface{}{"key": interface{}(123)}, map[string]interface{}{"key": interface{}(123)}) // EvaluateRequest | AuthZEN Authorization API 1.0 evaluation request.
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthorizationAPI.Evaluate(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.Evaluate(context.Background()).EvaluateRequest(evaluateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.Evaluate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -574,12 +606,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiEvaluateRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **evaluateRequest** | [**EvaluateRequest**](EvaluateRequest.md) | AuthZEN Authorization API 1.0 evaluation request. | 
 
 ### Return type
 
@@ -591,7 +627,7 @@ Other parameters are passed through a pointer to a apiEvaluateRequest struct via
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -601,7 +637,7 @@ Other parameters are passed through a pointer to a apiEvaluateRequest struct via
 
 ## EvaluateBatch
 
-> EvaluateBatchResponse EvaluateBatch(ctx).Execute()
+> EvaluateBatchResponse EvaluateBatch(ctx).EvaluateBatchRequest(evaluateBatchRequest).Execute()
 
 AuthZEN 1.0 boxcarred access evaluations
 
@@ -620,10 +656,11 @@ import (
 )
 
 func main() {
+	evaluateBatchRequest := *openapiclient.NewEvaluateBatchRequest([]map[string]interface{}{map[string]interface{}{"key": interface{}(123)}}) // EvaluateBatchRequest | AuthZEN Authorization API 1.0 batch evaluation request.
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthorizationAPI.EvaluateBatch(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.EvaluateBatch(context.Background()).EvaluateBatchRequest(evaluateBatchRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.EvaluateBatch``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -635,12 +672,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiEvaluateBatchRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **evaluateBatchRequest** | [**EvaluateBatchRequest**](EvaluateBatchRequest.md) | AuthZEN Authorization API 1.0 batch evaluation request. | 
 
 ### Return type
 
@@ -652,7 +693,7 @@ Other parameters are passed through a pointer to a apiEvaluateBatchRequest struc
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1079,7 +1120,7 @@ Other parameters are passed through a pointer to a apiListPermissionsRequest str
 
 ## SetResourceAttribute
 
-> SetResourceAttributeResponse SetResourceAttribute(ctx, orgId, resourceType, resourceId, attributeSlug).Execute()
+> SetResourceAttributeResponse SetResourceAttribute(ctx, orgId, resourceType, resourceId, attributeSlug).SetResourceAttributeRequest(setResourceAttributeRequest).Execute()
 
 Set a resource attribute
 
@@ -1102,10 +1143,11 @@ func main() {
 	resourceType := "resourceType_example" // string | 
 	resourceId := "resourceId_example" // string | 
 	attributeSlug := "attributeSlug_example" // string | 
+	setResourceAttributeRequest := *openapiclient.NewSetResourceAttributeRequest(interface{}(123)) // SetResourceAttributeRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthorizationAPI.SetResourceAttribute(context.Background(), orgId, resourceType, resourceId, attributeSlug).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.SetResourceAttribute(context.Background(), orgId, resourceType, resourceId, attributeSlug).SetResourceAttributeRequest(setResourceAttributeRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.SetResourceAttribute``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1137,6 +1179,7 @@ Name | Type | Description  | Notes
 
 
 
+ **setResourceAttributeRequest** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md) |  | 
 
 ### Return type
 
@@ -1148,7 +1191,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1158,7 +1201,7 @@ Name | Type | Description  | Notes
 
 ## SetUserAttribute
 
-> SetUserAttributeResponse SetUserAttribute(ctx, orgId, userId, attributeSlug).Execute()
+> SetUserAttributeResponse SetUserAttribute(ctx, orgId, userId, attributeSlug).SetResourceAttributeRequest(setResourceAttributeRequest).Execute()
 
 Set a user attribute
 
@@ -1180,10 +1223,11 @@ func main() {
 	orgId := "orgId_example" // string | 
 	userId := "userId_example" // string | 
 	attributeSlug := "attributeSlug_example" // string | 
+	setResourceAttributeRequest := *openapiclient.NewSetResourceAttributeRequest(interface{}(123)) // SetResourceAttributeRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthorizationAPI.SetUserAttribute(context.Background(), orgId, userId, attributeSlug).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.SetUserAttribute(context.Background(), orgId, userId, attributeSlug).SetResourceAttributeRequest(setResourceAttributeRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.SetUserAttribute``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1213,6 +1257,7 @@ Name | Type | Description  | Notes
 
 
 
+ **setResourceAttributeRequest** | [**SetResourceAttributeRequest**](SetResourceAttributeRequest.md) |  | 
 
 ### Return type
 
@@ -1224,7 +1269,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

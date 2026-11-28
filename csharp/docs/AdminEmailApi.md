@@ -331,7 +331,7 @@ catch (ApiException e)
 
 <a id="adminemailtemplatespreview"></a>
 # **AdminEmailTemplatesPreview**
-> AdminEmailTemplatesPreviewResponse AdminEmailTemplatesPreview (string orgId, string type)
+> AdminEmailTemplatesPreviewResponse AdminEmailTemplatesPreview (string orgId, string type, AdminEmailTemplatesPreviewRequest? adminEmailTemplatesPreviewRequest = null)
 
 Render an email template with sample data
 
@@ -365,11 +365,12 @@ namespace Example
             var apiInstance = new AdminEmailApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var type = "type_example";  // string | 
+            var adminEmailTemplatesPreviewRequest = new AdminEmailTemplatesPreviewRequest?(); // AdminEmailTemplatesPreviewRequest? |  (optional) 
 
             try
             {
                 // Render an email template with sample data
-                AdminEmailTemplatesPreviewResponse result = apiInstance.AdminEmailTemplatesPreview(orgId, type);
+                AdminEmailTemplatesPreviewResponse result = apiInstance.AdminEmailTemplatesPreview(orgId, type, adminEmailTemplatesPreviewRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -390,7 +391,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Render an email template with sample data
-    ApiResponse<AdminEmailTemplatesPreviewResponse> response = apiInstance.AdminEmailTemplatesPreviewWithHttpInfo(orgId, type);
+    ApiResponse<AdminEmailTemplatesPreviewResponse> response = apiInstance.AdminEmailTemplatesPreviewWithHttpInfo(orgId, type, adminEmailTemplatesPreviewRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -409,6 +410,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **type** | **string** |  |  |
+| **adminEmailTemplatesPreviewRequest** | [**AdminEmailTemplatesPreviewRequest?**](AdminEmailTemplatesPreviewRequest?.md) |  | [optional]  |
 
 ### Return type
 
@@ -420,7 +422,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -434,7 +436,7 @@ catch (ApiException e)
 
 <a id="adminemailtemplatesupsert"></a>
 # **AdminEmailTemplatesUpsert**
-> EmailTemplate AdminEmailTemplatesUpsert (string orgId, string type)
+> EmailTemplate AdminEmailTemplatesUpsert (string orgId, string type, AdminEmailTemplatesUpsertRequest adminEmailTemplatesUpsertRequest)
 
 Create or replace the custom email template for a type
 
@@ -470,11 +472,12 @@ namespace Example
             var apiInstance = new AdminEmailApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var type = "type_example";  // string | 
+            var adminEmailTemplatesUpsertRequest = new AdminEmailTemplatesUpsertRequest(); // AdminEmailTemplatesUpsertRequest | 
 
             try
             {
                 // Create or replace the custom email template for a type
-                EmailTemplate result = apiInstance.AdminEmailTemplatesUpsert(orgId, type);
+                EmailTemplate result = apiInstance.AdminEmailTemplatesUpsert(orgId, type, adminEmailTemplatesUpsertRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -495,7 +498,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create or replace the custom email template for a type
-    ApiResponse<EmailTemplate> response = apiInstance.AdminEmailTemplatesUpsertWithHttpInfo(orgId, type);
+    ApiResponse<EmailTemplate> response = apiInstance.AdminEmailTemplatesUpsertWithHttpInfo(orgId, type, adminEmailTemplatesUpsertRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -514,6 +517,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **type** | **string** |  |  |
+| **adminEmailTemplatesUpsertRequest** | [**AdminEmailTemplatesUpsertRequest**](AdminEmailTemplatesUpsertRequest.md) |  |  |
 
 ### Return type
 
@@ -525,7 +529,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

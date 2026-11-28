@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -88,7 +88,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.CreateClient(orgId);
+            //OAuthClientWrite oAuthClientWrite = null;
+            //var response = instance.CreateClient(orgId, oAuthClientWrite);
             //Assert.IsType<CreateClientResponse>(response);
         }
 
@@ -192,7 +193,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //var response = instance.PatchClient(orgId, clientId);
+            //OAuthClientWrite oAuthClientWrite = null;
+            //var response = instance.PatchClient(orgId, clientId, oAuthClientWrite);
             //Assert.IsType<UpdateClientResponse>(response);
         }
 
@@ -232,7 +234,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //var response = instance.SetClientScopes(orgId, clientId);
+            //SetClientScopesRequest setClientScopesRequest = null;
+            //var response = instance.SetClientScopes(orgId, clientId, setClientScopesRequest);
             //Assert.IsType<SetClientScopesResponse>(response);
         }
 
@@ -245,7 +248,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //var response = instance.UpdateClient(orgId, clientId);
+            //OAuthClientWrite oAuthClientWrite = null;
+            //var response = instance.UpdateClient(orgId, clientId, oAuthClientWrite);
             //Assert.IsType<UpdateClientResponse>(response);
         }
     }

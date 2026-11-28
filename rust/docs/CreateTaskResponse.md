@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **task_id** | Option<**String**> |  | [optional]
+**parent_task_id** | Option<**String**> | The parent task, or null for a task without one. | [optional]
 **caep_session_id** | Option<**String**> |  | [optional]
 **expires_at** | Option<**String**> |  | [optional]
 **agent_id** | Option<**String**> |  | [optional]

@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -57,8 +57,21 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scope"></param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="loginHintToken"> (optional)</param>
+        /// <param name="idTokenHint"> (optional)</param>
+        /// <param name="bindingMessage"> (optional)</param>
+        /// <param name="acrValues"> (optional)</param>
+        /// <param name="requestedExpiry"> (optional)</param>
+        /// <param name="clientNotificationToken"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>BackchannelAuthorizeResponse</returns>
-        BackchannelAuthorizeResponse BackchannelAuthorize(string orgId);
+        BackchannelAuthorizeResponse BackchannelAuthorize(string orgId, string scope, string? loginHint = default, string? loginHintToken = default, string? idTokenHint = default, string? bindingMessage = default, string? acrValues = default, int? requestedExpiry = default, string? clientNotificationToken = default, string? authorizationDetails = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default);
 
         /// <summary>
         /// CIBA backchannel authentication request
@@ -68,8 +81,21 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scope"></param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="loginHintToken"> (optional)</param>
+        /// <param name="idTokenHint"> (optional)</param>
+        /// <param name="bindingMessage"> (optional)</param>
+        /// <param name="acrValues"> (optional)</param>
+        /// <param name="requestedExpiry"> (optional)</param>
+        /// <param name="clientNotificationToken"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>ApiResponse of BackchannelAuthorizeResponse</returns>
-        ApiResponse<BackchannelAuthorizeResponse> BackchannelAuthorizeWithHttpInfo(string orgId);
+        ApiResponse<BackchannelAuthorizeResponse> BackchannelAuthorizeWithHttpInfo(string orgId, string scope, string? loginHint = default, string? loginHintToken = default, string? idTokenHint = default, string? bindingMessage = default, string? acrValues = default, int? requestedExpiry = default, string? clientNotificationToken = default, string? authorizationDetails = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default);
         /// <summary>
         /// Sign-in methods for an email-first form
         /// </summary>
@@ -101,8 +127,15 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
+        /// <param name="scope">Space-separated scopes. (optional)</param>
+        /// <param name="resource">RFC 8707 resource indicator. (optional)</param>
+        /// <param name="authorizationDetails">RFC 9396, a JSON array as text. (optional)</param>
         /// <returns>DeviceAuthorizationResponse</returns>
-        DeviceAuthorizationResponse DeviceAuthorization(string orgId);
+        DeviceAuthorizationResponse DeviceAuthorization(string orgId, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, string? scope = default, string? resource = default, string? authorizationDetails = default);
 
         /// <summary>
         /// Device authorization request (RFC 8628)
@@ -112,8 +145,15 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
+        /// <param name="scope">Space-separated scopes. (optional)</param>
+        /// <param name="resource">RFC 8707 resource indicator. (optional)</param>
+        /// <param name="authorizationDetails">RFC 9396, a JSON array as text. (optional)</param>
         /// <returns>ApiResponse of DeviceAuthorizationResponse</returns>
-        ApiResponse<DeviceAuthorizationResponse> DeviceAuthorizationWithHttpInfo(string orgId);
+        ApiResponse<DeviceAuthorizationResponse> DeviceAuthorizationWithHttpInfo(string orgId, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, string? scope = default, string? resource = default, string? authorizationDetails = default);
         /// <summary>
         /// Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
         /// </summary>
@@ -187,8 +227,14 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>IntrospectResponse</returns>
-        IntrospectResponse Introspect(string orgId);
+        IntrospectResponse Introspect(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default);
 
         /// <summary>
         /// Token introspection (RFC 7662)
@@ -198,8 +244,14 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>ApiResponse of IntrospectResponse</returns>
-        ApiResponse<IntrospectResponse> IntrospectWithHttpInfo(string orgId);
+        ApiResponse<IntrospectResponse> IntrospectWithHttpInfo(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default);
         /// <summary>
         /// Pushed authorization request (RFC 9126)
         /// </summary>
@@ -208,8 +260,24 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="responseType"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="state"> (optional)</param>
+        /// <param name="nonce"> (optional)</param>
+        /// <param name="codeChallenge"> (optional)</param>
+        /// <param name="codeChallengeMethod"> (optional)</param>
+        /// <param name="request">A signed request object (JAR, RFC 9101). (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="prompt"> (optional)</param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>ParResponse</returns>
-        ParResponse Par(string orgId);
+        ParResponse Par(string orgId, string? responseType = default, string? redirectUri = default, string? scope = default, string? state = default, string? nonce = default, string? codeChallenge = default, string? codeChallengeMethod = default, string? request = default, string? resource = default, string? authorizationDetails = default, string? prompt = default, string? loginHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default);
 
         /// <summary>
         /// Pushed authorization request (RFC 9126)
@@ -219,8 +287,24 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="responseType"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="state"> (optional)</param>
+        /// <param name="nonce"> (optional)</param>
+        /// <param name="codeChallenge"> (optional)</param>
+        /// <param name="codeChallengeMethod"> (optional)</param>
+        /// <param name="request">A signed request object (JAR, RFC 9101). (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="prompt"> (optional)</param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>ApiResponse of ParResponse</returns>
-        ApiResponse<ParResponse> ParWithHttpInfo(string orgId);
+        ApiResponse<ParResponse> ParWithHttpInfo(string orgId, string? responseType = default, string? redirectUri = default, string? scope = default, string? state = default, string? nonce = default, string? codeChallenge = default, string? codeChallengeMethod = default, string? request = default, string? resource = default, string? authorizationDetails = default, string? prompt = default, string? loginHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default);
         /// <summary>
         /// Dynamic client registration (RFC 7591 / OIDC DCR)
         /// </summary>
@@ -229,8 +313,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerClientRequest">RFC 7591 client metadata.</param>
         /// <returns>RegisterClientResponse</returns>
-        RegisterClientResponse RegisterClient(string orgId);
+        RegisterClientResponse RegisterClient(string orgId, RegisterClientRequest registerClientRequest);
 
         /// <summary>
         /// Dynamic client registration (RFC 7591 / OIDC DCR)
@@ -240,8 +325,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerClientRequest">RFC 7591 client metadata.</param>
         /// <returns>ApiResponse of RegisterClientResponse</returns>
-        ApiResponse<RegisterClientResponse> RegisterClientWithHttpInfo(string orgId);
+        ApiResponse<RegisterClientResponse> RegisterClientWithHttpInfo(string orgId, RegisterClientRequest registerClientRequest);
         /// <summary>
         /// Request a sign-in link by email
         /// </summary>
@@ -273,8 +359,14 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>Object</returns>
-        Object Revoke(string orgId);
+        Object Revoke(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default);
 
         /// <summary>
         /// Token revocation (RFC 7009)
@@ -284,8 +376,14 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        ApiResponse<Object> RevokeWithHttpInfo(string orgId);
+        ApiResponse<Object> RevokeWithHttpInfo(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default);
         /// <summary>
         /// Social / enterprise identity-provider callback
         /// </summary>
@@ -405,8 +503,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="submitLoginJsonRequest"></param>
         /// <returns>SubmitLoginJsonResponse</returns>
-        SubmitLoginJsonResponse SubmitLoginJson(string orgId);
+        SubmitLoginJsonResponse SubmitLoginJson(string orgId, SubmitLoginJsonRequest submitLoginJsonRequest);
 
         /// <summary>
         /// Programmatic (JSON) login for the authorization flow
@@ -416,8 +515,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="submitLoginJsonRequest"></param>
         /// <returns>ApiResponse of SubmitLoginJsonResponse</returns>
-        ApiResponse<SubmitLoginJsonResponse> SubmitLoginJsonWithHttpInfo(string orgId);
+        ApiResponse<SubmitLoginJsonResponse> SubmitLoginJsonWithHttpInfo(string orgId, SubmitLoginJsonRequest submitLoginJsonRequest);
         /// <summary>
         /// Submit organization selection
         /// </summary>
@@ -447,8 +547,27 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="grantType"></param>
+        /// <param name="code"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="codeVerifier"> (optional)</param>
+        /// <param name="refreshToken"> (optional)</param>
+        /// <param name="deviceCode"> (optional)</param>
+        /// <param name="authReqId">CIBA (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="subjectToken">Token exchange (RFC 8693) (optional)</param>
+        /// <param name="subjectTokenType"> (optional)</param>
+        /// <param name="actorToken"> (optional)</param>
+        /// <param name="actorTokenType"> (optional)</param>
+        /// <param name="requestedTokenType"> (optional)</param>
+        /// <param name="assertion">JWT bearer / ID-JAG grant (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>TokenResponse</returns>
-        TokenResponse Token(string orgId);
+        TokenResponse Token(string orgId, string grantType, string? code = default, string? redirectUri = default, string? codeVerifier = default, string? refreshToken = default, string? deviceCode = default, string? authReqId = default, string? scope = default, string? resource = default, string? subjectToken = default, string? subjectTokenType = default, string? actorToken = default, string? actorTokenType = default, string? requestedTokenType = default, string? assertion = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default);
 
         /// <summary>
         /// OAuth 2.1 token endpoint
@@ -458,8 +577,27 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="grantType"></param>
+        /// <param name="code"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="codeVerifier"> (optional)</param>
+        /// <param name="refreshToken"> (optional)</param>
+        /// <param name="deviceCode"> (optional)</param>
+        /// <param name="authReqId">CIBA (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="subjectToken">Token exchange (RFC 8693) (optional)</param>
+        /// <param name="subjectTokenType"> (optional)</param>
+        /// <param name="actorToken"> (optional)</param>
+        /// <param name="actorTokenType"> (optional)</param>
+        /// <param name="requestedTokenType"> (optional)</param>
+        /// <param name="assertion">JWT bearer / ID-JAG grant (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>ApiResponse of TokenResponse</returns>
-        ApiResponse<TokenResponse> TokenWithHttpInfo(string orgId);
+        ApiResponse<TokenResponse> TokenWithHttpInfo(string orgId, string grantType, string? code = default, string? redirectUri = default, string? codeVerifier = default, string? refreshToken = default, string? deviceCode = default, string? authReqId = default, string? scope = default, string? resource = default, string? subjectToken = default, string? subjectTokenType = default, string? actorToken = default, string? actorTokenType = default, string? requestedTokenType = default, string? assertion = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default);
         #endregion Synchronous Operations
     }
 
@@ -500,9 +638,22 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scope"></param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="loginHintToken"> (optional)</param>
+        /// <param name="idTokenHint"> (optional)</param>
+        /// <param name="bindingMessage"> (optional)</param>
+        /// <param name="acrValues"> (optional)</param>
+        /// <param name="requestedExpiry"> (optional)</param>
+        /// <param name="clientNotificationToken"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of BackchannelAuthorizeResponse</returns>
-        System.Threading.Tasks.Task<BackchannelAuthorizeResponse> BackchannelAuthorizeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<BackchannelAuthorizeResponse> BackchannelAuthorizeAsync(string orgId, string scope, string? loginHint = default, string? loginHintToken = default, string? idTokenHint = default, string? bindingMessage = default, string? acrValues = default, int? requestedExpiry = default, string? clientNotificationToken = default, string? authorizationDetails = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// CIBA backchannel authentication request
@@ -512,9 +663,22 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scope"></param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="loginHintToken"> (optional)</param>
+        /// <param name="idTokenHint"> (optional)</param>
+        /// <param name="bindingMessage"> (optional)</param>
+        /// <param name="acrValues"> (optional)</param>
+        /// <param name="requestedExpiry"> (optional)</param>
+        /// <param name="clientNotificationToken"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (BackchannelAuthorizeResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<BackchannelAuthorizeResponse>> BackchannelAuthorizeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<BackchannelAuthorizeResponse>> BackchannelAuthorizeWithHttpInfoAsync(string orgId, string scope, string? loginHint = default, string? loginHintToken = default, string? idTokenHint = default, string? bindingMessage = default, string? acrValues = default, int? requestedExpiry = default, string? clientNotificationToken = default, string? authorizationDetails = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Sign-in methods for an email-first form
         /// </summary>
@@ -548,9 +712,16 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
+        /// <param name="scope">Space-separated scopes. (optional)</param>
+        /// <param name="resource">RFC 8707 resource indicator. (optional)</param>
+        /// <param name="authorizationDetails">RFC 9396, a JSON array as text. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of DeviceAuthorizationResponse</returns>
-        System.Threading.Tasks.Task<DeviceAuthorizationResponse> DeviceAuthorizationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<DeviceAuthorizationResponse> DeviceAuthorizationAsync(string orgId, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, string? scope = default, string? resource = default, string? authorizationDetails = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Device authorization request (RFC 8628)
@@ -560,9 +731,16 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
+        /// <param name="scope">Space-separated scopes. (optional)</param>
+        /// <param name="resource">RFC 8707 resource indicator. (optional)</param>
+        /// <param name="authorizationDetails">RFC 9396, a JSON array as text. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (DeviceAuthorizationResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<DeviceAuthorizationResponse>> DeviceAuthorizationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<DeviceAuthorizationResponse>> DeviceAuthorizationWithHttpInfoAsync(string orgId, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, string? scope = default, string? resource = default, string? authorizationDetails = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
         /// </summary>
@@ -642,9 +820,15 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of IntrospectResponse</returns>
-        System.Threading.Tasks.Task<IntrospectResponse> IntrospectAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<IntrospectResponse> IntrospectAsync(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Token introspection (RFC 7662)
@@ -654,9 +838,15 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (IntrospectResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<IntrospectResponse>> IntrospectWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<IntrospectResponse>> IntrospectWithHttpInfoAsync(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Pushed authorization request (RFC 9126)
         /// </summary>
@@ -665,9 +855,25 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="responseType"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="state"> (optional)</param>
+        /// <param name="nonce"> (optional)</param>
+        /// <param name="codeChallenge"> (optional)</param>
+        /// <param name="codeChallengeMethod"> (optional)</param>
+        /// <param name="request">A signed request object (JAR, RFC 9101). (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="prompt"> (optional)</param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ParResponse</returns>
-        System.Threading.Tasks.Task<ParResponse> ParAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ParResponse> ParAsync(string orgId, string? responseType = default, string? redirectUri = default, string? scope = default, string? state = default, string? nonce = default, string? codeChallenge = default, string? codeChallengeMethod = default, string? request = default, string? resource = default, string? authorizationDetails = default, string? prompt = default, string? loginHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Pushed authorization request (RFC 9126)
@@ -677,9 +883,25 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="responseType"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="state"> (optional)</param>
+        /// <param name="nonce"> (optional)</param>
+        /// <param name="codeChallenge"> (optional)</param>
+        /// <param name="codeChallengeMethod"> (optional)</param>
+        /// <param name="request">A signed request object (JAR, RFC 9101). (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="prompt"> (optional)</param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ParResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ParResponse>> ParWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<ParResponse>> ParWithHttpInfoAsync(string orgId, string? responseType = default, string? redirectUri = default, string? scope = default, string? state = default, string? nonce = default, string? codeChallenge = default, string? codeChallengeMethod = default, string? request = default, string? resource = default, string? authorizationDetails = default, string? prompt = default, string? loginHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Dynamic client registration (RFC 7591 / OIDC DCR)
         /// </summary>
@@ -688,9 +910,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerClientRequest">RFC 7591 client metadata.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of RegisterClientResponse</returns>
-        System.Threading.Tasks.Task<RegisterClientResponse> RegisterClientAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<RegisterClientResponse> RegisterClientAsync(string orgId, RegisterClientRequest registerClientRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Dynamic client registration (RFC 7591 / OIDC DCR)
@@ -700,9 +923,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerClientRequest">RFC 7591 client metadata.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (RegisterClientResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RegisterClientResponse>> RegisterClientWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<RegisterClientResponse>> RegisterClientWithHttpInfoAsync(string orgId, RegisterClientRequest registerClientRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Request a sign-in link by email
         /// </summary>
@@ -736,9 +960,15 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        System.Threading.Tasks.Task<Object> RevokeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<Object> RevokeAsync(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Token revocation (RFC 7009)
@@ -748,9 +978,15 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> RevokeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<Object>> RevokeWithHttpInfoAsync(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Social / enterprise identity-provider callback
         /// </summary>
@@ -880,9 +1116,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="submitLoginJsonRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SubmitLoginJsonResponse</returns>
-        System.Threading.Tasks.Task<SubmitLoginJsonResponse> SubmitLoginJsonAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<SubmitLoginJsonResponse> SubmitLoginJsonAsync(string orgId, SubmitLoginJsonRequest submitLoginJsonRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Programmatic (JSON) login for the authorization flow
@@ -892,9 +1129,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="submitLoginJsonRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SubmitLoginJsonResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<SubmitLoginJsonResponse>> SubmitLoginJsonWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<SubmitLoginJsonResponse>> SubmitLoginJsonWithHttpInfoAsync(string orgId, SubmitLoginJsonRequest submitLoginJsonRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Submit organization selection
         /// </summary>
@@ -926,9 +1164,28 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="grantType"></param>
+        /// <param name="code"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="codeVerifier"> (optional)</param>
+        /// <param name="refreshToken"> (optional)</param>
+        /// <param name="deviceCode"> (optional)</param>
+        /// <param name="authReqId">CIBA (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="subjectToken">Token exchange (RFC 8693) (optional)</param>
+        /// <param name="subjectTokenType"> (optional)</param>
+        /// <param name="actorToken"> (optional)</param>
+        /// <param name="actorTokenType"> (optional)</param>
+        /// <param name="requestedTokenType"> (optional)</param>
+        /// <param name="assertion">JWT bearer / ID-JAG grant (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of TokenResponse</returns>
-        System.Threading.Tasks.Task<TokenResponse> TokenAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<TokenResponse> TokenAsync(string orgId, string grantType, string? code = default, string? redirectUri = default, string? codeVerifier = default, string? refreshToken = default, string? deviceCode = default, string? authReqId = default, string? scope = default, string? resource = default, string? subjectToken = default, string? subjectTokenType = default, string? actorToken = default, string? actorTokenType = default, string? requestedTokenType = default, string? assertion = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// OAuth 2.1 token endpoint
@@ -938,9 +1195,28 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="grantType"></param>
+        /// <param name="code"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="codeVerifier"> (optional)</param>
+        /// <param name="refreshToken"> (optional)</param>
+        /// <param name="deviceCode"> (optional)</param>
+        /// <param name="authReqId">CIBA (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="subjectToken">Token exchange (RFC 8693) (optional)</param>
+        /// <param name="subjectTokenType"> (optional)</param>
+        /// <param name="actorToken"> (optional)</param>
+        /// <param name="actorTokenType"> (optional)</param>
+        /// <param name="requestedTokenType"> (optional)</param>
+        /// <param name="assertion">JWT bearer / ID-JAG grant (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (TokenResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<TokenResponse>> TokenWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<TokenResponse>> TokenWithHttpInfoAsync(string orgId, string grantType, string? code = default, string? redirectUri = default, string? codeVerifier = default, string? refreshToken = default, string? deviceCode = default, string? authReqId = default, string? scope = default, string? resource = default, string? subjectToken = default, string? subjectTokenType = default, string? actorToken = default, string? actorTokenType = default, string? requestedTokenType = default, string? assertion = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -1274,10 +1550,23 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scope"></param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="loginHintToken"> (optional)</param>
+        /// <param name="idTokenHint"> (optional)</param>
+        /// <param name="bindingMessage"> (optional)</param>
+        /// <param name="acrValues"> (optional)</param>
+        /// <param name="requestedExpiry"> (optional)</param>
+        /// <param name="clientNotificationToken"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>BackchannelAuthorizeResponse</returns>
-        public BackchannelAuthorizeResponse BackchannelAuthorize(string orgId)
+        public BackchannelAuthorizeResponse BackchannelAuthorize(string orgId, string scope, string? loginHint = default, string? loginHintToken = default, string? idTokenHint = default, string? bindingMessage = default, string? acrValues = default, int? requestedExpiry = default, string? clientNotificationToken = default, string? authorizationDetails = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<BackchannelAuthorizeResponse> localVarResponse = BackchannelAuthorizeWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<BackchannelAuthorizeResponse> localVarResponse = BackchannelAuthorizeWithHttpInfo(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion);
             return localVarResponse.Data;
         }
 
@@ -1286,16 +1575,34 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scope"></param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="loginHintToken"> (optional)</param>
+        /// <param name="idTokenHint"> (optional)</param>
+        /// <param name="bindingMessage"> (optional)</param>
+        /// <param name="acrValues"> (optional)</param>
+        /// <param name="requestedExpiry"> (optional)</param>
+        /// <param name="clientNotificationToken"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>ApiResponse of BackchannelAuthorizeResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<BackchannelAuthorizeResponse> BackchannelAuthorizeWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<BackchannelAuthorizeResponse> BackchannelAuthorizeWithHttpInfo(string orgId, string scope, string? loginHint = default, string? loginHintToken = default, string? idTokenHint = default, string? bindingMessage = default, string? acrValues = default, int? requestedExpiry = default, string? clientNotificationToken = default, string? authorizationDetails = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->BackchannelAuthorize");
 
+            // verify the required parameter 'scope' is set
+            if (scope == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'scope' when calling OAuthApi->BackchannelAuthorize");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -1310,6 +1617,55 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.FormParameters.Add("scope", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(scope)); // form parameter
+            if (loginHint != null)
+            {
+                localVarRequestOptions.FormParameters.Add("login_hint", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(loginHint)); // form parameter
+            }
+            if (loginHintToken != null)
+            {
+                localVarRequestOptions.FormParameters.Add("login_hint_token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(loginHintToken)); // form parameter
+            }
+            if (idTokenHint != null)
+            {
+                localVarRequestOptions.FormParameters.Add("id_token_hint", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(idTokenHint)); // form parameter
+            }
+            if (bindingMessage != null)
+            {
+                localVarRequestOptions.FormParameters.Add("binding_message", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(bindingMessage)); // form parameter
+            }
+            if (acrValues != null)
+            {
+                localVarRequestOptions.FormParameters.Add("acr_values", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(acrValues)); // form parameter
+            }
+            if (requestedExpiry != null)
+            {
+                localVarRequestOptions.FormParameters.Add("requested_expiry", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(requestedExpiry)); // form parameter
+            }
+            if (clientNotificationToken != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_notification_token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientNotificationToken)); // form parameter
+            }
+            if (authorizationDetails != null)
+            {
+                localVarRequestOptions.FormParameters.Add("authorization_details", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(authorizationDetails)); // form parameter
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // form parameter
+            }
+            if (clientSecret != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_secret", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientSecret)); // form parameter
+            }
+            if (clientAssertionType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertionType)); // form parameter
+            }
+            if (clientAssertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertion)); // form parameter
+            }
 
             // authentication (ClientAuth) required
             // http basic authentication required
@@ -1335,11 +1691,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scope"></param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="loginHintToken"> (optional)</param>
+        /// <param name="idTokenHint"> (optional)</param>
+        /// <param name="bindingMessage"> (optional)</param>
+        /// <param name="acrValues"> (optional)</param>
+        /// <param name="requestedExpiry"> (optional)</param>
+        /// <param name="clientNotificationToken"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of BackchannelAuthorizeResponse</returns>
-        public async System.Threading.Tasks.Task<BackchannelAuthorizeResponse> BackchannelAuthorizeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<BackchannelAuthorizeResponse> BackchannelAuthorizeAsync(string orgId, string scope, string? loginHint = default, string? loginHintToken = default, string? idTokenHint = default, string? bindingMessage = default, string? acrValues = default, int? requestedExpiry = default, string? clientNotificationToken = default, string? authorizationDetails = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<BackchannelAuthorizeResponse> localVarResponse = await BackchannelAuthorizeWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<BackchannelAuthorizeResponse> localVarResponse = await BackchannelAuthorizeWithHttpInfoAsync(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1348,18 +1717,36 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scope"></param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="loginHintToken"> (optional)</param>
+        /// <param name="idTokenHint"> (optional)</param>
+        /// <param name="bindingMessage"> (optional)</param>
+        /// <param name="acrValues"> (optional)</param>
+        /// <param name="requestedExpiry"> (optional)</param>
+        /// <param name="clientNotificationToken"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (BackchannelAuthorizeResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<BackchannelAuthorizeResponse>> BackchannelAuthorizeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<BackchannelAuthorizeResponse>> BackchannelAuthorizeWithHttpInfoAsync(string orgId, string scope, string? loginHint = default, string? loginHintToken = default, string? idTokenHint = default, string? bindingMessage = default, string? acrValues = default, int? requestedExpiry = default, string? clientNotificationToken = default, string? authorizationDetails = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->BackchannelAuthorize");
 
+            // verify the required parameter 'scope' is set
+            if (scope == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'scope' when calling OAuthApi->BackchannelAuthorize");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -1375,6 +1762,55 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.FormParameters.Add("scope", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(scope)); // form parameter
+            if (loginHint != null)
+            {
+                localVarRequestOptions.FormParameters.Add("login_hint", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(loginHint)); // form parameter
+            }
+            if (loginHintToken != null)
+            {
+                localVarRequestOptions.FormParameters.Add("login_hint_token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(loginHintToken)); // form parameter
+            }
+            if (idTokenHint != null)
+            {
+                localVarRequestOptions.FormParameters.Add("id_token_hint", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(idTokenHint)); // form parameter
+            }
+            if (bindingMessage != null)
+            {
+                localVarRequestOptions.FormParameters.Add("binding_message", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(bindingMessage)); // form parameter
+            }
+            if (acrValues != null)
+            {
+                localVarRequestOptions.FormParameters.Add("acr_values", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(acrValues)); // form parameter
+            }
+            if (requestedExpiry != null)
+            {
+                localVarRequestOptions.FormParameters.Add("requested_expiry", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(requestedExpiry)); // form parameter
+            }
+            if (clientNotificationToken != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_notification_token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientNotificationToken)); // form parameter
+            }
+            if (authorizationDetails != null)
+            {
+                localVarRequestOptions.FormParameters.Add("authorization_details", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(authorizationDetails)); // form parameter
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // form parameter
+            }
+            if (clientSecret != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_secret", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientSecret)); // form parameter
+            }
+            if (clientAssertionType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertionType)); // form parameter
+            }
+            if (clientAssertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertion)); // form parameter
+            }
 
             // authentication (ClientAuth) required
             // http basic authentication required
@@ -1532,10 +1968,17 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
+        /// <param name="scope">Space-separated scopes. (optional)</param>
+        /// <param name="resource">RFC 8707 resource indicator. (optional)</param>
+        /// <param name="authorizationDetails">RFC 9396, a JSON array as text. (optional)</param>
         /// <returns>DeviceAuthorizationResponse</returns>
-        public DeviceAuthorizationResponse DeviceAuthorization(string orgId)
+        public DeviceAuthorizationResponse DeviceAuthorization(string orgId, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, string? scope = default, string? resource = default, string? authorizationDetails = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<DeviceAuthorizationResponse> localVarResponse = DeviceAuthorizationWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<DeviceAuthorizationResponse> localVarResponse = DeviceAuthorizationWithHttpInfo(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, authorizationDetails);
             return localVarResponse.Data;
         }
 
@@ -1544,8 +1987,15 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
+        /// <param name="scope">Space-separated scopes. (optional)</param>
+        /// <param name="resource">RFC 8707 resource indicator. (optional)</param>
+        /// <param name="authorizationDetails">RFC 9396, a JSON array as text. (optional)</param>
         /// <returns>ApiResponse of DeviceAuthorizationResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<DeviceAuthorizationResponse> DeviceAuthorizationWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<DeviceAuthorizationResponse> DeviceAuthorizationWithHttpInfo(string orgId, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, string? scope = default, string? resource = default, string? authorizationDetails = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1554,6 +2004,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -1568,6 +2019,34 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (clientId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // form parameter
+            }
+            if (clientSecret != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_secret", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientSecret)); // form parameter
+            }
+            if (clientAssertionType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertionType)); // form parameter
+            }
+            if (clientAssertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertion)); // form parameter
+            }
+            if (scope != null)
+            {
+                localVarRequestOptions.FormParameters.Add("scope", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(scope)); // form parameter
+            }
+            if (resource != null)
+            {
+                localVarRequestOptions.FormParameters.Add("resource", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resource)); // form parameter
+            }
+            if (authorizationDetails != null)
+            {
+                localVarRequestOptions.FormParameters.Add("authorization_details", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(authorizationDetails)); // form parameter
+            }
 
             // authentication (ClientAuth) required
             // http basic authentication required
@@ -1593,11 +2072,18 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
+        /// <param name="scope">Space-separated scopes. (optional)</param>
+        /// <param name="resource">RFC 8707 resource indicator. (optional)</param>
+        /// <param name="authorizationDetails">RFC 9396, a JSON array as text. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of DeviceAuthorizationResponse</returns>
-        public async System.Threading.Tasks.Task<DeviceAuthorizationResponse> DeviceAuthorizationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<DeviceAuthorizationResponse> DeviceAuthorizationAsync(string orgId, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, string? scope = default, string? resource = default, string? authorizationDetails = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<DeviceAuthorizationResponse> localVarResponse = await DeviceAuthorizationWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<DeviceAuthorizationResponse> localVarResponse = await DeviceAuthorizationWithHttpInfoAsync(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, authorizationDetails, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1606,9 +2092,16 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
+        /// <param name="scope">Space-separated scopes. (optional)</param>
+        /// <param name="resource">RFC 8707 resource indicator. (optional)</param>
+        /// <param name="authorizationDetails">RFC 9396, a JSON array as text. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (DeviceAuthorizationResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<DeviceAuthorizationResponse>> DeviceAuthorizationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<DeviceAuthorizationResponse>> DeviceAuthorizationWithHttpInfoAsync(string orgId, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, string? scope = default, string? resource = default, string? authorizationDetails = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1618,6 +2111,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -1633,6 +2127,34 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (clientId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // form parameter
+            }
+            if (clientSecret != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_secret", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientSecret)); // form parameter
+            }
+            if (clientAssertionType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertionType)); // form parameter
+            }
+            if (clientAssertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertion)); // form parameter
+            }
+            if (scope != null)
+            {
+                localVarRequestOptions.FormParameters.Add("scope", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(scope)); // form parameter
+            }
+            if (resource != null)
+            {
+                localVarRequestOptions.FormParameters.Add("resource", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resource)); // form parameter
+            }
+            if (authorizationDetails != null)
+            {
+                localVarRequestOptions.FormParameters.Add("authorization_details", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(authorizationDetails)); // form parameter
+            }
 
             // authentication (ClientAuth) required
             // http basic authentication required
@@ -2040,10 +2562,16 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>IntrospectResponse</returns>
-        public IntrospectResponse Introspect(string orgId)
+        public IntrospectResponse Introspect(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<IntrospectResponse> localVarResponse = IntrospectWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<IntrospectResponse> localVarResponse = IntrospectWithHttpInfo(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
             return localVarResponse.Data;
         }
 
@@ -2052,16 +2580,27 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>ApiResponse of IntrospectResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<IntrospectResponse> IntrospectWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<IntrospectResponse> IntrospectWithHttpInfo(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->Introspect");
 
+            // verify the required parameter 'token' is set
+            if (token == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'token' when calling OAuthApi->Introspect");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -2076,6 +2615,27 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.FormParameters.Add("token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(token)); // form parameter
+            if (tokenTypeHint != null)
+            {
+                localVarRequestOptions.FormParameters.Add("token_type_hint", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(tokenTypeHint)); // form parameter
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // form parameter
+            }
+            if (clientSecret != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_secret", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientSecret)); // form parameter
+            }
+            if (clientAssertionType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertionType)); // form parameter
+            }
+            if (clientAssertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertion)); // form parameter
+            }
 
             // authentication (ClientAuth) required
             // http basic authentication required
@@ -2101,11 +2661,17 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of IntrospectResponse</returns>
-        public async System.Threading.Tasks.Task<IntrospectResponse> IntrospectAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<IntrospectResponse> IntrospectAsync(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<IntrospectResponse> localVarResponse = await IntrospectWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<IntrospectResponse> localVarResponse = await IntrospectWithHttpInfoAsync(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2114,18 +2680,29 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (IntrospectResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<IntrospectResponse>> IntrospectWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<IntrospectResponse>> IntrospectWithHttpInfoAsync(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->Introspect");
 
+            // verify the required parameter 'token' is set
+            if (token == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'token' when calling OAuthApi->Introspect");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -2141,6 +2718,27 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.FormParameters.Add("token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(token)); // form parameter
+            if (tokenTypeHint != null)
+            {
+                localVarRequestOptions.FormParameters.Add("token_type_hint", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(tokenTypeHint)); // form parameter
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // form parameter
+            }
+            if (clientSecret != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_secret", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientSecret)); // form parameter
+            }
+            if (clientAssertionType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertionType)); // form parameter
+            }
+            if (clientAssertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertion)); // form parameter
+            }
 
             // authentication (ClientAuth) required
             // http basic authentication required
@@ -2167,10 +2765,26 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="responseType"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="state"> (optional)</param>
+        /// <param name="nonce"> (optional)</param>
+        /// <param name="codeChallenge"> (optional)</param>
+        /// <param name="codeChallengeMethod"> (optional)</param>
+        /// <param name="request">A signed request object (JAR, RFC 9101). (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="prompt"> (optional)</param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>ParResponse</returns>
-        public ParResponse Par(string orgId)
+        public ParResponse Par(string orgId, string? responseType = default, string? redirectUri = default, string? scope = default, string? state = default, string? nonce = default, string? codeChallenge = default, string? codeChallengeMethod = default, string? request = default, string? resource = default, string? authorizationDetails = default, string? prompt = default, string? loginHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<ParResponse> localVarResponse = ParWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<ParResponse> localVarResponse = ParWithHttpInfo(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, authorizationDetails, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion);
             return localVarResponse.Data;
         }
 
@@ -2179,8 +2793,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="responseType"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="state"> (optional)</param>
+        /// <param name="nonce"> (optional)</param>
+        /// <param name="codeChallenge"> (optional)</param>
+        /// <param name="codeChallengeMethod"> (optional)</param>
+        /// <param name="request">A signed request object (JAR, RFC 9101). (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="prompt"> (optional)</param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>ApiResponse of ParResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<ParResponse> ParWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<ParResponse> ParWithHttpInfo(string orgId, string? responseType = default, string? redirectUri = default, string? scope = default, string? state = default, string? nonce = default, string? codeChallenge = default, string? codeChallengeMethod = default, string? request = default, string? resource = default, string? authorizationDetails = default, string? prompt = default, string? loginHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2189,6 +2819,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -2203,6 +2834,70 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (responseType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("response_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(responseType)); // form parameter
+            }
+            if (redirectUri != null)
+            {
+                localVarRequestOptions.FormParameters.Add("redirect_uri", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(redirectUri)); // form parameter
+            }
+            if (scope != null)
+            {
+                localVarRequestOptions.FormParameters.Add("scope", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(scope)); // form parameter
+            }
+            if (state != null)
+            {
+                localVarRequestOptions.FormParameters.Add("state", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(state)); // form parameter
+            }
+            if (nonce != null)
+            {
+                localVarRequestOptions.FormParameters.Add("nonce", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(nonce)); // form parameter
+            }
+            if (codeChallenge != null)
+            {
+                localVarRequestOptions.FormParameters.Add("code_challenge", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(codeChallenge)); // form parameter
+            }
+            if (codeChallengeMethod != null)
+            {
+                localVarRequestOptions.FormParameters.Add("code_challenge_method", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(codeChallengeMethod)); // form parameter
+            }
+            if (request != null)
+            {
+                localVarRequestOptions.FormParameters.Add("request", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(request)); // form parameter
+            }
+            if (resource != null)
+            {
+                localVarRequestOptions.FormParameters.Add("resource", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resource)); // form parameter
+            }
+            if (authorizationDetails != null)
+            {
+                localVarRequestOptions.FormParameters.Add("authorization_details", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(authorizationDetails)); // form parameter
+            }
+            if (prompt != null)
+            {
+                localVarRequestOptions.FormParameters.Add("prompt", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(prompt)); // form parameter
+            }
+            if (loginHint != null)
+            {
+                localVarRequestOptions.FormParameters.Add("login_hint", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(loginHint)); // form parameter
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // form parameter
+            }
+            if (clientSecret != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_secret", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientSecret)); // form parameter
+            }
+            if (clientAssertionType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertionType)); // form parameter
+            }
+            if (clientAssertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertion)); // form parameter
+            }
 
             // authentication (ClientAuth) required
             // http basic authentication required
@@ -2228,11 +2923,27 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="responseType"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="state"> (optional)</param>
+        /// <param name="nonce"> (optional)</param>
+        /// <param name="codeChallenge"> (optional)</param>
+        /// <param name="codeChallengeMethod"> (optional)</param>
+        /// <param name="request">A signed request object (JAR, RFC 9101). (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="prompt"> (optional)</param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ParResponse</returns>
-        public async System.Threading.Tasks.Task<ParResponse> ParAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<ParResponse> ParAsync(string orgId, string? responseType = default, string? redirectUri = default, string? scope = default, string? state = default, string? nonce = default, string? codeChallenge = default, string? codeChallengeMethod = default, string? request = default, string? resource = default, string? authorizationDetails = default, string? prompt = default, string? loginHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<ParResponse> localVarResponse = await ParWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<ParResponse> localVarResponse = await ParWithHttpInfoAsync(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, authorizationDetails, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2241,9 +2952,25 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="responseType"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="state"> (optional)</param>
+        /// <param name="nonce"> (optional)</param>
+        /// <param name="codeChallenge"> (optional)</param>
+        /// <param name="codeChallengeMethod"> (optional)</param>
+        /// <param name="request">A signed request object (JAR, RFC 9101). (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="authorizationDetails"> (optional)</param>
+        /// <param name="prompt"> (optional)</param>
+        /// <param name="loginHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ParResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<ParResponse>> ParWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<ParResponse>> ParWithHttpInfoAsync(string orgId, string? responseType = default, string? redirectUri = default, string? scope = default, string? state = default, string? nonce = default, string? codeChallenge = default, string? codeChallengeMethod = default, string? request = default, string? resource = default, string? authorizationDetails = default, string? prompt = default, string? loginHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2253,6 +2980,7 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -2268,6 +2996,70 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            if (responseType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("response_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(responseType)); // form parameter
+            }
+            if (redirectUri != null)
+            {
+                localVarRequestOptions.FormParameters.Add("redirect_uri", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(redirectUri)); // form parameter
+            }
+            if (scope != null)
+            {
+                localVarRequestOptions.FormParameters.Add("scope", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(scope)); // form parameter
+            }
+            if (state != null)
+            {
+                localVarRequestOptions.FormParameters.Add("state", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(state)); // form parameter
+            }
+            if (nonce != null)
+            {
+                localVarRequestOptions.FormParameters.Add("nonce", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(nonce)); // form parameter
+            }
+            if (codeChallenge != null)
+            {
+                localVarRequestOptions.FormParameters.Add("code_challenge", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(codeChallenge)); // form parameter
+            }
+            if (codeChallengeMethod != null)
+            {
+                localVarRequestOptions.FormParameters.Add("code_challenge_method", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(codeChallengeMethod)); // form parameter
+            }
+            if (request != null)
+            {
+                localVarRequestOptions.FormParameters.Add("request", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(request)); // form parameter
+            }
+            if (resource != null)
+            {
+                localVarRequestOptions.FormParameters.Add("resource", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resource)); // form parameter
+            }
+            if (authorizationDetails != null)
+            {
+                localVarRequestOptions.FormParameters.Add("authorization_details", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(authorizationDetails)); // form parameter
+            }
+            if (prompt != null)
+            {
+                localVarRequestOptions.FormParameters.Add("prompt", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(prompt)); // form parameter
+            }
+            if (loginHint != null)
+            {
+                localVarRequestOptions.FormParameters.Add("login_hint", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(loginHint)); // form parameter
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // form parameter
+            }
+            if (clientSecret != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_secret", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientSecret)); // form parameter
+            }
+            if (clientAssertionType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertionType)); // form parameter
+            }
+            if (clientAssertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertion)); // form parameter
+            }
 
             // authentication (ClientAuth) required
             // http basic authentication required
@@ -2294,10 +3086,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerClientRequest">RFC 7591 client metadata.</param>
         /// <returns>RegisterClientResponse</returns>
-        public RegisterClientResponse RegisterClient(string orgId)
+        public RegisterClientResponse RegisterClient(string orgId, RegisterClientRequest registerClientRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<RegisterClientResponse> localVarResponse = RegisterClientWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<RegisterClientResponse> localVarResponse = RegisterClientWithHttpInfo(orgId, registerClientRequest);
             return localVarResponse.Data;
         }
 
@@ -2306,16 +3099,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerClientRequest">RFC 7591 client metadata.</param>
         /// <returns>ApiResponse of RegisterClientResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<RegisterClientResponse> RegisterClientWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<RegisterClientResponse> RegisterClientWithHttpInfo(string orgId, RegisterClientRequest registerClientRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->RegisterClient");
 
+            // verify the required parameter 'registerClientRequest' is set
+            if (registerClientRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'registerClientRequest' when calling OAuthApi->RegisterClient");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2330,6 +3129,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = registerClientRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2360,11 +3160,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerClientRequest">RFC 7591 client metadata.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of RegisterClientResponse</returns>
-        public async System.Threading.Tasks.Task<RegisterClientResponse> RegisterClientAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<RegisterClientResponse> RegisterClientAsync(string orgId, RegisterClientRequest registerClientRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<RegisterClientResponse> localVarResponse = await RegisterClientWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<RegisterClientResponse> localVarResponse = await RegisterClientWithHttpInfoAsync(orgId, registerClientRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2373,18 +3174,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="registerClientRequest">RFC 7591 client metadata.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (RegisterClientResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<RegisterClientResponse>> RegisterClientWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<RegisterClientResponse>> RegisterClientWithHttpInfoAsync(string orgId, RegisterClientRequest registerClientRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->RegisterClient");
 
+            // verify the required parameter 'registerClientRequest' is set
+            if (registerClientRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'registerClientRequest' when calling OAuthApi->RegisterClient");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -2400,6 +3207,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = registerClientRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -2562,10 +3370,16 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>Object</returns>
-        public Object Revoke(string orgId)
+        public Object Revoke(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<Object> localVarResponse = RevokeWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<Object> localVarResponse = RevokeWithHttpInfo(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
             return localVarResponse.Data;
         }
 
@@ -2574,16 +3388,27 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> RevokeWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<Object> RevokeWithHttpInfo(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->Revoke");
 
+            // verify the required parameter 'token' is set
+            if (token == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'token' when calling OAuthApi->Revoke");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -2598,6 +3423,27 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.FormParameters.Add("token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(token)); // form parameter
+            if (tokenTypeHint != null)
+            {
+                localVarRequestOptions.FormParameters.Add("token_type_hint", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(tokenTypeHint)); // form parameter
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // form parameter
+            }
+            if (clientSecret != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_secret", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientSecret)); // form parameter
+            }
+            if (clientAssertionType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertionType)); // form parameter
+            }
+            if (clientAssertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertion)); // form parameter
+            }
 
             // authentication (ClientAuth) required
             // http basic authentication required
@@ -2623,11 +3469,17 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        public async System.Threading.Tasks.Task<Object> RevokeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<Object> RevokeAsync(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<Object> localVarResponse = await RevokeWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<Object> localVarResponse = await RevokeWithHttpInfoAsync(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -2636,18 +3488,29 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="token"></param>
+        /// <param name="tokenTypeHint"> (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> RevokeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> RevokeWithHttpInfoAsync(string orgId, string token, string? tokenTypeHint = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->Revoke");
 
+            // verify the required parameter 'token' is set
+            if (token == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'token' when calling OAuthApi->Revoke");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -2663,6 +3526,27 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.FormParameters.Add("token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(token)); // form parameter
+            if (tokenTypeHint != null)
+            {
+                localVarRequestOptions.FormParameters.Add("token_type_hint", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(tokenTypeHint)); // form parameter
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // form parameter
+            }
+            if (clientSecret != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_secret", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientSecret)); // form parameter
+            }
+            if (clientAssertionType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertionType)); // form parameter
+            }
+            if (clientAssertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertion)); // form parameter
+            }
 
             // authentication (ClientAuth) required
             // http basic authentication required
@@ -3294,10 +4178,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="submitLoginJsonRequest"></param>
         /// <returns>SubmitLoginJsonResponse</returns>
-        public SubmitLoginJsonResponse SubmitLoginJson(string orgId)
+        public SubmitLoginJsonResponse SubmitLoginJson(string orgId, SubmitLoginJsonRequest submitLoginJsonRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<SubmitLoginJsonResponse> localVarResponse = SubmitLoginJsonWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<SubmitLoginJsonResponse> localVarResponse = SubmitLoginJsonWithHttpInfo(orgId, submitLoginJsonRequest);
             return localVarResponse.Data;
         }
 
@@ -3306,16 +4191,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="submitLoginJsonRequest"></param>
         /// <returns>ApiResponse of SubmitLoginJsonResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<SubmitLoginJsonResponse> SubmitLoginJsonWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<SubmitLoginJsonResponse> SubmitLoginJsonWithHttpInfo(string orgId, SubmitLoginJsonRequest submitLoginJsonRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->SubmitLoginJson");
 
+            // verify the required parameter 'submitLoginJsonRequest' is set
+            if (submitLoginJsonRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'submitLoginJsonRequest' when calling OAuthApi->SubmitLoginJson");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3330,6 +4221,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = submitLoginJsonRequest;
 
 
             // make the HTTP request
@@ -3349,11 +4241,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="submitLoginJsonRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SubmitLoginJsonResponse</returns>
-        public async System.Threading.Tasks.Task<SubmitLoginJsonResponse> SubmitLoginJsonAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<SubmitLoginJsonResponse> SubmitLoginJsonAsync(string orgId, SubmitLoginJsonRequest submitLoginJsonRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<SubmitLoginJsonResponse> localVarResponse = await SubmitLoginJsonWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<SubmitLoginJsonResponse> localVarResponse = await SubmitLoginJsonWithHttpInfoAsync(orgId, submitLoginJsonRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -3362,18 +4255,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="submitLoginJsonRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SubmitLoginJsonResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SubmitLoginJsonResponse>> SubmitLoginJsonWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SubmitLoginJsonResponse>> SubmitLoginJsonWithHttpInfoAsync(string orgId, SubmitLoginJsonRequest submitLoginJsonRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->SubmitLoginJson");
 
+            // verify the required parameter 'submitLoginJsonRequest' is set
+            if (submitLoginJsonRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'submitLoginJsonRequest' when calling OAuthApi->SubmitLoginJson");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3389,6 +4288,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = submitLoginJsonRequest;
 
 
             // make the HTTP request
@@ -3524,10 +4424,29 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="grantType"></param>
+        /// <param name="code"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="codeVerifier"> (optional)</param>
+        /// <param name="refreshToken"> (optional)</param>
+        /// <param name="deviceCode"> (optional)</param>
+        /// <param name="authReqId">CIBA (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="subjectToken">Token exchange (RFC 8693) (optional)</param>
+        /// <param name="subjectTokenType"> (optional)</param>
+        /// <param name="actorToken"> (optional)</param>
+        /// <param name="actorTokenType"> (optional)</param>
+        /// <param name="requestedTokenType"> (optional)</param>
+        /// <param name="assertion">JWT bearer / ID-JAG grant (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>TokenResponse</returns>
-        public TokenResponse Token(string orgId)
+        public TokenResponse Token(string orgId, string grantType, string? code = default, string? redirectUri = default, string? codeVerifier = default, string? refreshToken = default, string? deviceCode = default, string? authReqId = default, string? scope = default, string? resource = default, string? subjectToken = default, string? subjectTokenType = default, string? actorToken = default, string? actorTokenType = default, string? requestedTokenType = default, string? assertion = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<TokenResponse> localVarResponse = TokenWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<TokenResponse> localVarResponse = TokenWithHttpInfo(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion);
             return localVarResponse.Data;
         }
 
@@ -3536,16 +4455,40 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="grantType"></param>
+        /// <param name="code"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="codeVerifier"> (optional)</param>
+        /// <param name="refreshToken"> (optional)</param>
+        /// <param name="deviceCode"> (optional)</param>
+        /// <param name="authReqId">CIBA (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="subjectToken">Token exchange (RFC 8693) (optional)</param>
+        /// <param name="subjectTokenType"> (optional)</param>
+        /// <param name="actorToken"> (optional)</param>
+        /// <param name="actorTokenType"> (optional)</param>
+        /// <param name="requestedTokenType"> (optional)</param>
+        /// <param name="assertion">JWT bearer / ID-JAG grant (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <returns>ApiResponse of TokenResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<TokenResponse> TokenWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<TokenResponse> TokenWithHttpInfo(string orgId, string grantType, string? code = default, string? redirectUri = default, string? codeVerifier = default, string? refreshToken = default, string? deviceCode = default, string? authReqId = default, string? scope = default, string? resource = default, string? subjectToken = default, string? subjectTokenType = default, string? actorToken = default, string? actorTokenType = default, string? requestedTokenType = default, string? assertion = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->Token");
 
+            // verify the required parameter 'grantType' is set
+            if (grantType == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'grantType' when calling OAuthApi->Token");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -3560,6 +4503,79 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.FormParameters.Add("grant_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(grantType)); // form parameter
+            if (code != null)
+            {
+                localVarRequestOptions.FormParameters.Add("code", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(code)); // form parameter
+            }
+            if (redirectUri != null)
+            {
+                localVarRequestOptions.FormParameters.Add("redirect_uri", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(redirectUri)); // form parameter
+            }
+            if (codeVerifier != null)
+            {
+                localVarRequestOptions.FormParameters.Add("code_verifier", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(codeVerifier)); // form parameter
+            }
+            if (refreshToken != null)
+            {
+                localVarRequestOptions.FormParameters.Add("refresh_token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(refreshToken)); // form parameter
+            }
+            if (deviceCode != null)
+            {
+                localVarRequestOptions.FormParameters.Add("device_code", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(deviceCode)); // form parameter
+            }
+            if (authReqId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("auth_req_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(authReqId)); // form parameter
+            }
+            if (scope != null)
+            {
+                localVarRequestOptions.FormParameters.Add("scope", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(scope)); // form parameter
+            }
+            if (resource != null)
+            {
+                localVarRequestOptions.FormParameters.Add("resource", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resource)); // form parameter
+            }
+            if (subjectToken != null)
+            {
+                localVarRequestOptions.FormParameters.Add("subject_token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(subjectToken)); // form parameter
+            }
+            if (subjectTokenType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("subject_token_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(subjectTokenType)); // form parameter
+            }
+            if (actorToken != null)
+            {
+                localVarRequestOptions.FormParameters.Add("actor_token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(actorToken)); // form parameter
+            }
+            if (actorTokenType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("actor_token_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(actorTokenType)); // form parameter
+            }
+            if (requestedTokenType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("requested_token_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(requestedTokenType)); // form parameter
+            }
+            if (assertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(assertion)); // form parameter
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // form parameter
+            }
+            if (clientSecret != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_secret", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientSecret)); // form parameter
+            }
+            if (clientAssertionType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertionType)); // form parameter
+            }
+            if (clientAssertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertion)); // form parameter
+            }
 
             // authentication (ClientAuth) required
             // http basic authentication required
@@ -3585,11 +4601,30 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="grantType"></param>
+        /// <param name="code"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="codeVerifier"> (optional)</param>
+        /// <param name="refreshToken"> (optional)</param>
+        /// <param name="deviceCode"> (optional)</param>
+        /// <param name="authReqId">CIBA (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="subjectToken">Token exchange (RFC 8693) (optional)</param>
+        /// <param name="subjectTokenType"> (optional)</param>
+        /// <param name="actorToken"> (optional)</param>
+        /// <param name="actorTokenType"> (optional)</param>
+        /// <param name="requestedTokenType"> (optional)</param>
+        /// <param name="assertion">JWT bearer / ID-JAG grant (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of TokenResponse</returns>
-        public async System.Threading.Tasks.Task<TokenResponse> TokenAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<TokenResponse> TokenAsync(string orgId, string grantType, string? code = default, string? redirectUri = default, string? codeVerifier = default, string? refreshToken = default, string? deviceCode = default, string? authReqId = default, string? scope = default, string? resource = default, string? subjectToken = default, string? subjectTokenType = default, string? actorToken = default, string? actorTokenType = default, string? requestedTokenType = default, string? assertion = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<TokenResponse> localVarResponse = await TokenWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<TokenResponse> localVarResponse = await TokenWithHttpInfoAsync(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -3598,18 +4633,42 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="grantType"></param>
+        /// <param name="code"> (optional)</param>
+        /// <param name="redirectUri"> (optional)</param>
+        /// <param name="codeVerifier"> (optional)</param>
+        /// <param name="refreshToken"> (optional)</param>
+        /// <param name="deviceCode"> (optional)</param>
+        /// <param name="authReqId">CIBA (optional)</param>
+        /// <param name="scope"> (optional)</param>
+        /// <param name="resource"> (optional)</param>
+        /// <param name="subjectToken">Token exchange (RFC 8693) (optional)</param>
+        /// <param name="subjectTokenType"> (optional)</param>
+        /// <param name="actorToken"> (optional)</param>
+        /// <param name="actorTokenType"> (optional)</param>
+        /// <param name="requestedTokenType"> (optional)</param>
+        /// <param name="assertion">JWT bearer / ID-JAG grant (optional)</param>
+        /// <param name="clientId">Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)</param>
+        /// <param name="clientSecret">client_secret_post (optional)</param>
+        /// <param name="clientAssertionType"> (optional)</param>
+        /// <param name="clientAssertion">private_key_jwt (RFC 7523) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (TokenResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<TokenResponse>> TokenWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<TokenResponse>> TokenWithHttpInfoAsync(string orgId, string grantType, string? code = default, string? redirectUri = default, string? codeVerifier = default, string? refreshToken = default, string? deviceCode = default, string? authReqId = default, string? scope = default, string? resource = default, string? subjectToken = default, string? subjectTokenType = default, string? actorToken = default, string? actorTokenType = default, string? requestedTokenType = default, string? assertion = default, string? clientId = default, string? clientSecret = default, string? clientAssertionType = default, string? clientAssertion = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling OAuthApi->Token");
 
+            // verify the required parameter 'grantType' is set
+            if (grantType == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'grantType' when calling OAuthApi->Token");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -3625,6 +4684,79 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.FormParameters.Add("grant_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(grantType)); // form parameter
+            if (code != null)
+            {
+                localVarRequestOptions.FormParameters.Add("code", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(code)); // form parameter
+            }
+            if (redirectUri != null)
+            {
+                localVarRequestOptions.FormParameters.Add("redirect_uri", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(redirectUri)); // form parameter
+            }
+            if (codeVerifier != null)
+            {
+                localVarRequestOptions.FormParameters.Add("code_verifier", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(codeVerifier)); // form parameter
+            }
+            if (refreshToken != null)
+            {
+                localVarRequestOptions.FormParameters.Add("refresh_token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(refreshToken)); // form parameter
+            }
+            if (deviceCode != null)
+            {
+                localVarRequestOptions.FormParameters.Add("device_code", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(deviceCode)); // form parameter
+            }
+            if (authReqId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("auth_req_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(authReqId)); // form parameter
+            }
+            if (scope != null)
+            {
+                localVarRequestOptions.FormParameters.Add("scope", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(scope)); // form parameter
+            }
+            if (resource != null)
+            {
+                localVarRequestOptions.FormParameters.Add("resource", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resource)); // form parameter
+            }
+            if (subjectToken != null)
+            {
+                localVarRequestOptions.FormParameters.Add("subject_token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(subjectToken)); // form parameter
+            }
+            if (subjectTokenType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("subject_token_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(subjectTokenType)); // form parameter
+            }
+            if (actorToken != null)
+            {
+                localVarRequestOptions.FormParameters.Add("actor_token", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(actorToken)); // form parameter
+            }
+            if (actorTokenType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("actor_token_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(actorTokenType)); // form parameter
+            }
+            if (requestedTokenType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("requested_token_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(requestedTokenType)); // form parameter
+            }
+            if (assertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(assertion)); // form parameter
+            }
+            if (clientId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_id", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientId)); // form parameter
+            }
+            if (clientSecret != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_secret", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientSecret)); // form parameter
+            }
+            if (clientAssertionType != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion_type", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertionType)); // form parameter
+            }
+            if (clientAssertion != null)
+            {
+                localVarRequestOptions.FormParameters.Add("client_assertion", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(clientAssertion)); // form parameter
+            }
 
             // authentication (ClientAuth) required
             // http basic authentication required

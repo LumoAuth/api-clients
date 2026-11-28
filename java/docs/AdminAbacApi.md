@@ -21,7 +21,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="abacAttributesCreate"></a>
 # **abacAttributesCreate**
-> AbacAttributesCreateResponse abacAttributesCreate(orgId)
+> AbacAttributesCreateResponse abacAttributesCreate(orgId, abacAttributesCreateRequest)
 
 Create an attribute definition
 
@@ -52,8 +52,9 @@ public class Example {
 
     AdminAbacApi apiInstance = new AdminAbacApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AbacAttributesCreateRequest abacAttributesCreateRequest = new AbacAttributesCreateRequest(); // AbacAttributesCreateRequest | 
     try {
-      AbacAttributesCreateResponse result = apiInstance.abacAttributesCreate(orgId);
+      AbacAttributesCreateResponse result = apiInstance.abacAttributesCreate(orgId, abacAttributesCreateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#abacAttributesCreate");
@@ -71,6 +72,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **abacAttributesCreateRequest** | [**AbacAttributesCreateRequest**](AbacAttributesCreateRequest.md)|  | |
 
 ### Return type
 
@@ -82,7 +84,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -314,7 +316,7 @@ public class Example {
 
 <a id="abacPoliciesCreate"></a>
 # **abacPoliciesCreate**
-> AbacPoliciesCreateResponse abacPoliciesCreate(orgId)
+> AbacPoliciesCreateResponse abacPoliciesCreate(orgId, abacPoliciesCreateRequest)
 
 Create an ABAC policy
 
@@ -345,8 +347,9 @@ public class Example {
 
     AdminAbacApi apiInstance = new AdminAbacApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AbacPoliciesCreateRequest abacPoliciesCreateRequest = new AbacPoliciesCreateRequest(); // AbacPoliciesCreateRequest | 
     try {
-      AbacPoliciesCreateResponse result = apiInstance.abacPoliciesCreate(orgId);
+      AbacPoliciesCreateResponse result = apiInstance.abacPoliciesCreate(orgId, abacPoliciesCreateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#abacPoliciesCreate");
@@ -364,6 +367,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **abacPoliciesCreateRequest** | [**AbacPoliciesCreateRequest**](AbacPoliciesCreateRequest.md)|  | |
 
 ### Return type
 
@@ -375,7 +379,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -684,7 +688,7 @@ public class Example {
 
 <a id="patchAbacAttributesUpdate"></a>
 # **patchAbacAttributesUpdate**
-> PutAbacAttributesUpdateResponse patchAbacAttributesUpdate(orgId, id)
+> PutAbacAttributesUpdateResponse patchAbacAttributesUpdate(orgId, id, putAbacAttributesUpdateRequest)
 
 Partially update an attribute definition
 
@@ -716,8 +720,9 @@ public class Example {
     AdminAbacApi apiInstance = new AdminAbacApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
+    PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest = new PutAbacAttributesUpdateRequest(); // PutAbacAttributesUpdateRequest | 
     try {
-      PutAbacAttributesUpdateResponse result = apiInstance.patchAbacAttributesUpdate(orgId, id);
+      PutAbacAttributesUpdateResponse result = apiInstance.patchAbacAttributesUpdate(orgId, id, putAbacAttributesUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#patchAbacAttributesUpdate");
@@ -736,6 +741,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **id** | **String**|  | |
+| **putAbacAttributesUpdateRequest** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -747,7 +753,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -759,7 +765,7 @@ public class Example {
 
 <a id="patchAbacPoliciesUpdate"></a>
 # **patchAbacPoliciesUpdate**
-> PutAbacPoliciesUpdateResponse patchAbacPoliciesUpdate(orgId, id)
+> PutAbacPoliciesUpdateResponse patchAbacPoliciesUpdate(orgId, id, putAbacPoliciesUpdateRequest)
 
 Partially update an ABAC policy
 
@@ -791,8 +797,9 @@ public class Example {
     AdminAbacApi apiInstance = new AdminAbacApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
+    PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest = new PutAbacPoliciesUpdateRequest(); // PutAbacPoliciesUpdateRequest | 
     try {
-      PutAbacPoliciesUpdateResponse result = apiInstance.patchAbacPoliciesUpdate(orgId, id);
+      PutAbacPoliciesUpdateResponse result = apiInstance.patchAbacPoliciesUpdate(orgId, id, putAbacPoliciesUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#patchAbacPoliciesUpdate");
@@ -811,6 +818,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **id** | **String**|  | |
+| **putAbacPoliciesUpdateRequest** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -822,7 +830,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -835,7 +843,7 @@ public class Example {
 
 <a id="putAbacAttributesUpdate"></a>
 # **putAbacAttributesUpdate**
-> PutAbacAttributesUpdateResponse putAbacAttributesUpdate(orgId, id)
+> PutAbacAttributesUpdateResponse putAbacAttributesUpdate(orgId, id, putAbacAttributesUpdateRequest)
 
 Update an attribute definition
 
@@ -867,8 +875,9 @@ public class Example {
     AdminAbacApi apiInstance = new AdminAbacApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
+    PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest = new PutAbacAttributesUpdateRequest(); // PutAbacAttributesUpdateRequest | 
     try {
-      PutAbacAttributesUpdateResponse result = apiInstance.putAbacAttributesUpdate(orgId, id);
+      PutAbacAttributesUpdateResponse result = apiInstance.putAbacAttributesUpdate(orgId, id, putAbacAttributesUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#putAbacAttributesUpdate");
@@ -887,6 +896,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **id** | **String**|  | |
+| **putAbacAttributesUpdateRequest** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -898,7 +908,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -910,7 +920,7 @@ public class Example {
 
 <a id="putAbacPoliciesUpdate"></a>
 # **putAbacPoliciesUpdate**
-> PutAbacPoliciesUpdateResponse putAbacPoliciesUpdate(orgId, id)
+> PutAbacPoliciesUpdateResponse putAbacPoliciesUpdate(orgId, id, putAbacPoliciesUpdateRequest)
 
 Update an ABAC policy
 
@@ -942,8 +952,9 @@ public class Example {
     AdminAbacApi apiInstance = new AdminAbacApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
+    PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest = new PutAbacPoliciesUpdateRequest(); // PutAbacPoliciesUpdateRequest | 
     try {
-      PutAbacPoliciesUpdateResponse result = apiInstance.putAbacPoliciesUpdate(orgId, id);
+      PutAbacPoliciesUpdateResponse result = apiInstance.putAbacPoliciesUpdate(orgId, id, putAbacPoliciesUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#putAbacPoliciesUpdate");
@@ -962,6 +973,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **id** | **String**|  | |
+| **putAbacPoliciesUpdateRequest** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -973,7 +985,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

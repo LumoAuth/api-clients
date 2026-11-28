@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -19,10 +19,13 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr, field_validator
 from typing_extensions import Annotated
+from lumoauth_api_client.models.admin_permissions_create_request import AdminPermissionsCreateRequest
 from lumoauth_api_client.models.admin_permissions_create_response import AdminPermissionsCreateResponse
 from lumoauth_api_client.models.admin_permissions_get_response import AdminPermissionsGetResponse
 from lumoauth_api_client.models.admin_permissions_list_response import AdminPermissionsListResponse
+from lumoauth_api_client.models.admin_permissions_update_request import AdminPermissionsUpdateRequest
 from lumoauth_api_client.models.admin_permissions_usage_response import AdminPermissionsUsageResponse
+from lumoauth_api_client.models.admin_scopes_create_request import AdminScopesCreateRequest
 from lumoauth_api_client.models.admin_scopes_create_response import AdminScopesCreateResponse
 from lumoauth_api_client.models.admin_scopes_list_response import AdminScopesListResponse
 from lumoauth_api_client.models.message_response import MessageResponse
@@ -49,6 +52,7 @@ class AdminPermissionsApi:
     def admin_permissions_create(
         self,
         org_id: StrictStr,
+        admin_permissions_create_request: AdminPermissionsCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -62,11 +66,13 @@ class AdminPermissionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> AdminPermissionsCreateResponse:
-        """Create a custom permission for the tenant
+        """Create a custom permission for the organization
 
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_permissions_create_request: (required)
+        :type admin_permissions_create_request: AdminPermissionsCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -91,6 +97,7 @@ class AdminPermissionsApi:
 
         _param = self._admin_permissions_create_serialize(
             org_id=org_id,
+            admin_permissions_create_request=admin_permissions_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -115,6 +122,7 @@ class AdminPermissionsApi:
     def admin_permissions_create_with_http_info(
         self,
         org_id: StrictStr,
+        admin_permissions_create_request: AdminPermissionsCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -128,11 +136,13 @@ class AdminPermissionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[AdminPermissionsCreateResponse]:
-        """Create a custom permission for the tenant
+        """Create a custom permission for the organization
 
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_permissions_create_request: (required)
+        :type admin_permissions_create_request: AdminPermissionsCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -157,6 +167,7 @@ class AdminPermissionsApi:
 
         _param = self._admin_permissions_create_serialize(
             org_id=org_id,
+            admin_permissions_create_request=admin_permissions_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -181,6 +192,7 @@ class AdminPermissionsApi:
     def admin_permissions_create_without_preload_content(
         self,
         org_id: StrictStr,
+        admin_permissions_create_request: AdminPermissionsCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -194,11 +206,13 @@ class AdminPermissionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create a custom permission for the tenant
+        """Create a custom permission for the organization
 
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_permissions_create_request: (required)
+        :type admin_permissions_create_request: AdminPermissionsCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -223,6 +237,7 @@ class AdminPermissionsApi:
 
         _param = self._admin_permissions_create_serialize(
             org_id=org_id,
+            admin_permissions_create_request=admin_permissions_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -242,6 +257,7 @@ class AdminPermissionsApi:
     def _admin_permissions_create_serialize(
         self,
         org_id,
+        admin_permissions_create_request,
         _request_auth,
         _content_type,
         _headers,
@@ -269,6 +285,8 @@ class AdminPermissionsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_permissions_create_request is not None:
+            _body_params = admin_permissions_create_request
 
 
         # set the HTTP header `Accept`
@@ -279,6 +297,19 @@ class AdminPermissionsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -869,7 +900,7 @@ class AdminPermissionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> AdminPermissionsListResponse:
-        """List all available permissions for the tenant
+        """List all available permissions for the organization
 
 
         :param org_id: (required)
@@ -935,7 +966,7 @@ class AdminPermissionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[AdminPermissionsListResponse]:
-        """List all available permissions for the tenant
+        """List all available permissions for the organization
 
 
         :param org_id: (required)
@@ -1001,7 +1032,7 @@ class AdminPermissionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List all available permissions for the tenant
+        """List all available permissions for the organization
 
 
         :param org_id: (required)
@@ -1116,6 +1147,7 @@ class AdminPermissionsApi:
         self,
         org_id: StrictStr,
         permission_id: StrictStr,
+        admin_permissions_update_request: AdminPermissionsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1136,6 +1168,8 @@ class AdminPermissionsApi:
         :type org_id: str
         :param permission_id: (required)
         :type permission_id: str
+        :param admin_permissions_update_request: (required)
+        :type admin_permissions_update_request: AdminPermissionsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1161,6 +1195,7 @@ class AdminPermissionsApi:
         _param = self._admin_permissions_update_serialize(
             org_id=org_id,
             permission_id=permission_id,
+            admin_permissions_update_request=admin_permissions_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1186,6 +1221,7 @@ class AdminPermissionsApi:
         self,
         org_id: StrictStr,
         permission_id: StrictStr,
+        admin_permissions_update_request: AdminPermissionsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1206,6 +1242,8 @@ class AdminPermissionsApi:
         :type org_id: str
         :param permission_id: (required)
         :type permission_id: str
+        :param admin_permissions_update_request: (required)
+        :type admin_permissions_update_request: AdminPermissionsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1231,6 +1269,7 @@ class AdminPermissionsApi:
         _param = self._admin_permissions_update_serialize(
             org_id=org_id,
             permission_id=permission_id,
+            admin_permissions_update_request=admin_permissions_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1256,6 +1295,7 @@ class AdminPermissionsApi:
         self,
         org_id: StrictStr,
         permission_id: StrictStr,
+        admin_permissions_update_request: AdminPermissionsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1276,6 +1316,8 @@ class AdminPermissionsApi:
         :type org_id: str
         :param permission_id: (required)
         :type permission_id: str
+        :param admin_permissions_update_request: (required)
+        :type admin_permissions_update_request: AdminPermissionsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1301,6 +1343,7 @@ class AdminPermissionsApi:
         _param = self._admin_permissions_update_serialize(
             org_id=org_id,
             permission_id=permission_id,
+            admin_permissions_update_request=admin_permissions_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1321,6 +1364,7 @@ class AdminPermissionsApi:
         self,
         org_id,
         permission_id,
+        admin_permissions_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1350,6 +1394,8 @@ class AdminPermissionsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_permissions_update_request is not None:
+            _body_params = admin_permissions_update_request
 
 
         # set the HTTP header `Accept`
@@ -1360,6 +1406,19 @@ class AdminPermissionsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1663,6 +1722,7 @@ class AdminPermissionsApi:
     def admin_scopes_create(
         self,
         org_id: StrictStr,
+        admin_scopes_create_request: AdminScopesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1681,6 +1741,8 @@ class AdminPermissionsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_scopes_create_request: (required)
+        :type admin_scopes_create_request: AdminScopesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1705,6 +1767,7 @@ class AdminPermissionsApi:
 
         _param = self._admin_scopes_create_serialize(
             org_id=org_id,
+            admin_scopes_create_request=admin_scopes_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1729,6 +1792,7 @@ class AdminPermissionsApi:
     def admin_scopes_create_with_http_info(
         self,
         org_id: StrictStr,
+        admin_scopes_create_request: AdminScopesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1747,6 +1811,8 @@ class AdminPermissionsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_scopes_create_request: (required)
+        :type admin_scopes_create_request: AdminScopesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1771,6 +1837,7 @@ class AdminPermissionsApi:
 
         _param = self._admin_scopes_create_serialize(
             org_id=org_id,
+            admin_scopes_create_request=admin_scopes_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1795,6 +1862,7 @@ class AdminPermissionsApi:
     def admin_scopes_create_without_preload_content(
         self,
         org_id: StrictStr,
+        admin_scopes_create_request: AdminScopesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1813,6 +1881,8 @@ class AdminPermissionsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_scopes_create_request: (required)
+        :type admin_scopes_create_request: AdminScopesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1837,6 +1907,7 @@ class AdminPermissionsApi:
 
         _param = self._admin_scopes_create_serialize(
             org_id=org_id,
+            admin_scopes_create_request=admin_scopes_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1856,6 +1927,7 @@ class AdminPermissionsApi:
     def _admin_scopes_create_serialize(
         self,
         org_id,
+        admin_scopes_create_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1883,6 +1955,8 @@ class AdminPermissionsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_scopes_create_request is not None:
+            _body_params = admin_scopes_create_request
 
 
         # set the HTTP header `Accept`
@@ -1893,6 +1967,19 @@ class AdminPermissionsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

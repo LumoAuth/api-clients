@@ -296,7 +296,7 @@ Name | Type | Description  | Notes
 **401** | attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. |  -  |
 **403** | access_policy_denied — a conditional access policy refused the agent (reason code included). |  -  |
 **404** | tenant_not_found. |  -  |
-**429** | rate_limit_exceeded (Retry-After: 60). |  -  |
+**429** | rate_limit_exceeded (Retry-After: 60), or budget_exceeded: the agent&#39;s budget is spent (Retry-After: seconds until the spent window ends). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -485,10 +485,10 @@ Name | Type | Description  | Notes
 **201** | Approval request created and delivered (see &#x60;delivery&#x60;). |  -  |
 **202** | User has no push device; an email sign-in fallback link was sent. |  -  |
 **400** | Invalid JSON, task_id, reason, impact, expires_in or meta (invalid_meta names the field), or missing on_behalf_of. |  -  |
-**403** | Caller is not an agent, is cross-tenant, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. |  -  |
-**404** | Tenant or target user not found. |  -  |
+**403** | Caller is not an agent, belongs to another organization, presents a scope-narrowed token (insufficient_scope), or lacks delegation permission. |  -  |
+**404** | Organization or target user not found. |  -  |
 **428** | User has no enrolled push device, no approval channel receives the request, and the email fallback could not be sent. |  -  |
-**429** | Rate limited (per tenant/agent/user). |  -  |
+**429** | Rate limited (per organization, agent and user). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -644,7 +644,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Current status of the approval request. |  -  |
 **403** | Caller is not an agent, or the request belongs to another agent. |  -  |
-**404** | Tenant or approval request not found. |  -  |
+**404** | Organization or approval request not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -809,7 +809,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **register_agent**
-> RegisterAgentResponse register_agent(org_id)
+> RegisterAgentResponse register_agent(org_id, register_agent_request)
 
 Register (or re-register) an agent
 
@@ -820,6 +820,7 @@ Register (or re-register) an agent
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.register_agent_request import RegisterAgentRequest
 from lumoauth_api_client.models.register_agent_response import RegisterAgentResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -851,10 +852,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AgentsApi(api_client)
     org_id = 'org_id_example' # str | 
+    register_agent_request = lumoauth_api_client.RegisterAgentRequest() # RegisterAgentRequest | 
 
     try:
         # Register (or re-register) an agent
-        api_response = api_instance.register_agent(org_id)
+        api_response = api_instance.register_agent(org_id, register_agent_request)
         print("The response of AgentsApi->register_agent:\n")
         pprint(api_response)
     except Exception as e:
@@ -869,6 +871,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **register_agent_request** | [**RegisterAgentRequest**](RegisterAgentRequest.md)|  | 
 
 ### Return type
 
@@ -880,7 +883,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

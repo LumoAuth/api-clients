@@ -11,7 +11,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="createstreamconfig"></a>
 # **CreateStreamConfig**
-> SsfStream CreateStreamConfig (string orgId)
+> SsfStream CreateStreamConfig (string orgId, CreateStreamConfigRequest createStreamConfigRequest)
 
 Create an SSF stream
 
@@ -44,11 +44,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new SsfApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var createStreamConfigRequest = new CreateStreamConfigRequest(); // CreateStreamConfigRequest | 
 
             try
             {
                 // Create an SSF stream
-                SsfStream result = apiInstance.CreateStreamConfig(orgId);
+                SsfStream result = apiInstance.CreateStreamConfig(orgId, createStreamConfigRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -69,7 +70,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create an SSF stream
-    ApiResponse<SsfStream> response = apiInstance.CreateStreamConfigWithHttpInfo(orgId);
+    ApiResponse<SsfStream> response = apiInstance.CreateStreamConfigWithHttpInfo(orgId, createStreamConfigRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -87,6 +88,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **createStreamConfigRequest** | [**CreateStreamConfigRequest**](CreateStreamConfigRequest.md) |  |  |
 
 ### Return type
 
@@ -98,7 +100,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -310,14 +312,14 @@ catch (ApiException e)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | A single stream (with stream_id) or all of the tenant&#39;s streams |  -  |
+| **200** | A single stream (with stream_id) or all of the organization&#39;s streams |  -  |
 | **404** | Stream not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="verifystream"></a>
 # **VerifyStream**
-> void VerifyStream (string orgId)
+> void VerifyStream (string orgId, VerifyStreamRequest? verifyStreamRequest = null)
 
 Request a stream verification event
 
@@ -352,11 +354,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new SsfApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var verifyStreamRequest = new VerifyStreamRequest?(); // VerifyStreamRequest? |  (optional) 
 
             try
             {
                 // Request a stream verification event
-                apiInstance.VerifyStream(orgId);
+                apiInstance.VerifyStream(orgId, verifyStreamRequest);
             }
             catch (ApiException  e)
             {
@@ -376,7 +379,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Request a stream verification event
-    apiInstance.VerifyStreamWithHttpInfo(orgId);
+    apiInstance.VerifyStreamWithHttpInfo(orgId, verifyStreamRequest);
 }
 catch (ApiException e)
 {
@@ -391,6 +394,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **verifyStreamRequest** | [**VerifyStreamRequest?**](VerifyStreamRequest?.md) |  | [optional]  |
 
 ### Return type
 
@@ -402,7 +406,7 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 
