@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -23,6 +23,8 @@ type AdminWebhooksTunnelStartResponseData struct {
 	WebhookId *int32 `json:"webhook_id,omitempty"`
 	SessionId *string `json:"session_id,omitempty"`
 	TunnelUrl *string `json:"tunnel_url,omitempty"`
+	// The secret that signs the tunnel's deliveries (X-LumoAuth-Signature). Shown once.
+	SigningSecret *string `json:"signing_secret,omitempty"`
 }
 
 // NewAdminWebhooksTunnelStartResponseData instantiates a new AdminWebhooksTunnelStartResponseData object
@@ -138,6 +140,38 @@ func (o *AdminWebhooksTunnelStartResponseData) SetTunnelUrl(v string) {
 	o.TunnelUrl = &v
 }
 
+// GetSigningSecret returns the SigningSecret field value if set, zero value otherwise.
+func (o *AdminWebhooksTunnelStartResponseData) GetSigningSecret() string {
+	if o == nil || IsNil(o.SigningSecret) {
+		var ret string
+		return ret
+	}
+	return *o.SigningSecret
+}
+
+// GetSigningSecretOk returns a tuple with the SigningSecret field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminWebhooksTunnelStartResponseData) GetSigningSecretOk() (*string, bool) {
+	if o == nil || IsNil(o.SigningSecret) {
+		return nil, false
+	}
+	return o.SigningSecret, true
+}
+
+// HasSigningSecret returns a boolean if a field has been set.
+func (o *AdminWebhooksTunnelStartResponseData) HasSigningSecret() bool {
+	if o != nil && !IsNil(o.SigningSecret) {
+		return true
+	}
+
+	return false
+}
+
+// SetSigningSecret gets a reference to the given string and assigns it to the SigningSecret field.
+func (o *AdminWebhooksTunnelStartResponseData) SetSigningSecret(v string) {
+	o.SigningSecret = &v
+}
+
 func (o AdminWebhooksTunnelStartResponseData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -156,6 +190,9 @@ func (o AdminWebhooksTunnelStartResponseData) ToMap() (map[string]interface{}, e
 	}
 	if !IsNil(o.TunnelUrl) {
 		toSerialize["tunnel_url"] = o.TunnelUrl
+	}
+	if !IsNil(o.SigningSecret) {
+		toSerialize["signing_secret"] = o.SigningSecret
 	}
 	return toSerialize, nil
 }

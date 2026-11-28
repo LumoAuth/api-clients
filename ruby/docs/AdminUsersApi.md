@@ -39,7 +39,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 ## add_user_group
 
-> <AddUserGroupResponse> add_user_group(org_id, user_id)
+> <AddUserGroupResponse> add_user_group(org_id, user_id, add_user_group_request)
 
 Add a user to a group
 
@@ -62,10 +62,11 @@ end
 api_instance = LumoAuthApiClient::AdminUsersApi.new
 org_id = 'org_id_example' # String | 
 user_id = 'user_id_example' # String | 
+add_user_group_request = LumoAuthApiClient::AddUserGroupRequest.new # AddUserGroupRequest | 
 
 begin
   # Add a user to a group
-  result = api_instance.add_user_group(org_id, user_id)
+  result = api_instance.add_user_group(org_id, user_id, add_user_group_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->add_user_group: #{e}"
@@ -76,12 +77,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AddUserGroupResponse>, Integer, Hash)> add_user_group_with_http_info(org_id, user_id)
+> <Array(<AddUserGroupResponse>, Integer, Hash)> add_user_group_with_http_info(org_id, user_id, add_user_group_request)
 
 ```ruby
 begin
   # Add a user to a group
-  data, status_code, headers = api_instance.add_user_group_with_http_info(org_id, user_id)
+  data, status_code, headers = api_instance.add_user_group_with_http_info(org_id, user_id, add_user_group_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AddUserGroupResponse>
@@ -96,6 +97,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **user_id** | **String** |  |  |
+| **add_user_group_request** | [**AddUserGroupRequest**](AddUserGroupRequest.md) |  |  |
 
 ### Return type
 
@@ -107,17 +109,17 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## add_user_permission
 
-> <AddUserPermissionResponse> add_user_permission(org_id, user_id)
+> <AddUserPermissionResponse> add_user_permission(org_id, user_id, add_user_permission_request)
 
 Assign a permission to a user
 
-Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 ### Examples
 
@@ -138,10 +140,11 @@ end
 api_instance = LumoAuthApiClient::AdminUsersApi.new
 org_id = 'org_id_example' # String | 
 user_id = 'user_id_example' # String | 
+add_user_permission_request = LumoAuthApiClient::AddUserPermissionRequest.new({permission_id: 37}) # AddUserPermissionRequest | 
 
 begin
   # Assign a permission to a user
-  result = api_instance.add_user_permission(org_id, user_id)
+  result = api_instance.add_user_permission(org_id, user_id, add_user_permission_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->add_user_permission: #{e}"
@@ -152,12 +155,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AddUserPermissionResponse>, Integer, Hash)> add_user_permission_with_http_info(org_id, user_id)
+> <Array(<AddUserPermissionResponse>, Integer, Hash)> add_user_permission_with_http_info(org_id, user_id, add_user_permission_request)
 
 ```ruby
 begin
   # Assign a permission to a user
-  data, status_code, headers = api_instance.add_user_permission_with_http_info(org_id, user_id)
+  data, status_code, headers = api_instance.add_user_permission_with_http_info(org_id, user_id, add_user_permission_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AddUserPermissionResponse>
@@ -172,6 +175,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **user_id** | **String** |  |  |
+| **add_user_permission_request** | [**AddUserPermissionRequest**](AddUserPermissionRequest.md) |  |  |
 
 ### Return type
 
@@ -183,13 +187,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## add_user_role
 
-> <AddUserRoleResponse> add_user_role(org_id, user_id)
+> <AddUserRoleResponse> add_user_role(org_id, user_id, add_user_role_request)
 
 Assign a role to a user
 
@@ -212,10 +216,11 @@ end
 api_instance = LumoAuthApiClient::AdminUsersApi.new
 org_id = 'org_id_example' # String | 
 user_id = 'user_id_example' # String | 
+add_user_role_request = LumoAuthApiClient::AddUserRoleRequest.new # AddUserRoleRequest | 
 
 begin
   # Assign a role to a user
-  result = api_instance.add_user_role(org_id, user_id)
+  result = api_instance.add_user_role(org_id, user_id, add_user_role_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->add_user_role: #{e}"
@@ -226,12 +231,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AddUserRoleResponse>, Integer, Hash)> add_user_role_with_http_info(org_id, user_id)
+> <Array(<AddUserRoleResponse>, Integer, Hash)> add_user_role_with_http_info(org_id, user_id, add_user_role_request)
 
 ```ruby
 begin
   # Assign a role to a user
-  data, status_code, headers = api_instance.add_user_role_with_http_info(org_id, user_id)
+  data, status_code, headers = api_instance.add_user_role_with_http_info(org_id, user_id, add_user_role_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AddUserRoleResponse>
@@ -246,6 +251,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **user_id** | **String** |  |  |
+| **add_user_role_request** | [**AddUserRoleRequest**](AddUserRoleRequest.md) |  |  |
 
 ### Return type
 
@@ -257,7 +263,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -799,7 +805,7 @@ end
 
 ## create_user
 
-> <CreateUserResponse> create_user(org_id)
+> <CreateUserResponse> create_user(org_id, create_user_request)
 
 Create a user
 
@@ -821,10 +827,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminUsersApi.new
 org_id = 'org_id_example' # String | 
+create_user_request = LumoAuthApiClient::CreateUserRequest.new({email: 'email_example'}) # CreateUserRequest | 
 
 begin
   # Create a user
-  result = api_instance.create_user(org_id)
+  result = api_instance.create_user(org_id, create_user_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->create_user: #{e}"
@@ -835,12 +842,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<CreateUserResponse>, Integer, Hash)> create_user_with_http_info(org_id)
+> <Array(<CreateUserResponse>, Integer, Hash)> create_user_with_http_info(org_id, create_user_request)
 
 ```ruby
 begin
   # Create a user
-  data, status_code, headers = api_instance.create_user_with_http_info(org_id)
+  data, status_code, headers = api_instance.create_user_with_http_info(org_id, create_user_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <CreateUserResponse>
@@ -854,6 +861,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **create_user_request** | [**CreateUserRequest**](CreateUserRequest.md) |  |  |
 
 ### Return type
 
@@ -865,7 +873,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -1413,7 +1421,7 @@ end
 
 ## patch_user
 
-> <UpdateUserResponse> patch_user(org_id, user_id)
+> <UpdateUserResponse> patch_user(org_id, user_id, update_user_request)
 
 Update a user
 
@@ -1438,10 +1446,11 @@ end
 api_instance = LumoAuthApiClient::AdminUsersApi.new
 org_id = 'org_id_example' # String | 
 user_id = 'user_id_example' # String | 
+update_user_request = LumoAuthApiClient::UpdateUserRequest.new # UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
 begin
   # Update a user
-  result = api_instance.patch_user(org_id, user_id)
+  result = api_instance.patch_user(org_id, user_id, update_user_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->patch_user: #{e}"
@@ -1452,12 +1461,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<UpdateUserResponse>, Integer, Hash)> patch_user_with_http_info(org_id, user_id)
+> <Array(<UpdateUserResponse>, Integer, Hash)> patch_user_with_http_info(org_id, user_id, update_user_request)
 
 ```ruby
 begin
   # Update a user
-  data, status_code, headers = api_instance.patch_user_with_http_info(org_id, user_id)
+  data, status_code, headers = api_instance.patch_user_with_http_info(org_id, user_id, update_user_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <UpdateUserResponse>
@@ -1472,6 +1481,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **user_id** | **String** |  |  |
+| **update_user_request** | [**UpdateUserRequest**](UpdateUserRequest.md) | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. |  |
 
 ### Return type
 
@@ -1483,7 +1493,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -1866,7 +1876,7 @@ end
 
 ## set_user_password
 
-> <SetUserPasswordPostResponse> set_user_password(org_id, user_id)
+> <SetUserPasswordPostResponse> set_user_password(org_id, user_id, set_user_password_post_request)
 
 Set a user's password
 
@@ -1891,10 +1901,11 @@ end
 api_instance = LumoAuthApiClient::AdminUsersApi.new
 org_id = 'org_id_example' # String | 
 user_id = 'user_id_example' # String | 
+set_user_password_post_request = LumoAuthApiClient::SetUserPasswordPostRequest.new({password: 'password_example'}) # SetUserPasswordPostRequest | 
 
 begin
   # Set a user's password
-  result = api_instance.set_user_password(org_id, user_id)
+  result = api_instance.set_user_password(org_id, user_id, set_user_password_post_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->set_user_password: #{e}"
@@ -1905,12 +1916,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<SetUserPasswordPostResponse>, Integer, Hash)> set_user_password_with_http_info(org_id, user_id)
+> <Array(<SetUserPasswordPostResponse>, Integer, Hash)> set_user_password_with_http_info(org_id, user_id, set_user_password_post_request)
 
 ```ruby
 begin
   # Set a user's password
-  data, status_code, headers = api_instance.set_user_password_with_http_info(org_id, user_id)
+  data, status_code, headers = api_instance.set_user_password_with_http_info(org_id, user_id, set_user_password_post_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <SetUserPasswordPostResponse>
@@ -1925,6 +1936,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **user_id** | **String** |  |  |
+| **set_user_password_post_request** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md) |  |  |
 
 ### Return type
 
@@ -1936,13 +1948,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## set_user_password_post
 
-> <SetUserPasswordPostResponse> set_user_password_post(org_id, user_id)
+> <SetUserPasswordPostResponse> set_user_password_post(org_id, user_id, set_user_password_post_request)
 
 Set a user's password
 
@@ -1967,10 +1979,11 @@ end
 api_instance = LumoAuthApiClient::AdminUsersApi.new
 org_id = 'org_id_example' # String | 
 user_id = 'user_id_example' # String | 
+set_user_password_post_request = LumoAuthApiClient::SetUserPasswordPostRequest.new({password: 'password_example'}) # SetUserPasswordPostRequest | 
 
 begin
   # Set a user's password
-  result = api_instance.set_user_password_post(org_id, user_id)
+  result = api_instance.set_user_password_post(org_id, user_id, set_user_password_post_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->set_user_password_post: #{e}"
@@ -1981,12 +1994,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<SetUserPasswordPostResponse>, Integer, Hash)> set_user_password_post_with_http_info(org_id, user_id)
+> <Array(<SetUserPasswordPostResponse>, Integer, Hash)> set_user_password_post_with_http_info(org_id, user_id, set_user_password_post_request)
 
 ```ruby
 begin
   # Set a user's password
-  data, status_code, headers = api_instance.set_user_password_post_with_http_info(org_id, user_id)
+  data, status_code, headers = api_instance.set_user_password_post_with_http_info(org_id, user_id, set_user_password_post_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <SetUserPasswordPostResponse>
@@ -2001,6 +2014,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **user_id** | **String** |  |  |
+| **set_user_password_post_request** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md) |  |  |
 
 ### Return type
 
@@ -2012,7 +2026,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -2166,7 +2180,7 @@ end
 
 ## update_user
 
-> <UpdateUserResponse> update_user(org_id, user_id)
+> <UpdateUserResponse> update_user(org_id, user_id, update_user_request)
 
 Update a user
 
@@ -2191,10 +2205,11 @@ end
 api_instance = LumoAuthApiClient::AdminUsersApi.new
 org_id = 'org_id_example' # String | 
 user_id = 'user_id_example' # String | 
+update_user_request = LumoAuthApiClient::UpdateUserRequest.new # UpdateUserRequest | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
 begin
   # Update a user
-  result = api_instance.update_user(org_id, user_id)
+  result = api_instance.update_user(org_id, user_id, update_user_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->update_user: #{e}"
@@ -2205,12 +2220,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<UpdateUserResponse>, Integer, Hash)> update_user_with_http_info(org_id, user_id)
+> <Array(<UpdateUserResponse>, Integer, Hash)> update_user_with_http_info(org_id, user_id, update_user_request)
 
 ```ruby
 begin
   # Update a user
-  data, status_code, headers = api_instance.update_user_with_http_info(org_id, user_id)
+  data, status_code, headers = api_instance.update_user_with_http_info(org_id, user_id, update_user_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <UpdateUserResponse>
@@ -2225,6 +2240,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **user_id** | **String** |  |  |
+| **update_user_request** | [**UpdateUserRequest**](UpdateUserRequest.md) | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. |  |
 
 ### Return type
 
@@ -2236,13 +2252,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## update_user_groups
 
-> <UpdateUserGroupsResponse> update_user_groups(org_id, user_id)
+> <UpdateUserGroupsResponse> update_user_groups(org_id, user_id, update_user_groups_request)
 
 Replace a user's groups
 
@@ -2265,10 +2281,11 @@ end
 api_instance = LumoAuthApiClient::AdminUsersApi.new
 org_id = 'org_id_example' # String | 
 user_id = 'user_id_example' # String | 
+update_user_groups_request = LumoAuthApiClient::UpdateUserGroupsRequest.new({groups: ['groups_example']}) # UpdateUserGroupsRequest | 
 
 begin
   # Replace a user's groups
-  result = api_instance.update_user_groups(org_id, user_id)
+  result = api_instance.update_user_groups(org_id, user_id, update_user_groups_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->update_user_groups: #{e}"
@@ -2279,12 +2296,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<UpdateUserGroupsResponse>, Integer, Hash)> update_user_groups_with_http_info(org_id, user_id)
+> <Array(<UpdateUserGroupsResponse>, Integer, Hash)> update_user_groups_with_http_info(org_id, user_id, update_user_groups_request)
 
 ```ruby
 begin
   # Replace a user's groups
-  data, status_code, headers = api_instance.update_user_groups_with_http_info(org_id, user_id)
+  data, status_code, headers = api_instance.update_user_groups_with_http_info(org_id, user_id, update_user_groups_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <UpdateUserGroupsResponse>
@@ -2299,6 +2316,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **user_id** | **String** |  |  |
+| **update_user_groups_request** | [**UpdateUserGroupsRequest**](UpdateUserGroupsRequest.md) |  |  |
 
 ### Return type
 
@@ -2310,13 +2328,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## update_user_roles
 
-> <UpdateUserRolesResponse> update_user_roles(org_id, user_id)
+> <UpdateUserRolesResponse> update_user_roles(org_id, user_id, admin_groups_update_roles_request)
 
 Replace a user's roles
 
@@ -2339,10 +2357,11 @@ end
 api_instance = LumoAuthApiClient::AdminUsersApi.new
 org_id = 'org_id_example' # String | 
 user_id = 'user_id_example' # String | 
+admin_groups_update_roles_request = LumoAuthApiClient::AdminGroupsUpdateRolesRequest.new({roles: ['roles_example']}) # AdminGroupsUpdateRolesRequest | 
 
 begin
   # Replace a user's roles
-  result = api_instance.update_user_roles(org_id, user_id)
+  result = api_instance.update_user_roles(org_id, user_id, admin_groups_update_roles_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->update_user_roles: #{e}"
@@ -2353,12 +2372,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<UpdateUserRolesResponse>, Integer, Hash)> update_user_roles_with_http_info(org_id, user_id)
+> <Array(<UpdateUserRolesResponse>, Integer, Hash)> update_user_roles_with_http_info(org_id, user_id, admin_groups_update_roles_request)
 
 ```ruby
 begin
   # Replace a user's roles
-  data, status_code, headers = api_instance.update_user_roles_with_http_info(org_id, user_id)
+  data, status_code, headers = api_instance.update_user_roles_with_http_info(org_id, user_id, admin_groups_update_roles_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <UpdateUserRolesResponse>
@@ -2373,6 +2392,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **user_id** | **String** |  |  |
+| **admin_groups_update_roles_request** | [**AdminGroupsUpdateRolesRequest**](AdminGroupsUpdateRolesRequest.md) |  |  |
 
 ### Return type
 
@@ -2384,6 +2404,6 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 

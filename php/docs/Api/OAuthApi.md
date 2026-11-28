@@ -85,7 +85,7 @@ No authorization required
 ## `backchannelAuthorize()`
 
 ```php
-backchannelAuthorize($orgId): \LumoAuth\ApiClient\Model\BackchannelAuthorizeResponse
+backchannelAuthorize($orgId, $scope, $loginHint, $loginHintToken, $idTokenHint, $bindingMessage, $acrValues, $requestedExpiry, $clientNotificationToken, $authorizationDetails, $clientId, $clientSecret, $clientAssertionType, $clientAssertion): \LumoAuth\ApiClient\Model\BackchannelAuthorizeResponse
 ```
 
 CIBA backchannel authentication request
@@ -112,9 +112,22 @@ $apiInstance = new LumoAuth\ApiClient\Api\OAuthApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$scope = 'scope_example'; // string
+$loginHint = 'loginHint_example'; // string
+$loginHintToken = 'loginHintToken_example'; // string
+$idTokenHint = 'idTokenHint_example'; // string
+$bindingMessage = 'bindingMessage_example'; // string
+$acrValues = 'acrValues_example'; // string
+$requestedExpiry = 56; // int | Seconds. An application's request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused.
+$clientNotificationToken = 'clientNotificationToken_example'; // string
+$authorizationDetails = 'authorizationDetails_example'; // string
+$clientId = 'clientId_example'; // string | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+$clientSecret = 'clientSecret_example'; // string | client_secret_post
+$clientAssertionType = 'clientAssertionType_example'; // string
+$clientAssertion = 'clientAssertion_example'; // string | private_key_jwt (RFC 7523)
 
 try {
-    $result = $apiInstance->backchannelAuthorize($orgId);
+    $result = $apiInstance->backchannelAuthorize($orgId, $scope, $loginHint, $loginHintToken, $idTokenHint, $bindingMessage, $acrValues, $requestedExpiry, $clientNotificationToken, $authorizationDetails, $clientId, $clientSecret, $clientAssertionType, $clientAssertion);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OAuthApi->backchannelAuthorize: ', $e->getMessage(), PHP_EOL;
@@ -126,6 +139,19 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **scope** | **string**|  | |
+| **loginHint** | **string**|  | [optional] |
+| **loginHintToken** | **string**|  | [optional] |
+| **idTokenHint** | **string**|  | [optional] |
+| **bindingMessage** | **string**|  | [optional] |
+| **acrValues** | **string**|  | [optional] |
+| **requestedExpiry** | **int**| Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. | [optional] |
+| **clientNotificationToken** | **string**|  | [optional] |
+| **authorizationDetails** | **string**|  | [optional] |
+| **clientId** | **string**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **string**| client_secret_post | [optional] |
+| **clientAssertionType** | **string**|  | [optional] |
+| **clientAssertion** | **string**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -137,7 +163,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/x-www-form-urlencoded`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -205,12 +231,12 @@ No authorization required
 ## `deviceAuthorization()`
 
 ```php
-deviceAuthorization($orgId): \LumoAuth\ApiClient\Model\DeviceAuthorizationResponse
+deviceAuthorization($orgId, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $scope, $resource): \LumoAuth\ApiClient\Model\DeviceAuthorizationResponse
 ```
 
 Device authorization request (RFC 8628)
 
-Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
 
 ### Example
 
@@ -232,9 +258,15 @@ $apiInstance = new LumoAuth\ApiClient\Api\OAuthApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$clientId = 'clientId_example'; // string | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+$clientSecret = 'clientSecret_example'; // string | client_secret_post
+$clientAssertionType = 'clientAssertionType_example'; // string
+$clientAssertion = 'clientAssertion_example'; // string | private_key_jwt (RFC 7523)
+$scope = 'scope_example'; // string | Space-separated scopes.
+$resource = 'resource_example'; // string | RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client's audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them.
 
 try {
-    $result = $apiInstance->deviceAuthorization($orgId);
+    $result = $apiInstance->deviceAuthorization($orgId, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $scope, $resource);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OAuthApi->deviceAuthorization: ', $e->getMessage(), PHP_EOL;
@@ -246,6 +278,12 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **clientId** | **string**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **string**| client_secret_post | [optional] |
+| **clientAssertionType** | **string**|  | [optional] |
+| **clientAssertion** | **string**| private_key_jwt (RFC 7523) | [optional] |
+| **scope** | **string**| Space-separated scopes. | [optional] |
+| **resource** | **string**| RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. | [optional] |
 
 ### Return type
 
@@ -257,7 +295,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/x-www-form-urlencoded`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -446,7 +484,7 @@ No authorization required
 ## `introspect()`
 
 ```php
-introspect($orgId): \LumoAuth\ApiClient\Model\IntrospectResponse
+introspect($orgId, $token, $tokenTypeHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion): \LumoAuth\ApiClient\Model\IntrospectResponse
 ```
 
 Token introspection (RFC 7662)
@@ -473,9 +511,15 @@ $apiInstance = new LumoAuth\ApiClient\Api\OAuthApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$token = 'token_example'; // string
+$tokenTypeHint = 'tokenTypeHint_example'; // string
+$clientId = 'clientId_example'; // string | The calling client, with client_secret (client_secret_post), or an agent's id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client).
+$clientSecret = 'clientSecret_example'; // string | client_secret_post
+$clientAssertionType = 'clientAssertionType_example'; // string
+$clientAssertion = 'clientAssertion_example'; // string | private_key_jwt (RFC 7523)
 
 try {
-    $result = $apiInstance->introspect($orgId);
+    $result = $apiInstance->introspect($orgId, $token, $tokenTypeHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OAuthApi->introspect: ', $e->getMessage(), PHP_EOL;
@@ -487,6 +531,12 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **token** | **string**|  | |
+| **tokenTypeHint** | **string**|  | [optional] |
+| **clientId** | **string**| The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). | [optional] |
+| **clientSecret** | **string**| client_secret_post | [optional] |
+| **clientAssertionType** | **string**|  | [optional] |
+| **clientAssertion** | **string**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -498,7 +548,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/x-www-form-urlencoded`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -508,7 +558,7 @@ try {
 ## `par()`
 
 ```php
-par($orgId): \LumoAuth\ApiClient\Model\ParResponse
+par($orgId, $responseType, $redirectUri, $scope, $state, $nonce, $codeChallenge, $codeChallengeMethod, $request, $resource, $prompt, $loginHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion): \LumoAuth\ApiClient\Model\ParResponse
 ```
 
 Pushed authorization request (RFC 9126)
@@ -535,9 +585,24 @@ $apiInstance = new LumoAuth\ApiClient\Api\OAuthApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$responseType = 'responseType_example'; // string
+$redirectUri = 'redirectUri_example'; // string
+$scope = 'scope_example'; // string
+$state = 'state_example'; // string
+$nonce = 'nonce_example'; // string
+$codeChallenge = 'codeChallenge_example'; // string
+$codeChallengeMethod = 'codeChallengeMethod_example'; // string
+$request = 'request_example'; // string | A signed request object (JAR, RFC 9101).
+$resource = 'resource_example'; // string
+$prompt = 'prompt_example'; // string
+$loginHint = 'loginHint_example'; // string
+$clientId = 'clientId_example'; // string | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+$clientSecret = 'clientSecret_example'; // string | client_secret_post
+$clientAssertionType = 'clientAssertionType_example'; // string
+$clientAssertion = 'clientAssertion_example'; // string | private_key_jwt (RFC 7523)
 
 try {
-    $result = $apiInstance->par($orgId);
+    $result = $apiInstance->par($orgId, $responseType, $redirectUri, $scope, $state, $nonce, $codeChallenge, $codeChallengeMethod, $request, $resource, $prompt, $loginHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OAuthApi->par: ', $e->getMessage(), PHP_EOL;
@@ -549,6 +614,21 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **responseType** | **string**|  | [optional] |
+| **redirectUri** | **string**|  | [optional] |
+| **scope** | **string**|  | [optional] |
+| **state** | **string**|  | [optional] |
+| **nonce** | **string**|  | [optional] |
+| **codeChallenge** | **string**|  | [optional] |
+| **codeChallengeMethod** | **string**|  | [optional] |
+| **request** | **string**| A signed request object (JAR, RFC 9101). | [optional] |
+| **resource** | **string**|  | [optional] |
+| **prompt** | **string**|  | [optional] |
+| **loginHint** | **string**|  | [optional] |
+| **clientId** | **string**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **string**| client_secret_post | [optional] |
+| **clientAssertionType** | **string**|  | [optional] |
+| **clientAssertion** | **string**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -560,7 +640,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/x-www-form-urlencoded`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -570,7 +650,7 @@ try {
 ## `registerClient()`
 
 ```php
-registerClient($orgId): \LumoAuth\ApiClient\Model\RegisterClientResponse
+registerClient($orgId, $registerClientRequest): \LumoAuth\ApiClient\Model\RegisterClientResponse
 ```
 
 Dynamic client registration (RFC 7591 / OIDC DCR)
@@ -600,9 +680,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\OAuthApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$registerClientRequest = new \LumoAuth\ApiClient\Model\RegisterClientRequest(); // \LumoAuth\ApiClient\Model\RegisterClientRequest | RFC 7591 client metadata.
 
 try {
-    $result = $apiInstance->registerClient($orgId);
+    $result = $apiInstance->registerClient($orgId, $registerClientRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OAuthApi->registerClient: ', $e->getMessage(), PHP_EOL;
@@ -614,6 +695,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **registerClientRequest** | [**\LumoAuth\ApiClient\Model\RegisterClientRequest**](../Model/RegisterClientRequest.md)| RFC 7591 client metadata. | |
 
 ### Return type
 
@@ -625,7 +707,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -693,7 +775,7 @@ No authorization required
 ## `revoke()`
 
 ```php
-revoke($orgId): object
+revoke($orgId, $token, $tokenTypeHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion): object
 ```
 
 Token revocation (RFC 7009)
@@ -720,9 +802,15 @@ $apiInstance = new LumoAuth\ApiClient\Api\OAuthApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$token = 'token_example'; // string
+$tokenTypeHint = 'tokenTypeHint_example'; // string
+$clientId = 'clientId_example'; // string | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+$clientSecret = 'clientSecret_example'; // string | client_secret_post
+$clientAssertionType = 'clientAssertionType_example'; // string
+$clientAssertion = 'clientAssertion_example'; // string | private_key_jwt (RFC 7523)
 
 try {
-    $result = $apiInstance->revoke($orgId);
+    $result = $apiInstance->revoke($orgId, $token, $tokenTypeHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OAuthApi->revoke: ', $e->getMessage(), PHP_EOL;
@@ -734,6 +822,12 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **token** | **string**|  | |
+| **tokenTypeHint** | **string**|  | [optional] |
+| **clientId** | **string**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **string**| client_secret_post | [optional] |
+| **clientAssertionType** | **string**|  | [optional] |
+| **clientAssertion** | **string**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -745,7 +839,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/x-www-form-urlencoded`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1038,7 +1132,7 @@ No authorization required
 ## `submitLoginJson()`
 
 ```php
-submitLoginJson($orgId): \LumoAuth\ApiClient\Model\SubmitLoginJsonResponse
+submitLoginJson($orgId, $submitLoginJsonRequest): \LumoAuth\ApiClient\Model\SubmitLoginJsonResponse
 ```
 
 Programmatic (JSON) login for the authorization flow
@@ -1059,9 +1153,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\OAuthApi(
     new GuzzleHttp\Client()
 );
 $orgId = 'orgId_example'; // string
+$submitLoginJsonRequest = new \LumoAuth\ApiClient\Model\SubmitLoginJsonRequest(); // \LumoAuth\ApiClient\Model\SubmitLoginJsonRequest
 
 try {
-    $result = $apiInstance->submitLoginJson($orgId);
+    $result = $apiInstance->submitLoginJson($orgId, $submitLoginJsonRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OAuthApi->submitLoginJson: ', $e->getMessage(), PHP_EOL;
@@ -1073,6 +1168,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **submitLoginJsonRequest** | [**\LumoAuth\ApiClient\Model\SubmitLoginJsonRequest**](../Model/SubmitLoginJsonRequest.md)|  | |
 
 ### Return type
 
@@ -1084,7 +1180,7 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1150,7 +1246,7 @@ No authorization required
 ## `token()`
 
 ```php
-token($orgId): \LumoAuth\ApiClient\Model\TokenResponse
+token($orgId, $grantType, $code, $redirectUri, $codeVerifier, $refreshToken, $deviceCode, $authReqId, $scope, $resource, $subjectToken, $subjectTokenType, $actorToken, $actorTokenType, $requestedTokenType, $assertion, $clientId, $clientSecret, $clientAssertionType, $clientAssertion): \LumoAuth\ApiClient\Model\TokenResponse
 ```
 
 OAuth 2.1 token endpoint
@@ -1177,9 +1273,28 @@ $apiInstance = new LumoAuth\ApiClient\Api\OAuthApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$grantType = 'grantType_example'; // string
+$code = 'code_example'; // string
+$redirectUri = 'redirectUri_example'; // string
+$codeVerifier = 'codeVerifier_example'; // string
+$refreshToken = 'refreshToken_example'; // string
+$deviceCode = 'deviceCode_example'; // string
+$authReqId = 'authReqId_example'; // string | CIBA
+$scope = 'scope_example'; // string
+$resource = 'resource_example'; // string
+$subjectToken = 'subjectToken_example'; // string | Token exchange (RFC 8693)
+$subjectTokenType = 'subjectTokenType_example'; // string
+$actorToken = 'actorToken_example'; // string
+$actorTokenType = 'actorTokenType_example'; // string
+$requestedTokenType = 'requestedTokenType_example'; // string
+$assertion = 'assertion_example'; // string | JWT bearer / ID-JAG grant
+$clientId = 'clientId_example'; // string | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+$clientSecret = 'clientSecret_example'; // string | client_secret_post
+$clientAssertionType = 'clientAssertionType_example'; // string
+$clientAssertion = 'clientAssertion_example'; // string | private_key_jwt (RFC 7523)
 
 try {
-    $result = $apiInstance->token($orgId);
+    $result = $apiInstance->token($orgId, $grantType, $code, $redirectUri, $codeVerifier, $refreshToken, $deviceCode, $authReqId, $scope, $resource, $subjectToken, $subjectTokenType, $actorToken, $actorTokenType, $requestedTokenType, $assertion, $clientId, $clientSecret, $clientAssertionType, $clientAssertion);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OAuthApi->token: ', $e->getMessage(), PHP_EOL;
@@ -1191,6 +1306,25 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **grantType** | **string**|  | |
+| **code** | **string**|  | [optional] |
+| **redirectUri** | **string**|  | [optional] |
+| **codeVerifier** | **string**|  | [optional] |
+| **refreshToken** | **string**|  | [optional] |
+| **deviceCode** | **string**|  | [optional] |
+| **authReqId** | **string**| CIBA | [optional] |
+| **scope** | **string**|  | [optional] |
+| **resource** | **string**|  | [optional] |
+| **subjectToken** | **string**| Token exchange (RFC 8693) | [optional] |
+| **subjectTokenType** | **string**|  | [optional] |
+| **actorToken** | **string**|  | [optional] |
+| **actorTokenType** | **string**|  | [optional] |
+| **requestedTokenType** | **string**|  | [optional] |
+| **assertion** | **string**| JWT bearer / ID-JAG grant | [optional] |
+| **clientId** | **string**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **string**| client_secret_post | [optional] |
+| **clientAssertionType** | **string**|  | [optional] |
+| **clientAssertion** | **string**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -1202,7 +1336,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/x-www-form-urlencoded`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

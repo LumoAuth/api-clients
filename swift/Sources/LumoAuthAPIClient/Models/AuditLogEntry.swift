@@ -26,6 +26,8 @@ public struct AuditLogEntry: Codable, JSONEncodable, Hashable {
     public var targetId: String?
     public var targetName: String?
     public var ipAddress: String?
+    /** W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none */
+    public var traceId: String?
     /** Detailed responses only */
     public var eventTime: Date?
     /** Detailed responses only */
@@ -55,7 +57,7 @@ public struct AuditLogEntry: Codable, JSONEncodable, Hashable {
     /** Detailed responses only */
     public var context: [String: AnyCodable]?
 
-    public init(id: Int, createdAt: Date, eventType: String? = nil, action: String? = nil, severity: String? = nil, message: String? = nil, actorId: String? = nil, actorName: String? = nil, actorType: String? = nil, authMethod: String? = nil, targetType: String? = nil, targetId: String? = nil, targetName: String? = nil, ipAddress: String? = nil, eventTime: Date? = nil, durationMs: Int? = nil, initiatedBy: String? = nil, clientId: String? = nil, userAgent: String? = nil, geoLocation: [String: AnyCodable]? = nil, sessionId: String? = nil, requestId: String? = nil, status: String? = nil, statusReason: String? = nil, oldValue: [String: AnyCodable]? = nil, newValue: [String: AnyCodable]? = nil, changes: [String: AnyCodable]? = nil, context: [String: AnyCodable]? = nil) {
+    public init(id: Int, createdAt: Date, eventType: String? = nil, action: String? = nil, severity: String? = nil, message: String? = nil, actorId: String? = nil, actorName: String? = nil, actorType: String? = nil, authMethod: String? = nil, targetType: String? = nil, targetId: String? = nil, targetName: String? = nil, ipAddress: String? = nil, traceId: String? = nil, eventTime: Date? = nil, durationMs: Int? = nil, initiatedBy: String? = nil, clientId: String? = nil, userAgent: String? = nil, geoLocation: [String: AnyCodable]? = nil, sessionId: String? = nil, requestId: String? = nil, status: String? = nil, statusReason: String? = nil, oldValue: [String: AnyCodable]? = nil, newValue: [String: AnyCodable]? = nil, changes: [String: AnyCodable]? = nil, context: [String: AnyCodable]? = nil) {
         self.id = id
         self.createdAt = createdAt
         self.eventType = eventType
@@ -70,6 +72,7 @@ public struct AuditLogEntry: Codable, JSONEncodable, Hashable {
         self.targetId = targetId
         self.targetName = targetName
         self.ipAddress = ipAddress
+        self.traceId = traceId
         self.eventTime = eventTime
         self.durationMs = durationMs
         self.initiatedBy = initiatedBy
@@ -101,6 +104,7 @@ public struct AuditLogEntry: Codable, JSONEncodable, Hashable {
         case targetId
         case targetName
         case ipAddress
+        case traceId
         case eventTime
         case durationMs
         case initiatedBy
@@ -135,6 +139,7 @@ public struct AuditLogEntry: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(targetId, forKey: .targetId)
         try container.encodeIfPresent(targetName, forKey: .targetName)
         try container.encodeIfPresent(ipAddress, forKey: .ipAddress)
+        try container.encodeIfPresent(traceId, forKey: .traceId)
         try container.encodeIfPresent(eventTime, forKey: .eventTime)
         try container.encodeIfPresent(durationMs, forKey: .durationMs)
         try container.encodeIfPresent(initiatedBy, forKey: .initiatedBy)

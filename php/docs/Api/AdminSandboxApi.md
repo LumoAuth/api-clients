@@ -4,9 +4,9 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**adminSandboxDestroy()**](AdminSandboxApi.md#adminSandboxDestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant |
-| [**adminSandboxList()**](AdminSandboxApi.md#adminSandboxList) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox tenants |
-| [**adminSandboxSpawn()**](AdminSandboxApi.md#adminSandboxSpawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant |
+| [**adminSandboxDestroy()**](AdminSandboxApi.md#adminSandboxDestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox organization |
+| [**adminSandboxList()**](AdminSandboxApi.md#adminSandboxList) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox organizations |
+| [**adminSandboxSpawn()**](AdminSandboxApi.md#adminSandboxSpawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox organization |
 
 
 ## `adminSandboxDestroy()`
@@ -15,7 +15,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 adminSandboxDestroy($orgId, $sandboxSlug): \LumoAuth\ApiClient\Model\MessageResponse
 ```
 
-Destroy a sandbox tenant
+Destroy a sandbox organization
 
 ### Example
 
@@ -80,7 +80,7 @@ try {
 adminSandboxList($orgId): \LumoAuth\ApiClient\Model\AdminSandboxListResponse
 ```
 
-List the caller's sandbox tenants
+List the caller's sandbox organizations
 
 ### Example
 
@@ -143,7 +143,7 @@ try {
 adminSandboxSpawn($orgId, $adminSandboxSpawnRequest): \LumoAuth\ApiClient\Model\AdminSandboxSpawnResponse
 ```
 
-Spawn a sandbox tenant
+Spawn a sandbox organization
 
 Creates a sandbox organization with its own signing key, the Tenant Admin role, a Starter App client and one API key that holds every Admin API scope. The API key is returned only in this response and expires with the sandbox. Use it as `X-API-Key` on `/orgs/{sandbox slug}/api/v1/admin/...`. No user who can sign in is created: add users with the key. The sandbox uses the plan of the organization that created it and cannot create sandboxes itself.
 

@@ -11,7 +11,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**adminGroupsGet()**](AdminGroupsApi.md#adminGroupsGet) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Get a single group by ID or slug |
 | [**adminGroupsGetMembers()**](AdminGroupsApi.md#adminGroupsGetMembers) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members |
 | [**adminGroupsGroupsGetRoles()**](AdminGroupsApi.md#adminGroupsGroupsGetRoles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles |
-| [**adminGroupsList()**](AdminGroupsApi.md#adminGroupsList) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant |
+| [**adminGroupsList()**](AdminGroupsApi.md#adminGroupsList) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the organization |
 | [**adminGroupsRemoveMember()**](AdminGroupsApi.md#adminGroupsRemoveMember) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group |
 | [**adminGroupsRemoveRole()**](AdminGroupsApi.md#adminGroupsRemoveRole) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group |
 | [**adminGroupsUpdateRoles()**](AdminGroupsApi.md#adminGroupsUpdateRoles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles) |
@@ -22,7 +22,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 ## `adminGroupsAddMembers()`
 
 ```php
-adminGroupsAddMembers($orgId, $groupId): \LumoAuth\ApiClient\Model\AdminGroupsCreateResponse
+adminGroupsAddMembers($orgId, $groupId, $adminGroupsAddMembersRequest): \LumoAuth\ApiClient\Model\AdminGroupsCreateResponse
 ```
 
 Add member(s) to group
@@ -51,9 +51,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminGroupsApi(
 );
 $orgId = 'orgId_example'; // string
 $groupId = 'groupId_example'; // string
+$adminGroupsAddMembersRequest = new \LumoAuth\ApiClient\Model\AdminGroupsAddMembersRequest(); // \LumoAuth\ApiClient\Model\AdminGroupsAddMembersRequest
 
 try {
-    $result = $apiInstance->adminGroupsAddMembers($orgId, $groupId);
+    $result = $apiInstance->adminGroupsAddMembers($orgId, $groupId, $adminGroupsAddMembersRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminGroupsApi->adminGroupsAddMembers: ', $e->getMessage(), PHP_EOL;
@@ -66,6 +67,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **groupId** | **string**|  | |
+| **adminGroupsAddMembersRequest** | [**\LumoAuth\ApiClient\Model\AdminGroupsAddMembersRequest**](../Model/AdminGroupsAddMembersRequest.md)|  | |
 
 ### Return type
 
@@ -77,7 +79,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -87,12 +89,12 @@ try {
 ## `adminGroupsAddRole()`
 
 ```php
-adminGroupsAddRole($orgId, $groupId): \LumoAuth\ApiClient\Model\MessageResponse
+adminGroupsAddRole($orgId, $groupId, $adminGroupsAddRoleRequest): \LumoAuth\ApiClient\Model\MessageResponse
 ```
 
 Add a single role to a group
 
-A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 ### Example
 
@@ -118,9 +120,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminGroupsApi(
 );
 $orgId = 'orgId_example'; // string
 $groupId = 'groupId_example'; // string
+$adminGroupsAddRoleRequest = new \LumoAuth\ApiClient\Model\AdminGroupsAddRoleRequest(); // \LumoAuth\ApiClient\Model\AdminGroupsAddRoleRequest
 
 try {
-    $result = $apiInstance->adminGroupsAddRole($orgId, $groupId);
+    $result = $apiInstance->adminGroupsAddRole($orgId, $groupId, $adminGroupsAddRoleRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminGroupsApi->adminGroupsAddRole: ', $e->getMessage(), PHP_EOL;
@@ -133,6 +136,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **groupId** | **string**|  | |
+| **adminGroupsAddRoleRequest** | [**\LumoAuth\ApiClient\Model\AdminGroupsAddRoleRequest**](../Model/AdminGroupsAddRoleRequest.md)|  | |
 
 ### Return type
 
@@ -144,7 +148,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -154,12 +158,12 @@ try {
 ## `adminGroupsCreate()`
 
 ```php
-adminGroupsCreate($orgId): \LumoAuth\ApiClient\Model\AdminGroupsCreateResponse
+adminGroupsCreate($orgId, $adminGroupsCreateRequest): \LumoAuth\ApiClient\Model\AdminGroupsCreateResponse
 ```
 
 Create a new group
 
-Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 ### Example
 
@@ -184,9 +188,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminGroupsApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$adminGroupsCreateRequest = new \LumoAuth\ApiClient\Model\AdminGroupsCreateRequest(); // \LumoAuth\ApiClient\Model\AdminGroupsCreateRequest
 
 try {
-    $result = $apiInstance->adminGroupsCreate($orgId);
+    $result = $apiInstance->adminGroupsCreate($orgId, $adminGroupsCreateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminGroupsApi->adminGroupsCreate: ', $e->getMessage(), PHP_EOL;
@@ -198,6 +203,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **adminGroupsCreateRequest** | [**\LumoAuth\ApiClient\Model\AdminGroupsCreateRequest**](../Model/AdminGroupsCreateRequest.md)|  | |
 
 ### Return type
 
@@ -209,7 +215,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -482,7 +488,7 @@ try {
 adminGroupsList($orgId): \LumoAuth\ApiClient\Model\AdminGroupsListResponse
 ```
 
-List all groups in the tenant
+List all groups in the organization
 
 ### Example
 
@@ -676,12 +682,12 @@ try {
 ## `adminGroupsUpdateRoles()`
 
 ```php
-adminGroupsUpdateRoles($orgId, $groupId): \LumoAuth\ApiClient\Model\AdminGroupsCreateResponse
+adminGroupsUpdateRoles($orgId, $groupId, $adminGroupsUpdateRolesRequest): \LumoAuth\ApiClient\Model\AdminGroupsCreateResponse
 ```
 
 Update group roles (replaces all existing roles)
 
-`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
 ### Example
 
@@ -707,9 +713,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminGroupsApi(
 );
 $orgId = 'orgId_example'; // string
 $groupId = 'groupId_example'; // string
+$adminGroupsUpdateRolesRequest = new \LumoAuth\ApiClient\Model\AdminGroupsUpdateRolesRequest(); // \LumoAuth\ApiClient\Model\AdminGroupsUpdateRolesRequest
 
 try {
-    $result = $apiInstance->adminGroupsUpdateRoles($orgId, $groupId);
+    $result = $apiInstance->adminGroupsUpdateRoles($orgId, $groupId, $adminGroupsUpdateRolesRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminGroupsApi->adminGroupsUpdateRoles: ', $e->getMessage(), PHP_EOL;
@@ -722,6 +729,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **groupId** | **string**|  | |
+| **adminGroupsUpdateRolesRequest** | [**\LumoAuth\ApiClient\Model\AdminGroupsUpdateRolesRequest**](../Model/AdminGroupsUpdateRolesRequest.md)|  | |
 
 ### Return type
 
@@ -733,7 +741,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -743,7 +751,7 @@ try {
 ## `patchAdminGroupsUpdate()`
 
 ```php
-patchAdminGroupsUpdate($orgId, $groupId): \LumoAuth\ApiClient\Model\AdminGroupsCreateResponse
+patchAdminGroupsUpdate($orgId, $groupId, $putAdminGroupsUpdateRequest): \LumoAuth\ApiClient\Model\AdminGroupsCreateResponse
 ```
 
 Update an existing group
@@ -772,9 +780,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminGroupsApi(
 );
 $orgId = 'orgId_example'; // string
 $groupId = 'groupId_example'; // string
+$putAdminGroupsUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminGroupsUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminGroupsUpdateRequest
 
 try {
-    $result = $apiInstance->patchAdminGroupsUpdate($orgId, $groupId);
+    $result = $apiInstance->patchAdminGroupsUpdate($orgId, $groupId, $putAdminGroupsUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminGroupsApi->patchAdminGroupsUpdate: ', $e->getMessage(), PHP_EOL;
@@ -787,6 +796,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **groupId** | **string**|  | |
+| **putAdminGroupsUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminGroupsUpdateRequest**](../Model/PutAdminGroupsUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -798,7 +808,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -808,7 +818,7 @@ try {
 ## `putAdminGroupsUpdate()`
 
 ```php
-putAdminGroupsUpdate($orgId, $groupId): \LumoAuth\ApiClient\Model\AdminGroupsCreateResponse
+putAdminGroupsUpdate($orgId, $groupId, $putAdminGroupsUpdateRequest): \LumoAuth\ApiClient\Model\AdminGroupsCreateResponse
 ```
 
 Update an existing group
@@ -837,9 +847,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminGroupsApi(
 );
 $orgId = 'orgId_example'; // string
 $groupId = 'groupId_example'; // string
+$putAdminGroupsUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminGroupsUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminGroupsUpdateRequest
 
 try {
-    $result = $apiInstance->putAdminGroupsUpdate($orgId, $groupId);
+    $result = $apiInstance->putAdminGroupsUpdate($orgId, $groupId, $putAdminGroupsUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminGroupsApi->putAdminGroupsUpdate: ', $e->getMessage(), PHP_EOL;
@@ -852,6 +863,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **groupId** | **string**|  | |
+| **putAdminGroupsUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminGroupsUpdateRequest**](../Model/PutAdminGroupsUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -863,7 +875,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

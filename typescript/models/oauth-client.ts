@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -92,5 +92,124 @@ export interface OAuthClient {
      * @memberof OAuthClient
      */
     'cibaEnabled'?: boolean;
+    /**
+     * Detailed responses only. Browser CORS origins (scheme://host[:port]).
+     * @type {Array<string>}
+     * @memberof OAuthClient
+     */
+    'allowedOrigins'?: Array<string>;
+    /**
+     * Detailed responses only. Addresses that the end-session endpoint may return to.
+     * @type {Array<string>}
+     * @memberof OAuthClient
+     */
+    'postLogoutRedirectUris'?: Array<string>;
+    /**
+     * Detailed responses only. OIDC Front-Channel Logout address.
+     * @type {string}
+     * @memberof OAuthClient
+     */
+    'frontchannelLogoutUri'?: string | null;
+    /**
+     * Detailed responses only. OIDC Back-Channel Logout address.
+     * @type {string}
+     * @memberof OAuthClient
+     */
+    'backchannelLogoutUri'?: string | null;
+    /**
+     * Detailed responses only. Format of the access tokens that the client receives.
+     * @type {string}
+     * @memberof OAuthClient
+     */
+    'accessTokenFormat'?: OAuthClientAccessTokenFormat;
+    /**
+     * Detailed responses only.
+     * @type {string}
+     * @memberof OAuthClient
+     */
+    'tokenEndpointAuthMethod'?: OAuthClientTokenEndpointAuthMethod;
+    /**
+     * Detailed responses only. https address of the client\'s public keys.
+     * @type {string}
+     * @memberof OAuthClient
+     */
+    'jwksUri'?: string | null;
+    /**
+     * Detailed responses only. The client\'s public keys, inline.
+     * @type {{ [key: string]: any; }}
+     * @memberof OAuthClient
+     */
+    'jwks'?: { [key: string]: any; } | null;
+    /**
+     * Detailed responses only. FAPI 2.0 security profile.
+     * @type {string}
+     * @memberof OAuthClient
+     */
+    'fapiMode'?: OAuthClientFapiMode;
+    /**
+     * Detailed responses only. The stored switch; a FAPI profile requires PAR whatever it says.
+     * @type {boolean}
+     * @memberof OAuthClient
+     */
+    'requirePar'?: boolean;
+    /**
+     * Detailed responses only. The stored switch; a FAPI profile requires DPoP whatever it says.
+     * @type {boolean}
+     * @memberof OAuthClient
+     */
+    'dpopBoundAccessTokens'?: boolean;
+    /**
+     * Detailed responses only.
+     * @type {boolean}
+     * @memberof OAuthClient
+     */
+    'attestationBasedAuthEnabled'?: boolean;
+    /**
+     * Detailed responses only.
+     * @type {string}
+     * @memberof OAuthClient
+     */
+    'attesterIssuer'?: string | null;
+    /**
+     * Detailed responses only.
+     * @type {string}
+     * @memberof OAuthClient
+     */
+    'attesterJwksUri'?: string | null;
+    /**
+     * Detailed responses only. Whether the client may use token exchange (RFC 8693).
+     * @type {boolean}
+     * @memberof OAuthClient
+     */
+    'tokenExchangeEnabled'?: boolean;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum OAuthClientAccessTokenFormat {
+    OPAQUE = 'opaque',
+    JWT = 'jwt'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum OAuthClientTokenEndpointAuthMethod {
+    CLIENT_SECRET_BASIC = 'client_secret_basic',
+    PRIVATE_KEY_JWT = 'private_key_jwt',
+    NONE = 'none',
+    ATTEST_JWT_CLIENT_AUTH = 'attest_jwt_client_auth'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum OAuthClientFapiMode {
+    DISABLED = 'disabled',
+    FAPI2_BASELINE = 'fapi2_baseline',
+    FAPI2_ADVANCED = 'fapi2_advanced'
+}
+
 

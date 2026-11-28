@@ -16,11 +16,12 @@ open class AuthorizationAPI {
      Evaluate an ABAC policy decision for the caller
      
      - parameter orgId: (path)  
+     - parameter checkAbacRequest: (body)  
      - returns: CheckAbacResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func checkAbac(orgId: String) async throws -> CheckAbacResponse {
-        return try await checkAbacWithRequestBuilder(orgId: orgId).execute().body
+    open class func checkAbac(orgId: String, checkAbacRequest: CheckAbacRequest) async throws -> CheckAbacResponse {
+        return try await checkAbacWithRequestBuilder(orgId: orgId, checkAbacRequest: checkAbacRequest).execute().body
     }
 
     /**
@@ -31,20 +32,21 @@ open class AuthorizationAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter checkAbacRequest: (body)  
      - returns: RequestBuilder<CheckAbacResponse> 
      */
-    open class func checkAbacWithRequestBuilder(orgId: String) -> RequestBuilder<CheckAbacResponse> {
+    open class func checkAbacWithRequestBuilder(orgId: String, checkAbacRequest: CheckAbacRequest) -> RequestBuilder<CheckAbacResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/abac/check"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: checkAbacRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -58,11 +60,12 @@ open class AuthorizationAPI {
      Evaluate up to 100 ABAC checks for the caller in one call
      
      - parameter orgId: (path)  
+     - parameter checkAbacBulkRequest: (body)  
      - returns: CheckAbacBulkResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func checkAbacBulk(orgId: String) async throws -> CheckAbacBulkResponse {
-        return try await checkAbacBulkWithRequestBuilder(orgId: orgId).execute().body
+    open class func checkAbacBulk(orgId: String, checkAbacBulkRequest: CheckAbacBulkRequest) async throws -> CheckAbacBulkResponse {
+        return try await checkAbacBulkWithRequestBuilder(orgId: orgId, checkAbacBulkRequest: checkAbacBulkRequest).execute().body
     }
 
     /**
@@ -73,20 +76,21 @@ open class AuthorizationAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter checkAbacBulkRequest: (body)  
      - returns: RequestBuilder<CheckAbacBulkResponse> 
      */
-    open class func checkAbacBulkWithRequestBuilder(orgId: String) -> RequestBuilder<CheckAbacBulkResponse> {
+    open class func checkAbacBulkWithRequestBuilder(orgId: String, checkAbacBulkRequest: CheckAbacBulkRequest) -> RequestBuilder<CheckAbacBulkResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/abac/check-bulk"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: checkAbacBulkRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -99,11 +103,12 @@ open class AuthorizationAPI {
     /**
      Check whether the subject holds all of the permissions
      
+     - parameter checkPermissionsBulkRequest: (body)  
      - returns: CheckAnyPermissionResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func checkAllPermissions() async throws -> CheckAnyPermissionResponse {
-        return try await checkAllPermissionsWithRequestBuilder().execute().body
+    open class func checkAllPermissions(checkPermissionsBulkRequest: CheckPermissionsBulkRequest) async throws -> CheckAnyPermissionResponse {
+        return try await checkAllPermissionsWithRequestBuilder(checkPermissionsBulkRequest: checkPermissionsBulkRequest).execute().body
     }
 
     /**
@@ -116,17 +121,18 @@ open class AuthorizationAPI {
      - Bearer Token:
        - type: http
        - name: BearerAuth
+     - parameter checkPermissionsBulkRequest: (body)  
      - returns: RequestBuilder<CheckAnyPermissionResponse> 
      */
-    open class func checkAllPermissionsWithRequestBuilder() -> RequestBuilder<CheckAnyPermissionResponse> {
+    open class func checkAllPermissionsWithRequestBuilder(checkPermissionsBulkRequest: CheckPermissionsBulkRequest) -> RequestBuilder<CheckAnyPermissionResponse> {
         let localVariablePath = "/api/v1/authz/check-all"
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: checkPermissionsBulkRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -139,11 +145,12 @@ open class AuthorizationAPI {
     /**
      Check whether the subject holds any of the permissions
      
+     - parameter checkPermissionsBulkRequest: (body)  
      - returns: CheckAnyPermissionResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func checkAnyPermission() async throws -> CheckAnyPermissionResponse {
-        return try await checkAnyPermissionWithRequestBuilder().execute().body
+    open class func checkAnyPermission(checkPermissionsBulkRequest: CheckPermissionsBulkRequest) async throws -> CheckAnyPermissionResponse {
+        return try await checkAnyPermissionWithRequestBuilder(checkPermissionsBulkRequest: checkPermissionsBulkRequest).execute().body
     }
 
     /**
@@ -156,17 +163,18 @@ open class AuthorizationAPI {
      - Bearer Token:
        - type: http
        - name: BearerAuth
+     - parameter checkPermissionsBulkRequest: (body)  
      - returns: RequestBuilder<CheckAnyPermissionResponse> 
      */
-    open class func checkAnyPermissionWithRequestBuilder() -> RequestBuilder<CheckAnyPermissionResponse> {
+    open class func checkAnyPermissionWithRequestBuilder(checkPermissionsBulkRequest: CheckPermissionsBulkRequest) -> RequestBuilder<CheckAnyPermissionResponse> {
         let localVariablePath = "/api/v1/authz/check-any"
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: checkPermissionsBulkRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -179,11 +187,12 @@ open class AuthorizationAPI {
     /**
      Check one permission
      
+     - parameter checkPermissionRequest: (body)  
      - returns: CheckPermissionResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func checkPermission() async throws -> CheckPermissionResponse {
-        return try await checkPermissionWithRequestBuilder().execute().body
+    open class func checkPermission(checkPermissionRequest: CheckPermissionRequest) async throws -> CheckPermissionResponse {
+        return try await checkPermissionWithRequestBuilder(checkPermissionRequest: checkPermissionRequest).execute().body
     }
 
     /**
@@ -196,17 +205,18 @@ open class AuthorizationAPI {
      - Bearer Token:
        - type: http
        - name: BearerAuth
+     - parameter checkPermissionRequest: (body)  
      - returns: RequestBuilder<CheckPermissionResponse> 
      */
-    open class func checkPermissionWithRequestBuilder() -> RequestBuilder<CheckPermissionResponse> {
+    open class func checkPermissionWithRequestBuilder(checkPermissionRequest: CheckPermissionRequest) -> RequestBuilder<CheckPermissionResponse> {
         let localVariablePath = "/api/v1/authz/check"
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: checkPermissionRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -219,11 +229,12 @@ open class AuthorizationAPI {
     /**
      Check up to 100 permissions in one call
      
+     - parameter checkPermissionsBulkRequest: (body)  
      - returns: CheckPermissionsBulkResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func checkPermissionsBulk() async throws -> CheckPermissionsBulkResponse {
-        return try await checkPermissionsBulkWithRequestBuilder().execute().body
+    open class func checkPermissionsBulk(checkPermissionsBulkRequest: CheckPermissionsBulkRequest) async throws -> CheckPermissionsBulkResponse {
+        return try await checkPermissionsBulkWithRequestBuilder(checkPermissionsBulkRequest: checkPermissionsBulkRequest).execute().body
     }
 
     /**
@@ -236,17 +247,18 @@ open class AuthorizationAPI {
      - Bearer Token:
        - type: http
        - name: BearerAuth
+     - parameter checkPermissionsBulkRequest: (body)  
      - returns: RequestBuilder<CheckPermissionsBulkResponse> 
      */
-    open class func checkPermissionsBulkWithRequestBuilder() -> RequestBuilder<CheckPermissionsBulkResponse> {
+    open class func checkPermissionsBulkWithRequestBuilder(checkPermissionsBulkRequest: CheckPermissionsBulkRequest) -> RequestBuilder<CheckPermissionsBulkResponse> {
         let localVariablePath = "/api/v1/authz/check-bulk"
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: checkPermissionsBulkRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -259,11 +271,12 @@ open class AuthorizationAPI {
     /**
      Zanzibar relationship check
      
+     - parameter checkRelationRequest: (body)  
      - returns: CheckRelationResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func checkRelation() async throws -> CheckRelationResponse {
-        return try await checkRelationWithRequestBuilder().execute().body
+    open class func checkRelation(checkRelationRequest: CheckRelationRequest) async throws -> CheckRelationResponse {
+        return try await checkRelationWithRequestBuilder(checkRelationRequest: checkRelationRequest).execute().body
     }
 
     /**
@@ -276,17 +289,18 @@ open class AuthorizationAPI {
      - Bearer Token:
        - type: http
        - name: BearerAuth
+     - parameter checkRelationRequest: (body)  
      - returns: RequestBuilder<CheckRelationResponse> 
      */
-    open class func checkRelationWithRequestBuilder() -> RequestBuilder<CheckRelationResponse> {
+    open class func checkRelationWithRequestBuilder(checkRelationRequest: CheckRelationRequest) -> RequestBuilder<CheckRelationResponse> {
         let localVariablePath = "/api/v1/authz/zanzibar/check"
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: checkRelationRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -300,11 +314,12 @@ open class AuthorizationAPI {
      Zanzibar relationship check
      
      - parameter orgId: (path)  
+     - parameter checkRelationScopedRequest: (body)  
      - returns: CheckRelationScopedResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func checkRelationScoped(orgId: String) async throws -> CheckRelationScopedResponse {
-        return try await checkRelationScopedWithRequestBuilder(orgId: orgId).execute().body
+    open class func checkRelationScoped(orgId: String, checkRelationScopedRequest: CheckRelationScopedRequest) async throws -> CheckRelationScopedResponse {
+        return try await checkRelationScopedWithRequestBuilder(orgId: orgId, checkRelationScopedRequest: checkRelationScopedRequest).execute().body
     }
 
     /**
@@ -317,20 +332,21 @@ open class AuthorizationAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter checkRelationScopedRequest: (body)  
      - returns: RequestBuilder<CheckRelationScopedResponse> 
      */
-    open class func checkRelationScopedWithRequestBuilder(orgId: String) -> RequestBuilder<CheckRelationScopedResponse> {
+    open class func checkRelationScopedWithRequestBuilder(orgId: String, checkRelationScopedRequest: CheckRelationScopedRequest) -> RequestBuilder<CheckRelationScopedResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/zanzibar/check"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: checkRelationScopedRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -343,11 +359,12 @@ open class AuthorizationAPI {
     /**
      AuthZEN 1.0 access evaluation
      
+     - parameter evaluateRequest: (body) AuthZEN Authorization API 1.0 evaluation request. 
      - returns: AuthZenDecision
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func evaluate() async throws -> AuthZenDecision {
-        return try await evaluateWithRequestBuilder().execute().body
+    open class func evaluate(evaluateRequest: EvaluateRequest) async throws -> AuthZenDecision {
+        return try await evaluateWithRequestBuilder(evaluateRequest: evaluateRequest).execute().body
     }
 
     /**
@@ -360,17 +377,18 @@ open class AuthorizationAPI {
      - Bearer Token:
        - type: http
        - name: BearerAuth
+     - parameter evaluateRequest: (body) AuthZEN Authorization API 1.0 evaluation request. 
      - returns: RequestBuilder<AuthZenDecision> 
      */
-    open class func evaluateWithRequestBuilder() -> RequestBuilder<AuthZenDecision> {
+    open class func evaluateWithRequestBuilder(evaluateRequest: EvaluateRequest) -> RequestBuilder<AuthZenDecision> {
         let localVariablePath = "/api/v1/authz/v1/evaluation"
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: evaluateRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -383,11 +401,12 @@ open class AuthorizationAPI {
     /**
      AuthZEN 1.0 boxcarred access evaluations
      
+     - parameter evaluateBatchRequest: (body) AuthZEN Authorization API 1.0 batch evaluation request. 
      - returns: EvaluateBatchResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func evaluateBatch() async throws -> EvaluateBatchResponse {
-        return try await evaluateBatchWithRequestBuilder().execute().body
+    open class func evaluateBatch(evaluateBatchRequest: EvaluateBatchRequest) async throws -> EvaluateBatchResponse {
+        return try await evaluateBatchWithRequestBuilder(evaluateBatchRequest: evaluateBatchRequest).execute().body
     }
 
     /**
@@ -400,17 +419,18 @@ open class AuthorizationAPI {
      - Bearer Token:
        - type: http
        - name: BearerAuth
+     - parameter evaluateBatchRequest: (body) AuthZEN Authorization API 1.0 batch evaluation request. 
      - returns: RequestBuilder<EvaluateBatchResponse> 
      */
-    open class func evaluateBatchWithRequestBuilder() -> RequestBuilder<EvaluateBatchResponse> {
+    open class func evaluateBatchWithRequestBuilder(evaluateBatchRequest: EvaluateBatchRequest) -> RequestBuilder<EvaluateBatchResponse> {
         let localVariablePath = "/api/v1/authz/v1/evaluations"
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: evaluateBatchRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -706,11 +726,12 @@ open class AuthorizationAPI {
      - parameter resourceType: (path)  
      - parameter resourceId: (path)  
      - parameter attributeSlug: (path)  
+     - parameter setResourceAttributeRequest: (body)  
      - returns: SetResourceAttributeResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func setResourceAttribute(orgId: String, resourceType: String, resourceId: String, attributeSlug: String) async throws -> SetResourceAttributeResponse {
-        return try await setResourceAttributeWithRequestBuilder(orgId: orgId, resourceType: resourceType, resourceId: resourceId, attributeSlug: attributeSlug).execute().body
+    open class func setResourceAttribute(orgId: String, resourceType: String, resourceId: String, attributeSlug: String, setResourceAttributeRequest: SetResourceAttributeRequest) async throws -> SetResourceAttributeResponse {
+        return try await setResourceAttributeWithRequestBuilder(orgId: orgId, resourceType: resourceType, resourceId: resourceId, attributeSlug: attributeSlug, setResourceAttributeRequest: setResourceAttributeRequest).execute().body
     }
 
     /**
@@ -724,9 +745,10 @@ open class AuthorizationAPI {
      - parameter resourceType: (path)  
      - parameter resourceId: (path)  
      - parameter attributeSlug: (path)  
+     - parameter setResourceAttributeRequest: (body)  
      - returns: RequestBuilder<SetResourceAttributeResponse> 
      */
-    open class func setResourceAttributeWithRequestBuilder(orgId: String, resourceType: String, resourceId: String, attributeSlug: String) -> RequestBuilder<SetResourceAttributeResponse> {
+    open class func setResourceAttributeWithRequestBuilder(orgId: String, resourceType: String, resourceId: String, attributeSlug: String, setResourceAttributeRequest: SetResourceAttributeRequest) -> RequestBuilder<SetResourceAttributeResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -741,12 +763,12 @@ open class AuthorizationAPI {
         let attributeSlugPostEscape = attributeSlugPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{attributeSlug}", with: attributeSlugPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: setResourceAttributeRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -762,11 +784,12 @@ open class AuthorizationAPI {
      - parameter orgId: (path)  
      - parameter userId: (path)  
      - parameter attributeSlug: (path)  
+     - parameter setResourceAttributeRequest: (body)  
      - returns: SetUserAttributeResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func setUserAttribute(orgId: String, userId: String, attributeSlug: String) async throws -> SetUserAttributeResponse {
-        return try await setUserAttributeWithRequestBuilder(orgId: orgId, userId: userId, attributeSlug: attributeSlug).execute().body
+    open class func setUserAttribute(orgId: String, userId: String, attributeSlug: String, setResourceAttributeRequest: SetResourceAttributeRequest) async throws -> SetUserAttributeResponse {
+        return try await setUserAttributeWithRequestBuilder(orgId: orgId, userId: userId, attributeSlug: attributeSlug, setResourceAttributeRequest: setResourceAttributeRequest).execute().body
     }
 
     /**
@@ -779,9 +802,10 @@ open class AuthorizationAPI {
      - parameter orgId: (path)  
      - parameter userId: (path)  
      - parameter attributeSlug: (path)  
+     - parameter setResourceAttributeRequest: (body)  
      - returns: RequestBuilder<SetUserAttributeResponse> 
      */
-    open class func setUserAttributeWithRequestBuilder(orgId: String, userId: String, attributeSlug: String) -> RequestBuilder<SetUserAttributeResponse> {
+    open class func setUserAttributeWithRequestBuilder(orgId: String, userId: String, attributeSlug: String, setResourceAttributeRequest: SetResourceAttributeRequest) -> RequestBuilder<SetUserAttributeResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -793,12 +817,12 @@ open class AuthorizationAPI {
         let attributeSlugPostEscape = attributeSlugPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{attributeSlug}", with: attributeSlugPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: setResourceAttributeRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

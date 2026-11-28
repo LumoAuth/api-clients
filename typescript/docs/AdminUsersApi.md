@@ -37,7 +37,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**updateUserRoles**](#updateuserroles) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Replace a user\&#39;s roles|
 
 # **addUserGroup**
-> AddUserGroupResponse addUserGroup()
+> AddUserGroupResponse addUserGroup(addUserGroupRequest)
 
 
 ### Example
@@ -45,7 +45,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 ```typescript
 import {
     AdminUsersApi,
-    Configuration
+    Configuration,
+    AddUserGroupRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -53,10 +54,12 @@ const apiInstance = new AdminUsersApi(configuration);
 
 let orgId: string; // (default to undefined)
 let userId: string; // (default to undefined)
+let addUserGroupRequest: AddUserGroupRequest; //
 
 const { status, data } = await apiInstance.addUserGroup(
     orgId,
-    userId
+    userId,
+    addUserGroupRequest
 );
 ```
 
@@ -64,6 +67,7 @@ const { status, data } = await apiInstance.addUserGroup(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **addUserGroupRequest** | **AddUserGroupRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **userId** | [**string**] |  | defaults to undefined|
 
@@ -78,7 +82,7 @@ const { status, data } = await apiInstance.addUserGroup(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -90,16 +94,17 @@ const { status, data } = await apiInstance.addUserGroup(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **addUserPermission**
-> AddUserPermissionResponse addUserPermission()
+> AddUserPermissionResponse addUserPermission(addUserPermissionRequest)
 
-Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization\'s own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 ### Example
 
 ```typescript
 import {
     AdminUsersApi,
-    Configuration
+    Configuration,
+    AddUserPermissionRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -107,10 +112,12 @@ const apiInstance = new AdminUsersApi(configuration);
 
 let orgId: string; // (default to undefined)
 let userId: string; // (default to undefined)
+let addUserPermissionRequest: AddUserPermissionRequest; //
 
 const { status, data } = await apiInstance.addUserPermission(
     orgId,
-    userId
+    userId,
+    addUserPermissionRequest
 );
 ```
 
@@ -118,6 +125,7 @@ const { status, data } = await apiInstance.addUserPermission(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **addUserPermissionRequest** | **AddUserPermissionRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **userId** | [**string**] |  | defaults to undefined|
 
@@ -132,7 +140,7 @@ const { status, data } = await apiInstance.addUserPermission(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -144,7 +152,7 @@ const { status, data } = await apiInstance.addUserPermission(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **addUserRole**
-> AddUserRoleResponse addUserRole()
+> AddUserRoleResponse addUserRole(addUserRoleRequest)
 
 
 ### Example
@@ -152,7 +160,8 @@ const { status, data } = await apiInstance.addUserPermission(
 ```typescript
 import {
     AdminUsersApi,
-    Configuration
+    Configuration,
+    AddUserRoleRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -160,10 +169,12 @@ const apiInstance = new AdminUsersApi(configuration);
 
 let orgId: string; // (default to undefined)
 let userId: string; // (default to undefined)
+let addUserRoleRequest: AddUserRoleRequest; //
 
 const { status, data } = await apiInstance.addUserRole(
     orgId,
-    userId
+    userId,
+    addUserRoleRequest
 );
 ```
 
@@ -171,6 +182,7 @@ const { status, data } = await apiInstance.addUserRole(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **addUserRoleRequest** | **AddUserRoleRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **userId** | [**string**] |  | defaults to undefined|
 
@@ -185,7 +197,7 @@ const { status, data } = await apiInstance.addUserRole(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -597,7 +609,7 @@ const { status, data } = await apiInstance.blockUser(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createUser**
-> CreateUserResponse createUser()
+> CreateUserResponse createUser(createUserRequest)
 
 
 ### Example
@@ -605,16 +617,19 @@ const { status, data } = await apiInstance.blockUser(
 ```typescript
 import {
     AdminUsersApi,
-    Configuration
+    Configuration,
+    CreateUserRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminUsersApi(configuration);
 
 let orgId: string; // (default to undefined)
+let createUserRequest: CreateUserRequest; //
 
 const { status, data } = await apiInstance.createUser(
-    orgId
+    orgId,
+    createUserRequest
 );
 ```
 
@@ -622,6 +637,7 @@ const { status, data } = await apiInstance.createUser(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **createUserRequest** | **CreateUserRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -635,7 +651,7 @@ const { status, data } = await apiInstance.createUser(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1052,7 +1068,7 @@ const { status, data } = await apiInstance.markUserVerified(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchUser**
-> UpdateUserResponse patchUser()
+> UpdateUserResponse patchUser(updateUserRequest)
 
 Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive`, `staff` or `emailVerified` needs a caller who holds every permission of the user. `staff: true` is refused with 409 for an account that is a member of a customer organization. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
 
@@ -1061,7 +1077,8 @@ Changes the fields that the request sends. `password` is not accepted here (400)
 ```typescript
 import {
     AdminUsersApi,
-    Configuration
+    Configuration,
+    UpdateUserRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -1069,10 +1086,12 @@ const apiInstance = new AdminUsersApi(configuration);
 
 let orgId: string; // (default to undefined)
 let userId: string; // (default to undefined)
+let updateUserRequest: UpdateUserRequest; //Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
 const { status, data } = await apiInstance.patchUser(
     orgId,
-    userId
+    userId,
+    updateUserRequest
 );
 ```
 
@@ -1080,6 +1099,7 @@ const { status, data } = await apiInstance.patchUser(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **updateUserRequest** | **UpdateUserRequest**| Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **userId** | [**string**] |  | defaults to undefined|
 
@@ -1094,7 +1114,7 @@ const { status, data } = await apiInstance.patchUser(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1384,7 +1404,7 @@ const { status, data } = await apiInstance.sendUserVerificationEmail(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **setUserPassword**
-> SetUserPasswordPostResponse setUserPassword()
+> SetUserPasswordPostResponse setUserPassword(setUserPasswordPostRequest)
 
 Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
@@ -1393,7 +1413,8 @@ Needs `users.edit`, and the caller must hold every permission of the user. A sig
 ```typescript
 import {
     AdminUsersApi,
-    Configuration
+    Configuration,
+    SetUserPasswordPostRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -1401,10 +1422,12 @@ const apiInstance = new AdminUsersApi(configuration);
 
 let orgId: string; // (default to undefined)
 let userId: string; // (default to undefined)
+let setUserPasswordPostRequest: SetUserPasswordPostRequest; //
 
 const { status, data } = await apiInstance.setUserPassword(
     orgId,
-    userId
+    userId,
+    setUserPasswordPostRequest
 );
 ```
 
@@ -1412,6 +1435,7 @@ const { status, data } = await apiInstance.setUserPassword(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **setUserPasswordPostRequest** | **SetUserPasswordPostRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **userId** | [**string**] |  | defaults to undefined|
 
@@ -1426,7 +1450,7 @@ const { status, data } = await apiInstance.setUserPassword(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1440,7 +1464,7 @@ const { status, data } = await apiInstance.setUserPassword(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **setUserPasswordPost**
-> SetUserPasswordPostResponse setUserPasswordPost()
+> SetUserPasswordPostResponse setUserPasswordPost(setUserPasswordPostRequest)
 
 Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
 
@@ -1449,7 +1473,8 @@ Needs `users.edit`, and the caller must hold every permission of the user. A sig
 ```typescript
 import {
     AdminUsersApi,
-    Configuration
+    Configuration,
+    SetUserPasswordPostRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -1457,10 +1482,12 @@ const apiInstance = new AdminUsersApi(configuration);
 
 let orgId: string; // (default to undefined)
 let userId: string; // (default to undefined)
+let setUserPasswordPostRequest: SetUserPasswordPostRequest; //
 
 const { status, data } = await apiInstance.setUserPasswordPost(
     orgId,
-    userId
+    userId,
+    setUserPasswordPostRequest
 );
 ```
 
@@ -1468,6 +1495,7 @@ const { status, data } = await apiInstance.setUserPasswordPost(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **setUserPasswordPostRequest** | **SetUserPasswordPostRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **userId** | [**string**] |  | defaults to undefined|
 
@@ -1482,7 +1510,7 @@ const { status, data } = await apiInstance.setUserPasswordPost(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1602,7 +1630,7 @@ const { status, data } = await apiInstance.unblockUser(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateUser**
-> UpdateUserResponse updateUser()
+> UpdateUserResponse updateUser(updateUserRequest)
 
 Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive`, `staff` or `emailVerified` needs a caller who holds every permission of the user. `staff: true` is refused with 409 for an account that is a member of a customer organization. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
 
@@ -1611,7 +1639,8 @@ Changes the fields that the request sends. `password` is not accepted here (400)
 ```typescript
 import {
     AdminUsersApi,
-    Configuration
+    Configuration,
+    UpdateUserRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -1619,10 +1648,12 @@ const apiInstance = new AdminUsersApi(configuration);
 
 let orgId: string; // (default to undefined)
 let userId: string; // (default to undefined)
+let updateUserRequest: UpdateUserRequest; //Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
 
 const { status, data } = await apiInstance.updateUser(
     orgId,
-    userId
+    userId,
+    updateUserRequest
 );
 ```
 
@@ -1630,6 +1661,7 @@ const { status, data } = await apiInstance.updateUser(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **updateUserRequest** | **UpdateUserRequest**| Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **userId** | [**string**] |  | defaults to undefined|
 
@@ -1644,7 +1676,7 @@ const { status, data } = await apiInstance.updateUser(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1659,7 +1691,7 @@ const { status, data } = await apiInstance.updateUser(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateUserGroups**
-> UpdateUserGroupsResponse updateUserGroups()
+> UpdateUserGroupsResponse updateUserGroups(updateUserGroupsRequest)
 
 
 ### Example
@@ -1667,7 +1699,8 @@ const { status, data } = await apiInstance.updateUser(
 ```typescript
 import {
     AdminUsersApi,
-    Configuration
+    Configuration,
+    UpdateUserGroupsRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -1675,10 +1708,12 @@ const apiInstance = new AdminUsersApi(configuration);
 
 let orgId: string; // (default to undefined)
 let userId: string; // (default to undefined)
+let updateUserGroupsRequest: UpdateUserGroupsRequest; //
 
 const { status, data } = await apiInstance.updateUserGroups(
     orgId,
-    userId
+    userId,
+    updateUserGroupsRequest
 );
 ```
 
@@ -1686,6 +1721,7 @@ const { status, data } = await apiInstance.updateUserGroups(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **updateUserGroupsRequest** | **UpdateUserGroupsRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **userId** | [**string**] |  | defaults to undefined|
 
@@ -1700,7 +1736,7 @@ const { status, data } = await apiInstance.updateUserGroups(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1712,7 +1748,7 @@ const { status, data } = await apiInstance.updateUserGroups(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateUserRoles**
-> UpdateUserRolesResponse updateUserRoles()
+> UpdateUserRolesResponse updateUserRoles(adminGroupsUpdateRolesRequest)
 
 
 ### Example
@@ -1720,7 +1756,8 @@ const { status, data } = await apiInstance.updateUserGroups(
 ```typescript
 import {
     AdminUsersApi,
-    Configuration
+    Configuration,
+    AdminGroupsUpdateRolesRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -1728,10 +1765,12 @@ const apiInstance = new AdminUsersApi(configuration);
 
 let orgId: string; // (default to undefined)
 let userId: string; // (default to undefined)
+let adminGroupsUpdateRolesRequest: AdminGroupsUpdateRolesRequest; //
 
 const { status, data } = await apiInstance.updateUserRoles(
     orgId,
-    userId
+    userId,
+    adminGroupsUpdateRolesRequest
 );
 ```
 
@@ -1739,6 +1778,7 @@ const { status, data } = await apiInstance.updateUserRoles(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminGroupsUpdateRolesRequest** | **AdminGroupsUpdateRolesRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **userId** | [**string**] |  | defaults to undefined|
 
@@ -1753,7 +1793,7 @@ const { status, data } = await apiInstance.updateUserRoles(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

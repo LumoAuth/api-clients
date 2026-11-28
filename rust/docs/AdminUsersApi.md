@@ -40,7 +40,7 @@ Method | HTTP request | Description
 
 ## add_user_group
 
-> models::AddUserGroupResponse add_user_group(org_id, user_id)
+> models::AddUserGroupResponse add_user_group(org_id, user_id, add_user_group_request)
 Add a user to a group
 
 ### Parameters
@@ -50,6 +50,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **user_id** | **String** |  | [required] |
+**add_user_group_request** | [**AddUserGroupRequest**](AddUserGroupRequest.md) |  | [required] |
 
 ### Return type
 
@@ -61,7 +62,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -69,10 +70,10 @@ Name | Type | Description  | Required | Notes
 
 ## add_user_permission
 
-> models::AddUserPermissionResponse add_user_permission(org_id, user_id)
+> models::AddUserPermissionResponse add_user_permission(org_id, user_id, add_user_permission_request)
 Assign a permission to a user
 
-Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 ### Parameters
 
@@ -81,6 +82,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **user_id** | **String** |  | [required] |
+**add_user_permission_request** | [**AddUserPermissionRequest**](AddUserPermissionRequest.md) |  | [required] |
 
 ### Return type
 
@@ -92,7 +94,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -100,7 +102,7 @@ Name | Type | Description  | Required | Notes
 
 ## add_user_role
 
-> models::AddUserRoleResponse add_user_role(org_id, user_id)
+> models::AddUserRoleResponse add_user_role(org_id, user_id, add_user_role_request)
 Assign a role to a user
 
 ### Parameters
@@ -110,6 +112,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **user_id** | **String** |  | [required] |
+**add_user_role_request** | [**AddUserRoleRequest**](AddUserRoleRequest.md) |  | [required] |
 
 ### Return type
 
@@ -121,7 +124,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -346,7 +349,7 @@ Name | Type | Description  | Required | Notes
 
 ## create_user
 
-> models::CreateUserResponse create_user(org_id)
+> models::CreateUserResponse create_user(org_id, create_user_request)
 Create a user
 
 ### Parameters
@@ -355,6 +358,7 @@ Create a user
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**create_user_request** | [**CreateUserRequest**](CreateUserRequest.md) |  | [required] |
 
 ### Return type
 
@@ -366,7 +370,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -588,7 +592,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_user
 
-> models::UpdateUserResponse patch_user(org_id, user_id)
+> models::UpdateUserResponse patch_user(org_id, user_id, update_user_request)
 Update a user
 
 Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive`, `staff` or `emailVerified` needs a caller who holds every permission of the user. `staff: true` is refused with 409 for an account that is a member of a customer organization. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
@@ -600,6 +604,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **user_id** | **String** |  | [required] |
+**update_user_request** | [**UpdateUserRequest**](UpdateUserRequest.md) | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | [required] |
 
 ### Return type
 
@@ -611,7 +616,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -769,7 +774,7 @@ Name | Type | Description  | Required | Notes
 
 ## set_user_password
 
-> models::SetUserPasswordPostResponse set_user_password(org_id, user_id)
+> models::SetUserPasswordPostResponse set_user_password(org_id, user_id, set_user_password_post_request)
 Set a user's password
 
 Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
@@ -781,6 +786,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **user_id** | **String** |  | [required] |
+**set_user_password_post_request** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md) |  | [required] |
 
 ### Return type
 
@@ -792,7 +798,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -800,7 +806,7 @@ Name | Type | Description  | Required | Notes
 
 ## set_user_password_post
 
-> models::SetUserPasswordPostResponse set_user_password_post(org_id, user_id)
+> models::SetUserPasswordPostResponse set_user_password_post(org_id, user_id, set_user_password_post_request)
 Set a user's password
 
 Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
@@ -812,6 +818,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **user_id** | **String** |  | [required] |
+**set_user_password_post_request** | [**SetUserPasswordPostRequest**](SetUserPasswordPostRequest.md) |  | [required] |
 
 ### Return type
 
@@ -823,7 +830,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -889,7 +896,7 @@ Name | Type | Description  | Required | Notes
 
 ## update_user
 
-> models::UpdateUserResponse update_user(org_id, user_id)
+> models::UpdateUserResponse update_user(org_id, user_id, update_user_request)
 Update a user
 
 Changes the fields that the request sends. `password` is not accepted here (400): set it with PUT /users/{userId}/password. A change of `email`, `phoneNumber`, `isActive`, `staff` or `emailVerified` needs a caller who holds every permission of the user. `staff: true` is refused with 409 for an account that is a member of a customer organization. A change of `email` also needs a fresh sign-in of a signed-in administrator, as setting a password does: a Bearer token with a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`) and, for an administrator who holds a second factor, `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to that check.
@@ -901,6 +908,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **user_id** | **String** |  | [required] |
+**update_user_request** | [**UpdateUserRequest**](UpdateUserRequest.md) | Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here. | [required] |
 
 ### Return type
 
@@ -912,7 +920,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -920,7 +928,7 @@ Name | Type | Description  | Required | Notes
 
 ## update_user_groups
 
-> models::UpdateUserGroupsResponse update_user_groups(org_id, user_id)
+> models::UpdateUserGroupsResponse update_user_groups(org_id, user_id, update_user_groups_request)
 Replace a user's groups
 
 ### Parameters
@@ -930,6 +938,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **user_id** | **String** |  | [required] |
+**update_user_groups_request** | [**UpdateUserGroupsRequest**](UpdateUserGroupsRequest.md) |  | [required] |
 
 ### Return type
 
@@ -941,7 +950,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -949,7 +958,7 @@ Name | Type | Description  | Required | Notes
 
 ## update_user_roles
 
-> models::UpdateUserRolesResponse update_user_roles(org_id, user_id)
+> models::UpdateUserRolesResponse update_user_roles(org_id, user_id, admin_groups_update_roles_request)
 Replace a user's roles
 
 ### Parameters
@@ -959,6 +968,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **user_id** | **String** |  | [required] |
+**admin_groups_update_roles_request** | [**AdminGroupsUpdateRolesRequest**](AdminGroupsUpdateRolesRequest.md) |  | [required] |
 
 ### Return type
 
@@ -970,7 +980,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -40,7 +40,7 @@ type AdminUsersAPI interface {
 	/*
 	AddUserPermission Assign a permission to a user
 
-	Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+	Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -492,6 +492,12 @@ type ApiAddUserGroupRequest struct {
 	ApiService AdminUsersAPI
 	orgId string
 	userId string
+	addUserGroupRequest *AddUserGroupRequest
+}
+
+func (r ApiAddUserGroupRequest) AddUserGroupRequest(addUserGroupRequest AddUserGroupRequest) ApiAddUserGroupRequest {
+	r.addUserGroupRequest = &addUserGroupRequest
+	return r
 }
 
 func (r ApiAddUserGroupRequest) Execute() (*AddUserGroupResponse, *http.Response, error) {
@@ -537,9 +543,12 @@ func (a *AdminUsersAPIService) AddUserGroupExecute(r ApiAddUserGroupRequest) (*A
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.addUserGroupRequest == nil {
+		return localVarReturnValue, nil, reportError("addUserGroupRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -555,6 +564,8 @@ func (a *AdminUsersAPIService) AddUserGroupExecute(r ApiAddUserGroupRequest) (*A
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.addUserGroupRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -611,6 +622,12 @@ type ApiAddUserPermissionRequest struct {
 	ApiService AdminUsersAPI
 	orgId string
 	userId string
+	addUserPermissionRequest *AddUserPermissionRequest
+}
+
+func (r ApiAddUserPermissionRequest) AddUserPermissionRequest(addUserPermissionRequest AddUserPermissionRequest) ApiAddUserPermissionRequest {
+	r.addUserPermissionRequest = &addUserPermissionRequest
+	return r
 }
 
 func (r ApiAddUserPermissionRequest) Execute() (*AddUserPermissionResponse, *http.Response, error) {
@@ -620,7 +637,7 @@ func (r ApiAddUserPermissionRequest) Execute() (*AddUserPermissionResponse, *htt
 /*
 AddUserPermission Assign a permission to a user
 
-Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization's own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -658,9 +675,12 @@ func (a *AdminUsersAPIService) AddUserPermissionExecute(r ApiAddUserPermissionRe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.addUserPermissionRequest == nil {
+		return localVarReturnValue, nil, reportError("addUserPermissionRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -676,6 +696,8 @@ func (a *AdminUsersAPIService) AddUserPermissionExecute(r ApiAddUserPermissionRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.addUserPermissionRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -732,6 +754,12 @@ type ApiAddUserRoleRequest struct {
 	ApiService AdminUsersAPI
 	orgId string
 	userId string
+	addUserRoleRequest *AddUserRoleRequest
+}
+
+func (r ApiAddUserRoleRequest) AddUserRoleRequest(addUserRoleRequest AddUserRoleRequest) ApiAddUserRoleRequest {
+	r.addUserRoleRequest = &addUserRoleRequest
+	return r
 }
 
 func (r ApiAddUserRoleRequest) Execute() (*AddUserRoleResponse, *http.Response, error) {
@@ -777,9 +805,12 @@ func (a *AdminUsersAPIService) AddUserRoleExecute(r ApiAddUserRoleRequest) (*Add
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.addUserRoleRequest == nil {
+		return localVarReturnValue, nil, reportError("addUserRoleRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -795,6 +826,8 @@ func (a *AdminUsersAPIService) AddUserRoleExecute(r ApiAddUserRoleRequest) (*Add
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.addUserRoleRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1722,6 +1755,12 @@ type ApiCreateUserRequest struct {
 	ctx context.Context
 	ApiService AdminUsersAPI
 	orgId string
+	createUserRequest *CreateUserRequest
+}
+
+func (r ApiCreateUserRequest) CreateUserRequest(createUserRequest CreateUserRequest) ApiCreateUserRequest {
+	r.createUserRequest = &createUserRequest
+	return r
 }
 
 func (r ApiCreateUserRequest) Execute() (*CreateUserResponse, *http.Response, error) {
@@ -1764,9 +1803,12 @@ func (a *AdminUsersAPIService) CreateUserExecute(r ApiCreateUserRequest) (*Creat
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.createUserRequest == nil {
+		return localVarReturnValue, nil, reportError("createUserRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1782,6 +1824,8 @@ func (a *AdminUsersAPIService) CreateUserExecute(r ApiCreateUserRequest) (*Creat
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.createUserRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2799,6 +2843,13 @@ type ApiPatchUserRequest struct {
 	ApiService AdminUsersAPI
 	orgId string
 	userId string
+	updateUserRequest *UpdateUserRequest
+}
+
+// Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
+func (r ApiPatchUserRequest) UpdateUserRequest(updateUserRequest UpdateUserRequest) ApiPatchUserRequest {
+	r.updateUserRequest = &updateUserRequest
+	return r
 }
 
 func (r ApiPatchUserRequest) Execute() (*UpdateUserResponse, *http.Response, error) {
@@ -2846,9 +2897,12 @@ func (a *AdminUsersAPIService) PatchUserExecute(r ApiPatchUserRequest) (*UpdateU
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.updateUserRequest == nil {
+		return localVarReturnValue, nil, reportError("updateUserRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2864,6 +2918,8 @@ func (a *AdminUsersAPIService) PatchUserExecute(r ApiPatchUserRequest) (*UpdateU
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.updateUserRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -3521,6 +3577,12 @@ type ApiSetUserPasswordRequest struct {
 	ApiService AdminUsersAPI
 	orgId string
 	userId string
+	setUserPasswordPostRequest *SetUserPasswordPostRequest
+}
+
+func (r ApiSetUserPasswordRequest) SetUserPasswordPostRequest(setUserPasswordPostRequest SetUserPasswordPostRequest) ApiSetUserPasswordRequest {
+	r.setUserPasswordPostRequest = &setUserPasswordPostRequest
+	return r
 }
 
 func (r ApiSetUserPasswordRequest) Execute() (*SetUserPasswordPostResponse, *http.Response, error) {
@@ -3568,9 +3630,12 @@ func (a *AdminUsersAPIService) SetUserPasswordExecute(r ApiSetUserPasswordReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.setUserPasswordPostRequest == nil {
+		return localVarReturnValue, nil, reportError("setUserPasswordPostRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -3586,6 +3651,8 @@ func (a *AdminUsersAPIService) SetUserPasswordExecute(r ApiSetUserPasswordReques
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.setUserPasswordPostRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -3642,6 +3709,12 @@ type ApiSetUserPasswordPostRequest struct {
 	ApiService AdminUsersAPI
 	orgId string
 	userId string
+	setUserPasswordPostRequest *SetUserPasswordPostRequest
+}
+
+func (r ApiSetUserPasswordPostRequest) SetUserPasswordPostRequest(setUserPasswordPostRequest SetUserPasswordPostRequest) ApiSetUserPasswordPostRequest {
+	r.setUserPasswordPostRequest = &setUserPasswordPostRequest
+	return r
 }
 
 func (r ApiSetUserPasswordPostRequest) Execute() (*SetUserPasswordPostResponse, *http.Response, error) {
@@ -3689,9 +3762,12 @@ func (a *AdminUsersAPIService) SetUserPasswordPostExecute(r ApiSetUserPasswordPo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.setUserPasswordPostRequest == nil {
+		return localVarReturnValue, nil, reportError("setUserPasswordPostRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -3707,6 +3783,8 @@ func (a *AdminUsersAPIService) SetUserPasswordPostExecute(r ApiSetUserPasswordPo
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.setUserPasswordPostRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -4001,6 +4079,13 @@ type ApiUpdateUserRequest struct {
 	ApiService AdminUsersAPI
 	orgId string
 	userId string
+	updateUserRequest *UpdateUserRequest
+}
+
+// Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
+func (r ApiUpdateUserRequest) UpdateUserRequest(updateUserRequest UpdateUserRequest) ApiUpdateUserRequest {
+	r.updateUserRequest = &updateUserRequest
+	return r
 }
 
 func (r ApiUpdateUserRequest) Execute() (*UpdateUserResponse, *http.Response, error) {
@@ -4048,9 +4133,12 @@ func (a *AdminUsersAPIService) UpdateUserExecute(r ApiUpdateUserRequest) (*Updat
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.updateUserRequest == nil {
+		return localVarReturnValue, nil, reportError("updateUserRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -4066,6 +4154,8 @@ func (a *AdminUsersAPIService) UpdateUserExecute(r ApiUpdateUserRequest) (*Updat
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.updateUserRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -4122,6 +4212,12 @@ type ApiUpdateUserGroupsRequest struct {
 	ApiService AdminUsersAPI
 	orgId string
 	userId string
+	updateUserGroupsRequest *UpdateUserGroupsRequest
+}
+
+func (r ApiUpdateUserGroupsRequest) UpdateUserGroupsRequest(updateUserGroupsRequest UpdateUserGroupsRequest) ApiUpdateUserGroupsRequest {
+	r.updateUserGroupsRequest = &updateUserGroupsRequest
+	return r
 }
 
 func (r ApiUpdateUserGroupsRequest) Execute() (*UpdateUserGroupsResponse, *http.Response, error) {
@@ -4167,9 +4263,12 @@ func (a *AdminUsersAPIService) UpdateUserGroupsExecute(r ApiUpdateUserGroupsRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.updateUserGroupsRequest == nil {
+		return localVarReturnValue, nil, reportError("updateUserGroupsRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -4185,6 +4284,8 @@ func (a *AdminUsersAPIService) UpdateUserGroupsExecute(r ApiUpdateUserGroupsRequ
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.updateUserGroupsRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -4241,6 +4342,12 @@ type ApiUpdateUserRolesRequest struct {
 	ApiService AdminUsersAPI
 	orgId string
 	userId string
+	adminGroupsUpdateRolesRequest *AdminGroupsUpdateRolesRequest
+}
+
+func (r ApiUpdateUserRolesRequest) AdminGroupsUpdateRolesRequest(adminGroupsUpdateRolesRequest AdminGroupsUpdateRolesRequest) ApiUpdateUserRolesRequest {
+	r.adminGroupsUpdateRolesRequest = &adminGroupsUpdateRolesRequest
+	return r
 }
 
 func (r ApiUpdateUserRolesRequest) Execute() (*UpdateUserRolesResponse, *http.Response, error) {
@@ -4286,9 +4393,12 @@ func (a *AdminUsersAPIService) UpdateUserRolesExecute(r ApiUpdateUserRolesReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminGroupsUpdateRolesRequest == nil {
+		return localVarReturnValue, nil, reportError("adminGroupsUpdateRolesRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -4304,6 +4414,8 @@ func (a *AdminUsersAPIService) UpdateUserRolesExecute(r ApiUpdateUserRolesReques
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminGroupsUpdateRolesRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

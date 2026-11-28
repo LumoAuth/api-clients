@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -63,7 +63,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //var response = instance.AdminRolesAddPermissions(orgId, roleId);
+            //AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest = null;
+            //var response = instance.AdminRolesAddPermissions(orgId, roleId, adminRolesAddPermissionsRequest);
             //Assert.IsType<MessageResponse>(response);
         }
 
@@ -76,7 +77,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //var response = instance.AdminRolesAddUser(orgId, roleId);
+            //AdminRolesAddUserRequest adminRolesAddUserRequest = null;
+            //var response = instance.AdminRolesAddUser(orgId, roleId, adminRolesAddUserRequest);
             //Assert.IsType<MessageResponse>(response);
         }
 
@@ -88,7 +90,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.AdminRolesCreate(orgId);
+            //AdminRolesCreateRequest adminRolesCreateRequest = null;
+            //var response = instance.AdminRolesCreate(orgId, adminRolesCreateRequest);
             //Assert.IsType<AdminRolesCreateResponse>(response);
         }
 
@@ -193,7 +196,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //var response = instance.AdminRolesUpdatePermissions(orgId, roleId);
+            //AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest = null;
+            //var response = instance.AdminRolesUpdatePermissions(orgId, roleId, adminRolesUpdatePermissionsRequest);
             //Assert.IsType<AdminRolesCreateResponse>(response);
         }
 
@@ -206,7 +210,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //var response = instance.PatchAdminRolesUpdate(orgId, roleId);
+            //PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest = null;
+            //var response = instance.PatchAdminRolesUpdate(orgId, roleId, putAdminOrgRolesUpdateRequest);
             //Assert.IsType<AdminRolesCreateResponse>(response);
         }
 
@@ -219,7 +224,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //var response = instance.PutAdminRolesUpdate(orgId, roleId);
+            //PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest = null;
+            //var response = instance.PutAdminRolesUpdate(orgId, roleId, putAdminOrgRolesUpdateRequest);
             //Assert.IsType<AdminRolesCreateResponse>(response);
         }
     }

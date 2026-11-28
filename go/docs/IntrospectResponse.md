@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **Scope** | Pointer to **string** | Space-separated scopes. | [optional] 
 **ClientId** | Pointer to **NullableString** |  | [optional] 
 **Sub** | Pointer to **string** | User id, or client_… / agent_… for non-user subjects. | [optional] 
-**Username** | Pointer to **string** | The user&#39;s email (user-bound tokens only). | [optional] 
+**Username** | Pointer to **string** | The user&#39;s e-mail address: only for a user token that carries the email scope (as UserInfo releases the address), opaque or JWT. | [optional] 
 **Exp** | Pointer to **int32** | Expiry, Unix seconds. | [optional] 
 **Iat** | Pointer to **int32** | Issued-at, Unix seconds. | [optional] 
 **Nbf** | Pointer to **int32** | Not-before, Unix seconds (JWT tokens only). | [optional] 

@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -122,6 +122,36 @@ type AdminMcpAPI interface {
 	// AdminMcpServersListExecute executes the request
 	//  @return AdminMcpServersListResponse
 	AdminMcpServersListExecute(r ApiAdminMcpServersListRequest) (*AdminMcpServersListResponse, *http.Response, error)
+
+	/*
+	PatchAdminMcpServersUpdate Update an MCP server
+
+	Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@param serverId
+	@return ApiPatchAdminMcpServersUpdateRequest
+	*/
+	PatchAdminMcpServersUpdate(ctx context.Context, orgId string, serverId string) ApiPatchAdminMcpServersUpdateRequest
+
+	// PatchAdminMcpServersUpdateExecute executes the request
+	//  @return AdminMcpServersCreateResponse
+	PatchAdminMcpServersUpdateExecute(r ApiPatchAdminMcpServersUpdateRequest) (*AdminMcpServersCreateResponse, *http.Response, error)
+
+	/*
+	PutAdminMcpServersUpdate Update an MCP server (same as PATCH: only the fields that are sent change)
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@param serverId
+	@return ApiPutAdminMcpServersUpdateRequest
+	*/
+	PutAdminMcpServersUpdate(ctx context.Context, orgId string, serverId string) ApiPutAdminMcpServersUpdateRequest
+
+	// PutAdminMcpServersUpdateExecute executes the request
+	//  @return AdminMcpServersCreateResponse
+	PutAdminMcpServersUpdateExecute(r ApiPutAdminMcpServersUpdateRequest) (*AdminMcpServersCreateResponse, *http.Response, error)
 }
 
 // AdminMcpAPIService AdminMcpAPI service
@@ -131,6 +161,12 @@ type ApiAdminMcpServersCreateRequest struct {
 	ctx context.Context
 	ApiService AdminMcpAPI
 	orgId string
+	mcpServerWrite *McpServerWrite
+}
+
+func (r ApiAdminMcpServersCreateRequest) McpServerWrite(mcpServerWrite McpServerWrite) ApiAdminMcpServersCreateRequest {
+	r.mcpServerWrite = &mcpServerWrite
+	return r
 }
 
 func (r ApiAdminMcpServersCreateRequest) Execute() (*AdminMcpServersCreateResponse, *http.Response, error) {
@@ -175,9 +211,12 @@ func (a *AdminMcpAPIService) AdminMcpServersCreateExecute(r ApiAdminMcpServersCr
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.mcpServerWrite == nil {
+		return localVarReturnValue, nil, reportError("mcpServerWrite is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -193,6 +232,8 @@ func (a *AdminMcpAPIService) AdminMcpServersCreateExecute(r ApiAdminMcpServersCr
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.mcpServerWrite
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -932,6 +973,268 @@ func (a *AdminMcpAPIService) AdminMcpServersListExecute(r ApiAdminMcpServersList
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPatchAdminMcpServersUpdateRequest struct {
+	ctx context.Context
+	ApiService AdminMcpAPI
+	orgId string
+	serverId string
+	mcpServerWrite *McpServerWrite
+}
+
+func (r ApiPatchAdminMcpServersUpdateRequest) McpServerWrite(mcpServerWrite McpServerWrite) ApiPatchAdminMcpServersUpdateRequest {
+	r.mcpServerWrite = &mcpServerWrite
+	return r
+}
+
+func (r ApiPatchAdminMcpServersUpdateRequest) Execute() (*AdminMcpServersCreateResponse, *http.Response, error) {
+	return r.ApiService.PatchAdminMcpServersUpdateExecute(r)
+}
+
+/*
+PatchAdminMcpServersUpdate Update an MCP server
+
+Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @param serverId
+ @return ApiPatchAdminMcpServersUpdateRequest
+*/
+func (a *AdminMcpAPIService) PatchAdminMcpServersUpdate(ctx context.Context, orgId string, serverId string) ApiPatchAdminMcpServersUpdateRequest {
+	return ApiPatchAdminMcpServersUpdateRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+		serverId: serverId,
+	}
+}
+
+// Execute executes the request
+//  @return AdminMcpServersCreateResponse
+func (a *AdminMcpAPIService) PatchAdminMcpServersUpdateExecute(r ApiPatchAdminMcpServersUpdateRequest) (*AdminMcpServersCreateResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AdminMcpServersCreateResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMcpAPIService.PatchAdminMcpServersUpdate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"serverId"+"}", url.PathEscape(parameterValueToString(r.serverId, "serverId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.mcpServerWrite == nil {
+		return localVarReturnValue, nil, reportError("mcpServerWrite is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.mcpServerWrite
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPutAdminMcpServersUpdateRequest struct {
+	ctx context.Context
+	ApiService AdminMcpAPI
+	orgId string
+	serverId string
+	mcpServerWrite *McpServerWrite
+}
+
+func (r ApiPutAdminMcpServersUpdateRequest) McpServerWrite(mcpServerWrite McpServerWrite) ApiPutAdminMcpServersUpdateRequest {
+	r.mcpServerWrite = &mcpServerWrite
+	return r
+}
+
+func (r ApiPutAdminMcpServersUpdateRequest) Execute() (*AdminMcpServersCreateResponse, *http.Response, error) {
+	return r.ApiService.PutAdminMcpServersUpdateExecute(r)
+}
+
+/*
+PutAdminMcpServersUpdate Update an MCP server (same as PATCH: only the fields that are sent change)
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @param serverId
+ @return ApiPutAdminMcpServersUpdateRequest
+*/
+func (a *AdminMcpAPIService) PutAdminMcpServersUpdate(ctx context.Context, orgId string, serverId string) ApiPutAdminMcpServersUpdateRequest {
+	return ApiPutAdminMcpServersUpdateRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+		serverId: serverId,
+	}
+}
+
+// Execute executes the request
+//  @return AdminMcpServersCreateResponse
+func (a *AdminMcpAPIService) PutAdminMcpServersUpdateExecute(r ApiPutAdminMcpServersUpdateRequest) (*AdminMcpServersCreateResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AdminMcpServersCreateResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMcpAPIService.PutAdminMcpServersUpdate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"serverId"+"}", url.PathEscape(parameterValueToString(r.serverId, "serverId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.mcpServerWrite == nil {
+		return localVarReturnValue, nil, reportError("mcpServerWrite is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.mcpServerWrite
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

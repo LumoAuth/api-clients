@@ -21,7 +21,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 ## abac_attributes_create
 
-> <AbacAttributesCreateResponse> abac_attributes_create(org_id)
+> <AbacAttributesCreateResponse> abac_attributes_create(org_id, abac_attributes_create_request)
 
 Create an attribute definition
 
@@ -43,10 +43,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminAbacApi.new
 org_id = 'org_id_example' # String | 
+abac_attributes_create_request = LumoAuthApiClient::AbacAttributesCreateRequest.new({name: 'name_example', slug: 'slug_example', attribute_type: 'user', data_type: 'string'}) # AbacAttributesCreateRequest | 
 
 begin
   # Create an attribute definition
-  result = api_instance.abac_attributes_create(org_id)
+  result = api_instance.abac_attributes_create(org_id, abac_attributes_create_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAbacApi->abac_attributes_create: #{e}"
@@ -57,12 +58,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AbacAttributesCreateResponse>, Integer, Hash)> abac_attributes_create_with_http_info(org_id)
+> <Array(<AbacAttributesCreateResponse>, Integer, Hash)> abac_attributes_create_with_http_info(org_id, abac_attributes_create_request)
 
 ```ruby
 begin
   # Create an attribute definition
-  data, status_code, headers = api_instance.abac_attributes_create_with_http_info(org_id)
+  data, status_code, headers = api_instance.abac_attributes_create_with_http_info(org_id, abac_attributes_create_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AbacAttributesCreateResponse>
@@ -76,6 +77,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **abac_attributes_create_request** | [**AbacAttributesCreateRequest**](AbacAttributesCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -87,7 +89,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -313,7 +315,7 @@ end
 
 ## abac_policies_create
 
-> <AbacPoliciesCreateResponse> abac_policies_create(org_id)
+> <AbacPoliciesCreateResponse> abac_policies_create(org_id, abac_policies_create_request)
 
 Create an ABAC policy
 
@@ -335,10 +337,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminAbacApi.new
 org_id = 'org_id_example' # String | 
+abac_policies_create_request = LumoAuthApiClient::AbacPoliciesCreateRequest.new({name: 'name_example', resource_type: 'resource_type_example', action: 'action_example', effect: 'allow', conditions: { key: 3.56}}) # AbacPoliciesCreateRequest | 
 
 begin
   # Create an ABAC policy
-  result = api_instance.abac_policies_create(org_id)
+  result = api_instance.abac_policies_create(org_id, abac_policies_create_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAbacApi->abac_policies_create: #{e}"
@@ -349,12 +352,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AbacPoliciesCreateResponse>, Integer, Hash)> abac_policies_create_with_http_info(org_id)
+> <Array(<AbacPoliciesCreateResponse>, Integer, Hash)> abac_policies_create_with_http_info(org_id, abac_policies_create_request)
 
 ```ruby
 begin
   # Create an ABAC policy
-  data, status_code, headers = api_instance.abac_policies_create_with_http_info(org_id)
+  data, status_code, headers = api_instance.abac_policies_create_with_http_info(org_id, abac_policies_create_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AbacPoliciesCreateResponse>
@@ -368,6 +371,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **abac_policies_create_request** | [**AbacPoliciesCreateRequest**](AbacPoliciesCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -379,7 +383,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -683,7 +687,7 @@ end
 
 ## patch_abac_attributes_update
 
-> <PutAbacAttributesUpdateResponse> patch_abac_attributes_update(org_id, id)
+> <PutAbacAttributesUpdateResponse> patch_abac_attributes_update(org_id, id, put_abac_attributes_update_request)
 
 Partially update an attribute definition
 
@@ -706,10 +710,11 @@ end
 api_instance = LumoAuthApiClient::AdminAbacApi.new
 org_id = 'org_id_example' # String | 
 id = 'id_example' # String | 
+put_abac_attributes_update_request = LumoAuthApiClient::PutAbacAttributesUpdateRequest.new # PutAbacAttributesUpdateRequest | 
 
 begin
   # Partially update an attribute definition
-  result = api_instance.patch_abac_attributes_update(org_id, id)
+  result = api_instance.patch_abac_attributes_update(org_id, id, put_abac_attributes_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAbacApi->patch_abac_attributes_update: #{e}"
@@ -720,12 +725,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAbacAttributesUpdateResponse>, Integer, Hash)> patch_abac_attributes_update_with_http_info(org_id, id)
+> <Array(<PutAbacAttributesUpdateResponse>, Integer, Hash)> patch_abac_attributes_update_with_http_info(org_id, id, put_abac_attributes_update_request)
 
 ```ruby
 begin
   # Partially update an attribute definition
-  data, status_code, headers = api_instance.patch_abac_attributes_update_with_http_info(org_id, id)
+  data, status_code, headers = api_instance.patch_abac_attributes_update_with_http_info(org_id, id, put_abac_attributes_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAbacAttributesUpdateResponse>
@@ -740,6 +745,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **id** | **String** |  |  |
+| **put_abac_attributes_update_request** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -751,13 +757,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## patch_abac_policies_update
 
-> <PutAbacPoliciesUpdateResponse> patch_abac_policies_update(org_id, id)
+> <PutAbacPoliciesUpdateResponse> patch_abac_policies_update(org_id, id, put_abac_policies_update_request)
 
 Partially update an ABAC policy
 
@@ -780,10 +786,11 @@ end
 api_instance = LumoAuthApiClient::AdminAbacApi.new
 org_id = 'org_id_example' # String | 
 id = 'id_example' # String | 
+put_abac_policies_update_request = LumoAuthApiClient::PutAbacPoliciesUpdateRequest.new # PutAbacPoliciesUpdateRequest | 
 
 begin
   # Partially update an ABAC policy
-  result = api_instance.patch_abac_policies_update(org_id, id)
+  result = api_instance.patch_abac_policies_update(org_id, id, put_abac_policies_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAbacApi->patch_abac_policies_update: #{e}"
@@ -794,12 +801,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAbacPoliciesUpdateResponse>, Integer, Hash)> patch_abac_policies_update_with_http_info(org_id, id)
+> <Array(<PutAbacPoliciesUpdateResponse>, Integer, Hash)> patch_abac_policies_update_with_http_info(org_id, id, put_abac_policies_update_request)
 
 ```ruby
 begin
   # Partially update an ABAC policy
-  data, status_code, headers = api_instance.patch_abac_policies_update_with_http_info(org_id, id)
+  data, status_code, headers = api_instance.patch_abac_policies_update_with_http_info(org_id, id, put_abac_policies_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAbacPoliciesUpdateResponse>
@@ -814,6 +821,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **id** | **String** |  |  |
+| **put_abac_policies_update_request** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -825,13 +833,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## put_abac_attributes_update
 
-> <PutAbacAttributesUpdateResponse> put_abac_attributes_update(org_id, id)
+> <PutAbacAttributesUpdateResponse> put_abac_attributes_update(org_id, id, put_abac_attributes_update_request)
 
 Update an attribute definition
 
@@ -854,10 +862,11 @@ end
 api_instance = LumoAuthApiClient::AdminAbacApi.new
 org_id = 'org_id_example' # String | 
 id = 'id_example' # String | 
+put_abac_attributes_update_request = LumoAuthApiClient::PutAbacAttributesUpdateRequest.new # PutAbacAttributesUpdateRequest | 
 
 begin
   # Update an attribute definition
-  result = api_instance.put_abac_attributes_update(org_id, id)
+  result = api_instance.put_abac_attributes_update(org_id, id, put_abac_attributes_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAbacApi->put_abac_attributes_update: #{e}"
@@ -868,12 +877,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAbacAttributesUpdateResponse>, Integer, Hash)> put_abac_attributes_update_with_http_info(org_id, id)
+> <Array(<PutAbacAttributesUpdateResponse>, Integer, Hash)> put_abac_attributes_update_with_http_info(org_id, id, put_abac_attributes_update_request)
 
 ```ruby
 begin
   # Update an attribute definition
-  data, status_code, headers = api_instance.put_abac_attributes_update_with_http_info(org_id, id)
+  data, status_code, headers = api_instance.put_abac_attributes_update_with_http_info(org_id, id, put_abac_attributes_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAbacAttributesUpdateResponse>
@@ -888,6 +897,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **id** | **String** |  |  |
+| **put_abac_attributes_update_request** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -899,13 +909,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## put_abac_policies_update
 
-> <PutAbacPoliciesUpdateResponse> put_abac_policies_update(org_id, id)
+> <PutAbacPoliciesUpdateResponse> put_abac_policies_update(org_id, id, put_abac_policies_update_request)
 
 Update an ABAC policy
 
@@ -928,10 +938,11 @@ end
 api_instance = LumoAuthApiClient::AdminAbacApi.new
 org_id = 'org_id_example' # String | 
 id = 'id_example' # String | 
+put_abac_policies_update_request = LumoAuthApiClient::PutAbacPoliciesUpdateRequest.new # PutAbacPoliciesUpdateRequest | 
 
 begin
   # Update an ABAC policy
-  result = api_instance.put_abac_policies_update(org_id, id)
+  result = api_instance.put_abac_policies_update(org_id, id, put_abac_policies_update_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAbacApi->put_abac_policies_update: #{e}"
@@ -942,12 +953,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PutAbacPoliciesUpdateResponse>, Integer, Hash)> put_abac_policies_update_with_http_info(org_id, id)
+> <Array(<PutAbacPoliciesUpdateResponse>, Integer, Hash)> put_abac_policies_update_with_http_info(org_id, id, put_abac_policies_update_request)
 
 ```ruby
 begin
   # Update an ABAC policy
-  data, status_code, headers = api_instance.put_abac_policies_update_with_http_info(org_id, id)
+  data, status_code, headers = api_instance.put_abac_policies_update_with_http_info(org_id, id, put_abac_policies_update_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PutAbacPoliciesUpdateResponse>
@@ -962,6 +973,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **id** | **String** |  |  |
+| **put_abac_policies_update_request** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -973,6 +985,6 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 

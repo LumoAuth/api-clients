@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **attestation_token** | **str** | The workload OIDC token (JWT). | 
+**scope** | [**AttestRequestScope**](AttestRequestScope.md) |  | [optional] 
 
 ## Example
 

@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -716,15 +716,16 @@ class AdminIdentityProvidersApi
      * Create a social login provider
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateRequest $adminSocialProvidersCreateRequest An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminSocialProvidersCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse
      */
-    public function adminSocialProvidersCreate($orgId, string $contentType = self::contentTypes['adminSocialProvidersCreate'][0])
+    public function adminSocialProvidersCreate($orgId, $adminSocialProvidersCreateRequest, string $contentType = self::contentTypes['adminSocialProvidersCreate'][0])
     {
-        list($response) = $this->adminSocialProvidersCreateWithHttpInfo($orgId, $contentType);
+        list($response) = $this->adminSocialProvidersCreateWithHttpInfo($orgId, $adminSocialProvidersCreateRequest, $contentType);
         return $response;
     }
 
@@ -734,15 +735,16 @@ class AdminIdentityProvidersApi
      * Create a social login provider
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateRequest $adminSocialProvidersCreateRequest An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminSocialProvidersCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminSocialProvidersCreateWithHttpInfo($orgId, string $contentType = self::contentTypes['adminSocialProvidersCreate'][0])
+    public function adminSocialProvidersCreateWithHttpInfo($orgId, $adminSocialProvidersCreateRequest, string $contentType = self::contentTypes['adminSocialProvidersCreate'][0])
     {
-        $request = $this->adminSocialProvidersCreateRequest($orgId, $contentType);
+        $request = $this->adminSocialProvidersCreateRequest($orgId, $adminSocialProvidersCreateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -819,14 +821,15 @@ class AdminIdentityProvidersApi
      * Create a social login provider
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateRequest $adminSocialProvidersCreateRequest An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminSocialProvidersCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminSocialProvidersCreateAsync($orgId, string $contentType = self::contentTypes['adminSocialProvidersCreate'][0])
+    public function adminSocialProvidersCreateAsync($orgId, $adminSocialProvidersCreateRequest, string $contentType = self::contentTypes['adminSocialProvidersCreate'][0])
     {
-        return $this->adminSocialProvidersCreateAsyncWithHttpInfo($orgId, $contentType)
+        return $this->adminSocialProvidersCreateAsyncWithHttpInfo($orgId, $adminSocialProvidersCreateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -840,15 +843,16 @@ class AdminIdentityProvidersApi
      * Create a social login provider
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateRequest $adminSocialProvidersCreateRequest An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminSocialProvidersCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminSocialProvidersCreateAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['adminSocialProvidersCreate'][0])
+    public function adminSocialProvidersCreateAsyncWithHttpInfo($orgId, $adminSocialProvidersCreateRequest, string $contentType = self::contentTypes['adminSocialProvidersCreate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse';
-        $request = $this->adminSocialProvidersCreateRequest($orgId, $contentType);
+        $request = $this->adminSocialProvidersCreateRequest($orgId, $adminSocialProvidersCreateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -890,18 +894,26 @@ class AdminIdentityProvidersApi
      * Create request for operation 'adminSocialProvidersCreate'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateRequest $adminSocialProvidersCreateRequest An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminSocialProvidersCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminSocialProvidersCreateRequest($orgId, string $contentType = self::contentTypes['adminSocialProvidersCreate'][0])
+    public function adminSocialProvidersCreateRequest($orgId, $adminSocialProvidersCreateRequest, string $contentType = self::contentTypes['adminSocialProvidersCreate'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling adminSocialProvidersCreate'
+            );
+        }
+
+        // verify the required parameter 'adminSocialProvidersCreateRequest' is set
+        if ($adminSocialProvidersCreateRequest === null || (is_array($adminSocialProvidersCreateRequest) && count($adminSocialProvidersCreateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $adminSocialProvidersCreateRequest when calling adminSocialProvidersCreate'
             );
         }
 
@@ -932,7 +944,14 @@ class AdminIdentityProvidersApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminSocialProvidersCreateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminSocialProvidersCreateRequest));
+            } else {
+                $httpBody = $adminSocialProvidersCreateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -2736,15 +2755,16 @@ class AdminIdentityProvidersApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $providerId providerId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest $putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminSocialProvidersUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse
      */
-    public function patchAdminSocialProvidersUpdate($orgId, $providerId, string $contentType = self::contentTypes['patchAdminSocialProvidersUpdate'][0])
+    public function patchAdminSocialProvidersUpdate($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, string $contentType = self::contentTypes['patchAdminSocialProvidersUpdate'][0])
     {
-        list($response) = $this->patchAdminSocialProvidersUpdateWithHttpInfo($orgId, $providerId, $contentType);
+        list($response) = $this->patchAdminSocialProvidersUpdateWithHttpInfo($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, $contentType);
         return $response;
     }
 
@@ -2755,15 +2775,16 @@ class AdminIdentityProvidersApi
      *
      * @param  string $orgId (required)
      * @param  string $providerId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest $putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminSocialProvidersUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function patchAdminSocialProvidersUpdateWithHttpInfo($orgId, $providerId, string $contentType = self::contentTypes['patchAdminSocialProvidersUpdate'][0])
+    public function patchAdminSocialProvidersUpdateWithHttpInfo($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, string $contentType = self::contentTypes['patchAdminSocialProvidersUpdate'][0])
     {
-        $request = $this->patchAdminSocialProvidersUpdateRequest($orgId, $providerId, $contentType);
+        $request = $this->patchAdminSocialProvidersUpdateRequest($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2841,14 +2862,15 @@ class AdminIdentityProvidersApi
      *
      * @param  string $orgId (required)
      * @param  string $providerId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest $putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminSocialProvidersUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAdminSocialProvidersUpdateAsync($orgId, $providerId, string $contentType = self::contentTypes['patchAdminSocialProvidersUpdate'][0])
+    public function patchAdminSocialProvidersUpdateAsync($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, string $contentType = self::contentTypes['patchAdminSocialProvidersUpdate'][0])
     {
-        return $this->patchAdminSocialProvidersUpdateAsyncWithHttpInfo($orgId, $providerId, $contentType)
+        return $this->patchAdminSocialProvidersUpdateAsyncWithHttpInfo($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2863,15 +2885,16 @@ class AdminIdentityProvidersApi
      *
      * @param  string $orgId (required)
      * @param  string $providerId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest $putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminSocialProvidersUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAdminSocialProvidersUpdateAsyncWithHttpInfo($orgId, $providerId, string $contentType = self::contentTypes['patchAdminSocialProvidersUpdate'][0])
+    public function patchAdminSocialProvidersUpdateAsyncWithHttpInfo($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, string $contentType = self::contentTypes['patchAdminSocialProvidersUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse';
-        $request = $this->patchAdminSocialProvidersUpdateRequest($orgId, $providerId, $contentType);
+        $request = $this->patchAdminSocialProvidersUpdateRequest($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2914,12 +2937,13 @@ class AdminIdentityProvidersApi
      *
      * @param  string $orgId (required)
      * @param  string $providerId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest $putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminSocialProvidersUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function patchAdminSocialProvidersUpdateRequest($orgId, $providerId, string $contentType = self::contentTypes['patchAdminSocialProvidersUpdate'][0])
+    public function patchAdminSocialProvidersUpdateRequest($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, string $contentType = self::contentTypes['patchAdminSocialProvidersUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -2933,6 +2957,13 @@ class AdminIdentityProvidersApi
         if ($providerId === null || (is_array($providerId) && count($providerId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $providerId when calling patchAdminSocialProvidersUpdate'
+            );
+        }
+
+        // verify the required parameter 'putAdminSocialProvidersUpdateRequest' is set
+        if ($putAdminSocialProvidersUpdateRequest === null || (is_array($putAdminSocialProvidersUpdateRequest) && count($putAdminSocialProvidersUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAdminSocialProvidersUpdateRequest when calling patchAdminSocialProvidersUpdate'
             );
         }
 
@@ -2971,7 +3002,14 @@ class AdminIdentityProvidersApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAdminSocialProvidersUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAdminSocialProvidersUpdateRequest));
+            } else {
+                $httpBody = $putAdminSocialProvidersUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -3033,15 +3071,16 @@ class AdminIdentityProvidersApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $providerId providerId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest $putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminSocialProvidersUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse|\LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse
      */
-    public function putAdminSocialProvidersUpdate($orgId, $providerId, string $contentType = self::contentTypes['putAdminSocialProvidersUpdate'][0])
+    public function putAdminSocialProvidersUpdate($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, string $contentType = self::contentTypes['putAdminSocialProvidersUpdate'][0])
     {
-        list($response) = $this->putAdminSocialProvidersUpdateWithHttpInfo($orgId, $providerId, $contentType);
+        list($response) = $this->putAdminSocialProvidersUpdateWithHttpInfo($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, $contentType);
         return $response;
     }
 
@@ -3052,15 +3091,16 @@ class AdminIdentityProvidersApi
      *
      * @param  string $orgId (required)
      * @param  string $providerId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest $putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminSocialProvidersUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse|\LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function putAdminSocialProvidersUpdateWithHttpInfo($orgId, $providerId, string $contentType = self::contentTypes['putAdminSocialProvidersUpdate'][0])
+    public function putAdminSocialProvidersUpdateWithHttpInfo($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, string $contentType = self::contentTypes['putAdminSocialProvidersUpdate'][0])
     {
-        $request = $this->putAdminSocialProvidersUpdateRequest($orgId, $providerId, $contentType);
+        $request = $this->putAdminSocialProvidersUpdateRequest($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3152,14 +3192,15 @@ class AdminIdentityProvidersApi
      *
      * @param  string $orgId (required)
      * @param  string $providerId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest $putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminSocialProvidersUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAdminSocialProvidersUpdateAsync($orgId, $providerId, string $contentType = self::contentTypes['putAdminSocialProvidersUpdate'][0])
+    public function putAdminSocialProvidersUpdateAsync($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, string $contentType = self::contentTypes['putAdminSocialProvidersUpdate'][0])
     {
-        return $this->putAdminSocialProvidersUpdateAsyncWithHttpInfo($orgId, $providerId, $contentType)
+        return $this->putAdminSocialProvidersUpdateAsyncWithHttpInfo($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3174,15 +3215,16 @@ class AdminIdentityProvidersApi
      *
      * @param  string $orgId (required)
      * @param  string $providerId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest $putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminSocialProvidersUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAdminSocialProvidersUpdateAsyncWithHttpInfo($orgId, $providerId, string $contentType = self::contentTypes['putAdminSocialProvidersUpdate'][0])
+    public function putAdminSocialProvidersUpdateAsyncWithHttpInfo($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, string $contentType = self::contentTypes['putAdminSocialProvidersUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminSocialProvidersCreateResponse';
-        $request = $this->putAdminSocialProvidersUpdateRequest($orgId, $providerId, $contentType);
+        $request = $this->putAdminSocialProvidersUpdateRequest($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3225,12 +3267,13 @@ class AdminIdentityProvidersApi
      *
      * @param  string $orgId (required)
      * @param  string $providerId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminSocialProvidersUpdateRequest $putAdminSocialProvidersUpdateRequest Only the fields that are sent change. An unknown field is refused with 400. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminSocialProvidersUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function putAdminSocialProvidersUpdateRequest($orgId, $providerId, string $contentType = self::contentTypes['putAdminSocialProvidersUpdate'][0])
+    public function putAdminSocialProvidersUpdateRequest($orgId, $providerId, $putAdminSocialProvidersUpdateRequest, string $contentType = self::contentTypes['putAdminSocialProvidersUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -3244,6 +3287,13 @@ class AdminIdentityProvidersApi
         if ($providerId === null || (is_array($providerId) && count($providerId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $providerId when calling putAdminSocialProvidersUpdate'
+            );
+        }
+
+        // verify the required parameter 'putAdminSocialProvidersUpdateRequest' is set
+        if ($putAdminSocialProvidersUpdateRequest === null || (is_array($putAdminSocialProvidersUpdateRequest) && count($putAdminSocialProvidersUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAdminSocialProvidersUpdateRequest when calling putAdminSocialProvidersUpdate'
             );
         }
 
@@ -3282,7 +3332,14 @@ class AdminIdentityProvidersApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAdminSocialProvidersUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAdminSocialProvidersUpdateRequest));
+            } else {
+                $httpBody = $putAdminSocialProvidersUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

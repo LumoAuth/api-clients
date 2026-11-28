@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -79,9 +79,10 @@ pub enum AdminScopesListError {
 }
 
 
-pub async fn admin_permissions_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminPermissionsCreateResponse, Error<AdminPermissionsCreateError>> {
+pub async fn admin_permissions_create(configuration: &configuration::Configuration, org_id: &str, admin_permissions_create_request: models::AdminPermissionsCreateRequest) -> Result<models::AdminPermissionsCreateResponse, Error<AdminPermissionsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_admin_permissions_create_request = admin_permissions_create_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/permissions", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -100,6 +101,7 @@ pub async fn admin_permissions_create(configuration: &configuration::Configurati
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_permissions_create_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -269,10 +271,11 @@ pub async fn admin_permissions_list(configuration: &configuration::Configuration
     }
 }
 
-pub async fn admin_permissions_update(configuration: &configuration::Configuration, org_id: &str, permission_id: &str) -> Result<models::AdminPermissionsCreateResponse, Error<AdminPermissionsUpdateError>> {
+pub async fn admin_permissions_update(configuration: &configuration::Configuration, org_id: &str, permission_id: &str, admin_permissions_update_request: models::AdminPermissionsUpdateRequest) -> Result<models::AdminPermissionsCreateResponse, Error<AdminPermissionsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_permission_id = permission_id;
+    let p_admin_permissions_update_request = admin_permissions_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/permissions/{permissionId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), permissionId=crate::apis::urlencode(p_permission_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -291,6 +294,7 @@ pub async fn admin_permissions_update(configuration: &configuration::Configurati
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_permissions_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -365,9 +369,10 @@ pub async fn admin_permissions_usage(configuration: &configuration::Configuratio
     }
 }
 
-pub async fn admin_scopes_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminScopesCreateResponse, Error<AdminScopesCreateError>> {
+pub async fn admin_scopes_create(configuration: &configuration::Configuration, org_id: &str, admin_scopes_create_request: models::AdminScopesCreateRequest) -> Result<models::AdminScopesCreateResponse, Error<AdminScopesCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_admin_scopes_create_request = admin_scopes_create_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/scopes", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -386,6 +391,7 @@ pub async fn admin_scopes_create(configuration: &configuration::Configuration, o
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_scopes_create_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

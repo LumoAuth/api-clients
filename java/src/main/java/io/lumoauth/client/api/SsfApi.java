@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -27,8 +27,10 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.CreateStreamConfigRequest;
 import io.lumoauth.client.model.GetStreamConfig200Response;
 import io.lumoauth.client.model.SsfStream;
+import io.lumoauth.client.model.VerifyStreamRequest;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -76,6 +78,7 @@ public class SsfApi {
     /**
      * Build call for createStreamConfig
      * @param orgId  (required)
+     * @param createStreamConfigRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -87,7 +90,7 @@ public class SsfApi {
         <tr><td> 400 </td><td> Unsupported delivery method or missing field </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createStreamConfigCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call createStreamConfigCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateStreamConfigRequest createStreamConfigRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -101,7 +104,7 @@ public class SsfApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = createStreamConfigRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/ssf/stream"
@@ -122,6 +125,7 @@ public class SsfApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -133,13 +137,18 @@ public class SsfApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createStreamConfigValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createStreamConfigValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateStreamConfigRequest createStreamConfigRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling createStreamConfig(Async)");
         }
 
-        return createStreamConfigCall(orgId, _callback);
+        // verify the required parameter 'createStreamConfigRequest' is set
+        if (createStreamConfigRequest == null) {
+            throw new ApiException("Missing the required parameter 'createStreamConfigRequest' when calling createStreamConfig(Async)");
+        }
+
+        return createStreamConfigCall(orgId, createStreamConfigRequest, _callback);
 
     }
 
@@ -147,6 +156,7 @@ public class SsfApi {
      * Create an SSF stream
      * 
      * @param orgId  (required)
+     * @param createStreamConfigRequest  (required)
      * @return SsfStream
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -157,8 +167,8 @@ public class SsfApi {
         <tr><td> 400 </td><td> Unsupported delivery method or missing field </td><td>  -  </td></tr>
      </table>
      */
-    public SsfStream createStreamConfig(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<SsfStream> localVarResp = createStreamConfigWithHttpInfo(orgId);
+    public SsfStream createStreamConfig(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateStreamConfigRequest createStreamConfigRequest) throws ApiException {
+        ApiResponse<SsfStream> localVarResp = createStreamConfigWithHttpInfo(orgId, createStreamConfigRequest);
         return localVarResp.getData();
     }
 
@@ -166,6 +176,7 @@ public class SsfApi {
      * Create an SSF stream
      * 
      * @param orgId  (required)
+     * @param createStreamConfigRequest  (required)
      * @return ApiResponse&lt;SsfStream&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -176,8 +187,8 @@ public class SsfApi {
         <tr><td> 400 </td><td> Unsupported delivery method or missing field </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<SsfStream> createStreamConfigWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = createStreamConfigValidateBeforeCall(orgId, null);
+    public ApiResponse<SsfStream> createStreamConfigWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateStreamConfigRequest createStreamConfigRequest) throws ApiException {
+        okhttp3.Call localVarCall = createStreamConfigValidateBeforeCall(orgId, createStreamConfigRequest, null);
         Type localVarReturnType = new TypeToken<SsfStream>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -186,6 +197,7 @@ public class SsfApi {
      * Create an SSF stream (asynchronously)
      * 
      * @param orgId  (required)
+     * @param createStreamConfigRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -197,9 +209,9 @@ public class SsfApi {
         <tr><td> 400 </td><td> Unsupported delivery method or missing field </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createStreamConfigAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<SsfStream> _callback) throws ApiException {
+    public okhttp3.Call createStreamConfigAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull CreateStreamConfigRequest createStreamConfigRequest, final ApiCallback<SsfStream> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createStreamConfigValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = createStreamConfigValidateBeforeCall(orgId, createStreamConfigRequest, _callback);
         Type localVarReturnType = new TypeToken<SsfStream>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -358,7 +370,7 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A single stream (with stream_id) or all of the tenant&#39;s streams </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> A single stream (with stream_id) or all of the organization&#39;s streams </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
      </table>
      */
@@ -433,7 +445,7 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A single stream (with stream_id) or all of the tenant&#39;s streams </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> A single stream (with stream_id) or all of the organization&#39;s streams </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
      </table>
      */
@@ -453,7 +465,7 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A single stream (with stream_id) or all of the tenant&#39;s streams </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> A single stream (with stream_id) or all of the organization&#39;s streams </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
      </table>
      */
@@ -475,7 +487,7 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A single stream (with stream_id) or all of the tenant&#39;s streams </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> A single stream (with stream_id) or all of the organization&#39;s streams </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
      </table>
      */
@@ -489,6 +501,7 @@ public class SsfApi {
     /**
      * Build call for verifyStream
      * @param orgId  (required)
+     * @param verifyStreamRequest  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -502,7 +515,7 @@ public class SsfApi {
         <tr><td> 409 </td><td> Stream is not enabled </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call verifyStreamCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call verifyStreamCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable VerifyStreamRequest verifyStreamRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -516,7 +529,7 @@ public class SsfApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = verifyStreamRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/ssf/verify"
@@ -536,6 +549,7 @@ public class SsfApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -547,13 +561,13 @@ public class SsfApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call verifyStreamValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call verifyStreamValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable VerifyStreamRequest verifyStreamRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling verifyStream(Async)");
         }
 
-        return verifyStreamCall(orgId, _callback);
+        return verifyStreamCall(orgId, verifyStreamRequest, _callback);
 
     }
 
@@ -561,6 +575,7 @@ public class SsfApi {
      * Request a stream verification event
      * Needs &#x60;settings.manage&#x60;, as the portal does.
      * @param orgId  (required)
+     * @param verifyStreamRequest  (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
@@ -572,14 +587,15 @@ public class SsfApi {
         <tr><td> 409 </td><td> Stream is not enabled </td><td>  -  </td></tr>
      </table>
      */
-    public void verifyStream(@javax.annotation.Nonnull String orgId) throws ApiException {
-        verifyStreamWithHttpInfo(orgId);
+    public void verifyStream(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable VerifyStreamRequest verifyStreamRequest) throws ApiException {
+        verifyStreamWithHttpInfo(orgId, verifyStreamRequest);
     }
 
     /**
      * Request a stream verification event
      * Needs &#x60;settings.manage&#x60;, as the portal does.
      * @param orgId  (required)
+     * @param verifyStreamRequest  (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -592,8 +608,8 @@ public class SsfApi {
         <tr><td> 409 </td><td> Stream is not enabled </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> verifyStreamWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = verifyStreamValidateBeforeCall(orgId, null);
+    public ApiResponse<Void> verifyStreamWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable VerifyStreamRequest verifyStreamRequest) throws ApiException {
+        okhttp3.Call localVarCall = verifyStreamValidateBeforeCall(orgId, verifyStreamRequest, null);
         return localVarApiClient.execute(localVarCall);
     }
 
@@ -601,6 +617,7 @@ public class SsfApi {
      * Request a stream verification event (asynchronously)
      * Needs &#x60;settings.manage&#x60;, as the portal does.
      * @param orgId  (required)
+     * @param verifyStreamRequest  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -614,9 +631,9 @@ public class SsfApi {
         <tr><td> 409 </td><td> Stream is not enabled </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call verifyStreamAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call verifyStreamAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable VerifyStreamRequest verifyStreamRequest, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = verifyStreamValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = verifyStreamValidateBeforeCall(orgId, verifyStreamRequest, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }

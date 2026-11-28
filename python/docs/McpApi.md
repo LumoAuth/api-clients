@@ -238,7 +238,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A single MCP server with discovery metadata. |  -  |
 **403** | Caller lacks the agents.view permission. |  -  |
-**404** | Tenant or MCP server not found. |  -  |
+**404** | Organization or MCP server not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -408,9 +408,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | List of active MCP servers for the tenant. |  -  |
+**200** | List of active MCP servers for the organization. |  -  |
 **403** | Caller lacks the agents.view permission. |  -  |
-**404** | Tenant not found. |  -  |
+**404** | Organization not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

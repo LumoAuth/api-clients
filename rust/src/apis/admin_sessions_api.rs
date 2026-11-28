@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -273,7 +273,7 @@ pub async fn admin_sessions_count(configuration: &configuration::Configuration, 
     }
 }
 
-/// Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+/// Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 pub async fn admin_sessions_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSessionsListResponse, Error<AdminSessionsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -466,7 +466,7 @@ pub async fn admin_sessions_stats(configuration: &configuration::Configuration, 
     }
 }
 
-/// Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
+/// Paginated OPAQUE access tokens issued by the organization's clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user's or a client's tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
 pub async fn admin_tokens_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminTokensListResponse, Error<AdminTokensListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -707,6 +707,7 @@ pub async fn admin_user_sessions_revoke_post(configuration: &configuration::Conf
     }
 }
 
+/// Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 pub async fn admin_user_tokens_revoke_all(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AdminUserTokensRevokeAllResponse, Error<AdminUserTokensRevokeAllError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -755,6 +756,7 @@ pub async fn admin_user_tokens_revoke_all(configuration: &configuration::Configu
     }
 }
 
+/// Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 pub async fn admin_user_tokens_revoke_post(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AdminUserTokensRevokePostResponse, Error<AdminUserTokensRevokePostError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;

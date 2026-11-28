@@ -1,0 +1,30 @@
+# IntrospectRequest
+
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**token** | **string** |  | [default to undefined]
+**token_type_hint** | **string** |  | [optional] [default to undefined]
+**client_id** | **string** | The calling client, with client_secret (client_secret_post), or an agent\&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). | [optional] [default to undefined]
+**client_secret** | **string** | client_secret_post | [optional] [default to undefined]
+**client_assertion_type** | **string** |  | [optional] [default to undefined]
+**client_assertion** | **string** | private_key_jwt (RFC 7523) | [optional] [default to undefined]
+
+## Example
+
+```typescript
+import { IntrospectRequest } from '@lumoauth/api-client';
+
+const instance: IntrospectRequest = {
+    token,
+    token_type_hint,
+    client_id,
+    client_secret,
+    client_assertion_type,
+    client_assertion,
+};
+```
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

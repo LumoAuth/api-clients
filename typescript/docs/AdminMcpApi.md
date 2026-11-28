@@ -11,9 +11,11 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**adminMcpServersGrantsRemove**](#adminmcpserversgrantsremove) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Remove every grant of an agent on an MCP server|
 |[**adminMcpServersGrantsSet**](#adminmcpserversgrantsset) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Set the tools of an MCP server that an agent may call|
 |[**adminMcpServersList**](#adminmcpserverslist) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers|
+|[**patchAdminMcpServersUpdate**](#patchadminmcpserversupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server|
+|[**putAdminMcpServersUpdate**](#putadminmcpserversupdate) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server (same as PATCH: only the fields that are sent change)|
 
 # **adminMcpServersCreate**
-> AdminMcpServersCreateResponse adminMcpServersCreate()
+> AdminMcpServersCreateResponse adminMcpServersCreate(mcpServerWrite)
 
 The `resource_uri` is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
 
@@ -22,16 +24,19 @@ The `resource_uri` is stored and returned in canonical form: lower-case scheme a
 ```typescript
 import {
     AdminMcpApi,
-    Configuration
+    Configuration,
+    McpServerWrite
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminMcpApi(configuration);
 
 let orgId: string; // (default to undefined)
+let mcpServerWrite: McpServerWrite; //
 
 const { status, data } = await apiInstance.adminMcpServersCreate(
-    orgId
+    orgId,
+    mcpServerWrite
 );
 ```
 
@@ -39,6 +44,7 @@ const { status, data } = await apiInstance.adminMcpServersCreate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **mcpServerWrite** | **McpServerWrite**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -52,7 +58,7 @@ const { status, data } = await apiInstance.adminMcpServersCreate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -398,6 +404,127 @@ const { status, data } = await apiInstance.adminMcpServersList(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | MCP servers |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **patchAdminMcpServersUpdate**
+> AdminMcpServersCreateResponse patchAdminMcpServersUpdate(mcpServerWrite)
+
+Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+
+### Example
+
+```typescript
+import {
+    AdminMcpApi,
+    Configuration,
+    McpServerWrite
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminMcpApi(configuration);
+
+let orgId: string; // (default to undefined)
+let serverId: string; // (default to undefined)
+let mcpServerWrite: McpServerWrite; //
+
+const { status, data } = await apiInstance.patchAdminMcpServersUpdate(
+    orgId,
+    serverId,
+    mcpServerWrite
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **mcpServerWrite** | **McpServerWrite**|  | |
+| **orgId** | [**string**] |  | defaults to undefined|
+| **serverId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminMcpServersCreateResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Updated MCP server |  -  |
+|**400** | resource_uri changed, a switch that is not a JSON boolean, or a field that cannot be set (include_scope_in_challenge, bearer_methods_supported) |  -  |
+|**404** | MCP server not found |  -  |
+|**422** | validation_error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **putAdminMcpServersUpdate**
+> AdminMcpServersCreateResponse putAdminMcpServersUpdate(mcpServerWrite)
+
+
+### Example
+
+```typescript
+import {
+    AdminMcpApi,
+    Configuration,
+    McpServerWrite
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminMcpApi(configuration);
+
+let orgId: string; // (default to undefined)
+let serverId: string; // (default to undefined)
+let mcpServerWrite: McpServerWrite; //
+
+const { status, data } = await apiInstance.putAdminMcpServersUpdate(
+    orgId,
+    serverId,
+    mcpServerWrite
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **mcpServerWrite** | **McpServerWrite**|  | |
+| **orgId** | [**string**] |  | defaults to undefined|
+| **serverId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminMcpServersCreateResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Updated MCP server |  -  |
+|**400** | resource_uri changed, or a field that cannot be set |  -  |
+|**404** | MCP server not found |  -  |
+|**422** | validation_error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

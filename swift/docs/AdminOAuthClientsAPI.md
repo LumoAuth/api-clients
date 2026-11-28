@@ -127,7 +127,7 @@ Name | Type | Description  | Notes
 
 # **createClient**
 ```swift
-    open class func createClient(orgId: String, completion: @escaping (_ data: CreateClientResponse?, _ error: Error?) -> Void)
+    open class func createClient(orgId: String, oAuthClientWrite: OAuthClientWrite, completion: @escaping (_ data: CreateClientResponse?, _ error: Error?) -> Void)
 ```
 
 Create an OAuth client
@@ -138,9 +138,10 @@ Create an OAuth client
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let oAuthClientWrite = OAuthClientWrite(name: "name_example", redirectUris: ["redirectUris_example"], scopes: ["scopes_example"], grantTypes: ["grantTypes_example"], isConfidential: false, requiresPkce: false, cibaEnabled: false, allowedOrigins: ["allowedOrigins_example"], postLogoutRedirectUris: ["postLogoutRedirectUris_example"], frontchannelLogoutUri: "frontchannelLogoutUri_example", backchannelLogoutUri: "backchannelLogoutUri_example", accessTokenFormat: "accessTokenFormat_example", tokenEndpointAuthMethod: "tokenEndpointAuthMethod_example", jwksUri: "jwksUri_example", jwks: "TODO", fapiMode: "fapiMode_example", requirePar: false, dpopBoundAccessTokens: false, attestationBasedAuthEnabled: false, attesterIssuer: "attesterIssuer_example", attesterJwksUri: "attesterJwksUri_example", tokenExchangeEnabled: false) // OAuthClientWrite | 
 
 // Create an OAuth client
-AdminOAuthClientsAPI.createClient(orgId: orgId) { (response, error) in
+AdminOAuthClientsAPI.createClient(orgId: orgId, oAuthClientWrite: oAuthClientWrite) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -157,6 +158,7 @@ AdminOAuthClientsAPI.createClient(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **oAuthClientWrite** | [**OAuthClientWrite**](OAuthClientWrite.md) |  | 
 
 ### Return type
 
@@ -168,7 +170,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -531,7 +533,7 @@ Name | Type | Description  | Notes
 
 # **patchClient**
 ```swift
-    open class func patchClient(orgId: String, clientId: String, completion: @escaping (_ data: UpdateClientResponse?, _ error: Error?) -> Void)
+    open class func patchClient(orgId: String, clientId: String, oAuthClientWrite: OAuthClientWrite, completion: @escaping (_ data: UpdateClientResponse?, _ error: Error?) -> Void)
 ```
 
 Update an OAuth client
@@ -545,9 +547,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let clientId = "clientId_example" // String | 
+let oAuthClientWrite = OAuthClientWrite(name: "name_example", redirectUris: ["redirectUris_example"], scopes: ["scopes_example"], grantTypes: ["grantTypes_example"], isConfidential: false, requiresPkce: false, cibaEnabled: false, allowedOrigins: ["allowedOrigins_example"], postLogoutRedirectUris: ["postLogoutRedirectUris_example"], frontchannelLogoutUri: "frontchannelLogoutUri_example", backchannelLogoutUri: "backchannelLogoutUri_example", accessTokenFormat: "accessTokenFormat_example", tokenEndpointAuthMethod: "tokenEndpointAuthMethod_example", jwksUri: "jwksUri_example", jwks: "TODO", fapiMode: "fapiMode_example", requirePar: false, dpopBoundAccessTokens: false, attestationBasedAuthEnabled: false, attesterIssuer: "attesterIssuer_example", attesterJwksUri: "attesterJwksUri_example", tokenExchangeEnabled: false) // OAuthClientWrite | 
 
 // Update an OAuth client
-AdminOAuthClientsAPI.patchClient(orgId: orgId, clientId: clientId) { (response, error) in
+AdminOAuthClientsAPI.patchClient(orgId: orgId, clientId: clientId, oAuthClientWrite: oAuthClientWrite) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -565,6 +568,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **clientId** | **String** |  | 
+ **oAuthClientWrite** | [**OAuthClientWrite**](OAuthClientWrite.md) |  | 
 
 ### Return type
 
@@ -576,7 +580,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -689,7 +693,7 @@ Name | Type | Description  | Notes
 
 # **setClientScopes**
 ```swift
-    open class func setClientScopes(orgId: String, clientId: String, completion: @escaping (_ data: SetClientScopesResponse?, _ error: Error?) -> Void)
+    open class func setClientScopes(orgId: String, clientId: String, setClientScopesRequest: SetClientScopesRequest, completion: @escaping (_ data: SetClientScopesResponse?, _ error: Error?) -> Void)
 ```
 
 Replace the scopes granted to an OAuth client
@@ -703,9 +707,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let clientId = "clientId_example" // String | 
+let setClientScopesRequest = SetClientScopesRequest(scopes: ["scopes_example"]) // SetClientScopesRequest | 
 
 // Replace the scopes granted to an OAuth client
-AdminOAuthClientsAPI.setClientScopes(orgId: orgId, clientId: clientId) { (response, error) in
+AdminOAuthClientsAPI.setClientScopes(orgId: orgId, clientId: clientId, setClientScopesRequest: setClientScopesRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -723,6 +728,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **clientId** | **String** |  | 
+ **setClientScopesRequest** | [**SetClientScopesRequest**](SetClientScopesRequest.md) |  | 
 
 ### Return type
 
@@ -734,14 +740,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateClient**
 ```swift
-    open class func updateClient(orgId: String, clientId: String, completion: @escaping (_ data: UpdateClientResponse?, _ error: Error?) -> Void)
+    open class func updateClient(orgId: String, clientId: String, oAuthClientWrite: OAuthClientWrite, completion: @escaping (_ data: UpdateClientResponse?, _ error: Error?) -> Void)
 ```
 
 Update an OAuth client (same as PATCH: only the fields that are sent change)
@@ -755,9 +761,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let clientId = "clientId_example" // String | 
+let oAuthClientWrite = OAuthClientWrite(name: "name_example", redirectUris: ["redirectUris_example"], scopes: ["scopes_example"], grantTypes: ["grantTypes_example"], isConfidential: false, requiresPkce: false, cibaEnabled: false, allowedOrigins: ["allowedOrigins_example"], postLogoutRedirectUris: ["postLogoutRedirectUris_example"], frontchannelLogoutUri: "frontchannelLogoutUri_example", backchannelLogoutUri: "backchannelLogoutUri_example", accessTokenFormat: "accessTokenFormat_example", tokenEndpointAuthMethod: "tokenEndpointAuthMethod_example", jwksUri: "jwksUri_example", jwks: "TODO", fapiMode: "fapiMode_example", requirePar: false, dpopBoundAccessTokens: false, attestationBasedAuthEnabled: false, attesterIssuer: "attesterIssuer_example", attesterJwksUri: "attesterJwksUri_example", tokenExchangeEnabled: false) // OAuthClientWrite | 
 
 // Update an OAuth client (same as PATCH: only the fields that are sent change)
-AdminOAuthClientsAPI.updateClient(orgId: orgId, clientId: clientId) { (response, error) in
+AdminOAuthClientsAPI.updateClient(orgId: orgId, clientId: clientId, oAuthClientWrite: oAuthClientWrite) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -775,6 +782,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **clientId** | **String** |  | 
+ **oAuthClientWrite** | [**OAuthClientWrite**](OAuthClientWrite.md) |  | 
 
 ### Return type
 
@@ -786,7 +794,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

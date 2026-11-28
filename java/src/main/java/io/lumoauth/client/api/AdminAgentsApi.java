@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -108,7 +108,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsActivateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
@@ -188,7 +188,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsActivateResponse adminAgentsActivate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -211,7 +211,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsActivateResponse> adminAgentsActivateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -236,7 +236,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsActivateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<AdminAgentsActivateResponse> _callback) throws ApiException {
@@ -260,7 +260,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent disabled. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsAgentsDisableCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
@@ -339,7 +339,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent disabled. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsAgentsDisableResponse adminAgentsAgentsDisable(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -361,7 +361,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent disabled. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsAgentsDisableResponse> adminAgentsAgentsDisableWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -385,7 +385,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent disabled. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsAgentsDisableAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<AdminAgentsAgentsDisableResponse> _callback) throws ApiException {
@@ -410,7 +410,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsAgentsEnableCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
@@ -490,7 +490,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsAgentsEnableResponse adminAgentsAgentsEnable(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -513,7 +513,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsAgentsEnableResponse> adminAgentsAgentsEnableWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -538,7 +538,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> The agent holds capabilities that the caller does not hold (switching an agent on needs a caller who could grant all of them), the agent needs a new owner first (its owner was deleted, blocked or switched off: set ownerId with an update), or the agent is revoked. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsAgentsEnableAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<AdminAgentsAgentsEnableResponse> _callback) throws ApiException {
@@ -564,7 +564,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsAgentsRotateKeyCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest, final ApiCallback _callback) throws ApiException {
@@ -646,7 +646,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsAgentsRotateKeyResponse adminAgentsAgentsRotateKey(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest) throws ApiException {
@@ -670,7 +670,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsAgentsRotateKeyResponse> adminAgentsAgentsRotateKeyWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest) throws ApiException {
@@ -696,7 +696,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> The agent does not authenticate with an API key (identity type other than api_key), or the lifetime is invalid. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsAgentsRotateKeyAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest, final ApiCallback<AdminAgentsAgentsRotateKeyResponse> _callback) throws ApiException {
@@ -721,7 +721,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsCreateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminAgentsCreateRequest adminAgentsCreateRequest, final ApiCallback _callback) throws ApiException {
@@ -801,7 +801,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsCreateResponse adminAgentsCreate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminAgentsCreateRequest adminAgentsCreateRequest) throws ApiException {
@@ -824,7 +824,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsCreateResponse> adminAgentsCreateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminAgentsCreateRequest adminAgentsCreateRequest) throws ApiException {
@@ -849,7 +849,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Missing required field: name, or an invalid budgetPolicy (unknown key, or a value that is not a number greater than zero). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsCreateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminAgentsCreateRequest adminAgentsCreateRequest, final ApiCallback<AdminAgentsCreateResponse> _callback) throws ApiException {
@@ -873,7 +873,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent deactivated. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsDeactivateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
@@ -952,7 +952,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent deactivated. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsDeactivateResponse adminAgentsDeactivate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -974,7 +974,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent deactivated. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsDeactivateResponse> adminAgentsDeactivateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -998,7 +998,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent deactivated. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsDeactivateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<AdminAgentsDeactivateResponse> _callback) throws ApiException {
@@ -1022,7 +1022,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent deleted. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsDeleteCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
@@ -1101,7 +1101,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent deleted. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsDeleteResponse adminAgentsDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -1123,7 +1123,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent deleted. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsDeleteResponse> adminAgentsDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -1147,7 +1147,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent deleted. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<AdminAgentsDeleteResponse> _callback) throws ApiException {
@@ -1173,7 +1173,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
@@ -1256,7 +1256,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
@@ -1281,7 +1281,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
@@ -1308,7 +1308,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Inactive agent, an agent that only takes DPoP-bound tokens (a minted token cannot be bound to its key), requested scopes outside the agent&#39;s capabilities, a resource that is not an active MCP server of this organization, or expiresIn above 3600 without a resource. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> budget_exceeded: the agent budget is spent. A token mint counts as one call. Retry-After holds the seconds until the spent window starts again. </td><td>  -  </td></tr>
      </table>
      */
@@ -1330,10 +1330,10 @@ public class AdminAgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> The agent record. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The agent record. &#x60;ownerId&#x60; / &#x60;owner&#x60; name the agent&#39;s owner: the account that created it (for an agent created with an API key, the key&#39;s creator), or the one that &#x60;ownerId&#x60; named since; null for an agent without an owner. Just-in-time access is asked in the owner&#39;s name, and the owner cannot review the agent&#39;s JIT requests. &#x60;createdBy&#x60; is the same account. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsGetCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
@@ -1409,10 +1409,10 @@ public class AdminAgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> The agent record. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The agent record. &#x60;ownerId&#x60; / &#x60;owner&#x60; name the agent&#39;s owner: the account that created it (for an agent created with an API key, the key&#39;s creator), or the one that &#x60;ownerId&#x60; named since; null for an agent without an owner. Just-in-time access is asked in the owner&#39;s name, and the owner cannot review the agent&#39;s JIT requests. &#x60;createdBy&#x60; is the same account. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsGetResponse adminAgentsGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -1431,10 +1431,10 @@ public class AdminAgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> The agent record. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The agent record. &#x60;ownerId&#x60; / &#x60;owner&#x60; name the agent&#39;s owner: the account that created it (for an agent created with an API key, the key&#39;s creator), or the one that &#x60;ownerId&#x60; named since; null for an agent without an owner. Just-in-time access is asked in the owner&#39;s name, and the owner cannot review the agent&#39;s JIT requests. &#x60;createdBy&#x60; is the same account. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsGetResponse> adminAgentsGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -1455,10 +1455,10 @@ public class AdminAgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> The agent record. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The agent record. &#x60;ownerId&#x60; / &#x60;owner&#x60; name the agent&#39;s owner: the account that created it (for an agent created with an API key, the key&#39;s creator), or the one that &#x60;ownerId&#x60; named since; null for an agent without an owner. Just-in-time access is asked in the owner&#39;s name, and the owner cannot review the agent&#39;s JIT requests. &#x60;createdBy&#x60; is the same account. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<AdminAgentsGetResponse> _callback) throws ApiException {
@@ -1482,7 +1482,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent scopes/capabilities. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsGetScopesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
@@ -1561,7 +1561,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent scopes/capabilities. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsGetScopesResponse adminAgentsGetScopes(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -1583,7 +1583,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent scopes/capabilities. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsGetScopesResponse> adminAgentsGetScopesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -1607,7 +1607,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent scopes/capabilities. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsGetScopesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<AdminAgentsGetScopesResponse> _callback) throws ApiException {
@@ -1632,7 +1632,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Paginated list of agents. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsListCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir, final ApiCallback _callback) throws ApiException {
@@ -1714,7 +1714,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Paginated list of agents. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsListResponse adminAgentsList(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir) throws ApiException {
@@ -1737,7 +1737,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Paginated list of agents. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsListResponse> adminAgentsListWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir) throws ApiException {
@@ -1762,7 +1762,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Paginated list of agents. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsListAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String sortBy, @javax.annotation.Nullable String sortDir, final ApiCallback<AdminAgentsListResponse> _callback) throws ApiException {
@@ -1788,7 +1788,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsReportUsageCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest, final ApiCallback _callback) throws ApiException {
@@ -1875,7 +1875,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsReportUsageResponse adminAgentsReportUsage(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest) throws ApiException {
@@ -1899,7 +1899,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsReportUsageResponse> adminAgentsReportUsageWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest) throws ApiException {
@@ -1925,7 +1925,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> tokens or cost_usd is missing, negative, too large or not a number. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsReportUsageAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminAgentsReportUsageRequest adminAgentsReportUsageRequest, final ApiCallback<AdminAgentsReportUsageResponse> _callback) throws ApiException {
@@ -1949,7 +1949,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent API key revoked (nullified). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsRevokeKeyCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
@@ -2028,7 +2028,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent API key revoked (nullified). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsRevokeKeyResponse adminAgentsRevokeKey(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -2050,7 +2050,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent API key revoked (nullified). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsRevokeKeyResponse> adminAgentsRevokeKeyWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
@@ -2074,7 +2074,7 @@ public class AdminAgentsApi {
         <tr><td> 200 </td><td> Agent API key revoked (nullified). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsRevokeKeyAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<AdminAgentsRevokeKeyResponse> _callback) throws ApiException {
@@ -2100,7 +2100,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Credentials cannot be rotated for this agent (invalid identity type). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsRotateCredentialsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest, final ApiCallback _callback) throws ApiException {
@@ -2182,7 +2182,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Credentials cannot be rotated for this agent (invalid identity type). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsRotateCredentialsResponse adminAgentsRotateCredentials(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest) throws ApiException {
@@ -2206,7 +2206,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Credentials cannot be rotated for this agent (invalid identity type). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsRotateCredentialsResponse> adminAgentsRotateCredentialsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest) throws ApiException {
@@ -2232,7 +2232,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Credentials cannot be rotated for this agent (invalid identity type). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsRotateCredentialsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nullable AdminAgentsAgentsRotateKeyRequest adminAgentsAgentsRotateKeyRequest, final ApiCallback<AdminAgentsRotateCredentialsResponse> _callback) throws ApiException {
@@ -2258,7 +2258,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> scopes array is required. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsSetScopesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminAgentsSetScopesRequest adminAgentsSetScopesRequest, final ApiCallback _callback) throws ApiException {
@@ -2345,7 +2345,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> scopes array is required. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public AdminAgentsSetScopesResponse adminAgentsSetScopes(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminAgentsSetScopesRequest adminAgentsSetScopesRequest) throws ApiException {
@@ -2369,7 +2369,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> scopes array is required. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AdminAgentsSetScopesResponse> adminAgentsSetScopesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminAgentsSetScopesRequest adminAgentsSetScopesRequest) throws ApiException {
@@ -2395,7 +2395,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> scopes array is required. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAgentsSetScopesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AdminAgentsSetScopesRequest adminAgentsSetScopesRequest, final ApiCallback<AdminAgentsSetScopesResponse> _callback) throws ApiException {
@@ -2421,7 +2421,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminAgentsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull PutAdminAgentsUpdateRequest putAdminAgentsUpdateRequest, final ApiCallback _callback) throws ApiException {
@@ -2508,7 +2508,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public PutAdminAgentsUpdateResponse patchAdminAgentsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull PutAdminAgentsUpdateRequest putAdminAgentsUpdateRequest) throws ApiException {
@@ -2532,7 +2532,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<PutAdminAgentsUpdateResponse> patchAdminAgentsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull PutAdminAgentsUpdateRequest putAdminAgentsUpdateRequest) throws ApiException {
@@ -2558,7 +2558,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminAgentsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull PutAdminAgentsUpdateRequest putAdminAgentsUpdateRequest, final ApiCallback<PutAdminAgentsUpdateResponse> _callback) throws ApiException {
@@ -2584,7 +2584,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminAgentsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull PutAdminAgentsUpdateRequest putAdminAgentsUpdateRequest, final ApiCallback _callback) throws ApiException {
@@ -2671,7 +2671,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public PutAdminAgentsUpdateResponse putAdminAgentsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull PutAdminAgentsUpdateRequest putAdminAgentsUpdateRequest) throws ApiException {
@@ -2695,7 +2695,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<PutAdminAgentsUpdateResponse> putAdminAgentsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull PutAdminAgentsUpdateRequest putAdminAgentsUpdateRequest) throws ApiException {
@@ -2721,7 +2721,7 @@ public class AdminAgentsApi {
         <tr><td> 400 </td><td> Invalid budgetPolicy (an unknown key, or a value that is not a number greater than zero); canActOnBehalfOfUsers that is not true or false; when switching delegation on, an editor who does not hold every capability of the agent; an ownerId that is not an active account of the organization, or one that holds permissions the caller does not hold; or status active for an agent that needs a new owner. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Organization or agent not found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminAgentsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull PutAdminAgentsUpdateRequest putAdminAgentsUpdateRequest, final ApiCallback<PutAdminAgentsUpdateResponse> _callback) throws ApiException {

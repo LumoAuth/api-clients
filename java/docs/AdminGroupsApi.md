@@ -11,7 +11,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**adminGroupsGet**](AdminGroupsApi.md#adminGroupsGet) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Get a single group by ID or slug |
 | [**adminGroupsGetMembers**](AdminGroupsApi.md#adminGroupsGetMembers) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members |
 | [**adminGroupsGroupsGetRoles**](AdminGroupsApi.md#adminGroupsGroupsGetRoles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles |
-| [**adminGroupsList**](AdminGroupsApi.md#adminGroupsList) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant |
+| [**adminGroupsList**](AdminGroupsApi.md#adminGroupsList) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the organization |
 | [**adminGroupsRemoveMember**](AdminGroupsApi.md#adminGroupsRemoveMember) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group |
 | [**adminGroupsRemoveRole**](AdminGroupsApi.md#adminGroupsRemoveRole) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group |
 | [**adminGroupsUpdateRoles**](AdminGroupsApi.md#adminGroupsUpdateRoles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles) |
@@ -21,7 +21,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminGroupsAddMembers"></a>
 # **adminGroupsAddMembers**
-> AdminGroupsCreateResponse adminGroupsAddMembers(orgId, groupId)
+> AdminGroupsCreateResponse adminGroupsAddMembers(orgId, groupId, adminGroupsAddMembersRequest)
 
 Add member(s) to group
 
@@ -53,8 +53,9 @@ public class Example {
     AdminGroupsApi apiInstance = new AdminGroupsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
+    AdminGroupsAddMembersRequest adminGroupsAddMembersRequest = new AdminGroupsAddMembersRequest(); // AdminGroupsAddMembersRequest | 
     try {
-      AdminGroupsCreateResponse result = apiInstance.adminGroupsAddMembers(orgId, groupId);
+      AdminGroupsCreateResponse result = apiInstance.adminGroupsAddMembers(orgId, groupId, adminGroupsAddMembersRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsAddMembers");
@@ -73,6 +74,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **groupId** | **String**|  | |
+| **adminGroupsAddMembersRequest** | [**AdminGroupsAddMembersRequest**](AdminGroupsAddMembersRequest.md)|  | |
 
 ### Return type
 
@@ -84,7 +86,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -94,11 +96,11 @@ public class Example {
 
 <a id="adminGroupsAddRole"></a>
 # **adminGroupsAddRole**
-> MessageResponse adminGroupsAddRole(orgId, groupId)
+> MessageResponse adminGroupsAddRole(orgId, groupId, adminGroupsAddRoleRequest)
 
 Add a single role to a group
 
-A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
 
 ### Example
 ```java
@@ -128,8 +130,9 @@ public class Example {
     AdminGroupsApi apiInstance = new AdminGroupsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
+    AdminGroupsAddRoleRequest adminGroupsAddRoleRequest = new AdminGroupsAddRoleRequest(); // AdminGroupsAddRoleRequest | 
     try {
-      MessageResponse result = apiInstance.adminGroupsAddRole(orgId, groupId);
+      MessageResponse result = apiInstance.adminGroupsAddRole(orgId, groupId, adminGroupsAddRoleRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsAddRole");
@@ -148,6 +151,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **groupId** | **String**|  | |
+| **adminGroupsAddRoleRequest** | [**AdminGroupsAddRoleRequest**](AdminGroupsAddRoleRequest.md)|  | |
 
 ### Return type
 
@@ -159,7 +163,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -169,11 +173,11 @@ public class Example {
 
 <a id="adminGroupsCreate"></a>
 # **adminGroupsCreate**
-> AdminGroupsCreateResponse adminGroupsCreate(orgId)
+> AdminGroupsCreateResponse adminGroupsCreate(orgId, adminGroupsCreateRequest)
 
 Create a new group
 
-Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
 
 ### Example
 ```java
@@ -202,8 +206,9 @@ public class Example {
 
     AdminGroupsApi apiInstance = new AdminGroupsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AdminGroupsCreateRequest adminGroupsCreateRequest = new AdminGroupsCreateRequest(); // AdminGroupsCreateRequest | 
     try {
-      AdminGroupsCreateResponse result = apiInstance.adminGroupsCreate(orgId);
+      AdminGroupsCreateResponse result = apiInstance.adminGroupsCreate(orgId, adminGroupsCreateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsCreate");
@@ -221,6 +226,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **adminGroupsCreateRequest** | [**AdminGroupsCreateRequest**](AdminGroupsCreateRequest.md)|  | |
 
 ### Return type
 
@@ -232,7 +238,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -536,7 +542,7 @@ public class Example {
 # **adminGroupsList**
 > AdminGroupsListResponse adminGroupsList(orgId)
 
-List all groups in the tenant
+List all groups in the organization
 
 ### Example
 ```java
@@ -755,11 +761,11 @@ public class Example {
 
 <a id="adminGroupsUpdateRoles"></a>
 # **adminGroupsUpdateRoles**
-> AdminGroupsCreateResponse adminGroupsUpdateRoles(orgId, groupId)
+> AdminGroupsCreateResponse adminGroupsUpdateRoles(orgId, groupId, adminGroupsUpdateRolesRequest)
 
 Update group roles (replaces all existing roles)
 
-&#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+&#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
 ### Example
 ```java
@@ -789,8 +795,9 @@ public class Example {
     AdminGroupsApi apiInstance = new AdminGroupsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
+    AdminGroupsUpdateRolesRequest adminGroupsUpdateRolesRequest = new AdminGroupsUpdateRolesRequest(); // AdminGroupsUpdateRolesRequest | 
     try {
-      AdminGroupsCreateResponse result = apiInstance.adminGroupsUpdateRoles(orgId, groupId);
+      AdminGroupsCreateResponse result = apiInstance.adminGroupsUpdateRoles(orgId, groupId, adminGroupsUpdateRolesRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsUpdateRoles");
@@ -809,6 +816,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **groupId** | **String**|  | |
+| **adminGroupsUpdateRolesRequest** | [**AdminGroupsUpdateRolesRequest**](AdminGroupsUpdateRolesRequest.md)|  | |
 
 ### Return type
 
@@ -820,7 +828,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -830,7 +838,7 @@ public class Example {
 
 <a id="patchAdminGroupsUpdate"></a>
 # **patchAdminGroupsUpdate**
-> AdminGroupsCreateResponse patchAdminGroupsUpdate(orgId, groupId)
+> AdminGroupsCreateResponse patchAdminGroupsUpdate(orgId, groupId, putAdminGroupsUpdateRequest)
 
 Update an existing group
 
@@ -862,8 +870,9 @@ public class Example {
     AdminGroupsApi apiInstance = new AdminGroupsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
+    PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest = new PutAdminGroupsUpdateRequest(); // PutAdminGroupsUpdateRequest | 
     try {
-      AdminGroupsCreateResponse result = apiInstance.patchAdminGroupsUpdate(orgId, groupId);
+      AdminGroupsCreateResponse result = apiInstance.patchAdminGroupsUpdate(orgId, groupId, putAdminGroupsUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#patchAdminGroupsUpdate");
@@ -882,6 +891,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **groupId** | **String**|  | |
+| **putAdminGroupsUpdateRequest** | [**PutAdminGroupsUpdateRequest**](PutAdminGroupsUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -893,7 +903,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -903,7 +913,7 @@ public class Example {
 
 <a id="putAdminGroupsUpdate"></a>
 # **putAdminGroupsUpdate**
-> AdminGroupsCreateResponse putAdminGroupsUpdate(orgId, groupId)
+> AdminGroupsCreateResponse putAdminGroupsUpdate(orgId, groupId, putAdminGroupsUpdateRequest)
 
 Update an existing group
 
@@ -935,8 +945,9 @@ public class Example {
     AdminGroupsApi apiInstance = new AdminGroupsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
+    PutAdminGroupsUpdateRequest putAdminGroupsUpdateRequest = new PutAdminGroupsUpdateRequest(); // PutAdminGroupsUpdateRequest | 
     try {
-      AdminGroupsCreateResponse result = apiInstance.putAdminGroupsUpdate(orgId, groupId);
+      AdminGroupsCreateResponse result = apiInstance.putAdminGroupsUpdate(orgId, groupId, putAdminGroupsUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#putAdminGroupsUpdate");
@@ -955,6 +966,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **groupId** | **String**|  | |
+| **putAdminGroupsUpdateRequest** | [**PutAdminGroupsUpdateRequest**](PutAdminGroupsUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -966,7 +978,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

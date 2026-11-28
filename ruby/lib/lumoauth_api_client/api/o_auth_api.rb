@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -85,25 +85,55 @@ module LumoAuthApiClient
     # CIBA backchannel authentication request
     # OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
     # @param org_id [String] 
+    # @param scope [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :login_hint 
+    # @option opts [String] :login_hint_token 
+    # @option opts [String] :id_token_hint 
+    # @option opts [String] :binding_message 
+    # @option opts [String] :acr_values 
+    # @option opts [Integer] :requested_expiry Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused.
+    # @option opts [String] :client_notification_token 
+    # @option opts [String] :authorization_details 
+    # @option opts [String] :client_id Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    # @option opts [String] :client_secret client_secret_post
+    # @option opts [String] :client_assertion_type 
+    # @option opts [String] :client_assertion private_key_jwt (RFC 7523)
     # @return [BackchannelAuthorizeResponse]
-    def backchannel_authorize(org_id, opts = {})
-      data, _status_code, _headers = backchannel_authorize_with_http_info(org_id, opts)
+    def backchannel_authorize(org_id, scope, opts = {})
+      data, _status_code, _headers = backchannel_authorize_with_http_info(org_id, scope, opts)
       data
     end
 
     # CIBA backchannel authentication request
     # OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
     # @param org_id [String] 
+    # @param scope [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :login_hint 
+    # @option opts [String] :login_hint_token 
+    # @option opts [String] :id_token_hint 
+    # @option opts [String] :binding_message 
+    # @option opts [String] :acr_values 
+    # @option opts [Integer] :requested_expiry Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused.
+    # @option opts [String] :client_notification_token 
+    # @option opts [String] :authorization_details 
+    # @option opts [String] :client_id Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    # @option opts [String] :client_secret client_secret_post
+    # @option opts [String] :client_assertion_type 
+    # @option opts [String] :client_assertion private_key_jwt (RFC 7523)
     # @return [Array<(BackchannelAuthorizeResponse, Integer, Hash)>] BackchannelAuthorizeResponse data, response status code and response headers
-    def backchannel_authorize_with_http_info(org_id, opts = {})
+    def backchannel_authorize_with_http_info(org_id, scope, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.backchannel_authorize ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling OAuthApi.backchannel_authorize"
+      end
+      # verify the required parameter 'scope' is set
+      if @api_client.config.client_side_validation && scope.nil?
+        fail ArgumentError, "Missing the required parameter 'scope' when calling OAuthApi.backchannel_authorize"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/oauth/bc-authorize'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -115,9 +145,27 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/x-www-form-urlencoded'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
+      form_params['scope'] = scope
+      form_params['login_hint'] = opts[:'login_hint'] if !opts[:'login_hint'].nil?
+      form_params['login_hint_token'] = opts[:'login_hint_token'] if !opts[:'login_hint_token'].nil?
+      form_params['id_token_hint'] = opts[:'id_token_hint'] if !opts[:'id_token_hint'].nil?
+      form_params['binding_message'] = opts[:'binding_message'] if !opts[:'binding_message'].nil?
+      form_params['acr_values'] = opts[:'acr_values'] if !opts[:'acr_values'].nil?
+      form_params['requested_expiry'] = opts[:'requested_expiry'] if !opts[:'requested_expiry'].nil?
+      form_params['client_notification_token'] = opts[:'client_notification_token'] if !opts[:'client_notification_token'].nil?
+      form_params['authorization_details'] = opts[:'authorization_details'] if !opts[:'authorization_details'].nil?
+      form_params['client_id'] = opts[:'client_id'] if !opts[:'client_id'].nil?
+      form_params['client_secret'] = opts[:'client_secret'] if !opts[:'client_secret'].nil?
+      form_params['client_assertion_type'] = opts[:'client_assertion_type'] if !opts[:'client_assertion_type'].nil?
+      form_params['client_assertion'] = opts[:'client_assertion'] if !opts[:'client_assertion'].nil?
 
       # http body (model)
       post_body = opts[:debug_body]
@@ -220,9 +268,15 @@ module LumoAuthApiClient
     end
 
     # Device authorization request (RFC 8628)
-    # Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+    # Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :client_id Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    # @option opts [String] :client_secret client_secret_post
+    # @option opts [String] :client_assertion_type 
+    # @option opts [String] :client_assertion private_key_jwt (RFC 7523)
+    # @option opts [String] :scope Space-separated scopes.
+    # @option opts [String] :resource RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them.
     # @return [DeviceAuthorizationResponse]
     def device_authorization(org_id, opts = {})
       data, _status_code, _headers = device_authorization_with_http_info(org_id, opts)
@@ -230,9 +284,15 @@ module LumoAuthApiClient
     end
 
     # Device authorization request (RFC 8628)
-    # Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+    # Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :client_id Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    # @option opts [String] :client_secret client_secret_post
+    # @option opts [String] :client_assertion_type 
+    # @option opts [String] :client_assertion private_key_jwt (RFC 7523)
+    # @option opts [String] :scope Space-separated scopes.
+    # @option opts [String] :resource RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them.
     # @return [Array<(DeviceAuthorizationResponse, Integer, Hash)>] DeviceAuthorizationResponse data, response status code and response headers
     def device_authorization_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -252,9 +312,20 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/x-www-form-urlencoded'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
+      form_params['client_id'] = opts[:'client_id'] if !opts[:'client_id'].nil?
+      form_params['client_secret'] = opts[:'client_secret'] if !opts[:'client_secret'].nil?
+      form_params['client_assertion_type'] = opts[:'client_assertion_type'] if !opts[:'client_assertion_type'].nil?
+      form_params['client_assertion'] = opts[:'client_assertion'] if !opts[:'client_assertion'].nil?
+      form_params['scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+      form_params['resource'] = opts[:'resource'] if !opts[:'resource'].nil?
 
       # http body (model)
       post_body = opts[:debug_body]
@@ -480,25 +551,45 @@ module LumoAuthApiClient
     # Token introspection (RFC 7662)
     # Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
     # @param org_id [String] 
+    # @param token [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :token_type_hint 
+    # @option opts [String] :client_id The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client).
+    # @option opts [String] :client_secret client_secret_post
+    # @option opts [String] :client_assertion_type 
+    # @option opts [String] :client_assertion private_key_jwt (RFC 7523)
     # @return [IntrospectResponse]
-    def introspect(org_id, opts = {})
-      data, _status_code, _headers = introspect_with_http_info(org_id, opts)
+    def introspect(org_id, token, opts = {})
+      data, _status_code, _headers = introspect_with_http_info(org_id, token, opts)
       data
     end
 
     # Token introspection (RFC 7662)
     # Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
     # @param org_id [String] 
+    # @param token [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :token_type_hint 
+    # @option opts [String] :client_id The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client).
+    # @option opts [String] :client_secret client_secret_post
+    # @option opts [String] :client_assertion_type 
+    # @option opts [String] :client_assertion private_key_jwt (RFC 7523)
     # @return [Array<(IntrospectResponse, Integer, Hash)>] IntrospectResponse data, response status code and response headers
-    def introspect_with_http_info(org_id, opts = {})
+    def introspect_with_http_info(org_id, token, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.introspect ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling OAuthApi.introspect"
+      end
+      # verify the required parameter 'token' is set
+      if @api_client.config.client_side_validation && token.nil?
+        fail ArgumentError, "Missing the required parameter 'token' when calling OAuthApi.introspect"
+      end
+      allowable_values = ["access_token", "refresh_token"]
+      if @api_client.config.client_side_validation && opts[:'token_type_hint'] && !allowable_values.include?(opts[:'token_type_hint'])
+        fail ArgumentError, "invalid value for \"token_type_hint\", must be one of #{allowable_values}"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/oauth/introspect'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -510,9 +601,20 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/x-www-form-urlencoded'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
+      form_params['token'] = token
+      form_params['token_type_hint'] = opts[:'token_type_hint'] if !opts[:'token_type_hint'].nil?
+      form_params['client_id'] = opts[:'client_id'] if !opts[:'client_id'].nil?
+      form_params['client_secret'] = opts[:'client_secret'] if !opts[:'client_secret'].nil?
+      form_params['client_assertion_type'] = opts[:'client_assertion_type'] if !opts[:'client_assertion_type'].nil?
+      form_params['client_assertion'] = opts[:'client_assertion'] if !opts[:'client_assertion'].nil?
 
       # http body (model)
       post_body = opts[:debug_body]
@@ -544,6 +646,21 @@ module LumoAuthApiClient
     # Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :response_type 
+    # @option opts [String] :redirect_uri 
+    # @option opts [String] :scope 
+    # @option opts [String] :state 
+    # @option opts [String] :nonce 
+    # @option opts [String] :code_challenge 
+    # @option opts [String] :code_challenge_method 
+    # @option opts [String] :request A signed request object (JAR, RFC 9101).
+    # @option opts [String] :resource 
+    # @option opts [String] :prompt 
+    # @option opts [String] :login_hint 
+    # @option opts [String] :client_id Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    # @option opts [String] :client_secret client_secret_post
+    # @option opts [String] :client_assertion_type 
+    # @option opts [String] :client_assertion private_key_jwt (RFC 7523)
     # @return [ParResponse]
     def par(org_id, opts = {})
       data, _status_code, _headers = par_with_http_info(org_id, opts)
@@ -554,6 +671,21 @@ module LumoAuthApiClient
     # Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :response_type 
+    # @option opts [String] :redirect_uri 
+    # @option opts [String] :scope 
+    # @option opts [String] :state 
+    # @option opts [String] :nonce 
+    # @option opts [String] :code_challenge 
+    # @option opts [String] :code_challenge_method 
+    # @option opts [String] :request A signed request object (JAR, RFC 9101).
+    # @option opts [String] :resource 
+    # @option opts [String] :prompt 
+    # @option opts [String] :login_hint 
+    # @option opts [String] :client_id Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    # @option opts [String] :client_secret client_secret_post
+    # @option opts [String] :client_assertion_type 
+    # @option opts [String] :client_assertion private_key_jwt (RFC 7523)
     # @return [Array<(ParResponse, Integer, Hash)>] ParResponse data, response status code and response headers
     def par_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -573,9 +705,29 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/x-www-form-urlencoded'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
+      form_params['response_type'] = opts[:'response_type'] if !opts[:'response_type'].nil?
+      form_params['redirect_uri'] = opts[:'redirect_uri'] if !opts[:'redirect_uri'].nil?
+      form_params['scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+      form_params['state'] = opts[:'state'] if !opts[:'state'].nil?
+      form_params['nonce'] = opts[:'nonce'] if !opts[:'nonce'].nil?
+      form_params['code_challenge'] = opts[:'code_challenge'] if !opts[:'code_challenge'].nil?
+      form_params['code_challenge_method'] = opts[:'code_challenge_method'] if !opts[:'code_challenge_method'].nil?
+      form_params['request'] = opts[:'request'] if !opts[:'request'].nil?
+      form_params['resource'] = opts[:'resource'] if !opts[:'resource'].nil?
+      form_params['prompt'] = opts[:'prompt'] if !opts[:'prompt'].nil?
+      form_params['login_hint'] = opts[:'login_hint'] if !opts[:'login_hint'].nil?
+      form_params['client_id'] = opts[:'client_id'] if !opts[:'client_id'].nil?
+      form_params['client_secret'] = opts[:'client_secret'] if !opts[:'client_secret'].nil?
+      form_params['client_assertion_type'] = opts[:'client_assertion_type'] if !opts[:'client_assertion_type'].nil?
+      form_params['client_assertion'] = opts[:'client_assertion'] if !opts[:'client_assertion'].nil?
 
       # http body (model)
       post_body = opts[:debug_body]
@@ -606,25 +758,31 @@ module LumoAuthApiClient
     # Dynamic client registration (RFC 7591 / OIDC DCR)
     # Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization's signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
     # @param org_id [String] 
+    # @param register_client_request [RegisterClientRequest] RFC 7591 client metadata.
     # @param [Hash] opts the optional parameters
     # @return [RegisterClientResponse]
-    def register_client(org_id, opts = {})
-      data, _status_code, _headers = register_client_with_http_info(org_id, opts)
+    def register_client(org_id, register_client_request, opts = {})
+      data, _status_code, _headers = register_client_with_http_info(org_id, register_client_request, opts)
       data
     end
 
     # Dynamic client registration (RFC 7591 / OIDC DCR)
     # Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
     # @param org_id [String] 
+    # @param register_client_request [RegisterClientRequest] RFC 7591 client metadata.
     # @param [Hash] opts the optional parameters
     # @return [Array<(RegisterClientResponse, Integer, Hash)>] RegisterClientResponse data, response status code and response headers
-    def register_client_with_http_info(org_id, opts = {})
+    def register_client_with_http_info(org_id, register_client_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.register_client ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling OAuthApi.register_client"
+      end
+      # verify the required parameter 'register_client_request' is set
+      if @api_client.config.client_side_validation && register_client_request.nil?
+        fail ArgumentError, "Missing the required parameter 'register_client_request' when calling OAuthApi.register_client"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/connect/register'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -636,12 +794,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(register_client_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'RegisterClientResponse'
@@ -743,25 +906,45 @@ module LumoAuthApiClient
     # Token revocation (RFC 7009)
     # Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
     # @param org_id [String] 
+    # @param token [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :token_type_hint 
+    # @option opts [String] :client_id Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    # @option opts [String] :client_secret client_secret_post
+    # @option opts [String] :client_assertion_type 
+    # @option opts [String] :client_assertion private_key_jwt (RFC 7523)
     # @return [Object]
-    def revoke(org_id, opts = {})
-      data, _status_code, _headers = revoke_with_http_info(org_id, opts)
+    def revoke(org_id, token, opts = {})
+      data, _status_code, _headers = revoke_with_http_info(org_id, token, opts)
       data
     end
 
     # Token revocation (RFC 7009)
     # Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
     # @param org_id [String] 
+    # @param token [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :token_type_hint 
+    # @option opts [String] :client_id Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    # @option opts [String] :client_secret client_secret_post
+    # @option opts [String] :client_assertion_type 
+    # @option opts [String] :client_assertion private_key_jwt (RFC 7523)
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def revoke_with_http_info(org_id, opts = {})
+    def revoke_with_http_info(org_id, token, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.revoke ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling OAuthApi.revoke"
+      end
+      # verify the required parameter 'token' is set
+      if @api_client.config.client_side_validation && token.nil?
+        fail ArgumentError, "Missing the required parameter 'token' when calling OAuthApi.revoke"
+      end
+      allowable_values = ["access_token", "refresh_token"]
+      if @api_client.config.client_side_validation && opts[:'token_type_hint'] && !allowable_values.include?(opts[:'token_type_hint'])
+        fail ArgumentError, "invalid value for \"token_type_hint\", must be one of #{allowable_values}"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/oauth/revoke'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -773,9 +956,20 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/x-www-form-urlencoded'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
+      form_params['token'] = token
+      form_params['token_type_hint'] = opts[:'token_type_hint'] if !opts[:'token_type_hint'].nil?
+      form_params['client_id'] = opts[:'client_id'] if !opts[:'client_id'].nil?
+      form_params['client_secret'] = opts[:'client_secret'] if !opts[:'client_secret'].nil?
+      form_params['client_assertion_type'] = opts[:'client_assertion_type'] if !opts[:'client_assertion_type'].nil?
+      form_params['client_assertion'] = opts[:'client_assertion'] if !opts[:'client_assertion'].nil?
 
       # http body (model)
       post_body = opts[:debug_body]
@@ -1133,25 +1327,31 @@ module LumoAuthApiClient
     # Programmatic (JSON) login for the authorization flow
     # Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
     # @param org_id [String] 
+    # @param submit_login_json_request [SubmitLoginJsonRequest] 
     # @param [Hash] opts the optional parameters
     # @return [SubmitLoginJsonResponse]
-    def submit_login_json(org_id, opts = {})
-      data, _status_code, _headers = submit_login_json_with_http_info(org_id, opts)
+    def submit_login_json(org_id, submit_login_json_request, opts = {})
+      data, _status_code, _headers = submit_login_json_with_http_info(org_id, submit_login_json_request, opts)
       data
     end
 
     # Programmatic (JSON) login for the authorization flow
     # Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
     # @param org_id [String] 
+    # @param submit_login_json_request [SubmitLoginJsonRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(SubmitLoginJsonResponse, Integer, Hash)>] SubmitLoginJsonResponse data, response status code and response headers
-    def submit_login_json_with_http_info(org_id, opts = {})
+    def submit_login_json_with_http_info(org_id, submit_login_json_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.submit_login_json ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling OAuthApi.submit_login_json"
+      end
+      # verify the required parameter 'submit_login_json_request' is set
+      if @api_client.config.client_side_validation && submit_login_json_request.nil?
+        fail ArgumentError, "Missing the required parameter 'submit_login_json_request' when calling OAuthApi.submit_login_json"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/oauth/login/json'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -1163,12 +1363,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(submit_login_json_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'SubmitLoginJsonResponse'
@@ -1259,25 +1464,67 @@ module LumoAuthApiClient
     # OAuth 2.1 token endpoint
     # Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
     # @param org_id [String] 
+    # @param grant_type [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :code 
+    # @option opts [String] :redirect_uri 
+    # @option opts [String] :code_verifier 
+    # @option opts [String] :refresh_token 
+    # @option opts [String] :device_code 
+    # @option opts [String] :auth_req_id CIBA
+    # @option opts [String] :scope 
+    # @option opts [String] :resource 
+    # @option opts [String] :subject_token Token exchange (RFC 8693)
+    # @option opts [String] :subject_token_type 
+    # @option opts [String] :actor_token 
+    # @option opts [String] :actor_token_type 
+    # @option opts [String] :requested_token_type 
+    # @option opts [String] :assertion JWT bearer / ID-JAG grant
+    # @option opts [String] :client_id Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    # @option opts [String] :client_secret client_secret_post
+    # @option opts [String] :client_assertion_type 
+    # @option opts [String] :client_assertion private_key_jwt (RFC 7523)
     # @return [TokenResponse]
-    def token(org_id, opts = {})
-      data, _status_code, _headers = token_with_http_info(org_id, opts)
+    def token(org_id, grant_type, opts = {})
+      data, _status_code, _headers = token_with_http_info(org_id, grant_type, opts)
       data
     end
 
     # OAuth 2.1 token endpoint
     # Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
     # @param org_id [String] 
+    # @param grant_type [String] 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :code 
+    # @option opts [String] :redirect_uri 
+    # @option opts [String] :code_verifier 
+    # @option opts [String] :refresh_token 
+    # @option opts [String] :device_code 
+    # @option opts [String] :auth_req_id CIBA
+    # @option opts [String] :scope 
+    # @option opts [String] :resource 
+    # @option opts [String] :subject_token Token exchange (RFC 8693)
+    # @option opts [String] :subject_token_type 
+    # @option opts [String] :actor_token 
+    # @option opts [String] :actor_token_type 
+    # @option opts [String] :requested_token_type 
+    # @option opts [String] :assertion JWT bearer / ID-JAG grant
+    # @option opts [String] :client_id Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    # @option opts [String] :client_secret client_secret_post
+    # @option opts [String] :client_assertion_type 
+    # @option opts [String] :client_assertion private_key_jwt (RFC 7523)
     # @return [Array<(TokenResponse, Integer, Hash)>] TokenResponse data, response status code and response headers
-    def token_with_http_info(org_id, opts = {})
+    def token_with_http_info(org_id, grant_type, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.token ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling OAuthApi.token"
+      end
+      # verify the required parameter 'grant_type' is set
+      if @api_client.config.client_side_validation && grant_type.nil?
+        fail ArgumentError, "Missing the required parameter 'grant_type' when calling OAuthApi.token"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/oauth/token'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -1289,9 +1536,33 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/x-www-form-urlencoded'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
+      form_params['grant_type'] = grant_type
+      form_params['code'] = opts[:'code'] if !opts[:'code'].nil?
+      form_params['redirect_uri'] = opts[:'redirect_uri'] if !opts[:'redirect_uri'].nil?
+      form_params['code_verifier'] = opts[:'code_verifier'] if !opts[:'code_verifier'].nil?
+      form_params['refresh_token'] = opts[:'refresh_token'] if !opts[:'refresh_token'].nil?
+      form_params['device_code'] = opts[:'device_code'] if !opts[:'device_code'].nil?
+      form_params['auth_req_id'] = opts[:'auth_req_id'] if !opts[:'auth_req_id'].nil?
+      form_params['scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+      form_params['resource'] = opts[:'resource'] if !opts[:'resource'].nil?
+      form_params['subject_token'] = opts[:'subject_token'] if !opts[:'subject_token'].nil?
+      form_params['subject_token_type'] = opts[:'subject_token_type'] if !opts[:'subject_token_type'].nil?
+      form_params['actor_token'] = opts[:'actor_token'] if !opts[:'actor_token'].nil?
+      form_params['actor_token_type'] = opts[:'actor_token_type'] if !opts[:'actor_token_type'].nil?
+      form_params['requested_token_type'] = opts[:'requested_token_type'] if !opts[:'requested_token_type'].nil?
+      form_params['assertion'] = opts[:'assertion'] if !opts[:'assertion'].nil?
+      form_params['client_id'] = opts[:'client_id'] if !opts[:'client_id'].nil?
+      form_params['client_secret'] = opts[:'client_secret'] if !opts[:'client_secret'].nil?
+      form_params['client_assertion_type'] = opts[:'client_assertion_type'] if !opts[:'client_assertion_type'].nil?
+      form_params['client_assertion'] = opts[:'client_assertion'] if !opts[:'client_assertion'].nil?
 
       # http body (model)
       post_body = opts[:debug_body]

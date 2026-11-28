@@ -139,7 +139,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let agentId = "agentId_example" // String | 
-let attestRequest = AttestRequest(attestationToken: "attestationToken_example") // AttestRequest | 
+let attestRequest = AttestRequest(attestationToken: "attestationToken_example", scope: AttestRequest_scope()) // AttestRequest | 
 
 // Workload attestation: exchange a cloud OIDC token for an agent access token
 AgentsAPI.attest(orgId: orgId, agentId: agentId, attestRequest: attestRequest) { (response, error) in
@@ -483,7 +483,7 @@ No authorization required
 
 # **registerAgent**
 ```swift
-    open class func registerAgent(orgId: String, completion: @escaping (_ data: RegisterAgentResponse?, _ error: Error?) -> Void)
+    open class func registerAgent(orgId: String, registerAgentRequest: RegisterAgentRequest, completion: @escaping (_ data: RegisterAgentResponse?, _ error: Error?) -> Void)
 ```
 
 Register (or re-register) an agent
@@ -494,9 +494,10 @@ Register (or re-register) an agent
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let registerAgentRequest = RegisterAgentRequest(agent: "TODO", email: "email_example", password: "password_example") // RegisterAgentRequest | 
 
 // Register (or re-register) an agent
-AgentsAPI.registerAgent(orgId: orgId) { (response, error) in
+AgentsAPI.registerAgent(orgId: orgId, registerAgentRequest: registerAgentRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -513,6 +514,7 @@ AgentsAPI.registerAgent(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **registerAgentRequest** | [**RegisterAgentRequest**](RegisterAgentRequest.md) |  | 
 
 ### Return type
 
@@ -524,7 +526,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

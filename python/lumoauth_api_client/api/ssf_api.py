@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -19,8 +19,10 @@ from typing_extensions import Annotated
 
 from pydantic import StrictStr
 from typing import Optional
+from lumoauth_api_client.models.create_stream_config_request import CreateStreamConfigRequest
 from lumoauth_api_client.models.get_stream_config200_response import GetStreamConfig200Response
 from lumoauth_api_client.models.ssf_stream import SsfStream
+from lumoauth_api_client.models.verify_stream_request import VerifyStreamRequest
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -44,6 +46,7 @@ class SsfApi:
     def create_stream_config(
         self,
         org_id: StrictStr,
+        create_stream_config_request: CreateStreamConfigRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -62,6 +65,8 @@ class SsfApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param create_stream_config_request: (required)
+        :type create_stream_config_request: CreateStreamConfigRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -86,6 +91,7 @@ class SsfApi:
 
         _param = self._create_stream_config_serialize(
             org_id=org_id,
+            create_stream_config_request=create_stream_config_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -111,6 +117,7 @@ class SsfApi:
     def create_stream_config_with_http_info(
         self,
         org_id: StrictStr,
+        create_stream_config_request: CreateStreamConfigRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -129,6 +136,8 @@ class SsfApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param create_stream_config_request: (required)
+        :type create_stream_config_request: CreateStreamConfigRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -153,6 +162,7 @@ class SsfApi:
 
         _param = self._create_stream_config_serialize(
             org_id=org_id,
+            create_stream_config_request=create_stream_config_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -178,6 +188,7 @@ class SsfApi:
     def create_stream_config_without_preload_content(
         self,
         org_id: StrictStr,
+        create_stream_config_request: CreateStreamConfigRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -196,6 +207,8 @@ class SsfApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param create_stream_config_request: (required)
+        :type create_stream_config_request: CreateStreamConfigRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -220,6 +233,7 @@ class SsfApi:
 
         _param = self._create_stream_config_serialize(
             org_id=org_id,
+            create_stream_config_request=create_stream_config_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -240,6 +254,7 @@ class SsfApi:
     def _create_stream_config_serialize(
         self,
         org_id,
+        create_stream_config_request,
         _request_auth,
         _content_type,
         _headers,
@@ -267,6 +282,8 @@ class SsfApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if create_stream_config_request is not None:
+            _body_params = create_stream_config_request
 
 
         # set the HTTP header `Accept`
@@ -277,6 +294,19 @@ class SsfApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -863,6 +893,7 @@ class SsfApi:
     def verify_stream(
         self,
         org_id: StrictStr,
+        verify_stream_request: Optional[VerifyStreamRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -882,6 +913,8 @@ class SsfApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param verify_stream_request:
+        :type verify_stream_request: VerifyStreamRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -906,6 +939,7 @@ class SsfApi:
 
         _param = self._verify_stream_serialize(
             org_id=org_id,
+            verify_stream_request=verify_stream_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -933,6 +967,7 @@ class SsfApi:
     def verify_stream_with_http_info(
         self,
         org_id: StrictStr,
+        verify_stream_request: Optional[VerifyStreamRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -952,6 +987,8 @@ class SsfApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param verify_stream_request:
+        :type verify_stream_request: VerifyStreamRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -976,6 +1013,7 @@ class SsfApi:
 
         _param = self._verify_stream_serialize(
             org_id=org_id,
+            verify_stream_request=verify_stream_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1003,6 +1041,7 @@ class SsfApi:
     def verify_stream_without_preload_content(
         self,
         org_id: StrictStr,
+        verify_stream_request: Optional[VerifyStreamRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1022,6 +1061,8 @@ class SsfApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param verify_stream_request:
+        :type verify_stream_request: VerifyStreamRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1046,6 +1087,7 @@ class SsfApi:
 
         _param = self._verify_stream_serialize(
             org_id=org_id,
+            verify_stream_request=verify_stream_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1068,6 +1110,7 @@ class SsfApi:
     def _verify_stream_serialize(
         self,
         org_id,
+        verify_stream_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1095,9 +1138,24 @@ class SsfApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if verify_stream_request is not None:
+            _body_params = verify_stream_request
 
 
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

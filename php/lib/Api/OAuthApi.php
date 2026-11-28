@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -79,13 +79,13 @@ class OAuthApi
             'application/json',
         ],
         'backchannelAuthorize' => [
-            'application/json',
+            'application/x-www-form-urlencoded',
         ],
         'checkEmailFirst' => [
             'application/json',
         ],
         'deviceAuthorization' => [
-            'application/json',
+            'application/x-www-form-urlencoded',
         ],
         'getClientConfiguration' => [
             'application/json',
@@ -97,10 +97,10 @@ class OAuthApi
             'application/json',
         ],
         'introspect' => [
-            'application/json',
+            'application/x-www-form-urlencoded',
         ],
         'par' => [
-            'application/json',
+            'application/x-www-form-urlencoded',
         ],
         'registerClient' => [
             'application/json',
@@ -109,7 +109,7 @@ class OAuthApi
             'application/json',
         ],
         'revoke' => [
-            'application/json',
+            'application/x-www-form-urlencoded',
         ],
         'socialCallback' => [
             'application/json',
@@ -133,7 +133,7 @@ class OAuthApi
             'application/json',
         ],
         'token' => [
-            'application/json',
+            'application/x-www-form-urlencoded',
         ],
     ];
 
@@ -471,15 +471,28 @@ class OAuthApi
      * CIBA backchannel authentication request
      *
      * @param  string $orgId orgId (required)
+     * @param  string $scope scope (required)
+     * @param  string|null $loginHint loginHint (optional)
+     * @param  string|null $loginHintToken loginHintToken (optional)
+     * @param  string|null $idTokenHint idTokenHint (optional)
+     * @param  string|null $bindingMessage bindingMessage (optional)
+     * @param  string|null $acrValues acrValues (optional)
+     * @param  int|null $requestedExpiry Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional)
+     * @param  string|null $clientNotificationToken clientNotificationToken (optional)
+     * @param  string|null $authorizationDetails authorizationDetails (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['backchannelAuthorize'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\BackchannelAuthorizeResponse
      */
-    public function backchannelAuthorize($orgId, string $contentType = self::contentTypes['backchannelAuthorize'][0])
+    public function backchannelAuthorize($orgId, $scope, $loginHint = null, $loginHintToken = null, $idTokenHint = null, $bindingMessage = null, $acrValues = null, $requestedExpiry = null, $clientNotificationToken = null, $authorizationDetails = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['backchannelAuthorize'][0])
     {
-        list($response) = $this->backchannelAuthorizeWithHttpInfo($orgId, $contentType);
+        list($response) = $this->backchannelAuthorizeWithHttpInfo($orgId, $scope, $loginHint, $loginHintToken, $idTokenHint, $bindingMessage, $acrValues, $requestedExpiry, $clientNotificationToken, $authorizationDetails, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
         return $response;
     }
 
@@ -489,15 +502,28 @@ class OAuthApi
      * CIBA backchannel authentication request
      *
      * @param  string $orgId (required)
+     * @param  string $scope (required)
+     * @param  string|null $loginHint (optional)
+     * @param  string|null $loginHintToken (optional)
+     * @param  string|null $idTokenHint (optional)
+     * @param  string|null $bindingMessage (optional)
+     * @param  string|null $acrValues (optional)
+     * @param  int|null $requestedExpiry Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional)
+     * @param  string|null $clientNotificationToken (optional)
+     * @param  string|null $authorizationDetails (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['backchannelAuthorize'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\BackchannelAuthorizeResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function backchannelAuthorizeWithHttpInfo($orgId, string $contentType = self::contentTypes['backchannelAuthorize'][0])
+    public function backchannelAuthorizeWithHttpInfo($orgId, $scope, $loginHint = null, $loginHintToken = null, $idTokenHint = null, $bindingMessage = null, $acrValues = null, $requestedExpiry = null, $clientNotificationToken = null, $authorizationDetails = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['backchannelAuthorize'][0])
     {
-        $request = $this->backchannelAuthorizeRequest($orgId, $contentType);
+        $request = $this->backchannelAuthorizeRequest($orgId, $scope, $loginHint, $loginHintToken, $idTokenHint, $bindingMessage, $acrValues, $requestedExpiry, $clientNotificationToken, $authorizationDetails, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -574,14 +600,27 @@ class OAuthApi
      * CIBA backchannel authentication request
      *
      * @param  string $orgId (required)
+     * @param  string $scope (required)
+     * @param  string|null $loginHint (optional)
+     * @param  string|null $loginHintToken (optional)
+     * @param  string|null $idTokenHint (optional)
+     * @param  string|null $bindingMessage (optional)
+     * @param  string|null $acrValues (optional)
+     * @param  int|null $requestedExpiry Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional)
+     * @param  string|null $clientNotificationToken (optional)
+     * @param  string|null $authorizationDetails (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['backchannelAuthorize'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function backchannelAuthorizeAsync($orgId, string $contentType = self::contentTypes['backchannelAuthorize'][0])
+    public function backchannelAuthorizeAsync($orgId, $scope, $loginHint = null, $loginHintToken = null, $idTokenHint = null, $bindingMessage = null, $acrValues = null, $requestedExpiry = null, $clientNotificationToken = null, $authorizationDetails = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['backchannelAuthorize'][0])
     {
-        return $this->backchannelAuthorizeAsyncWithHttpInfo($orgId, $contentType)
+        return $this->backchannelAuthorizeAsyncWithHttpInfo($orgId, $scope, $loginHint, $loginHintToken, $idTokenHint, $bindingMessage, $acrValues, $requestedExpiry, $clientNotificationToken, $authorizationDetails, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -595,15 +634,28 @@ class OAuthApi
      * CIBA backchannel authentication request
      *
      * @param  string $orgId (required)
+     * @param  string $scope (required)
+     * @param  string|null $loginHint (optional)
+     * @param  string|null $loginHintToken (optional)
+     * @param  string|null $idTokenHint (optional)
+     * @param  string|null $bindingMessage (optional)
+     * @param  string|null $acrValues (optional)
+     * @param  int|null $requestedExpiry Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional)
+     * @param  string|null $clientNotificationToken (optional)
+     * @param  string|null $authorizationDetails (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['backchannelAuthorize'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function backchannelAuthorizeAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['backchannelAuthorize'][0])
+    public function backchannelAuthorizeAsyncWithHttpInfo($orgId, $scope, $loginHint = null, $loginHintToken = null, $idTokenHint = null, $bindingMessage = null, $acrValues = null, $requestedExpiry = null, $clientNotificationToken = null, $authorizationDetails = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['backchannelAuthorize'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\BackchannelAuthorizeResponse';
-        $request = $this->backchannelAuthorizeRequest($orgId, $contentType);
+        $request = $this->backchannelAuthorizeRequest($orgId, $scope, $loginHint, $loginHintToken, $idTokenHint, $bindingMessage, $acrValues, $requestedExpiry, $clientNotificationToken, $authorizationDetails, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -645,12 +697,25 @@ class OAuthApi
      * Create request for operation 'backchannelAuthorize'
      *
      * @param  string $orgId (required)
+     * @param  string $scope (required)
+     * @param  string|null $loginHint (optional)
+     * @param  string|null $loginHintToken (optional)
+     * @param  string|null $idTokenHint (optional)
+     * @param  string|null $bindingMessage (optional)
+     * @param  string|null $acrValues (optional)
+     * @param  int|null $requestedExpiry Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional)
+     * @param  string|null $clientNotificationToken (optional)
+     * @param  string|null $authorizationDetails (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['backchannelAuthorize'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function backchannelAuthorizeRequest($orgId, string $contentType = self::contentTypes['backchannelAuthorize'][0])
+    public function backchannelAuthorizeRequest($orgId, $scope, $loginHint = null, $loginHintToken = null, $idTokenHint = null, $bindingMessage = null, $acrValues = null, $requestedExpiry = null, $clientNotificationToken = null, $authorizationDetails = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['backchannelAuthorize'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -659,6 +724,25 @@ class OAuthApi
                 'Missing the required parameter $orgId when calling backchannelAuthorize'
             );
         }
+
+        // verify the required parameter 'scope' is set
+        if ($scope === null || (is_array($scope) && count($scope) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $scope when calling backchannelAuthorize'
+            );
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         $resourcePath = '/orgs/{orgId}/api/v1/oauth/bc-authorize';
@@ -679,6 +763,27 @@ class OAuthApi
             );
         }
 
+        // form params
+        $formDataProcessor = new FormDataProcessor();
+
+        $formData = $formDataProcessor->prepare([
+            'scope' => $scope,
+            'loginHint' => $loginHint,
+            'loginHintToken' => $loginHintToken,
+            'idTokenHint' => $idTokenHint,
+            'bindingMessage' => $bindingMessage,
+            'acrValues' => $acrValues,
+            'requestedExpiry' => $requestedExpiry,
+            'clientNotificationToken' => $clientNotificationToken,
+            'authorizationDetails' => $authorizationDetails,
+            'clientId' => $clientId,
+            'clientSecret' => $clientSecret,
+            'clientAssertionType' => $clientAssertionType,
+            'clientAssertion' => $clientAssertion,
+        ]);
+
+        $formParams = $formDataProcessor->flatten($formData);
+        $multipart = $formDataProcessor->has_file;
 
         $headers = $this->headerSelector->selectHeaders(
             ['application/json', ],
@@ -1030,15 +1135,21 @@ class OAuthApi
      * Device authorization request (RFC 8628)
      *
      * @param  string $orgId orgId (required)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
+     * @param  string|null $scope Space-separated scopes. (optional)
+     * @param  string|null $resource RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deviceAuthorization'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\DeviceAuthorizationResponse
      */
-    public function deviceAuthorization($orgId, string $contentType = self::contentTypes['deviceAuthorization'][0])
+    public function deviceAuthorization($orgId, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, $scope = null, $resource = null, string $contentType = self::contentTypes['deviceAuthorization'][0])
     {
-        list($response) = $this->deviceAuthorizationWithHttpInfo($orgId, $contentType);
+        list($response) = $this->deviceAuthorizationWithHttpInfo($orgId, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $scope, $resource, $contentType);
         return $response;
     }
 
@@ -1048,15 +1159,21 @@ class OAuthApi
      * Device authorization request (RFC 8628)
      *
      * @param  string $orgId (required)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
+     * @param  string|null $scope Space-separated scopes. (optional)
+     * @param  string|null $resource RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deviceAuthorization'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\DeviceAuthorizationResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deviceAuthorizationWithHttpInfo($orgId, string $contentType = self::contentTypes['deviceAuthorization'][0])
+    public function deviceAuthorizationWithHttpInfo($orgId, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, $scope = null, $resource = null, string $contentType = self::contentTypes['deviceAuthorization'][0])
     {
-        $request = $this->deviceAuthorizationRequest($orgId, $contentType);
+        $request = $this->deviceAuthorizationRequest($orgId, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $scope, $resource, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1133,14 +1250,20 @@ class OAuthApi
      * Device authorization request (RFC 8628)
      *
      * @param  string $orgId (required)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
+     * @param  string|null $scope Space-separated scopes. (optional)
+     * @param  string|null $resource RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deviceAuthorization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deviceAuthorizationAsync($orgId, string $contentType = self::contentTypes['deviceAuthorization'][0])
+    public function deviceAuthorizationAsync($orgId, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, $scope = null, $resource = null, string $contentType = self::contentTypes['deviceAuthorization'][0])
     {
-        return $this->deviceAuthorizationAsyncWithHttpInfo($orgId, $contentType)
+        return $this->deviceAuthorizationAsyncWithHttpInfo($orgId, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $scope, $resource, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1154,15 +1277,21 @@ class OAuthApi
      * Device authorization request (RFC 8628)
      *
      * @param  string $orgId (required)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
+     * @param  string|null $scope Space-separated scopes. (optional)
+     * @param  string|null $resource RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deviceAuthorization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deviceAuthorizationAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['deviceAuthorization'][0])
+    public function deviceAuthorizationAsyncWithHttpInfo($orgId, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, $scope = null, $resource = null, string $contentType = self::contentTypes['deviceAuthorization'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\DeviceAuthorizationResponse';
-        $request = $this->deviceAuthorizationRequest($orgId, $contentType);
+        $request = $this->deviceAuthorizationRequest($orgId, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $scope, $resource, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1204,12 +1333,18 @@ class OAuthApi
      * Create request for operation 'deviceAuthorization'
      *
      * @param  string $orgId (required)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
+     * @param  string|null $scope Space-separated scopes. (optional)
+     * @param  string|null $resource RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deviceAuthorization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deviceAuthorizationRequest($orgId, string $contentType = self::contentTypes['deviceAuthorization'][0])
+    public function deviceAuthorizationRequest($orgId, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, $scope = null, $resource = null, string $contentType = self::contentTypes['deviceAuthorization'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -1218,6 +1353,12 @@ class OAuthApi
                 'Missing the required parameter $orgId when calling deviceAuthorization'
             );
         }
+
+
+
+
+
+
 
 
         $resourcePath = '/orgs/{orgId}/api/v1/oauth/device_authorization';
@@ -1238,6 +1379,20 @@ class OAuthApi
             );
         }
 
+        // form params
+        $formDataProcessor = new FormDataProcessor();
+
+        $formData = $formDataProcessor->prepare([
+            'clientId' => $clientId,
+            'clientSecret' => $clientSecret,
+            'clientAssertionType' => $clientAssertionType,
+            'clientAssertion' => $clientAssertion,
+            'scope' => $scope,
+            'resource' => $resource,
+        ]);
+
+        $formParams = $formDataProcessor->flatten($formData);
+        $multipart = $formDataProcessor->has_file;
 
         $headers = $this->headerSelector->selectHeaders(
             ['application/json', ],
@@ -2149,15 +2304,21 @@ class OAuthApi
      * Token introspection (RFC 7662)
      *
      * @param  string $orgId orgId (required)
+     * @param  string $token token (required)
+     * @param  string|null $tokenTypeHint tokenTypeHint (optional)
+     * @param  string|null $clientId The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['introspect'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\IntrospectResponse
      */
-    public function introspect($orgId, string $contentType = self::contentTypes['introspect'][0])
+    public function introspect($orgId, $token, $tokenTypeHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['introspect'][0])
     {
-        list($response) = $this->introspectWithHttpInfo($orgId, $contentType);
+        list($response) = $this->introspectWithHttpInfo($orgId, $token, $tokenTypeHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
         return $response;
     }
 
@@ -2167,15 +2328,21 @@ class OAuthApi
      * Token introspection (RFC 7662)
      *
      * @param  string $orgId (required)
+     * @param  string $token (required)
+     * @param  string|null $tokenTypeHint (optional)
+     * @param  string|null $clientId The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['introspect'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\IntrospectResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function introspectWithHttpInfo($orgId, string $contentType = self::contentTypes['introspect'][0])
+    public function introspectWithHttpInfo($orgId, $token, $tokenTypeHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['introspect'][0])
     {
-        $request = $this->introspectRequest($orgId, $contentType);
+        $request = $this->introspectRequest($orgId, $token, $tokenTypeHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2252,14 +2419,20 @@ class OAuthApi
      * Token introspection (RFC 7662)
      *
      * @param  string $orgId (required)
+     * @param  string $token (required)
+     * @param  string|null $tokenTypeHint (optional)
+     * @param  string|null $clientId The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['introspect'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function introspectAsync($orgId, string $contentType = self::contentTypes['introspect'][0])
+    public function introspectAsync($orgId, $token, $tokenTypeHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['introspect'][0])
     {
-        return $this->introspectAsyncWithHttpInfo($orgId, $contentType)
+        return $this->introspectAsyncWithHttpInfo($orgId, $token, $tokenTypeHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2273,15 +2446,21 @@ class OAuthApi
      * Token introspection (RFC 7662)
      *
      * @param  string $orgId (required)
+     * @param  string $token (required)
+     * @param  string|null $tokenTypeHint (optional)
+     * @param  string|null $clientId The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['introspect'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function introspectAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['introspect'][0])
+    public function introspectAsyncWithHttpInfo($orgId, $token, $tokenTypeHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['introspect'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\IntrospectResponse';
-        $request = $this->introspectRequest($orgId, $contentType);
+        $request = $this->introspectRequest($orgId, $token, $tokenTypeHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2323,12 +2502,18 @@ class OAuthApi
      * Create request for operation 'introspect'
      *
      * @param  string $orgId (required)
+     * @param  string $token (required)
+     * @param  string|null $tokenTypeHint (optional)
+     * @param  string|null $clientId The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['introspect'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function introspectRequest($orgId, string $contentType = self::contentTypes['introspect'][0])
+    public function introspectRequest($orgId, $token, $tokenTypeHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['introspect'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -2337,6 +2522,18 @@ class OAuthApi
                 'Missing the required parameter $orgId when calling introspect'
             );
         }
+
+        // verify the required parameter 'token' is set
+        if ($token === null || (is_array($token) && count($token) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $token when calling introspect'
+            );
+        }
+
+
+
+
+
 
 
         $resourcePath = '/orgs/{orgId}/api/v1/oauth/introspect';
@@ -2357,6 +2554,20 @@ class OAuthApi
             );
         }
 
+        // form params
+        $formDataProcessor = new FormDataProcessor();
+
+        $formData = $formDataProcessor->prepare([
+            'token' => $token,
+            'tokenTypeHint' => $tokenTypeHint,
+            'clientId' => $clientId,
+            'clientSecret' => $clientSecret,
+            'clientAssertionType' => $clientAssertionType,
+            'clientAssertion' => $clientAssertion,
+        ]);
+
+        $formParams = $formDataProcessor->flatten($formData);
+        $multipart = $formDataProcessor->has_file;
 
         $headers = $this->headerSelector->selectHeaders(
             ['application/json', ],
@@ -2421,15 +2632,30 @@ class OAuthApi
      * Pushed authorization request (RFC 9126)
      *
      * @param  string $orgId orgId (required)
+     * @param  string|null $responseType responseType (optional)
+     * @param  string|null $redirectUri redirectUri (optional)
+     * @param  string|null $scope scope (optional)
+     * @param  string|null $state state (optional)
+     * @param  string|null $nonce nonce (optional)
+     * @param  string|null $codeChallenge codeChallenge (optional)
+     * @param  string|null $codeChallengeMethod codeChallengeMethod (optional)
+     * @param  string|null $request A signed request object (JAR, RFC 9101). (optional)
+     * @param  string|null $resource resource (optional)
+     * @param  string|null $prompt prompt (optional)
+     * @param  string|null $loginHint loginHint (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['par'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\ParResponse
      */
-    public function par($orgId, string $contentType = self::contentTypes['par'][0])
+    public function par($orgId, $responseType = null, $redirectUri = null, $scope = null, $state = null, $nonce = null, $codeChallenge = null, $codeChallengeMethod = null, $request = null, $resource = null, $prompt = null, $loginHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['par'][0])
     {
-        list($response) = $this->parWithHttpInfo($orgId, $contentType);
+        list($response) = $this->parWithHttpInfo($orgId, $responseType, $redirectUri, $scope, $state, $nonce, $codeChallenge, $codeChallengeMethod, $request, $resource, $prompt, $loginHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
         return $response;
     }
 
@@ -2439,15 +2665,30 @@ class OAuthApi
      * Pushed authorization request (RFC 9126)
      *
      * @param  string $orgId (required)
+     * @param  string|null $responseType (optional)
+     * @param  string|null $redirectUri (optional)
+     * @param  string|null $scope (optional)
+     * @param  string|null $state (optional)
+     * @param  string|null $nonce (optional)
+     * @param  string|null $codeChallenge (optional)
+     * @param  string|null $codeChallengeMethod (optional)
+     * @param  string|null $request A signed request object (JAR, RFC 9101). (optional)
+     * @param  string|null $resource (optional)
+     * @param  string|null $prompt (optional)
+     * @param  string|null $loginHint (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['par'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\ParResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function parWithHttpInfo($orgId, string $contentType = self::contentTypes['par'][0])
+    public function parWithHttpInfo($orgId, $responseType = null, $redirectUri = null, $scope = null, $state = null, $nonce = null, $codeChallenge = null, $codeChallengeMethod = null, $request = null, $resource = null, $prompt = null, $loginHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['par'][0])
     {
-        $request = $this->parRequest($orgId, $contentType);
+        $request = $this->parRequest($orgId, $responseType, $redirectUri, $scope, $state, $nonce, $codeChallenge, $codeChallengeMethod, $request, $resource, $prompt, $loginHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2524,14 +2765,29 @@ class OAuthApi
      * Pushed authorization request (RFC 9126)
      *
      * @param  string $orgId (required)
+     * @param  string|null $responseType (optional)
+     * @param  string|null $redirectUri (optional)
+     * @param  string|null $scope (optional)
+     * @param  string|null $state (optional)
+     * @param  string|null $nonce (optional)
+     * @param  string|null $codeChallenge (optional)
+     * @param  string|null $codeChallengeMethod (optional)
+     * @param  string|null $request A signed request object (JAR, RFC 9101). (optional)
+     * @param  string|null $resource (optional)
+     * @param  string|null $prompt (optional)
+     * @param  string|null $loginHint (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['par'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function parAsync($orgId, string $contentType = self::contentTypes['par'][0])
+    public function parAsync($orgId, $responseType = null, $redirectUri = null, $scope = null, $state = null, $nonce = null, $codeChallenge = null, $codeChallengeMethod = null, $request = null, $resource = null, $prompt = null, $loginHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['par'][0])
     {
-        return $this->parAsyncWithHttpInfo($orgId, $contentType)
+        return $this->parAsyncWithHttpInfo($orgId, $responseType, $redirectUri, $scope, $state, $nonce, $codeChallenge, $codeChallengeMethod, $request, $resource, $prompt, $loginHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2545,15 +2801,30 @@ class OAuthApi
      * Pushed authorization request (RFC 9126)
      *
      * @param  string $orgId (required)
+     * @param  string|null $responseType (optional)
+     * @param  string|null $redirectUri (optional)
+     * @param  string|null $scope (optional)
+     * @param  string|null $state (optional)
+     * @param  string|null $nonce (optional)
+     * @param  string|null $codeChallenge (optional)
+     * @param  string|null $codeChallengeMethod (optional)
+     * @param  string|null $request A signed request object (JAR, RFC 9101). (optional)
+     * @param  string|null $resource (optional)
+     * @param  string|null $prompt (optional)
+     * @param  string|null $loginHint (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['par'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function parAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['par'][0])
+    public function parAsyncWithHttpInfo($orgId, $responseType = null, $redirectUri = null, $scope = null, $state = null, $nonce = null, $codeChallenge = null, $codeChallengeMethod = null, $request = null, $resource = null, $prompt = null, $loginHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['par'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\ParResponse';
-        $request = $this->parRequest($orgId, $contentType);
+        $request = $this->parRequest($orgId, $responseType, $redirectUri, $scope, $state, $nonce, $codeChallenge, $codeChallengeMethod, $request, $resource, $prompt, $loginHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2595,12 +2866,27 @@ class OAuthApi
      * Create request for operation 'par'
      *
      * @param  string $orgId (required)
+     * @param  string|null $responseType (optional)
+     * @param  string|null $redirectUri (optional)
+     * @param  string|null $scope (optional)
+     * @param  string|null $state (optional)
+     * @param  string|null $nonce (optional)
+     * @param  string|null $codeChallenge (optional)
+     * @param  string|null $codeChallengeMethod (optional)
+     * @param  string|null $request A signed request object (JAR, RFC 9101). (optional)
+     * @param  string|null $resource (optional)
+     * @param  string|null $prompt (optional)
+     * @param  string|null $loginHint (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['par'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function parRequest($orgId, string $contentType = self::contentTypes['par'][0])
+    public function parRequest($orgId, $responseType = null, $redirectUri = null, $scope = null, $state = null, $nonce = null, $codeChallenge = null, $codeChallengeMethod = null, $request = null, $resource = null, $prompt = null, $loginHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['par'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -2609,6 +2895,21 @@ class OAuthApi
                 'Missing the required parameter $orgId when calling par'
             );
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         $resourcePath = '/orgs/{orgId}/api/v1/oauth/par';
@@ -2629,6 +2930,29 @@ class OAuthApi
             );
         }
 
+        // form params
+        $formDataProcessor = new FormDataProcessor();
+
+        $formData = $formDataProcessor->prepare([
+            'responseType' => $responseType,
+            'redirectUri' => $redirectUri,
+            'scope' => $scope,
+            'state' => $state,
+            'nonce' => $nonce,
+            'codeChallenge' => $codeChallenge,
+            'codeChallengeMethod' => $codeChallengeMethod,
+            'request' => $request,
+            'resource' => $resource,
+            'prompt' => $prompt,
+            'loginHint' => $loginHint,
+            'clientId' => $clientId,
+            'clientSecret' => $clientSecret,
+            'clientAssertionType' => $clientAssertionType,
+            'clientAssertion' => $clientAssertion,
+        ]);
+
+        $formParams = $formDataProcessor->flatten($formData);
+        $multipart = $formDataProcessor->has_file;
 
         $headers = $this->headerSelector->selectHeaders(
             ['application/json', ],
@@ -2693,15 +3017,16 @@ class OAuthApi
      * Dynamic client registration (RFC 7591 / OIDC DCR)
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RegisterClientRequest $registerClientRequest RFC 7591 client metadata. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['registerClient'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\RegisterClientResponse
      */
-    public function registerClient($orgId, string $contentType = self::contentTypes['registerClient'][0])
+    public function registerClient($orgId, $registerClientRequest, string $contentType = self::contentTypes['registerClient'][0])
     {
-        list($response) = $this->registerClientWithHttpInfo($orgId, $contentType);
+        list($response) = $this->registerClientWithHttpInfo($orgId, $registerClientRequest, $contentType);
         return $response;
     }
 
@@ -2711,15 +3036,16 @@ class OAuthApi
      * Dynamic client registration (RFC 7591 / OIDC DCR)
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RegisterClientRequest $registerClientRequest RFC 7591 client metadata. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['registerClient'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\RegisterClientResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function registerClientWithHttpInfo($orgId, string $contentType = self::contentTypes['registerClient'][0])
+    public function registerClientWithHttpInfo($orgId, $registerClientRequest, string $contentType = self::contentTypes['registerClient'][0])
     {
-        $request = $this->registerClientRequest($orgId, $contentType);
+        $request = $this->registerClientRequest($orgId, $registerClientRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2796,14 +3122,15 @@ class OAuthApi
      * Dynamic client registration (RFC 7591 / OIDC DCR)
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RegisterClientRequest $registerClientRequest RFC 7591 client metadata. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['registerClient'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function registerClientAsync($orgId, string $contentType = self::contentTypes['registerClient'][0])
+    public function registerClientAsync($orgId, $registerClientRequest, string $contentType = self::contentTypes['registerClient'][0])
     {
-        return $this->registerClientAsyncWithHttpInfo($orgId, $contentType)
+        return $this->registerClientAsyncWithHttpInfo($orgId, $registerClientRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2817,15 +3144,16 @@ class OAuthApi
      * Dynamic client registration (RFC 7591 / OIDC DCR)
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RegisterClientRequest $registerClientRequest RFC 7591 client metadata. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['registerClient'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function registerClientAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['registerClient'][0])
+    public function registerClientAsyncWithHttpInfo($orgId, $registerClientRequest, string $contentType = self::contentTypes['registerClient'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\RegisterClientResponse';
-        $request = $this->registerClientRequest($orgId, $contentType);
+        $request = $this->registerClientRequest($orgId, $registerClientRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2867,18 +3195,26 @@ class OAuthApi
      * Create request for operation 'registerClient'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\RegisterClientRequest $registerClientRequest RFC 7591 client metadata. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['registerClient'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function registerClientRequest($orgId, string $contentType = self::contentTypes['registerClient'][0])
+    public function registerClientRequest($orgId, $registerClientRequest, string $contentType = self::contentTypes['registerClient'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling registerClient'
+            );
+        }
+
+        // verify the required parameter 'registerClientRequest' is set
+        if ($registerClientRequest === null || (is_array($registerClientRequest) && count($registerClientRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $registerClientRequest when calling registerClient'
             );
         }
 
@@ -2909,7 +3245,14 @@ class OAuthApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($registerClientRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($registerClientRequest));
+            } else {
+                $httpBody = $registerClientRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -3257,15 +3600,21 @@ class OAuthApi
      * Token revocation (RFC 7009)
      *
      * @param  string $orgId orgId (required)
+     * @param  string $token token (required)
+     * @param  string|null $tokenTypeHint tokenTypeHint (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revoke'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return object
      */
-    public function revoke($orgId, string $contentType = self::contentTypes['revoke'][0])
+    public function revoke($orgId, $token, $tokenTypeHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['revoke'][0])
     {
-        list($response) = $this->revokeWithHttpInfo($orgId, $contentType);
+        list($response) = $this->revokeWithHttpInfo($orgId, $token, $tokenTypeHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
         return $response;
     }
 
@@ -3275,15 +3624,21 @@ class OAuthApi
      * Token revocation (RFC 7009)
      *
      * @param  string $orgId (required)
+     * @param  string $token (required)
+     * @param  string|null $tokenTypeHint (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revoke'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of object, HTTP status code, HTTP response headers (array of strings)
      */
-    public function revokeWithHttpInfo($orgId, string $contentType = self::contentTypes['revoke'][0])
+    public function revokeWithHttpInfo($orgId, $token, $tokenTypeHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['revoke'][0])
     {
-        $request = $this->revokeRequest($orgId, $contentType);
+        $request = $this->revokeRequest($orgId, $token, $tokenTypeHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3360,14 +3715,20 @@ class OAuthApi
      * Token revocation (RFC 7009)
      *
      * @param  string $orgId (required)
+     * @param  string $token (required)
+     * @param  string|null $tokenTypeHint (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revoke'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function revokeAsync($orgId, string $contentType = self::contentTypes['revoke'][0])
+    public function revokeAsync($orgId, $token, $tokenTypeHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['revoke'][0])
     {
-        return $this->revokeAsyncWithHttpInfo($orgId, $contentType)
+        return $this->revokeAsyncWithHttpInfo($orgId, $token, $tokenTypeHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3381,15 +3742,21 @@ class OAuthApi
      * Token revocation (RFC 7009)
      *
      * @param  string $orgId (required)
+     * @param  string $token (required)
+     * @param  string|null $tokenTypeHint (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revoke'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function revokeAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['revoke'][0])
+    public function revokeAsyncWithHttpInfo($orgId, $token, $tokenTypeHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['revoke'][0])
     {
         $returnType = 'object';
-        $request = $this->revokeRequest($orgId, $contentType);
+        $request = $this->revokeRequest($orgId, $token, $tokenTypeHint, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3431,12 +3798,18 @@ class OAuthApi
      * Create request for operation 'revoke'
      *
      * @param  string $orgId (required)
+     * @param  string $token (required)
+     * @param  string|null $tokenTypeHint (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revoke'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function revokeRequest($orgId, string $contentType = self::contentTypes['revoke'][0])
+    public function revokeRequest($orgId, $token, $tokenTypeHint = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['revoke'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -3445,6 +3818,18 @@ class OAuthApi
                 'Missing the required parameter $orgId when calling revoke'
             );
         }
+
+        // verify the required parameter 'token' is set
+        if ($token === null || (is_array($token) && count($token) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $token when calling revoke'
+            );
+        }
+
+
+
+
+
 
 
         $resourcePath = '/orgs/{orgId}/api/v1/oauth/revoke';
@@ -3465,6 +3850,20 @@ class OAuthApi
             );
         }
 
+        // form params
+        $formDataProcessor = new FormDataProcessor();
+
+        $formData = $formDataProcessor->prepare([
+            'token' => $token,
+            'tokenTypeHint' => $tokenTypeHint,
+            'clientId' => $clientId,
+            'clientSecret' => $clientSecret,
+            'clientAssertionType' => $clientAssertionType,
+            'clientAssertion' => $clientAssertion,
+        ]);
+
+        $formParams = $formDataProcessor->flatten($formData);
+        $multipart = $formDataProcessor->has_file;
 
         $headers = $this->headerSelector->selectHeaders(
             ['application/json', ],
@@ -4807,15 +5206,16 @@ class OAuthApi
      * Programmatic (JSON) login for the authorization flow
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\SubmitLoginJsonRequest $submitLoginJsonRequest submitLoginJsonRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['submitLoginJson'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\SubmitLoginJsonResponse
      */
-    public function submitLoginJson($orgId, string $contentType = self::contentTypes['submitLoginJson'][0])
+    public function submitLoginJson($orgId, $submitLoginJsonRequest, string $contentType = self::contentTypes['submitLoginJson'][0])
     {
-        list($response) = $this->submitLoginJsonWithHttpInfo($orgId, $contentType);
+        list($response) = $this->submitLoginJsonWithHttpInfo($orgId, $submitLoginJsonRequest, $contentType);
         return $response;
     }
 
@@ -4825,15 +5225,16 @@ class OAuthApi
      * Programmatic (JSON) login for the authorization flow
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\SubmitLoginJsonRequest $submitLoginJsonRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['submitLoginJson'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\SubmitLoginJsonResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function submitLoginJsonWithHttpInfo($orgId, string $contentType = self::contentTypes['submitLoginJson'][0])
+    public function submitLoginJsonWithHttpInfo($orgId, $submitLoginJsonRequest, string $contentType = self::contentTypes['submitLoginJson'][0])
     {
-        $request = $this->submitLoginJsonRequest($orgId, $contentType);
+        $request = $this->submitLoginJsonRequest($orgId, $submitLoginJsonRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4910,14 +5311,15 @@ class OAuthApi
      * Programmatic (JSON) login for the authorization flow
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\SubmitLoginJsonRequest $submitLoginJsonRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['submitLoginJson'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function submitLoginJsonAsync($orgId, string $contentType = self::contentTypes['submitLoginJson'][0])
+    public function submitLoginJsonAsync($orgId, $submitLoginJsonRequest, string $contentType = self::contentTypes['submitLoginJson'][0])
     {
-        return $this->submitLoginJsonAsyncWithHttpInfo($orgId, $contentType)
+        return $this->submitLoginJsonAsyncWithHttpInfo($orgId, $submitLoginJsonRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4931,15 +5333,16 @@ class OAuthApi
      * Programmatic (JSON) login for the authorization flow
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\SubmitLoginJsonRequest $submitLoginJsonRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['submitLoginJson'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function submitLoginJsonAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['submitLoginJson'][0])
+    public function submitLoginJsonAsyncWithHttpInfo($orgId, $submitLoginJsonRequest, string $contentType = self::contentTypes['submitLoginJson'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\SubmitLoginJsonResponse';
-        $request = $this->submitLoginJsonRequest($orgId, $contentType);
+        $request = $this->submitLoginJsonRequest($orgId, $submitLoginJsonRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -4981,18 +5384,26 @@ class OAuthApi
      * Create request for operation 'submitLoginJson'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\SubmitLoginJsonRequest $submitLoginJsonRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['submitLoginJson'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function submitLoginJsonRequest($orgId, string $contentType = self::contentTypes['submitLoginJson'][0])
+    public function submitLoginJsonRequest($orgId, $submitLoginJsonRequest, string $contentType = self::contentTypes['submitLoginJson'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling submitLoginJson'
+            );
+        }
+
+        // verify the required parameter 'submitLoginJsonRequest' is set
+        if ($submitLoginJsonRequest === null || (is_array($submitLoginJsonRequest) && count($submitLoginJsonRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $submitLoginJsonRequest when calling submitLoginJson'
             );
         }
 
@@ -5023,7 +5434,14 @@ class OAuthApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($submitLoginJsonRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($submitLoginJsonRequest));
+            } else {
+                $httpBody = $submitLoginJsonRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -5343,15 +5761,34 @@ class OAuthApi
      * OAuth 2.1 token endpoint
      *
      * @param  string $orgId orgId (required)
+     * @param  string $grantType grantType (required)
+     * @param  string|null $code code (optional)
+     * @param  string|null $redirectUri redirectUri (optional)
+     * @param  string|null $codeVerifier codeVerifier (optional)
+     * @param  string|null $refreshToken refreshToken (optional)
+     * @param  string|null $deviceCode deviceCode (optional)
+     * @param  string|null $authReqId CIBA (optional)
+     * @param  string|null $scope scope (optional)
+     * @param  string|null $resource resource (optional)
+     * @param  string|null $subjectToken Token exchange (RFC 8693) (optional)
+     * @param  string|null $subjectTokenType subjectTokenType (optional)
+     * @param  string|null $actorToken actorToken (optional)
+     * @param  string|null $actorTokenType actorTokenType (optional)
+     * @param  string|null $requestedTokenType requestedTokenType (optional)
+     * @param  string|null $assertion JWT bearer / ID-JAG grant (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['token'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\TokenResponse
      */
-    public function token($orgId, string $contentType = self::contentTypes['token'][0])
+    public function token($orgId, $grantType, $code = null, $redirectUri = null, $codeVerifier = null, $refreshToken = null, $deviceCode = null, $authReqId = null, $scope = null, $resource = null, $subjectToken = null, $subjectTokenType = null, $actorToken = null, $actorTokenType = null, $requestedTokenType = null, $assertion = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['token'][0])
     {
-        list($response) = $this->tokenWithHttpInfo($orgId, $contentType);
+        list($response) = $this->tokenWithHttpInfo($orgId, $grantType, $code, $redirectUri, $codeVerifier, $refreshToken, $deviceCode, $authReqId, $scope, $resource, $subjectToken, $subjectTokenType, $actorToken, $actorTokenType, $requestedTokenType, $assertion, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
         return $response;
     }
 
@@ -5361,15 +5798,34 @@ class OAuthApi
      * OAuth 2.1 token endpoint
      *
      * @param  string $orgId (required)
+     * @param  string $grantType (required)
+     * @param  string|null $code (optional)
+     * @param  string|null $redirectUri (optional)
+     * @param  string|null $codeVerifier (optional)
+     * @param  string|null $refreshToken (optional)
+     * @param  string|null $deviceCode (optional)
+     * @param  string|null $authReqId CIBA (optional)
+     * @param  string|null $scope (optional)
+     * @param  string|null $resource (optional)
+     * @param  string|null $subjectToken Token exchange (RFC 8693) (optional)
+     * @param  string|null $subjectTokenType (optional)
+     * @param  string|null $actorToken (optional)
+     * @param  string|null $actorTokenType (optional)
+     * @param  string|null $requestedTokenType (optional)
+     * @param  string|null $assertion JWT bearer / ID-JAG grant (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['token'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\TokenResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function tokenWithHttpInfo($orgId, string $contentType = self::contentTypes['token'][0])
+    public function tokenWithHttpInfo($orgId, $grantType, $code = null, $redirectUri = null, $codeVerifier = null, $refreshToken = null, $deviceCode = null, $authReqId = null, $scope = null, $resource = null, $subjectToken = null, $subjectTokenType = null, $actorToken = null, $actorTokenType = null, $requestedTokenType = null, $assertion = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['token'][0])
     {
-        $request = $this->tokenRequest($orgId, $contentType);
+        $request = $this->tokenRequest($orgId, $grantType, $code, $redirectUri, $codeVerifier, $refreshToken, $deviceCode, $authReqId, $scope, $resource, $subjectToken, $subjectTokenType, $actorToken, $actorTokenType, $requestedTokenType, $assertion, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -5446,14 +5902,33 @@ class OAuthApi
      * OAuth 2.1 token endpoint
      *
      * @param  string $orgId (required)
+     * @param  string $grantType (required)
+     * @param  string|null $code (optional)
+     * @param  string|null $redirectUri (optional)
+     * @param  string|null $codeVerifier (optional)
+     * @param  string|null $refreshToken (optional)
+     * @param  string|null $deviceCode (optional)
+     * @param  string|null $authReqId CIBA (optional)
+     * @param  string|null $scope (optional)
+     * @param  string|null $resource (optional)
+     * @param  string|null $subjectToken Token exchange (RFC 8693) (optional)
+     * @param  string|null $subjectTokenType (optional)
+     * @param  string|null $actorToken (optional)
+     * @param  string|null $actorTokenType (optional)
+     * @param  string|null $requestedTokenType (optional)
+     * @param  string|null $assertion JWT bearer / ID-JAG grant (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['token'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenAsync($orgId, string $contentType = self::contentTypes['token'][0])
+    public function tokenAsync($orgId, $grantType, $code = null, $redirectUri = null, $codeVerifier = null, $refreshToken = null, $deviceCode = null, $authReqId = null, $scope = null, $resource = null, $subjectToken = null, $subjectTokenType = null, $actorToken = null, $actorTokenType = null, $requestedTokenType = null, $assertion = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['token'][0])
     {
-        return $this->tokenAsyncWithHttpInfo($orgId, $contentType)
+        return $this->tokenAsyncWithHttpInfo($orgId, $grantType, $code, $redirectUri, $codeVerifier, $refreshToken, $deviceCode, $authReqId, $scope, $resource, $subjectToken, $subjectTokenType, $actorToken, $actorTokenType, $requestedTokenType, $assertion, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -5467,15 +5942,34 @@ class OAuthApi
      * OAuth 2.1 token endpoint
      *
      * @param  string $orgId (required)
+     * @param  string $grantType (required)
+     * @param  string|null $code (optional)
+     * @param  string|null $redirectUri (optional)
+     * @param  string|null $codeVerifier (optional)
+     * @param  string|null $refreshToken (optional)
+     * @param  string|null $deviceCode (optional)
+     * @param  string|null $authReqId CIBA (optional)
+     * @param  string|null $scope (optional)
+     * @param  string|null $resource (optional)
+     * @param  string|null $subjectToken Token exchange (RFC 8693) (optional)
+     * @param  string|null $subjectTokenType (optional)
+     * @param  string|null $actorToken (optional)
+     * @param  string|null $actorTokenType (optional)
+     * @param  string|null $requestedTokenType (optional)
+     * @param  string|null $assertion JWT bearer / ID-JAG grant (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['token'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function tokenAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['token'][0])
+    public function tokenAsyncWithHttpInfo($orgId, $grantType, $code = null, $redirectUri = null, $codeVerifier = null, $refreshToken = null, $deviceCode = null, $authReqId = null, $scope = null, $resource = null, $subjectToken = null, $subjectTokenType = null, $actorToken = null, $actorTokenType = null, $requestedTokenType = null, $assertion = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['token'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\TokenResponse';
-        $request = $this->tokenRequest($orgId, $contentType);
+        $request = $this->tokenRequest($orgId, $grantType, $code, $redirectUri, $codeVerifier, $refreshToken, $deviceCode, $authReqId, $scope, $resource, $subjectToken, $subjectTokenType, $actorToken, $actorTokenType, $requestedTokenType, $assertion, $clientId, $clientSecret, $clientAssertionType, $clientAssertion, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -5517,12 +6011,31 @@ class OAuthApi
      * Create request for operation 'token'
      *
      * @param  string $orgId (required)
+     * @param  string $grantType (required)
+     * @param  string|null $code (optional)
+     * @param  string|null $redirectUri (optional)
+     * @param  string|null $codeVerifier (optional)
+     * @param  string|null $refreshToken (optional)
+     * @param  string|null $deviceCode (optional)
+     * @param  string|null $authReqId CIBA (optional)
+     * @param  string|null $scope (optional)
+     * @param  string|null $resource (optional)
+     * @param  string|null $subjectToken Token exchange (RFC 8693) (optional)
+     * @param  string|null $subjectTokenType (optional)
+     * @param  string|null $actorToken (optional)
+     * @param  string|null $actorTokenType (optional)
+     * @param  string|null $requestedTokenType (optional)
+     * @param  string|null $assertion JWT bearer / ID-JAG grant (optional)
+     * @param  string|null $clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param  string|null $clientSecret client_secret_post (optional)
+     * @param  string|null $clientAssertionType (optional)
+     * @param  string|null $clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['token'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function tokenRequest($orgId, string $contentType = self::contentTypes['token'][0])
+    public function tokenRequest($orgId, $grantType, $code = null, $redirectUri = null, $codeVerifier = null, $refreshToken = null, $deviceCode = null, $authReqId = null, $scope = null, $resource = null, $subjectToken = null, $subjectTokenType = null, $actorToken = null, $actorTokenType = null, $requestedTokenType = null, $assertion = null, $clientId = null, $clientSecret = null, $clientAssertionType = null, $clientAssertion = null, string $contentType = self::contentTypes['token'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -5531,6 +6044,31 @@ class OAuthApi
                 'Missing the required parameter $orgId when calling token'
             );
         }
+
+        // verify the required parameter 'grantType' is set
+        if ($grantType === null || (is_array($grantType) && count($grantType) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $grantType when calling token'
+            );
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         $resourcePath = '/orgs/{orgId}/api/v1/oauth/token';
@@ -5551,6 +6089,33 @@ class OAuthApi
             );
         }
 
+        // form params
+        $formDataProcessor = new FormDataProcessor();
+
+        $formData = $formDataProcessor->prepare([
+            'grantType' => $grantType,
+            'code' => $code,
+            'redirectUri' => $redirectUri,
+            'codeVerifier' => $codeVerifier,
+            'refreshToken' => $refreshToken,
+            'deviceCode' => $deviceCode,
+            'authReqId' => $authReqId,
+            'scope' => $scope,
+            'resource' => $resource,
+            'subjectToken' => $subjectToken,
+            'subjectTokenType' => $subjectTokenType,
+            'actorToken' => $actorToken,
+            'actorTokenType' => $actorTokenType,
+            'requestedTokenType' => $requestedTokenType,
+            'assertion' => $assertion,
+            'clientId' => $clientId,
+            'clientSecret' => $clientSecret,
+            'clientAssertionType' => $clientAssertionType,
+            'clientAssertion' => $clientAssertion,
+        ]);
+
+        $formParams = $formDataProcessor->flatten($formData);
+        $multipart = $formDataProcessor->has_file;
 
         $headers = $this->headerSelector->selectHeaders(
             ['application/json', ],

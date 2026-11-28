@@ -46,7 +46,7 @@ No authorization required
 > models::JsonWebKeySet get_jwks(org_id)
 JSON Web Key Set (RFC 7517)
 
-Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
+Public signing keys of the organization (its own signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
 
 ### Parameters
 

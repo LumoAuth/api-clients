@@ -4,10 +4,10 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**adminPermissionsCreate**](#adminpermissionscreate) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the tenant|
+|[**adminPermissionsCreate**](#adminpermissionscreate) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the organization|
 |[**adminPermissionsDelete**](#adminpermissionsdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Delete a custom permission|
 |[**adminPermissionsGet**](#adminpermissionsget) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Get a single permission|
-|[**adminPermissionsList**](#adminpermissionslist) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the tenant|
+|[**adminPermissionsList**](#adminpermissionslist) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the organization|
 |[**adminPermissionsUpdate**](#adminpermissionsupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Update a permission|
 |[**adminPermissionsUsage**](#adminpermissionsusage) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId}/usage | Get permission usage (roles assigned to this permission)|
 |[**adminScopesCreate**](#adminscopescreate) | **POST** /orgs/{orgId}/api/v1/admin/scopes | Create a custom OAuth scope|
@@ -15,7 +15,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**adminScopesList**](#adminscopeslist) | **GET** /orgs/{orgId}/api/v1/admin/scopes | List OAuth scopes|
 
 # **adminPermissionsCreate**
-> AdminPermissionsCreateResponse adminPermissionsCreate()
+> AdminPermissionsCreateResponse adminPermissionsCreate(adminPermissionsCreateRequest)
 
 
 ### Example
@@ -23,16 +23,19 @@ All URIs are relative to *https://app.lumoauth.dev*
 ```typescript
 import {
     AdminPermissionsApi,
-    Configuration
+    Configuration,
+    AdminPermissionsCreateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminPermissionsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let adminPermissionsCreateRequest: AdminPermissionsCreateRequest; //
 
 const { status, data } = await apiInstance.adminPermissionsCreate(
-    orgId
+    orgId,
+    adminPermissionsCreateRequest
 );
 ```
 
@@ -40,6 +43,7 @@ const { status, data } = await apiInstance.adminPermissionsCreate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminPermissionsCreateRequest** | **AdminPermissionsCreateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -53,7 +57,7 @@ const { status, data } = await apiInstance.adminPermissionsCreate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -221,7 +225,7 @@ const { status, data } = await apiInstance.adminPermissionsList(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminPermissionsUpdate**
-> AdminPermissionsCreateResponse adminPermissionsUpdate()
+> AdminPermissionsCreateResponse adminPermissionsUpdate(adminPermissionsUpdateRequest)
 
 
 ### Example
@@ -229,7 +233,8 @@ const { status, data } = await apiInstance.adminPermissionsList(
 ```typescript
 import {
     AdminPermissionsApi,
-    Configuration
+    Configuration,
+    AdminPermissionsUpdateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -237,10 +242,12 @@ const apiInstance = new AdminPermissionsApi(configuration);
 
 let orgId: string; // (default to undefined)
 let permissionId: string; // (default to undefined)
+let adminPermissionsUpdateRequest: AdminPermissionsUpdateRequest; //
 
 const { status, data } = await apiInstance.adminPermissionsUpdate(
     orgId,
-    permissionId
+    permissionId,
+    adminPermissionsUpdateRequest
 );
 ```
 
@@ -248,6 +255,7 @@ const { status, data } = await apiInstance.adminPermissionsUpdate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminPermissionsUpdateRequest** | **AdminPermissionsUpdateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **permissionId** | [**string**] |  | defaults to undefined|
 
@@ -262,7 +270,7 @@ const { status, data } = await apiInstance.adminPermissionsUpdate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -327,7 +335,7 @@ const { status, data } = await apiInstance.adminPermissionsUsage(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminScopesCreate**
-> AdminScopesCreateResponse adminScopesCreate()
+> AdminScopesCreateResponse adminScopesCreate(adminScopesCreateRequest)
 
 
 ### Example
@@ -335,16 +343,19 @@ const { status, data } = await apiInstance.adminPermissionsUsage(
 ```typescript
 import {
     AdminPermissionsApi,
-    Configuration
+    Configuration,
+    AdminScopesCreateRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminPermissionsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let adminScopesCreateRequest: AdminScopesCreateRequest; //
 
 const { status, data } = await apiInstance.adminScopesCreate(
-    orgId
+    orgId,
+    adminScopesCreateRequest
 );
 ```
 
@@ -352,6 +363,7 @@ const { status, data } = await apiInstance.adminScopesCreate(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminScopesCreateRequest** | **AdminScopesCreateRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
@@ -365,7 +377,7 @@ const { status, data } = await apiInstance.adminScopesCreate(
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

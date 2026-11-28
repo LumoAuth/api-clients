@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -24,7 +24,7 @@ import (
 type AdminPermissionsAPI interface {
 
 	/*
-	AdminPermissionsCreate Create a custom permission for the tenant
+	AdminPermissionsCreate Create a custom permission for the organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -65,7 +65,7 @@ type AdminPermissionsAPI interface {
 	AdminPermissionsGetExecute(r ApiAdminPermissionsGetRequest) (*AdminPermissionsGetResponse, *http.Response, error)
 
 	/*
-	AdminPermissionsList List all available permissions for the tenant
+	AdminPermissionsList List all available permissions for the organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -153,6 +153,12 @@ type ApiAdminPermissionsCreateRequest struct {
 	ctx context.Context
 	ApiService AdminPermissionsAPI
 	orgId string
+	adminPermissionsCreateRequest *AdminPermissionsCreateRequest
+}
+
+func (r ApiAdminPermissionsCreateRequest) AdminPermissionsCreateRequest(adminPermissionsCreateRequest AdminPermissionsCreateRequest) ApiAdminPermissionsCreateRequest {
+	r.adminPermissionsCreateRequest = &adminPermissionsCreateRequest
+	return r
 }
 
 func (r ApiAdminPermissionsCreateRequest) Execute() (*AdminPermissionsCreateResponse, *http.Response, error) {
@@ -160,7 +166,7 @@ func (r ApiAdminPermissionsCreateRequest) Execute() (*AdminPermissionsCreateResp
 }
 
 /*
-AdminPermissionsCreate Create a custom permission for the tenant
+AdminPermissionsCreate Create a custom permission for the organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -195,9 +201,12 @@ func (a *AdminPermissionsAPIService) AdminPermissionsCreateExecute(r ApiAdminPer
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminPermissionsCreateRequest == nil {
+		return localVarReturnValue, nil, reportError("adminPermissionsCreateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -213,6 +222,8 @@ func (a *AdminPermissionsAPIService) AdminPermissionsCreateExecute(r ApiAdminPer
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminPermissionsCreateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -513,7 +524,7 @@ func (r ApiAdminPermissionsListRequest) Execute() (*AdminPermissionsListResponse
 }
 
 /*
-AdminPermissionsList List all available permissions for the tenant
+AdminPermissionsList List all available permissions for the organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -622,6 +633,12 @@ type ApiAdminPermissionsUpdateRequest struct {
 	ApiService AdminPermissionsAPI
 	orgId string
 	permissionId string
+	adminPermissionsUpdateRequest *AdminPermissionsUpdateRequest
+}
+
+func (r ApiAdminPermissionsUpdateRequest) AdminPermissionsUpdateRequest(adminPermissionsUpdateRequest AdminPermissionsUpdateRequest) ApiAdminPermissionsUpdateRequest {
+	r.adminPermissionsUpdateRequest = &adminPermissionsUpdateRequest
+	return r
 }
 
 func (r ApiAdminPermissionsUpdateRequest) Execute() (*AdminPermissionsCreateResponse, *http.Response, error) {
@@ -667,9 +684,12 @@ func (a *AdminPermissionsAPIService) AdminPermissionsUpdateExecute(r ApiAdminPer
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminPermissionsUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("adminPermissionsUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -685,6 +705,8 @@ func (a *AdminPermissionsAPIService) AdminPermissionsUpdateExecute(r ApiAdminPer
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminPermissionsUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -859,6 +881,12 @@ type ApiAdminScopesCreateRequest struct {
 	ctx context.Context
 	ApiService AdminPermissionsAPI
 	orgId string
+	adminScopesCreateRequest *AdminScopesCreateRequest
+}
+
+func (r ApiAdminScopesCreateRequest) AdminScopesCreateRequest(adminScopesCreateRequest AdminScopesCreateRequest) ApiAdminScopesCreateRequest {
+	r.adminScopesCreateRequest = &adminScopesCreateRequest
+	return r
 }
 
 func (r ApiAdminScopesCreateRequest) Execute() (*AdminScopesCreateResponse, *http.Response, error) {
@@ -901,9 +929,12 @@ func (a *AdminPermissionsAPIService) AdminScopesCreateExecute(r ApiAdminScopesCr
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminScopesCreateRequest == nil {
+		return localVarReturnValue, nil, reportError("adminScopesCreateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -919,6 +950,8 @@ func (a *AdminPermissionsAPIService) AdminScopesCreateExecute(r ApiAdminScopesCr
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminScopesCreateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

@@ -175,7 +175,7 @@ end
 
 ## create_client
 
-> <CreateClientResponse> create_client(org_id)
+> <CreateClientResponse> create_client(org_id, o_auth_client_write)
 
 Create an OAuth client
 
@@ -197,10 +197,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminOAuthClientsApi.new
 org_id = 'org_id_example' # String | 
+o_auth_client_write = LumoAuthApiClient::OAuthClientWrite.new # OAuthClientWrite | 
 
 begin
   # Create an OAuth client
-  result = api_instance.create_client(org_id)
+  result = api_instance.create_client(org_id, o_auth_client_write)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOAuthClientsApi->create_client: #{e}"
@@ -211,12 +212,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<CreateClientResponse>, Integer, Hash)> create_client_with_http_info(org_id)
+> <Array(<CreateClientResponse>, Integer, Hash)> create_client_with_http_info(org_id, o_auth_client_write)
 
 ```ruby
 begin
   # Create an OAuth client
-  data, status_code, headers = api_instance.create_client_with_http_info(org_id)
+  data, status_code, headers = api_instance.create_client_with_http_info(org_id, o_auth_client_write)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <CreateClientResponse>
@@ -230,6 +231,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **o_auth_client_write** | [**OAuthClientWrite**](OAuthClientWrite.md) |  |  |
 
 ### Return type
 
@@ -241,7 +243,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -773,7 +775,7 @@ end
 
 ## patch_client
 
-> <UpdateClientResponse> patch_client(org_id, client_id)
+> <UpdateClientResponse> patch_client(org_id, client_id, o_auth_client_write)
 
 Update an OAuth client
 
@@ -798,10 +800,11 @@ end
 api_instance = LumoAuthApiClient::AdminOAuthClientsApi.new
 org_id = 'org_id_example' # String | 
 client_id = 'client_id_example' # String | 
+o_auth_client_write = LumoAuthApiClient::OAuthClientWrite.new # OAuthClientWrite | 
 
 begin
   # Update an OAuth client
-  result = api_instance.patch_client(org_id, client_id)
+  result = api_instance.patch_client(org_id, client_id, o_auth_client_write)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOAuthClientsApi->patch_client: #{e}"
@@ -812,12 +815,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<UpdateClientResponse>, Integer, Hash)> patch_client_with_http_info(org_id, client_id)
+> <Array(<UpdateClientResponse>, Integer, Hash)> patch_client_with_http_info(org_id, client_id, o_auth_client_write)
 
 ```ruby
 begin
   # Update an OAuth client
-  data, status_code, headers = api_instance.patch_client_with_http_info(org_id, client_id)
+  data, status_code, headers = api_instance.patch_client_with_http_info(org_id, client_id, o_auth_client_write)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <UpdateClientResponse>
@@ -832,6 +835,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **client_id** | **String** |  |  |
+| **o_auth_client_write** | [**OAuthClientWrite**](OAuthClientWrite.md) |  |  |
 
 ### Return type
 
@@ -843,7 +847,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -1005,7 +1009,7 @@ end
 
 ## set_client_scopes
 
-> <SetClientScopesResponse> set_client_scopes(org_id, client_id)
+> <SetClientScopesResponse> set_client_scopes(org_id, client_id, set_client_scopes_request)
 
 Replace the scopes granted to an OAuth client
 
@@ -1030,10 +1034,11 @@ end
 api_instance = LumoAuthApiClient::AdminOAuthClientsApi.new
 org_id = 'org_id_example' # String | 
 client_id = 'client_id_example' # String | 
+set_client_scopes_request = LumoAuthApiClient::SetClientScopesRequest.new({scopes: ['scopes_example']}) # SetClientScopesRequest | 
 
 begin
   # Replace the scopes granted to an OAuth client
-  result = api_instance.set_client_scopes(org_id, client_id)
+  result = api_instance.set_client_scopes(org_id, client_id, set_client_scopes_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOAuthClientsApi->set_client_scopes: #{e}"
@@ -1044,12 +1049,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<SetClientScopesResponse>, Integer, Hash)> set_client_scopes_with_http_info(org_id, client_id)
+> <Array(<SetClientScopesResponse>, Integer, Hash)> set_client_scopes_with_http_info(org_id, client_id, set_client_scopes_request)
 
 ```ruby
 begin
   # Replace the scopes granted to an OAuth client
-  data, status_code, headers = api_instance.set_client_scopes_with_http_info(org_id, client_id)
+  data, status_code, headers = api_instance.set_client_scopes_with_http_info(org_id, client_id, set_client_scopes_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <SetClientScopesResponse>
@@ -1064,6 +1069,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **client_id** | **String** |  |  |
+| **set_client_scopes_request** | [**SetClientScopesRequest**](SetClientScopesRequest.md) |  |  |
 
 ### Return type
 
@@ -1075,13 +1081,13 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
 ## update_client
 
-> <UpdateClientResponse> update_client(org_id, client_id)
+> <UpdateClientResponse> update_client(org_id, client_id, o_auth_client_write)
 
 Update an OAuth client (same as PATCH: only the fields that are sent change)
 
@@ -1106,10 +1112,11 @@ end
 api_instance = LumoAuthApiClient::AdminOAuthClientsApi.new
 org_id = 'org_id_example' # String | 
 client_id = 'client_id_example' # String | 
+o_auth_client_write = LumoAuthApiClient::OAuthClientWrite.new # OAuthClientWrite | 
 
 begin
   # Update an OAuth client (same as PATCH: only the fields that are sent change)
-  result = api_instance.update_client(org_id, client_id)
+  result = api_instance.update_client(org_id, client_id, o_auth_client_write)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOAuthClientsApi->update_client: #{e}"
@@ -1120,12 +1127,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<UpdateClientResponse>, Integer, Hash)> update_client_with_http_info(org_id, client_id)
+> <Array(<UpdateClientResponse>, Integer, Hash)> update_client_with_http_info(org_id, client_id, o_auth_client_write)
 
 ```ruby
 begin
   # Update an OAuth client (same as PATCH: only the fields that are sent change)
-  data, status_code, headers = api_instance.update_client_with_http_info(org_id, client_id)
+  data, status_code, headers = api_instance.update_client_with_http_info(org_id, client_id, o_auth_client_write)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <UpdateClientResponse>
@@ -1140,6 +1147,7 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **client_id** | **String** |  |  |
+| **o_auth_client_write** | [**OAuthClientWrite**](OAuthClientWrite.md) |  |  |
 
 ### Return type
 
@@ -1151,6 +1159,6 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 

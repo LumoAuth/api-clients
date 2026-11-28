@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -28,7 +28,9 @@ import java.io.IOException;
 
 
 import io.lumoauth.client.model.AdminEmailTemplatesListResponse;
+import io.lumoauth.client.model.AdminEmailTemplatesPreviewRequest;
 import io.lumoauth.client.model.AdminEmailTemplatesPreviewResponse;
+import io.lumoauth.client.model.AdminEmailTemplatesUpsertRequest;
 import io.lumoauth.client.model.AdminEmailTemplatesVariablesResponse;
 import io.lumoauth.client.model.EmailTemplate;
 import io.lumoauth.client.model.MessageResponse;
@@ -521,6 +523,7 @@ public class AdminEmailApi {
      * Build call for adminEmailTemplatesPreview
      * @param orgId  (required)
      * @param type  (required)
+     * @param adminEmailTemplatesPreviewRequest  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -532,7 +535,7 @@ public class AdminEmailApi {
         <tr><td> 404 </td><td> Unknown template type </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminEmailTemplatesPreviewCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminEmailTemplatesPreviewCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable AdminEmailTemplatesPreviewRequest adminEmailTemplatesPreviewRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -546,7 +549,7 @@ public class AdminEmailApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminEmailTemplatesPreviewRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/email-templates/{type}/preview"
@@ -568,6 +571,7 @@ public class AdminEmailApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -579,7 +583,7 @@ public class AdminEmailApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminEmailTemplatesPreviewValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminEmailTemplatesPreviewValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable AdminEmailTemplatesPreviewRequest adminEmailTemplatesPreviewRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminEmailTemplatesPreview(Async)");
@@ -590,7 +594,7 @@ public class AdminEmailApi {
             throw new ApiException("Missing the required parameter 'type' when calling adminEmailTemplatesPreview(Async)");
         }
 
-        return adminEmailTemplatesPreviewCall(orgId, type, _callback);
+        return adminEmailTemplatesPreviewCall(orgId, type, adminEmailTemplatesPreviewRequest, _callback);
 
     }
 
@@ -599,6 +603,7 @@ public class AdminEmailApi {
      * 
      * @param orgId  (required)
      * @param type  (required)
+     * @param adminEmailTemplatesPreviewRequest  (optional)
      * @return AdminEmailTemplatesPreviewResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -609,8 +614,8 @@ public class AdminEmailApi {
         <tr><td> 404 </td><td> Unknown template type </td><td>  -  </td></tr>
      </table>
      */
-    public AdminEmailTemplatesPreviewResponse adminEmailTemplatesPreview(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type) throws ApiException {
-        ApiResponse<AdminEmailTemplatesPreviewResponse> localVarResp = adminEmailTemplatesPreviewWithHttpInfo(orgId, type);
+    public AdminEmailTemplatesPreviewResponse adminEmailTemplatesPreview(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable AdminEmailTemplatesPreviewRequest adminEmailTemplatesPreviewRequest) throws ApiException {
+        ApiResponse<AdminEmailTemplatesPreviewResponse> localVarResp = adminEmailTemplatesPreviewWithHttpInfo(orgId, type, adminEmailTemplatesPreviewRequest);
         return localVarResp.getData();
     }
 
@@ -619,6 +624,7 @@ public class AdminEmailApi {
      * 
      * @param orgId  (required)
      * @param type  (required)
+     * @param adminEmailTemplatesPreviewRequest  (optional)
      * @return ApiResponse&lt;AdminEmailTemplatesPreviewResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -629,8 +635,8 @@ public class AdminEmailApi {
         <tr><td> 404 </td><td> Unknown template type </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AdminEmailTemplatesPreviewResponse> adminEmailTemplatesPreviewWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type) throws ApiException {
-        okhttp3.Call localVarCall = adminEmailTemplatesPreviewValidateBeforeCall(orgId, type, null);
+    public ApiResponse<AdminEmailTemplatesPreviewResponse> adminEmailTemplatesPreviewWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable AdminEmailTemplatesPreviewRequest adminEmailTemplatesPreviewRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminEmailTemplatesPreviewValidateBeforeCall(orgId, type, adminEmailTemplatesPreviewRequest, null);
         Type localVarReturnType = new TypeToken<AdminEmailTemplatesPreviewResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -640,6 +646,7 @@ public class AdminEmailApi {
      * 
      * @param orgId  (required)
      * @param type  (required)
+     * @param adminEmailTemplatesPreviewRequest  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -651,9 +658,9 @@ public class AdminEmailApi {
         <tr><td> 404 </td><td> Unknown template type </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminEmailTemplatesPreviewAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, final ApiCallback<AdminEmailTemplatesPreviewResponse> _callback) throws ApiException {
+    public okhttp3.Call adminEmailTemplatesPreviewAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nullable AdminEmailTemplatesPreviewRequest adminEmailTemplatesPreviewRequest, final ApiCallback<AdminEmailTemplatesPreviewResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminEmailTemplatesPreviewValidateBeforeCall(orgId, type, _callback);
+        okhttp3.Call localVarCall = adminEmailTemplatesPreviewValidateBeforeCall(orgId, type, adminEmailTemplatesPreviewRequest, _callback);
         Type localVarReturnType = new TypeToken<AdminEmailTemplatesPreviewResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -662,6 +669,7 @@ public class AdminEmailApi {
      * Build call for adminEmailTemplatesUpsert
      * @param orgId  (required)
      * @param type  (required)
+     * @param adminEmailTemplatesUpsertRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -674,7 +682,7 @@ public class AdminEmailApi {
         <tr><td> 422 </td><td> Validation failed </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminEmailTemplatesUpsertCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminEmailTemplatesUpsertCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nonnull AdminEmailTemplatesUpsertRequest adminEmailTemplatesUpsertRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -688,7 +696,7 @@ public class AdminEmailApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminEmailTemplatesUpsertRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/email-templates/{type}"
@@ -710,6 +718,7 @@ public class AdminEmailApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -721,7 +730,7 @@ public class AdminEmailApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminEmailTemplatesUpsertValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminEmailTemplatesUpsertValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nonnull AdminEmailTemplatesUpsertRequest adminEmailTemplatesUpsertRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminEmailTemplatesUpsert(Async)");
@@ -732,7 +741,12 @@ public class AdminEmailApi {
             throw new ApiException("Missing the required parameter 'type' when calling adminEmailTemplatesUpsert(Async)");
         }
 
-        return adminEmailTemplatesUpsertCall(orgId, type, _callback);
+        // verify the required parameter 'adminEmailTemplatesUpsertRequest' is set
+        if (adminEmailTemplatesUpsertRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminEmailTemplatesUpsertRequest' when calling adminEmailTemplatesUpsert(Async)");
+        }
+
+        return adminEmailTemplatesUpsertCall(orgId, type, adminEmailTemplatesUpsertRequest, _callback);
 
     }
 
@@ -741,6 +755,7 @@ public class AdminEmailApi {
      * Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
      * @param orgId  (required)
      * @param type  (required)
+     * @param adminEmailTemplatesUpsertRequest  (required)
      * @return EmailTemplate
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -752,8 +767,8 @@ public class AdminEmailApi {
         <tr><td> 422 </td><td> Validation failed </td><td>  -  </td></tr>
      </table>
      */
-    public EmailTemplate adminEmailTemplatesUpsert(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type) throws ApiException {
-        ApiResponse<EmailTemplate> localVarResp = adminEmailTemplatesUpsertWithHttpInfo(orgId, type);
+    public EmailTemplate adminEmailTemplatesUpsert(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nonnull AdminEmailTemplatesUpsertRequest adminEmailTemplatesUpsertRequest) throws ApiException {
+        ApiResponse<EmailTemplate> localVarResp = adminEmailTemplatesUpsertWithHttpInfo(orgId, type, adminEmailTemplatesUpsertRequest);
         return localVarResp.getData();
     }
 
@@ -762,6 +777,7 @@ public class AdminEmailApi {
      * Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
      * @param orgId  (required)
      * @param type  (required)
+     * @param adminEmailTemplatesUpsertRequest  (required)
      * @return ApiResponse&lt;EmailTemplate&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -773,8 +789,8 @@ public class AdminEmailApi {
         <tr><td> 422 </td><td> Validation failed </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<EmailTemplate> adminEmailTemplatesUpsertWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type) throws ApiException {
-        okhttp3.Call localVarCall = adminEmailTemplatesUpsertValidateBeforeCall(orgId, type, null);
+    public ApiResponse<EmailTemplate> adminEmailTemplatesUpsertWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nonnull AdminEmailTemplatesUpsertRequest adminEmailTemplatesUpsertRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminEmailTemplatesUpsertValidateBeforeCall(orgId, type, adminEmailTemplatesUpsertRequest, null);
         Type localVarReturnType = new TypeToken<EmailTemplate>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -784,6 +800,7 @@ public class AdminEmailApi {
      * Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
      * @param orgId  (required)
      * @param type  (required)
+     * @param adminEmailTemplatesUpsertRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -796,9 +813,9 @@ public class AdminEmailApi {
         <tr><td> 422 </td><td> Validation failed </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminEmailTemplatesUpsertAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, final ApiCallback<EmailTemplate> _callback) throws ApiException {
+    public okhttp3.Call adminEmailTemplatesUpsertAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String type, @javax.annotation.Nonnull AdminEmailTemplatesUpsertRequest adminEmailTemplatesUpsertRequest, final ApiCallback<EmailTemplate> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminEmailTemplatesUpsertValidateBeforeCall(orgId, type, _callback);
+        okhttp3.Call localVarCall = adminEmailTemplatesUpsertValidateBeforeCall(orgId, type, adminEmailTemplatesUpsertRequest, _callback);
         Type localVarReturnType = new TypeToken<EmailTemplate>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

@@ -7,7 +7,10 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**AdminAnalyticsDashboard**](AdminSettingsApi.md#adminanalyticsdashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics |
 | [**AdminAnalyticsLogins**](AdminSettingsApi.md#adminanalyticslogins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics |
 | [**AdminAnalyticsUsers**](AdminSettingsApi.md#adminanalyticsusers) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics |
-| [**AdminOrganizationGet**](AdminSettingsApi.md#adminorganizationget) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile |
+| [**AdminInitialAccessTokensCreate**](AdminSettingsApi.md#admininitialaccesstokenscreate) | **POST** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | Create an initial access token for dynamic client registration |
+| [**AdminInitialAccessTokensDelete**](AdminSettingsApi.md#admininitialaccesstokensdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId} | Delete an initial access token of dynamic client registration |
+| [**AdminInitialAccessTokensList**](AdminSettingsApi.md#admininitialaccesstokenslist) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | List the initial access tokens of dynamic client registration |
+| [**AdminOrganizationGet**](AdminSettingsApi.md#adminorganizationget) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization profile |
 | [**AdminSettingsAll**](AdminSettingsApi.md#adminsettingsall) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined) |
 | [**AdminSettingsAuthGet**](AdminSettingsApi.md#adminsettingsauthget) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings |
 | [**AdminSettingsAuthenticationGet**](AdminSettingsApi.md#adminsettingsauthenticationget) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth) |
@@ -16,8 +19,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**AdminSettingsGeneralGet**](AdminSettingsApi.md#adminsettingsgeneralget) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings |
 | [**AdminSettingsScimGet**](AdminSettingsApi.md#adminsettingsscimget) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings |
 | [**AdminSettingsSecurityGet**](AdminSettingsApi.md#adminsettingssecurityget) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings |
-| [**AdminTenantGet**](AdminSettingsApi.md#admintenantget) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile |
-| [**PatchAdminOrganizationUpdate**](AdminSettingsApi.md#patchadminorganizationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings |
+| [**AdminTenantGet**](AdminSettingsApi.md#admintenantget) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization profile |
+| [**PatchAdminOrganizationUpdate**](AdminSettingsApi.md#patchadminorganizationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update the organization&#39;s name and settings |
 | [**PatchAdminSettingsAuthUpdate**](AdminSettingsApi.md#patchadminsettingsauthupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings |
 | [**PatchAdminSettingsAuthenticationUpdate**](AdminSettingsApi.md#patchadminsettingsauthenticationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth) |
 | [**PatchAdminSettingsBrandingUpdate**](AdminSettingsApi.md#patchadminsettingsbrandingupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings |
@@ -25,8 +28,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**PatchAdminSettingsGeneralUpdate**](AdminSettingsApi.md#patchadminsettingsgeneralupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings |
 | [**PatchAdminSettingsScimUpdate**](AdminSettingsApi.md#patchadminsettingsscimupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings |
 | [**PatchAdminSettingsSecurityUpdate**](AdminSettingsApi.md#patchadminsettingssecurityupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings |
-| [**PatchAdminTenantUpdate**](AdminSettingsApi.md#patchadmintenantupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings |
-| [**PutAdminOrganizationUpdate**](AdminSettingsApi.md#putadminorganizationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings |
+| [**PatchAdminTenantUpdate**](AdminSettingsApi.md#patchadmintenantupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update the organization&#39;s name and settings |
+| [**PutAdminOrganizationUpdate**](AdminSettingsApi.md#putadminorganizationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update the organization&#39;s name and settings |
 | [**PutAdminSettingsAuthUpdate**](AdminSettingsApi.md#putadminsettingsauthupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings |
 | [**PutAdminSettingsAuthenticationUpdate**](AdminSettingsApi.md#putadminsettingsauthenticationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth) |
 | [**PutAdminSettingsBrandingUpdate**](AdminSettingsApi.md#putadminsettingsbrandingupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings |
@@ -34,7 +37,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**PutAdminSettingsGeneralUpdate**](AdminSettingsApi.md#putadminsettingsgeneralupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings |
 | [**PutAdminSettingsScimUpdate**](AdminSettingsApi.md#putadminsettingsscimupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings |
 | [**PutAdminSettingsSecurityUpdate**](AdminSettingsApi.md#putadminsettingssecurityupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings |
-| [**PutAdminTenantUpdate**](AdminSettingsApi.md#putadmintenantupdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings |
+| [**PutAdminTenantUpdate**](AdminSettingsApi.md#putadmintenantupdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update the organization&#39;s name and settings |
 
 <a id="adminanalyticsdashboard"></a>
 # **AdminAnalyticsDashboard**
@@ -340,11 +343,320 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a id="admininitialaccesstokenscreate"></a>
+# **AdminInitialAccessTokensCreate**
+> AdminInitialAccessTokensCreateResponse AdminInitialAccessTokensCreate (string orgId)
+
+Create an initial access token for dynamic client registration
+
+Generates a token and adds it to the organization's list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class AdminInitialAccessTokensCreateExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+
+            try
+            {
+                // Create an initial access token for dynamic client registration
+                AdminInitialAccessTokensCreateResponse result = apiInstance.AdminInitialAccessTokensCreate(orgId);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminSettingsApi.AdminInitialAccessTokensCreate: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the AdminInitialAccessTokensCreateWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Create an initial access token for dynamic client registration
+    ApiResponse<AdminInitialAccessTokensCreateResponse> response = apiInstance.AdminInitialAccessTokensCreateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminSettingsApi.AdminInitialAccessTokensCreateWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+
+### Return type
+
+[**AdminInitialAccessTokensCreateResponse**](AdminInitialAccessTokensCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | Token created |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="admininitialaccesstokensdelete"></a>
+# **AdminInitialAccessTokensDelete**
+> MessageResponse AdminInitialAccessTokensDelete (string orgId, string tokenId)
+
+Delete an initial access token of dynamic client registration
+
+The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class AdminInitialAccessTokensDeleteExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+            var tokenId = "tokenId_example";  // string | 
+
+            try
+            {
+                // Delete an initial access token of dynamic client registration
+                MessageResponse result = apiInstance.AdminInitialAccessTokensDelete(orgId, tokenId);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminSettingsApi.AdminInitialAccessTokensDelete: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the AdminInitialAccessTokensDeleteWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Delete an initial access token of dynamic client registration
+    ApiResponse<MessageResponse> response = apiInstance.AdminInitialAccessTokensDeleteWithHttpInfo(orgId, tokenId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminSettingsApi.AdminInitialAccessTokensDeleteWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+| **tokenId** | **string** |  |  |
+
+### Return type
+
+[**MessageResponse**](MessageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Deleted |  -  |
+| **404** | No token with this id |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="admininitialaccesstokenslist"></a>
+# **AdminInitialAccessTokensList**
+> AdminInitialAccessTokensListResponse AdminInitialAccessTokensList (string orgId)
+
+List the initial access tokens of dynamic client registration
+
+Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class AdminInitialAccessTokensListExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+
+            try
+            {
+                // List the initial access tokens of dynamic client registration
+                AdminInitialAccessTokensListResponse result = apiInstance.AdminInitialAccessTokensList(orgId);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminSettingsApi.AdminInitialAccessTokensList: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the AdminInitialAccessTokensListWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // List the initial access tokens of dynamic client registration
+    ApiResponse<AdminInitialAccessTokensListResponse> response = apiInstance.AdminInitialAccessTokensListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminSettingsApi.AdminInitialAccessTokensListWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+
+### Return type
+
+[**AdminInitialAccessTokensListResponse**](AdminInitialAccessTokensListResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Tokens |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a id="adminorganizationget"></a>
 # **AdminOrganizationGet**
 > AdminTenantGetResponse AdminOrganizationGet (string orgId)
 
-Get organization (tenant) profile
+Get organization profile
 
 ### Example
 ```csharp
@@ -378,7 +690,7 @@ namespace Example
 
             try
             {
-                // Get organization (tenant) profile
+                // Get organization profile
                 AdminTenantGetResponse result = apiInstance.AdminOrganizationGet(orgId);
                 Debug.WriteLine(result);
             }
@@ -399,7 +711,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get organization (tenant) profile
+    // Get organization profile
     ApiResponse<AdminTenantGetResponse> response = apiInstance.AdminOrganizationGetWithHttpInfo(orgId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
@@ -1248,7 +1560,7 @@ catch (ApiException e)
 # **AdminTenantGet**
 > AdminTenantGetResponse AdminTenantGet (string orgId)
 
-Get organization (tenant) profile
+Get organization profile
 
 ### Example
 ```csharp
@@ -1282,7 +1594,7 @@ namespace Example
 
             try
             {
-                // Get organization (tenant) profile
+                // Get organization profile
                 AdminTenantGetResponse result = apiInstance.AdminTenantGet(orgId);
                 Debug.WriteLine(result);
             }
@@ -1303,7 +1615,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get organization (tenant) profile
+    // Get organization profile
     ApiResponse<AdminTenantGetResponse> response = apiInstance.AdminTenantGetWithHttpInfo(orgId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
@@ -1346,9 +1658,9 @@ catch (ApiException e)
 
 <a id="patchadminorganizationupdate"></a>
 # **PatchAdminOrganizationUpdate**
-> PutAdminTenantUpdateResponse PatchAdminOrganizationUpdate (string orgId)
+> PutAdminTenantUpdateResponse PatchAdminOrganizationUpdate (string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest)
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Example
 ```csharp
@@ -1379,11 +1691,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var putAdminTenantUpdateRequest = new PutAdminTenantUpdateRequest(); // PutAdminTenantUpdateRequest | 
 
             try
             {
-                // Update organization (tenant) name and settings
-                PutAdminTenantUpdateResponse result = apiInstance.PatchAdminOrganizationUpdate(orgId);
+                // Update the organization's name and settings
+                PutAdminTenantUpdateResponse result = apiInstance.PatchAdminOrganizationUpdate(orgId, putAdminTenantUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1403,8 +1716,8 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update organization (tenant) name and settings
-    ApiResponse<PutAdminTenantUpdateResponse> response = apiInstance.PatchAdminOrganizationUpdateWithHttpInfo(orgId);
+    // Update the organization's name and settings
+    ApiResponse<PutAdminTenantUpdateResponse> response = apiInstance.PatchAdminOrganizationUpdateWithHttpInfo(orgId, putAdminTenantUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1422,6 +1735,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **putAdminTenantUpdateRequest** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1433,7 +1747,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1447,9 +1761,11 @@ catch (ApiException e)
 
 <a id="patchadminsettingsauthupdate"></a>
 # **PatchAdminSettingsAuthUpdate**
-> PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthUpdate (string orgId)
+> PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthUpdate (string orgId, AuthenticationSettings authenticationSettings)
 
 Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 ```csharp
@@ -1480,11 +1796,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var authenticationSettings = new AuthenticationSettings(); // AuthenticationSettings | 
 
             try
             {
                 // Update authentication settings
-                PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.PatchAdminSettingsAuthUpdate(orgId);
+                PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.PatchAdminSettingsAuthUpdate(orgId, authenticationSettings);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1505,7 +1822,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update authentication settings
-    ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> response = apiInstance.PatchAdminSettingsAuthUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> response = apiInstance.PatchAdminSettingsAuthUpdateWithHttpInfo(orgId, authenticationSettings);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1523,6 +1840,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **authenticationSettings** | [**AuthenticationSettings**](AuthenticationSettings.md) |  |  |
 
 ### Return type
 
@@ -1534,7 +1852,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1548,9 +1866,11 @@ catch (ApiException e)
 
 <a id="patchadminsettingsauthenticationupdate"></a>
 # **PatchAdminSettingsAuthenticationUpdate**
-> PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthenticationUpdate (string orgId)
+> PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthenticationUpdate (string orgId, AuthenticationSettings authenticationSettings)
 
 Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 ```csharp
@@ -1581,11 +1901,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var authenticationSettings = new AuthenticationSettings(); // AuthenticationSettings | 
 
             try
             {
                 // Update authentication settings (alias for settings/auth)
-                PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.PatchAdminSettingsAuthenticationUpdate(orgId);
+                PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.PatchAdminSettingsAuthenticationUpdate(orgId, authenticationSettings);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1606,7 +1927,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update authentication settings (alias for settings/auth)
-    ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> response = apiInstance.PatchAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> response = apiInstance.PatchAdminSettingsAuthenticationUpdateWithHttpInfo(orgId, authenticationSettings);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1624,6 +1945,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **authenticationSettings** | [**AuthenticationSettings**](AuthenticationSettings.md) |  |  |
 
 ### Return type
 
@@ -1635,7 +1957,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1649,7 +1971,7 @@ catch (ApiException e)
 
 <a id="patchadminsettingsbrandingupdate"></a>
 # **PatchAdminSettingsBrandingUpdate**
-> PutAdminSettingsBrandingUpdateResponse PatchAdminSettingsBrandingUpdate (string orgId)
+> PutAdminSettingsBrandingUpdateResponse PatchAdminSettingsBrandingUpdate (string orgId, BrandingSettings brandingSettings)
 
 Update branding/login page settings
 
@@ -1684,11 +2006,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var brandingSettings = new BrandingSettings(); // BrandingSettings | 
 
             try
             {
                 // Update branding/login page settings
-                PutAdminSettingsBrandingUpdateResponse result = apiInstance.PatchAdminSettingsBrandingUpdate(orgId);
+                PutAdminSettingsBrandingUpdateResponse result = apiInstance.PatchAdminSettingsBrandingUpdate(orgId, brandingSettings);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1709,7 +2032,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update branding/login page settings
-    ApiResponse<PutAdminSettingsBrandingUpdateResponse> response = apiInstance.PatchAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsBrandingUpdateResponse> response = apiInstance.PatchAdminSettingsBrandingUpdateWithHttpInfo(orgId, brandingSettings);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1727,6 +2050,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **brandingSettings** | [**BrandingSettings**](BrandingSettings.md) |  |  |
 
 ### Return type
 
@@ -1738,7 +2062,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1964,7 +2288,7 @@ catch (ApiException e)
 
 <a id="patchadminsettingsscimupdate"></a>
 # **PatchAdminSettingsScimUpdate**
-> PutAdminSettingsScimUpdateResponse PatchAdminSettingsScimUpdate (string orgId)
+> PutAdminSettingsScimUpdateResponse PatchAdminSettingsScimUpdate (string orgId, ScimSettings scimSettings)
 
 Update SCIM settings
 
@@ -1997,11 +2321,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var scimSettings = new ScimSettings(); // ScimSettings | 
 
             try
             {
                 // Update SCIM settings
-                PutAdminSettingsScimUpdateResponse result = apiInstance.PatchAdminSettingsScimUpdate(orgId);
+                PutAdminSettingsScimUpdateResponse result = apiInstance.PatchAdminSettingsScimUpdate(orgId, scimSettings);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2022,7 +2347,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update SCIM settings
-    ApiResponse<PutAdminSettingsScimUpdateResponse> response = apiInstance.PatchAdminSettingsScimUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsScimUpdateResponse> response = apiInstance.PatchAdminSettingsScimUpdateWithHttpInfo(orgId, scimSettings);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2040,6 +2365,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **scimSettings** | [**ScimSettings**](ScimSettings.md) |  |  |
 
 ### Return type
 
@@ -2051,7 +2377,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2064,7 +2390,7 @@ catch (ApiException e)
 
 <a id="patchadminsettingssecurityupdate"></a>
 # **PatchAdminSettingsSecurityUpdate**
-> PutAdminSettingsSecurityUpdateResponse PatchAdminSettingsSecurityUpdate (string orgId)
+> PutAdminSettingsSecurityUpdateResponse PatchAdminSettingsSecurityUpdate (string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest)
 
 Update security settings
 
@@ -2097,11 +2423,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var putAdminSettingsSecurityUpdateRequest = new PutAdminSettingsSecurityUpdateRequest(); // PutAdminSettingsSecurityUpdateRequest | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
 
             try
             {
                 // Update security settings
-                PutAdminSettingsSecurityUpdateResponse result = apiInstance.PatchAdminSettingsSecurityUpdate(orgId);
+                PutAdminSettingsSecurityUpdateResponse result = apiInstance.PatchAdminSettingsSecurityUpdate(orgId, putAdminSettingsSecurityUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2122,7 +2449,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update security settings
-    ApiResponse<PutAdminSettingsSecurityUpdateResponse> response = apiInstance.PatchAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsSecurityUpdateResponse> response = apiInstance.PatchAdminSettingsSecurityUpdateWithHttpInfo(orgId, putAdminSettingsSecurityUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2140,6 +2467,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **putAdminSettingsSecurityUpdateRequest** | [**PutAdminSettingsSecurityUpdateRequest**](PutAdminSettingsSecurityUpdateRequest.md) | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. |  |
 
 ### Return type
 
@@ -2151,7 +2479,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2164,9 +2492,9 @@ catch (ApiException e)
 
 <a id="patchadmintenantupdate"></a>
 # **PatchAdminTenantUpdate**
-> PutAdminTenantUpdateResponse PatchAdminTenantUpdate (string orgId)
+> PutAdminTenantUpdateResponse PatchAdminTenantUpdate (string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest)
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Example
 ```csharp
@@ -2197,11 +2525,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var putAdminTenantUpdateRequest = new PutAdminTenantUpdateRequest(); // PutAdminTenantUpdateRequest | 
 
             try
             {
-                // Update organization (tenant) name and settings
-                PutAdminTenantUpdateResponse result = apiInstance.PatchAdminTenantUpdate(orgId);
+                // Update the organization's name and settings
+                PutAdminTenantUpdateResponse result = apiInstance.PatchAdminTenantUpdate(orgId, putAdminTenantUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2221,8 +2550,8 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update organization (tenant) name and settings
-    ApiResponse<PutAdminTenantUpdateResponse> response = apiInstance.PatchAdminTenantUpdateWithHttpInfo(orgId);
+    // Update the organization's name and settings
+    ApiResponse<PutAdminTenantUpdateResponse> response = apiInstance.PatchAdminTenantUpdateWithHttpInfo(orgId, putAdminTenantUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2240,6 +2569,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **putAdminTenantUpdateRequest** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -2251,7 +2581,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2265,9 +2595,9 @@ catch (ApiException e)
 
 <a id="putadminorganizationupdate"></a>
 # **PutAdminOrganizationUpdate**
-> PutAdminTenantUpdateResponse PutAdminOrganizationUpdate (string orgId)
+> PutAdminTenantUpdateResponse PutAdminOrganizationUpdate (string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest)
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Example
 ```csharp
@@ -2298,11 +2628,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var putAdminTenantUpdateRequest = new PutAdminTenantUpdateRequest(); // PutAdminTenantUpdateRequest | 
 
             try
             {
-                // Update organization (tenant) name and settings
-                PutAdminTenantUpdateResponse result = apiInstance.PutAdminOrganizationUpdate(orgId);
+                // Update the organization's name and settings
+                PutAdminTenantUpdateResponse result = apiInstance.PutAdminOrganizationUpdate(orgId, putAdminTenantUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2322,8 +2653,8 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update organization (tenant) name and settings
-    ApiResponse<PutAdminTenantUpdateResponse> response = apiInstance.PutAdminOrganizationUpdateWithHttpInfo(orgId);
+    // Update the organization's name and settings
+    ApiResponse<PutAdminTenantUpdateResponse> response = apiInstance.PutAdminOrganizationUpdateWithHttpInfo(orgId, putAdminTenantUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2341,6 +2672,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **putAdminTenantUpdateRequest** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -2352,7 +2684,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2366,9 +2698,11 @@ catch (ApiException e)
 
 <a id="putadminsettingsauthupdate"></a>
 # **PutAdminSettingsAuthUpdate**
-> PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthUpdate (string orgId)
+> PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthUpdate (string orgId, AuthenticationSettings authenticationSettings)
 
 Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 ```csharp
@@ -2399,11 +2733,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var authenticationSettings = new AuthenticationSettings(); // AuthenticationSettings | 
 
             try
             {
                 // Update authentication settings
-                PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.PutAdminSettingsAuthUpdate(orgId);
+                PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.PutAdminSettingsAuthUpdate(orgId, authenticationSettings);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2424,7 +2759,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update authentication settings
-    ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> response = apiInstance.PutAdminSettingsAuthUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> response = apiInstance.PutAdminSettingsAuthUpdateWithHttpInfo(orgId, authenticationSettings);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2442,6 +2777,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **authenticationSettings** | [**AuthenticationSettings**](AuthenticationSettings.md) |  |  |
 
 ### Return type
 
@@ -2453,7 +2789,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2467,9 +2803,11 @@ catch (ApiException e)
 
 <a id="putadminsettingsauthenticationupdate"></a>
 # **PutAdminSettingsAuthenticationUpdate**
-> PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthenticationUpdate (string orgId)
+> PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthenticationUpdate (string orgId, AuthenticationSettings authenticationSettings)
 
 Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 ```csharp
@@ -2500,11 +2838,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var authenticationSettings = new AuthenticationSettings(); // AuthenticationSettings | 
 
             try
             {
                 // Update authentication settings (alias for settings/auth)
-                PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.PutAdminSettingsAuthenticationUpdate(orgId);
+                PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.PutAdminSettingsAuthenticationUpdate(orgId, authenticationSettings);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2525,7 +2864,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update authentication settings (alias for settings/auth)
-    ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> response = apiInstance.PutAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> response = apiInstance.PutAdminSettingsAuthenticationUpdateWithHttpInfo(orgId, authenticationSettings);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2543,6 +2882,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **authenticationSettings** | [**AuthenticationSettings**](AuthenticationSettings.md) |  |  |
 
 ### Return type
 
@@ -2554,7 +2894,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2568,7 +2908,7 @@ catch (ApiException e)
 
 <a id="putadminsettingsbrandingupdate"></a>
 # **PutAdminSettingsBrandingUpdate**
-> PutAdminSettingsBrandingUpdateResponse PutAdminSettingsBrandingUpdate (string orgId)
+> PutAdminSettingsBrandingUpdateResponse PutAdminSettingsBrandingUpdate (string orgId, BrandingSettings brandingSettings)
 
 Update branding/login page settings
 
@@ -2603,11 +2943,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var brandingSettings = new BrandingSettings(); // BrandingSettings | 
 
             try
             {
                 // Update branding/login page settings
-                PutAdminSettingsBrandingUpdateResponse result = apiInstance.PutAdminSettingsBrandingUpdate(orgId);
+                PutAdminSettingsBrandingUpdateResponse result = apiInstance.PutAdminSettingsBrandingUpdate(orgId, brandingSettings);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2628,7 +2969,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update branding/login page settings
-    ApiResponse<PutAdminSettingsBrandingUpdateResponse> response = apiInstance.PutAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsBrandingUpdateResponse> response = apiInstance.PutAdminSettingsBrandingUpdateWithHttpInfo(orgId, brandingSettings);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2646,6 +2987,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **brandingSettings** | [**BrandingSettings**](BrandingSettings.md) |  |  |
 
 ### Return type
 
@@ -2657,7 +2999,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2883,7 +3225,7 @@ catch (ApiException e)
 
 <a id="putadminsettingsscimupdate"></a>
 # **PutAdminSettingsScimUpdate**
-> PutAdminSettingsScimUpdateResponse PutAdminSettingsScimUpdate (string orgId)
+> PutAdminSettingsScimUpdateResponse PutAdminSettingsScimUpdate (string orgId, ScimSettings scimSettings)
 
 Update SCIM settings
 
@@ -2916,11 +3258,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var scimSettings = new ScimSettings(); // ScimSettings | 
 
             try
             {
                 // Update SCIM settings
-                PutAdminSettingsScimUpdateResponse result = apiInstance.PutAdminSettingsScimUpdate(orgId);
+                PutAdminSettingsScimUpdateResponse result = apiInstance.PutAdminSettingsScimUpdate(orgId, scimSettings);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2941,7 +3284,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update SCIM settings
-    ApiResponse<PutAdminSettingsScimUpdateResponse> response = apiInstance.PutAdminSettingsScimUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsScimUpdateResponse> response = apiInstance.PutAdminSettingsScimUpdateWithHttpInfo(orgId, scimSettings);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2959,6 +3302,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **scimSettings** | [**ScimSettings**](ScimSettings.md) |  |  |
 
 ### Return type
 
@@ -2970,7 +3314,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -2983,7 +3327,7 @@ catch (ApiException e)
 
 <a id="putadminsettingssecurityupdate"></a>
 # **PutAdminSettingsSecurityUpdate**
-> PutAdminSettingsSecurityUpdateResponse PutAdminSettingsSecurityUpdate (string orgId)
+> PutAdminSettingsSecurityUpdateResponse PutAdminSettingsSecurityUpdate (string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest)
 
 Update security settings
 
@@ -3016,11 +3360,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var putAdminSettingsSecurityUpdateRequest = new PutAdminSettingsSecurityUpdateRequest(); // PutAdminSettingsSecurityUpdateRequest | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
 
             try
             {
                 // Update security settings
-                PutAdminSettingsSecurityUpdateResponse result = apiInstance.PutAdminSettingsSecurityUpdate(orgId);
+                PutAdminSettingsSecurityUpdateResponse result = apiInstance.PutAdminSettingsSecurityUpdate(orgId, putAdminSettingsSecurityUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -3041,7 +3386,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update security settings
-    ApiResponse<PutAdminSettingsSecurityUpdateResponse> response = apiInstance.PutAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsSecurityUpdateResponse> response = apiInstance.PutAdminSettingsSecurityUpdateWithHttpInfo(orgId, putAdminSettingsSecurityUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -3059,6 +3404,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **putAdminSettingsSecurityUpdateRequest** | [**PutAdminSettingsSecurityUpdateRequest**](PutAdminSettingsSecurityUpdateRequest.md) | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. |  |
 
 ### Return type
 
@@ -3070,7 +3416,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -3083,9 +3429,9 @@ catch (ApiException e)
 
 <a id="putadmintenantupdate"></a>
 # **PutAdminTenantUpdate**
-> PutAdminTenantUpdateResponse PutAdminTenantUpdate (string orgId)
+> PutAdminTenantUpdateResponse PutAdminTenantUpdate (string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest)
 
-Update organization (tenant) name and settings
+Update the organization's name and settings
 
 ### Example
 ```csharp
@@ -3116,11 +3462,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var putAdminTenantUpdateRequest = new PutAdminTenantUpdateRequest(); // PutAdminTenantUpdateRequest | 
 
             try
             {
-                // Update organization (tenant) name and settings
-                PutAdminTenantUpdateResponse result = apiInstance.PutAdminTenantUpdate(orgId);
+                // Update the organization's name and settings
+                PutAdminTenantUpdateResponse result = apiInstance.PutAdminTenantUpdate(orgId, putAdminTenantUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -3140,8 +3487,8 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update organization (tenant) name and settings
-    ApiResponse<PutAdminTenantUpdateResponse> response = apiInstance.PutAdminTenantUpdateWithHttpInfo(orgId);
+    // Update the organization's name and settings
+    ApiResponse<PutAdminTenantUpdateResponse> response = apiInstance.PutAdminTenantUpdateWithHttpInfo(orgId, putAdminTenantUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -3159,6 +3506,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **putAdminTenantUpdateRequest** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -3170,7 +3518,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

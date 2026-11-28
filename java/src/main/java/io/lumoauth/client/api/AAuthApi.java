@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -97,7 +97,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 302 </td><td> Redirect to the tenant portal AAuth consent page for the given request_token. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the AAuth consent page of the organization&#39;s portal for the given request_token. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> Missing request_token query parameter. </td><td>  -  </td></tr>
      </table>
      */
@@ -165,7 +165,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 302 </td><td> Redirect to the tenant portal AAuth consent page for the given request_token. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the AAuth consent page of the organization&#39;s portal for the given request_token. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> Missing request_token query parameter. </td><td>  -  </td></tr>
      </table>
      */
@@ -183,7 +183,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 302 </td><td> Redirect to the tenant portal AAuth consent page for the given request_token. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the AAuth consent page of the organization&#39;s portal for the given request_token. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> Missing request_token query parameter. </td><td>  -  </td></tr>
      </table>
      */
@@ -203,7 +203,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 302 </td><td> Redirect to the tenant portal AAuth consent page for the given request_token. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the AAuth consent page of the organization&#39;s portal for the given request_token. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> Missing request_token query parameter. </td><td>  -  </td></tr>
      </table>
      */
@@ -364,7 +364,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Metadata documents for all active agents of this tenant (Section 8.1). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Metadata documents for all active agents of this organization (Section 8.1). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getAgentMetadataCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -433,7 +433,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Metadata documents for all active agents of this tenant (Section 8.1). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Metadata documents for all active agents of this organization (Section 8.1). </td><td>  -  </td></tr>
      </table>
      */
     public List<Object> getAgentMetadata(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -451,7 +451,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Metadata documents for all active agents of this tenant (Section 8.1). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Metadata documents for all active agents of this organization (Section 8.1). </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<List<Object>> getAgentMetadataWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -471,7 +471,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Metadata documents for all active agents of this tenant (Section 8.1). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Metadata documents for all active agents of this organization (Section 8.1). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getAgentMetadataAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<List<Object>> _callback) throws ApiException {
@@ -1027,7 +1027,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Metadata documents for all active resources of this tenant (Section 8.3). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Metadata documents for all active resources of this organization (Section 8.3). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getResourceMetadataCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1096,7 +1096,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Metadata documents for all active resources of this tenant (Section 8.3). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Metadata documents for all active resources of this organization (Section 8.3). </td><td>  -  </td></tr>
      </table>
      */
     public List<Object> getResourceMetadata(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1114,7 +1114,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Metadata documents for all active resources of this tenant (Section 8.3). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Metadata documents for all active resources of this organization (Section 8.3). </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<List<Object>> getResourceMetadataWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1134,7 +1134,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Metadata documents for all active resources of this tenant (Section 8.3). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Metadata documents for all active resources of this organization (Section 8.3). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getResourceMetadataAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<List<Object>> _callback) throws ApiException {
@@ -1748,7 +1748,7 @@ public class AAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A resource token binding the agent request to the resource identity. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid JSON body, missing agent/agent_jkt, or unsupported scope. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid JSON body, missing resource, agent or agent_jkt, or unsupported scope. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Resource authentication (HTTP message signature) failed. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
@@ -1827,7 +1827,7 @@ public class AAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A resource token binding the agent request to the resource identity. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid JSON body, missing agent/agent_jkt, or unsupported scope. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid JSON body, missing resource, agent or agent_jkt, or unsupported scope. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Resource authentication (HTTP message signature) failed. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
@@ -1849,7 +1849,7 @@ public class AAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A resource token binding the agent request to the resource identity. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid JSON body, missing agent/agent_jkt, or unsupported scope. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid JSON body, missing resource, agent or agent_jkt, or unsupported scope. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Resource authentication (HTTP message signature) failed. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
@@ -1873,7 +1873,7 @@ public class AAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A resource token binding the agent request to the resource identity. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Invalid JSON body, missing agent/agent_jkt, or unsupported scope. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid JSON body, missing resource, agent or agent_jkt, or unsupported scope. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Resource authentication (HTTP message signature) failed. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
@@ -2199,7 +2199,7 @@ public class AAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Introspection result; active&#x3D;false with an error when the token is invalid. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing resource_token, agent, or agent_jkt. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing resource, resource_token, agent, or agent_jkt. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Resource authentication failed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Resource token is not valid for the authenticated resource. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
@@ -2279,7 +2279,7 @@ public class AAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Introspection result; active&#x3D;false with an error when the token is invalid. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing resource_token, agent, or agent_jkt. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing resource, resource_token, agent, or agent_jkt. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Resource authentication failed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Resource token is not valid for the authenticated resource. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
@@ -2302,7 +2302,7 @@ public class AAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Introspection result; active&#x3D;false with an error when the token is invalid. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing resource_token, agent, or agent_jkt. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing resource, resource_token, agent, or agent_jkt. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Resource authentication failed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Resource token is not valid for the authenticated resource. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
@@ -2327,7 +2327,7 @@ public class AAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Introspection result; active&#x3D;false with an error when the token is invalid. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Missing resource_token, agent, or agent_jkt. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing resource, resource_token, agent, or agent_jkt. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Resource authentication failed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Resource token is not valid for the authenticated resource. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>

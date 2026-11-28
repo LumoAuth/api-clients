@@ -78,7 +78,7 @@ No authorization required
 
 # **backchannelAuthorize**
 ```swift
-    open class func backchannelAuthorize(orgId: String, completion: @escaping (_ data: BackchannelAuthorizeResponse?, _ error: Error?) -> Void)
+    open class func backchannelAuthorize(orgId: String, scope: String, loginHint: String? = nil, loginHintToken: String? = nil, idTokenHint: String? = nil, bindingMessage: String? = nil, acrValues: String? = nil, requestedExpiry: Int? = nil, clientNotificationToken: String? = nil, authorizationDetails: String? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil, completion: @escaping (_ data: BackchannelAuthorizeResponse?, _ error: Error?) -> Void)
 ```
 
 CIBA backchannel authentication request
@@ -91,9 +91,22 @@ OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Clas
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let scope = "scope_example" // String | 
+let loginHint = "loginHint_example" // String |  (optional)
+let loginHintToken = "loginHintToken_example" // String |  (optional)
+let idTokenHint = "idTokenHint_example" // String |  (optional)
+let bindingMessage = "bindingMessage_example" // String |  (optional)
+let acrValues = "acrValues_example" // String |  (optional)
+let requestedExpiry = 987 // Int | Seconds. An application's request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional)
+let clientNotificationToken = "clientNotificationToken_example" // String |  (optional)
+let authorizationDetails = "authorizationDetails_example" // String |  (optional)
+let clientId = "clientId_example" // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+let clientSecret = "clientSecret_example" // String | client_secret_post (optional)
+let clientAssertionType = "clientAssertionType_example" // String |  (optional)
+let clientAssertion = "clientAssertion_example" // String | private_key_jwt (RFC 7523) (optional)
 
 // CIBA backchannel authentication request
-OAuthAPI.backchannelAuthorize(orgId: orgId) { (response, error) in
+OAuthAPI.backchannelAuthorize(orgId: orgId, scope: scope, loginHint: loginHint, loginHintToken: loginHintToken, idTokenHint: idTokenHint, bindingMessage: bindingMessage, acrValues: acrValues, requestedExpiry: requestedExpiry, clientNotificationToken: clientNotificationToken, authorizationDetails: authorizationDetails, clientId: clientId, clientSecret: clientSecret, clientAssertionType: clientAssertionType, clientAssertion: clientAssertion) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -110,6 +123,19 @@ OAuthAPI.backchannelAuthorize(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **scope** | **String** |  | 
+ **loginHint** | **String** |  | [optional] 
+ **loginHintToken** | **String** |  | [optional] 
+ **idTokenHint** | **String** |  | [optional] 
+ **bindingMessage** | **String** |  | [optional] 
+ **acrValues** | **String** |  | [optional] 
+ **requestedExpiry** | **Int** | Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. | [optional] 
+ **clientNotificationToken** | **String** |  | [optional] 
+ **authorizationDetails** | **String** |  | [optional] 
+ **clientId** | **String** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] 
+ **clientSecret** | **String** | client_secret_post | [optional] 
+ **clientAssertionType** | **String** |  | [optional] 
+ **clientAssertion** | **String** | private_key_jwt (RFC 7523) | [optional] 
 
 ### Return type
 
@@ -121,7 +147,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -180,12 +206,12 @@ No authorization required
 
 # **deviceAuthorization**
 ```swift
-    open class func deviceAuthorization(orgId: String, completion: @escaping (_ data: DeviceAuthorizationResponse?, _ error: Error?) -> Void)
+    open class func deviceAuthorization(orgId: String, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil, scope: String? = nil, resource: String? = nil, completion: @escaping (_ data: DeviceAuthorizationResponse?, _ error: Error?) -> Void)
 ```
 
 Device authorization request (RFC 8628)
 
-Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
 
 ### Example
 ```swift
@@ -193,9 +219,15 @@ Starts the device authorization grant for a client registered for urn:ietf:param
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let clientId = "clientId_example" // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+let clientSecret = "clientSecret_example" // String | client_secret_post (optional)
+let clientAssertionType = "clientAssertionType_example" // String |  (optional)
+let clientAssertion = "clientAssertion_example" // String | private_key_jwt (RFC 7523) (optional)
+let scope = "scope_example" // String | Space-separated scopes. (optional)
+let resource = "resource_example" // String | RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client's audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional)
 
 // Device authorization request (RFC 8628)
-OAuthAPI.deviceAuthorization(orgId: orgId) { (response, error) in
+OAuthAPI.deviceAuthorization(orgId: orgId, clientId: clientId, clientSecret: clientSecret, clientAssertionType: clientAssertionType, clientAssertion: clientAssertion, scope: scope, resource: resource) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -212,6 +244,12 @@ OAuthAPI.deviceAuthorization(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **clientId** | **String** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] 
+ **clientSecret** | **String** | client_secret_post | [optional] 
+ **clientAssertionType** | **String** |  | [optional] 
+ **clientAssertion** | **String** | private_key_jwt (RFC 7523) | [optional] 
+ **scope** | **String** | Space-separated scopes. | [optional] 
+ **resource** | **String** | RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. | [optional] 
 
 ### Return type
 
@@ -223,7 +261,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -382,7 +420,7 @@ No authorization required
 
 # **introspect**
 ```swift
-    open class func introspect(orgId: String, completion: @escaping (_ data: IntrospectResponse?, _ error: Error?) -> Void)
+    open class func introspect(orgId: String, token: String, tokenTypeHint: TokenTypeHint_introspect? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil, completion: @escaping (_ data: IntrospectResponse?, _ error: Error?) -> Void)
 ```
 
 Token introspection (RFC 7662)
@@ -395,9 +433,15 @@ Resource servers query the active state and meta-information of an access or ref
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let token = "token_example" // String | 
+let tokenTypeHint = "tokenTypeHint_example" // String |  (optional)
+let clientId = "clientId_example" // String | The calling client, with client_secret (client_secret_post), or an agent's id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional)
+let clientSecret = "clientSecret_example" // String | client_secret_post (optional)
+let clientAssertionType = "clientAssertionType_example" // String |  (optional)
+let clientAssertion = "clientAssertion_example" // String | private_key_jwt (RFC 7523) (optional)
 
 // Token introspection (RFC 7662)
-OAuthAPI.introspect(orgId: orgId) { (response, error) in
+OAuthAPI.introspect(orgId: orgId, token: token, tokenTypeHint: tokenTypeHint, clientId: clientId, clientSecret: clientSecret, clientAssertionType: clientAssertionType, clientAssertion: clientAssertion) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -414,6 +458,12 @@ OAuthAPI.introspect(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **token** | **String** |  | 
+ **tokenTypeHint** | **String** |  | [optional] 
+ **clientId** | **String** | The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). | [optional] 
+ **clientSecret** | **String** | client_secret_post | [optional] 
+ **clientAssertionType** | **String** |  | [optional] 
+ **clientAssertion** | **String** | private_key_jwt (RFC 7523) | [optional] 
 
 ### Return type
 
@@ -425,14 +475,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **par**
 ```swift
-    open class func par(orgId: String, completion: @escaping (_ data: ParResponse?, _ error: Error?) -> Void)
+    open class func par(orgId: String, responseType: String? = nil, redirectUri: String? = nil, scope: String? = nil, state: String? = nil, nonce: String? = nil, codeChallenge: String? = nil, codeChallengeMethod: String? = nil, request: String? = nil, resource: String? = nil, prompt: String? = nil, loginHint: String? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil, completion: @escaping (_ data: ParResponse?, _ error: Error?) -> Void)
 ```
 
 Pushed authorization request (RFC 9126)
@@ -445,9 +495,24 @@ Stores the authorization request parameters server-side and returns a request_ur
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let responseType = "responseType_example" // String |  (optional)
+let redirectUri = "redirectUri_example" // String |  (optional)
+let scope = "scope_example" // String |  (optional)
+let state = "state_example" // String |  (optional)
+let nonce = "nonce_example" // String |  (optional)
+let codeChallenge = "codeChallenge_example" // String |  (optional)
+let codeChallengeMethod = "codeChallengeMethod_example" // String |  (optional)
+let request = "request_example" // String | A signed request object (JAR, RFC 9101). (optional)
+let resource = "resource_example" // String |  (optional)
+let prompt = "prompt_example" // String |  (optional)
+let loginHint = "loginHint_example" // String |  (optional)
+let clientId = "clientId_example" // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+let clientSecret = "clientSecret_example" // String | client_secret_post (optional)
+let clientAssertionType = "clientAssertionType_example" // String |  (optional)
+let clientAssertion = "clientAssertion_example" // String | private_key_jwt (RFC 7523) (optional)
 
 // Pushed authorization request (RFC 9126)
-OAuthAPI.par(orgId: orgId) { (response, error) in
+OAuthAPI.par(orgId: orgId, responseType: responseType, redirectUri: redirectUri, scope: scope, state: state, nonce: nonce, codeChallenge: codeChallenge, codeChallengeMethod: codeChallengeMethod, request: request, resource: resource, prompt: prompt, loginHint: loginHint, clientId: clientId, clientSecret: clientSecret, clientAssertionType: clientAssertionType, clientAssertion: clientAssertion) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -464,6 +529,21 @@ OAuthAPI.par(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **responseType** | **String** |  | [optional] 
+ **redirectUri** | **String** |  | [optional] 
+ **scope** | **String** |  | [optional] 
+ **state** | **String** |  | [optional] 
+ **nonce** | **String** |  | [optional] 
+ **codeChallenge** | **String** |  | [optional] 
+ **codeChallengeMethod** | **String** |  | [optional] 
+ **request** | **String** | A signed request object (JAR, RFC 9101). | [optional] 
+ **resource** | **String** |  | [optional] 
+ **prompt** | **String** |  | [optional] 
+ **loginHint** | **String** |  | [optional] 
+ **clientId** | **String** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] 
+ **clientSecret** | **String** | client_secret_post | [optional] 
+ **clientAssertionType** | **String** |  | [optional] 
+ **clientAssertion** | **String** | private_key_jwt (RFC 7523) | [optional] 
 
 ### Return type
 
@@ -475,14 +555,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **registerClient**
 ```swift
-    open class func registerClient(orgId: String, completion: @escaping (_ data: RegisterClientResponse?, _ error: Error?) -> Void)
+    open class func registerClient(orgId: String, registerClientRequest: RegisterClientRequest, completion: @escaping (_ data: RegisterClientResponse?, _ error: Error?) -> Void)
 ```
 
 Dynamic client registration (RFC 7591 / OIDC DCR)
@@ -495,9 +575,10 @@ Registers an OAuth client from a JSON metadata document. Authenticated with an i
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let registerClientRequest = RegisterClientRequest(redirectUris: ["redirectUris_example"], clientName: "clientName_example", grantTypes: ["grantTypes_example"], responseTypes: ["responseTypes_example"], tokenEndpointAuthMethod: "tokenEndpointAuthMethod_example", scope: "scope_example", jwksUri: "jwksUri_example", jwks: "TODO", applicationType: "applicationType_example", postLogoutRedirectUris: ["postLogoutRedirectUris_example"], backchannelLogoutUri: "backchannelLogoutUri_example", frontchannelLogoutUri: "frontchannelLogoutUri_example", clientUri: "clientUri_example", logoUri: "logoUri_example", policyUri: "policyUri_example", tosUri: "tosUri_example", contacts: ["contacts_example"]) // RegisterClientRequest | RFC 7591 client metadata.
 
 // Dynamic client registration (RFC 7591 / OIDC DCR)
-OAuthAPI.registerClient(orgId: orgId) { (response, error) in
+OAuthAPI.registerClient(orgId: orgId, registerClientRequest: registerClientRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -514,6 +595,7 @@ OAuthAPI.registerClient(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **registerClientRequest** | [**RegisterClientRequest**](RegisterClientRequest.md) | RFC 7591 client metadata. | 
 
 ### Return type
 
@@ -525,7 +607,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -584,7 +666,7 @@ No authorization required
 
 # **revoke**
 ```swift
-    open class func revoke(orgId: String, completion: @escaping (_ data: AnyCodable?, _ error: Error?) -> Void)
+    open class func revoke(orgId: String, token: String, tokenTypeHint: TokenTypeHint_revoke? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil, completion: @escaping (_ data: AnyCodable?, _ error: Error?) -> Void)
 ```
 
 Token revocation (RFC 7009)
@@ -597,9 +679,15 @@ Revokes an access or refresh token (revoking a refresh token also revokes the ac
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let token = "token_example" // String | 
+let tokenTypeHint = "tokenTypeHint_example" // String |  (optional)
+let clientId = "clientId_example" // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+let clientSecret = "clientSecret_example" // String | client_secret_post (optional)
+let clientAssertionType = "clientAssertionType_example" // String |  (optional)
+let clientAssertion = "clientAssertion_example" // String | private_key_jwt (RFC 7523) (optional)
 
 // Token revocation (RFC 7009)
-OAuthAPI.revoke(orgId: orgId) { (response, error) in
+OAuthAPI.revoke(orgId: orgId, token: token, tokenTypeHint: tokenTypeHint, clientId: clientId, clientSecret: clientSecret, clientAssertionType: clientAssertionType, clientAssertion: clientAssertion) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -616,6 +704,12 @@ OAuthAPI.revoke(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **token** | **String** |  | 
+ **tokenTypeHint** | **String** |  | [optional] 
+ **clientId** | **String** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] 
+ **clientSecret** | **String** | client_secret_post | [optional] 
+ **clientAssertionType** | **String** |  | [optional] 
+ **clientAssertion** | **String** | private_key_jwt (RFC 7523) | [optional] 
 
 ### Return type
 
@@ -627,7 +721,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -890,7 +984,7 @@ No authorization required
 
 # **submitLoginJson**
 ```swift
-    open class func submitLoginJson(orgId: String, completion: @escaping (_ data: SubmitLoginJsonResponse?, _ error: Error?) -> Void)
+    open class func submitLoginJson(orgId: String, submitLoginJsonRequest: SubmitLoginJsonRequest, completion: @escaping (_ data: SubmitLoginJsonResponse?, _ error: Error?) -> Void)
 ```
 
 Programmatic (JSON) login for the authorization flow
@@ -903,9 +997,10 @@ Establishes the end-user browser session from JSON credentials so a following /o
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let submitLoginJsonRequest = SubmitLoginJsonRequest(email: "email_example", password: "password_example", captchaToken: "captchaToken_example") // SubmitLoginJsonRequest | 
 
 // Programmatic (JSON) login for the authorization flow
-OAuthAPI.submitLoginJson(orgId: orgId) { (response, error) in
+OAuthAPI.submitLoginJson(orgId: orgId, submitLoginJsonRequest: submitLoginJsonRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -922,6 +1017,7 @@ OAuthAPI.submitLoginJson(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **submitLoginJsonRequest** | [**SubmitLoginJsonRequest**](SubmitLoginJsonRequest.md) |  | 
 
 ### Return type
 
@@ -933,7 +1029,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -990,7 +1086,7 @@ No authorization required
 
 # **token**
 ```swift
-    open class func token(orgId: String, completion: @escaping (_ data: TokenResponse?, _ error: Error?) -> Void)
+    open class func token(orgId: String, grantType: String, code: String? = nil, redirectUri: String? = nil, codeVerifier: String? = nil, refreshToken: String? = nil, deviceCode: String? = nil, authReqId: String? = nil, scope: String? = nil, resource: String? = nil, subjectToken: String? = nil, subjectTokenType: String? = nil, actorToken: String? = nil, actorTokenType: String? = nil, requestedTokenType: String? = nil, assertion: String? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil, completion: @escaping (_ data: TokenResponse?, _ error: Error?) -> Void)
 ```
 
 OAuth 2.1 token endpoint
@@ -1003,9 +1099,28 @@ Issues tokens for authorization_code, refresh_token, client_credentials, urn:iet
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let grantType = "grantType_example" // String | 
+let code = "code_example" // String |  (optional)
+let redirectUri = "redirectUri_example" // String |  (optional)
+let codeVerifier = "codeVerifier_example" // String |  (optional)
+let refreshToken = "refreshToken_example" // String |  (optional)
+let deviceCode = "deviceCode_example" // String |  (optional)
+let authReqId = "authReqId_example" // String | CIBA (optional)
+let scope = "scope_example" // String |  (optional)
+let resource = "resource_example" // String |  (optional)
+let subjectToken = "subjectToken_example" // String | Token exchange (RFC 8693) (optional)
+let subjectTokenType = "subjectTokenType_example" // String |  (optional)
+let actorToken = "actorToken_example" // String |  (optional)
+let actorTokenType = "actorTokenType_example" // String |  (optional)
+let requestedTokenType = "requestedTokenType_example" // String |  (optional)
+let assertion = "assertion_example" // String | JWT bearer / ID-JAG grant (optional)
+let clientId = "clientId_example" // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+let clientSecret = "clientSecret_example" // String | client_secret_post (optional)
+let clientAssertionType = "clientAssertionType_example" // String |  (optional)
+let clientAssertion = "clientAssertion_example" // String | private_key_jwt (RFC 7523) (optional)
 
 // OAuth 2.1 token endpoint
-OAuthAPI.token(orgId: orgId) { (response, error) in
+OAuthAPI.token(orgId: orgId, grantType: grantType, code: code, redirectUri: redirectUri, codeVerifier: codeVerifier, refreshToken: refreshToken, deviceCode: deviceCode, authReqId: authReqId, scope: scope, resource: resource, subjectToken: subjectToken, subjectTokenType: subjectTokenType, actorToken: actorToken, actorTokenType: actorTokenType, requestedTokenType: requestedTokenType, assertion: assertion, clientId: clientId, clientSecret: clientSecret, clientAssertionType: clientAssertionType, clientAssertion: clientAssertion) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1022,6 +1137,25 @@ OAuthAPI.token(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **grantType** | **String** |  | 
+ **code** | **String** |  | [optional] 
+ **redirectUri** | **String** |  | [optional] 
+ **codeVerifier** | **String** |  | [optional] 
+ **refreshToken** | **String** |  | [optional] 
+ **deviceCode** | **String** |  | [optional] 
+ **authReqId** | **String** | CIBA | [optional] 
+ **scope** | **String** |  | [optional] 
+ **resource** | **String** |  | [optional] 
+ **subjectToken** | **String** | Token exchange (RFC 8693) | [optional] 
+ **subjectTokenType** | **String** |  | [optional] 
+ **actorToken** | **String** |  | [optional] 
+ **actorTokenType** | **String** |  | [optional] 
+ **requestedTokenType** | **String** |  | [optional] 
+ **assertion** | **String** | JWT bearer / ID-JAG grant | [optional] 
+ **clientId** | **String** | Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] 
+ **clientSecret** | **String** | client_secret_post | [optional] 
+ **clientAssertionType** | **String** |  | [optional] 
+ **clientAssertion** | **String** | private_key_jwt (RFC 7523) | [optional] 
 
 ### Return type
 
@@ -1033,7 +1167,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

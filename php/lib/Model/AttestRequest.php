@@ -13,7 +13,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -58,7 +58,8 @@ class AttestRequest implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'attestationToken' => 'string'
+        'attestationToken' => 'string',
+        'scope' => '\LumoAuth\ApiClient\Model\AttestRequestScope'
     ];
 
     /**
@@ -69,7 +70,8 @@ class AttestRequest implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'attestationToken' => null
+        'attestationToken' => null,
+        'scope' => null
     ];
 
     /**
@@ -78,7 +80,8 @@ class AttestRequest implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'attestationToken' => false
+        'attestationToken' => false,
+        'scope' => false
     ];
 
     /**
@@ -167,7 +170,8 @@ class AttestRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'attestationToken' => 'attestation_token'
+        'attestationToken' => 'attestation_token',
+        'scope' => 'scope'
     ];
 
     /**
@@ -176,7 +180,8 @@ class AttestRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'attestationToken' => 'setAttestationToken'
+        'attestationToken' => 'setAttestationToken',
+        'scope' => 'setScope'
     ];
 
     /**
@@ -185,7 +190,8 @@ class AttestRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'attestationToken' => 'getAttestationToken'
+        'attestationToken' => 'getAttestationToken',
+        'scope' => 'getScope'
     ];
 
     /**
@@ -246,6 +252,7 @@ class AttestRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     public function __construct(?array $data = null)
     {
         $this->setIfExists('attestationToken', $data ?? [], null);
+        $this->setIfExists('scope', $data ?? [], null);
     }
 
     /**
@@ -316,6 +323,33 @@ class AttestRequest implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable attestationToken cannot be null');
         }
         $this->container['attestationToken'] = $attestationToken;
+
+        return $this;
+    }
+
+    /**
+     * Gets scope
+     *
+     * @return \LumoAuth\ApiClient\Model\AttestRequestScope|null
+     */
+    public function getScope()
+    {
+        return $this->container['scope'];
+    }
+
+    /**
+     * Sets scope
+     *
+     * @param \LumoAuth\ApiClient\Model\AttestRequestScope|null $scope scope
+     *
+     * @return self
+     */
+    public function setScope($scope)
+    {
+        if (is_null($scope)) {
+            throw new \InvalidArgumentException('non-nullable scope cannot be null');
+        }
+        $this->container['scope'] = $scope;
 
         return $this;
     }

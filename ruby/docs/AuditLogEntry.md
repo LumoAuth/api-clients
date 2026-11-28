@@ -18,6 +18,7 @@
 | **target_id** | **String** |  | [optional] |
 | **target_name** | **String** |  | [optional] |
 | **ip_address** | **String** |  | [optional] |
+| **trace_id** | **String** | W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none | [optional] |
 | **event_time** | **Time** | Detailed responses only | [optional] |
 | **duration_ms** | **Integer** | Detailed responses only | [optional] |
 | **initiated_by** | **String** | Detailed responses only | [optional] |
@@ -53,6 +54,7 @@ instance = LumoAuthApiClient::AuditLogEntry.new(
   target_id: null,
   target_name: null,
   ip_address: null,
+  trace_id: null,
   event_time: null,
   duration_ms: null,
   initiated_by: null,

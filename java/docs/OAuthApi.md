@@ -94,7 +94,7 @@ No authorization required
 
 <a id="backchannelAuthorize"></a>
 # **backchannelAuthorize**
-> BackchannelAuthorizeResponse backchannelAuthorize(orgId)
+> BackchannelAuthorizeResponse backchannelAuthorize(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion)
 
 CIBA backchannel authentication request
 
@@ -122,8 +122,21 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String scope = "scope_example"; // String | 
+    String loginHint = "loginHint_example"; // String | 
+    String loginHintToken = "loginHintToken_example"; // String | 
+    String idTokenHint = "idTokenHint_example"; // String | 
+    String bindingMessage = "bindingMessage_example"; // String | 
+    String acrValues = "acrValues_example"; // String | 
+    Integer requestedExpiry = 56; // Integer | Seconds. An application's request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused.
+    String clientNotificationToken = "clientNotificationToken_example"; // String | 
+    String authorizationDetails = "authorizationDetails_example"; // String | 
+    String clientId = "clientId_example"; // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    String clientSecret = "clientSecret_example"; // String | client_secret_post
+    String clientAssertionType = "clientAssertionType_example"; // String | 
+    String clientAssertion = "clientAssertion_example"; // String | private_key_jwt (RFC 7523)
     try {
-      BackchannelAuthorizeResponse result = apiInstance.backchannelAuthorize(orgId);
+      BackchannelAuthorizeResponse result = apiInstance.backchannelAuthorize(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#backchannelAuthorize");
@@ -141,6 +154,19 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **scope** | **String**|  | |
+| **loginHint** | **String**|  | [optional] |
+| **loginHintToken** | **String**|  | [optional] |
+| **idTokenHint** | **String**|  | [optional] |
+| **bindingMessage** | **String**|  | [optional] |
+| **acrValues** | **String**|  | [optional] |
+| **requestedExpiry** | **Integer**| Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. | [optional] |
+| **clientNotificationToken** | **String**|  | [optional] |
+| **authorizationDetails** | **String**|  | [optional] |
+| **clientId** | **String**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **String**| client_secret_post | [optional] |
+| **clientAssertionType** | **String**|  | [optional] |
+| **clientAssertion** | **String**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -152,16 +178,16 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Authentication request accepted (CIBA Core §7.3). The hint is never confirmed: an unknown user yields an unstored auth_req_id of the same shape. interval is present for poll and ping delivery modes (always for agent-initiated requests). |  -  |
-| **400** | invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. |  -  |
-| **401** | invalid_client — client authentication failed. |  -  |
-| **403** | unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. |  -  |
+| **400** | invalid_request (also for more than one client authentication method; an agent&#39;s Bearer / DPoP credential next to the application&#39;s credentials is not a second one), unauthorized_client (CIBA not enabled for the client or plan, or agent_id named but not authenticated by that agent), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details (CIBA Core §13). |  -  |
+| **401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. |  * WWW-Authenticate -  <br>  |
+| **403** | access_denied. |  -  |
 | **429** | too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. |  -  |
 
 <a id="checkEmailFirst"></a>
@@ -234,11 +260,11 @@ No authorization required
 
 <a id="deviceAuthorization"></a>
 # **deviceAuthorization**
-> DeviceAuthorizationResponse deviceAuthorization(orgId)
+> DeviceAuthorizationResponse deviceAuthorization(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource)
 
 Device authorization request (RFC 8628)
 
-Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
 
 ### Example
 ```java
@@ -262,8 +288,14 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String clientId = "clientId_example"; // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    String clientSecret = "clientSecret_example"; // String | client_secret_post
+    String clientAssertionType = "clientAssertionType_example"; // String | 
+    String clientAssertion = "clientAssertion_example"; // String | private_key_jwt (RFC 7523)
+    String scope = "scope_example"; // String | Space-separated scopes.
+    URI resource = new URI(); // URI | RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client's audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them.
     try {
-      DeviceAuthorizationResponse result = apiInstance.deviceAuthorization(orgId);
+      DeviceAuthorizationResponse result = apiInstance.deviceAuthorization(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#deviceAuthorization");
@@ -281,6 +313,12 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **clientId** | **String**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **String**| client_secret_post | [optional] |
+| **clientAssertionType** | **String**|  | [optional] |
+| **clientAssertion** | **String**| private_key_jwt (RFC 7523) | [optional] |
+| **scope** | **String**| Space-separated scopes. | [optional] |
+| **resource** | **URI**| RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. | [optional] |
 
 ### Return type
 
@@ -292,15 +330,15 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Device authorization response (RFC 8628 §3.2). |  -  |
-| **400** | invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. |  -  |
-| **401** | invalid_client — a confidential client failed to authenticate. |  -  |
+| **400** | invalid_request (more than one client authentication method in the request), unauthorized_client (the client may not use the device grant), invalid_scope, or invalid_target (a resource that is malformed or not registered for the client). |  -  |
+| **401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. Also for a missing client_id: a public client sends its client_id, a confidential client authenticates (by HTTP Basic it needs no client_id in the body). |  * WWW-Authenticate -  <br>  |
 | **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 <a id="getClientConfiguration"></a>
@@ -509,7 +547,7 @@ No authorization required
 
 <a id="introspect"></a>
 # **introspect**
-> IntrospectResponse introspect(orgId)
+> IntrospectResponse introspect(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion)
 
 Token introspection (RFC 7662)
 
@@ -537,8 +575,14 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String token = "token_example"; // String | 
+    String tokenTypeHint = "access_token"; // String | 
+    String clientId = "clientId_example"; // String | The calling client, with client_secret (client_secret_post), or an agent's id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client).
+    String clientSecret = "clientSecret_example"; // String | client_secret_post
+    String clientAssertionType = "clientAssertionType_example"; // String | 
+    String clientAssertion = "clientAssertion_example"; // String | private_key_jwt (RFC 7523)
     try {
-      IntrospectResponse result = apiInstance.introspect(orgId);
+      IntrospectResponse result = apiInstance.introspect(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#introspect");
@@ -556,6 +600,12 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **token** | **String**|  | |
+| **tokenTypeHint** | **String**|  | [optional] [enum: access_token, refresh_token] |
+| **clientId** | **String**| The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). | [optional] |
+| **clientSecret** | **String**| client_secret_post | [optional] |
+| **clientAssertionType** | **String**|  | [optional] |
+| **clientAssertion** | **String**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -567,20 +617,20 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. |  -  |
-| **400** | invalid_request — token parameter missing. |  -  |
-| **401** | invalid_client — client authentication failed. |  -  |
+| **200** | Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for a user token that carries the email scope (opaque and JWT alike); iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. |  -  |
+| **400** | invalid_request: token parameter missing, or more than one client authentication method in the request (RFC 6749 §2.3). |  -  |
+| **401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client cannot introspect. |  * WWW-Authenticate -  <br>  |
 | **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 <a id="par"></a>
 # **par**
-> ParResponse par(orgId)
+> ParResponse par(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion)
 
 Pushed authorization request (RFC 9126)
 
@@ -608,8 +658,23 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String responseType = "responseType_example"; // String | 
+    URI redirectUri = new URI(); // URI | 
+    String scope = "scope_example"; // String | 
+    String state = "state_example"; // String | 
+    String nonce = "nonce_example"; // String | 
+    String codeChallenge = "codeChallenge_example"; // String | 
+    String codeChallengeMethod = "codeChallengeMethod_example"; // String | 
+    String request = "request_example"; // String | A signed request object (JAR, RFC 9101).
+    URI resource = new URI(); // URI | 
+    String prompt = "prompt_example"; // String | 
+    String loginHint = "loginHint_example"; // String | 
+    String clientId = "clientId_example"; // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    String clientSecret = "clientSecret_example"; // String | client_secret_post
+    String clientAssertionType = "clientAssertionType_example"; // String | 
+    String clientAssertion = "clientAssertion_example"; // String | private_key_jwt (RFC 7523)
     try {
-      ParResponse result = apiInstance.par(orgId);
+      ParResponse result = apiInstance.par(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#par");
@@ -627,6 +692,21 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **responseType** | **String**|  | [optional] |
+| **redirectUri** | **URI**|  | [optional] |
+| **scope** | **String**|  | [optional] |
+| **state** | **String**|  | [optional] |
+| **nonce** | **String**|  | [optional] |
+| **codeChallenge** | **String**|  | [optional] |
+| **codeChallengeMethod** | **String**|  | [optional] |
+| **request** | **String**| A signed request object (JAR, RFC 9101). | [optional] |
+| **resource** | **URI**|  | [optional] |
+| **prompt** | **String**|  | [optional] |
+| **loginHint** | **String**|  | [optional] |
+| **clientId** | **String**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **String**| client_secret_post | [optional] |
+| **clientAssertionType** | **String**|  | [optional] |
+| **clientAssertion** | **String**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -638,20 +718,20 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Pushed authorization request created (RFC 9126 §2.2). |  -  |
-| **400** | invalid_request / invalid_target / invalid_request_object, or the organization is unknown. |  -  |
-| **401** | invalid_client — client authentication failed. |  -  |
+| **400** | invalid_request (also for more than one client authentication method) / invalid_target / invalid_request_object, or the organization is unknown. |  -  |
+| **401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. |  * WWW-Authenticate -  <br>  |
 | **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 <a id="registerClient"></a>
 # **registerClient**
-> RegisterClientResponse registerClient(orgId)
+> RegisterClientResponse registerClient(orgId, registerClientRequest)
 
 Dynamic client registration (RFC 7591 / OIDC DCR)
 
@@ -684,8 +764,9 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    RegisterClientRequest registerClientRequest = new RegisterClientRequest(); // RegisterClientRequest | RFC 7591 client metadata.
     try {
-      RegisterClientResponse result = apiInstance.registerClient(orgId);
+      RegisterClientResponse result = apiInstance.registerClient(orgId, registerClientRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#registerClient");
@@ -703,6 +784,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **registerClientRequest** | [**RegisterClientRequest**](RegisterClientRequest.md)| RFC 7591 client metadata. | |
 
 ### Return type
 
@@ -714,7 +796,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -722,7 +804,7 @@ public class Example {
 |-------------|-------------|------------------|
 | **201** | Client registered (OIDC Dynamic Client Registration §3.2). client_secret / client_secret_expires_at only for confidential clients; registration_access_token and registration_client_uri when a registration access token was issued; the remaining optional members echo registered metadata and are omitted when empty or at their default. Sent with Cache-Control: no-store. |  -  |
 | **400** | invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. |  -  |
-| **401** | access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). |  -  |
+| **401** | invalid_token: the initial access token is missing or not valid (RFC 7591 §3, RFC 6750 §3.1). WWW-Authenticate: Bearer realm&#x3D;\&quot;Client Registration\&quot;, with error&#x3D;\&quot;invalid_token\&quot; when a token was sent. |  * WWW-Authenticate -  <br>  |
 | **403** | access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. |  -  |
 | **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
@@ -796,7 +878,7 @@ No authorization required
 
 <a id="revoke"></a>
 # **revoke**
-> Object revoke(orgId)
+> Object revoke(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion)
 
 Token revocation (RFC 7009)
 
@@ -824,8 +906,14 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String token = "token_example"; // String | 
+    String tokenTypeHint = "access_token"; // String | 
+    String clientId = "clientId_example"; // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    String clientSecret = "clientSecret_example"; // String | client_secret_post
+    String clientAssertionType = "clientAssertionType_example"; // String | 
+    String clientAssertion = "clientAssertion_example"; // String | private_key_jwt (RFC 7523)
     try {
-      Object result = apiInstance.revoke(orgId);
+      Object result = apiInstance.revoke(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#revoke");
@@ -843,6 +931,12 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **token** | **String**|  | |
+| **tokenTypeHint** | **String**|  | [optional] [enum: access_token, refresh_token] |
+| **clientId** | **String**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **String**| client_secret_post | [optional] |
+| **clientAssertionType** | **String**|  | [optional] |
+| **clientAssertion** | **String**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -854,15 +948,15 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). |  -  |
-| **400** | invalid_request (token parameter missing) or unsupported_token_type. |  -  |
-| **401** | invalid_client — client authentication failed. |  -  |
+| **200** | The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. |  -  |
+| **400** | invalid_request (token parameter missing, or more than one client authentication method in the request, RFC 6749 §2.3), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). |  -  |
+| **401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client revokes its own tokens with its client_id. |  * WWW-Authenticate -  <br>  |
 | **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 
 <a id="socialCallback"></a>
@@ -1186,7 +1280,7 @@ No authorization required
 
 <a id="submitLoginJson"></a>
 # **submitLoginJson**
-> SubmitLoginJsonResponse submitLoginJson(orgId)
+> SubmitLoginJsonResponse submitLoginJson(orgId, submitLoginJsonRequest)
 
 Programmatic (JSON) login for the authorization flow
 
@@ -1208,8 +1302,9 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    SubmitLoginJsonRequest submitLoginJsonRequest = new SubmitLoginJsonRequest(); // SubmitLoginJsonRequest | 
     try {
-      SubmitLoginJsonResponse result = apiInstance.submitLoginJson(orgId);
+      SubmitLoginJsonResponse result = apiInstance.submitLoginJson(orgId, submitLoginJsonRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#submitLoginJson");
@@ -1227,6 +1322,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **submitLoginJsonRequest** | [**SubmitLoginJsonRequest**](SubmitLoginJsonRequest.md)|  | |
 
 ### Return type
 
@@ -1238,7 +1334,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1317,7 +1413,7 @@ No authorization required
 
 <a id="token"></a>
 # **token**
-> TokenResponse token(orgId)
+> TokenResponse token(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion)
 
 OAuth 2.1 token endpoint
 
@@ -1345,8 +1441,27 @@ public class Example {
 
     OAuthApi apiInstance = new OAuthApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String grantType = "grantType_example"; // String | 
+    String code = "code_example"; // String | 
+    URI redirectUri = new URI(); // URI | 
+    String codeVerifier = "codeVerifier_example"; // String | 
+    String refreshToken = "refreshToken_example"; // String | 
+    String deviceCode = "deviceCode_example"; // String | 
+    String authReqId = "authReqId_example"; // String | CIBA
+    String scope = "scope_example"; // String | 
+    URI resource = new URI(); // URI | 
+    String subjectToken = "subjectToken_example"; // String | Token exchange (RFC 8693)
+    String subjectTokenType = "subjectTokenType_example"; // String | 
+    String actorToken = "actorToken_example"; // String | 
+    String actorTokenType = "actorTokenType_example"; // String | 
+    String requestedTokenType = "requestedTokenType_example"; // String | 
+    String assertion = "assertion_example"; // String | JWT bearer / ID-JAG grant
+    String clientId = "clientId_example"; // String | Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+    String clientSecret = "clientSecret_example"; // String | client_secret_post
+    String clientAssertionType = "clientAssertionType_example"; // String | 
+    String clientAssertion = "clientAssertion_example"; // String | private_key_jwt (RFC 7523)
     try {
-      TokenResponse result = apiInstance.token(orgId);
+      TokenResponse result = apiInstance.token(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling OAuthApi#token");
@@ -1364,6 +1479,25 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **grantType** | **String**|  | |
+| **code** | **String**|  | [optional] |
+| **redirectUri** | **URI**|  | [optional] |
+| **codeVerifier** | **String**|  | [optional] |
+| **refreshToken** | **String**|  | [optional] |
+| **deviceCode** | **String**|  | [optional] |
+| **authReqId** | **String**| CIBA | [optional] |
+| **scope** | **String**|  | [optional] |
+| **resource** | **URI**|  | [optional] |
+| **subjectToken** | **String**| Token exchange (RFC 8693) | [optional] |
+| **subjectTokenType** | **String**|  | [optional] |
+| **actorToken** | **String**|  | [optional] |
+| **actorTokenType** | **String**|  | [optional] |
+| **requestedTokenType** | **String**|  | [optional] |
+| **assertion** | **String**| JWT bearer / ID-JAG grant | [optional] |
+| **clientId** | **String**| Required for a public client; a confidential client may authenticate with HTTP Basic instead. | [optional] |
+| **clientSecret** | **String**| client_secret_post | [optional] |
+| **clientAssertionType** | **String**|  | [optional] |
+| **clientAssertion** | **String**| private_key_jwt (RFC 7523) | [optional] |
 
 ### Return type
 
@@ -1375,15 +1509,15 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. |  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  |
-| **400** | invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). |  -  |
-| **401** | invalid_client — client authentication failed. |  -  |
-| **403** | plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. |  -  |
+| **400** | invalid_request (also for more than one client authentication method) / invalid_grant / unauthorized_client (the client may not use this grant) / unsupported_grant_type / invalid_scope / invalid_target / access_denied (an agent refused by a conditional access policy or not allowed to act for users; a user who denied a device or CIBA request): every token endpoint error but invalid_client is 400 (RFC 6749 §5.2). |  -  |
+| **401** | invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client authenticates by sending its client_id. |  * WWW-Authenticate -  <br>  |
+| **403** | plan_limit_reached (a LumoAuth extension): the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. |  -  |
 | **429** | too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. |  -  |
 

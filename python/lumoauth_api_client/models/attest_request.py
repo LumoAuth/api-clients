@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -19,7 +19,8 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
+from lumoauth_api_client.models.attest_request_scope import AttestRequestScope
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +29,8 @@ class AttestRequest(BaseModel):
     AttestRequest
     """ # noqa: E501
     attestation_token: StrictStr = Field(description="The workload OIDC token (JWT).")
-    __properties: ClassVar[List[str]] = ["attestation_token"]
+    scope: Optional[AttestRequestScope] = None
+    __properties: ClassVar[List[str]] = ["attestation_token", "scope"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -69,6 +71,9 @@ class AttestRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of scope
+        if self.scope:
+            _dict['scope'] = self.scope.to_dict()
         return _dict
 
     @classmethod
@@ -81,7 +86,8 @@ class AttestRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "attestation_token": obj.get("attestation_token")
+            "attestation_token": obj.get("attestation_token"),
+            "scope": AttestRequestScope.from_dict(obj["scope"]) if obj.get("scope") is not None else None
         })
         return _obj
 

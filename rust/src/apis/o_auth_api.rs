@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -240,9 +240,22 @@ pub async fn authorize(configuration: &configuration::Configuration, org_id: &st
 }
 
 /// OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
-pub async fn backchannel_authorize(configuration: &configuration::Configuration, org_id: &str) -> Result<models::BackchannelAuthorizeResponse, Error<BackchannelAuthorizeError>> {
+pub async fn backchannel_authorize(configuration: &configuration::Configuration, org_id: &str, scope: &str, login_hint: Option<&str>, login_hint_token: Option<&str>, id_token_hint: Option<&str>, binding_message: Option<&str>, acr_values: Option<&str>, requested_expiry: Option<i32>, client_notification_token: Option<&str>, authorization_details: Option<&str>, client_id: Option<&str>, client_secret: Option<&str>, client_assertion_type: Option<&str>, client_assertion: Option<&str>) -> Result<models::BackchannelAuthorizeResponse, Error<BackchannelAuthorizeError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_scope = scope;
+    let p_login_hint = login_hint;
+    let p_login_hint_token = login_hint_token;
+    let p_id_token_hint = id_token_hint;
+    let p_binding_message = binding_message;
+    let p_acr_values = acr_values;
+    let p_requested_expiry = requested_expiry;
+    let p_client_notification_token = client_notification_token;
+    let p_authorization_details = authorization_details;
+    let p_client_id = client_id;
+    let p_client_secret = client_secret;
+    let p_client_assertion_type = client_assertion_type;
+    let p_client_assertion = client_assertion;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/oauth/bc-authorize", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -253,6 +266,45 @@ pub async fn backchannel_authorize(configuration: &configuration::Configuration,
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
+    let mut multipart_form_params = std::collections::HashMap::new();
+    multipart_form_params.insert("scope", p_scope.to_string());
+    if let Some(param_value) = p_login_hint {
+        multipart_form_params.insert("login_hint", param_value.to_string());
+    }
+    if let Some(param_value) = p_login_hint_token {
+        multipart_form_params.insert("login_hint_token", param_value.to_string());
+    }
+    if let Some(param_value) = p_id_token_hint {
+        multipart_form_params.insert("id_token_hint", param_value.to_string());
+    }
+    if let Some(param_value) = p_binding_message {
+        multipart_form_params.insert("binding_message", param_value.to_string());
+    }
+    if let Some(param_value) = p_acr_values {
+        multipart_form_params.insert("acr_values", param_value.to_string());
+    }
+    if let Some(param_value) = p_requested_expiry {
+        multipart_form_params.insert("requested_expiry", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_notification_token {
+        multipart_form_params.insert("client_notification_token", param_value.to_string());
+    }
+    if let Some(param_value) = p_authorization_details {
+        multipart_form_params.insert("authorization_details", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_id {
+        multipart_form_params.insert("client_id", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_secret {
+        multipart_form_params.insert("client_secret", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_assertion_type {
+        multipart_form_params.insert("client_assertion_type", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_assertion {
+        multipart_form_params.insert("client_assertion", param_value.to_string());
+    }
+    req_builder = req_builder.form(&multipart_form_params);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -318,10 +370,16 @@ pub async fn check_email_first(configuration: &configuration::Configuration, org
     }
 }
 
-/// Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
-pub async fn device_authorization(configuration: &configuration::Configuration, org_id: &str) -> Result<models::DeviceAuthorizationResponse, Error<DeviceAuthorizationError>> {
+/// Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
+pub async fn device_authorization(configuration: &configuration::Configuration, org_id: &str, client_id: Option<&str>, client_secret: Option<&str>, client_assertion_type: Option<&str>, client_assertion: Option<&str>, scope: Option<&str>, resource: Option<&str>) -> Result<models::DeviceAuthorizationResponse, Error<DeviceAuthorizationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_client_id = client_id;
+    let p_client_secret = client_secret;
+    let p_client_assertion_type = client_assertion_type;
+    let p_client_assertion = client_assertion;
+    let p_scope = scope;
+    let p_resource = resource;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/oauth/device_authorization", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -332,6 +390,26 @@ pub async fn device_authorization(configuration: &configuration::Configuration, 
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
+    let mut multipart_form_params = std::collections::HashMap::new();
+    if let Some(param_value) = p_client_id {
+        multipart_form_params.insert("client_id", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_secret {
+        multipart_form_params.insert("client_secret", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_assertion_type {
+        multipart_form_params.insert("client_assertion_type", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_assertion {
+        multipart_form_params.insert("client_assertion", param_value.to_string());
+    }
+    if let Some(param_value) = p_scope {
+        multipart_form_params.insert("scope", param_value.to_string());
+    }
+    if let Some(param_value) = p_resource {
+        multipart_form_params.insert("resource", param_value.to_string());
+    }
+    req_builder = req_builder.form(&multipart_form_params);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -482,9 +560,15 @@ pub async fn get_org_selection(configuration: &configuration::Configuration, org
 }
 
 /// Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
-pub async fn introspect(configuration: &configuration::Configuration, org_id: &str) -> Result<models::IntrospectResponse, Error<IntrospectError>> {
+pub async fn introspect(configuration: &configuration::Configuration, org_id: &str, token: &str, token_type_hint: Option<&str>, client_id: Option<&str>, client_secret: Option<&str>, client_assertion_type: Option<&str>, client_assertion: Option<&str>) -> Result<models::IntrospectResponse, Error<IntrospectError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_token = token;
+    let p_token_type_hint = token_type_hint;
+    let p_client_id = client_id;
+    let p_client_secret = client_secret;
+    let p_client_assertion_type = client_assertion_type;
+    let p_client_assertion = client_assertion;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/oauth/introspect", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -495,6 +579,24 @@ pub async fn introspect(configuration: &configuration::Configuration, org_id: &s
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
+    let mut multipart_form_params = std::collections::HashMap::new();
+    multipart_form_params.insert("token", p_token.to_string());
+    if let Some(param_value) = p_token_type_hint {
+        multipart_form_params.insert("token_type_hint", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_id {
+        multipart_form_params.insert("client_id", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_secret {
+        multipart_form_params.insert("client_secret", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_assertion_type {
+        multipart_form_params.insert("client_assertion_type", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_assertion {
+        multipart_form_params.insert("client_assertion", param_value.to_string());
+    }
+    req_builder = req_builder.form(&multipart_form_params);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -522,9 +624,24 @@ pub async fn introspect(configuration: &configuration::Configuration, org_id: &s
 }
 
 /// Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
-pub async fn par(configuration: &configuration::Configuration, org_id: &str) -> Result<models::ParResponse, Error<ParError>> {
+pub async fn par(configuration: &configuration::Configuration, org_id: &str, response_type: Option<&str>, redirect_uri: Option<&str>, scope: Option<&str>, state: Option<&str>, nonce: Option<&str>, code_challenge: Option<&str>, code_challenge_method: Option<&str>, request: Option<&str>, resource: Option<&str>, prompt: Option<&str>, login_hint: Option<&str>, client_id: Option<&str>, client_secret: Option<&str>, client_assertion_type: Option<&str>, client_assertion: Option<&str>) -> Result<models::ParResponse, Error<ParError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_response_type = response_type;
+    let p_redirect_uri = redirect_uri;
+    let p_scope = scope;
+    let p_state = state;
+    let p_nonce = nonce;
+    let p_code_challenge = code_challenge;
+    let p_code_challenge_method = code_challenge_method;
+    let p_request = request;
+    let p_resource = resource;
+    let p_prompt = prompt;
+    let p_login_hint = login_hint;
+    let p_client_id = client_id;
+    let p_client_secret = client_secret;
+    let p_client_assertion_type = client_assertion_type;
+    let p_client_assertion = client_assertion;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/oauth/par", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -535,6 +652,53 @@ pub async fn par(configuration: &configuration::Configuration, org_id: &str) -> 
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
+    let mut multipart_form_params = std::collections::HashMap::new();
+    if let Some(param_value) = p_response_type {
+        multipart_form_params.insert("response_type", param_value.to_string());
+    }
+    if let Some(param_value) = p_redirect_uri {
+        multipart_form_params.insert("redirect_uri", param_value.to_string());
+    }
+    if let Some(param_value) = p_scope {
+        multipart_form_params.insert("scope", param_value.to_string());
+    }
+    if let Some(param_value) = p_state {
+        multipart_form_params.insert("state", param_value.to_string());
+    }
+    if let Some(param_value) = p_nonce {
+        multipart_form_params.insert("nonce", param_value.to_string());
+    }
+    if let Some(param_value) = p_code_challenge {
+        multipart_form_params.insert("code_challenge", param_value.to_string());
+    }
+    if let Some(param_value) = p_code_challenge_method {
+        multipart_form_params.insert("code_challenge_method", param_value.to_string());
+    }
+    if let Some(param_value) = p_request {
+        multipart_form_params.insert("request", param_value.to_string());
+    }
+    if let Some(param_value) = p_resource {
+        multipart_form_params.insert("resource", param_value.to_string());
+    }
+    if let Some(param_value) = p_prompt {
+        multipart_form_params.insert("prompt", param_value.to_string());
+    }
+    if let Some(param_value) = p_login_hint {
+        multipart_form_params.insert("login_hint", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_id {
+        multipart_form_params.insert("client_id", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_secret {
+        multipart_form_params.insert("client_secret", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_assertion_type {
+        multipart_form_params.insert("client_assertion_type", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_assertion {
+        multipart_form_params.insert("client_assertion", param_value.to_string());
+    }
+    req_builder = req_builder.form(&multipart_form_params);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -562,9 +726,10 @@ pub async fn par(configuration: &configuration::Configuration, org_id: &str) -> 
 }
 
 /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization's signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
-pub async fn register_client(configuration: &configuration::Configuration, org_id: &str) -> Result<models::RegisterClientResponse, Error<RegisterClientError>> {
+pub async fn register_client(configuration: &configuration::Configuration, org_id: &str, register_client_request: models::RegisterClientRequest) -> Result<models::RegisterClientResponse, Error<RegisterClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_register_client_request = register_client_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/connect/register", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -583,6 +748,7 @@ pub async fn register_client(configuration: &configuration::Configuration, org_i
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_register_client_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -649,9 +815,15 @@ pub async fn request_magic_link(configuration: &configuration::Configuration, or
 }
 
 /// Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
-pub async fn revoke(configuration: &configuration::Configuration, org_id: &str) -> Result<serde_json::Value, Error<RevokeError>> {
+pub async fn revoke(configuration: &configuration::Configuration, org_id: &str, token: &str, token_type_hint: Option<&str>, client_id: Option<&str>, client_secret: Option<&str>, client_assertion_type: Option<&str>, client_assertion: Option<&str>) -> Result<serde_json::Value, Error<RevokeError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_token = token;
+    let p_token_type_hint = token_type_hint;
+    let p_client_id = client_id;
+    let p_client_secret = client_secret;
+    let p_client_assertion_type = client_assertion_type;
+    let p_client_assertion = client_assertion;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/oauth/revoke", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -662,6 +834,24 @@ pub async fn revoke(configuration: &configuration::Configuration, org_id: &str) 
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
+    let mut multipart_form_params = std::collections::HashMap::new();
+    multipart_form_params.insert("token", p_token.to_string());
+    if let Some(param_value) = p_token_type_hint {
+        multipart_form_params.insert("token_type_hint", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_id {
+        multipart_form_params.insert("client_id", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_secret {
+        multipart_form_params.insert("client_secret", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_assertion_type {
+        multipart_form_params.insert("client_assertion_type", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_assertion {
+        multipart_form_params.insert("client_assertion", param_value.to_string());
+    }
+    req_builder = req_builder.form(&multipart_form_params);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -844,9 +1034,10 @@ pub async fn submit_device_verification(configuration: &configuration::Configura
 }
 
 /// Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
-pub async fn submit_login_json(configuration: &configuration::Configuration, org_id: &str) -> Result<models::SubmitLoginJsonResponse, Error<SubmitLoginJsonError>> {
+pub async fn submit_login_json(configuration: &configuration::Configuration, org_id: &str, submit_login_json_request: models::SubmitLoginJsonRequest) -> Result<models::SubmitLoginJsonResponse, Error<SubmitLoginJsonError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_submit_login_json_request = submit_login_json_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/oauth/login/json", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -854,6 +1045,7 @@ pub async fn submit_login_json(configuration: &configuration::Configuration, org
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
+    req_builder = req_builder.json(&p_submit_login_json_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -918,9 +1110,28 @@ pub async fn submit_org_selection(configuration: &configuration::Configuration, 
 }
 
 /// Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
-pub async fn token(configuration: &configuration::Configuration, org_id: &str) -> Result<models::TokenResponse, Error<TokenError>> {
+pub async fn token(configuration: &configuration::Configuration, org_id: &str, grant_type: &str, code: Option<&str>, redirect_uri: Option<&str>, code_verifier: Option<&str>, refresh_token: Option<&str>, device_code: Option<&str>, auth_req_id: Option<&str>, scope: Option<&str>, resource: Option<&str>, subject_token: Option<&str>, subject_token_type: Option<&str>, actor_token: Option<&str>, actor_token_type: Option<&str>, requested_token_type: Option<&str>, assertion: Option<&str>, client_id: Option<&str>, client_secret: Option<&str>, client_assertion_type: Option<&str>, client_assertion: Option<&str>) -> Result<models::TokenResponse, Error<TokenError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_grant_type = grant_type;
+    let p_code = code;
+    let p_redirect_uri = redirect_uri;
+    let p_code_verifier = code_verifier;
+    let p_refresh_token = refresh_token;
+    let p_device_code = device_code;
+    let p_auth_req_id = auth_req_id;
+    let p_scope = scope;
+    let p_resource = resource;
+    let p_subject_token = subject_token;
+    let p_subject_token_type = subject_token_type;
+    let p_actor_token = actor_token;
+    let p_actor_token_type = actor_token_type;
+    let p_requested_token_type = requested_token_type;
+    let p_assertion = assertion;
+    let p_client_id = client_id;
+    let p_client_secret = client_secret;
+    let p_client_assertion_type = client_assertion_type;
+    let p_client_assertion = client_assertion;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/oauth/token", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -931,6 +1142,63 @@ pub async fn token(configuration: &configuration::Configuration, org_id: &str) -
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
+    let mut multipart_form_params = std::collections::HashMap::new();
+    multipart_form_params.insert("grant_type", p_grant_type.to_string());
+    if let Some(param_value) = p_code {
+        multipart_form_params.insert("code", param_value.to_string());
+    }
+    if let Some(param_value) = p_redirect_uri {
+        multipart_form_params.insert("redirect_uri", param_value.to_string());
+    }
+    if let Some(param_value) = p_code_verifier {
+        multipart_form_params.insert("code_verifier", param_value.to_string());
+    }
+    if let Some(param_value) = p_refresh_token {
+        multipart_form_params.insert("refresh_token", param_value.to_string());
+    }
+    if let Some(param_value) = p_device_code {
+        multipart_form_params.insert("device_code", param_value.to_string());
+    }
+    if let Some(param_value) = p_auth_req_id {
+        multipart_form_params.insert("auth_req_id", param_value.to_string());
+    }
+    if let Some(param_value) = p_scope {
+        multipart_form_params.insert("scope", param_value.to_string());
+    }
+    if let Some(param_value) = p_resource {
+        multipart_form_params.insert("resource", param_value.to_string());
+    }
+    if let Some(param_value) = p_subject_token {
+        multipart_form_params.insert("subject_token", param_value.to_string());
+    }
+    if let Some(param_value) = p_subject_token_type {
+        multipart_form_params.insert("subject_token_type", param_value.to_string());
+    }
+    if let Some(param_value) = p_actor_token {
+        multipart_form_params.insert("actor_token", param_value.to_string());
+    }
+    if let Some(param_value) = p_actor_token_type {
+        multipart_form_params.insert("actor_token_type", param_value.to_string());
+    }
+    if let Some(param_value) = p_requested_token_type {
+        multipart_form_params.insert("requested_token_type", param_value.to_string());
+    }
+    if let Some(param_value) = p_assertion {
+        multipart_form_params.insert("assertion", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_id {
+        multipart_form_params.insert("client_id", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_secret {
+        multipart_form_params.insert("client_secret", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_assertion_type {
+        multipart_form_params.insert("client_assertion_type", param_value.to_string());
+    }
+    if let Some(param_value) = p_client_assertion {
+        multipart_form_params.insert("client_assertion", param_value.to_string());
+    }
+    req_builder = req_builder.form(&multipart_form_params);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

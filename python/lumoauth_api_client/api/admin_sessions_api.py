@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -884,7 +884,7 @@ class AdminSessionsApi:
     ) -> AdminSessionsListResponse:
         """List active sessions
 
-        Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+        Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
         :param org_id: (required)
         :type org_id: str
@@ -951,7 +951,7 @@ class AdminSessionsApi:
     ) -> ApiResponse[AdminSessionsListResponse]:
         """List active sessions
 
-        Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+        Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
         :param org_id: (required)
         :type org_id: str
@@ -1018,7 +1018,7 @@ class AdminSessionsApi:
     ) -> RESTResponseType:
         """List active sessions
 
-        Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+        Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
         :param org_id: (required)
         :type org_id: str
@@ -1425,7 +1425,7 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> AdminSessionsRevokeAllResponse:
-        """Revoke every session in the tenant
+        """Revoke every session in the organization
 
         Signs out all users. Requires `confirm: true` in the body.
 
@@ -1497,7 +1497,7 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[AdminSessionsRevokeAllResponse]:
-        """Revoke every session in the tenant
+        """Revoke every session in the organization
 
         Signs out all users. Requires `confirm: true` in the body.
 
@@ -1569,7 +1569,7 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Revoke every session in the tenant
+        """Revoke every session in the organization
 
         Signs out all users. Requires `confirm: true` in the body.
 
@@ -1976,9 +1976,9 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> AdminTokensListResponse:
-        """List access tokens
+        """List stored (opaque) access tokens
 
-        Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
+        Paginated OPAQUE access tokens issued by the organization's clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user's or a client's tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
 
         :param org_id: (required)
         :type org_id: str
@@ -2043,9 +2043,9 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[AdminTokensListResponse]:
-        """List access tokens
+        """List stored (opaque) access tokens
 
-        Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
+        Paginated OPAQUE access tokens issued by the organization's clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user's or a client's tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
 
         :param org_id: (required)
         :type org_id: str
@@ -2110,9 +2110,9 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List access tokens
+        """List stored (opaque) access tokens
 
-        Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
+        Paginated OPAQUE access tokens issued by the organization's clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user's or a client's tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: `revoked` (bool), `clientId`, `userId`.
 
         :param org_id: (required)
         :type org_id: str
@@ -3361,6 +3361,7 @@ class AdminSessionsApi:
     ) -> AdminUserTokensRevokeAllResponse:
         """Revoke all tokens of a user
 
+        Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
         :param org_id: (required)
         :type org_id: str
@@ -3433,6 +3434,7 @@ class AdminSessionsApi:
     ) -> ApiResponse[AdminUserTokensRevokeAllResponse]:
         """Revoke all tokens of a user
 
+        Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
         :param org_id: (required)
         :type org_id: str
@@ -3505,6 +3507,7 @@ class AdminSessionsApi:
     ) -> RESTResponseType:
         """Revoke all tokens of a user
 
+        Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
         :param org_id: (required)
         :type org_id: str
@@ -3641,6 +3644,7 @@ class AdminSessionsApi:
     ) -> AdminUserTokensRevokePostResponse:
         """Revoke all tokens of a user (POST alias)
 
+        Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
         :param org_id: (required)
         :type org_id: str
@@ -3713,6 +3717,7 @@ class AdminSessionsApi:
     ) -> ApiResponse[AdminUserTokensRevokePostResponse]:
         """Revoke all tokens of a user (POST alias)
 
+        Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
         :param org_id: (required)
         :type org_id: str
@@ -3785,6 +3790,7 @@ class AdminSessionsApi:
     ) -> RESTResponseType:
         """Revoke all tokens of a user (POST alias)
 
+        Revokes the user's opaque access tokens, JWT access tokens (deny-listed by their `jti`) and refresh tokens. The message counts the access tokens.
 
         :param org_id: (required)
         :type org_id: str

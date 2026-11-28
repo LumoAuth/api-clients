@@ -26,7 +26,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 ## `adminWebhooksCreate()`
 
 ```php
-adminWebhooksCreate($orgId): \LumoAuth\ApiClient\Model\AdminWebhooksCreateResponse
+adminWebhooksCreate($orgId, $adminWebhooksCreateRequest): \LumoAuth\ApiClient\Model\AdminWebhooksCreateResponse
 ```
 
 Create a webhook
@@ -56,9 +56,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminWebhooksApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$adminWebhooksCreateRequest = new \LumoAuth\ApiClient\Model\AdminWebhooksCreateRequest(); // \LumoAuth\ApiClient\Model\AdminWebhooksCreateRequest
 
 try {
-    $result = $apiInstance->adminWebhooksCreate($orgId);
+    $result = $apiInstance->adminWebhooksCreate($orgId, $adminWebhooksCreateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminWebhooksApi->adminWebhooksCreate: ', $e->getMessage(), PHP_EOL;
@@ -70,6 +71,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **adminWebhooksCreateRequest** | [**\LumoAuth\ApiClient\Model\AdminWebhooksCreateRequest**](../Model/AdminWebhooksCreateRequest.md)|  | |
 
 ### Return type
 
@@ -81,7 +83,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -494,7 +496,7 @@ adminWebhooksList($orgId): \LumoAuth\ApiClient\Model\AdminWebhooksListResponse
 
 List webhooks
 
-Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
 ### Example
 
@@ -693,7 +695,7 @@ adminWebhooksTunnelStart($orgId): \LumoAuth\ApiClient\Model\AdminWebhooksTunnelS
 
 Start a webhook tunnel
 
-Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 
 ### Example
 
@@ -1017,7 +1019,7 @@ try {
 ## `patchAdminWebhooksUpdate()`
 
 ```php
-patchAdminWebhooksUpdate($orgId, $webhookId): \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateResponse
+patchAdminWebhooksUpdate($orgId, $webhookId, $putAdminWebhooksUpdateRequest): \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateResponse
 ```
 
 Partially update a webhook
@@ -1046,9 +1048,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminWebhooksApi(
 );
 $orgId = 'orgId_example'; // string
 $webhookId = 'webhookId_example'; // string
+$putAdminWebhooksUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest
 
 try {
-    $result = $apiInstance->patchAdminWebhooksUpdate($orgId, $webhookId);
+    $result = $apiInstance->patchAdminWebhooksUpdate($orgId, $webhookId, $putAdminWebhooksUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminWebhooksApi->patchAdminWebhooksUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1061,6 +1064,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **webhookId** | **string**|  | |
+| **putAdminWebhooksUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest**](../Model/PutAdminWebhooksUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1072,7 +1076,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -1082,7 +1086,7 @@ try {
 ## `putAdminWebhooksUpdate()`
 
 ```php
-putAdminWebhooksUpdate($orgId, $webhookId): \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateResponse
+putAdminWebhooksUpdate($orgId, $webhookId, $putAdminWebhooksUpdateRequest): \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateResponse
 ```
 
 Update a webhook
@@ -1113,9 +1117,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\AdminWebhooksApi(
 );
 $orgId = 'orgId_example'; // string
 $webhookId = 'webhookId_example'; // string
+$putAdminWebhooksUpdateRequest = new \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest(); // \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest
 
 try {
-    $result = $apiInstance->putAdminWebhooksUpdate($orgId, $webhookId);
+    $result = $apiInstance->putAdminWebhooksUpdate($orgId, $webhookId, $putAdminWebhooksUpdateRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AdminWebhooksApi->putAdminWebhooksUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1128,6 +1133,7 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
 | **webhookId** | **string**|  | |
+| **putAdminWebhooksUpdateRequest** | [**\LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest**](../Model/PutAdminWebhooksUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1139,7 +1145,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

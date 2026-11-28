@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -104,6 +104,12 @@ export interface AuditLogEntry {
      * @memberof AuditLogEntry
      */
     'ipAddress'?: string | null;
+    /**
+     * W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none
+     * @type {string}
+     * @memberof AuditLogEntry
+     */
+    'traceId'?: string | null;
     /**
      * Detailed responses only
      * @type {string}

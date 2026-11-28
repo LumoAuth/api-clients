@@ -669,7 +669,7 @@ No authorization required
 
 ## RegisterAgent
 
-> RegisterAgentResponse RegisterAgent(ctx, orgId).Execute()
+> RegisterAgentResponse RegisterAgent(ctx, orgId).RegisterAgentRequest(registerAgentRequest).Execute()
 
 Register (or re-register) an agent
 
@@ -687,10 +687,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	registerAgentRequest := *openapiclient.NewRegisterAgentRequest() // RegisterAgentRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AgentsAPI.RegisterAgent(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AgentsAPI.RegisterAgent(context.Background(), orgId).RegisterAgentRequest(registerAgentRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AgentsAPI.RegisterAgent``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -716,6 +717,7 @@ Other parameters are passed through a pointer to a apiRegisterAgentRequest struc
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **registerAgentRequest** | [**RegisterAgentRequest**](RegisterAgentRequest.md) |  | 
 
 ### Return type
 
@@ -727,7 +729,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

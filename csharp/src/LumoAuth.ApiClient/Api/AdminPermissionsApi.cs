@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -29,23 +29,25 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// Create a custom permission for the tenant
+        /// Create a custom permission for the organization
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminPermissionsCreateRequest"></param>
         /// <returns>AdminPermissionsCreateResponse</returns>
-        AdminPermissionsCreateResponse AdminPermissionsCreate(string orgId);
+        AdminPermissionsCreateResponse AdminPermissionsCreate(string orgId, AdminPermissionsCreateRequest adminPermissionsCreateRequest);
 
         /// <summary>
-        /// Create a custom permission for the tenant
+        /// Create a custom permission for the organization
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminPermissionsCreateRequest"></param>
         /// <returns>ApiResponse of AdminPermissionsCreateResponse</returns>
-        ApiResponse<AdminPermissionsCreateResponse> AdminPermissionsCreateWithHttpInfo(string orgId);
+        ApiResponse<AdminPermissionsCreateResponse> AdminPermissionsCreateWithHttpInfo(string orgId, AdminPermissionsCreateRequest adminPermissionsCreateRequest);
         /// <summary>
         /// Delete a custom permission
         /// </summary>
@@ -87,7 +89,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of AdminPermissionsGetResponse</returns>
         ApiResponse<AdminPermissionsGetResponse> AdminPermissionsGetWithHttpInfo(string orgId, string permissionId);
         /// <summary>
-        /// List all available permissions for the tenant
+        /// List all available permissions for the organization
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -95,7 +97,7 @@ namespace LumoAuth.ApiClient.Api
         AdminPermissionsListResponse AdminPermissionsList(string orgId);
 
         /// <summary>
-        /// List all available permissions for the tenant
+        /// List all available permissions for the organization
         /// </summary>
         /// <remarks>
         /// 
@@ -110,8 +112,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="permissionId"></param>
+        /// <param name="adminPermissionsUpdateRequest"></param>
         /// <returns>AdminPermissionsCreateResponse</returns>
-        AdminPermissionsCreateResponse AdminPermissionsUpdate(string orgId, string permissionId);
+        AdminPermissionsCreateResponse AdminPermissionsUpdate(string orgId, string permissionId, AdminPermissionsUpdateRequest adminPermissionsUpdateRequest);
 
         /// <summary>
         /// Update a permission
@@ -122,8 +125,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="permissionId"></param>
+        /// <param name="adminPermissionsUpdateRequest"></param>
         /// <returns>ApiResponse of AdminPermissionsCreateResponse</returns>
-        ApiResponse<AdminPermissionsCreateResponse> AdminPermissionsUpdateWithHttpInfo(string orgId, string permissionId);
+        ApiResponse<AdminPermissionsCreateResponse> AdminPermissionsUpdateWithHttpInfo(string orgId, string permissionId, AdminPermissionsUpdateRequest adminPermissionsUpdateRequest);
         /// <summary>
         /// Get permission usage (roles assigned to this permission)
         /// </summary>
@@ -149,8 +153,9 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminScopesCreateRequest"></param>
         /// <returns>AdminScopesCreateResponse</returns>
-        AdminScopesCreateResponse AdminScopesCreate(string orgId);
+        AdminScopesCreateResponse AdminScopesCreate(string orgId, AdminScopesCreateRequest adminScopesCreateRequest);
 
         /// <summary>
         /// Create a custom OAuth scope
@@ -160,8 +165,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminScopesCreateRequest"></param>
         /// <returns>ApiResponse of AdminScopesCreateResponse</returns>
-        ApiResponse<AdminScopesCreateResponse> AdminScopesCreateWithHttpInfo(string orgId);
+        ApiResponse<AdminScopesCreateResponse> AdminScopesCreateWithHttpInfo(string orgId, AdminScopesCreateRequest adminScopesCreateRequest);
         /// <summary>
         /// Delete a custom OAuth scope
         /// </summary>
@@ -210,28 +216,30 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// Create a custom permission for the tenant
+        /// Create a custom permission for the organization
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminPermissionsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminPermissionsCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminPermissionsCreateResponse> AdminPermissionsCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminPermissionsCreateResponse> AdminPermissionsCreateAsync(string orgId, AdminPermissionsCreateRequest adminPermissionsCreateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Create a custom permission for the tenant
+        /// Create a custom permission for the organization
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminPermissionsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminPermissionsCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminPermissionsCreateResponse>> AdminPermissionsCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminPermissionsCreateResponse>> AdminPermissionsCreateWithHttpInfoAsync(string orgId, AdminPermissionsCreateRequest adminPermissionsCreateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete a custom permission
         /// </summary>
@@ -283,7 +291,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (AdminPermissionsGetResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminPermissionsGetResponse>> AdminPermissionsGetWithHttpInfoAsync(string orgId, string permissionId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// List all available permissions for the tenant
+        /// List all available permissions for the organization
         /// </summary>
         /// <remarks>
         /// 
@@ -295,7 +303,7 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task<AdminPermissionsListResponse> AdminPermissionsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List all available permissions for the tenant
+        /// List all available permissions for the organization
         /// </summary>
         /// <remarks>
         /// 
@@ -314,9 +322,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="permissionId"></param>
+        /// <param name="adminPermissionsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminPermissionsCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminPermissionsCreateResponse> AdminPermissionsUpdateAsync(string orgId, string permissionId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminPermissionsCreateResponse> AdminPermissionsUpdateAsync(string orgId, string permissionId, AdminPermissionsUpdateRequest adminPermissionsUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a permission
@@ -327,9 +336,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="permissionId"></param>
+        /// <param name="adminPermissionsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminPermissionsCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminPermissionsCreateResponse>> AdminPermissionsUpdateWithHttpInfoAsync(string orgId, string permissionId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminPermissionsCreateResponse>> AdminPermissionsUpdateWithHttpInfoAsync(string orgId, string permissionId, AdminPermissionsUpdateRequest adminPermissionsUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Get permission usage (roles assigned to this permission)
         /// </summary>
@@ -363,9 +373,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminScopesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminScopesCreateResponse</returns>
-        System.Threading.Tasks.Task<AdminScopesCreateResponse> AdminScopesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<AdminScopesCreateResponse> AdminScopesCreateAsync(string orgId, AdminScopesCreateRequest adminScopesCreateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a custom OAuth scope
@@ -375,9 +386,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminScopesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminScopesCreateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AdminScopesCreateResponse>> AdminScopesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<AdminScopesCreateResponse>> AdminScopesCreateWithHttpInfoAsync(string orgId, AdminScopesCreateRequest adminScopesCreateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete a custom OAuth scope
         /// </summary>
@@ -640,32 +652,39 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a custom permission for the tenant 
+        /// Create a custom permission for the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminPermissionsCreateRequest"></param>
         /// <returns>AdminPermissionsCreateResponse</returns>
-        public AdminPermissionsCreateResponse AdminPermissionsCreate(string orgId)
+        public AdminPermissionsCreateResponse AdminPermissionsCreate(string orgId, AdminPermissionsCreateRequest adminPermissionsCreateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse> localVarResponse = AdminPermissionsCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse> localVarResponse = AdminPermissionsCreateWithHttpInfo(orgId, adminPermissionsCreateRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a custom permission for the tenant 
+        /// Create a custom permission for the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminPermissionsCreateRequest"></param>
         /// <returns>ApiResponse of AdminPermissionsCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse> AdminPermissionsCreateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse> AdminPermissionsCreateWithHttpInfo(string orgId, AdminPermissionsCreateRequest adminPermissionsCreateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminPermissionsApi->AdminPermissionsCreate");
 
+            // verify the required parameter 'adminPermissionsCreateRequest' is set
+            if (adminPermissionsCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminPermissionsCreateRequest' when calling AdminPermissionsApi->AdminPermissionsCreate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -680,6 +699,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminPermissionsCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -706,35 +726,42 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a custom permission for the tenant 
+        /// Create a custom permission for the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminPermissionsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminPermissionsCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminPermissionsCreateResponse> AdminPermissionsCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminPermissionsCreateResponse> AdminPermissionsCreateAsync(string orgId, AdminPermissionsCreateRequest adminPermissionsCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse> localVarResponse = await AdminPermissionsCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse> localVarResponse = await AdminPermissionsCreateWithHttpInfoAsync(orgId, adminPermissionsCreateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a custom permission for the tenant 
+        /// Create a custom permission for the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminPermissionsCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminPermissionsCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse>> AdminPermissionsCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse>> AdminPermissionsCreateWithHttpInfoAsync(string orgId, AdminPermissionsCreateRequest adminPermissionsCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminPermissionsApi->AdminPermissionsCreate");
 
+            // verify the required parameter 'adminPermissionsCreateRequest' is set
+            if (adminPermissionsCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminPermissionsCreateRequest' when calling AdminPermissionsApi->AdminPermissionsCreate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -750,6 +777,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminPermissionsCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1079,7 +1107,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all available permissions for the tenant 
+        /// List all available permissions for the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1091,7 +1119,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all available permissions for the tenant 
+        /// List all available permissions for the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1145,7 +1173,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all available permissions for the tenant 
+        /// List all available permissions for the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1158,7 +1186,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all available permissions for the tenant 
+        /// List all available permissions for the organization 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -1221,10 +1249,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="permissionId"></param>
+        /// <param name="adminPermissionsUpdateRequest"></param>
         /// <returns>AdminPermissionsCreateResponse</returns>
-        public AdminPermissionsCreateResponse AdminPermissionsUpdate(string orgId, string permissionId)
+        public AdminPermissionsCreateResponse AdminPermissionsUpdate(string orgId, string permissionId, AdminPermissionsUpdateRequest adminPermissionsUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse> localVarResponse = AdminPermissionsUpdateWithHttpInfo(orgId, permissionId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse> localVarResponse = AdminPermissionsUpdateWithHttpInfo(orgId, permissionId, adminPermissionsUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -1234,8 +1263,9 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="permissionId"></param>
+        /// <param name="adminPermissionsUpdateRequest"></param>
         /// <returns>ApiResponse of AdminPermissionsCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse> AdminPermissionsUpdateWithHttpInfo(string orgId, string permissionId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse> AdminPermissionsUpdateWithHttpInfo(string orgId, string permissionId, AdminPermissionsUpdateRequest adminPermissionsUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1245,9 +1275,14 @@ namespace LumoAuth.ApiClient.Api
             if (permissionId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'permissionId' when calling AdminPermissionsApi->AdminPermissionsUpdate");
 
+            // verify the required parameter 'adminPermissionsUpdateRequest' is set
+            if (adminPermissionsUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminPermissionsUpdateRequest' when calling AdminPermissionsApi->AdminPermissionsUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1263,6 +1298,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("permissionId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(permissionId)); // path parameter
+            localVarRequestOptions.Data = adminPermissionsUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1294,11 +1330,12 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="permissionId"></param>
+        /// <param name="adminPermissionsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminPermissionsCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminPermissionsCreateResponse> AdminPermissionsUpdateAsync(string orgId, string permissionId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminPermissionsCreateResponse> AdminPermissionsUpdateAsync(string orgId, string permissionId, AdminPermissionsUpdateRequest adminPermissionsUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse> localVarResponse = await AdminPermissionsUpdateWithHttpInfoAsync(orgId, permissionId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse> localVarResponse = await AdminPermissionsUpdateWithHttpInfoAsync(orgId, permissionId, adminPermissionsUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1308,9 +1345,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="permissionId"></param>
+        /// <param name="adminPermissionsUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminPermissionsCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse>> AdminPermissionsUpdateWithHttpInfoAsync(string orgId, string permissionId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminPermissionsCreateResponse>> AdminPermissionsUpdateWithHttpInfoAsync(string orgId, string permissionId, AdminPermissionsUpdateRequest adminPermissionsUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1320,10 +1358,15 @@ namespace LumoAuth.ApiClient.Api
             if (permissionId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'permissionId' when calling AdminPermissionsApi->AdminPermissionsUpdate");
 
+            // verify the required parameter 'adminPermissionsUpdateRequest' is set
+            if (adminPermissionsUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminPermissionsUpdateRequest' when calling AdminPermissionsApi->AdminPermissionsUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1340,6 +1383,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("permissionId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(permissionId)); // path parameter
+            localVarRequestOptions.Data = adminPermissionsUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1522,10 +1566,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminScopesCreateRequest"></param>
         /// <returns>AdminScopesCreateResponse</returns>
-        public AdminScopesCreateResponse AdminScopesCreate(string orgId)
+        public AdminScopesCreateResponse AdminScopesCreate(string orgId, AdminScopesCreateRequest adminScopesCreateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminScopesCreateResponse> localVarResponse = AdminScopesCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminScopesCreateResponse> localVarResponse = AdminScopesCreateWithHttpInfo(orgId, adminScopesCreateRequest);
             return localVarResponse.Data;
         }
 
@@ -1534,16 +1579,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminScopesCreateRequest"></param>
         /// <returns>ApiResponse of AdminScopesCreateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<AdminScopesCreateResponse> AdminScopesCreateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminScopesCreateResponse> AdminScopesCreateWithHttpInfo(string orgId, AdminScopesCreateRequest adminScopesCreateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminPermissionsApi->AdminScopesCreate");
 
+            // verify the required parameter 'adminScopesCreateRequest' is set
+            if (adminScopesCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminScopesCreateRequest' when calling AdminPermissionsApi->AdminScopesCreate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1558,6 +1609,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminScopesCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1588,11 +1640,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminScopesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AdminScopesCreateResponse</returns>
-        public async System.Threading.Tasks.Task<AdminScopesCreateResponse> AdminScopesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<AdminScopesCreateResponse> AdminScopesCreateAsync(string orgId, AdminScopesCreateRequest adminScopesCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<AdminScopesCreateResponse> localVarResponse = await AdminScopesCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminScopesCreateResponse> localVarResponse = await AdminScopesCreateWithHttpInfoAsync(orgId, adminScopesCreateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1601,18 +1654,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminScopesCreateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AdminScopesCreateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminScopesCreateResponse>> AdminScopesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminScopesCreateResponse>> AdminScopesCreateWithHttpInfoAsync(string orgId, AdminScopesCreateRequest adminScopesCreateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminPermissionsApi->AdminScopesCreate");
 
+            // verify the required parameter 'adminScopesCreateRequest' is set
+            if (adminScopesCreateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminScopesCreateRequest' when calling AdminPermissionsApi->AdminScopesCreate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -1628,6 +1687,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminScopesCreateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

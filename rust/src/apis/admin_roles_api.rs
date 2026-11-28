@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -113,11 +113,12 @@ pub enum PutAdminRolesUpdateError {
 }
 
 
-/// Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
-pub async fn admin_roles_add_permissions(configuration: &configuration::Configuration, org_id: &str, role_id: &str) -> Result<models::MessageResponse, Error<AdminRolesAddPermissionsError>> {
+/// Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization's own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+pub async fn admin_roles_add_permissions(configuration: &configuration::Configuration, org_id: &str, role_id: &str, admin_roles_add_permissions_request: models::AdminRolesAddPermissionsRequest) -> Result<models::MessageResponse, Error<AdminRolesAddPermissionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_role_id = role_id;
+    let p_admin_roles_add_permissions_request = admin_roles_add_permissions_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), roleId=crate::apis::urlencode(p_role_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -136,6 +137,7 @@ pub async fn admin_roles_add_permissions(configuration: &configuration::Configur
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_roles_add_permissions_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -162,10 +164,11 @@ pub async fn admin_roles_add_permissions(configuration: &configuration::Configur
     }
 }
 
-pub async fn admin_roles_add_user(configuration: &configuration::Configuration, org_id: &str, role_id: &str) -> Result<models::MessageResponse, Error<AdminRolesAddUserError>> {
+pub async fn admin_roles_add_user(configuration: &configuration::Configuration, org_id: &str, role_id: &str, admin_roles_add_user_request: models::AdminRolesAddUserRequest) -> Result<models::MessageResponse, Error<AdminRolesAddUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_role_id = role_id;
+    let p_admin_roles_add_user_request = admin_roles_add_user_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/roles/{roleId}/users", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), roleId=crate::apis::urlencode(p_role_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -184,6 +187,7 @@ pub async fn admin_roles_add_user(configuration: &configuration::Configuration, 
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_roles_add_user_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -210,10 +214,11 @@ pub async fn admin_roles_add_user(configuration: &configuration::Configuration, 
     }
 }
 
-/// Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
-pub async fn admin_roles_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminRolesCreateResponse, Error<AdminRolesCreateError>> {
+/// Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization's own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
+pub async fn admin_roles_create(configuration: &configuration::Configuration, org_id: &str, admin_roles_create_request: models::AdminRolesCreateRequest) -> Result<models::AdminRolesCreateResponse, Error<AdminRolesCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_admin_roles_create_request = admin_roles_create_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/roles", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -232,6 +237,7 @@ pub async fn admin_roles_create(configuration: &configuration::Configuration, or
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_roles_create_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -596,11 +602,12 @@ pub async fn admin_roles_remove_user(configuration: &configuration::Configuratio
     }
 }
 
-/// Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
-pub async fn admin_roles_update_permissions(configuration: &configuration::Configuration, org_id: &str, role_id: &str) -> Result<models::AdminRolesCreateResponse, Error<AdminRolesUpdatePermissionsError>> {
+/// Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization's own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+pub async fn admin_roles_update_permissions(configuration: &configuration::Configuration, org_id: &str, role_id: &str, admin_roles_update_permissions_request: models::AdminRolesUpdatePermissionsRequest) -> Result<models::AdminRolesCreateResponse, Error<AdminRolesUpdatePermissionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_role_id = role_id;
+    let p_admin_roles_update_permissions_request = admin_roles_update_permissions_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), roleId=crate::apis::urlencode(p_role_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -619,6 +626,7 @@ pub async fn admin_roles_update_permissions(configuration: &configuration::Confi
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_roles_update_permissions_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -645,10 +653,11 @@ pub async fn admin_roles_update_permissions(configuration: &configuration::Confi
     }
 }
 
-pub async fn patch_admin_roles_update(configuration: &configuration::Configuration, org_id: &str, role_id: &str) -> Result<models::AdminRolesCreateResponse, Error<PatchAdminRolesUpdateError>> {
+pub async fn patch_admin_roles_update(configuration: &configuration::Configuration, org_id: &str, role_id: &str, put_admin_org_roles_update_request: models::PutAdminOrgRolesUpdateRequest) -> Result<models::AdminRolesCreateResponse, Error<PatchAdminRolesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_role_id = role_id;
+    let p_put_admin_org_roles_update_request = put_admin_org_roles_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/roles/{roleId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), roleId=crate::apis::urlencode(p_role_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -667,6 +676,7 @@ pub async fn patch_admin_roles_update(configuration: &configuration::Configurati
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_org_roles_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -693,10 +703,11 @@ pub async fn patch_admin_roles_update(configuration: &configuration::Configurati
     }
 }
 
-pub async fn put_admin_roles_update(configuration: &configuration::Configuration, org_id: &str, role_id: &str) -> Result<models::AdminRolesCreateResponse, Error<PutAdminRolesUpdateError>> {
+pub async fn put_admin_roles_update(configuration: &configuration::Configuration, org_id: &str, role_id: &str, put_admin_org_roles_update_request: models::PutAdminOrgRolesUpdateRequest) -> Result<models::AdminRolesCreateResponse, Error<PutAdminRolesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_role_id = role_id;
+    let p_put_admin_org_roles_update_request = put_admin_org_roles_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/roles/{roleId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), roleId=crate::apis::urlencode(p_role_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -715,6 +726,7 @@ pub async fn put_admin_roles_update(configuration: &configuration::Configuration
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_org_roles_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

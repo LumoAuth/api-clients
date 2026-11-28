@@ -681,7 +681,7 @@ No authorization required
 
 ## register_agent
 
-> <RegisterAgentResponse> register_agent(org_id)
+> <RegisterAgentResponse> register_agent(org_id, register_agent_request)
 
 Register (or re-register) an agent
 
@@ -703,10 +703,11 @@ end
 
 api_instance = LumoAuthApiClient::AgentsApi.new
 org_id = 'org_id_example' # String | 
+register_agent_request = LumoAuthApiClient::RegisterAgentRequest.new # RegisterAgentRequest | 
 
 begin
   # Register (or re-register) an agent
-  result = api_instance.register_agent(org_id)
+  result = api_instance.register_agent(org_id, register_agent_request)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AgentsApi->register_agent: #{e}"
@@ -717,12 +718,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<RegisterAgentResponse>, Integer, Hash)> register_agent_with_http_info(org_id)
+> <Array(<RegisterAgentResponse>, Integer, Hash)> register_agent_with_http_info(org_id, register_agent_request)
 
 ```ruby
 begin
   # Register (or re-register) an agent
-  data, status_code, headers = api_instance.register_agent_with_http_info(org_id)
+  data, status_code, headers = api_instance.register_agent_with_http_info(org_id, register_agent_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <RegisterAgentResponse>
@@ -736,6 +737,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **register_agent_request** | [**RegisterAgentRequest**](RegisterAgentRequest.md) |  |  |
 
 ### Return type
 
@@ -747,7 +749,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 

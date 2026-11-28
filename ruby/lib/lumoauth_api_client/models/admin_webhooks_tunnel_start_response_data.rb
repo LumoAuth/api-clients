@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -21,12 +21,16 @@ module LumoAuthApiClient
 
     attr_accessor :tunnel_url
 
+    # The secret that signs the tunnel's deliveries (X-LumoAuth-Signature). Shown once.
+    attr_accessor :signing_secret
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'webhook_id' => :'webhook_id',
         :'session_id' => :'session_id',
-        :'tunnel_url' => :'tunnel_url'
+        :'tunnel_url' => :'tunnel_url',
+        :'signing_secret' => :'signing_secret'
       }
     end
 
@@ -45,7 +49,8 @@ module LumoAuthApiClient
       {
         :'webhook_id' => :'Integer',
         :'session_id' => :'String',
-        :'tunnel_url' => :'String'
+        :'tunnel_url' => :'String',
+        :'signing_secret' => :'String'
       }
     end
 
@@ -82,6 +87,10 @@ module LumoAuthApiClient
       if attributes.key?(:'tunnel_url')
         self.tunnel_url = attributes[:'tunnel_url']
       end
+
+      if attributes.key?(:'signing_secret')
+        self.signing_secret = attributes[:'signing_secret']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -106,7 +115,8 @@ module LumoAuthApiClient
       self.class == o.class &&
           webhook_id == o.webhook_id &&
           session_id == o.session_id &&
-          tunnel_url == o.tunnel_url
+          tunnel_url == o.tunnel_url &&
+          signing_secret == o.signing_secret
     end
 
     # @see the `==` method
@@ -118,7 +128,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [webhook_id, session_id, tunnel_url].hash
+      [webhook_id, session_id, tunnel_url, signing_secret].hash
     end
 
     # Builds the object from hash

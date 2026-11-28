@@ -216,7 +216,7 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | A single MCP server with discovery metadata. |  -  |
 | **403** | Caller lacks the agents.view permission. |  -  |
-| **404** | Tenant or MCP server not found. |  -  |
+| **404** | Organization or MCP server not found. |  -  |
 
 <a id="getServerChallenge"></a>
 # **getServerChallenge**
@@ -363,9 +363,9 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | List of active MCP servers for the tenant. |  -  |
+| **200** | List of active MCP servers for the organization. |  -  |
 | **403** | Caller lacks the agents.view permission. |  -  |
-| **404** | Tenant not found. |  -  |
+| **404** | Organization not found. |  -  |
 
 <a id="mcpServerToolAuthorize"></a>
 # **mcpServerToolAuthorize**

@@ -13,7 +13,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -58,6 +58,7 @@ class IssueResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSer
       * @var string[]
       */
     protected static $openAPITypes = [
+        'resource' => 'string',
         'agent' => 'string',
         'agentJkt' => 'string',
         'scope' => 'string',
@@ -73,6 +74,7 @@ class IssueResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSer
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
+        'resource' => null,
         'agent' => null,
         'agentJkt' => null,
         'scope' => null,
@@ -86,6 +88,7 @@ class IssueResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSer
       * @var boolean[]
       */
     protected static array $openAPINullables = [
+        'resource' => false,
         'agent' => false,
         'agentJkt' => false,
         'scope' => false,
@@ -179,6 +182,7 @@ class IssueResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $attributeMap = [
+        'resource' => 'resource',
         'agent' => 'agent',
         'agentJkt' => 'agent_jkt',
         'scope' => 'scope',
@@ -192,6 +196,7 @@ class IssueResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $setters = [
+        'resource' => 'setResource',
         'agent' => 'setAgent',
         'agentJkt' => 'setAgentJkt',
         'scope' => 'setScope',
@@ -205,6 +210,7 @@ class IssueResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $getters = [
+        'resource' => 'getResource',
         'agent' => 'getAgent',
         'agentJkt' => 'getAgentJkt',
         'scope' => 'getScope',
@@ -269,6 +275,7 @@ class IssueResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSer
      */
     public function __construct(?array $data = null)
     {
+        $this->setIfExists('resource', $data ?? [], null);
         $this->setIfExists('agent', $data ?? [], null);
         $this->setIfExists('agentJkt', $data ?? [], null);
         $this->setIfExists('scope', $data ?? [], null);
@@ -303,6 +310,15 @@ class IssueResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSer
     {
         $invalidProperties = [];
 
+        if ($this->container['resource'] === null) {
+            $invalidProperties[] = "'resource' can't be null";
+        }
+        if ($this->container['agent'] === null) {
+            $invalidProperties[] = "'agent' can't be null";
+        }
+        if ($this->container['agentJkt'] === null) {
+            $invalidProperties[] = "'agentJkt' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -319,9 +335,36 @@ class IssueResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSer
 
 
     /**
+     * Gets resource
+     *
+     * @return string
+     */
+    public function getResource()
+    {
+        return $this->container['resource'];
+    }
+
+    /**
+     * Sets resource
+     *
+     * @param string $resource Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
+     *
+     * @return self
+     */
+    public function setResource($resource)
+    {
+        if (is_null($resource)) {
+            throw new \InvalidArgumentException('non-nullable resource cannot be null');
+        }
+        $this->container['resource'] = $resource;
+
+        return $this;
+    }
+
+    /**
      * Gets agent
      *
-     * @return string|null
+     * @return string
      */
     public function getAgent()
     {
@@ -331,7 +374,7 @@ class IssueResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets agent
      *
-     * @param string|null $agent Agent identifier the resource token is bound to.
+     * @param string $agent Agent identifier the resource token is bound to.
      *
      * @return self
      */
@@ -348,7 +391,7 @@ class IssueResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Gets agentJkt
      *
-     * @return string|null
+     * @return string
      */
     public function getAgentJkt()
     {
@@ -358,7 +401,7 @@ class IssueResourceTokenRequest implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets agentJkt
      *
-     * @param string|null $agentJkt JWK thumbprint of the agent key (PoP binding).
+     * @param string $agentJkt JWK thumbprint of the agent key (PoP binding).
      *
      * @return self
      */

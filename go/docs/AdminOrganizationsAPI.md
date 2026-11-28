@@ -29,7 +29,7 @@ Method | HTTP request | Description
 
 ## AdminOrgInvitationsCreate
 
-> AdminOrgInvitationsCreateResponse AdminOrgInvitationsCreate(ctx, orgId, organizationId).Execute()
+> AdminOrgInvitationsCreateResponse AdminOrgInvitationsCreate(ctx, orgId, organizationId).AdminOrgInvitationsCreateRequest(adminOrgInvitationsCreateRequest).Execute()
 
 Invite a user to an organization
 
@@ -48,10 +48,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	organizationId := "organizationId_example" // string | 
+	adminOrgInvitationsCreateRequest := *openapiclient.NewAdminOrgInvitationsCreateRequest("Email_example") // AdminOrgInvitationsCreateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOrganizationsAPI.AdminOrgInvitationsCreate(context.Background(), orgId, organizationId).Execute()
+	resp, r, err := apiClient.AdminOrganizationsAPI.AdminOrgInvitationsCreate(context.Background(), orgId, organizationId).AdminOrgInvitationsCreateRequest(adminOrgInvitationsCreateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOrganizationsAPI.AdminOrgInvitationsCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -79,6 +80,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **adminOrgInvitationsCreateRequest** | [**AdminOrgInvitationsCreateRequest**](AdminOrgInvitationsCreateRequest.md) |  | 
 
 ### Return type
 
@@ -90,7 +92,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -319,7 +321,7 @@ Name | Type | Description  | Notes
 
 ## AdminOrgMembersAdd
 
-> AdminOrgMembersAddResponse AdminOrgMembersAdd(ctx, orgId, organizationId).Execute()
+> AdminOrgMembersAddResponse AdminOrgMembersAdd(ctx, orgId, organizationId).AdminOrgMembersAddRequest(adminOrgMembersAddRequest).Execute()
 
 Add a member to an organization
 
@@ -338,10 +340,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	organizationId := "organizationId_example" // string | 
+	adminOrgMembersAddRequest := *openapiclient.NewAdminOrgMembersAddRequest("UserId_example") // AdminOrgMembersAddRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOrganizationsAPI.AdminOrgMembersAdd(context.Background(), orgId, organizationId).Execute()
+	resp, r, err := apiClient.AdminOrganizationsAPI.AdminOrgMembersAdd(context.Background(), orgId, organizationId).AdminOrgMembersAddRequest(adminOrgMembersAddRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOrganizationsAPI.AdminOrgMembersAdd``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -369,6 +372,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **adminOrgMembersAddRequest** | [**AdminOrgMembersAddRequest**](AdminOrgMembersAddRequest.md) |  | 
 
 ### Return type
 
@@ -380,7 +384,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -535,7 +539,7 @@ Name | Type | Description  | Notes
 
 ## AdminOrgRolesCreate
 
-> AdminOrgRolesCreateResponse AdminOrgRolesCreate(ctx, orgId, organizationId).Execute()
+> AdminOrgRolesCreateResponse AdminOrgRolesCreate(ctx, orgId, organizationId).AdminOrgRolesCreateRequest(adminOrgRolesCreateRequest).Execute()
 
 Create an organization role
 
@@ -554,10 +558,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	organizationId := "organizationId_example" // string | 
+	adminOrgRolesCreateRequest := *openapiclient.NewAdminOrgRolesCreateRequest("Name_example") // AdminOrgRolesCreateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOrganizationsAPI.AdminOrgRolesCreate(context.Background(), orgId, organizationId).Execute()
+	resp, r, err := apiClient.AdminOrganizationsAPI.AdminOrgRolesCreate(context.Background(), orgId, organizationId).AdminOrgRolesCreateRequest(adminOrgRolesCreateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOrganizationsAPI.AdminOrgRolesCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -585,6 +590,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **adminOrgRolesCreateRequest** | [**AdminOrgRolesCreateRequest**](AdminOrgRolesCreateRequest.md) |  | 
 
 ### Return type
 
@@ -596,7 +602,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -751,7 +757,7 @@ Name | Type | Description  | Notes
 
 ## AdminOrganizationsCreate
 
-> AdminOrganizationsCreateResponse AdminOrganizationsCreate(ctx, orgId).Execute()
+> AdminOrganizationsCreateResponse AdminOrganizationsCreate(ctx, orgId).AdminOrganizationsCreateRequest(adminOrganizationsCreateRequest).Execute()
 
 Create an organization
 
@@ -769,10 +775,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	adminOrganizationsCreateRequest := *openapiclient.NewAdminOrganizationsCreateRequest("Northwind Traders") // AdminOrganizationsCreateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOrganizationsAPI.AdminOrganizationsCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminOrganizationsAPI.AdminOrganizationsCreate(context.Background(), orgId).AdminOrganizationsCreateRequest(adminOrganizationsCreateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOrganizationsAPI.AdminOrganizationsCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -798,6 +805,7 @@ Other parameters are passed through a pointer to a apiAdminOrganizationsCreateRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **adminOrganizationsCreateRequest** | [**AdminOrganizationsCreateRequest**](AdminOrganizationsCreateRequest.md) |  | 
 
 ### Return type
 
@@ -809,7 +817,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1029,7 +1037,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminOrgMembersUpdate
 
-> PutAdminOrgMembersUpdateResponse PatchAdminOrgMembersUpdate(ctx, orgId, organizationId, userId).Execute()
+> PutAdminOrgMembersUpdateResponse PatchAdminOrgMembersUpdate(ctx, orgId, organizationId, userId).PutAdminOrgMembersUpdateRequest(putAdminOrgMembersUpdateRequest).Execute()
 
 Update a member's role or status
 
@@ -1049,10 +1057,11 @@ func main() {
 	orgId := "orgId_example" // string | 
 	organizationId := "organizationId_example" // string | 
 	userId := "userId_example" // string | 
+	putAdminOrgMembersUpdateRequest := *openapiclient.NewPutAdminOrgMembersUpdateRequest() // PutAdminOrgMembersUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOrganizationsAPI.PatchAdminOrgMembersUpdate(context.Background(), orgId, organizationId, userId).Execute()
+	resp, r, err := apiClient.AdminOrganizationsAPI.PatchAdminOrgMembersUpdate(context.Background(), orgId, organizationId, userId).PutAdminOrgMembersUpdateRequest(putAdminOrgMembersUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOrganizationsAPI.PatchAdminOrgMembersUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1082,6 +1091,7 @@ Name | Type | Description  | Notes
 
 
 
+ **putAdminOrgMembersUpdateRequest** | [**PutAdminOrgMembersUpdateRequest**](PutAdminOrgMembersUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -1093,7 +1103,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1103,7 +1113,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminOrgRolesUpdate
 
-> AdminOrgRolesCreateResponse PatchAdminOrgRolesUpdate(ctx, orgId, organizationId, roleId).Execute()
+> AdminOrgRolesCreateResponse PatchAdminOrgRolesUpdate(ctx, orgId, organizationId, roleId).PutAdminOrgRolesUpdateRequest(putAdminOrgRolesUpdateRequest).Execute()
 
 Update an organization role
 
@@ -1123,10 +1133,11 @@ func main() {
 	orgId := "orgId_example" // string | 
 	organizationId := "organizationId_example" // string | 
 	roleId := "roleId_example" // string | 
+	putAdminOrgRolesUpdateRequest := *openapiclient.NewPutAdminOrgRolesUpdateRequest() // PutAdminOrgRolesUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOrganizationsAPI.PatchAdminOrgRolesUpdate(context.Background(), orgId, organizationId, roleId).Execute()
+	resp, r, err := apiClient.AdminOrganizationsAPI.PatchAdminOrgRolesUpdate(context.Background(), orgId, organizationId, roleId).PutAdminOrgRolesUpdateRequest(putAdminOrgRolesUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOrganizationsAPI.PatchAdminOrgRolesUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1156,6 +1167,7 @@ Name | Type | Description  | Notes
 
 
 
+ **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -1167,7 +1179,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1177,7 +1189,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminOrganizationsUpdate
 
-> AdminOrganizationsGetResponse PatchAdminOrganizationsUpdate(ctx, orgId, organizationId).Execute()
+> AdminOrganizationsGetResponse PatchAdminOrganizationsUpdate(ctx, orgId, organizationId).PutAdminOrganizationsUpdateRequest(putAdminOrganizationsUpdateRequest).Execute()
 
 Update an organization
 
@@ -1196,10 +1208,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	organizationId := "organizationId_example" // string | 
+	putAdminOrganizationsUpdateRequest := *openapiclient.NewPutAdminOrganizationsUpdateRequest() // PutAdminOrganizationsUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOrganizationsAPI.PatchAdminOrganizationsUpdate(context.Background(), orgId, organizationId).Execute()
+	resp, r, err := apiClient.AdminOrganizationsAPI.PatchAdminOrganizationsUpdate(context.Background(), orgId, organizationId).PutAdminOrganizationsUpdateRequest(putAdminOrganizationsUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOrganizationsAPI.PatchAdminOrganizationsUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1227,6 +1240,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **putAdminOrganizationsUpdateRequest** | [**PutAdminOrganizationsUpdateRequest**](PutAdminOrganizationsUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -1238,7 +1252,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1248,7 +1262,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminOrgMembersUpdate
 
-> PutAdminOrgMembersUpdateResponse PutAdminOrgMembersUpdate(ctx, orgId, organizationId, userId).Execute()
+> PutAdminOrgMembersUpdateResponse PutAdminOrgMembersUpdate(ctx, orgId, organizationId, userId).PutAdminOrgMembersUpdateRequest(putAdminOrgMembersUpdateRequest).Execute()
 
 Update a member's role or status
 
@@ -1268,10 +1282,11 @@ func main() {
 	orgId := "orgId_example" // string | 
 	organizationId := "organizationId_example" // string | 
 	userId := "userId_example" // string | 
+	putAdminOrgMembersUpdateRequest := *openapiclient.NewPutAdminOrgMembersUpdateRequest() // PutAdminOrgMembersUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOrganizationsAPI.PutAdminOrgMembersUpdate(context.Background(), orgId, organizationId, userId).Execute()
+	resp, r, err := apiClient.AdminOrganizationsAPI.PutAdminOrgMembersUpdate(context.Background(), orgId, organizationId, userId).PutAdminOrgMembersUpdateRequest(putAdminOrgMembersUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOrganizationsAPI.PutAdminOrgMembersUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1301,6 +1316,7 @@ Name | Type | Description  | Notes
 
 
 
+ **putAdminOrgMembersUpdateRequest** | [**PutAdminOrgMembersUpdateRequest**](PutAdminOrgMembersUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -1312,7 +1328,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1322,7 +1338,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminOrgRolesUpdate
 
-> AdminOrgRolesCreateResponse PutAdminOrgRolesUpdate(ctx, orgId, organizationId, roleId).Execute()
+> AdminOrgRolesCreateResponse PutAdminOrgRolesUpdate(ctx, orgId, organizationId, roleId).PutAdminOrgRolesUpdateRequest(putAdminOrgRolesUpdateRequest).Execute()
 
 Update an organization role
 
@@ -1342,10 +1358,11 @@ func main() {
 	orgId := "orgId_example" // string | 
 	organizationId := "organizationId_example" // string | 
 	roleId := "roleId_example" // string | 
+	putAdminOrgRolesUpdateRequest := *openapiclient.NewPutAdminOrgRolesUpdateRequest() // PutAdminOrgRolesUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOrganizationsAPI.PutAdminOrgRolesUpdate(context.Background(), orgId, organizationId, roleId).Execute()
+	resp, r, err := apiClient.AdminOrganizationsAPI.PutAdminOrgRolesUpdate(context.Background(), orgId, organizationId, roleId).PutAdminOrgRolesUpdateRequest(putAdminOrgRolesUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOrganizationsAPI.PutAdminOrgRolesUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1375,6 +1392,7 @@ Name | Type | Description  | Notes
 
 
 
+ **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -1386,7 +1404,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1396,7 +1414,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminOrganizationsUpdate
 
-> AdminOrganizationsGetResponse PutAdminOrganizationsUpdate(ctx, orgId, organizationId).Execute()
+> AdminOrganizationsGetResponse PutAdminOrganizationsUpdate(ctx, orgId, organizationId).PutAdminOrganizationsUpdateRequest(putAdminOrganizationsUpdateRequest).Execute()
 
 Update an organization
 
@@ -1415,10 +1433,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	organizationId := "organizationId_example" // string | 
+	putAdminOrganizationsUpdateRequest := *openapiclient.NewPutAdminOrganizationsUpdateRequest() // PutAdminOrganizationsUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminOrganizationsAPI.PutAdminOrganizationsUpdate(context.Background(), orgId, organizationId).Execute()
+	resp, r, err := apiClient.AdminOrganizationsAPI.PutAdminOrganizationsUpdate(context.Background(), orgId, organizationId).PutAdminOrganizationsUpdateRequest(putAdminOrganizationsUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOrganizationsAPI.PutAdminOrganizationsUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1446,6 +1465,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **putAdminOrganizationsUpdateRequest** | [**PutAdminOrganizationsUpdateRequest**](PutAdminOrganizationsUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -1457,7 +1477,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

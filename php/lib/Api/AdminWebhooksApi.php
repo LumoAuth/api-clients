@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -180,15 +180,16 @@ class AdminWebhooksApi
      * Create a webhook
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminWebhooksCreateRequest $adminWebhooksCreateRequest adminWebhooksCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminWebhooksCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminWebhooksCreateResponse
      */
-    public function adminWebhooksCreate($orgId, string $contentType = self::contentTypes['adminWebhooksCreate'][0])
+    public function adminWebhooksCreate($orgId, $adminWebhooksCreateRequest, string $contentType = self::contentTypes['adminWebhooksCreate'][0])
     {
-        list($response) = $this->adminWebhooksCreateWithHttpInfo($orgId, $contentType);
+        list($response) = $this->adminWebhooksCreateWithHttpInfo($orgId, $adminWebhooksCreateRequest, $contentType);
         return $response;
     }
 
@@ -198,15 +199,16 @@ class AdminWebhooksApi
      * Create a webhook
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminWebhooksCreateRequest $adminWebhooksCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminWebhooksCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminWebhooksCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminWebhooksCreateWithHttpInfo($orgId, string $contentType = self::contentTypes['adminWebhooksCreate'][0])
+    public function adminWebhooksCreateWithHttpInfo($orgId, $adminWebhooksCreateRequest, string $contentType = self::contentTypes['adminWebhooksCreate'][0])
     {
-        $request = $this->adminWebhooksCreateRequest($orgId, $contentType);
+        $request = $this->adminWebhooksCreateRequest($orgId, $adminWebhooksCreateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -283,14 +285,15 @@ class AdminWebhooksApi
      * Create a webhook
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminWebhooksCreateRequest $adminWebhooksCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminWebhooksCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminWebhooksCreateAsync($orgId, string $contentType = self::contentTypes['adminWebhooksCreate'][0])
+    public function adminWebhooksCreateAsync($orgId, $adminWebhooksCreateRequest, string $contentType = self::contentTypes['adminWebhooksCreate'][0])
     {
-        return $this->adminWebhooksCreateAsyncWithHttpInfo($orgId, $contentType)
+        return $this->adminWebhooksCreateAsyncWithHttpInfo($orgId, $adminWebhooksCreateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -304,15 +307,16 @@ class AdminWebhooksApi
      * Create a webhook
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminWebhooksCreateRequest $adminWebhooksCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminWebhooksCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminWebhooksCreateAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['adminWebhooksCreate'][0])
+    public function adminWebhooksCreateAsyncWithHttpInfo($orgId, $adminWebhooksCreateRequest, string $contentType = self::contentTypes['adminWebhooksCreate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminWebhooksCreateResponse';
-        $request = $this->adminWebhooksCreateRequest($orgId, $contentType);
+        $request = $this->adminWebhooksCreateRequest($orgId, $adminWebhooksCreateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -354,18 +358,26 @@ class AdminWebhooksApi
      * Create request for operation 'adminWebhooksCreate'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminWebhooksCreateRequest $adminWebhooksCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminWebhooksCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminWebhooksCreateRequest($orgId, string $contentType = self::contentTypes['adminWebhooksCreate'][0])
+    public function adminWebhooksCreateRequest($orgId, $adminWebhooksCreateRequest, string $contentType = self::contentTypes['adminWebhooksCreate'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling adminWebhooksCreate'
+            );
+        }
+
+        // verify the required parameter 'adminWebhooksCreateRequest' is set
+        if ($adminWebhooksCreateRequest === null || (is_array($adminWebhooksCreateRequest) && count($adminWebhooksCreateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $adminWebhooksCreateRequest when calling adminWebhooksCreate'
             );
         }
 
@@ -396,7 +408,14 @@ class AdminWebhooksApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminWebhooksCreateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminWebhooksCreateRequest));
+            } else {
+                $httpBody = $adminWebhooksCreateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -4629,15 +4648,16 @@ class AdminWebhooksApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $webhookId webhookId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest $putAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminWebhooksUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateResponse
      */
-    public function patchAdminWebhooksUpdate($orgId, $webhookId, string $contentType = self::contentTypes['patchAdminWebhooksUpdate'][0])
+    public function patchAdminWebhooksUpdate($orgId, $webhookId, $putAdminWebhooksUpdateRequest, string $contentType = self::contentTypes['patchAdminWebhooksUpdate'][0])
     {
-        list($response) = $this->patchAdminWebhooksUpdateWithHttpInfo($orgId, $webhookId, $contentType);
+        list($response) = $this->patchAdminWebhooksUpdateWithHttpInfo($orgId, $webhookId, $putAdminWebhooksUpdateRequest, $contentType);
         return $response;
     }
 
@@ -4648,15 +4668,16 @@ class AdminWebhooksApi
      *
      * @param  string $orgId (required)
      * @param  string $webhookId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest $putAdminWebhooksUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminWebhooksUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function patchAdminWebhooksUpdateWithHttpInfo($orgId, $webhookId, string $contentType = self::contentTypes['patchAdminWebhooksUpdate'][0])
+    public function patchAdminWebhooksUpdateWithHttpInfo($orgId, $webhookId, $putAdminWebhooksUpdateRequest, string $contentType = self::contentTypes['patchAdminWebhooksUpdate'][0])
     {
-        $request = $this->patchAdminWebhooksUpdateRequest($orgId, $webhookId, $contentType);
+        $request = $this->patchAdminWebhooksUpdateRequest($orgId, $webhookId, $putAdminWebhooksUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4734,14 +4755,15 @@ class AdminWebhooksApi
      *
      * @param  string $orgId (required)
      * @param  string $webhookId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest $putAdminWebhooksUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminWebhooksUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAdminWebhooksUpdateAsync($orgId, $webhookId, string $contentType = self::contentTypes['patchAdminWebhooksUpdate'][0])
+    public function patchAdminWebhooksUpdateAsync($orgId, $webhookId, $putAdminWebhooksUpdateRequest, string $contentType = self::contentTypes['patchAdminWebhooksUpdate'][0])
     {
-        return $this->patchAdminWebhooksUpdateAsyncWithHttpInfo($orgId, $webhookId, $contentType)
+        return $this->patchAdminWebhooksUpdateAsyncWithHttpInfo($orgId, $webhookId, $putAdminWebhooksUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4756,15 +4778,16 @@ class AdminWebhooksApi
      *
      * @param  string $orgId (required)
      * @param  string $webhookId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest $putAdminWebhooksUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminWebhooksUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAdminWebhooksUpdateAsyncWithHttpInfo($orgId, $webhookId, string $contentType = self::contentTypes['patchAdminWebhooksUpdate'][0])
+    public function patchAdminWebhooksUpdateAsyncWithHttpInfo($orgId, $webhookId, $putAdminWebhooksUpdateRequest, string $contentType = self::contentTypes['patchAdminWebhooksUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateResponse';
-        $request = $this->patchAdminWebhooksUpdateRequest($orgId, $webhookId, $contentType);
+        $request = $this->patchAdminWebhooksUpdateRequest($orgId, $webhookId, $putAdminWebhooksUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -4807,12 +4830,13 @@ class AdminWebhooksApi
      *
      * @param  string $orgId (required)
      * @param  string $webhookId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest $putAdminWebhooksUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminWebhooksUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function patchAdminWebhooksUpdateRequest($orgId, $webhookId, string $contentType = self::contentTypes['patchAdminWebhooksUpdate'][0])
+    public function patchAdminWebhooksUpdateRequest($orgId, $webhookId, $putAdminWebhooksUpdateRequest, string $contentType = self::contentTypes['patchAdminWebhooksUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -4832,6 +4856,13 @@ class AdminWebhooksApi
             throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.patchAdminWebhooksUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
         }
         
+        // verify the required parameter 'putAdminWebhooksUpdateRequest' is set
+        if ($putAdminWebhooksUpdateRequest === null || (is_array($putAdminWebhooksUpdateRequest) && count($putAdminWebhooksUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAdminWebhooksUpdateRequest when calling patchAdminWebhooksUpdate'
+            );
+        }
+
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}';
         $formParams = [];
@@ -4867,7 +4898,14 @@ class AdminWebhooksApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAdminWebhooksUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAdminWebhooksUpdateRequest));
+            } else {
+                $httpBody = $putAdminWebhooksUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -4929,15 +4967,16 @@ class AdminWebhooksApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $webhookId webhookId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest $putAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminWebhooksUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateResponse
      */
-    public function putAdminWebhooksUpdate($orgId, $webhookId, string $contentType = self::contentTypes['putAdminWebhooksUpdate'][0])
+    public function putAdminWebhooksUpdate($orgId, $webhookId, $putAdminWebhooksUpdateRequest, string $contentType = self::contentTypes['putAdminWebhooksUpdate'][0])
     {
-        list($response) = $this->putAdminWebhooksUpdateWithHttpInfo($orgId, $webhookId, $contentType);
+        list($response) = $this->putAdminWebhooksUpdateWithHttpInfo($orgId, $webhookId, $putAdminWebhooksUpdateRequest, $contentType);
         return $response;
     }
 
@@ -4948,15 +4987,16 @@ class AdminWebhooksApi
      *
      * @param  string $orgId (required)
      * @param  string $webhookId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest $putAdminWebhooksUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminWebhooksUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function putAdminWebhooksUpdateWithHttpInfo($orgId, $webhookId, string $contentType = self::contentTypes['putAdminWebhooksUpdate'][0])
+    public function putAdminWebhooksUpdateWithHttpInfo($orgId, $webhookId, $putAdminWebhooksUpdateRequest, string $contentType = self::contentTypes['putAdminWebhooksUpdate'][0])
     {
-        $request = $this->putAdminWebhooksUpdateRequest($orgId, $webhookId, $contentType);
+        $request = $this->putAdminWebhooksUpdateRequest($orgId, $webhookId, $putAdminWebhooksUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -5034,14 +5074,15 @@ class AdminWebhooksApi
      *
      * @param  string $orgId (required)
      * @param  string $webhookId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest $putAdminWebhooksUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminWebhooksUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAdminWebhooksUpdateAsync($orgId, $webhookId, string $contentType = self::contentTypes['putAdminWebhooksUpdate'][0])
+    public function putAdminWebhooksUpdateAsync($orgId, $webhookId, $putAdminWebhooksUpdateRequest, string $contentType = self::contentTypes['putAdminWebhooksUpdate'][0])
     {
-        return $this->putAdminWebhooksUpdateAsyncWithHttpInfo($orgId, $webhookId, $contentType)
+        return $this->putAdminWebhooksUpdateAsyncWithHttpInfo($orgId, $webhookId, $putAdminWebhooksUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -5056,15 +5097,16 @@ class AdminWebhooksApi
      *
      * @param  string $orgId (required)
      * @param  string $webhookId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest $putAdminWebhooksUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminWebhooksUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAdminWebhooksUpdateAsyncWithHttpInfo($orgId, $webhookId, string $contentType = self::contentTypes['putAdminWebhooksUpdate'][0])
+    public function putAdminWebhooksUpdateAsyncWithHttpInfo($orgId, $webhookId, $putAdminWebhooksUpdateRequest, string $contentType = self::contentTypes['putAdminWebhooksUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateResponse';
-        $request = $this->putAdminWebhooksUpdateRequest($orgId, $webhookId, $contentType);
+        $request = $this->putAdminWebhooksUpdateRequest($orgId, $webhookId, $putAdminWebhooksUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -5107,12 +5149,13 @@ class AdminWebhooksApi
      *
      * @param  string $orgId (required)
      * @param  string $webhookId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminWebhooksUpdateRequest $putAdminWebhooksUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminWebhooksUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function putAdminWebhooksUpdateRequest($orgId, $webhookId, string $contentType = self::contentTypes['putAdminWebhooksUpdate'][0])
+    public function putAdminWebhooksUpdateRequest($orgId, $webhookId, $putAdminWebhooksUpdateRequest, string $contentType = self::contentTypes['putAdminWebhooksUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -5132,6 +5175,13 @@ class AdminWebhooksApi
             throw new \InvalidArgumentException("invalid value for \"webhookId\" when calling AdminWebhooksApi.putAdminWebhooksUpdate, must conform to the pattern /[1-9]\\d{0,8}|1\\d{9}|20\\d{8}|21[0-3]\\d{7}|214[0-6]\\d{6}|2147[0-3]\\d{5}|21474[0-7]\\d{4}|214748[0-2]\\d{3}|2147483[0-5]\\d{2}|21474836[0-3]\\d|214748364[0-7]/.");
         }
         
+        // verify the required parameter 'putAdminWebhooksUpdateRequest' is set
+        if ($putAdminWebhooksUpdateRequest === null || (is_array($putAdminWebhooksUpdateRequest) && count($putAdminWebhooksUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAdminWebhooksUpdateRequest when calling putAdminWebhooksUpdate'
+            );
+        }
+
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}';
         $formParams = [];
@@ -5167,7 +5217,14 @@ class AdminWebhooksApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAdminWebhooksUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAdminWebhooksUpdateRequest));
+            } else {
+                $httpBody = $putAdminWebhooksUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -19,6 +19,9 @@ pub struct AdminWebhooksTunnelStartResponseData {
     pub session_id: Option<String>,
     #[serde(rename = "tunnel_url", skip_serializing_if = "Option::is_none")]
     pub tunnel_url: Option<String>,
+    /// The secret that signs the tunnel's deliveries (X-LumoAuth-Signature). Shown once.
+    #[serde(rename = "signing_secret", skip_serializing_if = "Option::is_none")]
+    pub signing_secret: Option<String>,
 }
 
 impl AdminWebhooksTunnelStartResponseData {
@@ -27,6 +30,7 @@ impl AdminWebhooksTunnelStartResponseData {
             webhook_id: None,
             session_id: None,
             tunnel_url: None,
+            signing_secret: None,
         }
     }
 }

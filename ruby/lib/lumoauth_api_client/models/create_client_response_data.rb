@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -43,10 +43,77 @@ module LumoAuthApiClient
     # Detailed responses only. Whether the client may use CIBA (backchannel authentication).
     attr_accessor :ciba_enabled
 
+    # Detailed responses only. Browser CORS origins (scheme://host[:port]).
+    attr_accessor :allowed_origins
+
+    # Detailed responses only. Addresses that the end-session endpoint may return to.
+    attr_accessor :post_logout_redirect_uris
+
+    # Detailed responses only. OIDC Front-Channel Logout address.
+    attr_accessor :frontchannel_logout_uri
+
+    # Detailed responses only. OIDC Back-Channel Logout address.
+    attr_accessor :backchannel_logout_uri
+
+    # Detailed responses only. Format of the access tokens that the client receives.
+    attr_accessor :access_token_format
+
+    # Detailed responses only.
+    attr_accessor :token_endpoint_auth_method
+
+    # Detailed responses only. https address of the client's public keys.
+    attr_accessor :jwks_uri
+
+    # Detailed responses only. The client's public keys, inline.
+    attr_accessor :jwks
+
+    # Detailed responses only. FAPI 2.0 security profile.
+    attr_accessor :fapi_mode
+
+    # Detailed responses only. The stored switch; a FAPI profile requires PAR whatever it says.
+    attr_accessor :require_par
+
+    # Detailed responses only. The stored switch; a FAPI profile requires DPoP whatever it says.
+    attr_accessor :dpop_bound_access_tokens
+
+    # Detailed responses only.
+    attr_accessor :attestation_based_auth_enabled
+
+    # Detailed responses only.
+    attr_accessor :attester_issuer
+
+    # Detailed responses only.
+    attr_accessor :attester_jwks_uri
+
+    # Detailed responses only. Whether the client may use token exchange (RFC 8693).
+    attr_accessor :token_exchange_enabled
+
     # Plaintext client secret — returned only once, never retrievable again. Absent for a public client
     attr_accessor :secret
 
     attr_accessor :_note
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -63,6 +130,21 @@ module LumoAuthApiClient
         :'scopes' => :'scopes',
         :'grant_types' => :'grantTypes',
         :'ciba_enabled' => :'cibaEnabled',
+        :'allowed_origins' => :'allowedOrigins',
+        :'post_logout_redirect_uris' => :'postLogoutRedirectUris',
+        :'frontchannel_logout_uri' => :'frontchannelLogoutUri',
+        :'backchannel_logout_uri' => :'backchannelLogoutUri',
+        :'access_token_format' => :'accessTokenFormat',
+        :'token_endpoint_auth_method' => :'tokenEndpointAuthMethod',
+        :'jwks_uri' => :'jwksUri',
+        :'jwks' => :'jwks',
+        :'fapi_mode' => :'fapiMode',
+        :'require_par' => :'requirePar',
+        :'dpop_bound_access_tokens' => :'dpopBoundAccessTokens',
+        :'attestation_based_auth_enabled' => :'attestationBasedAuthEnabled',
+        :'attester_issuer' => :'attesterIssuer',
+        :'attester_jwks_uri' => :'attesterJwksUri',
+        :'token_exchange_enabled' => :'tokenExchangeEnabled',
         :'secret' => :'secret',
         :'_note' => :'_note'
       }
@@ -93,6 +175,21 @@ module LumoAuthApiClient
         :'scopes' => :'Array<String>',
         :'grant_types' => :'Array<String>',
         :'ciba_enabled' => :'Boolean',
+        :'allowed_origins' => :'Array<String>',
+        :'post_logout_redirect_uris' => :'Array<String>',
+        :'frontchannel_logout_uri' => :'String',
+        :'backchannel_logout_uri' => :'String',
+        :'access_token_format' => :'String',
+        :'token_endpoint_auth_method' => :'String',
+        :'jwks_uri' => :'String',
+        :'jwks' => :'Hash<String, Object>',
+        :'fapi_mode' => :'String',
+        :'require_par' => :'Boolean',
+        :'dpop_bound_access_tokens' => :'Boolean',
+        :'attestation_based_auth_enabled' => :'Boolean',
+        :'attester_issuer' => :'String',
+        :'attester_jwks_uri' => :'String',
+        :'token_exchange_enabled' => :'Boolean',
         :'secret' => :'String',
         :'_note' => :'String'
       }
@@ -101,6 +198,12 @@ module LumoAuthApiClient
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'frontchannel_logout_uri',
+        :'backchannel_logout_uri',
+        :'jwks_uri',
+        :'jwks',
+        :'attester_issuer',
+        :'attester_jwks_uri',
       ])
     end
 
@@ -198,6 +301,72 @@ module LumoAuthApiClient
         self.ciba_enabled = attributes[:'ciba_enabled']
       end
 
+      if attributes.key?(:'allowed_origins')
+        if (value = attributes[:'allowed_origins']).is_a?(Array)
+          self.allowed_origins = value
+        end
+      end
+
+      if attributes.key?(:'post_logout_redirect_uris')
+        if (value = attributes[:'post_logout_redirect_uris']).is_a?(Array)
+          self.post_logout_redirect_uris = value
+        end
+      end
+
+      if attributes.key?(:'frontchannel_logout_uri')
+        self.frontchannel_logout_uri = attributes[:'frontchannel_logout_uri']
+      end
+
+      if attributes.key?(:'backchannel_logout_uri')
+        self.backchannel_logout_uri = attributes[:'backchannel_logout_uri']
+      end
+
+      if attributes.key?(:'access_token_format')
+        self.access_token_format = attributes[:'access_token_format']
+      end
+
+      if attributes.key?(:'token_endpoint_auth_method')
+        self.token_endpoint_auth_method = attributes[:'token_endpoint_auth_method']
+      end
+
+      if attributes.key?(:'jwks_uri')
+        self.jwks_uri = attributes[:'jwks_uri']
+      end
+
+      if attributes.key?(:'jwks')
+        if (value = attributes[:'jwks']).is_a?(Hash)
+          self.jwks = value
+        end
+      end
+
+      if attributes.key?(:'fapi_mode')
+        self.fapi_mode = attributes[:'fapi_mode']
+      end
+
+      if attributes.key?(:'require_par')
+        self.require_par = attributes[:'require_par']
+      end
+
+      if attributes.key?(:'dpop_bound_access_tokens')
+        self.dpop_bound_access_tokens = attributes[:'dpop_bound_access_tokens']
+      end
+
+      if attributes.key?(:'attestation_based_auth_enabled')
+        self.attestation_based_auth_enabled = attributes[:'attestation_based_auth_enabled']
+      end
+
+      if attributes.key?(:'attester_issuer')
+        self.attester_issuer = attributes[:'attester_issuer']
+      end
+
+      if attributes.key?(:'attester_jwks_uri')
+        self.attester_jwks_uri = attributes[:'attester_jwks_uri']
+      end
+
+      if attributes.key?(:'token_exchange_enabled')
+        self.token_exchange_enabled = attributes[:'token_exchange_enabled']
+      end
+
       if attributes.key?(:'secret')
         self.secret = attributes[:'secret']
       end
@@ -259,6 +428,12 @@ module LumoAuthApiClient
       return false if @is_active.nil?
       return false if @requires_pkce.nil?
       return false if @created_at.nil?
+      access_token_format_validator = EnumAttributeValidator.new('String', ["opaque", "jwt"])
+      return false unless access_token_format_validator.valid?(@access_token_format)
+      token_endpoint_auth_method_validator = EnumAttributeValidator.new('String', ["client_secret_basic", "private_key_jwt", "none", "attest_jwt_client_auth"])
+      return false unless token_endpoint_auth_method_validator.valid?(@token_endpoint_auth_method)
+      fapi_mode_validator = EnumAttributeValidator.new('String', ["disabled", "fapi2_baseline", "fapi2_advanced"])
+      return false unless fapi_mode_validator.valid?(@fapi_mode)
       true
     end
 
@@ -342,6 +517,36 @@ module LumoAuthApiClient
       @created_at = created_at
     end
 
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] access_token_format Object to be assigned
+    def access_token_format=(access_token_format)
+      validator = EnumAttributeValidator.new('String', ["opaque", "jwt"])
+      unless validator.valid?(access_token_format)
+        fail ArgumentError, "invalid value for \"access_token_format\", must be one of #{validator.allowable_values}."
+      end
+      @access_token_format = access_token_format
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] token_endpoint_auth_method Object to be assigned
+    def token_endpoint_auth_method=(token_endpoint_auth_method)
+      validator = EnumAttributeValidator.new('String', ["client_secret_basic", "private_key_jwt", "none", "attest_jwt_client_auth"])
+      unless validator.valid?(token_endpoint_auth_method)
+        fail ArgumentError, "invalid value for \"token_endpoint_auth_method\", must be one of #{validator.allowable_values}."
+      end
+      @token_endpoint_auth_method = token_endpoint_auth_method
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] fapi_mode Object to be assigned
+    def fapi_mode=(fapi_mode)
+      validator = EnumAttributeValidator.new('String', ["disabled", "fapi2_baseline", "fapi2_advanced"])
+      unless validator.valid?(fapi_mode)
+        fail ArgumentError, "invalid value for \"fapi_mode\", must be one of #{validator.allowable_values}."
+      end
+      @fapi_mode = fapi_mode
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -359,6 +564,21 @@ module LumoAuthApiClient
           scopes == o.scopes &&
           grant_types == o.grant_types &&
           ciba_enabled == o.ciba_enabled &&
+          allowed_origins == o.allowed_origins &&
+          post_logout_redirect_uris == o.post_logout_redirect_uris &&
+          frontchannel_logout_uri == o.frontchannel_logout_uri &&
+          backchannel_logout_uri == o.backchannel_logout_uri &&
+          access_token_format == o.access_token_format &&
+          token_endpoint_auth_method == o.token_endpoint_auth_method &&
+          jwks_uri == o.jwks_uri &&
+          jwks == o.jwks &&
+          fapi_mode == o.fapi_mode &&
+          require_par == o.require_par &&
+          dpop_bound_access_tokens == o.dpop_bound_access_tokens &&
+          attestation_based_auth_enabled == o.attestation_based_auth_enabled &&
+          attester_issuer == o.attester_issuer &&
+          attester_jwks_uri == o.attester_jwks_uri &&
+          token_exchange_enabled == o.token_exchange_enabled &&
           secret == o.secret &&
           _note == o._note
     end
@@ -372,7 +592,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, client_id, name, is_confidential, is_public, is_active, requires_pkce, created_at, redirect_uris, scopes, grant_types, ciba_enabled, secret, _note].hash
+      [id, client_id, name, is_confidential, is_public, is_active, requires_pkce, created_at, redirect_uris, scopes, grant_types, ciba_enabled, allowed_origins, post_logout_redirect_uris, frontchannel_logout_uri, backchannel_logout_uri, access_token_format, token_endpoint_auth_method, jwks_uri, jwks, fapi_mode, require_par, dpop_bound_access_tokens, attestation_based_auth_enabled, attester_issuer, attester_jwks_uri, token_exchange_enabled, secret, _note].hash
     end
 
     # Builds the object from hash

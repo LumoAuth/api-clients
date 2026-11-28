@@ -13,14 +13,17 @@ import AnyCodable
 public struct CreateTaskResponse: Codable, JSONEncodable, Hashable {
 
     public var taskId: String?
+    /** The parent task, or null for a task without one. */
+    public var parentTaskId: String?
     public var caepSessionId: String?
     public var expiresAt: Date?
     public var agentId: String?
     public var agent: AnyCodable?
     public var onBehalfOf: String?
 
-    public init(taskId: String? = nil, caepSessionId: String? = nil, expiresAt: Date? = nil, agentId: String? = nil, agent: AnyCodable? = nil, onBehalfOf: String? = nil) {
+    public init(taskId: String? = nil, parentTaskId: String? = nil, caepSessionId: String? = nil, expiresAt: Date? = nil, agentId: String? = nil, agent: AnyCodable? = nil, onBehalfOf: String? = nil) {
         self.taskId = taskId
+        self.parentTaskId = parentTaskId
         self.caepSessionId = caepSessionId
         self.expiresAt = expiresAt
         self.agentId = agentId
@@ -30,6 +33,7 @@ public struct CreateTaskResponse: Codable, JSONEncodable, Hashable {
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case taskId = "task_id"
+        case parentTaskId = "parent_task_id"
         case caepSessionId = "caep_session_id"
         case expiresAt = "expires_at"
         case agentId = "agent_id"
@@ -42,6 +46,7 @@ public struct CreateTaskResponse: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(taskId, forKey: .taskId)
+        try container.encodeIfPresent(parentTaskId, forKey: .parentTaskId)
         try container.encodeIfPresent(caepSessionId, forKey: .caepSessionId)
         try container.encodeIfPresent(expiresAt, forKey: .expiresAt)
         try container.encodeIfPresent(agentId, forKey: .agentId)

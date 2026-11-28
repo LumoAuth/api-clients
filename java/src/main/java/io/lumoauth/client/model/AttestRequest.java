@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -19,6 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.lumoauth.client.model.AttestRequestScope;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -48,12 +49,17 @@ import io.lumoauth.client.JSON;
 /**
  * AttestRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-28T17:25:42.087818540Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AttestRequest {
   public static final String SERIALIZED_NAME_ATTESTATION_TOKEN = "attestation_token";
   @SerializedName(SERIALIZED_NAME_ATTESTATION_TOKEN)
   @javax.annotation.Nonnull
   private String attestationToken;
+
+  public static final String SERIALIZED_NAME_SCOPE = "scope";
+  @SerializedName(SERIALIZED_NAME_SCOPE)
+  @javax.annotation.Nullable
+  private AttestRequestScope scope;
 
   public AttestRequest() {
   }
@@ -77,6 +83,25 @@ public class AttestRequest {
   }
 
 
+  public AttestRequest scope(@javax.annotation.Nullable AttestRequestScope scope) {
+    this.scope = scope;
+    return this;
+  }
+
+  /**
+   * Get scope
+   * @return scope
+   */
+  @javax.annotation.Nullable
+  public AttestRequestScope getScope() {
+    return scope;
+  }
+
+  public void setScope(@javax.annotation.Nullable AttestRequestScope scope) {
+    this.scope = scope;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -87,12 +112,13 @@ public class AttestRequest {
       return false;
     }
     AttestRequest attestRequest = (AttestRequest) o;
-    return Objects.equals(this.attestationToken, attestRequest.attestationToken);
+    return Objects.equals(this.attestationToken, attestRequest.attestationToken) &&
+        Objects.equals(this.scope, attestRequest.scope);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(attestationToken);
+    return Objects.hash(attestationToken, scope);
   }
 
   @Override
@@ -100,6 +126,7 @@ public class AttestRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class AttestRequest {\n");
     sb.append("    attestationToken: ").append(toIndentedString(attestationToken)).append("\n");
+    sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -121,7 +148,7 @@ public class AttestRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("attestation_token"));
+    openapiFields = new HashSet<String>(Arrays.asList("attestation_token", "scope"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("attestation_token"));
@@ -157,6 +184,10 @@ public class AttestRequest {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (!jsonObj.get("attestation_token").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `attestation_token` to be a primitive type in the JSON string but got `%s`", jsonObj.get("attestation_token").toString()));
+      }
+      // validate the optional field `scope`
+      if (jsonObj.get("scope") != null && !jsonObj.get("scope").isJsonNull()) {
+        AttestRequestScope.validateJsonElement(jsonObj.get("scope"));
       }
   }
 

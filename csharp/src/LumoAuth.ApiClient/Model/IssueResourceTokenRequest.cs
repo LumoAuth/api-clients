@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -36,14 +36,36 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="IssueResourceTokenRequest" /> class.
         /// </summary>
-        /// <param name="agent">Agent identifier the resource token is bound to..</param>
-        /// <param name="agentJkt">JWK thumbprint of the agent key (PoP binding)..</param>
+        [JsonConstructorAttribute]
+        protected IssueResourceTokenRequest() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IssueResourceTokenRequest" /> class.
+        /// </summary>
+        /// <param name="resource">Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource. (required).</param>
+        /// <param name="agent">Agent identifier the resource token is bound to. (required).</param>
+        /// <param name="agentJkt">JWK thumbprint of the agent key (PoP binding). (required).</param>
         /// <param name="scope">Optional space-delimited requested scopes..</param>
         /// <param name="authRequestUrl">Optional auth request URL to embed in the token..</param>
         /// <param name="authServer">Optional auth server URL for the aud claim; defaults to this issuer..</param>
-        public IssueResourceTokenRequest(string agent = default, string agentJkt = default, string scope = default, string authRequestUrl = default, string authServer = default)
+        public IssueResourceTokenRequest(string resource = default, string agent = default, string agentJkt = default, string scope = default, string authRequestUrl = default, string authServer = default)
         {
+            // to ensure "resource" is required (not null)
+            if (resource == null)
+            {
+                throw new ArgumentNullException("resource is a required property for IssueResourceTokenRequest and cannot be null");
+            }
+            this.Resource = resource;
+            // to ensure "agent" is required (not null)
+            if (agent == null)
+            {
+                throw new ArgumentNullException("agent is a required property for IssueResourceTokenRequest and cannot be null");
+            }
             this.Agent = agent;
+            // to ensure "agentJkt" is required (not null)
+            if (agentJkt == null)
+            {
+                throw new ArgumentNullException("agentJkt is a required property for IssueResourceTokenRequest and cannot be null");
+            }
             this.AgentJkt = agentJkt;
             this.Scope = scope;
             this.AuthRequestUrl = authRequestUrl;
@@ -51,17 +73,24 @@ namespace LumoAuth.ApiClient.Model
         }
 
         /// <summary>
+        /// Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
+        /// </summary>
+        /// <value>Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource.</value>
+        [DataMember(Name = "resource", IsRequired = true, EmitDefaultValue = true)]
+        public string Resource { get; set; }
+
+        /// <summary>
         /// Agent identifier the resource token is bound to.
         /// </summary>
         /// <value>Agent identifier the resource token is bound to.</value>
-        [DataMember(Name = "agent", EmitDefaultValue = false)]
+        [DataMember(Name = "agent", IsRequired = true, EmitDefaultValue = true)]
         public string Agent { get; set; }
 
         /// <summary>
         /// JWK thumbprint of the agent key (PoP binding).
         /// </summary>
         /// <value>JWK thumbprint of the agent key (PoP binding).</value>
-        [DataMember(Name = "agent_jkt", EmitDefaultValue = false)]
+        [DataMember(Name = "agent_jkt", IsRequired = true, EmitDefaultValue = true)]
         public string AgentJkt { get; set; }
 
         /// <summary>
@@ -93,6 +122,7 @@ namespace LumoAuth.ApiClient.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class IssueResourceTokenRequest {\n");
+            sb.Append("  Resource: ").Append(Resource).Append("\n");
             sb.Append("  Agent: ").Append(Agent).Append("\n");
             sb.Append("  AgentJkt: ").Append(AgentJkt).Append("\n");
             sb.Append("  Scope: ").Append(Scope).Append("\n");

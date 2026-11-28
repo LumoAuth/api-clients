@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -14,18 +14,18 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct VerifyAuthTokenRequest {
     /// The auth token presented by the agent.
-    #[serde(rename = "auth_token", skip_serializing_if = "Option::is_none")]
-    pub auth_token: Option<String>,
-    /// Resource identifier; defaults to the authenticated resource.
-    #[serde(rename = "resource", skip_serializing_if = "Option::is_none")]
-    pub resource: Option<String>,
+    #[serde(rename = "auth_token")]
+    pub auth_token: String,
+    /// Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
+    #[serde(rename = "resource")]
+    pub resource: String,
 }
 
 impl VerifyAuthTokenRequest {
-    pub fn new() -> VerifyAuthTokenRequest {
+    pub fn new(auth_token: String, resource: String) -> VerifyAuthTokenRequest {
         VerifyAuthTokenRequest {
-            auth_token: None,
-            resource: None,
+            auth_token,
+            resource,
         }
     }
 }

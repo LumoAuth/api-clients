@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -565,7 +565,7 @@ public class AdminSessionsApi {
 
     /**
      * List active sessions
-     * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
+     * Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
      * @param orgId  (required)
      * @return AdminSessionsListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -583,7 +583,7 @@ public class AdminSessionsApi {
 
     /**
      * List active sessions
-     * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
+     * Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminSessionsListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -602,7 +602,7 @@ public class AdminSessionsApi {
 
     /**
      * List active sessions (asynchronously)
-     * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
+     * Paginated active sessions for the organization (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -844,7 +844,7 @@ public class AdminSessionsApi {
     }
 
     /**
-     * Revoke every session in the tenant
+     * Revoke every session in the organization
      * Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
      * @param orgId  (required)
      * @param adminSessionsRevokeAllRequest  (required)
@@ -864,7 +864,7 @@ public class AdminSessionsApi {
     }
 
     /**
-     * Revoke every session in the tenant
+     * Revoke every session in the organization
      * Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
      * @param orgId  (required)
      * @param adminSessionsRevokeAllRequest  (required)
@@ -885,7 +885,7 @@ public class AdminSessionsApi {
     }
 
     /**
-     * Revoke every session in the tenant (asynchronously)
+     * Revoke every session in the organization (asynchronously)
      * Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
      * @param orgId  (required)
      * @param adminSessionsRevokeAllRequest  (required)
@@ -1104,8 +1104,8 @@ public class AdminSessionsApi {
     }
 
     /**
-     * List access tokens
-     * Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
+     * List stored (opaque) access tokens
+     * Paginated OPAQUE access tokens issued by the organization&#39;s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user&#39;s or a client&#39;s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
      * @param orgId  (required)
      * @return AdminTokensListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1122,8 +1122,8 @@ public class AdminSessionsApi {
     }
 
     /**
-     * List access tokens
-     * Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
+     * List stored (opaque) access tokens
+     * Paginated OPAQUE access tokens issued by the organization&#39;s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user&#39;s or a client&#39;s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminTokensListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1141,8 +1141,8 @@ public class AdminSessionsApi {
     }
 
     /**
-     * List access tokens (asynchronously)
-     * Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
+     * List stored (opaque) access tokens (asynchronously)
+     * Paginated OPAQUE access tokens issued by the organization&#39;s clients: the ones that LumoAuth stores. JWT access tokens (the default format of a new application) are not stored and never appear here, and neither do refresh tokens. To end a user&#39;s or a client&#39;s tokens of every kind, use POST /users/{userId}/tokens/revoke or POST /clients/{clientId}/tokens/revoke; a single token is revoked with the OAuth revocation endpoint (RFC 7009). Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1817,7 +1817,7 @@ public class AdminSessionsApi {
 
     /**
      * Revoke all tokens of a user
-     * 
+     * Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
      * @param orgId  (required)
      * @param userId  (required)
      * @return AdminUserTokensRevokeAllResponse
@@ -1838,7 +1838,7 @@ public class AdminSessionsApi {
 
     /**
      * Revoke all tokens of a user
-     * 
+     * Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
      * @param orgId  (required)
      * @param userId  (required)
      * @return ApiResponse&lt;AdminUserTokensRevokeAllResponse&gt;
@@ -1860,7 +1860,7 @@ public class AdminSessionsApi {
 
     /**
      * Revoke all tokens of a user (asynchronously)
-     * 
+     * Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
      * @param orgId  (required)
      * @param userId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1962,7 +1962,7 @@ public class AdminSessionsApi {
 
     /**
      * Revoke all tokens of a user (POST alias)
-     * 
+     * Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
      * @param orgId  (required)
      * @param userId  (required)
      * @return AdminUserTokensRevokePostResponse
@@ -1983,7 +1983,7 @@ public class AdminSessionsApi {
 
     /**
      * Revoke all tokens of a user (POST alias)
-     * 
+     * Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
      * @param orgId  (required)
      * @param userId  (required)
      * @return ApiResponse&lt;AdminUserTokensRevokePostResponse&gt;
@@ -2005,7 +2005,7 @@ public class AdminSessionsApi {
 
     /**
      * Revoke all tokens of a user (POST alias) (asynchronously)
-     * 
+     * Revokes the user&#39;s opaque access tokens, JWT access tokens (deny-listed by their &#x60;jti&#x60;) and refresh tokens. The message counts the access tokens.
      * @param orgId  (required)
      * @param userId  (required)
      * @param _callback The callback to be executed when the API call finishes

@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -224,7 +224,207 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get organization (tenant) profile
+    # Create an initial access token for dynamic client registration
+    # Generates a token and adds it to the organization's list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+    # @param org_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [AdminInitialAccessTokensCreateResponse]
+    def admin_initial_access_tokens_create(org_id, opts = {})
+      data, _status_code, _headers = admin_initial_access_tokens_create_with_http_info(org_id, opts)
+      data
+    end
+
+    # Create an initial access token for dynamic client registration
+    # Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+    # @param org_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(AdminInitialAccessTokensCreateResponse, Integer, Hash)>] AdminInitialAccessTokensCreateResponse data, response status code and response headers
+    def admin_initial_access_tokens_create_with_http_info(org_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AdminSettingsApi.admin_initial_access_tokens_create ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.admin_initial_access_tokens_create"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'AdminInitialAccessTokensCreateResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AdminSettingsApi.admin_initial_access_tokens_create",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AdminSettingsApi#admin_initial_access_tokens_create\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Delete an initial access token of dynamic client registration
+    # The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+    # @param org_id [String] 
+    # @param token_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [MessageResponse]
+    def admin_initial_access_tokens_delete(org_id, token_id, opts = {})
+      data, _status_code, _headers = admin_initial_access_tokens_delete_with_http_info(org_id, token_id, opts)
+      data
+    end
+
+    # Delete an initial access token of dynamic client registration
+    # The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+    # @param org_id [String] 
+    # @param token_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
+    def admin_initial_access_tokens_delete_with_http_info(org_id, token_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AdminSettingsApi.admin_initial_access_tokens_delete ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.admin_initial_access_tokens_delete"
+      end
+      # verify the required parameter 'token_id' is set
+      if @api_client.config.client_side_validation && token_id.nil?
+        fail ArgumentError, "Missing the required parameter 'token_id' when calling AdminSettingsApi.admin_initial_access_tokens_delete"
+      end
+      pattern = Regexp.new(/[0-9a-f]{12}/)
+      if @api_client.config.client_side_validation && token_id !~ pattern
+        fail ArgumentError, "invalid value for 'token_id' when calling AdminSettingsApi.admin_initial_access_tokens_delete, must conform to the pattern #{pattern}."
+      end
+
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'tokenId' + '}', CGI.escape(token_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'MessageResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AdminSettingsApi.admin_initial_access_tokens_delete",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AdminSettingsApi#admin_initial_access_tokens_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # List the initial access tokens of dynamic client registration
+    # Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+    # @param org_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [AdminInitialAccessTokensListResponse]
+    def admin_initial_access_tokens_list(org_id, opts = {})
+      data, _status_code, _headers = admin_initial_access_tokens_list_with_http_info(org_id, opts)
+      data
+    end
+
+    # List the initial access tokens of dynamic client registration
+    # Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+    # @param org_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(AdminInitialAccessTokensListResponse, Integer, Hash)>] AdminInitialAccessTokensListResponse data, response status code and response headers
+    def admin_initial_access_tokens_list_with_http_info(org_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AdminSettingsApi.admin_initial_access_tokens_list ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.admin_initial_access_tokens_list"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'AdminInitialAccessTokensListResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AdminSettingsApi.admin_initial_access_tokens_list",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AdminSettingsApi#admin_initial_access_tokens_list\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get organization profile
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminTenantGetResponse]
@@ -233,7 +433,7 @@ module LumoAuthApiClient
       data
     end
 
-    # Get organization (tenant) profile
+    # Get organization profile
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminTenantGetResponse, Integer, Hash)>] AdminTenantGetResponse data, response status code and response headers
@@ -777,7 +977,7 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get organization (tenant) profile
+    # Get organization profile
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminTenantGetResponse]
@@ -786,7 +986,7 @@ module LumoAuthApiClient
       data
     end
 
-    # Get organization (tenant) profile
+    # Get organization profile
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminTenantGetResponse, Integer, Hash)>] AdminTenantGetResponse data, response status code and response headers
@@ -838,26 +1038,32 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Update organization (tenant) name and settings
+    # Update the organization's name and settings
     # @param org_id [String] 
+    # @param put_admin_tenant_update_request [PutAdminTenantUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminTenantUpdateResponse]
-    def patch_admin_organization_update(org_id, opts = {})
-      data, _status_code, _headers = patch_admin_organization_update_with_http_info(org_id, opts)
+    def patch_admin_organization_update(org_id, put_admin_tenant_update_request, opts = {})
+      data, _status_code, _headers = patch_admin_organization_update_with_http_info(org_id, put_admin_tenant_update_request, opts)
       data
     end
 
-    # Update organization (tenant) name and settings
+    # Update the organization&#39;s name and settings
     # @param org_id [String] 
+    # @param put_admin_tenant_update_request [PutAdminTenantUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminTenantUpdateResponse, Integer, Hash)>] PutAdminTenantUpdateResponse data, response status code and response headers
-    def patch_admin_organization_update_with_http_info(org_id, opts = {})
+    def patch_admin_organization_update_with_http_info(org_id, put_admin_tenant_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.patch_admin_organization_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.patch_admin_organization_update"
+      end
+      # verify the required parameter 'put_admin_tenant_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_tenant_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_tenant_update_request' when calling AdminSettingsApi.patch_admin_organization_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organization'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -869,12 +1075,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_tenant_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminTenantUpdateResponse'
@@ -900,25 +1111,33 @@ module LumoAuthApiClient
     end
 
     # Update authentication settings
+    # The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
     # @param org_id [String] 
+    # @param authentication_settings [AuthenticationSettings] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminSettingsAuthenticationUpdateResponse]
-    def patch_admin_settings_auth_update(org_id, opts = {})
-      data, _status_code, _headers = patch_admin_settings_auth_update_with_http_info(org_id, opts)
+    def patch_admin_settings_auth_update(org_id, authentication_settings, opts = {})
+      data, _status_code, _headers = patch_admin_settings_auth_update_with_http_info(org_id, authentication_settings, opts)
       data
     end
 
     # Update authentication settings
+    # The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
     # @param org_id [String] 
+    # @param authentication_settings [AuthenticationSettings] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminSettingsAuthenticationUpdateResponse, Integer, Hash)>] PutAdminSettingsAuthenticationUpdateResponse data, response status code and response headers
-    def patch_admin_settings_auth_update_with_http_info(org_id, opts = {})
+    def patch_admin_settings_auth_update_with_http_info(org_id, authentication_settings, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.patch_admin_settings_auth_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.patch_admin_settings_auth_update"
+      end
+      # verify the required parameter 'authentication_settings' is set
+      if @api_client.config.client_side_validation && authentication_settings.nil?
+        fail ArgumentError, "Missing the required parameter 'authentication_settings' when calling AdminSettingsApi.patch_admin_settings_auth_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/settings/auth'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -930,12 +1149,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(authentication_settings)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsAuthenticationUpdateResponse'
@@ -961,25 +1185,33 @@ module LumoAuthApiClient
     end
 
     # Update authentication settings (alias for settings/auth)
+    # The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
     # @param org_id [String] 
+    # @param authentication_settings [AuthenticationSettings] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminSettingsAuthenticationUpdateResponse]
-    def patch_admin_settings_authentication_update(org_id, opts = {})
-      data, _status_code, _headers = patch_admin_settings_authentication_update_with_http_info(org_id, opts)
+    def patch_admin_settings_authentication_update(org_id, authentication_settings, opts = {})
+      data, _status_code, _headers = patch_admin_settings_authentication_update_with_http_info(org_id, authentication_settings, opts)
       data
     end
 
     # Update authentication settings (alias for settings/auth)
+    # The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
     # @param org_id [String] 
+    # @param authentication_settings [AuthenticationSettings] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminSettingsAuthenticationUpdateResponse, Integer, Hash)>] PutAdminSettingsAuthenticationUpdateResponse data, response status code and response headers
-    def patch_admin_settings_authentication_update_with_http_info(org_id, opts = {})
+    def patch_admin_settings_authentication_update_with_http_info(org_id, authentication_settings, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.patch_admin_settings_authentication_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.patch_admin_settings_authentication_update"
+      end
+      # verify the required parameter 'authentication_settings' is set
+      if @api_client.config.client_side_validation && authentication_settings.nil?
+        fail ArgumentError, "Missing the required parameter 'authentication_settings' when calling AdminSettingsApi.patch_admin_settings_authentication_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/settings/authentication'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -991,12 +1223,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(authentication_settings)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsAuthenticationUpdateResponse'
@@ -1024,25 +1261,31 @@ module LumoAuthApiClient
     # Update branding/login page settings
     # Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
     # @param org_id [String] 
+    # @param branding_settings [BrandingSettings] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminSettingsBrandingUpdateResponse]
-    def patch_admin_settings_branding_update(org_id, opts = {})
-      data, _status_code, _headers = patch_admin_settings_branding_update_with_http_info(org_id, opts)
+    def patch_admin_settings_branding_update(org_id, branding_settings, opts = {})
+      data, _status_code, _headers = patch_admin_settings_branding_update_with_http_info(org_id, branding_settings, opts)
       data
     end
 
     # Update branding/login page settings
     # Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
     # @param org_id [String] 
+    # @param branding_settings [BrandingSettings] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminSettingsBrandingUpdateResponse, Integer, Hash)>] PutAdminSettingsBrandingUpdateResponse data, response status code and response headers
-    def patch_admin_settings_branding_update_with_http_info(org_id, opts = {})
+    def patch_admin_settings_branding_update_with_http_info(org_id, branding_settings, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.patch_admin_settings_branding_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.patch_admin_settings_branding_update"
+      end
+      # verify the required parameter 'branding_settings' is set
+      if @api_client.config.client_side_validation && branding_settings.nil?
+        fail ArgumentError, "Missing the required parameter 'branding_settings' when calling AdminSettingsApi.patch_admin_settings_branding_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/settings/branding'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -1054,12 +1297,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(branding_settings)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsBrandingUpdateResponse'
@@ -1226,24 +1474,30 @@ module LumoAuthApiClient
 
     # Update SCIM settings
     # @param org_id [String] 
+    # @param scim_settings [ScimSettings] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminSettingsScimUpdateResponse]
-    def patch_admin_settings_scim_update(org_id, opts = {})
-      data, _status_code, _headers = patch_admin_settings_scim_update_with_http_info(org_id, opts)
+    def patch_admin_settings_scim_update(org_id, scim_settings, opts = {})
+      data, _status_code, _headers = patch_admin_settings_scim_update_with_http_info(org_id, scim_settings, opts)
       data
     end
 
     # Update SCIM settings
     # @param org_id [String] 
+    # @param scim_settings [ScimSettings] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminSettingsScimUpdateResponse, Integer, Hash)>] PutAdminSettingsScimUpdateResponse data, response status code and response headers
-    def patch_admin_settings_scim_update_with_http_info(org_id, opts = {})
+    def patch_admin_settings_scim_update_with_http_info(org_id, scim_settings, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.patch_admin_settings_scim_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.patch_admin_settings_scim_update"
+      end
+      # verify the required parameter 'scim_settings' is set
+      if @api_client.config.client_side_validation && scim_settings.nil?
+        fail ArgumentError, "Missing the required parameter 'scim_settings' when calling AdminSettingsApi.patch_admin_settings_scim_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/settings/scim'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -1255,12 +1509,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(scim_settings)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsScimUpdateResponse'
@@ -1287,24 +1546,30 @@ module LumoAuthApiClient
 
     # Update security settings
     # @param org_id [String] 
+    # @param put_admin_settings_security_update_request [PutAdminSettingsSecurityUpdateRequest] Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
     # @param [Hash] opts the optional parameters
     # @return [PutAdminSettingsSecurityUpdateResponse]
-    def patch_admin_settings_security_update(org_id, opts = {})
-      data, _status_code, _headers = patch_admin_settings_security_update_with_http_info(org_id, opts)
+    def patch_admin_settings_security_update(org_id, put_admin_settings_security_update_request, opts = {})
+      data, _status_code, _headers = patch_admin_settings_security_update_with_http_info(org_id, put_admin_settings_security_update_request, opts)
       data
     end
 
     # Update security settings
     # @param org_id [String] 
+    # @param put_admin_settings_security_update_request [PutAdminSettingsSecurityUpdateRequest] Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminSettingsSecurityUpdateResponse, Integer, Hash)>] PutAdminSettingsSecurityUpdateResponse data, response status code and response headers
-    def patch_admin_settings_security_update_with_http_info(org_id, opts = {})
+    def patch_admin_settings_security_update_with_http_info(org_id, put_admin_settings_security_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.patch_admin_settings_security_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.patch_admin_settings_security_update"
+      end
+      # verify the required parameter 'put_admin_settings_security_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_settings_security_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_settings_security_update_request' when calling AdminSettingsApi.patch_admin_settings_security_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/settings/security'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -1316,12 +1581,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_settings_security_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsSecurityUpdateResponse'
@@ -1346,26 +1616,32 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Update organization (tenant) name and settings
+    # Update the organization's name and settings
     # @param org_id [String] 
+    # @param put_admin_tenant_update_request [PutAdminTenantUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminTenantUpdateResponse]
-    def patch_admin_tenant_update(org_id, opts = {})
-      data, _status_code, _headers = patch_admin_tenant_update_with_http_info(org_id, opts)
+    def patch_admin_tenant_update(org_id, put_admin_tenant_update_request, opts = {})
+      data, _status_code, _headers = patch_admin_tenant_update_with_http_info(org_id, put_admin_tenant_update_request, opts)
       data
     end
 
-    # Update organization (tenant) name and settings
+    # Update the organization&#39;s name and settings
     # @param org_id [String] 
+    # @param put_admin_tenant_update_request [PutAdminTenantUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminTenantUpdateResponse, Integer, Hash)>] PutAdminTenantUpdateResponse data, response status code and response headers
-    def patch_admin_tenant_update_with_http_info(org_id, opts = {})
+    def patch_admin_tenant_update_with_http_info(org_id, put_admin_tenant_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.patch_admin_tenant_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.patch_admin_tenant_update"
+      end
+      # verify the required parameter 'put_admin_tenant_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_tenant_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_tenant_update_request' when calling AdminSettingsApi.patch_admin_tenant_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/tenant'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -1377,12 +1653,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_tenant_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminTenantUpdateResponse'
@@ -1407,26 +1688,32 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Update organization (tenant) name and settings
+    # Update the organization's name and settings
     # @param org_id [String] 
+    # @param put_admin_tenant_update_request [PutAdminTenantUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminTenantUpdateResponse]
-    def put_admin_organization_update(org_id, opts = {})
-      data, _status_code, _headers = put_admin_organization_update_with_http_info(org_id, opts)
+    def put_admin_organization_update(org_id, put_admin_tenant_update_request, opts = {})
+      data, _status_code, _headers = put_admin_organization_update_with_http_info(org_id, put_admin_tenant_update_request, opts)
       data
     end
 
-    # Update organization (tenant) name and settings
+    # Update the organization&#39;s name and settings
     # @param org_id [String] 
+    # @param put_admin_tenant_update_request [PutAdminTenantUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminTenantUpdateResponse, Integer, Hash)>] PutAdminTenantUpdateResponse data, response status code and response headers
-    def put_admin_organization_update_with_http_info(org_id, opts = {})
+    def put_admin_organization_update_with_http_info(org_id, put_admin_tenant_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.put_admin_organization_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.put_admin_organization_update"
+      end
+      # verify the required parameter 'put_admin_tenant_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_tenant_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_tenant_update_request' when calling AdminSettingsApi.put_admin_organization_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/organization'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -1438,12 +1725,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_tenant_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminTenantUpdateResponse'
@@ -1469,25 +1761,33 @@ module LumoAuthApiClient
     end
 
     # Update authentication settings
+    # The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
     # @param org_id [String] 
+    # @param authentication_settings [AuthenticationSettings] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminSettingsAuthenticationUpdateResponse]
-    def put_admin_settings_auth_update(org_id, opts = {})
-      data, _status_code, _headers = put_admin_settings_auth_update_with_http_info(org_id, opts)
+    def put_admin_settings_auth_update(org_id, authentication_settings, opts = {})
+      data, _status_code, _headers = put_admin_settings_auth_update_with_http_info(org_id, authentication_settings, opts)
       data
     end
 
     # Update authentication settings
+    # The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
     # @param org_id [String] 
+    # @param authentication_settings [AuthenticationSettings] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminSettingsAuthenticationUpdateResponse, Integer, Hash)>] PutAdminSettingsAuthenticationUpdateResponse data, response status code and response headers
-    def put_admin_settings_auth_update_with_http_info(org_id, opts = {})
+    def put_admin_settings_auth_update_with_http_info(org_id, authentication_settings, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.put_admin_settings_auth_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.put_admin_settings_auth_update"
+      end
+      # verify the required parameter 'authentication_settings' is set
+      if @api_client.config.client_side_validation && authentication_settings.nil?
+        fail ArgumentError, "Missing the required parameter 'authentication_settings' when calling AdminSettingsApi.put_admin_settings_auth_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/settings/auth'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -1499,12 +1799,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(authentication_settings)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsAuthenticationUpdateResponse'
@@ -1530,25 +1835,33 @@ module LumoAuthApiClient
     end
 
     # Update authentication settings (alias for settings/auth)
+    # The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
     # @param org_id [String] 
+    # @param authentication_settings [AuthenticationSettings] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminSettingsAuthenticationUpdateResponse]
-    def put_admin_settings_authentication_update(org_id, opts = {})
-      data, _status_code, _headers = put_admin_settings_authentication_update_with_http_info(org_id, opts)
+    def put_admin_settings_authentication_update(org_id, authentication_settings, opts = {})
+      data, _status_code, _headers = put_admin_settings_authentication_update_with_http_info(org_id, authentication_settings, opts)
       data
     end
 
     # Update authentication settings (alias for settings/auth)
+    # The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
     # @param org_id [String] 
+    # @param authentication_settings [AuthenticationSettings] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminSettingsAuthenticationUpdateResponse, Integer, Hash)>] PutAdminSettingsAuthenticationUpdateResponse data, response status code and response headers
-    def put_admin_settings_authentication_update_with_http_info(org_id, opts = {})
+    def put_admin_settings_authentication_update_with_http_info(org_id, authentication_settings, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.put_admin_settings_authentication_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.put_admin_settings_authentication_update"
+      end
+      # verify the required parameter 'authentication_settings' is set
+      if @api_client.config.client_side_validation && authentication_settings.nil?
+        fail ArgumentError, "Missing the required parameter 'authentication_settings' when calling AdminSettingsApi.put_admin_settings_authentication_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/settings/authentication'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -1560,12 +1873,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(authentication_settings)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsAuthenticationUpdateResponse'
@@ -1593,25 +1911,31 @@ module LumoAuthApiClient
     # Update branding/login page settings
     # Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
     # @param org_id [String] 
+    # @param branding_settings [BrandingSettings] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminSettingsBrandingUpdateResponse]
-    def put_admin_settings_branding_update(org_id, opts = {})
-      data, _status_code, _headers = put_admin_settings_branding_update_with_http_info(org_id, opts)
+    def put_admin_settings_branding_update(org_id, branding_settings, opts = {})
+      data, _status_code, _headers = put_admin_settings_branding_update_with_http_info(org_id, branding_settings, opts)
       data
     end
 
     # Update branding/login page settings
     # Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
     # @param org_id [String] 
+    # @param branding_settings [BrandingSettings] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminSettingsBrandingUpdateResponse, Integer, Hash)>] PutAdminSettingsBrandingUpdateResponse data, response status code and response headers
-    def put_admin_settings_branding_update_with_http_info(org_id, opts = {})
+    def put_admin_settings_branding_update_with_http_info(org_id, branding_settings, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.put_admin_settings_branding_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.put_admin_settings_branding_update"
+      end
+      # verify the required parameter 'branding_settings' is set
+      if @api_client.config.client_side_validation && branding_settings.nil?
+        fail ArgumentError, "Missing the required parameter 'branding_settings' when calling AdminSettingsApi.put_admin_settings_branding_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/settings/branding'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -1623,12 +1947,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(branding_settings)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsBrandingUpdateResponse'
@@ -1795,24 +2124,30 @@ module LumoAuthApiClient
 
     # Update SCIM settings
     # @param org_id [String] 
+    # @param scim_settings [ScimSettings] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminSettingsScimUpdateResponse]
-    def put_admin_settings_scim_update(org_id, opts = {})
-      data, _status_code, _headers = put_admin_settings_scim_update_with_http_info(org_id, opts)
+    def put_admin_settings_scim_update(org_id, scim_settings, opts = {})
+      data, _status_code, _headers = put_admin_settings_scim_update_with_http_info(org_id, scim_settings, opts)
       data
     end
 
     # Update SCIM settings
     # @param org_id [String] 
+    # @param scim_settings [ScimSettings] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminSettingsScimUpdateResponse, Integer, Hash)>] PutAdminSettingsScimUpdateResponse data, response status code and response headers
-    def put_admin_settings_scim_update_with_http_info(org_id, opts = {})
+    def put_admin_settings_scim_update_with_http_info(org_id, scim_settings, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.put_admin_settings_scim_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.put_admin_settings_scim_update"
+      end
+      # verify the required parameter 'scim_settings' is set
+      if @api_client.config.client_side_validation && scim_settings.nil?
+        fail ArgumentError, "Missing the required parameter 'scim_settings' when calling AdminSettingsApi.put_admin_settings_scim_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/settings/scim'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -1824,12 +2159,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(scim_settings)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsScimUpdateResponse'
@@ -1856,24 +2196,30 @@ module LumoAuthApiClient
 
     # Update security settings
     # @param org_id [String] 
+    # @param put_admin_settings_security_update_request [PutAdminSettingsSecurityUpdateRequest] Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
     # @param [Hash] opts the optional parameters
     # @return [PutAdminSettingsSecurityUpdateResponse]
-    def put_admin_settings_security_update(org_id, opts = {})
-      data, _status_code, _headers = put_admin_settings_security_update_with_http_info(org_id, opts)
+    def put_admin_settings_security_update(org_id, put_admin_settings_security_update_request, opts = {})
+      data, _status_code, _headers = put_admin_settings_security_update_with_http_info(org_id, put_admin_settings_security_update_request, opts)
       data
     end
 
     # Update security settings
     # @param org_id [String] 
+    # @param put_admin_settings_security_update_request [PutAdminSettingsSecurityUpdateRequest] Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminSettingsSecurityUpdateResponse, Integer, Hash)>] PutAdminSettingsSecurityUpdateResponse data, response status code and response headers
-    def put_admin_settings_security_update_with_http_info(org_id, opts = {})
+    def put_admin_settings_security_update_with_http_info(org_id, put_admin_settings_security_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.put_admin_settings_security_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.put_admin_settings_security_update"
+      end
+      # verify the required parameter 'put_admin_settings_security_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_settings_security_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_settings_security_update_request' when calling AdminSettingsApi.put_admin_settings_security_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/settings/security'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -1885,12 +2231,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_settings_security_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminSettingsSecurityUpdateResponse'
@@ -1915,26 +2266,32 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Update organization (tenant) name and settings
+    # Update the organization's name and settings
     # @param org_id [String] 
+    # @param put_admin_tenant_update_request [PutAdminTenantUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [PutAdminTenantUpdateResponse]
-    def put_admin_tenant_update(org_id, opts = {})
-      data, _status_code, _headers = put_admin_tenant_update_with_http_info(org_id, opts)
+    def put_admin_tenant_update(org_id, put_admin_tenant_update_request, opts = {})
+      data, _status_code, _headers = put_admin_tenant_update_with_http_info(org_id, put_admin_tenant_update_request, opts)
       data
     end
 
-    # Update organization (tenant) name and settings
+    # Update the organization&#39;s name and settings
     # @param org_id [String] 
+    # @param put_admin_tenant_update_request [PutAdminTenantUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(PutAdminTenantUpdateResponse, Integer, Hash)>] PutAdminTenantUpdateResponse data, response status code and response headers
-    def put_admin_tenant_update_with_http_info(org_id, opts = {})
+    def put_admin_tenant_update_with_http_info(org_id, put_admin_tenant_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSettingsApi.put_admin_tenant_update ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSettingsApi.put_admin_tenant_update"
+      end
+      # verify the required parameter 'put_admin_tenant_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_tenant_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_tenant_update_request' when calling AdminSettingsApi.put_admin_tenant_update"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/tenant'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -1946,12 +2303,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_tenant_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'PutAdminTenantUpdateResponse'

@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**adminRolesGet**](AdminRolesAPI.md#adminrolesget) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Get a single role by ID or slug
 [**adminRolesGetPermissions**](AdminRolesAPI.md#adminrolesgetpermissions) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Get role permissions
 [**adminRolesGetUsers**](AdminRolesAPI.md#adminrolesgetusers) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users | Get users assigned to a role
-[**adminRolesList**](AdminRolesAPI.md#adminroleslist) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the tenant
+[**adminRolesList**](AdminRolesAPI.md#adminroleslist) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the organization
 [**adminRolesRemovePermission**](AdminRolesAPI.md#adminrolesremovepermission) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId} | Remove a permission from a role
 [**adminRolesRemoveUser**](AdminRolesAPI.md#adminrolesremoveuser) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId} | Remove a user from a role
 [**adminRolesUpdatePermissions**](AdminRolesAPI.md#adminrolesupdatepermissions) | **PUT** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Update role permissions (replaces all)
@@ -21,12 +21,12 @@ Method | HTTP request | Description
 
 # **adminRolesAddPermissions**
 ```swift
-    open class func adminRolesAddPermissions(orgId: String, roleId: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
+    open class func adminRolesAddPermissions(orgId: String, roleId: String, adminRolesAddPermissionsRequest: AdminRolesAddPermissionsRequest, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
 ```
 
 Add permission(s) to a role
 
-Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization's own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 ### Example
 ```swift
@@ -35,9 +35,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let roleId = "roleId_example" // String | 
+let adminRolesAddPermissionsRequest = AdminRolesAddPermissionsRequest(permissionId: 123, permissionIds: [123]) // AdminRolesAddPermissionsRequest | 
 
 // Add permission(s) to a role
-AdminRolesAPI.adminRolesAddPermissions(orgId: orgId, roleId: roleId) { (response, error) in
+AdminRolesAPI.adminRolesAddPermissions(orgId: orgId, roleId: roleId, adminRolesAddPermissionsRequest: adminRolesAddPermissionsRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -55,6 +56,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **roleId** | **String** |  | 
+ **adminRolesAddPermissionsRequest** | [**AdminRolesAddPermissionsRequest**](AdminRolesAddPermissionsRequest.md) |  | 
 
 ### Return type
 
@@ -66,14 +68,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesAddUser**
 ```swift
-    open class func adminRolesAddUser(orgId: String, roleId: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
+    open class func adminRolesAddUser(orgId: String, roleId: String, adminRolesAddUserRequest: AdminRolesAddUserRequest, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
 ```
 
 Assign a user to a role
@@ -85,9 +87,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let roleId = "roleId_example" // String | 
+let adminRolesAddUserRequest = AdminRolesAddUserRequest(userId: 123) // AdminRolesAddUserRequest | 
 
 // Assign a user to a role
-AdminRolesAPI.adminRolesAddUser(orgId: orgId, roleId: roleId) { (response, error) in
+AdminRolesAPI.adminRolesAddUser(orgId: orgId, roleId: roleId, adminRolesAddUserRequest: adminRolesAddUserRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -105,6 +108,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **roleId** | **String** |  | 
+ **adminRolesAddUserRequest** | [**AdminRolesAddUserRequest**](AdminRolesAddUserRequest.md) |  | 
 
 ### Return type
 
@@ -116,19 +120,19 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesCreate**
 ```swift
-    open class func adminRolesCreate(orgId: String, completion: @escaping (_ data: AdminRolesCreateResponse?, _ error: Error?) -> Void)
+    open class func adminRolesCreate(orgId: String, adminRolesCreateRequest: AdminRolesCreateRequest, completion: @escaping (_ data: AdminRolesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Create a new role
 
-Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization's own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
 ### Example
 ```swift
@@ -136,9 +140,10 @@ Optional `permissions` is a list of permission slugs. Giving it needs `roles.ass
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let adminRolesCreateRequest = AdminRolesCreateRequest(name: "name_example", slug: "slug_example", description: "description_example", permissions: ["permissions_example"]) // AdminRolesCreateRequest | 
 
 // Create a new role
-AdminRolesAPI.adminRolesCreate(orgId: orgId) { (response, error) in
+AdminRolesAPI.adminRolesCreate(orgId: orgId, adminRolesCreateRequest: adminRolesCreateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -155,6 +160,7 @@ AdminRolesAPI.adminRolesCreate(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **adminRolesCreateRequest** | [**AdminRolesCreateRequest**](AdminRolesCreateRequest.md) |  | 
 
 ### Return type
 
@@ -166,7 +172,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -376,7 +382,7 @@ Name | Type | Description  | Notes
     open class func adminRolesList(orgId: String, completion: @escaping (_ data: AdminRolesListResponse?, _ error: Error?) -> Void)
 ```
 
-List all roles in the tenant
+List all roles in the organization
 
 ### Example
 ```swift
@@ -385,7 +391,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// List all roles in the tenant
+// List all roles in the organization
 AdminRolesAPI.adminRolesList(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -527,12 +533,12 @@ Name | Type | Description  | Notes
 
 # **adminRolesUpdatePermissions**
 ```swift
-    open class func adminRolesUpdatePermissions(orgId: String, roleId: String, completion: @escaping (_ data: AdminRolesCreateResponse?, _ error: Error?) -> Void)
+    open class func adminRolesUpdatePermissions(orgId: String, roleId: String, adminRolesUpdatePermissionsRequest: AdminRolesUpdatePermissionsRequest, completion: @escaping (_ data: AdminRolesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update role permissions (replaces all)
 
-Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization's own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 ### Example
 ```swift
@@ -541,9 +547,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let roleId = "roleId_example" // String | 
+let adminRolesUpdatePermissionsRequest = AdminRolesUpdatePermissionsRequest(permissions: ["permissions_example"]) // AdminRolesUpdatePermissionsRequest | 
 
 // Update role permissions (replaces all)
-AdminRolesAPI.adminRolesUpdatePermissions(orgId: orgId, roleId: roleId) { (response, error) in
+AdminRolesAPI.adminRolesUpdatePermissions(orgId: orgId, roleId: roleId, adminRolesUpdatePermissionsRequest: adminRolesUpdatePermissionsRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -561,6 +568,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **roleId** | **String** |  | 
+ **adminRolesUpdatePermissionsRequest** | [**AdminRolesUpdatePermissionsRequest**](AdminRolesUpdatePermissionsRequest.md) |  | 
 
 ### Return type
 
@@ -572,14 +580,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminRolesUpdate**
 ```swift
-    open class func patchAdminRolesUpdate(orgId: String, roleId: String, completion: @escaping (_ data: AdminRolesCreateResponse?, _ error: Error?) -> Void)
+    open class func patchAdminRolesUpdate(orgId: String, roleId: String, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest, completion: @escaping (_ data: AdminRolesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update an existing role
@@ -591,9 +599,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let roleId = "roleId_example" // String | 
+let putAdminOrgRolesUpdateRequest = PutAdminOrgRolesUpdateRequest(name: "name_example", description: "description_example") // PutAdminOrgRolesUpdateRequest | 
 
 // Update an existing role
-AdminRolesAPI.patchAdminRolesUpdate(orgId: orgId, roleId: roleId) { (response, error) in
+AdminRolesAPI.patchAdminRolesUpdate(orgId: orgId, roleId: roleId, putAdminOrgRolesUpdateRequest: putAdminOrgRolesUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -611,6 +620,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **roleId** | **String** |  | 
+ **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -622,14 +632,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminRolesUpdate**
 ```swift
-    open class func putAdminRolesUpdate(orgId: String, roleId: String, completion: @escaping (_ data: AdminRolesCreateResponse?, _ error: Error?) -> Void)
+    open class func putAdminRolesUpdate(orgId: String, roleId: String, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest, completion: @escaping (_ data: AdminRolesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update an existing role
@@ -641,9 +651,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let roleId = "roleId_example" // String | 
+let putAdminOrgRolesUpdateRequest = PutAdminOrgRolesUpdateRequest(name: "name_example", description: "description_example") // PutAdminOrgRolesUpdateRequest | 
 
 // Update an existing role
-AdminRolesAPI.putAdminRolesUpdate(orgId: orgId, roleId: roleId) { (response, error) in
+AdminRolesAPI.putAdminRolesUpdate(orgId: orgId, roleId: roleId, putAdminOrgRolesUpdateRequest: putAdminOrgRolesUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -661,6 +672,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **roleId** | **String** |  | 
+ **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -672,7 +684,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

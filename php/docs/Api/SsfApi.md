@@ -13,7 +13,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 ## `createStreamConfig()`
 
 ```php
-createStreamConfig($orgId): \LumoAuth\ApiClient\Model\SsfStream
+createStreamConfig($orgId, $createStreamConfigRequest): \LumoAuth\ApiClient\Model\SsfStream
 ```
 
 Create an SSF stream
@@ -41,9 +41,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\SsfApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$createStreamConfigRequest = new \LumoAuth\ApiClient\Model\CreateStreamConfigRequest(); // \LumoAuth\ApiClient\Model\CreateStreamConfigRequest
 
 try {
-    $result = $apiInstance->createStreamConfig($orgId);
+    $result = $apiInstance->createStreamConfig($orgId, $createStreamConfigRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling SsfApi->createStreamConfig: ', $e->getMessage(), PHP_EOL;
@@ -55,6 +56,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **createStreamConfigRequest** | [**\LumoAuth\ApiClient\Model\CreateStreamConfigRequest**](../Model/CreateStreamConfigRequest.md)|  | |
 
 ### Return type
 
@@ -66,7 +68,7 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -207,7 +209,7 @@ try {
 ## `verifyStream()`
 
 ```php
-verifyStream($orgId)
+verifyStream($orgId, $verifyStreamRequest)
 ```
 
 Request a stream verification event
@@ -237,9 +239,10 @@ $apiInstance = new LumoAuth\ApiClient\Api\SsfApi(
     $config
 );
 $orgId = 'orgId_example'; // string
+$verifyStreamRequest = new \LumoAuth\ApiClient\Model\VerifyStreamRequest(); // \LumoAuth\ApiClient\Model\VerifyStreamRequest
 
 try {
-    $apiInstance->verifyStream($orgId);
+    $apiInstance->verifyStream($orgId, $verifyStreamRequest);
 } catch (Exception $e) {
     echo 'Exception when calling SsfApi->verifyStream: ', $e->getMessage(), PHP_EOL;
 }
@@ -250,6 +253,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **orgId** | **string**|  | |
+| **verifyStreamRequest** | [**\LumoAuth\ApiClient\Model\VerifyStreamRequest**](../Model/VerifyStreamRequest.md)|  | [optional] |
 
 ### Return type
 
@@ -261,7 +265,7 @@ void (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

@@ -18,7 +18,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Remove one of a user&#39;s authenticators
 
-Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the tenant MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
+Revokes a single authenticator (e.g. a lost phone). Trusted devices are revoked and the user is notified. Does not bypass the organization&#39;s MFA requirement: the user is prompted to enroll again at next sign-in. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh &#x60;auth_time&#x60; (otherwise 401 &#x60;insufficient_user_authentication&#x60;), and an administrator who holds a second factor sends &#x60;X-MFA-Challenge&#x60; with an approved step_up challenge (otherwise 403 &#x60;step_up_required&#x60;). Organization API keys are not subject to this check.
 
 ### Example
 ```java

@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -33,12 +33,15 @@ import io.lumoauth.client.model.CheckEmailFirstResponse;
 import io.lumoauth.client.model.DeviceAuthorizationResponse;
 import io.lumoauth.client.model.IntrospectResponse;
 import io.lumoauth.client.model.ParResponse;
+import io.lumoauth.client.model.RegisterClientRequest;
 import io.lumoauth.client.model.RegisterClientResponse;
 import io.lumoauth.client.model.RegisteredClientMetadata;
 import io.lumoauth.client.model.RequestMagicLinkRequest;
 import io.lumoauth.client.model.RequestMagicLinkResponse;
+import io.lumoauth.client.model.SubmitLoginJsonRequest;
 import io.lumoauth.client.model.SubmitLoginJsonResponse;
 import io.lumoauth.client.model.TokenResponse;
+import java.net.URI;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -229,6 +232,19 @@ public class OAuthApi {
     /**
      * Build call for backchannelAuthorize
      * @param orgId  (required)
+     * @param scope  (required)
+     * @param loginHint  (optional)
+     * @param loginHintToken  (optional)
+     * @param idTokenHint  (optional)
+     * @param bindingMessage  (optional)
+     * @param acrValues  (optional)
+     * @param requestedExpiry Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional)
+     * @param clientNotificationToken  (optional)
+     * @param authorizationDetails  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -237,13 +253,13 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authentication request accepted (CIBA Core §7.3). The hint is never confirmed: an unknown user yields an unstored auth_req_id of the same shape. interval is present for poll and ping delivery modes (always for agent-initiated requests). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (also for more than one client authentication method; an agent&#39;s Bearer / DPoP credential next to the application&#39;s credentials is not a second one), unauthorized_client (CIBA not enabled for the client or plan, or agent_id named but not authenticated by that agent), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details (CIBA Core §13). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> access_denied. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call backchannelAuthorizeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call backchannelAuthorizeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String scope, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String loginHintToken, @javax.annotation.Nullable String idTokenHint, @javax.annotation.Nullable String bindingMessage, @javax.annotation.Nullable String acrValues, @javax.annotation.Nullable Integer requestedExpiry, @javax.annotation.Nullable String clientNotificationToken, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -269,6 +285,58 @@ public class OAuthApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (scope != null) {
+            localVarFormParams.put("scope", scope);
+        }
+
+        if (loginHint != null) {
+            localVarFormParams.put("login_hint", loginHint);
+        }
+
+        if (loginHintToken != null) {
+            localVarFormParams.put("login_hint_token", loginHintToken);
+        }
+
+        if (idTokenHint != null) {
+            localVarFormParams.put("id_token_hint", idTokenHint);
+        }
+
+        if (bindingMessage != null) {
+            localVarFormParams.put("binding_message", bindingMessage);
+        }
+
+        if (acrValues != null) {
+            localVarFormParams.put("acr_values", acrValues);
+        }
+
+        if (requestedExpiry != null) {
+            localVarFormParams.put("requested_expiry", requestedExpiry);
+        }
+
+        if (clientNotificationToken != null) {
+            localVarFormParams.put("client_notification_token", clientNotificationToken);
+        }
+
+        if (authorizationDetails != null) {
+            localVarFormParams.put("authorization_details", authorizationDetails);
+        }
+
+        if (clientId != null) {
+            localVarFormParams.put("client_id", clientId);
+        }
+
+        if (clientSecret != null) {
+            localVarFormParams.put("client_secret", clientSecret);
+        }
+
+        if (clientAssertionType != null) {
+            localVarFormParams.put("client_assertion_type", clientAssertionType);
+        }
+
+        if (clientAssertion != null) {
+            localVarFormParams.put("client_assertion", clientAssertion);
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -278,6 +346,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/x-www-form-urlencoded"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -289,13 +358,18 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call backchannelAuthorizeValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call backchannelAuthorizeValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String scope, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String loginHintToken, @javax.annotation.Nullable String idTokenHint, @javax.annotation.Nullable String bindingMessage, @javax.annotation.Nullable String acrValues, @javax.annotation.Nullable Integer requestedExpiry, @javax.annotation.Nullable String clientNotificationToken, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling backchannelAuthorize(Async)");
         }
 
-        return backchannelAuthorizeCall(orgId, _callback);
+        // verify the required parameter 'scope' is set
+        if (scope == null) {
+            throw new ApiException("Missing the required parameter 'scope' when calling backchannelAuthorize(Async)");
+        }
+
+        return backchannelAuthorizeCall(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
 
     }
 
@@ -303,6 +377,19 @@ public class OAuthApi {
      * CIBA backchannel authentication request
      * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
      * @param orgId  (required)
+     * @param scope  (required)
+     * @param loginHint  (optional)
+     * @param loginHintToken  (optional)
+     * @param idTokenHint  (optional)
+     * @param bindingMessage  (optional)
+     * @param acrValues  (optional)
+     * @param requestedExpiry Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional)
+     * @param clientNotificationToken  (optional)
+     * @param authorizationDetails  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return BackchannelAuthorizeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -310,14 +397,14 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authentication request accepted (CIBA Core §7.3). The hint is never confirmed: an unknown user yields an unstored auth_req_id of the same shape. interval is present for poll and ping delivery modes (always for agent-initiated requests). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (also for more than one client authentication method; an agent&#39;s Bearer / DPoP credential next to the application&#39;s credentials is not a second one), unauthorized_client (CIBA not enabled for the client or plan, or agent_id named but not authenticated by that agent), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details (CIBA Core §13). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> access_denied. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
-    public BackchannelAuthorizeResponse backchannelAuthorize(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<BackchannelAuthorizeResponse> localVarResp = backchannelAuthorizeWithHttpInfo(orgId);
+    public BackchannelAuthorizeResponse backchannelAuthorize(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String scope, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String loginHintToken, @javax.annotation.Nullable String idTokenHint, @javax.annotation.Nullable String bindingMessage, @javax.annotation.Nullable String acrValues, @javax.annotation.Nullable Integer requestedExpiry, @javax.annotation.Nullable String clientNotificationToken, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        ApiResponse<BackchannelAuthorizeResponse> localVarResp = backchannelAuthorizeWithHttpInfo(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion);
         return localVarResp.getData();
     }
 
@@ -325,6 +412,19 @@ public class OAuthApi {
      * CIBA backchannel authentication request
      * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
      * @param orgId  (required)
+     * @param scope  (required)
+     * @param loginHint  (optional)
+     * @param loginHintToken  (optional)
+     * @param idTokenHint  (optional)
+     * @param bindingMessage  (optional)
+     * @param acrValues  (optional)
+     * @param requestedExpiry Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional)
+     * @param clientNotificationToken  (optional)
+     * @param authorizationDetails  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return ApiResponse&lt;BackchannelAuthorizeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -332,14 +432,14 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authentication request accepted (CIBA Core §7.3). The hint is never confirmed: an unknown user yields an unstored auth_req_id of the same shape. interval is present for poll and ping delivery modes (always for agent-initiated requests). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (also for more than one client authentication method; an agent&#39;s Bearer / DPoP credential next to the application&#39;s credentials is not a second one), unauthorized_client (CIBA not enabled for the client or plan, or agent_id named but not authenticated by that agent), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details (CIBA Core §13). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> access_denied. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<BackchannelAuthorizeResponse> backchannelAuthorizeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = backchannelAuthorizeValidateBeforeCall(orgId, null);
+    public ApiResponse<BackchannelAuthorizeResponse> backchannelAuthorizeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String scope, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String loginHintToken, @javax.annotation.Nullable String idTokenHint, @javax.annotation.Nullable String bindingMessage, @javax.annotation.Nullable String acrValues, @javax.annotation.Nullable Integer requestedExpiry, @javax.annotation.Nullable String clientNotificationToken, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        okhttp3.Call localVarCall = backchannelAuthorizeValidateBeforeCall(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion, null);
         Type localVarReturnType = new TypeToken<BackchannelAuthorizeResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -348,6 +448,19 @@ public class OAuthApi {
      * CIBA backchannel authentication request (asynchronously)
      * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
      * @param orgId  (required)
+     * @param scope  (required)
+     * @param loginHint  (optional)
+     * @param loginHintToken  (optional)
+     * @param idTokenHint  (optional)
+     * @param bindingMessage  (optional)
+     * @param acrValues  (optional)
+     * @param requestedExpiry Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional)
+     * @param clientNotificationToken  (optional)
+     * @param authorizationDetails  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -356,15 +469,15 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Authentication request accepted (CIBA Core §7.3). The hint is never confirmed: an unknown user yields an unstored auth_req_id of the same shape. interval is present for poll and ping delivery modes (always for agent-initiated requests). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (also for more than one client authentication method; an agent&#39;s Bearer / DPoP credential next to the application&#39;s credentials is not a second one), unauthorized_client (CIBA not enabled for the client or plan, or agent_id named but not authenticated by that agent), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details (CIBA Core §13). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> access_denied. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests (rate limit exceeded; Retry-After names the seconds to wait), or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call backchannelAuthorizeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<BackchannelAuthorizeResponse> _callback) throws ApiException {
+    public okhttp3.Call backchannelAuthorizeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String scope, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String loginHintToken, @javax.annotation.Nullable String idTokenHint, @javax.annotation.Nullable String bindingMessage, @javax.annotation.Nullable String acrValues, @javax.annotation.Nullable Integer requestedExpiry, @javax.annotation.Nullable String clientNotificationToken, @javax.annotation.Nullable String authorizationDetails, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback<BackchannelAuthorizeResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = backchannelAuthorizeValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = backchannelAuthorizeValidateBeforeCall(orgId, scope, loginHint, loginHintToken, idTokenHint, bindingMessage, acrValues, requestedExpiry, clientNotificationToken, authorizationDetails, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
         Type localVarReturnType = new TypeToken<BackchannelAuthorizeResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -525,6 +638,12 @@ public class OAuthApi {
     /**
      * Build call for deviceAuthorization
      * @param orgId  (required)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
+     * @param scope Space-separated scopes. (optional)
+     * @param resource RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -533,12 +652,12 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Device authorization response (RFC 8628 §3.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — a confidential client failed to authenticate. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (more than one client authentication method in the request), unauthorized_client (the client may not use the device grant), invalid_scope, or invalid_target (a resource that is malformed or not registered for the client). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. Also for a missing client_id: a public client sends its client_id, a confidential client authenticates (by HTTP Basic it needs no client_id in the body). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deviceAuthorizationCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call deviceAuthorizationCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -564,6 +683,30 @@ public class OAuthApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (clientId != null) {
+            localVarFormParams.put("client_id", clientId);
+        }
+
+        if (clientSecret != null) {
+            localVarFormParams.put("client_secret", clientSecret);
+        }
+
+        if (clientAssertionType != null) {
+            localVarFormParams.put("client_assertion_type", clientAssertionType);
+        }
+
+        if (clientAssertion != null) {
+            localVarFormParams.put("client_assertion", clientAssertion);
+        }
+
+        if (scope != null) {
+            localVarFormParams.put("scope", scope);
+        }
+
+        if (resource != null) {
+            localVarFormParams.put("resource", resource);
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -573,6 +716,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/x-www-form-urlencoded"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -584,20 +728,26 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call deviceAuthorizationValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call deviceAuthorizationValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling deviceAuthorization(Async)");
         }
 
-        return deviceAuthorizationCall(orgId, _callback);
+        return deviceAuthorizationCall(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, _callback);
 
     }
 
     /**
      * Device authorization request (RFC 8628)
-     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
      * @param orgId  (required)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
+     * @param scope Space-separated scopes. (optional)
+     * @param resource RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional)
      * @return DeviceAuthorizationResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -605,20 +755,26 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Device authorization response (RFC 8628 §3.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — a confidential client failed to authenticate. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (more than one client authentication method in the request), unauthorized_client (the client may not use the device grant), invalid_scope, or invalid_target (a resource that is malformed or not registered for the client). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. Also for a missing client_id: a public client sends its client_id, a confidential client authenticates (by HTTP Basic it needs no client_id in the body). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public DeviceAuthorizationResponse deviceAuthorization(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<DeviceAuthorizationResponse> localVarResp = deviceAuthorizationWithHttpInfo(orgId);
+    public DeviceAuthorizationResponse deviceAuthorization(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource) throws ApiException {
+        ApiResponse<DeviceAuthorizationResponse> localVarResp = deviceAuthorizationWithHttpInfo(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource);
         return localVarResp.getData();
     }
 
     /**
      * Device authorization request (RFC 8628)
-     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
      * @param orgId  (required)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
+     * @param scope Space-separated scopes. (optional)
+     * @param resource RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional)
      * @return ApiResponse&lt;DeviceAuthorizationResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -626,21 +782,27 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Device authorization response (RFC 8628 §3.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — a confidential client failed to authenticate. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (more than one client authentication method in the request), unauthorized_client (the client may not use the device grant), invalid_scope, or invalid_target (a resource that is malformed or not registered for the client). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. Also for a missing client_id: a public client sends its client_id, a confidential client authenticates (by HTTP Basic it needs no client_id in the body). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DeviceAuthorizationResponse> deviceAuthorizationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = deviceAuthorizationValidateBeforeCall(orgId, null);
+    public ApiResponse<DeviceAuthorizationResponse> deviceAuthorizationWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource) throws ApiException {
+        okhttp3.Call localVarCall = deviceAuthorizationValidateBeforeCall(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, null);
         Type localVarReturnType = new TypeToken<DeviceAuthorizationResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Device authorization request (RFC 8628) (asynchronously)
-     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
      * @param orgId  (required)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
+     * @param scope Space-separated scopes. (optional)
+     * @param resource RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -649,14 +811,14 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Device authorization response (RFC 8628 §3.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — a confidential client failed to authenticate. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (more than one client authentication method in the request), unauthorized_client (the client may not use the device grant), invalid_scope, or invalid_target (a resource that is malformed or not registered for the client). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. Also for a missing client_id: a public client sends its client_id, a confidential client authenticates (by HTTP Basic it needs no client_id in the body). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deviceAuthorizationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<DeviceAuthorizationResponse> _callback) throws ApiException {
+    public okhttp3.Call deviceAuthorizationAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, final ApiCallback<DeviceAuthorizationResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = deviceAuthorizationValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = deviceAuthorizationValidateBeforeCall(orgId, clientId, clientSecret, clientAssertionType, clientAssertion, scope, resource, _callback);
         Type localVarReturnType = new TypeToken<DeviceAuthorizationResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1075,6 +1237,12 @@ public class OAuthApi {
     /**
      * Build call for introspect
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1082,13 +1250,13 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request — token parameter missing. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for a user token that carries the email scope (opaque and JWT alike); iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request: token parameter missing, or more than one client authentication method in the request (RFC 6749 §2.3). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client cannot introspect. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call introspectCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call introspectCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1114,6 +1282,30 @@ public class OAuthApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (token != null) {
+            localVarFormParams.put("token", token);
+        }
+
+        if (tokenTypeHint != null) {
+            localVarFormParams.put("token_type_hint", tokenTypeHint);
+        }
+
+        if (clientId != null) {
+            localVarFormParams.put("client_id", clientId);
+        }
+
+        if (clientSecret != null) {
+            localVarFormParams.put("client_secret", clientSecret);
+        }
+
+        if (clientAssertionType != null) {
+            localVarFormParams.put("client_assertion_type", clientAssertionType);
+        }
+
+        if (clientAssertion != null) {
+            localVarFormParams.put("client_assertion", clientAssertion);
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1123,6 +1315,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/x-www-form-urlencoded"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1134,13 +1327,18 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call introspectValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call introspectValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling introspect(Async)");
         }
 
-        return introspectCall(orgId, _callback);
+        // verify the required parameter 'token' is set
+        if (token == null) {
+            throw new ApiException("Missing the required parameter 'token' when calling introspect(Async)");
+        }
+
+        return introspectCall(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
 
     }
 
@@ -1148,20 +1346,26 @@ public class OAuthApi {
      * Token introspection (RFC 7662)
      * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return IntrospectResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request — token parameter missing. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for a user token that carries the email scope (opaque and JWT alike); iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request: token parameter missing, or more than one client authentication method in the request (RFC 6749 §2.3). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client cannot introspect. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public IntrospectResponse introspect(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<IntrospectResponse> localVarResp = introspectWithHttpInfo(orgId);
+    public IntrospectResponse introspect(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        ApiResponse<IntrospectResponse> localVarResp = introspectWithHttpInfo(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
         return localVarResp.getData();
     }
 
@@ -1169,20 +1373,26 @@ public class OAuthApi {
      * Token introspection (RFC 7662)
      * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return ApiResponse&lt;IntrospectResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request — token parameter missing. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for a user token that carries the email scope (opaque and JWT alike); iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request: token parameter missing, or more than one client authentication method in the request (RFC 6749 §2.3). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client cannot introspect. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<IntrospectResponse> introspectWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = introspectValidateBeforeCall(orgId, null);
+    public ApiResponse<IntrospectResponse> introspectWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        okhttp3.Call localVarCall = introspectValidateBeforeCall(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, null);
         Type localVarReturnType = new TypeToken<IntrospectResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1191,6 +1401,12 @@ public class OAuthApi {
      * Token introspection (RFC 7662) (asynchronously)
      * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1198,15 +1414,15 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request — token parameter missing. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for a user token that carries the email scope (opaque and JWT alike); iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request: token parameter missing, or more than one client authentication method in the request (RFC 6749 §2.3). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client cannot introspect. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call introspectAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<IntrospectResponse> _callback) throws ApiException {
+    public okhttp3.Call introspectAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback<IntrospectResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = introspectValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = introspectValidateBeforeCall(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
         Type localVarReturnType = new TypeToken<IntrospectResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1214,6 +1430,21 @@ public class OAuthApi {
     /**
      * Build call for par
      * @param orgId  (required)
+     * @param responseType  (optional)
+     * @param redirectUri  (optional)
+     * @param scope  (optional)
+     * @param state  (optional)
+     * @param nonce  (optional)
+     * @param codeChallenge  (optional)
+     * @param codeChallengeMethod  (optional)
+     * @param request A signed request object (JAR, RFC 9101). (optional)
+     * @param resource  (optional)
+     * @param prompt  (optional)
+     * @param loginHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1222,12 +1453,12 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (also for more than one client authentication method) / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call parCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call parCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String responseType, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String scope, @javax.annotation.Nullable String state, @javax.annotation.Nullable String nonce, @javax.annotation.Nullable String codeChallenge, @javax.annotation.Nullable String codeChallengeMethod, @javax.annotation.Nullable String request, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String prompt, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1253,6 +1484,66 @@ public class OAuthApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (responseType != null) {
+            localVarFormParams.put("response_type", responseType);
+        }
+
+        if (redirectUri != null) {
+            localVarFormParams.put("redirect_uri", redirectUri);
+        }
+
+        if (scope != null) {
+            localVarFormParams.put("scope", scope);
+        }
+
+        if (state != null) {
+            localVarFormParams.put("state", state);
+        }
+
+        if (nonce != null) {
+            localVarFormParams.put("nonce", nonce);
+        }
+
+        if (codeChallenge != null) {
+            localVarFormParams.put("code_challenge", codeChallenge);
+        }
+
+        if (codeChallengeMethod != null) {
+            localVarFormParams.put("code_challenge_method", codeChallengeMethod);
+        }
+
+        if (request != null) {
+            localVarFormParams.put("request", request);
+        }
+
+        if (resource != null) {
+            localVarFormParams.put("resource", resource);
+        }
+
+        if (prompt != null) {
+            localVarFormParams.put("prompt", prompt);
+        }
+
+        if (loginHint != null) {
+            localVarFormParams.put("login_hint", loginHint);
+        }
+
+        if (clientId != null) {
+            localVarFormParams.put("client_id", clientId);
+        }
+
+        if (clientSecret != null) {
+            localVarFormParams.put("client_secret", clientSecret);
+        }
+
+        if (clientAssertionType != null) {
+            localVarFormParams.put("client_assertion_type", clientAssertionType);
+        }
+
+        if (clientAssertion != null) {
+            localVarFormParams.put("client_assertion", clientAssertion);
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1262,6 +1553,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/x-www-form-urlencoded"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1273,13 +1565,13 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call parValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call parValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String responseType, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String scope, @javax.annotation.Nullable String state, @javax.annotation.Nullable String nonce, @javax.annotation.Nullable String codeChallenge, @javax.annotation.Nullable String codeChallengeMethod, @javax.annotation.Nullable String request, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String prompt, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling par(Async)");
         }
 
-        return parCall(orgId, _callback);
+        return parCall(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
 
     }
 
@@ -1287,6 +1579,21 @@ public class OAuthApi {
      * Pushed authorization request (RFC 9126)
      * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
      * @param orgId  (required)
+     * @param responseType  (optional)
+     * @param redirectUri  (optional)
+     * @param scope  (optional)
+     * @param state  (optional)
+     * @param nonce  (optional)
+     * @param codeChallenge  (optional)
+     * @param codeChallengeMethod  (optional)
+     * @param request A signed request object (JAR, RFC 9101). (optional)
+     * @param resource  (optional)
+     * @param prompt  (optional)
+     * @param loginHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return ParResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1294,13 +1601,13 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (also for more than one client authentication method) / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ParResponse par(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<ParResponse> localVarResp = parWithHttpInfo(orgId);
+    public ParResponse par(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String responseType, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String scope, @javax.annotation.Nullable String state, @javax.annotation.Nullable String nonce, @javax.annotation.Nullable String codeChallenge, @javax.annotation.Nullable String codeChallengeMethod, @javax.annotation.Nullable String request, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String prompt, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        ApiResponse<ParResponse> localVarResp = parWithHttpInfo(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion);
         return localVarResp.getData();
     }
 
@@ -1308,6 +1615,21 @@ public class OAuthApi {
      * Pushed authorization request (RFC 9126)
      * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
      * @param orgId  (required)
+     * @param responseType  (optional)
+     * @param redirectUri  (optional)
+     * @param scope  (optional)
+     * @param state  (optional)
+     * @param nonce  (optional)
+     * @param codeChallenge  (optional)
+     * @param codeChallengeMethod  (optional)
+     * @param request A signed request object (JAR, RFC 9101). (optional)
+     * @param resource  (optional)
+     * @param prompt  (optional)
+     * @param loginHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return ApiResponse&lt;ParResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1315,13 +1637,13 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (also for more than one client authentication method) / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<ParResponse> parWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = parValidateBeforeCall(orgId, null);
+    public ApiResponse<ParResponse> parWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String responseType, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String scope, @javax.annotation.Nullable String state, @javax.annotation.Nullable String nonce, @javax.annotation.Nullable String codeChallenge, @javax.annotation.Nullable String codeChallengeMethod, @javax.annotation.Nullable String request, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String prompt, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        okhttp3.Call localVarCall = parValidateBeforeCall(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion, null);
         Type localVarReturnType = new TypeToken<ParResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1330,6 +1652,21 @@ public class OAuthApi {
      * Pushed authorization request (RFC 9126) (asynchronously)
      * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
      * @param orgId  (required)
+     * @param responseType  (optional)
+     * @param redirectUri  (optional)
+     * @param scope  (optional)
+     * @param state  (optional)
+     * @param nonce  (optional)
+     * @param codeChallenge  (optional)
+     * @param codeChallengeMethod  (optional)
+     * @param request A signed request object (JAR, RFC 9101). (optional)
+     * @param resource  (optional)
+     * @param prompt  (optional)
+     * @param loginHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1338,14 +1675,14 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (also for more than one client authentication method) / invalid_target / invalid_request_object, or the organization is unknown. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call parAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<ParResponse> _callback) throws ApiException {
+    public okhttp3.Call parAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String responseType, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String scope, @javax.annotation.Nullable String state, @javax.annotation.Nullable String nonce, @javax.annotation.Nullable String codeChallenge, @javax.annotation.Nullable String codeChallengeMethod, @javax.annotation.Nullable String request, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String prompt, @javax.annotation.Nullable String loginHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback<ParResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = parValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = parValidateBeforeCall(orgId, responseType, redirectUri, scope, state, nonce, codeChallenge, codeChallengeMethod, request, resource, prompt, loginHint, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
         Type localVarReturnType = new TypeToken<ParResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1353,6 +1690,7 @@ public class OAuthApi {
     /**
      * Build call for registerClient
      * @param orgId  (required)
+     * @param registerClientRequest RFC 7591 client metadata. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1362,12 +1700,12 @@ public class OAuthApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Client registered (OIDC Dynamic Client Registration §3.2). client_secret / client_secret_expires_at only for confidential clients; registration_access_token and registration_client_uri when a registration access token was issued; the remaining optional members echo registered metadata and are omitted when empty or at their default. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token: the initial access token is missing or not valid (RFC 7591 §3, RFC 6750 §3.1). WWW-Authenticate: Bearer realm&#x3D;\&quot;Client Registration\&quot;, with error&#x3D;\&quot;invalid_token\&quot; when a token was sent. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call registerClientCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call registerClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterClientRequest registerClientRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1381,7 +1719,7 @@ public class OAuthApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = registerClientRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/connect/register"
@@ -1402,6 +1740,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1413,13 +1752,18 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call registerClientValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call registerClientValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterClientRequest registerClientRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling registerClient(Async)");
         }
 
-        return registerClientCall(orgId, _callback);
+        // verify the required parameter 'registerClientRequest' is set
+        if (registerClientRequest == null) {
+            throw new ApiException("Missing the required parameter 'registerClientRequest' when calling registerClient(Async)");
+        }
+
+        return registerClientCall(orgId, registerClientRequest, _callback);
 
     }
 
@@ -1427,6 +1771,7 @@ public class OAuthApi {
      * Dynamic client registration (RFC 7591 / OIDC DCR)
      * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
      * @param orgId  (required)
+     * @param registerClientRequest RFC 7591 client metadata. (required)
      * @return RegisterClientResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1435,13 +1780,13 @@ public class OAuthApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Client registered (OIDC Dynamic Client Registration §3.2). client_secret / client_secret_expires_at only for confidential clients; registration_access_token and registration_client_uri when a registration access token was issued; the remaining optional members echo registered metadata and are omitted when empty or at their default. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token: the initial access token is missing or not valid (RFC 7591 §3, RFC 6750 §3.1). WWW-Authenticate: Bearer realm&#x3D;\&quot;Client Registration\&quot;, with error&#x3D;\&quot;invalid_token\&quot; when a token was sent. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public RegisterClientResponse registerClient(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<RegisterClientResponse> localVarResp = registerClientWithHttpInfo(orgId);
+    public RegisterClientResponse registerClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterClientRequest registerClientRequest) throws ApiException {
+        ApiResponse<RegisterClientResponse> localVarResp = registerClientWithHttpInfo(orgId, registerClientRequest);
         return localVarResp.getData();
     }
 
@@ -1449,6 +1794,7 @@ public class OAuthApi {
      * Dynamic client registration (RFC 7591 / OIDC DCR)
      * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
      * @param orgId  (required)
+     * @param registerClientRequest RFC 7591 client metadata. (required)
      * @return ApiResponse&lt;RegisterClientResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1457,13 +1803,13 @@ public class OAuthApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Client registered (OIDC Dynamic Client Registration §3.2). client_secret / client_secret_expires_at only for confidential clients; registration_access_token and registration_client_uri when a registration access token was issued; the remaining optional members echo registered metadata and are omitted when empty or at their default. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token: the initial access token is missing or not valid (RFC 7591 §3, RFC 6750 §3.1). WWW-Authenticate: Bearer realm&#x3D;\&quot;Client Registration\&quot;, with error&#x3D;\&quot;invalid_token\&quot; when a token was sent. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<RegisterClientResponse> registerClientWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = registerClientValidateBeforeCall(orgId, null);
+    public ApiResponse<RegisterClientResponse> registerClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterClientRequest registerClientRequest) throws ApiException {
+        okhttp3.Call localVarCall = registerClientValidateBeforeCall(orgId, registerClientRequest, null);
         Type localVarReturnType = new TypeToken<RegisterClientResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1472,6 +1818,7 @@ public class OAuthApi {
      * Dynamic client registration (RFC 7591 / OIDC DCR) (asynchronously)
      * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it. Refused with invalid_client_metadata: grant_types other than authorization_code and refresh_token, response_types other than code and none, subject_type other than public, sector_identifier_uri, request_uris, userinfo_signed_response_alg, an id_token_signed_response_alg other than the organization&#39;s signing algorithm, and every encryption member (id_token_encrypted_response_*, userinfo_encrypted_response_*, request_object_encryption_*, authorization_encrypted_response_*).
      * @param orgId  (required)
+     * @param registerClientRequest RFC 7591 client metadata. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1481,14 +1828,14 @@ public class OAuthApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 201 </td><td> Client registered (OIDC Dynamic Client Registration §3.2). client_secret / client_secret_expires_at only for confidential clients; registration_access_token and registration_client_uri when a registration access token was issued; the remaining optional members echo registered metadata and are omitted when empty or at their default. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token: the initial access token is missing or not valid (RFC 7591 §3, RFC 6750 §3.1). WWW-Authenticate: Bearer realm&#x3D;\&quot;Client Registration\&quot;, with error&#x3D;\&quot;invalid_token\&quot; when a token was sent. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 403 </td><td> access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call registerClientAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<RegisterClientResponse> _callback) throws ApiException {
+    public okhttp3.Call registerClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull RegisterClientRequest registerClientRequest, final ApiCallback<RegisterClientResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = registerClientValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = registerClientValidateBeforeCall(orgId, registerClientRequest, _callback);
         Type localVarReturnType = new TypeToken<RegisterClientResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1649,6 +1996,12 @@ public class OAuthApi {
     /**
      * Build call for revoke
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1656,13 +2009,13 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (token parameter missing, or more than one client authentication method in the request, RFC 6749 §2.3), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client revokes its own tokens with its client_id. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call revokeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call revokeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1688,6 +2041,30 @@ public class OAuthApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (token != null) {
+            localVarFormParams.put("token", token);
+        }
+
+        if (tokenTypeHint != null) {
+            localVarFormParams.put("token_type_hint", tokenTypeHint);
+        }
+
+        if (clientId != null) {
+            localVarFormParams.put("client_id", clientId);
+        }
+
+        if (clientSecret != null) {
+            localVarFormParams.put("client_secret", clientSecret);
+        }
+
+        if (clientAssertionType != null) {
+            localVarFormParams.put("client_assertion_type", clientAssertionType);
+        }
+
+        if (clientAssertion != null) {
+            localVarFormParams.put("client_assertion", clientAssertion);
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1697,6 +2074,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/x-www-form-urlencoded"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1708,13 +2086,18 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call revokeValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call revokeValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling revoke(Async)");
         }
 
-        return revokeCall(orgId, _callback);
+        // verify the required parameter 'token' is set
+        if (token == null) {
+            throw new ApiException("Missing the required parameter 'token' when calling revoke(Async)");
+        }
+
+        return revokeCall(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
 
     }
 
@@ -1722,20 +2105,26 @@ public class OAuthApi {
      * Token revocation (RFC 7009)
      * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (token parameter missing, or more than one client authentication method in the request, RFC 6749 §2.3), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client revokes its own tokens with its client_id. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public Object revoke(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<Object> localVarResp = revokeWithHttpInfo(orgId);
+    public Object revoke(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        ApiResponse<Object> localVarResp = revokeWithHttpInfo(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion);
         return localVarResp.getData();
     }
 
@@ -1743,20 +2132,26 @@ public class OAuthApi {
      * Token revocation (RFC 7009)
      * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (token parameter missing, or more than one client authentication method in the request, RFC 6749 §2.3), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client revokes its own tokens with its client_id. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> revokeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = revokeValidateBeforeCall(orgId, null);
+    public ApiResponse<Object> revokeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        okhttp3.Call localVarCall = revokeValidateBeforeCall(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, null);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1765,6 +2160,12 @@ public class OAuthApi {
      * Token revocation (RFC 7009) (asynchronously)
      * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @param token  (required)
+     * @param tokenTypeHint  (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1772,15 +2173,15 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The token of the calling client was revoked, or the token is unknown, expired or already revoked (RFC 7009 §2.2): 200 with an empty JSON object. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (token parameter missing, or more than one client authentication method in the request, RFC 6749 §2.3), unsupported_token_type, or invalid_grant: a live token that was issued to another client or agent is not revoked (RFC 7009 §2.1). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client revokes its own tokens with its client_id. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call revokeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call revokeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String token, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback<Object> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = revokeValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = revokeValidateBeforeCall(orgId, token, tokenTypeHint, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2462,6 +2863,7 @@ public class OAuthApi {
     /**
      * Build call for submitLoginJson
      * @param orgId  (required)
+     * @param submitLoginJsonRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2477,7 +2879,7 @@ public class OAuthApi {
         <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call submitLoginJsonCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call submitLoginJsonCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull SubmitLoginJsonRequest submitLoginJsonRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2491,7 +2893,7 @@ public class OAuthApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = submitLoginJsonRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/oauth/login/json"
@@ -2512,6 +2914,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2523,13 +2926,18 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call submitLoginJsonValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call submitLoginJsonValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull SubmitLoginJsonRequest submitLoginJsonRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling submitLoginJson(Async)");
         }
 
-        return submitLoginJsonCall(orgId, _callback);
+        // verify the required parameter 'submitLoginJsonRequest' is set
+        if (submitLoginJsonRequest == null) {
+            throw new ApiException("Missing the required parameter 'submitLoginJsonRequest' when calling submitLoginJson(Async)");
+        }
+
+        return submitLoginJsonCall(orgId, submitLoginJsonRequest, _callback);
 
     }
 
@@ -2537,6 +2945,7 @@ public class OAuthApi {
      * Programmatic (JSON) login for the authorization flow
      * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
      * @param orgId  (required)
+     * @param submitLoginJsonRequest  (required)
      * @return SubmitLoginJsonResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2551,8 +2960,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
      */
-    public SubmitLoginJsonResponse submitLoginJson(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<SubmitLoginJsonResponse> localVarResp = submitLoginJsonWithHttpInfo(orgId);
+    public SubmitLoginJsonResponse submitLoginJson(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull SubmitLoginJsonRequest submitLoginJsonRequest) throws ApiException {
+        ApiResponse<SubmitLoginJsonResponse> localVarResp = submitLoginJsonWithHttpInfo(orgId, submitLoginJsonRequest);
         return localVarResp.getData();
     }
 
@@ -2560,6 +2969,7 @@ public class OAuthApi {
      * Programmatic (JSON) login for the authorization flow
      * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
      * @param orgId  (required)
+     * @param submitLoginJsonRequest  (required)
      * @return ApiResponse&lt;SubmitLoginJsonResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2574,8 +2984,8 @@ public class OAuthApi {
         <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<SubmitLoginJsonResponse> submitLoginJsonWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = submitLoginJsonValidateBeforeCall(orgId, null);
+    public ApiResponse<SubmitLoginJsonResponse> submitLoginJsonWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull SubmitLoginJsonRequest submitLoginJsonRequest) throws ApiException {
+        okhttp3.Call localVarCall = submitLoginJsonValidateBeforeCall(orgId, submitLoginJsonRequest, null);
         Type localVarReturnType = new TypeToken<SubmitLoginJsonResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2584,6 +2994,7 @@ public class OAuthApi {
      * Programmatic (JSON) login for the authorization flow (asynchronously)
      * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
      * @param orgId  (required)
+     * @param submitLoginJsonRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2599,9 +3010,9 @@ public class OAuthApi {
         <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call submitLoginJsonAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<SubmitLoginJsonResponse> _callback) throws ApiException {
+    public okhttp3.Call submitLoginJsonAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull SubmitLoginJsonRequest submitLoginJsonRequest, final ApiCallback<SubmitLoginJsonResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = submitLoginJsonValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = submitLoginJsonValidateBeforeCall(orgId, submitLoginJsonRequest, _callback);
         Type localVarReturnType = new TypeToken<SubmitLoginJsonResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2744,6 +3155,25 @@ public class OAuthApi {
     /**
      * Build call for token
      * @param orgId  (required)
+     * @param grantType  (required)
+     * @param code  (optional)
+     * @param redirectUri  (optional)
+     * @param codeVerifier  (optional)
+     * @param refreshToken  (optional)
+     * @param deviceCode  (optional)
+     * @param authReqId CIBA (optional)
+     * @param scope  (optional)
+     * @param resource  (optional)
+     * @param subjectToken Token exchange (RFC 8693) (optional)
+     * @param subjectTokenType  (optional)
+     * @param actorToken  (optional)
+     * @param actorTokenType  (optional)
+     * @param requestedTokenType  (optional)
+     * @param assertion JWT bearer / ID-JAG grant (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2752,13 +3182,13 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
-        <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (also for more than one client authentication method) / invalid_grant / unauthorized_client (the client may not use this grant) / unsupported_grant_type / invalid_scope / invalid_target / access_denied (an agent refused by a conditional access policy or not allowed to act for users; a user who denied a device or CIBA request): every token endpoint error but invalid_client is 400 (RFC 6749 §5.2). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client authenticates by sending its client_id. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached (a LumoAuth extension): the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call tokenCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call tokenCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String grantType, @javax.annotation.Nullable String code, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String codeVerifier, @javax.annotation.Nullable String refreshToken, @javax.annotation.Nullable String deviceCode, @javax.annotation.Nullable String authReqId, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String subjectToken, @javax.annotation.Nullable String subjectTokenType, @javax.annotation.Nullable String actorToken, @javax.annotation.Nullable String actorTokenType, @javax.annotation.Nullable String requestedTokenType, @javax.annotation.Nullable String assertion, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2784,6 +3214,82 @@ public class OAuthApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (grantType != null) {
+            localVarFormParams.put("grant_type", grantType);
+        }
+
+        if (code != null) {
+            localVarFormParams.put("code", code);
+        }
+
+        if (redirectUri != null) {
+            localVarFormParams.put("redirect_uri", redirectUri);
+        }
+
+        if (codeVerifier != null) {
+            localVarFormParams.put("code_verifier", codeVerifier);
+        }
+
+        if (refreshToken != null) {
+            localVarFormParams.put("refresh_token", refreshToken);
+        }
+
+        if (deviceCode != null) {
+            localVarFormParams.put("device_code", deviceCode);
+        }
+
+        if (authReqId != null) {
+            localVarFormParams.put("auth_req_id", authReqId);
+        }
+
+        if (scope != null) {
+            localVarFormParams.put("scope", scope);
+        }
+
+        if (resource != null) {
+            localVarFormParams.put("resource", resource);
+        }
+
+        if (subjectToken != null) {
+            localVarFormParams.put("subject_token", subjectToken);
+        }
+
+        if (subjectTokenType != null) {
+            localVarFormParams.put("subject_token_type", subjectTokenType);
+        }
+
+        if (actorToken != null) {
+            localVarFormParams.put("actor_token", actorToken);
+        }
+
+        if (actorTokenType != null) {
+            localVarFormParams.put("actor_token_type", actorTokenType);
+        }
+
+        if (requestedTokenType != null) {
+            localVarFormParams.put("requested_token_type", requestedTokenType);
+        }
+
+        if (assertion != null) {
+            localVarFormParams.put("assertion", assertion);
+        }
+
+        if (clientId != null) {
+            localVarFormParams.put("client_id", clientId);
+        }
+
+        if (clientSecret != null) {
+            localVarFormParams.put("client_secret", clientSecret);
+        }
+
+        if (clientAssertionType != null) {
+            localVarFormParams.put("client_assertion_type", clientAssertionType);
+        }
+
+        if (clientAssertion != null) {
+            localVarFormParams.put("client_assertion", clientAssertion);
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -2793,6 +3299,7 @@ public class OAuthApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/x-www-form-urlencoded"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2804,13 +3311,18 @@ public class OAuthApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call tokenValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call tokenValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String grantType, @javax.annotation.Nullable String code, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String codeVerifier, @javax.annotation.Nullable String refreshToken, @javax.annotation.Nullable String deviceCode, @javax.annotation.Nullable String authReqId, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String subjectToken, @javax.annotation.Nullable String subjectTokenType, @javax.annotation.Nullable String actorToken, @javax.annotation.Nullable String actorTokenType, @javax.annotation.Nullable String requestedTokenType, @javax.annotation.Nullable String assertion, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling token(Async)");
         }
 
-        return tokenCall(orgId, _callback);
+        // verify the required parameter 'grantType' is set
+        if (grantType == null) {
+            throw new ApiException("Missing the required parameter 'grantType' when calling token(Async)");
+        }
+
+        return tokenCall(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
 
     }
 
@@ -2818,6 +3330,25 @@ public class OAuthApi {
      * OAuth 2.1 token endpoint
      * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
      * @param orgId  (required)
+     * @param grantType  (required)
+     * @param code  (optional)
+     * @param redirectUri  (optional)
+     * @param codeVerifier  (optional)
+     * @param refreshToken  (optional)
+     * @param deviceCode  (optional)
+     * @param authReqId CIBA (optional)
+     * @param scope  (optional)
+     * @param resource  (optional)
+     * @param subjectToken Token exchange (RFC 8693) (optional)
+     * @param subjectTokenType  (optional)
+     * @param actorToken  (optional)
+     * @param actorTokenType  (optional)
+     * @param requestedTokenType  (optional)
+     * @param assertion JWT bearer / ID-JAG grant (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return TokenResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2825,14 +3356,14 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
-        <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (also for more than one client authentication method) / invalid_grant / unauthorized_client (the client may not use this grant) / unsupported_grant_type / invalid_scope / invalid_target / access_denied (an agent refused by a conditional access policy or not allowed to act for users; a user who denied a device or CIBA request): every token endpoint error but invalid_client is 400 (RFC 6749 §5.2). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client authenticates by sending its client_id. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached (a LumoAuth extension): the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public TokenResponse token(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<TokenResponse> localVarResp = tokenWithHttpInfo(orgId);
+    public TokenResponse token(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String grantType, @javax.annotation.Nullable String code, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String codeVerifier, @javax.annotation.Nullable String refreshToken, @javax.annotation.Nullable String deviceCode, @javax.annotation.Nullable String authReqId, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String subjectToken, @javax.annotation.Nullable String subjectTokenType, @javax.annotation.Nullable String actorToken, @javax.annotation.Nullable String actorTokenType, @javax.annotation.Nullable String requestedTokenType, @javax.annotation.Nullable String assertion, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        ApiResponse<TokenResponse> localVarResp = tokenWithHttpInfo(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion);
         return localVarResp.getData();
     }
 
@@ -2840,6 +3371,25 @@ public class OAuthApi {
      * OAuth 2.1 token endpoint
      * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
      * @param orgId  (required)
+     * @param grantType  (required)
+     * @param code  (optional)
+     * @param redirectUri  (optional)
+     * @param codeVerifier  (optional)
+     * @param refreshToken  (optional)
+     * @param deviceCode  (optional)
+     * @param authReqId CIBA (optional)
+     * @param scope  (optional)
+     * @param resource  (optional)
+     * @param subjectToken Token exchange (RFC 8693) (optional)
+     * @param subjectTokenType  (optional)
+     * @param actorToken  (optional)
+     * @param actorTokenType  (optional)
+     * @param requestedTokenType  (optional)
+     * @param assertion JWT bearer / ID-JAG grant (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @return ApiResponse&lt;TokenResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2847,14 +3397,14 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
-        <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (also for more than one client authentication method) / invalid_grant / unauthorized_client (the client may not use this grant) / unsupported_grant_type / invalid_scope / invalid_target / access_denied (an agent refused by a conditional access policy or not allowed to act for users; a user who denied a device or CIBA request): every token endpoint error but invalid_client is 400 (RFC 6749 §5.2). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client authenticates by sending its client_id. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached (a LumoAuth extension): the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<TokenResponse> tokenWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = tokenValidateBeforeCall(orgId, null);
+    public ApiResponse<TokenResponse> tokenWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String grantType, @javax.annotation.Nullable String code, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String codeVerifier, @javax.annotation.Nullable String refreshToken, @javax.annotation.Nullable String deviceCode, @javax.annotation.Nullable String authReqId, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String subjectToken, @javax.annotation.Nullable String subjectTokenType, @javax.annotation.Nullable String actorToken, @javax.annotation.Nullable String actorTokenType, @javax.annotation.Nullable String requestedTokenType, @javax.annotation.Nullable String assertion, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion) throws ApiException {
+        okhttp3.Call localVarCall = tokenValidateBeforeCall(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion, null);
         Type localVarReturnType = new TypeToken<TokenResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2863,6 +3413,25 @@ public class OAuthApi {
      * OAuth 2.1 token endpoint (asynchronously)
      * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
      * @param orgId  (required)
+     * @param grantType  (required)
+     * @param code  (optional)
+     * @param redirectUri  (optional)
+     * @param codeVerifier  (optional)
+     * @param refreshToken  (optional)
+     * @param deviceCode  (optional)
+     * @param authReqId CIBA (optional)
+     * @param scope  (optional)
+     * @param resource  (optional)
+     * @param subjectToken Token exchange (RFC 8693) (optional)
+     * @param subjectTokenType  (optional)
+     * @param actorToken  (optional)
+     * @param actorTokenType  (optional)
+     * @param requestedTokenType  (optional)
+     * @param assertion JWT bearer / ID-JAG grant (optional)
+     * @param clientId Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     * @param clientSecret client_secret_post (optional)
+     * @param clientAssertionType  (optional)
+     * @param clientAssertion private_key_jwt (RFC 7523) (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2871,15 +3440,15 @@ public class OAuthApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
-        <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> plan_limit_reached — the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (also for more than one client authentication method) / invalid_grant / unauthorized_client (the client may not use this grant) / unsupported_grant_type / invalid_scope / invalid_target / access_denied (an agent refused by a conditional access policy or not allowed to act for users; a user who denied a device or CIBA request): every token endpoint error but invalid_client is 400 (RFC 6749 §5.2). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client: client authentication failed (unknown or inactive client, no client authentication, a wrong credential, or a method the client may not use). Always 401, with WWW-Authenticate. A public client authenticates by sending its client_id. </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> plan_limit_reached (a LumoAuth extension): the month&#39;s included machine-to-machine tokens or active agents are used on a plan without overage; error_description says which. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests — rate limit exceeded; Retry-After names the seconds to wait. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call tokenAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<TokenResponse> _callback) throws ApiException {
+    public okhttp3.Call tokenAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String grantType, @javax.annotation.Nullable String code, @javax.annotation.Nullable URI redirectUri, @javax.annotation.Nullable String codeVerifier, @javax.annotation.Nullable String refreshToken, @javax.annotation.Nullable String deviceCode, @javax.annotation.Nullable String authReqId, @javax.annotation.Nullable String scope, @javax.annotation.Nullable URI resource, @javax.annotation.Nullable String subjectToken, @javax.annotation.Nullable String subjectTokenType, @javax.annotation.Nullable String actorToken, @javax.annotation.Nullable String actorTokenType, @javax.annotation.Nullable String requestedTokenType, @javax.annotation.Nullable String assertion, @javax.annotation.Nullable String clientId, @javax.annotation.Nullable String clientSecret, @javax.annotation.Nullable String clientAssertionType, @javax.annotation.Nullable String clientAssertion, final ApiCallback<TokenResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = tokenValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = tokenValidateBeforeCall(orgId, grantType, code, redirectUri, codeVerifier, refreshToken, deviceCode, authReqId, scope, resource, subjectToken, subjectTokenType, actorToken, actorTokenType, requestedTokenType, assertion, clientId, clientSecret, clientAssertionType, clientAssertion, _callback);
         Type localVarReturnType = new TypeToken<TokenResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

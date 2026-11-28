@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -48,22 +48,22 @@ import io.lumoauth.client.JSON;
 /**
  * VerifyAuthTokenRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-28T17:25:42.087818540Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class VerifyAuthTokenRequest {
   public static final String SERIALIZED_NAME_AUTH_TOKEN = "auth_token";
   @SerializedName(SERIALIZED_NAME_AUTH_TOKEN)
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   private String authToken;
 
   public static final String SERIALIZED_NAME_RESOURCE = "resource";
   @SerializedName(SERIALIZED_NAME_RESOURCE)
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   private String resource;
 
   public VerifyAuthTokenRequest() {
   }
 
-  public VerifyAuthTokenRequest authToken(@javax.annotation.Nullable String authToken) {
+  public VerifyAuthTokenRequest authToken(@javax.annotation.Nonnull String authToken) {
     this.authToken = authToken;
     return this;
   }
@@ -72,31 +72,31 @@ public class VerifyAuthTokenRequest {
    * The auth token presented by the agent.
    * @return authToken
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public String getAuthToken() {
     return authToken;
   }
 
-  public void setAuthToken(@javax.annotation.Nullable String authToken) {
+  public void setAuthToken(@javax.annotation.Nonnull String authToken) {
     this.authToken = authToken;
   }
 
 
-  public VerifyAuthTokenRequest resource(@javax.annotation.Nullable String resource) {
+  public VerifyAuthTokenRequest resource(@javax.annotation.Nonnull String resource) {
     this.resource = resource;
     return this;
   }
 
   /**
-   * Resource identifier; defaults to the authenticated resource.
+   * Required. The resource identifier of the calling resource (&#x60;resource_identifier&#x60; is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
    * @return resource
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public String getResource() {
     return resource;
   }
 
-  public void setResource(@javax.annotation.Nullable String resource) {
+  public void setResource(@javax.annotation.Nonnull String resource) {
     this.resource = resource;
   }
 
@@ -150,7 +150,7 @@ public class VerifyAuthTokenRequest {
     openapiFields = new HashSet<String>(Arrays.asList("auth_token", "resource"));
 
     // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>(0);
+    openapiRequiredFields = new HashSet<String>(Arrays.asList("auth_token", "resource"));
   }
 
   /**
@@ -173,11 +173,18 @@ public class VerifyAuthTokenRequest {
           throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `VerifyAuthTokenRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+
+      // check to make sure all required properties/fields are present in the JSON string
+      for (String requiredField : VerifyAuthTokenRequest.openapiRequiredFields) {
+        if (jsonElement.getAsJsonObject().get(requiredField) == null) {
+          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonElement.toString()));
+        }
+      }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
-      if ((jsonObj.get("auth_token") != null && !jsonObj.get("auth_token").isJsonNull()) && !jsonObj.get("auth_token").isJsonPrimitive()) {
+      if (!jsonObj.get("auth_token").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `auth_token` to be a primitive type in the JSON string but got `%s`", jsonObj.get("auth_token").toString()));
       }
-      if ((jsonObj.get("resource") != null && !jsonObj.get("resource").isJsonNull()) && !jsonObj.get("resource").isJsonPrimitive()) {
+      if (!jsonObj.get("resource").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `resource` to be a primitive type in the JSON string but got `%s`", jsonObj.get("resource").toString()));
       }
   }

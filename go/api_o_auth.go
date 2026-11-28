@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -71,7 +71,7 @@ type OAuthAPI interface {
 	/*
 	DeviceAuthorization Device authorization request (RFC 8628)
 
-	Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+	Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -446,6 +446,88 @@ type ApiBackchannelAuthorizeRequest struct {
 	ctx context.Context
 	ApiService OAuthAPI
 	orgId string
+	scope *string
+	loginHint *string
+	loginHintToken *string
+	idTokenHint *string
+	bindingMessage *string
+	acrValues *string
+	requestedExpiry *int32
+	clientNotificationToken *string
+	authorizationDetails *string
+	clientId *string
+	clientSecret *string
+	clientAssertionType *string
+	clientAssertion *string
+}
+
+func (r ApiBackchannelAuthorizeRequest) Scope(scope string) ApiBackchannelAuthorizeRequest {
+	r.scope = &scope
+	return r
+}
+
+func (r ApiBackchannelAuthorizeRequest) LoginHint(loginHint string) ApiBackchannelAuthorizeRequest {
+	r.loginHint = &loginHint
+	return r
+}
+
+func (r ApiBackchannelAuthorizeRequest) LoginHintToken(loginHintToken string) ApiBackchannelAuthorizeRequest {
+	r.loginHintToken = &loginHintToken
+	return r
+}
+
+func (r ApiBackchannelAuthorizeRequest) IdTokenHint(idTokenHint string) ApiBackchannelAuthorizeRequest {
+	r.idTokenHint = &idTokenHint
+	return r
+}
+
+func (r ApiBackchannelAuthorizeRequest) BindingMessage(bindingMessage string) ApiBackchannelAuthorizeRequest {
+	r.bindingMessage = &bindingMessage
+	return r
+}
+
+func (r ApiBackchannelAuthorizeRequest) AcrValues(acrValues string) ApiBackchannelAuthorizeRequest {
+	r.acrValues = &acrValues
+	return r
+}
+
+// Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused.
+func (r ApiBackchannelAuthorizeRequest) RequestedExpiry(requestedExpiry int32) ApiBackchannelAuthorizeRequest {
+	r.requestedExpiry = &requestedExpiry
+	return r
+}
+
+func (r ApiBackchannelAuthorizeRequest) ClientNotificationToken(clientNotificationToken string) ApiBackchannelAuthorizeRequest {
+	r.clientNotificationToken = &clientNotificationToken
+	return r
+}
+
+func (r ApiBackchannelAuthorizeRequest) AuthorizationDetails(authorizationDetails string) ApiBackchannelAuthorizeRequest {
+	r.authorizationDetails = &authorizationDetails
+	return r
+}
+
+// Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+func (r ApiBackchannelAuthorizeRequest) ClientId(clientId string) ApiBackchannelAuthorizeRequest {
+	r.clientId = &clientId
+	return r
+}
+
+// client_secret_post
+func (r ApiBackchannelAuthorizeRequest) ClientSecret(clientSecret string) ApiBackchannelAuthorizeRequest {
+	r.clientSecret = &clientSecret
+	return r
+}
+
+func (r ApiBackchannelAuthorizeRequest) ClientAssertionType(clientAssertionType string) ApiBackchannelAuthorizeRequest {
+	r.clientAssertionType = &clientAssertionType
+	return r
+}
+
+// private_key_jwt (RFC 7523)
+func (r ApiBackchannelAuthorizeRequest) ClientAssertion(clientAssertion string) ApiBackchannelAuthorizeRequest {
+	r.clientAssertion = &clientAssertion
+	return r
 }
 
 func (r ApiBackchannelAuthorizeRequest) Execute() (*BackchannelAuthorizeResponse, *http.Response, error) {
@@ -490,9 +572,12 @@ func (a *OAuthAPIService) BackchannelAuthorizeExecute(r ApiBackchannelAuthorizeR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.scope == nil {
+		return localVarReturnValue, nil, reportError("scope is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -507,6 +592,43 @@ func (a *OAuthAPIService) BackchannelAuthorizeExecute(r ApiBackchannelAuthorizeR
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "scope", r.scope, "", "")
+	if r.loginHint != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "login_hint", r.loginHint, "", "")
+	}
+	if r.loginHintToken != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "login_hint_token", r.loginHintToken, "", "")
+	}
+	if r.idTokenHint != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "id_token_hint", r.idTokenHint, "", "")
+	}
+	if r.bindingMessage != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "binding_message", r.bindingMessage, "", "")
+	}
+	if r.acrValues != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "acr_values", r.acrValues, "", "")
+	}
+	if r.requestedExpiry != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "requested_expiry", r.requestedExpiry, "", "")
+	}
+	if r.clientNotificationToken != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_notification_token", r.clientNotificationToken, "", "")
+	}
+	if r.authorizationDetails != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "authorization_details", r.authorizationDetails, "", "")
+	}
+	if r.clientId != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_id", r.clientId, "", "")
+	}
+	if r.clientSecret != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_secret", r.clientSecret, "", "")
+	}
+	if r.clientAssertionType != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_assertion_type", r.clientAssertionType, "", "")
+	}
+	if r.clientAssertion != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_assertion", r.clientAssertion, "", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -663,6 +785,47 @@ type ApiDeviceAuthorizationRequest struct {
 	ctx context.Context
 	ApiService OAuthAPI
 	orgId string
+	clientId *string
+	clientSecret *string
+	clientAssertionType *string
+	clientAssertion *string
+	scope *string
+	resource *string
+}
+
+// Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+func (r ApiDeviceAuthorizationRequest) ClientId(clientId string) ApiDeviceAuthorizationRequest {
+	r.clientId = &clientId
+	return r
+}
+
+// client_secret_post
+func (r ApiDeviceAuthorizationRequest) ClientSecret(clientSecret string) ApiDeviceAuthorizationRequest {
+	r.clientSecret = &clientSecret
+	return r
+}
+
+func (r ApiDeviceAuthorizationRequest) ClientAssertionType(clientAssertionType string) ApiDeviceAuthorizationRequest {
+	r.clientAssertionType = &clientAssertionType
+	return r
+}
+
+// private_key_jwt (RFC 7523)
+func (r ApiDeviceAuthorizationRequest) ClientAssertion(clientAssertion string) ApiDeviceAuthorizationRequest {
+	r.clientAssertion = &clientAssertion
+	return r
+}
+
+// Space-separated scopes.
+func (r ApiDeviceAuthorizationRequest) Scope(scope string) ApiDeviceAuthorizationRequest {
+	r.scope = &scope
+	return r
+}
+
+// RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them.
+func (r ApiDeviceAuthorizationRequest) Resource(resource string) ApiDeviceAuthorizationRequest {
+	r.resource = &resource
+	return r
 }
 
 func (r ApiDeviceAuthorizationRequest) Execute() (*DeviceAuthorizationResponse, *http.Response, error) {
@@ -672,7 +835,7 @@ func (r ApiDeviceAuthorizationRequest) Execute() (*DeviceAuthorizationResponse, 
 /*
 DeviceAuthorization Device authorization request (RFC 8628)
 
-Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -709,7 +872,7 @@ func (a *OAuthAPIService) DeviceAuthorizationExecute(r ApiDeviceAuthorizationReq
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -724,6 +887,24 @@ func (a *OAuthAPIService) DeviceAuthorizationExecute(r ApiDeviceAuthorizationReq
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.clientId != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_id", r.clientId, "", "")
+	}
+	if r.clientSecret != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_secret", r.clientSecret, "", "")
+	}
+	if r.clientAssertionType != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_assertion_type", r.clientAssertionType, "", "")
+	}
+	if r.clientAssertion != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_assertion", r.clientAssertion, "", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "scope", r.scope, "", "")
+	}
+	if r.resource != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "resource", r.resource, "", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1103,6 +1284,45 @@ type ApiIntrospectRequest struct {
 	ctx context.Context
 	ApiService OAuthAPI
 	orgId string
+	token *string
+	tokenTypeHint *string
+	clientId *string
+	clientSecret *string
+	clientAssertionType *string
+	clientAssertion *string
+}
+
+func (r ApiIntrospectRequest) Token(token string) ApiIntrospectRequest {
+	r.token = &token
+	return r
+}
+
+func (r ApiIntrospectRequest) TokenTypeHint(tokenTypeHint string) ApiIntrospectRequest {
+	r.tokenTypeHint = &tokenTypeHint
+	return r
+}
+
+// The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client).
+func (r ApiIntrospectRequest) ClientId(clientId string) ApiIntrospectRequest {
+	r.clientId = &clientId
+	return r
+}
+
+// client_secret_post
+func (r ApiIntrospectRequest) ClientSecret(clientSecret string) ApiIntrospectRequest {
+	r.clientSecret = &clientSecret
+	return r
+}
+
+func (r ApiIntrospectRequest) ClientAssertionType(clientAssertionType string) ApiIntrospectRequest {
+	r.clientAssertionType = &clientAssertionType
+	return r
+}
+
+// private_key_jwt (RFC 7523)
+func (r ApiIntrospectRequest) ClientAssertion(clientAssertion string) ApiIntrospectRequest {
+	r.clientAssertion = &clientAssertion
+	return r
 }
 
 func (r ApiIntrospectRequest) Execute() (*IntrospectResponse, *http.Response, error) {
@@ -1147,9 +1367,12 @@ func (a *OAuthAPIService) IntrospectExecute(r ApiIntrospectRequest) (*Introspect
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.token == nil {
+		return localVarReturnValue, nil, reportError("token is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1164,6 +1387,22 @@ func (a *OAuthAPIService) IntrospectExecute(r ApiIntrospectRequest) (*Introspect
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "token", r.token, "", "")
+	if r.tokenTypeHint != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "token_type_hint", r.tokenTypeHint, "", "")
+	}
+	if r.clientId != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_id", r.clientId, "", "")
+	}
+	if r.clientSecret != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_secret", r.clientSecret, "", "")
+	}
+	if r.clientAssertionType != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_assertion_type", r.clientAssertionType, "", "")
+	}
+	if r.clientAssertion != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_assertion", r.clientAssertion, "", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1206,6 +1445,100 @@ type ApiParRequest struct {
 	ctx context.Context
 	ApiService OAuthAPI
 	orgId string
+	responseType *string
+	redirectUri *string
+	scope *string
+	state *string
+	nonce *string
+	codeChallenge *string
+	codeChallengeMethod *string
+	request *string
+	resource *string
+	prompt *string
+	loginHint *string
+	clientId *string
+	clientSecret *string
+	clientAssertionType *string
+	clientAssertion *string
+}
+
+func (r ApiParRequest) ResponseType(responseType string) ApiParRequest {
+	r.responseType = &responseType
+	return r
+}
+
+func (r ApiParRequest) RedirectUri(redirectUri string) ApiParRequest {
+	r.redirectUri = &redirectUri
+	return r
+}
+
+func (r ApiParRequest) Scope(scope string) ApiParRequest {
+	r.scope = &scope
+	return r
+}
+
+func (r ApiParRequest) State(state string) ApiParRequest {
+	r.state = &state
+	return r
+}
+
+func (r ApiParRequest) Nonce(nonce string) ApiParRequest {
+	r.nonce = &nonce
+	return r
+}
+
+func (r ApiParRequest) CodeChallenge(codeChallenge string) ApiParRequest {
+	r.codeChallenge = &codeChallenge
+	return r
+}
+
+func (r ApiParRequest) CodeChallengeMethod(codeChallengeMethod string) ApiParRequest {
+	r.codeChallengeMethod = &codeChallengeMethod
+	return r
+}
+
+// A signed request object (JAR, RFC 9101).
+func (r ApiParRequest) Request(request string) ApiParRequest {
+	r.request = &request
+	return r
+}
+
+func (r ApiParRequest) Resource(resource string) ApiParRequest {
+	r.resource = &resource
+	return r
+}
+
+func (r ApiParRequest) Prompt(prompt string) ApiParRequest {
+	r.prompt = &prompt
+	return r
+}
+
+func (r ApiParRequest) LoginHint(loginHint string) ApiParRequest {
+	r.loginHint = &loginHint
+	return r
+}
+
+// Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+func (r ApiParRequest) ClientId(clientId string) ApiParRequest {
+	r.clientId = &clientId
+	return r
+}
+
+// client_secret_post
+func (r ApiParRequest) ClientSecret(clientSecret string) ApiParRequest {
+	r.clientSecret = &clientSecret
+	return r
+}
+
+func (r ApiParRequest) ClientAssertionType(clientAssertionType string) ApiParRequest {
+	r.clientAssertionType = &clientAssertionType
+	return r
+}
+
+// private_key_jwt (RFC 7523)
+func (r ApiParRequest) ClientAssertion(clientAssertion string) ApiParRequest {
+	r.clientAssertion = &clientAssertion
+	return r
 }
 
 func (r ApiParRequest) Execute() (*ParResponse, *http.Response, error) {
@@ -1252,7 +1585,7 @@ func (a *OAuthAPIService) ParExecute(r ApiParRequest) (*ParResponse, *http.Respo
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1267,6 +1600,51 @@ func (a *OAuthAPIService) ParExecute(r ApiParRequest) (*ParResponse, *http.Respo
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.responseType != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "response_type", r.responseType, "", "")
+	}
+	if r.redirectUri != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "redirect_uri", r.redirectUri, "", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "scope", r.scope, "", "")
+	}
+	if r.state != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "state", r.state, "", "")
+	}
+	if r.nonce != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "nonce", r.nonce, "", "")
+	}
+	if r.codeChallenge != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "code_challenge", r.codeChallenge, "", "")
+	}
+	if r.codeChallengeMethod != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "code_challenge_method", r.codeChallengeMethod, "", "")
+	}
+	if r.request != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "request", r.request, "", "")
+	}
+	if r.resource != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "resource", r.resource, "", "")
+	}
+	if r.prompt != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "prompt", r.prompt, "", "")
+	}
+	if r.loginHint != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "login_hint", r.loginHint, "", "")
+	}
+	if r.clientId != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_id", r.clientId, "", "")
+	}
+	if r.clientSecret != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_secret", r.clientSecret, "", "")
+	}
+	if r.clientAssertionType != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_assertion_type", r.clientAssertionType, "", "")
+	}
+	if r.clientAssertion != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_assertion", r.clientAssertion, "", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1309,6 +1687,13 @@ type ApiRegisterClientRequest struct {
 	ctx context.Context
 	ApiService OAuthAPI
 	orgId string
+	registerClientRequest *RegisterClientRequest
+}
+
+// RFC 7591 client metadata.
+func (r ApiRegisterClientRequest) RegisterClientRequest(registerClientRequest RegisterClientRequest) ApiRegisterClientRequest {
+	r.registerClientRequest = &registerClientRequest
+	return r
 }
 
 func (r ApiRegisterClientRequest) Execute() (*RegisterClientResponse, *http.Response, error) {
@@ -1353,9 +1738,12 @@ func (a *OAuthAPIService) RegisterClientExecute(r ApiRegisterClientRequest) (*Re
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.registerClientRequest == nil {
+		return localVarReturnValue, nil, reportError("registerClientRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1371,6 +1759,8 @@ func (a *OAuthAPIService) RegisterClientExecute(r ApiRegisterClientRequest) (*Re
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.registerClientRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1540,6 +1930,45 @@ type ApiRevokeRequest struct {
 	ctx context.Context
 	ApiService OAuthAPI
 	orgId string
+	token *string
+	tokenTypeHint *string
+	clientId *string
+	clientSecret *string
+	clientAssertionType *string
+	clientAssertion *string
+}
+
+func (r ApiRevokeRequest) Token(token string) ApiRevokeRequest {
+	r.token = &token
+	return r
+}
+
+func (r ApiRevokeRequest) TokenTypeHint(tokenTypeHint string) ApiRevokeRequest {
+	r.tokenTypeHint = &tokenTypeHint
+	return r
+}
+
+// Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+func (r ApiRevokeRequest) ClientId(clientId string) ApiRevokeRequest {
+	r.clientId = &clientId
+	return r
+}
+
+// client_secret_post
+func (r ApiRevokeRequest) ClientSecret(clientSecret string) ApiRevokeRequest {
+	r.clientSecret = &clientSecret
+	return r
+}
+
+func (r ApiRevokeRequest) ClientAssertionType(clientAssertionType string) ApiRevokeRequest {
+	r.clientAssertionType = &clientAssertionType
+	return r
+}
+
+// private_key_jwt (RFC 7523)
+func (r ApiRevokeRequest) ClientAssertion(clientAssertion string) ApiRevokeRequest {
+	r.clientAssertion = &clientAssertion
+	return r
 }
 
 func (r ApiRevokeRequest) Execute() (map[string]interface{}, *http.Response, error) {
@@ -1584,9 +2013,12 @@ func (a *OAuthAPIService) RevokeExecute(r ApiRevokeRequest) (map[string]interfac
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.token == nil {
+		return localVarReturnValue, nil, reportError("token is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1601,6 +2033,22 @@ func (a *OAuthAPIService) RevokeExecute(r ApiRevokeRequest) (map[string]interfac
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "token", r.token, "", "")
+	if r.tokenTypeHint != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "token_type_hint", r.tokenTypeHint, "", "")
+	}
+	if r.clientId != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_id", r.clientId, "", "")
+	}
+	if r.clientSecret != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_secret", r.clientSecret, "", "")
+	}
+	if r.clientAssertionType != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_assertion_type", r.clientAssertionType, "", "")
+	}
+	if r.clientAssertion != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_assertion", r.clientAssertion, "", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -2158,6 +2606,12 @@ type ApiSubmitLoginJsonRequest struct {
 	ctx context.Context
 	ApiService OAuthAPI
 	orgId string
+	submitLoginJsonRequest *SubmitLoginJsonRequest
+}
+
+func (r ApiSubmitLoginJsonRequest) SubmitLoginJsonRequest(submitLoginJsonRequest SubmitLoginJsonRequest) ApiSubmitLoginJsonRequest {
+	r.submitLoginJsonRequest = &submitLoginJsonRequest
+	return r
 }
 
 func (r ApiSubmitLoginJsonRequest) Execute() (*SubmitLoginJsonResponse, *http.Response, error) {
@@ -2202,9 +2656,12 @@ func (a *OAuthAPIService) SubmitLoginJsonExecute(r ApiSubmitLoginJsonRequest) (*
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.submitLoginJsonRequest == nil {
+		return localVarReturnValue, nil, reportError("submitLoginJsonRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2220,6 +2677,8 @@ func (a *OAuthAPIService) SubmitLoginJsonExecute(r ApiSubmitLoginJsonRequest) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.submitLoginJsonRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2364,6 +2823,126 @@ type ApiTokenRequest struct {
 	ctx context.Context
 	ApiService OAuthAPI
 	orgId string
+	grantType *string
+	code *string
+	redirectUri *string
+	codeVerifier *string
+	refreshToken *string
+	deviceCode *string
+	authReqId *string
+	scope *string
+	resource *string
+	subjectToken *string
+	subjectTokenType *string
+	actorToken *string
+	actorTokenType *string
+	requestedTokenType *string
+	assertion *string
+	clientId *string
+	clientSecret *string
+	clientAssertionType *string
+	clientAssertion *string
+}
+
+func (r ApiTokenRequest) GrantType(grantType string) ApiTokenRequest {
+	r.grantType = &grantType
+	return r
+}
+
+func (r ApiTokenRequest) Code(code string) ApiTokenRequest {
+	r.code = &code
+	return r
+}
+
+func (r ApiTokenRequest) RedirectUri(redirectUri string) ApiTokenRequest {
+	r.redirectUri = &redirectUri
+	return r
+}
+
+func (r ApiTokenRequest) CodeVerifier(codeVerifier string) ApiTokenRequest {
+	r.codeVerifier = &codeVerifier
+	return r
+}
+
+func (r ApiTokenRequest) RefreshToken(refreshToken string) ApiTokenRequest {
+	r.refreshToken = &refreshToken
+	return r
+}
+
+func (r ApiTokenRequest) DeviceCode(deviceCode string) ApiTokenRequest {
+	r.deviceCode = &deviceCode
+	return r
+}
+
+// CIBA
+func (r ApiTokenRequest) AuthReqId(authReqId string) ApiTokenRequest {
+	r.authReqId = &authReqId
+	return r
+}
+
+func (r ApiTokenRequest) Scope(scope string) ApiTokenRequest {
+	r.scope = &scope
+	return r
+}
+
+func (r ApiTokenRequest) Resource(resource string) ApiTokenRequest {
+	r.resource = &resource
+	return r
+}
+
+// Token exchange (RFC 8693)
+func (r ApiTokenRequest) SubjectToken(subjectToken string) ApiTokenRequest {
+	r.subjectToken = &subjectToken
+	return r
+}
+
+func (r ApiTokenRequest) SubjectTokenType(subjectTokenType string) ApiTokenRequest {
+	r.subjectTokenType = &subjectTokenType
+	return r
+}
+
+func (r ApiTokenRequest) ActorToken(actorToken string) ApiTokenRequest {
+	r.actorToken = &actorToken
+	return r
+}
+
+func (r ApiTokenRequest) ActorTokenType(actorTokenType string) ApiTokenRequest {
+	r.actorTokenType = &actorTokenType
+	return r
+}
+
+func (r ApiTokenRequest) RequestedTokenType(requestedTokenType string) ApiTokenRequest {
+	r.requestedTokenType = &requestedTokenType
+	return r
+}
+
+// JWT bearer / ID-JAG grant
+func (r ApiTokenRequest) Assertion(assertion string) ApiTokenRequest {
+	r.assertion = &assertion
+	return r
+}
+
+// Required for a public client; a confidential client may authenticate with HTTP Basic instead.
+func (r ApiTokenRequest) ClientId(clientId string) ApiTokenRequest {
+	r.clientId = &clientId
+	return r
+}
+
+// client_secret_post
+func (r ApiTokenRequest) ClientSecret(clientSecret string) ApiTokenRequest {
+	r.clientSecret = &clientSecret
+	return r
+}
+
+func (r ApiTokenRequest) ClientAssertionType(clientAssertionType string) ApiTokenRequest {
+	r.clientAssertionType = &clientAssertionType
+	return r
+}
+
+// private_key_jwt (RFC 7523)
+func (r ApiTokenRequest) ClientAssertion(clientAssertion string) ApiTokenRequest {
+	r.clientAssertion = &clientAssertion
+	return r
 }
 
 func (r ApiTokenRequest) Execute() (*TokenResponse, *http.Response, error) {
@@ -2408,9 +2987,12 @@ func (a *OAuthAPIService) TokenExecute(r ApiTokenRequest) (*TokenResponse, *http
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.grantType == nil {
+		return localVarReturnValue, nil, reportError("grantType is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/x-www-form-urlencoded"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2425,6 +3007,61 @@ func (a *OAuthAPIService) TokenExecute(r ApiTokenRequest) (*TokenResponse, *http
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	parameterAddToHeaderOrQuery(localVarFormParams, "grant_type", r.grantType, "", "")
+	if r.code != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "code", r.code, "", "")
+	}
+	if r.redirectUri != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "redirect_uri", r.redirectUri, "", "")
+	}
+	if r.codeVerifier != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "code_verifier", r.codeVerifier, "", "")
+	}
+	if r.refreshToken != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "refresh_token", r.refreshToken, "", "")
+	}
+	if r.deviceCode != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "device_code", r.deviceCode, "", "")
+	}
+	if r.authReqId != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "auth_req_id", r.authReqId, "", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "scope", r.scope, "", "")
+	}
+	if r.resource != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "resource", r.resource, "", "")
+	}
+	if r.subjectToken != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "subject_token", r.subjectToken, "", "")
+	}
+	if r.subjectTokenType != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "subject_token_type", r.subjectTokenType, "", "")
+	}
+	if r.actorToken != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "actor_token", r.actorToken, "", "")
+	}
+	if r.actorTokenType != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "actor_token_type", r.actorTokenType, "", "")
+	}
+	if r.requestedTokenType != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "requested_token_type", r.requestedTokenType, "", "")
+	}
+	if r.assertion != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "assertion", r.assertion, "", "")
+	}
+	if r.clientId != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_id", r.clientId, "", "")
+	}
+	if r.clientSecret != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_secret", r.clientSecret, "", "")
+	}
+	if r.clientAssertionType != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_assertion_type", r.clientAssertionType, "", "")
+	}
+	if r.clientAssertion != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "client_assertion", r.clientAssertion, "", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

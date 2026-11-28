@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -132,7 +132,7 @@ type AdminWebhooksAPI interface {
 	/*
 	AdminWebhooksList List webhooks
 
-	Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+	Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -179,7 +179,7 @@ type AdminWebhooksAPI interface {
 	/*
 	AdminWebhooksTunnelStart Start a webhook tunnel
 
-	Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+	Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -289,6 +289,12 @@ type ApiAdminWebhooksCreateRequest struct {
 	ctx context.Context
 	ApiService AdminWebhooksAPI
 	orgId string
+	adminWebhooksCreateRequest *AdminWebhooksCreateRequest
+}
+
+func (r ApiAdminWebhooksCreateRequest) AdminWebhooksCreateRequest(adminWebhooksCreateRequest AdminWebhooksCreateRequest) ApiAdminWebhooksCreateRequest {
+	r.adminWebhooksCreateRequest = &adminWebhooksCreateRequest
+	return r
 }
 
 func (r ApiAdminWebhooksCreateRequest) Execute() (*AdminWebhooksCreateResponse, *http.Response, error) {
@@ -333,9 +339,12 @@ func (a *AdminWebhooksAPIService) AdminWebhooksCreateExecute(r ApiAdminWebhooksC
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminWebhooksCreateRequest == nil {
+		return localVarReturnValue, nil, reportError("adminWebhooksCreateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -351,6 +360,8 @@ func (a *AdminWebhooksAPIService) AdminWebhooksCreateExecute(r ApiAdminWebhooksC
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminWebhooksCreateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1139,7 +1150,7 @@ func (r ApiAdminWebhooksListRequest) Execute() (*AdminWebhooksListResponse, *htt
 /*
 AdminWebhooksList List webhooks
 
-Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1498,7 +1509,7 @@ func (r ApiAdminWebhooksTunnelStartRequest) Execute() (*AdminWebhooksTunnelStart
 /*
 AdminWebhooksTunnelStart Start a webhook tunnel
 
-Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2087,6 +2098,12 @@ type ApiPatchAdminWebhooksUpdateRequest struct {
 	ApiService AdminWebhooksAPI
 	orgId string
 	webhookId string
+	putAdminWebhooksUpdateRequest *PutAdminWebhooksUpdateRequest
+}
+
+func (r ApiPatchAdminWebhooksUpdateRequest) PutAdminWebhooksUpdateRequest(putAdminWebhooksUpdateRequest PutAdminWebhooksUpdateRequest) ApiPatchAdminWebhooksUpdateRequest {
+	r.putAdminWebhooksUpdateRequest = &putAdminWebhooksUpdateRequest
+	return r
 }
 
 func (r ApiPatchAdminWebhooksUpdateRequest) Execute() (*PutAdminWebhooksUpdateResponse, *http.Response, error) {
@@ -2132,9 +2149,12 @@ func (a *AdminWebhooksAPIService) PatchAdminWebhooksUpdateExecute(r ApiPatchAdmi
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminWebhooksUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminWebhooksUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2150,6 +2170,8 @@ func (a *AdminWebhooksAPIService) PatchAdminWebhooksUpdateExecute(r ApiPatchAdmi
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminWebhooksUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2206,6 +2228,12 @@ type ApiPutAdminWebhooksUpdateRequest struct {
 	ApiService AdminWebhooksAPI
 	orgId string
 	webhookId string
+	putAdminWebhooksUpdateRequest *PutAdminWebhooksUpdateRequest
+}
+
+func (r ApiPutAdminWebhooksUpdateRequest) PutAdminWebhooksUpdateRequest(putAdminWebhooksUpdateRequest PutAdminWebhooksUpdateRequest) ApiPutAdminWebhooksUpdateRequest {
+	r.putAdminWebhooksUpdateRequest = &putAdminWebhooksUpdateRequest
+	return r
 }
 
 func (r ApiPutAdminWebhooksUpdateRequest) Execute() (*PutAdminWebhooksUpdateResponse, *http.Response, error) {
@@ -2253,9 +2281,12 @@ func (a *AdminWebhooksAPIService) PutAdminWebhooksUpdateExecute(r ApiPutAdminWeb
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminWebhooksUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminWebhooksUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2271,6 +2302,8 @@ func (a *AdminWebhooksAPIService) PutAdminWebhooksUpdateExecute(r ApiPutAdminWeb
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminWebhooksUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

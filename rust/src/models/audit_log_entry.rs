@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -41,6 +41,9 @@ pub struct AuditLogEntry {
     pub target_name: Option<Option<String>>,
     #[serde(rename = "ipAddress", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub ip_address: Option<Option<String>>,
+    /// W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none
+    #[serde(rename = "traceId", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub trace_id: Option<Option<String>>,
     /// Detailed responses only
     #[serde(rename = "eventTime", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub event_time: Option<Option<String>>,
@@ -102,6 +105,7 @@ impl AuditLogEntry {
             target_id: None,
             target_name: None,
             ip_address: None,
+            trace_id: None,
             event_time: None,
             duration_ms: None,
             initiated_by: None,

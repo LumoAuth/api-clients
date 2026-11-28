@@ -9,9 +9,9 @@ Method | HTTP request | Description
 [**AdminSessionsCount**](AdminSessionsAPI.md#AdminSessionsCount) | **Get** /orgs/{orgId}/api/v1/admin/sessions/count | Active session count
 [**AdminSessionsList**](AdminSessionsAPI.md#AdminSessionsList) | **Get** /orgs/{orgId}/api/v1/admin/sessions | List active sessions
 [**AdminSessionsRevoke**](AdminSessionsAPI.md#AdminSessionsRevoke) | **Delete** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a session
-[**AdminSessionsRevokeAll**](AdminSessionsAPI.md#AdminSessionsRevokeAll) | **Post** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the tenant
+[**AdminSessionsRevokeAll**](AdminSessionsAPI.md#AdminSessionsRevokeAll) | **Post** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the organization
 [**AdminSessionsStats**](AdminSessionsAPI.md#AdminSessionsStats) | **Get** /orgs/{orgId}/api/v1/admin/sessions/stats | Session statistics
-[**AdminTokensList**](AdminSessionsAPI.md#AdminTokensList) | **Get** /orgs/{orgId}/api/v1/admin/tokens | List access tokens
+[**AdminTokensList**](AdminSessionsAPI.md#AdminTokensList) | **Get** /orgs/{orgId}/api/v1/admin/tokens | List stored (opaque) access tokens
 [**AdminTokensRevoke**](AdminSessionsAPI.md#AdminTokensRevoke) | **Delete** /orgs/{orgId}/api/v1/admin/tokens/{tokenId} | Revoke a token
 [**AdminUserSessionsList**](AdminSessionsAPI.md#AdminUserSessionsList) | **Get** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | List a user&#39;s active sessions
 [**AdminUserSessionsRevokeAll**](AdminSessionsAPI.md#AdminUserSessionsRevokeAll) | **Delete** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions of a user
@@ -376,7 +376,7 @@ Name | Type | Description  | Notes
 
 > AdminSessionsRevokeAllResponse AdminSessionsRevokeAll(ctx, orgId).AdminSessionsRevokeAllRequest(adminSessionsRevokeAllRequest).Execute()
 
-Revoke every session in the tenant
+Revoke every session in the organization
 
 
 
@@ -516,7 +516,7 @@ Name | Type | Description  | Notes
 
 > AdminTokensListResponse AdminTokensList(ctx, orgId).Execute()
 
-List access tokens
+List stored (opaque) access tokens
 
 
 
@@ -874,6 +874,8 @@ Name | Type | Description  | Notes
 
 Revoke all tokens of a user
 
+
+
 ### Example
 
 ```go
@@ -944,6 +946,8 @@ Name | Type | Description  | Notes
 > AdminUserTokensRevokePostResponse AdminUserTokensRevokePost(ctx, orgId, userId).Execute()
 
 Revoke all tokens of a user (POST alias)
+
+
 
 ### Example
 

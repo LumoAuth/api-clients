@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -153,36 +153,38 @@ class AdminPermissionsApi
     /**
      * Operation adminPermissionsCreate
      *
-     * Create a custom permission for the tenant
+     * Create a custom permission for the organization
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminPermissionsCreateRequest $adminPermissionsCreateRequest adminPermissionsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminPermissionsCreateResponse
      */
-    public function adminPermissionsCreate($orgId, string $contentType = self::contentTypes['adminPermissionsCreate'][0])
+    public function adminPermissionsCreate($orgId, $adminPermissionsCreateRequest, string $contentType = self::contentTypes['adminPermissionsCreate'][0])
     {
-        list($response) = $this->adminPermissionsCreateWithHttpInfo($orgId, $contentType);
+        list($response) = $this->adminPermissionsCreateWithHttpInfo($orgId, $adminPermissionsCreateRequest, $contentType);
         return $response;
     }
 
     /**
      * Operation adminPermissionsCreateWithHttpInfo
      *
-     * Create a custom permission for the tenant
+     * Create a custom permission for the organization
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminPermissionsCreateRequest $adminPermissionsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminPermissionsCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminPermissionsCreateWithHttpInfo($orgId, string $contentType = self::contentTypes['adminPermissionsCreate'][0])
+    public function adminPermissionsCreateWithHttpInfo($orgId, $adminPermissionsCreateRequest, string $contentType = self::contentTypes['adminPermissionsCreate'][0])
     {
-        $request = $this->adminPermissionsCreateRequest($orgId, $contentType);
+        $request = $this->adminPermissionsCreateRequest($orgId, $adminPermissionsCreateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -256,17 +258,18 @@ class AdminPermissionsApi
     /**
      * Operation adminPermissionsCreateAsync
      *
-     * Create a custom permission for the tenant
+     * Create a custom permission for the organization
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminPermissionsCreateRequest $adminPermissionsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminPermissionsCreateAsync($orgId, string $contentType = self::contentTypes['adminPermissionsCreate'][0])
+    public function adminPermissionsCreateAsync($orgId, $adminPermissionsCreateRequest, string $contentType = self::contentTypes['adminPermissionsCreate'][0])
     {
-        return $this->adminPermissionsCreateAsyncWithHttpInfo($orgId, $contentType)
+        return $this->adminPermissionsCreateAsyncWithHttpInfo($orgId, $adminPermissionsCreateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -277,18 +280,19 @@ class AdminPermissionsApi
     /**
      * Operation adminPermissionsCreateAsyncWithHttpInfo
      *
-     * Create a custom permission for the tenant
+     * Create a custom permission for the organization
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminPermissionsCreateRequest $adminPermissionsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminPermissionsCreateAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['adminPermissionsCreate'][0])
+    public function adminPermissionsCreateAsyncWithHttpInfo($orgId, $adminPermissionsCreateRequest, string $contentType = self::contentTypes['adminPermissionsCreate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminPermissionsCreateResponse';
-        $request = $this->adminPermissionsCreateRequest($orgId, $contentType);
+        $request = $this->adminPermissionsCreateRequest($orgId, $adminPermissionsCreateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -330,18 +334,26 @@ class AdminPermissionsApi
      * Create request for operation 'adminPermissionsCreate'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminPermissionsCreateRequest $adminPermissionsCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminPermissionsCreateRequest($orgId, string $contentType = self::contentTypes['adminPermissionsCreate'][0])
+    public function adminPermissionsCreateRequest($orgId, $adminPermissionsCreateRequest, string $contentType = self::contentTypes['adminPermissionsCreate'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling adminPermissionsCreate'
+            );
+        }
+
+        // verify the required parameter 'adminPermissionsCreateRequest' is set
+        if ($adminPermissionsCreateRequest === null || (is_array($adminPermissionsCreateRequest) && count($adminPermissionsCreateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $adminPermissionsCreateRequest when calling adminPermissionsCreate'
             );
         }
 
@@ -372,7 +384,14 @@ class AdminPermissionsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminPermissionsCreateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminPermissionsCreateRequest));
+            } else {
+                $httpBody = $adminPermissionsCreateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -1024,7 +1043,7 @@ class AdminPermissionsApi
     /**
      * Operation adminPermissionsList
      *
-     * List all available permissions for the tenant
+     * List all available permissions for the organization
      *
      * @param  string $orgId orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsList'] to see the possible values for this operation
@@ -1042,7 +1061,7 @@ class AdminPermissionsApi
     /**
      * Operation adminPermissionsListWithHttpInfo
      *
-     * List all available permissions for the tenant
+     * List all available permissions for the organization
      *
      * @param  string $orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsList'] to see the possible values for this operation
@@ -1127,7 +1146,7 @@ class AdminPermissionsApi
     /**
      * Operation adminPermissionsListAsync
      *
-     * List all available permissions for the tenant
+     * List all available permissions for the organization
      *
      * @param  string $orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsList'] to see the possible values for this operation
@@ -1148,7 +1167,7 @@ class AdminPermissionsApi
     /**
      * Operation adminPermissionsListAsyncWithHttpInfo
      *
-     * List all available permissions for the tenant
+     * List all available permissions for the organization
      *
      * @param  string $orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsList'] to see the possible values for this operation
@@ -1305,15 +1324,16 @@ class AdminPermissionsApi
      *
      * @param  string $orgId orgId (required)
      * @param  string $permissionId permissionId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminPermissionsUpdateRequest $adminPermissionsUpdateRequest adminPermissionsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminPermissionsCreateResponse
      */
-    public function adminPermissionsUpdate($orgId, $permissionId, string $contentType = self::contentTypes['adminPermissionsUpdate'][0])
+    public function adminPermissionsUpdate($orgId, $permissionId, $adminPermissionsUpdateRequest, string $contentType = self::contentTypes['adminPermissionsUpdate'][0])
     {
-        list($response) = $this->adminPermissionsUpdateWithHttpInfo($orgId, $permissionId, $contentType);
+        list($response) = $this->adminPermissionsUpdateWithHttpInfo($orgId, $permissionId, $adminPermissionsUpdateRequest, $contentType);
         return $response;
     }
 
@@ -1324,15 +1344,16 @@ class AdminPermissionsApi
      *
      * @param  string $orgId (required)
      * @param  string $permissionId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminPermissionsUpdateRequest $adminPermissionsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminPermissionsCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminPermissionsUpdateWithHttpInfo($orgId, $permissionId, string $contentType = self::contentTypes['adminPermissionsUpdate'][0])
+    public function adminPermissionsUpdateWithHttpInfo($orgId, $permissionId, $adminPermissionsUpdateRequest, string $contentType = self::contentTypes['adminPermissionsUpdate'][0])
     {
-        $request = $this->adminPermissionsUpdateRequest($orgId, $permissionId, $contentType);
+        $request = $this->adminPermissionsUpdateRequest($orgId, $permissionId, $adminPermissionsUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1410,14 +1431,15 @@ class AdminPermissionsApi
      *
      * @param  string $orgId (required)
      * @param  string $permissionId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminPermissionsUpdateRequest $adminPermissionsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminPermissionsUpdateAsync($orgId, $permissionId, string $contentType = self::contentTypes['adminPermissionsUpdate'][0])
+    public function adminPermissionsUpdateAsync($orgId, $permissionId, $adminPermissionsUpdateRequest, string $contentType = self::contentTypes['adminPermissionsUpdate'][0])
     {
-        return $this->adminPermissionsUpdateAsyncWithHttpInfo($orgId, $permissionId, $contentType)
+        return $this->adminPermissionsUpdateAsyncWithHttpInfo($orgId, $permissionId, $adminPermissionsUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1432,15 +1454,16 @@ class AdminPermissionsApi
      *
      * @param  string $orgId (required)
      * @param  string $permissionId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminPermissionsUpdateRequest $adminPermissionsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminPermissionsUpdateAsyncWithHttpInfo($orgId, $permissionId, string $contentType = self::contentTypes['adminPermissionsUpdate'][0])
+    public function adminPermissionsUpdateAsyncWithHttpInfo($orgId, $permissionId, $adminPermissionsUpdateRequest, string $contentType = self::contentTypes['adminPermissionsUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminPermissionsCreateResponse';
-        $request = $this->adminPermissionsUpdateRequest($orgId, $permissionId, $contentType);
+        $request = $this->adminPermissionsUpdateRequest($orgId, $permissionId, $adminPermissionsUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1483,12 +1506,13 @@ class AdminPermissionsApi
      *
      * @param  string $orgId (required)
      * @param  string $permissionId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminPermissionsUpdateRequest $adminPermissionsUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminPermissionsUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminPermissionsUpdateRequest($orgId, $permissionId, string $contentType = self::contentTypes['adminPermissionsUpdate'][0])
+    public function adminPermissionsUpdateRequest($orgId, $permissionId, $adminPermissionsUpdateRequest, string $contentType = self::contentTypes['adminPermissionsUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -1502,6 +1526,13 @@ class AdminPermissionsApi
         if ($permissionId === null || (is_array($permissionId) && count($permissionId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $permissionId when calling adminPermissionsUpdate'
+            );
+        }
+
+        // verify the required parameter 'adminPermissionsUpdateRequest' is set
+        if ($adminPermissionsUpdateRequest === null || (is_array($adminPermissionsUpdateRequest) && count($adminPermissionsUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $adminPermissionsUpdateRequest when calling adminPermissionsUpdate'
             );
         }
 
@@ -1540,7 +1571,14 @@ class AdminPermissionsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminPermissionsUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminPermissionsUpdateRequest));
+            } else {
+                $httpBody = $adminPermissionsUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -1898,15 +1936,16 @@ class AdminPermissionsApi
      * Create a custom OAuth scope
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminScopesCreateRequest $adminScopesCreateRequest adminScopesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminScopesCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminScopesCreateResponse
      */
-    public function adminScopesCreate($orgId, string $contentType = self::contentTypes['adminScopesCreate'][0])
+    public function adminScopesCreate($orgId, $adminScopesCreateRequest, string $contentType = self::contentTypes['adminScopesCreate'][0])
     {
-        list($response) = $this->adminScopesCreateWithHttpInfo($orgId, $contentType);
+        list($response) = $this->adminScopesCreateWithHttpInfo($orgId, $adminScopesCreateRequest, $contentType);
         return $response;
     }
 
@@ -1916,15 +1955,16 @@ class AdminPermissionsApi
      * Create a custom OAuth scope
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminScopesCreateRequest $adminScopesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminScopesCreate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminScopesCreateResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminScopesCreateWithHttpInfo($orgId, string $contentType = self::contentTypes['adminScopesCreate'][0])
+    public function adminScopesCreateWithHttpInfo($orgId, $adminScopesCreateRequest, string $contentType = self::contentTypes['adminScopesCreate'][0])
     {
-        $request = $this->adminScopesCreateRequest($orgId, $contentType);
+        $request = $this->adminScopesCreateRequest($orgId, $adminScopesCreateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2001,14 +2041,15 @@ class AdminPermissionsApi
      * Create a custom OAuth scope
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminScopesCreateRequest $adminScopesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminScopesCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminScopesCreateAsync($orgId, string $contentType = self::contentTypes['adminScopesCreate'][0])
+    public function adminScopesCreateAsync($orgId, $adminScopesCreateRequest, string $contentType = self::contentTypes['adminScopesCreate'][0])
     {
-        return $this->adminScopesCreateAsyncWithHttpInfo($orgId, $contentType)
+        return $this->adminScopesCreateAsyncWithHttpInfo($orgId, $adminScopesCreateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2022,15 +2063,16 @@ class AdminPermissionsApi
      * Create a custom OAuth scope
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminScopesCreateRequest $adminScopesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminScopesCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminScopesCreateAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['adminScopesCreate'][0])
+    public function adminScopesCreateAsyncWithHttpInfo($orgId, $adminScopesCreateRequest, string $contentType = self::contentTypes['adminScopesCreate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminScopesCreateResponse';
-        $request = $this->adminScopesCreateRequest($orgId, $contentType);
+        $request = $this->adminScopesCreateRequest($orgId, $adminScopesCreateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2072,18 +2114,26 @@ class AdminPermissionsApi
      * Create request for operation 'adminScopesCreate'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\AdminScopesCreateRequest $adminScopesCreateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminScopesCreate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminScopesCreateRequest($orgId, string $contentType = self::contentTypes['adminScopesCreate'][0])
+    public function adminScopesCreateRequest($orgId, $adminScopesCreateRequest, string $contentType = self::contentTypes['adminScopesCreate'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling adminScopesCreate'
+            );
+        }
+
+        // verify the required parameter 'adminScopesCreateRequest' is set
+        if ($adminScopesCreateRequest === null || (is_array($adminScopesCreateRequest) && count($adminScopesCreateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $adminScopesCreateRequest when calling adminScopesCreate'
             );
         }
 
@@ -2114,7 +2164,14 @@ class AdminPermissionsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($adminScopesCreateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($adminScopesCreateRequest));
+            } else {
+                $httpBody = $adminScopesCreateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

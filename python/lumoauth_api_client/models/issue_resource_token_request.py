@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -27,12 +27,13 @@ class IssueResourceTokenRequest(BaseModel):
     """
     IssueResourceTokenRequest
     """ # noqa: E501
-    agent: Optional[StrictStr] = Field(default=None, description="Agent identifier the resource token is bound to.")
-    agent_jkt: Optional[StrictStr] = Field(default=None, description="JWK thumbprint of the agent key (PoP binding).")
+    resource: StrictStr = Field(description="Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource.")
+    agent: StrictStr = Field(description="Agent identifier the resource token is bound to.")
+    agent_jkt: StrictStr = Field(description="JWK thumbprint of the agent key (PoP binding).")
     scope: Optional[StrictStr] = Field(default=None, description="Optional space-delimited requested scopes.")
     auth_request_url: Optional[StrictStr] = Field(default=None, description="Optional auth request URL to embed in the token.")
     auth_server: Optional[StrictStr] = Field(default=None, description="Optional auth server URL for the aud claim; defaults to this issuer.")
-    __properties: ClassVar[List[str]] = ["agent", "agent_jkt", "scope", "auth_request_url", "auth_server"]
+    __properties: ClassVar[List[str]] = ["resource", "agent", "agent_jkt", "scope", "auth_request_url", "auth_server"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -85,6 +86,7 @@ class IssueResourceTokenRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "resource": obj.get("resource"),
             "agent": obj.get("agent"),
             "agent_jkt": obj.get("agent_jkt"),
             "scope": obj.get("scope"),

@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -51,9 +51,10 @@ pub enum VerifyStreamError {
 }
 
 
-pub async fn create_stream_config(configuration: &configuration::Configuration, org_id: &str) -> Result<models::SsfStream, Error<CreateStreamConfigError>> {
+pub async fn create_stream_config(configuration: &configuration::Configuration, org_id: &str, create_stream_config_request: models::CreateStreamConfigRequest) -> Result<models::SsfStream, Error<CreateStreamConfigError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_create_stream_config_request = create_stream_config_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/ssf/stream", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -72,6 +73,7 @@ pub async fn create_stream_config(configuration: &configuration::Configuration, 
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_create_stream_config_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -189,9 +191,10 @@ pub async fn get_stream_config(configuration: &configuration::Configuration, org
 }
 
 /// Needs `settings.manage`, as the portal does.
-pub async fn verify_stream(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<VerifyStreamError>> {
+pub async fn verify_stream(configuration: &configuration::Configuration, org_id: &str, verify_stream_request: Option<models::VerifyStreamRequest>) -> Result<(), Error<VerifyStreamError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_verify_stream_request = verify_stream_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/ssf/verify", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -210,6 +213,7 @@ pub async fn verify_stream(configuration: &configuration::Configuration, org_id:
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_verify_stream_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

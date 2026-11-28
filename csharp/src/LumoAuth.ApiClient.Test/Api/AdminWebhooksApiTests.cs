@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -62,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.AdminWebhooksCreate(orgId);
+            //AdminWebhooksCreateRequest adminWebhooksCreateRequest = null;
+            //var response = instance.AdminWebhooksCreate(orgId, adminWebhooksCreateRequest);
             //Assert.IsType<AdminWebhooksCreateResponse>(response);
         }
 
@@ -256,7 +257,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string webhookId = null;
-            //var response = instance.PatchAdminWebhooksUpdate(orgId, webhookId);
+            //PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest = null;
+            //var response = instance.PatchAdminWebhooksUpdate(orgId, webhookId, putAdminWebhooksUpdateRequest);
             //Assert.IsType<PutAdminWebhooksUpdateResponse>(response);
         }
 
@@ -269,7 +271,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string webhookId = null;
-            //var response = instance.PutAdminWebhooksUpdate(orgId, webhookId);
+            //PutAdminWebhooksUpdateRequest putAdminWebhooksUpdateRequest = null;
+            //var response = instance.PutAdminWebhooksUpdate(orgId, webhookId, putAdminWebhooksUpdateRequest);
             //Assert.IsType<PutAdminWebhooksUpdateResponse>(response);
         }
     }

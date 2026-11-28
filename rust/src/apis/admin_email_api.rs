@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -225,10 +225,11 @@ pub async fn admin_email_templates_list(configuration: &configuration::Configura
     }
 }
 
-pub async fn admin_email_templates_preview(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<models::AdminEmailTemplatesPreviewResponse, Error<AdminEmailTemplatesPreviewError>> {
+pub async fn admin_email_templates_preview(configuration: &configuration::Configuration, org_id: &str, r#type: &str, admin_email_templates_preview_request: Option<models::AdminEmailTemplatesPreviewRequest>) -> Result<models::AdminEmailTemplatesPreviewResponse, Error<AdminEmailTemplatesPreviewError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_type = r#type;
+    let p_admin_email_templates_preview_request = admin_email_templates_preview_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/email-templates/{type}/preview", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), type=crate::apis::urlencode(p_type));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -247,6 +248,7 @@ pub async fn admin_email_templates_preview(configuration: &configuration::Config
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_email_templates_preview_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -274,10 +276,11 @@ pub async fn admin_email_templates_preview(configuration: &configuration::Config
 }
 
 /// Body: subject, body_html, and optionally locale (BCP 47) and client_id to save a language- or application-specific version. Mails use the most specific version: application + language, application, language, then the default.
-pub async fn admin_email_templates_upsert(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<models::EmailTemplate, Error<AdminEmailTemplatesUpsertError>> {
+pub async fn admin_email_templates_upsert(configuration: &configuration::Configuration, org_id: &str, r#type: &str, admin_email_templates_upsert_request: models::AdminEmailTemplatesUpsertRequest) -> Result<models::EmailTemplate, Error<AdminEmailTemplatesUpsertError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_type = r#type;
+    let p_admin_email_templates_upsert_request = admin_email_templates_upsert_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/email-templates/{type}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), type=crate::apis::urlencode(p_type));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -296,6 +299,7 @@ pub async fn admin_email_templates_upsert(configuration: &configuration::Configu
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_email_templates_upsert_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

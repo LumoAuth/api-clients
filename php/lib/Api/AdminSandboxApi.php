@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -135,7 +135,7 @@ class AdminSandboxApi
     /**
      * Operation adminSandboxDestroy
      *
-     * Destroy a sandbox tenant
+     * Destroy a sandbox organization
      *
      * @param  string $orgId orgId (required)
      * @param  string $sandboxSlug sandboxSlug (required)
@@ -154,7 +154,7 @@ class AdminSandboxApi
     /**
      * Operation adminSandboxDestroyWithHttpInfo
      *
-     * Destroy a sandbox tenant
+     * Destroy a sandbox organization
      *
      * @param  string $orgId (required)
      * @param  string $sandboxSlug (required)
@@ -240,7 +240,7 @@ class AdminSandboxApi
     /**
      * Operation adminSandboxDestroyAsync
      *
-     * Destroy a sandbox tenant
+     * Destroy a sandbox organization
      *
      * @param  string $orgId (required)
      * @param  string $sandboxSlug (required)
@@ -262,7 +262,7 @@ class AdminSandboxApi
     /**
      * Operation adminSandboxDestroyAsyncWithHttpInfo
      *
-     * Destroy a sandbox tenant
+     * Destroy a sandbox organization
      *
      * @param  string $orgId (required)
      * @param  string $sandboxSlug (required)
@@ -432,7 +432,7 @@ class AdminSandboxApi
     /**
      * Operation adminSandboxList
      *
-     * List the caller&#39;s sandbox tenants
+     * List the caller&#39;s sandbox organizations
      *
      * @param  string $orgId orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminSandboxList'] to see the possible values for this operation
@@ -450,7 +450,7 @@ class AdminSandboxApi
     /**
      * Operation adminSandboxListWithHttpInfo
      *
-     * List the caller&#39;s sandbox tenants
+     * List the caller&#39;s sandbox organizations
      *
      * @param  string $orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminSandboxList'] to see the possible values for this operation
@@ -535,7 +535,7 @@ class AdminSandboxApi
     /**
      * Operation adminSandboxListAsync
      *
-     * List the caller&#39;s sandbox tenants
+     * List the caller&#39;s sandbox organizations
      *
      * @param  string $orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminSandboxList'] to see the possible values for this operation
@@ -556,7 +556,7 @@ class AdminSandboxApi
     /**
      * Operation adminSandboxListAsyncWithHttpInfo
      *
-     * List the caller&#39;s sandbox tenants
+     * List the caller&#39;s sandbox organizations
      *
      * @param  string $orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminSandboxList'] to see the possible values for this operation
@@ -709,7 +709,7 @@ class AdminSandboxApi
     /**
      * Operation adminSandboxSpawn
      *
-     * Spawn a sandbox tenant
+     * Spawn a sandbox organization
      *
      * @param  string $orgId orgId (required)
      * @param  \LumoAuth\ApiClient\Model\AdminSandboxSpawnRequest|null $adminSandboxSpawnRequest adminSandboxSpawnRequest (optional)
@@ -728,7 +728,7 @@ class AdminSandboxApi
     /**
      * Operation adminSandboxSpawnWithHttpInfo
      *
-     * Spawn a sandbox tenant
+     * Spawn a sandbox organization
      *
      * @param  string $orgId (required)
      * @param  \LumoAuth\ApiClient\Model\AdminSandboxSpawnRequest|null $adminSandboxSpawnRequest (optional)
@@ -814,7 +814,7 @@ class AdminSandboxApi
     /**
      * Operation adminSandboxSpawnAsync
      *
-     * Spawn a sandbox tenant
+     * Spawn a sandbox organization
      *
      * @param  string $orgId (required)
      * @param  \LumoAuth\ApiClient\Model\AdminSandboxSpawnRequest|null $adminSandboxSpawnRequest (optional)
@@ -836,7 +836,7 @@ class AdminSandboxApi
     /**
      * Operation adminSandboxSpawnAsyncWithHttpInfo
      *
-     * Spawn a sandbox tenant
+     * Spawn a sandbox organization
      *
      * @param  string $orgId (required)
      * @param  \LumoAuth\ApiClient\Model\AdminSandboxSpawnRequest|null $adminSandboxSpawnRequest (optional)

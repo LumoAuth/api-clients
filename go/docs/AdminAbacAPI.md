@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 ## AbacAttributesCreate
 
-> AbacAttributesCreateResponse AbacAttributesCreate(ctx, orgId).Execute()
+> AbacAttributesCreateResponse AbacAttributesCreate(ctx, orgId).AbacAttributesCreateRequest(abacAttributesCreateRequest).Execute()
 
 Create an attribute definition
 
@@ -40,10 +40,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	abacAttributesCreateRequest := *openapiclient.NewAbacAttributesCreateRequest("Name_example", "Slug_example", "AttributeType_example", "DataType_example") // AbacAttributesCreateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminAbacAPI.AbacAttributesCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.AbacAttributesCreate(context.Background(), orgId).AbacAttributesCreateRequest(abacAttributesCreateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.AbacAttributesCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -69,6 +70,7 @@ Other parameters are passed through a pointer to a apiAbacAttributesCreateReques
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **abacAttributesCreateRequest** | [**AbacAttributesCreateRequest**](AbacAttributesCreateRequest.md) |  | 
 
 ### Return type
 
@@ -80,7 +82,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -300,7 +302,7 @@ Name | Type | Description  | Notes
 
 ## AbacPoliciesCreate
 
-> AbacPoliciesCreateResponse AbacPoliciesCreate(ctx, orgId).Execute()
+> AbacPoliciesCreateResponse AbacPoliciesCreate(ctx, orgId).AbacPoliciesCreateRequest(abacPoliciesCreateRequest).Execute()
 
 Create an ABAC policy
 
@@ -318,10 +320,11 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	abacPoliciesCreateRequest := *openapiclient.NewAbacPoliciesCreateRequest("Name_example", "ResourceType_example", "Action_example", "Effect_example", map[string]interface{}{"key": interface{}(123)}) // AbacPoliciesCreateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminAbacAPI.AbacPoliciesCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.AbacPoliciesCreate(context.Background(), orgId).AbacPoliciesCreateRequest(abacPoliciesCreateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.AbacPoliciesCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -347,6 +350,7 @@ Other parameters are passed through a pointer to a apiAbacPoliciesCreateRequest 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **abacPoliciesCreateRequest** | [**AbacPoliciesCreateRequest**](AbacPoliciesCreateRequest.md) |  | 
 
 ### Return type
 
@@ -358,7 +362,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -651,7 +655,7 @@ Name | Type | Description  | Notes
 
 ## PatchAbacAttributesUpdate
 
-> PutAbacAttributesUpdateResponse PatchAbacAttributesUpdate(ctx, orgId, id).Execute()
+> PutAbacAttributesUpdateResponse PatchAbacAttributesUpdate(ctx, orgId, id).PutAbacAttributesUpdateRequest(putAbacAttributesUpdateRequest).Execute()
 
 Partially update an attribute definition
 
@@ -670,10 +674,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	id := "id_example" // string | 
+	putAbacAttributesUpdateRequest := *openapiclient.NewPutAbacAttributesUpdateRequest() // PutAbacAttributesUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminAbacAPI.PatchAbacAttributesUpdate(context.Background(), orgId, id).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.PatchAbacAttributesUpdate(context.Background(), orgId, id).PutAbacAttributesUpdateRequest(putAbacAttributesUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.PatchAbacAttributesUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -701,6 +706,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **putAbacAttributesUpdateRequest** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -712,7 +718,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -722,7 +728,7 @@ Name | Type | Description  | Notes
 
 ## PatchAbacPoliciesUpdate
 
-> PutAbacPoliciesUpdateResponse PatchAbacPoliciesUpdate(ctx, orgId, id).Execute()
+> PutAbacPoliciesUpdateResponse PatchAbacPoliciesUpdate(ctx, orgId, id).PutAbacPoliciesUpdateRequest(putAbacPoliciesUpdateRequest).Execute()
 
 Partially update an ABAC policy
 
@@ -741,10 +747,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	id := "id_example" // string | 
+	putAbacPoliciesUpdateRequest := *openapiclient.NewPutAbacPoliciesUpdateRequest() // PutAbacPoliciesUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminAbacAPI.PatchAbacPoliciesUpdate(context.Background(), orgId, id).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.PatchAbacPoliciesUpdate(context.Background(), orgId, id).PutAbacPoliciesUpdateRequest(putAbacPoliciesUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.PatchAbacPoliciesUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -772,6 +779,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **putAbacPoliciesUpdateRequest** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -783,7 +791,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -793,7 +801,7 @@ Name | Type | Description  | Notes
 
 ## PutAbacAttributesUpdate
 
-> PutAbacAttributesUpdateResponse PutAbacAttributesUpdate(ctx, orgId, id).Execute()
+> PutAbacAttributesUpdateResponse PutAbacAttributesUpdate(ctx, orgId, id).PutAbacAttributesUpdateRequest(putAbacAttributesUpdateRequest).Execute()
 
 Update an attribute definition
 
@@ -812,10 +820,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	id := "id_example" // string | 
+	putAbacAttributesUpdateRequest := *openapiclient.NewPutAbacAttributesUpdateRequest() // PutAbacAttributesUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminAbacAPI.PutAbacAttributesUpdate(context.Background(), orgId, id).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.PutAbacAttributesUpdate(context.Background(), orgId, id).PutAbacAttributesUpdateRequest(putAbacAttributesUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.PutAbacAttributesUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -843,6 +852,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **putAbacAttributesUpdateRequest** | [**PutAbacAttributesUpdateRequest**](PutAbacAttributesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -854,7 +864,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -864,7 +874,7 @@ Name | Type | Description  | Notes
 
 ## PutAbacPoliciesUpdate
 
-> PutAbacPoliciesUpdateResponse PutAbacPoliciesUpdate(ctx, orgId, id).Execute()
+> PutAbacPoliciesUpdateResponse PutAbacPoliciesUpdate(ctx, orgId, id).PutAbacPoliciesUpdateRequest(putAbacPoliciesUpdateRequest).Execute()
 
 Update an ABAC policy
 
@@ -883,10 +893,11 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	id := "id_example" // string | 
+	putAbacPoliciesUpdateRequest := *openapiclient.NewPutAbacPoliciesUpdateRequest() // PutAbacPoliciesUpdateRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AdminAbacAPI.PutAbacPoliciesUpdate(context.Background(), orgId, id).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.PutAbacPoliciesUpdate(context.Background(), orgId, id).PutAbacPoliciesUpdateRequest(putAbacPoliciesUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.PutAbacPoliciesUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -914,6 +925,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **putAbacPoliciesUpdateRequest** | [**PutAbacPoliciesUpdateRequest**](PutAbacPoliciesUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -925,7 +937,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

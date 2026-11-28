@@ -11,7 +11,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**adminRolesGet**](AdminRolesApi.md#adminRolesGet) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Get a single role by ID or slug |
 | [**adminRolesGetPermissions**](AdminRolesApi.md#adminRolesGetPermissions) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Get role permissions |
 | [**adminRolesGetUsers**](AdminRolesApi.md#adminRolesGetUsers) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users | Get users assigned to a role |
-| [**adminRolesList**](AdminRolesApi.md#adminRolesList) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the tenant |
+| [**adminRolesList**](AdminRolesApi.md#adminRolesList) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the organization |
 | [**adminRolesRemovePermission**](AdminRolesApi.md#adminRolesRemovePermission) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId} | Remove a permission from a role |
 | [**adminRolesRemoveUser**](AdminRolesApi.md#adminRolesRemoveUser) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId} | Remove a user from a role |
 | [**adminRolesUpdatePermissions**](AdminRolesApi.md#adminRolesUpdatePermissions) | **PUT** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Update role permissions (replaces all) |
@@ -21,11 +21,11 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminRolesAddPermissions"></a>
 # **adminRolesAddPermissions**
-> MessageResponse adminRolesAddPermissions(orgId, roleId)
+> MessageResponse adminRolesAddPermissions(orgId, roleId, adminRolesAddPermissionsRequest)
 
 Add permission(s) to a role
 
-Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. Takes &#x60;permissionId&#x60; or a list &#x60;permissionIds&#x60;. Every id is judged before anything changes: an unknown id is 400 (&#x60;Unknown permission: &lt;id&gt;&#x60;), and a built-in permission that the caller does not hold is 403 (the organization&#39;s own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
 
 ### Example
 ```java
@@ -55,8 +55,9 @@ public class Example {
     AdminRolesApi apiInstance = new AdminRolesApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
+    AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest = new AdminRolesAddPermissionsRequest(); // AdminRolesAddPermissionsRequest | 
     try {
-      MessageResponse result = apiInstance.adminRolesAddPermissions(orgId, roleId);
+      MessageResponse result = apiInstance.adminRolesAddPermissions(orgId, roleId, adminRolesAddPermissionsRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesAddPermissions");
@@ -75,6 +76,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **roleId** | **String**|  | |
+| **adminRolesAddPermissionsRequest** | [**AdminRolesAddPermissionsRequest**](AdminRolesAddPermissionsRequest.md)|  | |
 
 ### Return type
 
@@ -86,7 +88,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -94,12 +96,12 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | Added; message reports how many permissions were added |  -  |
 | **400** | No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform |  -  |
-| **403** | A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
+| **403** | A built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
 | **404** | Role not found |  -  |
 
 <a id="adminRolesAddUser"></a>
 # **adminRolesAddUser**
-> MessageResponse adminRolesAddUser(orgId, roleId)
+> MessageResponse adminRolesAddUser(orgId, roleId, adminRolesAddUserRequest)
 
 Assign a user to a role
 
@@ -131,8 +133,9 @@ public class Example {
     AdminRolesApi apiInstance = new AdminRolesApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
+    AdminRolesAddUserRequest adminRolesAddUserRequest = new AdminRolesAddUserRequest(); // AdminRolesAddUserRequest | 
     try {
-      MessageResponse result = apiInstance.adminRolesAddUser(orgId, roleId);
+      MessageResponse result = apiInstance.adminRolesAddUser(orgId, roleId, adminRolesAddUserRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesAddUser");
@@ -151,6 +154,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **roleId** | **String**|  | |
+| **adminRolesAddUserRequest** | [**AdminRolesAddUserRequest**](AdminRolesAddUserRequest.md)|  | |
 
 ### Return type
 
@@ -162,7 +166,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -172,11 +176,11 @@ public class Example {
 
 <a id="adminRolesCreate"></a>
 # **adminRolesCreate**
-> AdminRolesCreateResponse adminRolesCreate(orgId)
+> AdminRolesCreateResponse adminRolesCreate(orgId, adminRolesCreateRequest)
 
 Create a new role
 
-Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+Optional &#x60;permissions&#x60; is a list of permission slugs. Giving it needs &#x60;roles.assign-permissions&#x60; as well as &#x60;roles.create&#x60;, and every built-in permission must be one that the caller holds (the organization&#39;s own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
 ### Example
 ```java
@@ -205,8 +209,9 @@ public class Example {
 
     AdminRolesApi apiInstance = new AdminRolesApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AdminRolesCreateRequest adminRolesCreateRequest = new AdminRolesCreateRequest(); // AdminRolesCreateRequest | 
     try {
-      AdminRolesCreateResponse result = apiInstance.adminRolesCreate(orgId);
+      AdminRolesCreateResponse result = apiInstance.adminRolesCreate(orgId, adminRolesCreateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesCreate");
@@ -224,6 +229,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **adminRolesCreateRequest** | [**AdminRolesCreateRequest**](AdminRolesCreateRequest.md)|  | |
 
 ### Return type
 
@@ -235,7 +241,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -539,7 +545,7 @@ public class Example {
 # **adminRolesList**
 > AdminRolesListResponse adminRolesList(orgId)
 
-List all roles in the tenant
+List all roles in the organization
 
 ### Example
 ```java
@@ -760,11 +766,11 @@ public class Example {
 
 <a id="adminRolesUpdatePermissions"></a>
 # **adminRolesUpdatePermissions**
-> AdminRolesCreateResponse adminRolesUpdatePermissions(orgId, roleId)
+> AdminRolesCreateResponse adminRolesUpdatePermissions(orgId, roleId, adminRolesUpdatePermissionsRequest)
 
 Update role permissions (replaces all)
 
-Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
+Needs &#x60;roles.assign-permissions&#x60; and &#x60;roles.edit&#x60;. &#x60;permissions&#x60; is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (&#x60;Unknown permission: &lt;slug&gt;&#x60;), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization&#39;s own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 &#x60;plan_limit_reached&#x60;, and &#x60;requested&#x60; says how many seats it needs.
 
 ### Example
 ```java
@@ -794,8 +800,9 @@ public class Example {
     AdminRolesApi apiInstance = new AdminRolesApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
+    AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest = new AdminRolesUpdatePermissionsRequest(); // AdminRolesUpdatePermissionsRequest | 
     try {
-      AdminRolesCreateResponse result = apiInstance.adminRolesUpdatePermissions(orgId, roleId);
+      AdminRolesCreateResponse result = apiInstance.adminRolesUpdatePermissions(orgId, roleId, adminRolesUpdatePermissionsRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesUpdatePermissions");
@@ -814,6 +821,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **roleId** | **String**|  | |
+| **adminRolesUpdatePermissionsRequest** | [**AdminRolesUpdatePermissionsRequest**](AdminRolesUpdatePermissionsRequest.md)|  | |
 
 ### Return type
 
@@ -825,7 +833,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -833,12 +841,12 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | Updated role |  -  |
 | **400** | permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform |  -  |
-| **403** | A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
+| **403** | A new built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
 | **404** | Role not found |  -  |
 
 <a id="patchAdminRolesUpdate"></a>
 # **patchAdminRolesUpdate**
-> AdminRolesCreateResponse patchAdminRolesUpdate(orgId, roleId)
+> AdminRolesCreateResponse patchAdminRolesUpdate(orgId, roleId, putAdminOrgRolesUpdateRequest)
 
 Update an existing role
 
@@ -870,8 +878,9 @@ public class Example {
     AdminRolesApi apiInstance = new AdminRolesApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
+    PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest = new PutAdminOrgRolesUpdateRequest(); // PutAdminOrgRolesUpdateRequest | 
     try {
-      AdminRolesCreateResponse result = apiInstance.patchAdminRolesUpdate(orgId, roleId);
+      AdminRolesCreateResponse result = apiInstance.patchAdminRolesUpdate(orgId, roleId, putAdminOrgRolesUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#patchAdminRolesUpdate");
@@ -890,6 +899,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **roleId** | **String**|  | |
+| **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -901,7 +911,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -911,7 +921,7 @@ public class Example {
 
 <a id="putAdminRolesUpdate"></a>
 # **putAdminRolesUpdate**
-> AdminRolesCreateResponse putAdminRolesUpdate(orgId, roleId)
+> AdminRolesCreateResponse putAdminRolesUpdate(orgId, roleId, putAdminOrgRolesUpdateRequest)
 
 Update an existing role
 
@@ -943,8 +953,9 @@ public class Example {
     AdminRolesApi apiInstance = new AdminRolesApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
+    PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest = new PutAdminOrgRolesUpdateRequest(); // PutAdminOrgRolesUpdateRequest | 
     try {
-      AdminRolesCreateResponse result = apiInstance.putAdminRolesUpdate(orgId, roleId);
+      AdminRolesCreateResponse result = apiInstance.putAdminRolesUpdate(orgId, roleId, putAdminOrgRolesUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#putAdminRolesUpdate");
@@ -963,6 +974,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
 | **roleId** | **String**|  | |
+| **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -974,7 +986,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

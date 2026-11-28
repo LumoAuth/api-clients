@@ -1,0 +1,12 @@
+# CheckRelationRequest
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**object** | **String** |  | 
+**relation** | **String** |  | 
+**subject** | **String** | namespace:id, optionally with #relation. | 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**adminGroupsGet**](AdminGroupsAPI.md#admingroupsget) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Get a single group by ID or slug
 [**adminGroupsGetMembers**](AdminGroupsAPI.md#admingroupsgetmembers) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members
 [**adminGroupsGroupsGetRoles**](AdminGroupsAPI.md#admingroupsgroupsgetroles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles
-[**adminGroupsList**](AdminGroupsAPI.md#admingroupslist) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant
+[**adminGroupsList**](AdminGroupsAPI.md#admingroupslist) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the organization
 [**adminGroupsRemoveMember**](AdminGroupsAPI.md#admingroupsremovemember) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group
 [**adminGroupsRemoveRole**](AdminGroupsAPI.md#admingroupsremoverole) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group
 [**adminGroupsUpdateRoles**](AdminGroupsAPI.md#admingroupsupdateroles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles)
@@ -21,7 +21,7 @@ Method | HTTP request | Description
 
 # **adminGroupsAddMembers**
 ```swift
-    open class func adminGroupsAddMembers(orgId: String, groupId: String, completion: @escaping (_ data: AdminGroupsCreateResponse?, _ error: Error?) -> Void)
+    open class func adminGroupsAddMembers(orgId: String, groupId: String, adminGroupsAddMembersRequest: AdminGroupsAddMembersRequest, completion: @escaping (_ data: AdminGroupsCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Add member(s) to group
@@ -33,9 +33,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let groupId = "groupId_example" // String | 
+let adminGroupsAddMembersRequest = AdminGroupsAddMembersRequest(userId: 123, userIds: ["userIds_example"]) // AdminGroupsAddMembersRequest | 
 
 // Add member(s) to group
-AdminGroupsAPI.adminGroupsAddMembers(orgId: orgId, groupId: groupId) { (response, error) in
+AdminGroupsAPI.adminGroupsAddMembers(orgId: orgId, groupId: groupId, adminGroupsAddMembersRequest: adminGroupsAddMembersRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -53,6 +54,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **groupId** | **String** |  | 
+ **adminGroupsAddMembersRequest** | [**AdminGroupsAddMembersRequest**](AdminGroupsAddMembersRequest.md) |  | 
 
 ### Return type
 
@@ -64,19 +66,19 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminGroupsAddRole**
 ```swift
-    open class func adminGroupsAddRole(orgId: String, groupId: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
+    open class func adminGroupsAddRole(orgId: String, groupId: String, adminGroupsAddRoleRequest: AdminGroupsAddRoleRequest, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
 ```
 
 Add a single role to a group
 
-A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 ### Example
 ```swift
@@ -85,9 +87,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let groupId = "groupId_example" // String | 
+let adminGroupsAddRoleRequest = AdminGroupsAddRoleRequest(roleId: 123) // AdminGroupsAddRoleRequest | 
 
 // Add a single role to a group
-AdminGroupsAPI.adminGroupsAddRole(orgId: orgId, groupId: groupId) { (response, error) in
+AdminGroupsAPI.adminGroupsAddRole(orgId: orgId, groupId: groupId, adminGroupsAddRoleRequest: adminGroupsAddRoleRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -105,6 +108,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **groupId** | **String** |  | 
+ **adminGroupsAddRoleRequest** | [**AdminGroupsAddRoleRequest**](AdminGroupsAddRoleRequest.md) |  | 
 
 ### Return type
 
@@ -116,19 +120,19 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminGroupsCreate**
 ```swift
-    open class func adminGroupsCreate(orgId: String, completion: @escaping (_ data: AdminGroupsCreateResponse?, _ error: Error?) -> Void)
+    open class func adminGroupsCreate(orgId: String, adminGroupsCreateRequest: AdminGroupsCreateRequest, completion: @escaping (_ data: AdminGroupsCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Create a new group
 
-Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
 
 ### Example
 ```swift
@@ -136,9 +140,10 @@ Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be 
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let adminGroupsCreateRequest = AdminGroupsCreateRequest(name: "name_example", slug: "slug_example", description: "description_example", roles: ["roles_example"]) // AdminGroupsCreateRequest | 
 
 // Create a new group
-AdminGroupsAPI.adminGroupsCreate(orgId: orgId) { (response, error) in
+AdminGroupsAPI.adminGroupsCreate(orgId: orgId, adminGroupsCreateRequest: adminGroupsCreateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -155,6 +160,7 @@ AdminGroupsAPI.adminGroupsCreate(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **adminGroupsCreateRequest** | [**AdminGroupsCreateRequest**](AdminGroupsCreateRequest.md) |  | 
 
 ### Return type
 
@@ -166,7 +172,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -376,7 +382,7 @@ Name | Type | Description  | Notes
     open class func adminGroupsList(orgId: String, completion: @escaping (_ data: AdminGroupsListResponse?, _ error: Error?) -> Void)
 ```
 
-List all groups in the tenant
+List all groups in the organization
 
 ### Example
 ```swift
@@ -385,7 +391,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// List all groups in the tenant
+// List all groups in the organization
 AdminGroupsAPI.adminGroupsList(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -525,12 +531,12 @@ Name | Type | Description  | Notes
 
 # **adminGroupsUpdateRoles**
 ```swift
-    open class func adminGroupsUpdateRoles(orgId: String, groupId: String, completion: @escaping (_ data: AdminGroupsCreateResponse?, _ error: Error?) -> Void)
+    open class func adminGroupsUpdateRoles(orgId: String, groupId: String, adminGroupsUpdateRolesRequest: AdminGroupsUpdateRolesRequest, completion: @escaping (_ data: AdminGroupsCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update group roles (replaces all existing roles)
 
-`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+`roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
 
 ### Example
 ```swift
@@ -539,9 +545,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let groupId = "groupId_example" // String | 
+let adminGroupsUpdateRolesRequest = AdminGroupsUpdateRolesRequest(roles: ["roles_example"]) // AdminGroupsUpdateRolesRequest | 
 
 // Update group roles (replaces all existing roles)
-AdminGroupsAPI.adminGroupsUpdateRoles(orgId: orgId, groupId: groupId) { (response, error) in
+AdminGroupsAPI.adminGroupsUpdateRoles(orgId: orgId, groupId: groupId, adminGroupsUpdateRolesRequest: adminGroupsUpdateRolesRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -559,6 +566,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **groupId** | **String** |  | 
+ **adminGroupsUpdateRolesRequest** | [**AdminGroupsUpdateRolesRequest**](AdminGroupsUpdateRolesRequest.md) |  | 
 
 ### Return type
 
@@ -570,14 +578,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminGroupsUpdate**
 ```swift
-    open class func patchAdminGroupsUpdate(orgId: String, groupId: String, completion: @escaping (_ data: AdminGroupsCreateResponse?, _ error: Error?) -> Void)
+    open class func patchAdminGroupsUpdate(orgId: String, groupId: String, putAdminGroupsUpdateRequest: PutAdminGroupsUpdateRequest, completion: @escaping (_ data: AdminGroupsCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update an existing group
@@ -589,9 +597,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let groupId = "groupId_example" // String | 
+let putAdminGroupsUpdateRequest = PutAdminGroupsUpdateRequest(name: "name_example", description: "description_example") // PutAdminGroupsUpdateRequest | 
 
 // Update an existing group
-AdminGroupsAPI.patchAdminGroupsUpdate(orgId: orgId, groupId: groupId) { (response, error) in
+AdminGroupsAPI.patchAdminGroupsUpdate(orgId: orgId, groupId: groupId, putAdminGroupsUpdateRequest: putAdminGroupsUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -609,6 +618,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **groupId** | **String** |  | 
+ **putAdminGroupsUpdateRequest** | [**PutAdminGroupsUpdateRequest**](PutAdminGroupsUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -620,14 +630,14 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminGroupsUpdate**
 ```swift
-    open class func putAdminGroupsUpdate(orgId: String, groupId: String, completion: @escaping (_ data: AdminGroupsCreateResponse?, _ error: Error?) -> Void)
+    open class func putAdminGroupsUpdate(orgId: String, groupId: String, putAdminGroupsUpdateRequest: PutAdminGroupsUpdateRequest, completion: @escaping (_ data: AdminGroupsCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update an existing group
@@ -639,9 +649,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let groupId = "groupId_example" // String | 
+let putAdminGroupsUpdateRequest = PutAdminGroupsUpdateRequest(name: "name_example", description: "description_example") // PutAdminGroupsUpdateRequest | 
 
 // Update an existing group
-AdminGroupsAPI.putAdminGroupsUpdate(orgId: orgId, groupId: groupId) { (response, error) in
+AdminGroupsAPI.putAdminGroupsUpdate(orgId: orgId, groupId: groupId, putAdminGroupsUpdateRequest: putAdminGroupsUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -659,6 +670,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **groupId** | **String** |  | 
+ **putAdminGroupsUpdateRequest** | [**PutAdminGroupsUpdateRequest**](PutAdminGroupsUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -670,7 +682,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

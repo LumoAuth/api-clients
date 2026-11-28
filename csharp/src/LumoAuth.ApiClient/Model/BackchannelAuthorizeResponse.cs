@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -42,7 +42,7 @@ namespace LumoAuth.ApiClient.Model
         /// Initializes a new instance of the <see cref="BackchannelAuthorizeResponse" /> class.
         /// </summary>
         /// <param name="authReqId">authReqId (required).</param>
-        /// <param name="expiresIn">Lifetime of the auth_req_id in seconds. (required).</param>
+        /// <param name="expiresIn">Lifetime of the auth_req_id in seconds: for an application 120, or a shorter requested_expiry (at least 30); for an agent-initiated request 300, or a requested_expiry between 30 and 600. (required).</param>
         /// <param name="interval">Minimum polling interval in seconds (poll / ping modes)..</param>
         public BackchannelAuthorizeResponse(string authReqId = default, int expiresIn = default, int interval = default)
         {
@@ -63,11 +63,11 @@ namespace LumoAuth.ApiClient.Model
         public string AuthReqId { get; set; }
 
         /// <summary>
-        /// Lifetime of the auth_req_id in seconds.
+        /// Lifetime of the auth_req_id in seconds: for an application 120, or a shorter requested_expiry (at least 30); for an agent-initiated request 300, or a requested_expiry between 30 and 600.
         /// </summary>
-        /// <value>Lifetime of the auth_req_id in seconds.</value>
+        /// <value>Lifetime of the auth_req_id in seconds: for an application 120, or a shorter requested_expiry (at least 30); for an agent-initiated request 300, or a requested_expiry between 30 and 600.</value>
         /*
-        <example>300</example>
+        <example>120</example>
         */
         [DataMember(Name = "expires_in", IsRequired = true, EmitDefaultValue = true)]
         public int ExpiresIn { get; set; }

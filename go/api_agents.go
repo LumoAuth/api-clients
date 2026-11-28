@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -1352,6 +1352,12 @@ type ApiRegisterAgentRequest struct {
 	ctx context.Context
 	ApiService AgentsAPI
 	orgId string
+	registerAgentRequest *RegisterAgentRequest
+}
+
+func (r ApiRegisterAgentRequest) RegisterAgentRequest(registerAgentRequest RegisterAgentRequest) ApiRegisterAgentRequest {
+	r.registerAgentRequest = &registerAgentRequest
+	return r
 }
 
 func (r ApiRegisterAgentRequest) Execute() (*RegisterAgentResponse, *http.Response, error) {
@@ -1394,9 +1400,12 @@ func (a *AgentsAPIService) RegisterAgentExecute(r ApiRegisterAgentRequest) (*Reg
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.registerAgentRequest == nil {
+		return localVarReturnValue, nil, reportError("registerAgentRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1412,6 +1421,8 @@ func (a *AgentsAPIService) RegisterAgentExecute(r ApiRegisterAgentRequest) (*Reg
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.registerAgentRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

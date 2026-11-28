@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AttestationToken** | **string** | The workload OIDC token (JWT). | 
+**Scope** | Pointer to [**AttestRequestScope**](AttestRequestScope.md) |  | [optional] 
 
 ## Methods
 
@@ -44,6 +45,31 @@ and a boolean to check if the value has been set.
 
 SetAttestationToken sets AttestationToken field to given value.
 
+
+### GetScope
+
+`func (o *AttestRequest) GetScope() AttestRequestScope`
+
+GetScope returns the Scope field if non-nil, zero value otherwise.
+
+### GetScopeOk
+
+`func (o *AttestRequest) GetScopeOk() (*AttestRequestScope, bool)`
+
+GetScopeOk returns a tuple with the Scope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScope
+
+`func (o *AttestRequest) SetScope(v AttestRequestScope)`
+
+SetScope sets Scope field to given value.
+
+### HasScope
+
+`func (o *AttestRequest) HasScope() bool`
+
+HasScope returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

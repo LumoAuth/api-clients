@@ -11,11 +11,13 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**admin_mcp_servers_grants_remove**](AdminMcpApi.md#admin_mcp_servers_grants_remove) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Remove every grant of an agent on an MCP server |
 | [**admin_mcp_servers_grants_set**](AdminMcpApi.md#admin_mcp_servers_grants_set) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}/grants/{agentId} | Set the tools of an MCP server that an agent may call |
 | [**admin_mcp_servers_list**](AdminMcpApi.md#admin_mcp_servers_list) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers |
+| [**patch_admin_mcp_servers_update**](AdminMcpApi.md#patch_admin_mcp_servers_update) | **PATCH** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server |
+| [**put_admin_mcp_servers_update**](AdminMcpApi.md#put_admin_mcp_servers_update) | **PUT** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Update an MCP server (same as PATCH: only the fields that are sent change) |
 
 
 ## admin_mcp_servers_create
 
-> <AdminMcpServersCreateResponse> admin_mcp_servers_create(org_id)
+> <AdminMcpServersCreateResponse> admin_mcp_servers_create(org_id, mcp_server_write)
 
 Register an MCP server
 
@@ -39,10 +41,11 @@ end
 
 api_instance = LumoAuthApiClient::AdminMcpApi.new
 org_id = 'org_id_example' # String | 
+mcp_server_write = LumoAuthApiClient::McpServerWrite.new # McpServerWrite | 
 
 begin
   # Register an MCP server
-  result = api_instance.admin_mcp_servers_create(org_id)
+  result = api_instance.admin_mcp_servers_create(org_id, mcp_server_write)
   p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminMcpApi->admin_mcp_servers_create: #{e}"
@@ -53,12 +56,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<AdminMcpServersCreateResponse>, Integer, Hash)> admin_mcp_servers_create_with_http_info(org_id)
+> <Array(<AdminMcpServersCreateResponse>, Integer, Hash)> admin_mcp_servers_create_with_http_info(org_id, mcp_server_write)
 
 ```ruby
 begin
   # Register an MCP server
-  data, status_code, headers = api_instance.admin_mcp_servers_create_with_http_info(org_id)
+  data, status_code, headers = api_instance.admin_mcp_servers_create_with_http_info(org_id, mcp_server_write)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <AdminMcpServersCreateResponse>
@@ -72,6 +75,7 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **mcp_server_write** | [**McpServerWrite**](McpServerWrite.md) |  |  |
 
 ### Return type
 
@@ -83,7 +87,7 @@ end
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -536,5 +540,159 @@ end
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## patch_admin_mcp_servers_update
+
+> <AdminMcpServersCreateResponse> patch_admin_mcp_servers_update(org_id, server_id, mcp_server_write)
+
+Update an MCP server
+
+Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminMcpApi.new
+org_id = 'org_id_example' # String | 
+server_id = 'server_id_example' # String | 
+mcp_server_write = LumoAuthApiClient::McpServerWrite.new # McpServerWrite | 
+
+begin
+  # Update an MCP server
+  result = api_instance.patch_admin_mcp_servers_update(org_id, server_id, mcp_server_write)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminMcpApi->patch_admin_mcp_servers_update: #{e}"
+end
+```
+
+#### Using the patch_admin_mcp_servers_update_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AdminMcpServersCreateResponse>, Integer, Hash)> patch_admin_mcp_servers_update_with_http_info(org_id, server_id, mcp_server_write)
+
+```ruby
+begin
+  # Update an MCP server
+  data, status_code, headers = api_instance.patch_admin_mcp_servers_update_with_http_info(org_id, server_id, mcp_server_write)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AdminMcpServersCreateResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminMcpApi->patch_admin_mcp_servers_update_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **server_id** | **String** |  |  |
+| **mcp_server_write** | [**McpServerWrite**](McpServerWrite.md) |  |  |
+
+### Return type
+
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## put_admin_mcp_servers_update
+
+> <AdminMcpServersCreateResponse> put_admin_mcp_servers_update(org_id, server_id, mcp_server_write)
+
+Update an MCP server (same as PATCH: only the fields that are sent change)
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminMcpApi.new
+org_id = 'org_id_example' # String | 
+server_id = 'server_id_example' # String | 
+mcp_server_write = LumoAuthApiClient::McpServerWrite.new # McpServerWrite | 
+
+begin
+  # Update an MCP server (same as PATCH: only the fields that are sent change)
+  result = api_instance.put_admin_mcp_servers_update(org_id, server_id, mcp_server_write)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminMcpApi->put_admin_mcp_servers_update: #{e}"
+end
+```
+
+#### Using the put_admin_mcp_servers_update_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AdminMcpServersCreateResponse>, Integer, Hash)> put_admin_mcp_servers_update_with_http_info(org_id, server_id, mcp_server_write)
+
+```ruby
+begin
+  # Update an MCP server (same as PATCH: only the fields that are sent change)
+  data, status_code, headers = api_instance.put_admin_mcp_servers_update_with_http_info(org_id, server_id, mcp_server_write)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AdminMcpServersCreateResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminMcpApi->put_admin_mcp_servers_update_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **server_id** | **String** |  |  |
+| **mcp_server_write** | [**McpServerWrite**](McpServerWrite.md) |  |  |
+
+### Return type
+
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 

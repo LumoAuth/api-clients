@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -28,7 +28,7 @@ class BackchannelAuthorizeResponse(BaseModel):
     BackchannelAuthorizeResponse
     """ # noqa: E501
     auth_req_id: StrictStr
-    expires_in: StrictInt = Field(description="Lifetime of the auth_req_id in seconds.")
+    expires_in: StrictInt = Field(description="Lifetime of the auth_req_id in seconds: for an application 120, or a shorter requested_expiry (at least 30); for an agent-initiated request 300, or a requested_expiry between 30 and 600.")
     interval: Optional[StrictInt] = Field(default=None, description="Minimum polling interval in seconds (poll / ping modes).")
     __properties: ClassVar[List[str]] = ["auth_req_id", "expires_in", "interval"]
 

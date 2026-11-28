@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -19,17 +19,24 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr, field_validator
 from typing_extensions import Annotated
+from lumoauth_api_client.models.admin_org_invitations_create_request import AdminOrgInvitationsCreateRequest
 from lumoauth_api_client.models.admin_org_invitations_create_response import AdminOrgInvitationsCreateResponse
 from lumoauth_api_client.models.admin_org_invitations_list_response import AdminOrgInvitationsListResponse
+from lumoauth_api_client.models.admin_org_members_add_request import AdminOrgMembersAddRequest
 from lumoauth_api_client.models.admin_org_members_add_response import AdminOrgMembersAddResponse
 from lumoauth_api_client.models.admin_org_members_list_response import AdminOrgMembersListResponse
+from lumoauth_api_client.models.admin_org_roles_create_request import AdminOrgRolesCreateRequest
 from lumoauth_api_client.models.admin_org_roles_create_response import AdminOrgRolesCreateResponse
 from lumoauth_api_client.models.admin_org_roles_list_response import AdminOrgRolesListResponse
+from lumoauth_api_client.models.admin_organizations_create_request import AdminOrganizationsCreateRequest
 from lumoauth_api_client.models.admin_organizations_create_response import AdminOrganizationsCreateResponse
 from lumoauth_api_client.models.admin_organizations_get_response import AdminOrganizationsGetResponse
 from lumoauth_api_client.models.admin_organizations_list_response import AdminOrganizationsListResponse
 from lumoauth_api_client.models.message_response import MessageResponse
+from lumoauth_api_client.models.put_admin_org_members_update_request import PutAdminOrgMembersUpdateRequest
 from lumoauth_api_client.models.put_admin_org_members_update_response import PutAdminOrgMembersUpdateResponse
+from lumoauth_api_client.models.put_admin_org_roles_update_request import PutAdminOrgRolesUpdateRequest
+from lumoauth_api_client.models.put_admin_organizations_update_request import PutAdminOrganizationsUpdateRequest
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -54,6 +61,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        admin_org_invitations_create_request: AdminOrgInvitationsCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -74,6 +82,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param admin_org_invitations_create_request: (required)
+        :type admin_org_invitations_create_request: AdminOrgInvitationsCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -99,6 +109,7 @@ class AdminOrganizationsApi:
         _param = self._admin_org_invitations_create_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            admin_org_invitations_create_request=admin_org_invitations_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -128,6 +139,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        admin_org_invitations_create_request: AdminOrgInvitationsCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -148,6 +160,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param admin_org_invitations_create_request: (required)
+        :type admin_org_invitations_create_request: AdminOrgInvitationsCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -173,6 +187,7 @@ class AdminOrganizationsApi:
         _param = self._admin_org_invitations_create_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            admin_org_invitations_create_request=admin_org_invitations_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -202,6 +217,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        admin_org_invitations_create_request: AdminOrgInvitationsCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -222,6 +238,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param admin_org_invitations_create_request: (required)
+        :type admin_org_invitations_create_request: AdminOrgInvitationsCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -247,6 +265,7 @@ class AdminOrganizationsApi:
         _param = self._admin_org_invitations_create_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            admin_org_invitations_create_request=admin_org_invitations_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -271,6 +290,7 @@ class AdminOrganizationsApi:
         self,
         org_id,
         organization_id,
+        admin_org_invitations_create_request,
         _request_auth,
         _content_type,
         _headers,
@@ -300,6 +320,8 @@ class AdminOrganizationsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_org_invitations_create_request is not None:
+            _body_params = admin_org_invitations_create_request
 
 
         # set the HTTP header `Accept`
@@ -310,6 +332,19 @@ class AdminOrganizationsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1207,6 +1242,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        admin_org_members_add_request: AdminOrgMembersAddRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1227,6 +1263,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param admin_org_members_add_request: (required)
+        :type admin_org_members_add_request: AdminOrgMembersAddRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1252,6 +1290,7 @@ class AdminOrganizationsApi:
         _param = self._admin_org_members_add_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            admin_org_members_add_request=admin_org_members_add_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1279,6 +1318,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        admin_org_members_add_request: AdminOrgMembersAddRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1299,6 +1339,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param admin_org_members_add_request: (required)
+        :type admin_org_members_add_request: AdminOrgMembersAddRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1324,6 +1366,7 @@ class AdminOrganizationsApi:
         _param = self._admin_org_members_add_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            admin_org_members_add_request=admin_org_members_add_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1351,6 +1394,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        admin_org_members_add_request: AdminOrgMembersAddRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1371,6 +1415,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param admin_org_members_add_request: (required)
+        :type admin_org_members_add_request: AdminOrgMembersAddRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1396,6 +1442,7 @@ class AdminOrganizationsApi:
         _param = self._admin_org_members_add_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            admin_org_members_add_request=admin_org_members_add_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1418,6 +1465,7 @@ class AdminOrganizationsApi:
         self,
         org_id,
         organization_id,
+        admin_org_members_add_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1447,6 +1495,8 @@ class AdminOrganizationsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_org_members_add_request is not None:
+            _body_params = admin_org_members_add_request
 
 
         # set the HTTP header `Accept`
@@ -1457,6 +1507,19 @@ class AdminOrganizationsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2059,6 +2122,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        admin_org_roles_create_request: AdminOrgRolesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2079,6 +2143,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param admin_org_roles_create_request: (required)
+        :type admin_org_roles_create_request: AdminOrgRolesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2104,6 +2170,7 @@ class AdminOrganizationsApi:
         _param = self._admin_org_roles_create_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            admin_org_roles_create_request=admin_org_roles_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2132,6 +2199,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        admin_org_roles_create_request: AdminOrgRolesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2152,6 +2220,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param admin_org_roles_create_request: (required)
+        :type admin_org_roles_create_request: AdminOrgRolesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2177,6 +2247,7 @@ class AdminOrganizationsApi:
         _param = self._admin_org_roles_create_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            admin_org_roles_create_request=admin_org_roles_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2205,6 +2276,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        admin_org_roles_create_request: AdminOrgRolesCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2225,6 +2297,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param admin_org_roles_create_request: (required)
+        :type admin_org_roles_create_request: AdminOrgRolesCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2250,6 +2324,7 @@ class AdminOrganizationsApi:
         _param = self._admin_org_roles_create_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            admin_org_roles_create_request=admin_org_roles_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2273,6 +2348,7 @@ class AdminOrganizationsApi:
         self,
         org_id,
         organization_id,
+        admin_org_roles_create_request,
         _request_auth,
         _content_type,
         _headers,
@@ -2302,6 +2378,8 @@ class AdminOrganizationsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_org_roles_create_request is not None:
+            _body_params = admin_org_roles_create_request
 
 
         # set the HTTP header `Accept`
@@ -2312,6 +2390,19 @@ class AdminOrganizationsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2913,6 +3004,7 @@ class AdminOrganizationsApi:
     def admin_organizations_create(
         self,
         org_id: StrictStr,
+        admin_organizations_create_request: AdminOrganizationsCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2931,6 +3023,8 @@ class AdminOrganizationsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_organizations_create_request: (required)
+        :type admin_organizations_create_request: AdminOrganizationsCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2955,6 +3049,7 @@ class AdminOrganizationsApi:
 
         _param = self._admin_organizations_create_serialize(
             org_id=org_id,
+            admin_organizations_create_request=admin_organizations_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2982,6 +3077,7 @@ class AdminOrganizationsApi:
     def admin_organizations_create_with_http_info(
         self,
         org_id: StrictStr,
+        admin_organizations_create_request: AdminOrganizationsCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3000,6 +3096,8 @@ class AdminOrganizationsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_organizations_create_request: (required)
+        :type admin_organizations_create_request: AdminOrganizationsCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3024,6 +3122,7 @@ class AdminOrganizationsApi:
 
         _param = self._admin_organizations_create_serialize(
             org_id=org_id,
+            admin_organizations_create_request=admin_organizations_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3051,6 +3150,7 @@ class AdminOrganizationsApi:
     def admin_organizations_create_without_preload_content(
         self,
         org_id: StrictStr,
+        admin_organizations_create_request: AdminOrganizationsCreateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3069,6 +3169,8 @@ class AdminOrganizationsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_organizations_create_request: (required)
+        :type admin_organizations_create_request: AdminOrganizationsCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3093,6 +3195,7 @@ class AdminOrganizationsApi:
 
         _param = self._admin_organizations_create_serialize(
             org_id=org_id,
+            admin_organizations_create_request=admin_organizations_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3115,6 +3218,7 @@ class AdminOrganizationsApi:
     def _admin_organizations_create_serialize(
         self,
         org_id,
+        admin_organizations_create_request,
         _request_auth,
         _content_type,
         _headers,
@@ -3142,6 +3246,8 @@ class AdminOrganizationsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_organizations_create_request is not None:
+            _body_params = admin_organizations_create_request
 
 
         # set the HTTP header `Accept`
@@ -3152,6 +3258,19 @@ class AdminOrganizationsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -3996,6 +4115,7 @@ class AdminOrganizationsApi:
         org_id: StrictStr,
         organization_id: StrictStr,
         user_id: StrictStr,
+        put_admin_org_members_update_request: PutAdminOrgMembersUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4018,6 +4138,8 @@ class AdminOrganizationsApi:
         :type organization_id: str
         :param user_id: (required)
         :type user_id: str
+        :param put_admin_org_members_update_request: (required)
+        :type put_admin_org_members_update_request: PutAdminOrgMembersUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4044,6 +4166,7 @@ class AdminOrganizationsApi:
             org_id=org_id,
             organization_id=organization_id,
             user_id=user_id,
+            put_admin_org_members_update_request=put_admin_org_members_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4072,6 +4195,7 @@ class AdminOrganizationsApi:
         org_id: StrictStr,
         organization_id: StrictStr,
         user_id: StrictStr,
+        put_admin_org_members_update_request: PutAdminOrgMembersUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4094,6 +4218,8 @@ class AdminOrganizationsApi:
         :type organization_id: str
         :param user_id: (required)
         :type user_id: str
+        :param put_admin_org_members_update_request: (required)
+        :type put_admin_org_members_update_request: PutAdminOrgMembersUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4120,6 +4246,7 @@ class AdminOrganizationsApi:
             org_id=org_id,
             organization_id=organization_id,
             user_id=user_id,
+            put_admin_org_members_update_request=put_admin_org_members_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4148,6 +4275,7 @@ class AdminOrganizationsApi:
         org_id: StrictStr,
         organization_id: StrictStr,
         user_id: StrictStr,
+        put_admin_org_members_update_request: PutAdminOrgMembersUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4170,6 +4298,8 @@ class AdminOrganizationsApi:
         :type organization_id: str
         :param user_id: (required)
         :type user_id: str
+        :param put_admin_org_members_update_request: (required)
+        :type put_admin_org_members_update_request: PutAdminOrgMembersUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4196,6 +4326,7 @@ class AdminOrganizationsApi:
             org_id=org_id,
             organization_id=organization_id,
             user_id=user_id,
+            put_admin_org_members_update_request=put_admin_org_members_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4219,6 +4350,7 @@ class AdminOrganizationsApi:
         org_id,
         organization_id,
         user_id,
+        put_admin_org_members_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -4250,6 +4382,8 @@ class AdminOrganizationsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_org_members_update_request is not None:
+            _body_params = put_admin_org_members_update_request
 
 
         # set the HTTP header `Accept`
@@ -4260,6 +4394,19 @@ class AdminOrganizationsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -4291,6 +4438,7 @@ class AdminOrganizationsApi:
         org_id: StrictStr,
         organization_id: StrictStr,
         role_id: Annotated[str, Field(strict=True)],
+        put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4313,6 +4461,8 @@ class AdminOrganizationsApi:
         :type organization_id: str
         :param role_id: (required)
         :type role_id: str
+        :param put_admin_org_roles_update_request: (required)
+        :type put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4339,6 +4489,7 @@ class AdminOrganizationsApi:
             org_id=org_id,
             organization_id=organization_id,
             role_id=role_id,
+            put_admin_org_roles_update_request=put_admin_org_roles_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4367,6 +4518,7 @@ class AdminOrganizationsApi:
         org_id: StrictStr,
         organization_id: StrictStr,
         role_id: Annotated[str, Field(strict=True)],
+        put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4389,6 +4541,8 @@ class AdminOrganizationsApi:
         :type organization_id: str
         :param role_id: (required)
         :type role_id: str
+        :param put_admin_org_roles_update_request: (required)
+        :type put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4415,6 +4569,7 @@ class AdminOrganizationsApi:
             org_id=org_id,
             organization_id=organization_id,
             role_id=role_id,
+            put_admin_org_roles_update_request=put_admin_org_roles_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4443,6 +4598,7 @@ class AdminOrganizationsApi:
         org_id: StrictStr,
         organization_id: StrictStr,
         role_id: Annotated[str, Field(strict=True)],
+        put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4465,6 +4621,8 @@ class AdminOrganizationsApi:
         :type organization_id: str
         :param role_id: (required)
         :type role_id: str
+        :param put_admin_org_roles_update_request: (required)
+        :type put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4491,6 +4649,7 @@ class AdminOrganizationsApi:
             org_id=org_id,
             organization_id=organization_id,
             role_id=role_id,
+            put_admin_org_roles_update_request=put_admin_org_roles_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4514,6 +4673,7 @@ class AdminOrganizationsApi:
         org_id,
         organization_id,
         role_id,
+        put_admin_org_roles_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -4545,6 +4705,8 @@ class AdminOrganizationsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_org_roles_update_request is not None:
+            _body_params = put_admin_org_roles_update_request
 
 
         # set the HTTP header `Accept`
@@ -4555,6 +4717,19 @@ class AdminOrganizationsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -4585,6 +4760,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        put_admin_organizations_update_request: PutAdminOrganizationsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4605,6 +4781,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param put_admin_organizations_update_request: (required)
+        :type put_admin_organizations_update_request: PutAdminOrganizationsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4630,6 +4808,7 @@ class AdminOrganizationsApi:
         _param = self._patch_admin_organizations_update_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            put_admin_organizations_update_request=put_admin_organizations_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4658,6 +4837,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        put_admin_organizations_update_request: PutAdminOrganizationsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4678,6 +4858,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param put_admin_organizations_update_request: (required)
+        :type put_admin_organizations_update_request: PutAdminOrganizationsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4703,6 +4885,7 @@ class AdminOrganizationsApi:
         _param = self._patch_admin_organizations_update_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            put_admin_organizations_update_request=put_admin_organizations_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4731,6 +4914,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        put_admin_organizations_update_request: PutAdminOrganizationsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4751,6 +4935,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param put_admin_organizations_update_request: (required)
+        :type put_admin_organizations_update_request: PutAdminOrganizationsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4776,6 +4962,7 @@ class AdminOrganizationsApi:
         _param = self._patch_admin_organizations_update_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            put_admin_organizations_update_request=put_admin_organizations_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4799,6 +4986,7 @@ class AdminOrganizationsApi:
         self,
         org_id,
         organization_id,
+        put_admin_organizations_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -4828,6 +5016,8 @@ class AdminOrganizationsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_organizations_update_request is not None:
+            _body_params = put_admin_organizations_update_request
 
 
         # set the HTTP header `Accept`
@@ -4838,6 +5028,19 @@ class AdminOrganizationsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -4869,6 +5072,7 @@ class AdminOrganizationsApi:
         org_id: StrictStr,
         organization_id: StrictStr,
         user_id: StrictStr,
+        put_admin_org_members_update_request: PutAdminOrgMembersUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4891,6 +5095,8 @@ class AdminOrganizationsApi:
         :type organization_id: str
         :param user_id: (required)
         :type user_id: str
+        :param put_admin_org_members_update_request: (required)
+        :type put_admin_org_members_update_request: PutAdminOrgMembersUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4917,6 +5123,7 @@ class AdminOrganizationsApi:
             org_id=org_id,
             organization_id=organization_id,
             user_id=user_id,
+            put_admin_org_members_update_request=put_admin_org_members_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4945,6 +5152,7 @@ class AdminOrganizationsApi:
         org_id: StrictStr,
         organization_id: StrictStr,
         user_id: StrictStr,
+        put_admin_org_members_update_request: PutAdminOrgMembersUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4967,6 +5175,8 @@ class AdminOrganizationsApi:
         :type organization_id: str
         :param user_id: (required)
         :type user_id: str
+        :param put_admin_org_members_update_request: (required)
+        :type put_admin_org_members_update_request: PutAdminOrgMembersUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4993,6 +5203,7 @@ class AdminOrganizationsApi:
             org_id=org_id,
             organization_id=organization_id,
             user_id=user_id,
+            put_admin_org_members_update_request=put_admin_org_members_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5021,6 +5232,7 @@ class AdminOrganizationsApi:
         org_id: StrictStr,
         organization_id: StrictStr,
         user_id: StrictStr,
+        put_admin_org_members_update_request: PutAdminOrgMembersUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5043,6 +5255,8 @@ class AdminOrganizationsApi:
         :type organization_id: str
         :param user_id: (required)
         :type user_id: str
+        :param put_admin_org_members_update_request: (required)
+        :type put_admin_org_members_update_request: PutAdminOrgMembersUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5069,6 +5283,7 @@ class AdminOrganizationsApi:
             org_id=org_id,
             organization_id=organization_id,
             user_id=user_id,
+            put_admin_org_members_update_request=put_admin_org_members_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5092,6 +5307,7 @@ class AdminOrganizationsApi:
         org_id,
         organization_id,
         user_id,
+        put_admin_org_members_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -5123,6 +5339,8 @@ class AdminOrganizationsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_org_members_update_request is not None:
+            _body_params = put_admin_org_members_update_request
 
 
         # set the HTTP header `Accept`
@@ -5133,6 +5351,19 @@ class AdminOrganizationsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -5164,6 +5395,7 @@ class AdminOrganizationsApi:
         org_id: StrictStr,
         organization_id: StrictStr,
         role_id: Annotated[str, Field(strict=True)],
+        put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5186,6 +5418,8 @@ class AdminOrganizationsApi:
         :type organization_id: str
         :param role_id: (required)
         :type role_id: str
+        :param put_admin_org_roles_update_request: (required)
+        :type put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5212,6 +5446,7 @@ class AdminOrganizationsApi:
             org_id=org_id,
             organization_id=organization_id,
             role_id=role_id,
+            put_admin_org_roles_update_request=put_admin_org_roles_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5240,6 +5475,7 @@ class AdminOrganizationsApi:
         org_id: StrictStr,
         organization_id: StrictStr,
         role_id: Annotated[str, Field(strict=True)],
+        put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5262,6 +5498,8 @@ class AdminOrganizationsApi:
         :type organization_id: str
         :param role_id: (required)
         :type role_id: str
+        :param put_admin_org_roles_update_request: (required)
+        :type put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5288,6 +5526,7 @@ class AdminOrganizationsApi:
             org_id=org_id,
             organization_id=organization_id,
             role_id=role_id,
+            put_admin_org_roles_update_request=put_admin_org_roles_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5316,6 +5555,7 @@ class AdminOrganizationsApi:
         org_id: StrictStr,
         organization_id: StrictStr,
         role_id: Annotated[str, Field(strict=True)],
+        put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5338,6 +5578,8 @@ class AdminOrganizationsApi:
         :type organization_id: str
         :param role_id: (required)
         :type role_id: str
+        :param put_admin_org_roles_update_request: (required)
+        :type put_admin_org_roles_update_request: PutAdminOrgRolesUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5364,6 +5606,7 @@ class AdminOrganizationsApi:
             org_id=org_id,
             organization_id=organization_id,
             role_id=role_id,
+            put_admin_org_roles_update_request=put_admin_org_roles_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5387,6 +5630,7 @@ class AdminOrganizationsApi:
         org_id,
         organization_id,
         role_id,
+        put_admin_org_roles_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -5418,6 +5662,8 @@ class AdminOrganizationsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_org_roles_update_request is not None:
+            _body_params = put_admin_org_roles_update_request
 
 
         # set the HTTP header `Accept`
@@ -5428,6 +5674,19 @@ class AdminOrganizationsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -5458,6 +5717,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        put_admin_organizations_update_request: PutAdminOrganizationsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5478,6 +5738,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param put_admin_organizations_update_request: (required)
+        :type put_admin_organizations_update_request: PutAdminOrganizationsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5503,6 +5765,7 @@ class AdminOrganizationsApi:
         _param = self._put_admin_organizations_update_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            put_admin_organizations_update_request=put_admin_organizations_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5531,6 +5794,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        put_admin_organizations_update_request: PutAdminOrganizationsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5551,6 +5815,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param put_admin_organizations_update_request: (required)
+        :type put_admin_organizations_update_request: PutAdminOrganizationsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5576,6 +5842,7 @@ class AdminOrganizationsApi:
         _param = self._put_admin_organizations_update_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            put_admin_organizations_update_request=put_admin_organizations_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5604,6 +5871,7 @@ class AdminOrganizationsApi:
         self,
         org_id: StrictStr,
         organization_id: StrictStr,
+        put_admin_organizations_update_request: PutAdminOrganizationsUpdateRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5624,6 +5892,8 @@ class AdminOrganizationsApi:
         :type org_id: str
         :param organization_id: (required)
         :type organization_id: str
+        :param put_admin_organizations_update_request: (required)
+        :type put_admin_organizations_update_request: PutAdminOrganizationsUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5649,6 +5919,7 @@ class AdminOrganizationsApi:
         _param = self._put_admin_organizations_update_serialize(
             org_id=org_id,
             organization_id=organization_id,
+            put_admin_organizations_update_request=put_admin_organizations_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5672,6 +5943,7 @@ class AdminOrganizationsApi:
         self,
         org_id,
         organization_id,
+        put_admin_organizations_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -5701,6 +5973,8 @@ class AdminOrganizationsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_organizations_update_request is not None:
+            _body_params = put_admin_organizations_update_request
 
 
         # set the HTTP header `Accept`
@@ -5711,6 +5985,19 @@ class AdminOrganizationsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

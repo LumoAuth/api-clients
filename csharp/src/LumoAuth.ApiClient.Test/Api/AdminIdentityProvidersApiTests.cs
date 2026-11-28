@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -86,7 +86,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //var response = instance.AdminSocialProvidersCreate(orgId);
+            //AdminSocialProvidersCreateRequest adminSocialProvidersCreateRequest = null;
+            //var response = instance.AdminSocialProvidersCreate(orgId, adminSocialProvidersCreateRequest);
             //Assert.IsType<AdminSocialProvidersCreateResponse>(response);
         }
 
@@ -175,7 +176,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string providerId = null;
-            //var response = instance.PatchAdminSocialProvidersUpdate(orgId, providerId);
+            //PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest = null;
+            //var response = instance.PatchAdminSocialProvidersUpdate(orgId, providerId, putAdminSocialProvidersUpdateRequest);
             //Assert.IsType<AdminSocialProvidersCreateResponse>(response);
         }
 
@@ -188,7 +190,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string providerId = null;
-            //var response = instance.PutAdminSocialProvidersUpdate(orgId, providerId);
+            //PutAdminSocialProvidersUpdateRequest putAdminSocialProvidersUpdateRequest = null;
+            //var response = instance.PutAdminSocialProvidersUpdate(orgId, providerId, putAdminSocialProvidersUpdateRequest);
             //Assert.IsType<AdminSocialProvidersCreateResponse>(response);
         }
     }

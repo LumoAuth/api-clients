@@ -11,7 +11,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**AdminRolesGet**](AdminRolesApi.md#adminrolesget) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Get a single role by ID or slug |
 | [**AdminRolesGetPermissions**](AdminRolesApi.md#adminrolesgetpermissions) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Get role permissions |
 | [**AdminRolesGetUsers**](AdminRolesApi.md#adminrolesgetusers) | **GET** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users | Get users assigned to a role |
-| [**AdminRolesList**](AdminRolesApi.md#adminroleslist) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the tenant |
+| [**AdminRolesList**](AdminRolesApi.md#adminroleslist) | **GET** /orgs/{orgId}/api/v1/admin/roles | List all roles in the organization |
 | [**AdminRolesRemovePermission**](AdminRolesApi.md#adminrolesremovepermission) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId} | Remove a permission from a role |
 | [**AdminRolesRemoveUser**](AdminRolesApi.md#adminrolesremoveuser) | **DELETE** /orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId} | Remove a user from a role |
 | [**AdminRolesUpdatePermissions**](AdminRolesApi.md#adminrolesupdatepermissions) | **PUT** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Update role permissions (replaces all) |
@@ -20,11 +20,11 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminrolesaddpermissions"></a>
 # **AdminRolesAddPermissions**
-> MessageResponse AdminRolesAddPermissions (string orgId, string roleId)
+> MessageResponse AdminRolesAddPermissions (string orgId, string roleId, AdminRolesAddPermissionsRequest adminRolesAddPermissionsRequest)
 
 Add permission(s) to a role
 
-Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a permission that the caller does not hold is 403. Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. Takes `permissionId` or a list `permissionIds`. Every id is judged before anything changes: an unknown id is 400 (`Unknown permission: <id>`), and a built-in permission that the caller does not hold is 403 (the organization's own permissions need nothing more). Either refusal adds nothing. A permission that the role already holds is left as it is. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole request with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 ### Example
 ```csharp
@@ -56,11 +56,12 @@ namespace Example
             var apiInstance = new AdminRolesApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var roleId = "roleId_example";  // string | 
+            var adminRolesAddPermissionsRequest = new AdminRolesAddPermissionsRequest(); // AdminRolesAddPermissionsRequest | 
 
             try
             {
                 // Add permission(s) to a role
-                MessageResponse result = apiInstance.AdminRolesAddPermissions(orgId, roleId);
+                MessageResponse result = apiInstance.AdminRolesAddPermissions(orgId, roleId, adminRolesAddPermissionsRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -81,7 +82,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Add permission(s) to a role
-    ApiResponse<MessageResponse> response = apiInstance.AdminRolesAddPermissionsWithHttpInfo(orgId, roleId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminRolesAddPermissionsWithHttpInfo(orgId, roleId, adminRolesAddPermissionsRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -100,6 +101,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **roleId** | **string** |  |  |
+| **adminRolesAddPermissionsRequest** | [**AdminRolesAddPermissionsRequest**](AdminRolesAddPermissionsRequest.md) |  |  |
 
 ### Return type
 
@@ -111,7 +113,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -120,14 +122,14 @@ catch (ApiException e)
 |-------------|-------------|------------------|
 | **200** | Added; message reports how many permissions were added |  -  |
 | **400** | No permissionId / permissionIds, an id that is not a whole number, an unknown id, or a permission reserved for the platform |  -  |
-| **403** | A permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
+| **403** | A built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
 | **404** | Role not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminrolesadduser"></a>
 # **AdminRolesAddUser**
-> MessageResponse AdminRolesAddUser (string orgId, string roleId)
+> MessageResponse AdminRolesAddUser (string orgId, string roleId, AdminRolesAddUserRequest adminRolesAddUserRequest)
 
 Assign a user to a role
 
@@ -161,11 +163,12 @@ namespace Example
             var apiInstance = new AdminRolesApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var roleId = "roleId_example";  // string | 
+            var adminRolesAddUserRequest = new AdminRolesAddUserRequest(); // AdminRolesAddUserRequest | 
 
             try
             {
                 // Assign a user to a role
-                MessageResponse result = apiInstance.AdminRolesAddUser(orgId, roleId);
+                MessageResponse result = apiInstance.AdminRolesAddUser(orgId, roleId, adminRolesAddUserRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -186,7 +189,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Assign a user to a role
-    ApiResponse<MessageResponse> response = apiInstance.AdminRolesAddUserWithHttpInfo(orgId, roleId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminRolesAddUserWithHttpInfo(orgId, roleId, adminRolesAddUserRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -205,6 +208,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **roleId** | **string** |  |  |
+| **adminRolesAddUserRequest** | [**AdminRolesAddUserRequest**](AdminRolesAddUserRequest.md) |  |  |
 
 ### Return type
 
@@ -216,7 +220,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -229,11 +233,11 @@ catch (ApiException e)
 
 <a id="adminrolescreate"></a>
 # **AdminRolesCreate**
-> AdminRolesCreateResponse AdminRolesCreate (string orgId)
+> AdminRolesCreateResponse AdminRolesCreate (string orgId, AdminRolesCreateRequest adminRolesCreateRequest)
 
 Create a new role
 
-Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every permission must be one that the caller holds; otherwise the answer is 403 and no role is created. An unknown slug is 400.
+Optional `permissions` is a list of permission slugs. Giving it needs `roles.assign-permissions` as well as `roles.create`, and every built-in permission must be one that the caller holds (the organization's own permissions need nothing more); otherwise the answer is 403 and no role is created. An unknown slug is 400.
 
 ### Example
 ```csharp
@@ -264,11 +268,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminRolesApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var adminRolesCreateRequest = new AdminRolesCreateRequest(); // AdminRolesCreateRequest | 
 
             try
             {
                 // Create a new role
-                AdminRolesCreateResponse result = apiInstance.AdminRolesCreate(orgId);
+                AdminRolesCreateResponse result = apiInstance.AdminRolesCreate(orgId, adminRolesCreateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -289,7 +294,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create a new role
-    ApiResponse<AdminRolesCreateResponse> response = apiInstance.AdminRolesCreateWithHttpInfo(orgId);
+    ApiResponse<AdminRolesCreateResponse> response = apiInstance.AdminRolesCreateWithHttpInfo(orgId, adminRolesCreateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -307,6 +312,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **adminRolesCreateRequest** | [**AdminRolesCreateRequest**](AdminRolesCreateRequest.md) |  |  |
 
 ### Return type
 
@@ -318,7 +324,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -741,7 +747,7 @@ catch (ApiException e)
 # **AdminRolesList**
 > AdminRolesListResponse AdminRolesList (string orgId)
 
-List all roles in the tenant
+List all roles in the organization
 
 ### Example
 ```csharp
@@ -775,7 +781,7 @@ namespace Example
 
             try
             {
-                // List all roles in the tenant
+                // List all roles in the organization
                 AdminRolesListResponse result = apiInstance.AdminRolesList(orgId);
                 Debug.WriteLine(result);
             }
@@ -796,7 +802,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List all roles in the tenant
+    // List all roles in the organization
     ApiResponse<AdminRolesListResponse> response = apiInstance.AdminRolesListWithHttpInfo(orgId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
@@ -1049,11 +1055,11 @@ catch (ApiException e)
 
 <a id="adminrolesupdatepermissions"></a>
 # **AdminRolesUpdatePermissions**
-> AdminRolesCreateResponse AdminRolesUpdatePermissions (string orgId, string roleId)
+> AdminRolesCreateResponse AdminRolesUpdatePermissions (string orgId, string roleId, AdminRolesUpdatePermissionsRequest adminRolesUpdatePermissionsRequest)
 
 Update role permissions (replaces all)
 
-Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a permission that the role does not hold yet must be one that the caller holds, otherwise 403. Either refusal changes nothing. Permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
+Needs `roles.assign-permissions` and `roles.edit`. `permissions` is the full list of permission slugs that the role should grant. The whole list is judged before anything changes: an unknown slug is 400 (`Unknown permission: <slug>`), and a built-in permission that the role does not hold yet must be one that the caller holds, otherwise 403. The organization's own permissions need nothing more. Either refusal changes nothing. Built-in permissions on the role that the caller does not hold are kept, whether or not the list names them. When the role starts to open the admin portal, each active holder that is not an administrator yet takes an admin seat; too few free seats refuse the whole change with 403 `plan_limit_reached`, and `requested` says how many seats it needs.
 
 ### Example
 ```csharp
@@ -1085,11 +1091,12 @@ namespace Example
             var apiInstance = new AdminRolesApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var roleId = "roleId_example";  // string | 
+            var adminRolesUpdatePermissionsRequest = new AdminRolesUpdatePermissionsRequest(); // AdminRolesUpdatePermissionsRequest | 
 
             try
             {
                 // Update role permissions (replaces all)
-                AdminRolesCreateResponse result = apiInstance.AdminRolesUpdatePermissions(orgId, roleId);
+                AdminRolesCreateResponse result = apiInstance.AdminRolesUpdatePermissions(orgId, roleId, adminRolesUpdatePermissionsRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1110,7 +1117,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update role permissions (replaces all)
-    ApiResponse<AdminRolesCreateResponse> response = apiInstance.AdminRolesUpdatePermissionsWithHttpInfo(orgId, roleId);
+    ApiResponse<AdminRolesCreateResponse> response = apiInstance.AdminRolesUpdatePermissionsWithHttpInfo(orgId, roleId, adminRolesUpdatePermissionsRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1129,6 +1136,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **roleId** | **string** |  |  |
+| **adminRolesUpdatePermissionsRequest** | [**AdminRolesUpdatePermissionsRequest**](AdminRolesUpdatePermissionsRequest.md) |  |  |
 
 ### Return type
 
@@ -1140,7 +1148,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1149,14 +1157,14 @@ catch (ApiException e)
 |-------------|-------------|------------------|
 | **200** | Updated role |  -  |
 | **400** | permissions is missing or not a list, names an unknown slug, or names a permission reserved for the platform |  -  |
-| **403** | A new permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
+| **403** | A new built-in permission that the caller does not hold, a system role, or too few admin seats for the holders that the role would make administrators (&#x60;plan_limit_reached&#x60;) |  -  |
 | **404** | Role not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminrolesupdate"></a>
 # **PatchAdminRolesUpdate**
-> AdminRolesCreateResponse PatchAdminRolesUpdate (string orgId, string roleId)
+> AdminRolesCreateResponse PatchAdminRolesUpdate (string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest)
 
 Update an existing role
 
@@ -1190,11 +1198,12 @@ namespace Example
             var apiInstance = new AdminRolesApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var roleId = "roleId_example";  // string | 
+            var putAdminOrgRolesUpdateRequest = new PutAdminOrgRolesUpdateRequest(); // PutAdminOrgRolesUpdateRequest | 
 
             try
             {
                 // Update an existing role
-                AdminRolesCreateResponse result = apiInstance.PatchAdminRolesUpdate(orgId, roleId);
+                AdminRolesCreateResponse result = apiInstance.PatchAdminRolesUpdate(orgId, roleId, putAdminOrgRolesUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1215,7 +1224,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an existing role
-    ApiResponse<AdminRolesCreateResponse> response = apiInstance.PatchAdminRolesUpdateWithHttpInfo(orgId, roleId);
+    ApiResponse<AdminRolesCreateResponse> response = apiInstance.PatchAdminRolesUpdateWithHttpInfo(orgId, roleId, putAdminOrgRolesUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1234,6 +1243,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **roleId** | **string** |  |  |
+| **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1245,7 +1255,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1258,7 +1268,7 @@ catch (ApiException e)
 
 <a id="putadminrolesupdate"></a>
 # **PutAdminRolesUpdate**
-> AdminRolesCreateResponse PutAdminRolesUpdate (string orgId, string roleId)
+> AdminRolesCreateResponse PutAdminRolesUpdate (string orgId, string roleId, PutAdminOrgRolesUpdateRequest putAdminOrgRolesUpdateRequest)
 
 Update an existing role
 
@@ -1292,11 +1302,12 @@ namespace Example
             var apiInstance = new AdminRolesApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var roleId = "roleId_example";  // string | 
+            var putAdminOrgRolesUpdateRequest = new PutAdminOrgRolesUpdateRequest(); // PutAdminOrgRolesUpdateRequest | 
 
             try
             {
                 // Update an existing role
-                AdminRolesCreateResponse result = apiInstance.PutAdminRolesUpdate(orgId, roleId);
+                AdminRolesCreateResponse result = apiInstance.PutAdminRolesUpdate(orgId, roleId, putAdminOrgRolesUpdateRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1317,7 +1328,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an existing role
-    ApiResponse<AdminRolesCreateResponse> response = apiInstance.PutAdminRolesUpdateWithHttpInfo(orgId, roleId);
+    ApiResponse<AdminRolesCreateResponse> response = apiInstance.PutAdminRolesUpdateWithHttpInfo(orgId, roleId, putAdminOrgRolesUpdateRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1336,6 +1347,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **roleId** | **string** |  |  |
+| **putAdminOrgRolesUpdateRequest** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  |  |
 
 ### Return type
 
@@ -1347,7 +1359,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

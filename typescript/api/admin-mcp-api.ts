@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -36,6 +36,8 @@ import type { AdminMcpServersGrantsSetResponse } from '../models';
 // @ts-ignore
 import type { AdminMcpServersListResponse } from '../models';
 // @ts-ignore
+import type { McpServerWrite } from '../models';
+// @ts-ignore
 import type { MessageResponse } from '../models';
 /**
  * AdminMcpApi - axios parameter creator
@@ -47,12 +49,15 @@ export const AdminMcpApiAxiosParamCreator = function (configuration?: Configurat
          * The `resource_uri` is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
          * @summary Register an MCP server
          * @param {string} orgId 
+         * @param {McpServerWrite} mcpServerWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminMcpServersCreate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminMcpServersCreate: async (orgId: string, mcpServerWrite: McpServerWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminMcpServersCreate', 'orgId', orgId)
+            // verify required parameter 'mcpServerWrite' is not null or undefined
+            assertParamExists('adminMcpServersCreate', 'mcpServerWrite', mcpServerWrite)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/mcp/servers`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -75,9 +80,12 @@ export const AdminMcpApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(mcpServerWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -369,6 +377,108 @@ export const AdminMcpApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+         * @summary Update an MCP server
+         * @param {string} orgId 
+         * @param {string} serverId 
+         * @param {McpServerWrite} mcpServerWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAdminMcpServersUpdate: async (orgId: string, serverId: string, mcpServerWrite: McpServerWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('patchAdminMcpServersUpdate', 'orgId', orgId)
+            // verify required parameter 'serverId' is not null or undefined
+            assertParamExists('patchAdminMcpServersUpdate', 'serverId', serverId)
+            // verify required parameter 'mcpServerWrite' is not null or undefined
+            assertParamExists('patchAdminMcpServersUpdate', 'mcpServerWrite', mcpServerWrite)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"serverId"}}`, encodeURIComponent(String(serverId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(mcpServerWrite, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update an MCP server (same as PATCH: only the fields that are sent change)
+         * @param {string} orgId 
+         * @param {string} serverId 
+         * @param {McpServerWrite} mcpServerWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putAdminMcpServersUpdate: async (orgId: string, serverId: string, mcpServerWrite: McpServerWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('putAdminMcpServersUpdate', 'orgId', orgId)
+            // verify required parameter 'serverId' is not null or undefined
+            assertParamExists('putAdminMcpServersUpdate', 'serverId', serverId)
+            // verify required parameter 'mcpServerWrite' is not null or undefined
+            assertParamExists('putAdminMcpServersUpdate', 'mcpServerWrite', mcpServerWrite)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"serverId"}}`, encodeURIComponent(String(serverId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(mcpServerWrite, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -383,11 +493,12 @@ export const AdminMcpApiFp = function(configuration?: Configuration) {
          * The `resource_uri` is stored and returned in canonical form: lower-case scheme and host, no default port, no trailing slash, no dot segments. Token requests match it in any equivalent spelling.
          * @summary Register an MCP server
          * @param {string} orgId 
+         * @param {McpServerWrite} mcpServerWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminMcpServersCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminMcpServersCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminMcpServersCreate(orgId, options);
+        async adminMcpServersCreate(orgId: string, mcpServerWrite: McpServerWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminMcpServersCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminMcpServersCreate(orgId, mcpServerWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminMcpApi.adminMcpServersCreate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -479,6 +590,36 @@ export const AdminMcpApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['AdminMcpApi.adminMcpServersList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+         * @summary Update an MCP server
+         * @param {string} orgId 
+         * @param {string} serverId 
+         * @param {McpServerWrite} mcpServerWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchAdminMcpServersUpdate(orgId: string, serverId: string, mcpServerWrite: McpServerWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminMcpServersCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminMcpServersUpdate(orgId, serverId, mcpServerWrite, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminMcpApi.patchAdminMcpServersUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update an MCP server (same as PATCH: only the fields that are sent change)
+         * @param {string} orgId 
+         * @param {string} serverId 
+         * @param {McpServerWrite} mcpServerWrite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putAdminMcpServersUpdate(orgId: string, serverId: string, mcpServerWrite: McpServerWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminMcpServersCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminMcpServersUpdate(orgId, serverId, mcpServerWrite, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminMcpApi.putAdminMcpServersUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -497,7 +638,7 @@ export const AdminMcpApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         adminMcpServersCreate(requestParameters: AdminMcpApiAdminMcpServersCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersCreateResponse> {
-            return localVarFp.adminMcpServersCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminMcpServersCreate(requestParameters.orgId, requestParameters.mcpServerWrite, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -558,6 +699,26 @@ export const AdminMcpApiFactory = function (configuration?: Configuration, baseP
          */
         adminMcpServersList(requestParameters: AdminMcpApiAdminMcpServersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersListResponse> {
             return localVarFp.adminMcpServersList(requestParameters.orgId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+         * @summary Update an MCP server
+         * @param {AdminMcpApiPatchAdminMcpServersUpdateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAdminMcpServersUpdate(requestParameters: AdminMcpApiPatchAdminMcpServersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersCreateResponse> {
+            return localVarFp.patchAdminMcpServersUpdate(requestParameters.orgId, requestParameters.serverId, requestParameters.mcpServerWrite, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update an MCP server (same as PATCH: only the fields that are sent change)
+         * @param {AdminMcpApiPutAdminMcpServersUpdateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putAdminMcpServersUpdate(requestParameters: AdminMcpApiPutAdminMcpServersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersCreateResponse> {
+            return localVarFp.putAdminMcpServersUpdate(requestParameters.orgId, requestParameters.serverId, requestParameters.mcpServerWrite, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -638,6 +799,26 @@ export interface AdminMcpApiInterface {
      */
     adminMcpServersList(requestParameters: AdminMcpApiAdminMcpServersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersListResponse>;
 
+    /**
+     * Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+     * @summary Update an MCP server
+     * @param {AdminMcpApiPatchAdminMcpServersUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminMcpApiInterface
+     */
+    patchAdminMcpServersUpdate(requestParameters: AdminMcpApiPatchAdminMcpServersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersCreateResponse>;
+
+    /**
+     * 
+     * @summary Update an MCP server (same as PATCH: only the fields that are sent change)
+     * @param {AdminMcpApiPutAdminMcpServersUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminMcpApiInterface
+     */
+    putAdminMcpServersUpdate(requestParameters: AdminMcpApiPutAdminMcpServersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersCreateResponse>;
+
 }
 
 /**
@@ -652,6 +833,13 @@ export interface AdminMcpApiAdminMcpServersCreateRequest {
      * @memberof AdminMcpApiAdminMcpServersCreate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {McpServerWrite}
+     * @memberof AdminMcpApiAdminMcpServersCreate
+     */
+    readonly mcpServerWrite: McpServerWrite
 }
 
 /**
@@ -802,6 +990,62 @@ export interface AdminMcpApiAdminMcpServersListRequest {
 }
 
 /**
+ * Request parameters for patchAdminMcpServersUpdate operation in AdminMcpApi.
+ * @export
+ * @interface AdminMcpApiPatchAdminMcpServersUpdateRequest
+ */
+export interface AdminMcpApiPatchAdminMcpServersUpdateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminMcpApiPatchAdminMcpServersUpdate
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminMcpApiPatchAdminMcpServersUpdate
+     */
+    readonly serverId: string
+
+    /**
+     * 
+     * @type {McpServerWrite}
+     * @memberof AdminMcpApiPatchAdminMcpServersUpdate
+     */
+    readonly mcpServerWrite: McpServerWrite
+}
+
+/**
+ * Request parameters for putAdminMcpServersUpdate operation in AdminMcpApi.
+ * @export
+ * @interface AdminMcpApiPutAdminMcpServersUpdateRequest
+ */
+export interface AdminMcpApiPutAdminMcpServersUpdateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminMcpApiPutAdminMcpServersUpdate
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminMcpApiPutAdminMcpServersUpdate
+     */
+    readonly serverId: string
+
+    /**
+     * 
+     * @type {McpServerWrite}
+     * @memberof AdminMcpApiPutAdminMcpServersUpdate
+     */
+    readonly mcpServerWrite: McpServerWrite
+}
+
+/**
  * AdminMcpApi - object-oriented interface
  * @export
  * @class AdminMcpApi
@@ -817,7 +1061,7 @@ export class AdminMcpApi extends BaseAPI implements AdminMcpApiInterface {
      * @memberof AdminMcpApi
      */
     public adminMcpServersCreate(requestParameters: AdminMcpApiAdminMcpServersCreateRequest, options?: RawAxiosRequestConfig) {
-        return AdminMcpApiFp(this.configuration).adminMcpServersCreate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminMcpApiFp(this.configuration).adminMcpServersCreate(requestParameters.orgId, requestParameters.mcpServerWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -890,6 +1134,30 @@ export class AdminMcpApi extends BaseAPI implements AdminMcpApiInterface {
      */
     public adminMcpServersList(requestParameters: AdminMcpApiAdminMcpServersListRequest, options?: RawAxiosRequestConfig) {
         return AdminMcpApiFp(this.configuration).adminMcpServersList(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Only the fields that are sent change; each is judged as on create. `resource_uri` cannot be changed (400): register a new server for another address. Changes apply to the next token request.
+     * @summary Update an MCP server
+     * @param {AdminMcpApiPatchAdminMcpServersUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminMcpApi
+     */
+    public patchAdminMcpServersUpdate(requestParameters: AdminMcpApiPatchAdminMcpServersUpdateRequest, options?: RawAxiosRequestConfig) {
+        return AdminMcpApiFp(this.configuration).patchAdminMcpServersUpdate(requestParameters.orgId, requestParameters.serverId, requestParameters.mcpServerWrite, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update an MCP server (same as PATCH: only the fields that are sent change)
+     * @param {AdminMcpApiPutAdminMcpServersUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminMcpApi
+     */
+    public putAdminMcpServersUpdate(requestParameters: AdminMcpApiPutAdminMcpServersUpdateRequest, options?: RawAxiosRequestConfig) {
+        return AdminMcpApiFp(this.configuration).putAdminMcpServersUpdate(requestParameters.orgId, requestParameters.serverId, requestParameters.mcpServerWrite, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

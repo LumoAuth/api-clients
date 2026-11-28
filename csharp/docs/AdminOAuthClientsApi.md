@@ -232,7 +232,7 @@ catch (ApiException e)
 
 <a id="createclient"></a>
 # **CreateClient**
-> CreateClientResponse CreateClient (string orgId)
+> CreateClientResponse CreateClient (string orgId, OAuthClientWrite oAuthClientWrite)
 
 Create an OAuth client
 
@@ -265,11 +265,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminOAuthClientsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var oAuthClientWrite = new OAuthClientWrite(); // OAuthClientWrite | 
 
             try
             {
                 // Create an OAuth client
-                CreateClientResponse result = apiInstance.CreateClient(orgId);
+                CreateClientResponse result = apiInstance.CreateClient(orgId, oAuthClientWrite);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -290,7 +291,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create an OAuth client
-    ApiResponse<CreateClientResponse> response = apiInstance.CreateClientWithHttpInfo(orgId);
+    ApiResponse<CreateClientResponse> response = apiInstance.CreateClientWithHttpInfo(orgId, oAuthClientWrite);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -308,6 +309,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **oAuthClientWrite** | [**OAuthClientWrite**](OAuthClientWrite.md) |  |  |
 
 ### Return type
 
@@ -319,7 +321,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1061,7 +1063,7 @@ catch (ApiException e)
 
 <a id="patchclient"></a>
 # **PatchClient**
-> UpdateClientResponse PatchClient (string orgId, string clientId)
+> UpdateClientResponse PatchClient (string orgId, string clientId, OAuthClientWrite oAuthClientWrite)
 
 Update an OAuth client
 
@@ -1097,11 +1099,12 @@ namespace Example
             var apiInstance = new AdminOAuthClientsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var clientId = "clientId_example";  // string | 
+            var oAuthClientWrite = new OAuthClientWrite(); // OAuthClientWrite | 
 
             try
             {
                 // Update an OAuth client
-                UpdateClientResponse result = apiInstance.PatchClient(orgId, clientId);
+                UpdateClientResponse result = apiInstance.PatchClient(orgId, clientId, oAuthClientWrite);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1122,7 +1125,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an OAuth client
-    ApiResponse<UpdateClientResponse> response = apiInstance.PatchClientWithHttpInfo(orgId, clientId);
+    ApiResponse<UpdateClientResponse> response = apiInstance.PatchClientWithHttpInfo(orgId, clientId, oAuthClientWrite);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1141,6 +1144,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **clientId** | **string** |  |  |
+| **oAuthClientWrite** | [**OAuthClientWrite**](OAuthClientWrite.md) |  |  |
 
 ### Return type
 
@@ -1152,7 +1156,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1373,6 +1377,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Rotated — the new plaintext secret is included once and never shown again |  -  |
+| **400** | The client authenticates with a key (private_key_jwt, or a FAPI 2.0 profile) and has no client secret |  -  |
 | **403** | The client holds a privilege that the caller may not hand out |  -  |
 | **404** | OAuth client not found |  -  |
 
@@ -1380,7 +1385,7 @@ catch (ApiException e)
 
 <a id="setclientscopes"></a>
 # **SetClientScopes**
-> SetClientScopesResponse SetClientScopes (string orgId, string clientId)
+> SetClientScopesResponse SetClientScopes (string orgId, string clientId, SetClientScopesRequest setClientScopesRequest)
 
 Replace the scopes granted to an OAuth client
 
@@ -1416,11 +1421,12 @@ namespace Example
             var apiInstance = new AdminOAuthClientsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var clientId = "clientId_example";  // string | 
+            var setClientScopesRequest = new SetClientScopesRequest(); // SetClientScopesRequest | 
 
             try
             {
                 // Replace the scopes granted to an OAuth client
-                SetClientScopesResponse result = apiInstance.SetClientScopes(orgId, clientId);
+                SetClientScopesResponse result = apiInstance.SetClientScopes(orgId, clientId, setClientScopesRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1441,7 +1447,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Replace the scopes granted to an OAuth client
-    ApiResponse<SetClientScopesResponse> response = apiInstance.SetClientScopesWithHttpInfo(orgId, clientId);
+    ApiResponse<SetClientScopesResponse> response = apiInstance.SetClientScopesWithHttpInfo(orgId, clientId, setClientScopesRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1460,6 +1466,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **clientId** | **string** |  |  |
+| **setClientScopesRequest** | [**SetClientScopesRequest**](SetClientScopesRequest.md) |  |  |
 
 ### Return type
 
@@ -1471,7 +1478,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -1486,7 +1493,7 @@ catch (ApiException e)
 
 <a id="updateclient"></a>
 # **UpdateClient**
-> UpdateClientResponse UpdateClient (string orgId, string clientId)
+> UpdateClientResponse UpdateClient (string orgId, string clientId, OAuthClientWrite oAuthClientWrite)
 
 Update an OAuth client (same as PATCH: only the fields that are sent change)
 
@@ -1522,11 +1529,12 @@ namespace Example
             var apiInstance = new AdminOAuthClientsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var clientId = "clientId_example";  // string | 
+            var oAuthClientWrite = new OAuthClientWrite(); // OAuthClientWrite | 
 
             try
             {
                 // Update an OAuth client (same as PATCH: only the fields that are sent change)
-                UpdateClientResponse result = apiInstance.UpdateClient(orgId, clientId);
+                UpdateClientResponse result = apiInstance.UpdateClient(orgId, clientId, oAuthClientWrite);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1547,7 +1555,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an OAuth client (same as PATCH: only the fields that are sent change)
-    ApiResponse<UpdateClientResponse> response = apiInstance.UpdateClientWithHttpInfo(orgId, clientId);
+    ApiResponse<UpdateClientResponse> response = apiInstance.UpdateClientWithHttpInfo(orgId, clientId, oAuthClientWrite);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1566,6 +1574,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **clientId** | **string** |  |  |
+| **oAuthClientWrite** | [**OAuthClientWrite**](OAuthClientWrite.md) |  |  |
 
 ### Return type
 
@@ -1577,7 +1586,7 @@ catch (ApiException e)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 

@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -14,10 +14,13 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminPermissionsCreateRequest;
 import io.lumoauth.client.model.AdminPermissionsCreateResponse;
 import io.lumoauth.client.model.AdminPermissionsGetResponse;
 import io.lumoauth.client.model.AdminPermissionsListResponse;
+import io.lumoauth.client.model.AdminPermissionsUpdateRequest;
 import io.lumoauth.client.model.AdminPermissionsUsageResponse;
+import io.lumoauth.client.model.AdminScopesCreateRequest;
 import io.lumoauth.client.model.AdminScopesCreateResponse;
 import io.lumoauth.client.model.AdminScopesListResponse;
 import io.lumoauth.client.model.MessageResponse;
@@ -38,14 +41,15 @@ public class AdminPermissionsApiTest {
     private final AdminPermissionsApi api = new AdminPermissionsApi();
 
     /**
-     * Create a custom permission for the tenant
+     * Create a custom permission for the organization
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminPermissionsCreateTest() throws ApiException {
         String orgId = null;
-        AdminPermissionsCreateResponse response = api.adminPermissionsCreate(orgId);
+        AdminPermissionsCreateRequest adminPermissionsCreateRequest = null;
+        AdminPermissionsCreateResponse response = api.adminPermissionsCreate(orgId, adminPermissionsCreateRequest);
         // TODO: test validations
     }
 
@@ -76,7 +80,7 @@ public class AdminPermissionsApiTest {
     }
 
     /**
-     * List all available permissions for the tenant
+     * List all available permissions for the organization
      *
      * @throws ApiException if the Api call fails
      */
@@ -96,7 +100,8 @@ public class AdminPermissionsApiTest {
     public void adminPermissionsUpdateTest() throws ApiException {
         String orgId = null;
         String permissionId = null;
-        AdminPermissionsCreateResponse response = api.adminPermissionsUpdate(orgId, permissionId);
+        AdminPermissionsUpdateRequest adminPermissionsUpdateRequest = null;
+        AdminPermissionsCreateResponse response = api.adminPermissionsUpdate(orgId, permissionId, adminPermissionsUpdateRequest);
         // TODO: test validations
     }
 
@@ -121,7 +126,8 @@ public class AdminPermissionsApiTest {
     @Test
     public void adminScopesCreateTest() throws ApiException {
         String orgId = null;
-        AdminScopesCreateResponse response = api.adminScopesCreate(orgId);
+        AdminScopesCreateRequest adminScopesCreateRequest = null;
+        AdminScopesCreateResponse response = api.adminScopesCreate(orgId, adminScopesCreateRequest);
         // TODO: test validations
     }
 

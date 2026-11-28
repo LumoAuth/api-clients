@@ -4,10 +4,10 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_permissions_create**](AdminPermissionsApi.md#admin_permissions_create) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the tenant
+[**admin_permissions_create**](AdminPermissionsApi.md#admin_permissions_create) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the organization
 [**admin_permissions_delete**](AdminPermissionsApi.md#admin_permissions_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Delete a custom permission
 [**admin_permissions_get**](AdminPermissionsApi.md#admin_permissions_get) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Get a single permission
-[**admin_permissions_list**](AdminPermissionsApi.md#admin_permissions_list) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the tenant
+[**admin_permissions_list**](AdminPermissionsApi.md#admin_permissions_list) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the organization
 [**admin_permissions_update**](AdminPermissionsApi.md#admin_permissions_update) | **PATCH** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Update a permission
 [**admin_permissions_usage**](AdminPermissionsApi.md#admin_permissions_usage) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId}/usage | Get permission usage (roles assigned to this permission)
 [**admin_scopes_create**](AdminPermissionsApi.md#admin_scopes_create) | **POST** /orgs/{orgId}/api/v1/admin/scopes | Create a custom OAuth scope
@@ -16,9 +16,9 @@ Method | HTTP request | Description
 
 
 # **admin_permissions_create**
-> AdminPermissionsCreateResponse admin_permissions_create(org_id)
+> AdminPermissionsCreateResponse admin_permissions_create(org_id, admin_permissions_create_request)
 
-Create a custom permission for the tenant
+Create a custom permission for the organization
 
 ### Example
 
@@ -27,6 +27,7 @@ Create a custom permission for the tenant
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_permissions_create_request import AdminPermissionsCreateRequest
 from lumoauth_api_client.models.admin_permissions_create_response import AdminPermissionsCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -58,10 +59,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminPermissionsApi(api_client)
     org_id = 'org_id_example' # str | 
+    admin_permissions_create_request = lumoauth_api_client.AdminPermissionsCreateRequest() # AdminPermissionsCreateRequest | 
 
     try:
-        # Create a custom permission for the tenant
-        api_response = api_instance.admin_permissions_create(org_id)
+        # Create a custom permission for the organization
+        api_response = api_instance.admin_permissions_create(org_id, admin_permissions_create_request)
         print("The response of AdminPermissionsApi->admin_permissions_create:\n")
         pprint(api_response)
     except Exception as e:
@@ -76,6 +78,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **admin_permissions_create_request** | [**AdminPermissionsCreateRequest**](AdminPermissionsCreateRequest.md)|  | 
 
 ### Return type
 
@@ -87,7 +90,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -271,7 +274,7 @@ Name | Type | Description  | Notes
 # **admin_permissions_list**
 > AdminPermissionsListResponse admin_permissions_list(org_id)
 
-List all available permissions for the tenant
+List all available permissions for the organization
 
 ### Example
 
@@ -313,7 +316,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # List all available permissions for the tenant
+        # List all available permissions for the organization
         api_response = api_instance.admin_permissions_list(org_id)
         print("The response of AdminPermissionsApi->admin_permissions_list:\n")
         pprint(api_response)
@@ -352,7 +355,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_permissions_update**
-> AdminPermissionsCreateResponse admin_permissions_update(org_id, permission_id)
+> AdminPermissionsCreateResponse admin_permissions_update(org_id, permission_id, admin_permissions_update_request)
 
 Update a permission
 
@@ -364,6 +367,7 @@ Update a permission
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.admin_permissions_create_response import AdminPermissionsCreateResponse
+from lumoauth_api_client.models.admin_permissions_update_request import AdminPermissionsUpdateRequest
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -395,10 +399,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminPermissionsApi(api_client)
     org_id = 'org_id_example' # str | 
     permission_id = 'permission_id_example' # str | 
+    admin_permissions_update_request = lumoauth_api_client.AdminPermissionsUpdateRequest() # AdminPermissionsUpdateRequest | 
 
     try:
         # Update a permission
-        api_response = api_instance.admin_permissions_update(org_id, permission_id)
+        api_response = api_instance.admin_permissions_update(org_id, permission_id, admin_permissions_update_request)
         print("The response of AdminPermissionsApi->admin_permissions_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -414,6 +419,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **permission_id** | **str**|  | 
+ **admin_permissions_update_request** | [**AdminPermissionsUpdateRequest**](AdminPermissionsUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -425,7 +431,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -522,7 +528,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_scopes_create**
-> AdminScopesCreateResponse admin_scopes_create(org_id)
+> AdminScopesCreateResponse admin_scopes_create(org_id, admin_scopes_create_request)
 
 Create a custom OAuth scope
 
@@ -533,6 +539,7 @@ Create a custom OAuth scope
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_scopes_create_request import AdminScopesCreateRequest
 from lumoauth_api_client.models.admin_scopes_create_response import AdminScopesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -564,10 +571,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminPermissionsApi(api_client)
     org_id = 'org_id_example' # str | 
+    admin_scopes_create_request = lumoauth_api_client.AdminScopesCreateRequest() # AdminScopesCreateRequest | 
 
     try:
         # Create a custom OAuth scope
-        api_response = api_instance.admin_scopes_create(org_id)
+        api_response = api_instance.admin_scopes_create(org_id, admin_scopes_create_request)
         print("The response of AdminPermissionsApi->admin_scopes_create:\n")
         pprint(api_response)
     except Exception as e:
@@ -582,6 +590,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **admin_scopes_create_request** | [**AdminScopesCreateRequest**](AdminScopesCreateRequest.md)|  | 
 
 ### Return type
 
@@ -593,7 +602,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

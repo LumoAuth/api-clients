@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -23,10 +23,12 @@ import io.lumoauth.client.model.GetClientResponse;
 import io.lumoauth.client.model.ListClientScopesResponse;
 import io.lumoauth.client.model.ListClientsResponse;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.OAuthClientWrite;
 import io.lumoauth.client.model.PatchAdminClientsUpdateBrandingResponse;
 import io.lumoauth.client.model.PutAdminClientsUpdateBrandingRequest;
 import io.lumoauth.client.model.PutAdminClientsUpdateBrandingResponse;
 import io.lumoauth.client.model.RotateClientSecretResponse;
+import io.lumoauth.client.model.SetClientScopesRequest;
 import io.lumoauth.client.model.SetClientScopesResponse;
 import io.lumoauth.client.model.UpdateClientResponse;
 import org.junit.jupiter.api.Disabled;
@@ -83,7 +85,8 @@ public class AdminOAuthClientsApiTest {
     @Test
     public void createClientTest() throws ApiException {
         String orgId = null;
-        CreateClientResponse response = api.createClient(orgId);
+        OAuthClientWrite oauthClientWrite = null;
+        CreateClientResponse response = api.createClient(orgId, oauthClientWrite);
         // TODO: test validations
     }
 
@@ -195,7 +198,8 @@ public class AdminOAuthClientsApiTest {
     public void patchClientTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        UpdateClientResponse response = api.patchClient(orgId, clientId);
+        OAuthClientWrite oauthClientWrite = null;
+        UpdateClientResponse response = api.patchClient(orgId, clientId, oauthClientWrite);
         // TODO: test validations
     }
 
@@ -241,7 +245,8 @@ public class AdminOAuthClientsApiTest {
     public void setClientScopesTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        SetClientScopesResponse response = api.setClientScopes(orgId, clientId);
+        SetClientScopesRequest setClientScopesRequest = null;
+        SetClientScopesResponse response = api.setClientScopes(orgId, clientId, setClientScopesRequest);
         // TODO: test validations
     }
 
@@ -256,7 +261,8 @@ public class AdminOAuthClientsApiTest {
     public void updateClientTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        UpdateClientResponse response = api.updateClient(orgId, clientId);
+        OAuthClientWrite oauthClientWrite = null;
+        UpdateClientResponse response = api.updateClient(orgId, clientId, oauthClientWrite);
         // TODO: test validations
     }
 

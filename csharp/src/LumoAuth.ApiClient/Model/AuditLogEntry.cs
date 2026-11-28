@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -55,6 +55,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="targetId">targetId.</param>
         /// <param name="targetName">targetName.</param>
         /// <param name="ipAddress">ipAddress.</param>
+        /// <param name="traceId">W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none.</param>
         /// <param name="eventTime">Detailed responses only.</param>
         /// <param name="durationMs">Detailed responses only.</param>
         /// <param name="initiatedBy">Detailed responses only.</param>
@@ -69,7 +70,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="newValue">Detailed responses only.</param>
         /// <param name="changes">Detailed responses only.</param>
         /// <param name="context">Detailed responses only.</param>
-        public AuditLogEntry(int id = default, DateTime createdAt = default, string eventType = default, string action = default, string severity = default, string message = default, string actorId = default, string actorName = default, string actorType = default, string authMethod = default, string targetType = default, string targetId = default, string targetName = default, string ipAddress = default, DateTime? eventTime = default, int? durationMs = default, string initiatedBy = default, string clientId = default, string userAgent = default, Dictionary<string, Object> geoLocation = default, string sessionId = default, string requestId = default, string status = default, string statusReason = default, Dictionary<string, Object> oldValue = default, Dictionary<string, Object> newValue = default, Dictionary<string, Object> changes = default, Dictionary<string, Object> context = default)
+        public AuditLogEntry(int id = default, DateTime createdAt = default, string eventType = default, string action = default, string severity = default, string message = default, string actorId = default, string actorName = default, string actorType = default, string authMethod = default, string targetType = default, string targetId = default, string targetName = default, string ipAddress = default, string traceId = default, DateTime? eventTime = default, int? durationMs = default, string initiatedBy = default, string clientId = default, string userAgent = default, Dictionary<string, Object> geoLocation = default, string sessionId = default, string requestId = default, string status = default, string statusReason = default, Dictionary<string, Object> oldValue = default, Dictionary<string, Object> newValue = default, Dictionary<string, Object> changes = default, Dictionary<string, Object> context = default)
         {
             this.Id = id;
             this.CreatedAt = createdAt;
@@ -85,6 +86,7 @@ namespace LumoAuth.ApiClient.Model
             this.TargetId = targetId;
             this.TargetName = targetName;
             this.IpAddress = ipAddress;
+            this.TraceId = traceId;
             this.EventTime = eventTime;
             this.DurationMs = durationMs;
             this.InitiatedBy = initiatedBy;
@@ -184,6 +186,13 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         [DataMember(Name = "ipAddress", EmitDefaultValue = true)]
         public string IpAddress { get; set; }
+
+        /// <summary>
+        /// W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none
+        /// </summary>
+        /// <value>W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none</value>
+        [DataMember(Name = "traceId", EmitDefaultValue = true)]
+        public string TraceId { get; set; }
 
         /// <summary>
         /// Detailed responses only
@@ -305,6 +314,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  TargetId: ").Append(TargetId).Append("\n");
             sb.Append("  TargetName: ").Append(TargetName).Append("\n");
             sb.Append("  IpAddress: ").Append(IpAddress).Append("\n");
+            sb.Append("  TraceId: ").Append(TraceId).Append("\n");
             sb.Append("  EventTime: ").Append(EventTime).Append("\n");
             sb.Append("  DurationMs: ").Append(DurationMs).Append("\n");
             sb.Append("  InitiatedBy: ").Append(InitiatedBy).Append("\n");

@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -33,6 +33,28 @@ pub enum AdminAnalyticsLoginsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminAnalyticsUsersError {
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`admin_initial_access_tokens_create`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminInitialAccessTokensCreateError {
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`admin_initial_access_tokens_delete`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminInitialAccessTokensDeleteError {
+    Status404(),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`admin_initial_access_tokens_list`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminInitialAccessTokensListError {
     UnknownValue(serde_json::Value),
 }
 
@@ -396,6 +418,151 @@ pub async fn admin_analytics_users(configuration: &configuration::Configuration,
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminAnalyticsUsersError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Generates a token and adds it to the organization's list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+pub async fn admin_initial_access_tokens_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminInitialAccessTokensCreateResponse, Error<AdminInitialAccessTokensCreateError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminInitialAccessTokensCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminInitialAccessTokensCreateResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminInitialAccessTokensCreateError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+pub async fn admin_initial_access_tokens_delete(configuration: &configuration::Configuration, org_id: &str, token_id: &str) -> Result<models::MessageResponse, Error<AdminInitialAccessTokensDeleteError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_token_id = token_id;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId}", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), tokenId=crate::apis::urlencode(p_token_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::DELETE, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminInitialAccessTokensDeleteError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+pub async fn admin_initial_access_tokens_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminInitialAccessTokensListResponse, Error<AdminInitialAccessTokensListError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminInitialAccessTokensListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminInitialAccessTokensListResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminInitialAccessTokensListError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
@@ -872,9 +1039,10 @@ pub async fn admin_tenant_get(configuration: &configuration::Configuration, org_
     }
 }
 
-pub async fn patch_admin_organization_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminTenantUpdateResponse, Error<PatchAdminOrganizationUpdateError>> {
+pub async fn patch_admin_organization_update(configuration: &configuration::Configuration, org_id: &str, put_admin_tenant_update_request: models::PutAdminTenantUpdateRequest) -> Result<models::PutAdminTenantUpdateResponse, Error<PatchAdminOrganizationUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_put_admin_tenant_update_request = put_admin_tenant_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/organization", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -893,6 +1061,7 @@ pub async fn patch_admin_organization_update(configuration: &configuration::Conf
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_tenant_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -919,9 +1088,11 @@ pub async fn patch_admin_organization_update(configuration: &configuration::Conf
     }
 }
 
-pub async fn patch_admin_settings_auth_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsAuthenticationUpdateResponse, Error<PatchAdminSettingsAuthUpdateError>> {
+/// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+pub async fn patch_admin_settings_auth_update(configuration: &configuration::Configuration, org_id: &str, authentication_settings: models::AuthenticationSettings) -> Result<models::PutAdminSettingsAuthenticationUpdateResponse, Error<PatchAdminSettingsAuthUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_authentication_settings = authentication_settings;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/auth", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -940,6 +1111,7 @@ pub async fn patch_admin_settings_auth_update(configuration: &configuration::Con
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_authentication_settings);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -966,9 +1138,11 @@ pub async fn patch_admin_settings_auth_update(configuration: &configuration::Con
     }
 }
 
-pub async fn patch_admin_settings_authentication_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsAuthenticationUpdateResponse, Error<PatchAdminSettingsAuthenticationUpdateError>> {
+/// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+pub async fn patch_admin_settings_authentication_update(configuration: &configuration::Configuration, org_id: &str, authentication_settings: models::AuthenticationSettings) -> Result<models::PutAdminSettingsAuthenticationUpdateResponse, Error<PatchAdminSettingsAuthenticationUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_authentication_settings = authentication_settings;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/authentication", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -987,6 +1161,7 @@ pub async fn patch_admin_settings_authentication_update(configuration: &configur
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_authentication_settings);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1014,9 +1189,10 @@ pub async fn patch_admin_settings_authentication_update(configuration: &configur
 }
 
 /// Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
-pub async fn patch_admin_settings_branding_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsBrandingUpdateResponse, Error<PatchAdminSettingsBrandingUpdateError>> {
+pub async fn patch_admin_settings_branding_update(configuration: &configuration::Configuration, org_id: &str, branding_settings: models::BrandingSettings) -> Result<models::PutAdminSettingsBrandingUpdateResponse, Error<PatchAdminSettingsBrandingUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_branding_settings = branding_settings;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/branding", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -1035,6 +1211,7 @@ pub async fn patch_admin_settings_branding_update(configuration: &configuration:
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_branding_settings);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1161,9 +1338,10 @@ pub async fn patch_admin_settings_general_update(configuration: &configuration::
     }
 }
 
-pub async fn patch_admin_settings_scim_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsScimUpdateResponse, Error<PatchAdminSettingsScimUpdateError>> {
+pub async fn patch_admin_settings_scim_update(configuration: &configuration::Configuration, org_id: &str, scim_settings: models::ScimSettings) -> Result<models::PutAdminSettingsScimUpdateResponse, Error<PatchAdminSettingsScimUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_scim_settings = scim_settings;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/scim", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -1182,6 +1360,7 @@ pub async fn patch_admin_settings_scim_update(configuration: &configuration::Con
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_scim_settings);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1208,9 +1387,10 @@ pub async fn patch_admin_settings_scim_update(configuration: &configuration::Con
     }
 }
 
-pub async fn patch_admin_settings_security_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsSecurityUpdateResponse, Error<PatchAdminSettingsSecurityUpdateError>> {
+pub async fn patch_admin_settings_security_update(configuration: &configuration::Configuration, org_id: &str, put_admin_settings_security_update_request: models::PutAdminSettingsSecurityUpdateRequest) -> Result<models::PutAdminSettingsSecurityUpdateResponse, Error<PatchAdminSettingsSecurityUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_put_admin_settings_security_update_request = put_admin_settings_security_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/security", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -1229,6 +1409,7 @@ pub async fn patch_admin_settings_security_update(configuration: &configuration:
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_settings_security_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1255,9 +1436,10 @@ pub async fn patch_admin_settings_security_update(configuration: &configuration:
     }
 }
 
-pub async fn patch_admin_tenant_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminTenantUpdateResponse, Error<PatchAdminTenantUpdateError>> {
+pub async fn patch_admin_tenant_update(configuration: &configuration::Configuration, org_id: &str, put_admin_tenant_update_request: models::PutAdminTenantUpdateRequest) -> Result<models::PutAdminTenantUpdateResponse, Error<PatchAdminTenantUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_put_admin_tenant_update_request = put_admin_tenant_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/tenant", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PATCH, &uri_str);
@@ -1276,6 +1458,7 @@ pub async fn patch_admin_tenant_update(configuration: &configuration::Configurat
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_tenant_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1302,9 +1485,10 @@ pub async fn patch_admin_tenant_update(configuration: &configuration::Configurat
     }
 }
 
-pub async fn put_admin_organization_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminTenantUpdateResponse, Error<PutAdminOrganizationUpdateError>> {
+pub async fn put_admin_organization_update(configuration: &configuration::Configuration, org_id: &str, put_admin_tenant_update_request: models::PutAdminTenantUpdateRequest) -> Result<models::PutAdminTenantUpdateResponse, Error<PutAdminOrganizationUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_put_admin_tenant_update_request = put_admin_tenant_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/organization", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1323,6 +1507,7 @@ pub async fn put_admin_organization_update(configuration: &configuration::Config
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_tenant_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1349,9 +1534,11 @@ pub async fn put_admin_organization_update(configuration: &configuration::Config
     }
 }
 
-pub async fn put_admin_settings_auth_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsAuthenticationUpdateResponse, Error<PutAdminSettingsAuthUpdateError>> {
+/// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+pub async fn put_admin_settings_auth_update(configuration: &configuration::Configuration, org_id: &str, authentication_settings: models::AuthenticationSettings) -> Result<models::PutAdminSettingsAuthenticationUpdateResponse, Error<PutAdminSettingsAuthUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_authentication_settings = authentication_settings;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/auth", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1370,6 +1557,7 @@ pub async fn put_admin_settings_auth_update(configuration: &configuration::Confi
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_authentication_settings);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1396,9 +1584,11 @@ pub async fn put_admin_settings_auth_update(configuration: &configuration::Confi
     }
 }
 
-pub async fn put_admin_settings_authentication_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsAuthenticationUpdateResponse, Error<PutAdminSettingsAuthenticationUpdateError>> {
+/// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+pub async fn put_admin_settings_authentication_update(configuration: &configuration::Configuration, org_id: &str, authentication_settings: models::AuthenticationSettings) -> Result<models::PutAdminSettingsAuthenticationUpdateResponse, Error<PutAdminSettingsAuthenticationUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_authentication_settings = authentication_settings;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/authentication", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1417,6 +1607,7 @@ pub async fn put_admin_settings_authentication_update(configuration: &configurat
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_authentication_settings);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1444,9 +1635,10 @@ pub async fn put_admin_settings_authentication_update(configuration: &configurat
 }
 
 /// Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
-pub async fn put_admin_settings_branding_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsBrandingUpdateResponse, Error<PutAdminSettingsBrandingUpdateError>> {
+pub async fn put_admin_settings_branding_update(configuration: &configuration::Configuration, org_id: &str, branding_settings: models::BrandingSettings) -> Result<models::PutAdminSettingsBrandingUpdateResponse, Error<PutAdminSettingsBrandingUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_branding_settings = branding_settings;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/branding", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1465,6 +1657,7 @@ pub async fn put_admin_settings_branding_update(configuration: &configuration::C
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_branding_settings);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1591,9 +1784,10 @@ pub async fn put_admin_settings_general_update(configuration: &configuration::Co
     }
 }
 
-pub async fn put_admin_settings_scim_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsScimUpdateResponse, Error<PutAdminSettingsScimUpdateError>> {
+pub async fn put_admin_settings_scim_update(configuration: &configuration::Configuration, org_id: &str, scim_settings: models::ScimSettings) -> Result<models::PutAdminSettingsScimUpdateResponse, Error<PutAdminSettingsScimUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_scim_settings = scim_settings;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/scim", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1612,6 +1806,7 @@ pub async fn put_admin_settings_scim_update(configuration: &configuration::Confi
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_scim_settings);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1638,9 +1833,10 @@ pub async fn put_admin_settings_scim_update(configuration: &configuration::Confi
     }
 }
 
-pub async fn put_admin_settings_security_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsSecurityUpdateResponse, Error<PutAdminSettingsSecurityUpdateError>> {
+pub async fn put_admin_settings_security_update(configuration: &configuration::Configuration, org_id: &str, put_admin_settings_security_update_request: models::PutAdminSettingsSecurityUpdateRequest) -> Result<models::PutAdminSettingsSecurityUpdateResponse, Error<PutAdminSettingsSecurityUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_put_admin_settings_security_update_request = put_admin_settings_security_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/settings/security", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1659,6 +1855,7 @@ pub async fn put_admin_settings_security_update(configuration: &configuration::C
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_settings_security_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1685,9 +1882,10 @@ pub async fn put_admin_settings_security_update(configuration: &configuration::C
     }
 }
 
-pub async fn put_admin_tenant_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminTenantUpdateResponse, Error<PutAdminTenantUpdateError>> {
+pub async fn put_admin_tenant_update(configuration: &configuration::Configuration, org_id: &str, put_admin_tenant_update_request: models::PutAdminTenantUpdateRequest) -> Result<models::PutAdminTenantUpdateResponse, Error<PutAdminTenantUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_put_admin_tenant_update_request = put_admin_tenant_update_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/tenant", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::PUT, &uri_str);
@@ -1706,6 +1904,7 @@ pub async fn put_admin_tenant_update(configuration: &configuration::Configuratio
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_put_admin_tenant_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

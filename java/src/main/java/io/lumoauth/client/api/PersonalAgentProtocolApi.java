@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -96,6 +96,7 @@ public class PersonalAgentProtocolApi {
         <tr><td> 401 </td><td> invalid_client. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> not_found: unknown organization or Session. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call endPoppySessionCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull EndPoppySessionRequest endPoppySessionRequest, final ApiCallback _callback) throws ApiException {
@@ -175,6 +176,7 @@ public class PersonalAgentProtocolApi {
         <tr><td> 401 </td><td> invalid_client. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> not_found: unknown organization or Session. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). </td><td>  -  </td></tr>
      </table>
      */
     public EndPoppySessionResponse endPoppySession(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull EndPoppySessionRequest endPoppySessionRequest) throws ApiException {
@@ -197,6 +199,7 @@ public class PersonalAgentProtocolApi {
         <tr><td> 401 </td><td> invalid_client. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> not_found: unknown organization or Session. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<EndPoppySessionResponse> endPoppySessionWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull EndPoppySessionRequest endPoppySessionRequest) throws ApiException {
@@ -221,6 +224,7 @@ public class PersonalAgentProtocolApi {
         <tr><td> 401 </td><td> invalid_client. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> not_found: unknown organization or Session. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call endPoppySessionAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull EndPoppySessionRequest endPoppySessionRequest, final ApiCallback<EndPoppySessionResponse> _callback) throws ApiException {
@@ -526,7 +530,8 @@ public class PersonalAgentProtocolApi {
         <tr><td> 200 </td><td> The state of the Session. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> not_found: unknown organization, or the protocol is switched off. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found: unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). Answered after the calling application authenticated. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getPoppySessionStatusCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull EndPoppySessionRequest endPoppySessionRequest, final ApiCallback _callback) throws ApiException {
@@ -605,7 +610,8 @@ public class PersonalAgentProtocolApi {
         <tr><td> 200 </td><td> The state of the Session. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> not_found: unknown organization, or the protocol is switched off. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found: unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). Answered after the calling application authenticated. </td><td>  -  </td></tr>
      </table>
      */
     public GetPoppySessionStatusResponse getPoppySessionStatus(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull EndPoppySessionRequest endPoppySessionRequest) throws ApiException {
@@ -627,7 +633,8 @@ public class PersonalAgentProtocolApi {
         <tr><td> 200 </td><td> The state of the Session. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> not_found: unknown organization, or the protocol is switched off. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found: unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). Answered after the calling application authenticated. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<GetPoppySessionStatusResponse> getPoppySessionStatusWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull EndPoppySessionRequest endPoppySessionRequest) throws ApiException {
@@ -651,7 +658,8 @@ public class PersonalAgentProtocolApi {
         <tr><td> 200 </td><td> The state of the Session. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> not_found: unknown organization, or the protocol is switched off. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found: unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). Answered after the calling application authenticated. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getPoppySessionStatusAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull EndPoppySessionRequest endPoppySessionRequest, final ApiCallback<GetPoppySessionStatusResponse> _callback) throws ApiException {
@@ -1020,7 +1028,8 @@ public class PersonalAgentProtocolApi {
         <tr><td> 400 </td><td> invalid_request: method, url or headers missing or malformed. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client: the calling application did not authenticate. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope: the calling application may not verify Session headers. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> not_found: unknown organization, or the protocol is switched off. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found: unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). Answered after the calling application authenticated. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests, with Retry-After. </td><td>  -  </td></tr>
      </table>
      */
@@ -1101,7 +1110,8 @@ public class PersonalAgentProtocolApi {
         <tr><td> 400 </td><td> invalid_request: method, url or headers missing or malformed. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client: the calling application did not authenticate. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope: the calling application may not verify Session headers. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> not_found: unknown organization, or the protocol is switched off. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found: unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). Answered after the calling application authenticated. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests, with Retry-After. </td><td>  -  </td></tr>
      </table>
      */
@@ -1125,7 +1135,8 @@ public class PersonalAgentProtocolApi {
         <tr><td> 400 </td><td> invalid_request: method, url or headers missing or malformed. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client: the calling application did not authenticate. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope: the calling application may not verify Session headers. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> not_found: unknown organization, or the protocol is switched off. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found: unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). Answered after the calling application authenticated. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests, with Retry-After. </td><td>  -  </td></tr>
      </table>
      */
@@ -1151,7 +1162,8 @@ public class PersonalAgentProtocolApi {
         <tr><td> 400 </td><td> invalid_request: method, url or headers missing or malformed. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> invalid_client: the calling application did not authenticate. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> insufficient_scope: the calling application may not verify Session headers. </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> not_found: unknown organization, or the protocol is switched off. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found: unknown organization. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> protocol_disabled: the Personal Agent Protocol is switched off for this organization (or not in its plan). Answered after the calling application authenticated. </td><td>  -  </td></tr>
         <tr><td> 429 </td><td> too_many_requests, with Retry-After. </td><td>  -  </td></tr>
      </table>
      */

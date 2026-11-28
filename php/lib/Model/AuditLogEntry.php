@@ -13,7 +13,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -72,6 +72,7 @@ class AuditLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         'targetId' => 'string',
         'targetName' => 'string',
         'ipAddress' => 'string',
+        'traceId' => 'string',
         'eventTime' => '\DateTime',
         'durationMs' => 'int',
         'initiatedBy' => 'string',
@@ -110,6 +111,7 @@ class AuditLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         'targetId' => null,
         'targetName' => null,
         'ipAddress' => null,
+        'traceId' => null,
         'eventTime' => 'date-time',
         'durationMs' => null,
         'initiatedBy' => null,
@@ -146,6 +148,7 @@ class AuditLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         'targetId' => true,
         'targetName' => true,
         'ipAddress' => true,
+        'traceId' => true,
         'eventTime' => true,
         'durationMs' => true,
         'initiatedBy' => true,
@@ -262,6 +265,7 @@ class AuditLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         'targetId' => 'targetId',
         'targetName' => 'targetName',
         'ipAddress' => 'ipAddress',
+        'traceId' => 'traceId',
         'eventTime' => 'eventTime',
         'durationMs' => 'durationMs',
         'initiatedBy' => 'initiatedBy',
@@ -298,6 +302,7 @@ class AuditLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         'targetId' => 'setTargetId',
         'targetName' => 'setTargetName',
         'ipAddress' => 'setIpAddress',
+        'traceId' => 'setTraceId',
         'eventTime' => 'setEventTime',
         'durationMs' => 'setDurationMs',
         'initiatedBy' => 'setInitiatedBy',
@@ -334,6 +339,7 @@ class AuditLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         'targetId' => 'getTargetId',
         'targetName' => 'getTargetName',
         'ipAddress' => 'getIpAddress',
+        'traceId' => 'getTraceId',
         'eventTime' => 'getEventTime',
         'durationMs' => 'getDurationMs',
         'initiatedBy' => 'getInitiatedBy',
@@ -421,6 +427,7 @@ class AuditLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('targetId', $data ?? [], null);
         $this->setIfExists('targetName', $data ?? [], null);
         $this->setIfExists('ipAddress', $data ?? [], null);
+        $this->setIfExists('traceId', $data ?? [], null);
         $this->setIfExists('eventTime', $data ?? [], null);
         $this->setIfExists('durationMs', $data ?? [], null);
         $this->setIfExists('initiatedBy', $data ?? [], null);
@@ -943,6 +950,40 @@ class AuditLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
             }
         }
         $this->container['ipAddress'] = $ipAddress;
+
+        return $this;
+    }
+
+    /**
+     * Gets traceId
+     *
+     * @return string|null
+     */
+    public function getTraceId()
+    {
+        return $this->container['traceId'];
+    }
+
+    /**
+     * Sets traceId
+     *
+     * @param string|null $traceId W3C trace ID (32 hex characters) of the request that wrote the entry, from its traceparent header; null when the request carried none
+     *
+     * @return self
+     */
+    public function setTraceId($traceId)
+    {
+        if (is_null($traceId)) {
+            array_push($this->openAPINullablesSetToNull, 'traceId');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('traceId', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['traceId'] = $traceId;
 
         return $this;
     }

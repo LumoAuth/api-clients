@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -17,13 +17,16 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import Field, StrictStr
+from typing_extensions import Annotated
 from lumoauth_api_client.models.admin_social_providers_available_response import AdminSocialProvidersAvailableResponse
 from lumoauth_api_client.models.admin_social_providers_callback_urls_response import AdminSocialProvidersCallbackUrlsResponse
+from lumoauth_api_client.models.admin_social_providers_create_request import AdminSocialProvidersCreateRequest
 from lumoauth_api_client.models.admin_social_providers_create_response import AdminSocialProvidersCreateResponse
 from lumoauth_api_client.models.admin_social_providers_get_response import AdminSocialProvidersGetResponse
 from lumoauth_api_client.models.admin_social_providers_list_response import AdminSocialProvidersListResponse
 from lumoauth_api_client.models.message_response import MessageResponse
+from lumoauth_api_client.models.put_admin_social_providers_update_request import PutAdminSocialProvidersUpdateRequest
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -565,6 +568,7 @@ class AdminIdentityProvidersApi:
     def admin_social_providers_create(
         self,
         org_id: StrictStr,
+        admin_social_providers_create_request: Annotated[AdminSocialProvidersCreateRequest, Field(description="An unknown field is refused with 400.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -583,6 +587,8 @@ class AdminIdentityProvidersApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_social_providers_create_request: An unknown field is refused with 400. (required)
+        :type admin_social_providers_create_request: AdminSocialProvidersCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -607,6 +613,7 @@ class AdminIdentityProvidersApi:
 
         _param = self._admin_social_providers_create_serialize(
             org_id=org_id,
+            admin_social_providers_create_request=admin_social_providers_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -632,6 +639,7 @@ class AdminIdentityProvidersApi:
     def admin_social_providers_create_with_http_info(
         self,
         org_id: StrictStr,
+        admin_social_providers_create_request: Annotated[AdminSocialProvidersCreateRequest, Field(description="An unknown field is refused with 400.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -650,6 +658,8 @@ class AdminIdentityProvidersApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_social_providers_create_request: An unknown field is refused with 400. (required)
+        :type admin_social_providers_create_request: AdminSocialProvidersCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -674,6 +684,7 @@ class AdminIdentityProvidersApi:
 
         _param = self._admin_social_providers_create_serialize(
             org_id=org_id,
+            admin_social_providers_create_request=admin_social_providers_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -699,6 +710,7 @@ class AdminIdentityProvidersApi:
     def admin_social_providers_create_without_preload_content(
         self,
         org_id: StrictStr,
+        admin_social_providers_create_request: Annotated[AdminSocialProvidersCreateRequest, Field(description="An unknown field is refused with 400.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -717,6 +729,8 @@ class AdminIdentityProvidersApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_social_providers_create_request: An unknown field is refused with 400. (required)
+        :type admin_social_providers_create_request: AdminSocialProvidersCreateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -741,6 +755,7 @@ class AdminIdentityProvidersApi:
 
         _param = self._admin_social_providers_create_serialize(
             org_id=org_id,
+            admin_social_providers_create_request=admin_social_providers_create_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -761,6 +776,7 @@ class AdminIdentityProvidersApi:
     def _admin_social_providers_create_serialize(
         self,
         org_id,
+        admin_social_providers_create_request,
         _request_auth,
         _content_type,
         _headers,
@@ -788,6 +804,8 @@ class AdminIdentityProvidersApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_social_providers_create_request is not None:
+            _body_params = admin_social_providers_create_request
 
 
         # set the HTTP header `Accept`
@@ -798,6 +816,19 @@ class AdminIdentityProvidersApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2454,6 +2485,7 @@ class AdminIdentityProvidersApi:
         self,
         org_id: StrictStr,
         provider_id: StrictStr,
+        put_admin_social_providers_update_request: Annotated[PutAdminSocialProvidersUpdateRequest, Field(description="Only the fields that are sent change. An unknown field is refused with 400.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2474,6 +2506,8 @@ class AdminIdentityProvidersApi:
         :type org_id: str
         :param provider_id: (required)
         :type provider_id: str
+        :param put_admin_social_providers_update_request: Only the fields that are sent change. An unknown field is refused with 400. (required)
+        :type put_admin_social_providers_update_request: PutAdminSocialProvidersUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2499,6 +2533,7 @@ class AdminIdentityProvidersApi:
         _param = self._patch_admin_social_providers_update_serialize(
             org_id=org_id,
             provider_id=provider_id,
+            put_admin_social_providers_update_request=put_admin_social_providers_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2525,6 +2560,7 @@ class AdminIdentityProvidersApi:
         self,
         org_id: StrictStr,
         provider_id: StrictStr,
+        put_admin_social_providers_update_request: Annotated[PutAdminSocialProvidersUpdateRequest, Field(description="Only the fields that are sent change. An unknown field is refused with 400.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2545,6 +2581,8 @@ class AdminIdentityProvidersApi:
         :type org_id: str
         :param provider_id: (required)
         :type provider_id: str
+        :param put_admin_social_providers_update_request: Only the fields that are sent change. An unknown field is refused with 400. (required)
+        :type put_admin_social_providers_update_request: PutAdminSocialProvidersUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2570,6 +2608,7 @@ class AdminIdentityProvidersApi:
         _param = self._patch_admin_social_providers_update_serialize(
             org_id=org_id,
             provider_id=provider_id,
+            put_admin_social_providers_update_request=put_admin_social_providers_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2596,6 +2635,7 @@ class AdminIdentityProvidersApi:
         self,
         org_id: StrictStr,
         provider_id: StrictStr,
+        put_admin_social_providers_update_request: Annotated[PutAdminSocialProvidersUpdateRequest, Field(description="Only the fields that are sent change. An unknown field is refused with 400.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2616,6 +2656,8 @@ class AdminIdentityProvidersApi:
         :type org_id: str
         :param provider_id: (required)
         :type provider_id: str
+        :param put_admin_social_providers_update_request: Only the fields that are sent change. An unknown field is refused with 400. (required)
+        :type put_admin_social_providers_update_request: PutAdminSocialProvidersUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2641,6 +2683,7 @@ class AdminIdentityProvidersApi:
         _param = self._patch_admin_social_providers_update_serialize(
             org_id=org_id,
             provider_id=provider_id,
+            put_admin_social_providers_update_request=put_admin_social_providers_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2662,6 +2705,7 @@ class AdminIdentityProvidersApi:
         self,
         org_id,
         provider_id,
+        put_admin_social_providers_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -2691,6 +2735,8 @@ class AdminIdentityProvidersApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_social_providers_update_request is not None:
+            _body_params = put_admin_social_providers_update_request
 
 
         # set the HTTP header `Accept`
@@ -2701,6 +2747,19 @@ class AdminIdentityProvidersApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2731,6 +2790,7 @@ class AdminIdentityProvidersApi:
         self,
         org_id: StrictStr,
         provider_id: StrictStr,
+        put_admin_social_providers_update_request: Annotated[PutAdminSocialProvidersUpdateRequest, Field(description="Only the fields that are sent change. An unknown field is refused with 400.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2751,6 +2811,8 @@ class AdminIdentityProvidersApi:
         :type org_id: str
         :param provider_id: (required)
         :type provider_id: str
+        :param put_admin_social_providers_update_request: Only the fields that are sent change. An unknown field is refused with 400. (required)
+        :type put_admin_social_providers_update_request: PutAdminSocialProvidersUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2776,6 +2838,7 @@ class AdminIdentityProvidersApi:
         _param = self._put_admin_social_providers_update_serialize(
             org_id=org_id,
             provider_id=provider_id,
+            put_admin_social_providers_update_request=put_admin_social_providers_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2802,6 +2865,7 @@ class AdminIdentityProvidersApi:
         self,
         org_id: StrictStr,
         provider_id: StrictStr,
+        put_admin_social_providers_update_request: Annotated[PutAdminSocialProvidersUpdateRequest, Field(description="Only the fields that are sent change. An unknown field is refused with 400.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2822,6 +2886,8 @@ class AdminIdentityProvidersApi:
         :type org_id: str
         :param provider_id: (required)
         :type provider_id: str
+        :param put_admin_social_providers_update_request: Only the fields that are sent change. An unknown field is refused with 400. (required)
+        :type put_admin_social_providers_update_request: PutAdminSocialProvidersUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2847,6 +2913,7 @@ class AdminIdentityProvidersApi:
         _param = self._put_admin_social_providers_update_serialize(
             org_id=org_id,
             provider_id=provider_id,
+            put_admin_social_providers_update_request=put_admin_social_providers_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2873,6 +2940,7 @@ class AdminIdentityProvidersApi:
         self,
         org_id: StrictStr,
         provider_id: StrictStr,
+        put_admin_social_providers_update_request: Annotated[PutAdminSocialProvidersUpdateRequest, Field(description="Only the fields that are sent change. An unknown field is refused with 400.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2893,6 +2961,8 @@ class AdminIdentityProvidersApi:
         :type org_id: str
         :param provider_id: (required)
         :type provider_id: str
+        :param put_admin_social_providers_update_request: Only the fields that are sent change. An unknown field is refused with 400. (required)
+        :type put_admin_social_providers_update_request: PutAdminSocialProvidersUpdateRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2918,6 +2988,7 @@ class AdminIdentityProvidersApi:
         _param = self._put_admin_social_providers_update_serialize(
             org_id=org_id,
             provider_id=provider_id,
+            put_admin_social_providers_update_request=put_admin_social_providers_update_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2939,6 +3010,7 @@ class AdminIdentityProvidersApi:
         self,
         org_id,
         provider_id,
+        put_admin_social_providers_update_request,
         _request_auth,
         _content_type,
         _headers,
@@ -2968,6 +3040,8 @@ class AdminIdentityProvidersApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if put_admin_social_providers_update_request is not None:
+            _body_params = put_admin_social_providers_update_request
 
 
         # set the HTTP header `Accept`
@@ -2978,6 +3052,19 @@ class AdminIdentityProvidersApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

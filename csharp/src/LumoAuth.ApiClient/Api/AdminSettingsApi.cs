@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -87,7 +87,72 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of AdminAnalyticsUsersResponse</returns>
         ApiResponse<AdminAnalyticsUsersResponse> AdminAnalyticsUsersWithHttpInfo(string orgId, int? days = default);
         /// <summary>
-        /// Get organization (tenant) profile
+        /// Create an initial access token for dynamic client registration
+        /// </summary>
+        /// <remarks>
+        /// Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>AdminInitialAccessTokensCreateResponse</returns>
+        AdminInitialAccessTokensCreateResponse AdminInitialAccessTokensCreate(string orgId);
+
+        /// <summary>
+        /// Create an initial access token for dynamic client registration
+        /// </summary>
+        /// <remarks>
+        /// Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>ApiResponse of AdminInitialAccessTokensCreateResponse</returns>
+        ApiResponse<AdminInitialAccessTokensCreateResponse> AdminInitialAccessTokensCreateWithHttpInfo(string orgId);
+        /// <summary>
+        /// Delete an initial access token of dynamic client registration
+        /// </summary>
+        /// <remarks>
+        /// The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="tokenId"></param>
+        /// <returns>MessageResponse</returns>
+        MessageResponse AdminInitialAccessTokensDelete(string orgId, string tokenId);
+
+        /// <summary>
+        /// Delete an initial access token of dynamic client registration
+        /// </summary>
+        /// <remarks>
+        /// The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="tokenId"></param>
+        /// <returns>ApiResponse of MessageResponse</returns>
+        ApiResponse<MessageResponse> AdminInitialAccessTokensDeleteWithHttpInfo(string orgId, string tokenId);
+        /// <summary>
+        /// List the initial access tokens of dynamic client registration
+        /// </summary>
+        /// <remarks>
+        /// Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>AdminInitialAccessTokensListResponse</returns>
+        AdminInitialAccessTokensListResponse AdminInitialAccessTokensList(string orgId);
+
+        /// <summary>
+        /// List the initial access tokens of dynamic client registration
+        /// </summary>
+        /// <remarks>
+        /// Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>ApiResponse of AdminInitialAccessTokensListResponse</returns>
+        ApiResponse<AdminInitialAccessTokensListResponse> AdminInitialAccessTokensListWithHttpInfo(string orgId);
+        /// <summary>
+        /// Get organization profile
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -95,7 +160,7 @@ namespace LumoAuth.ApiClient.Api
         AdminTenantGetResponse AdminOrganizationGet(string orgId);
 
         /// <summary>
-        /// Get organization (tenant) profile
+        /// Get organization profile
         /// </summary>
         /// <remarks>
         /// 
@@ -255,7 +320,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of AdminSettingsSecurityGetResponse</returns>
         ApiResponse<AdminSettingsSecurityGetResponse> AdminSettingsSecurityGetWithHttpInfo(string orgId);
         /// <summary>
-        /// Get organization (tenant) profile
+        /// Get organization profile
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -263,7 +328,7 @@ namespace LumoAuth.ApiClient.Api
         AdminTenantGetResponse AdminTenantGet(string orgId);
 
         /// <summary>
-        /// Get organization (tenant) profile
+        /// Get organization profile
         /// </summary>
         /// <remarks>
         /// 
@@ -273,59 +338,71 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of AdminTenantGetResponse</returns>
         ApiResponse<AdminTenantGetResponse> AdminTenantGetWithHttpInfo(string orgId);
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>PutAdminTenantUpdateResponse</returns>
-        PutAdminTenantUpdateResponse PatchAdminOrganizationUpdate(string orgId);
+        PutAdminTenantUpdateResponse PatchAdminOrganizationUpdate(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest);
 
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminTenantUpdateResponse</returns>
-        ApiResponse<PutAdminTenantUpdateResponse> PatchAdminOrganizationUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminTenantUpdateResponse> PatchAdminOrganizationUpdateWithHttpInfo(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest);
         /// <summary>
         /// Update authentication settings
         /// </summary>
+        /// <remarks>
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>PutAdminSettingsAuthenticationUpdateResponse</returns>
-        PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthUpdate(string orgId);
+        PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthUpdate(string orgId, AuthenticationSettings authenticationSettings);
 
         /// <summary>
         /// Update authentication settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthUpdateWithHttpInfo(string orgId, AuthenticationSettings authenticationSettings);
         /// <summary>
         /// Update authentication settings (alias for settings/auth)
         /// </summary>
+        /// <remarks>
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>PutAdminSettingsAuthenticationUpdateResponse</returns>
-        PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthenticationUpdate(string orgId);
+        PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthenticationUpdate(string orgId, AuthenticationSettings authenticationSettings);
 
         /// <summary>
         /// Update authentication settings (alias for settings/auth)
         /// </summary>
         /// <remarks>
-        /// 
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthenticationUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthenticationUpdateWithHttpInfo(string orgId, AuthenticationSettings authenticationSettings);
         /// <summary>
         /// Update branding/login page settings
         /// </summary>
@@ -334,8 +411,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <returns>PutAdminSettingsBrandingUpdateResponse</returns>
-        PutAdminSettingsBrandingUpdateResponse PatchAdminSettingsBrandingUpdate(string orgId);
+        PutAdminSettingsBrandingUpdateResponse PatchAdminSettingsBrandingUpdate(string orgId, BrandingSettings brandingSettings);
 
         /// <summary>
         /// Update branding/login page settings
@@ -345,8 +423,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsBrandingUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsBrandingUpdateResponse> PatchAdminSettingsBrandingUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsBrandingUpdateResponse> PatchAdminSettingsBrandingUpdateWithHttpInfo(string orgId, BrandingSettings brandingSettings);
         /// <summary>
         /// Update email settings
         /// </summary>
@@ -398,8 +477,9 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <returns>PutAdminSettingsScimUpdateResponse</returns>
-        PutAdminSettingsScimUpdateResponse PatchAdminSettingsScimUpdate(string orgId);
+        PutAdminSettingsScimUpdateResponse PatchAdminSettingsScimUpdate(string orgId, ScimSettings scimSettings);
 
         /// <summary>
         /// Update SCIM settings
@@ -409,15 +489,17 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsScimUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsScimUpdateResponse> PatchAdminSettingsScimUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsScimUpdateResponse> PatchAdminSettingsScimUpdateWithHttpInfo(string orgId, ScimSettings scimSettings);
         /// <summary>
         /// Update security settings
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <returns>PutAdminSettingsSecurityUpdateResponse</returns>
-        PutAdminSettingsSecurityUpdateResponse PatchAdminSettingsSecurityUpdate(string orgId);
+        PutAdminSettingsSecurityUpdateResponse PatchAdminSettingsSecurityUpdate(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest);
 
         /// <summary>
         /// Update security settings
@@ -427,80 +509,95 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <returns>ApiResponse of PutAdminSettingsSecurityUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsSecurityUpdateResponse> PatchAdminSettingsSecurityUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsSecurityUpdateResponse> PatchAdminSettingsSecurityUpdateWithHttpInfo(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest);
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>PutAdminTenantUpdateResponse</returns>
-        PutAdminTenantUpdateResponse PatchAdminTenantUpdate(string orgId);
+        PutAdminTenantUpdateResponse PatchAdminTenantUpdate(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest);
 
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminTenantUpdateResponse</returns>
-        ApiResponse<PutAdminTenantUpdateResponse> PatchAdminTenantUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminTenantUpdateResponse> PatchAdminTenantUpdateWithHttpInfo(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest);
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>PutAdminTenantUpdateResponse</returns>
-        PutAdminTenantUpdateResponse PutAdminOrganizationUpdate(string orgId);
+        PutAdminTenantUpdateResponse PutAdminOrganizationUpdate(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest);
 
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminTenantUpdateResponse</returns>
-        ApiResponse<PutAdminTenantUpdateResponse> PutAdminOrganizationUpdateWithHttpInfo(string orgId);
-        /// <summary>
-        /// Update authentication settings
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns>PutAdminSettingsAuthenticationUpdateResponse</returns>
-        PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthUpdate(string orgId);
-
+        ApiResponse<PutAdminTenantUpdateResponse> PutAdminOrganizationUpdateWithHttpInfo(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest);
         /// <summary>
         /// Update authentication settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
+        /// <returns>PutAdminSettingsAuthenticationUpdateResponse</returns>
+        PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthUpdate(string orgId, AuthenticationSettings authenticationSettings);
+
+        /// <summary>
+        /// Update authentication settings
+        /// </summary>
+        /// <remarks>
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthUpdateWithHttpInfo(string orgId, AuthenticationSettings authenticationSettings);
         /// <summary>
         /// Update authentication settings (alias for settings/auth)
         /// </summary>
+        /// <remarks>
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>PutAdminSettingsAuthenticationUpdateResponse</returns>
-        PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthenticationUpdate(string orgId);
+        PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthenticationUpdate(string orgId, AuthenticationSettings authenticationSettings);
 
         /// <summary>
         /// Update authentication settings (alias for settings/auth)
         /// </summary>
         /// <remarks>
-        /// 
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthenticationUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthenticationUpdateWithHttpInfo(string orgId, AuthenticationSettings authenticationSettings);
         /// <summary>
         /// Update branding/login page settings
         /// </summary>
@@ -509,8 +606,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <returns>PutAdminSettingsBrandingUpdateResponse</returns>
-        PutAdminSettingsBrandingUpdateResponse PutAdminSettingsBrandingUpdate(string orgId);
+        PutAdminSettingsBrandingUpdateResponse PutAdminSettingsBrandingUpdate(string orgId, BrandingSettings brandingSettings);
 
         /// <summary>
         /// Update branding/login page settings
@@ -520,8 +618,9 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsBrandingUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsBrandingUpdateResponse> PutAdminSettingsBrandingUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsBrandingUpdateResponse> PutAdminSettingsBrandingUpdateWithHttpInfo(string orgId, BrandingSettings brandingSettings);
         /// <summary>
         /// Update email settings
         /// </summary>
@@ -573,8 +672,9 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <returns>PutAdminSettingsScimUpdateResponse</returns>
-        PutAdminSettingsScimUpdateResponse PutAdminSettingsScimUpdate(string orgId);
+        PutAdminSettingsScimUpdateResponse PutAdminSettingsScimUpdate(string orgId, ScimSettings scimSettings);
 
         /// <summary>
         /// Update SCIM settings
@@ -584,15 +684,17 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsScimUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsScimUpdateResponse> PutAdminSettingsScimUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsScimUpdateResponse> PutAdminSettingsScimUpdateWithHttpInfo(string orgId, ScimSettings scimSettings);
         /// <summary>
         /// Update security settings
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <returns>PutAdminSettingsSecurityUpdateResponse</returns>
-        PutAdminSettingsSecurityUpdateResponse PutAdminSettingsSecurityUpdate(string orgId);
+        PutAdminSettingsSecurityUpdateResponse PutAdminSettingsSecurityUpdate(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest);
 
         /// <summary>
         /// Update security settings
@@ -602,26 +704,29 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <returns>ApiResponse of PutAdminSettingsSecurityUpdateResponse</returns>
-        ApiResponse<PutAdminSettingsSecurityUpdateResponse> PutAdminSettingsSecurityUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminSettingsSecurityUpdateResponse> PutAdminSettingsSecurityUpdateWithHttpInfo(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest);
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>PutAdminTenantUpdateResponse</returns>
-        PutAdminTenantUpdateResponse PutAdminTenantUpdate(string orgId);
+        PutAdminTenantUpdateResponse PutAdminTenantUpdate(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest);
 
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminTenantUpdateResponse</returns>
-        ApiResponse<PutAdminTenantUpdateResponse> PutAdminTenantUpdateWithHttpInfo(string orgId);
+        ApiResponse<PutAdminTenantUpdateResponse> PutAdminTenantUpdateWithHttpInfo(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest);
         #endregion Synchronous Operations
     }
 
@@ -705,7 +810,78 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (AdminAnalyticsUsersResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminAnalyticsUsersResponse>> AdminAnalyticsUsersWithHttpInfoAsync(string orgId, int? days = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get organization (tenant) profile
+        /// Create an initial access token for dynamic client registration
+        /// </summary>
+        /// <remarks>
+        /// Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminInitialAccessTokensCreateResponse</returns>
+        System.Threading.Tasks.Task<AdminInitialAccessTokensCreateResponse> AdminInitialAccessTokensCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Create an initial access token for dynamic client registration
+        /// </summary>
+        /// <remarks>
+        /// Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminInitialAccessTokensCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminInitialAccessTokensCreateResponse>> AdminInitialAccessTokensCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Delete an initial access token of dynamic client registration
+        /// </summary>
+        /// <remarks>
+        /// The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="tokenId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of MessageResponse</returns>
+        System.Threading.Tasks.Task<MessageResponse> AdminInitialAccessTokensDeleteAsync(string orgId, string tokenId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Delete an initial access token of dynamic client registration
+        /// </summary>
+        /// <remarks>
+        /// The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="tokenId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminInitialAccessTokensDeleteWithHttpInfoAsync(string orgId, string tokenId, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// List the initial access tokens of dynamic client registration
+        /// </summary>
+        /// <remarks>
+        /// Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminInitialAccessTokensListResponse</returns>
+        System.Threading.Tasks.Task<AdminInitialAccessTokensListResponse> AdminInitialAccessTokensListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// List the initial access tokens of dynamic client registration
+        /// </summary>
+        /// <remarks>
+        /// Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminInitialAccessTokensListResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminInitialAccessTokensListResponse>> AdminInitialAccessTokensListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Get organization profile
         /// </summary>
         /// <remarks>
         /// 
@@ -717,7 +893,7 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task<AdminTenantGetResponse> AdminOrganizationGetAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get organization (tenant) profile
+        /// Get organization profile
         /// </summary>
         /// <remarks>
         /// 
@@ -912,7 +1088,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (AdminSettingsSecurityGetResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminSettingsSecurityGetResponse>> AdminSettingsSecurityGetWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get organization (tenant) profile
+        /// Get organization profile
         /// </summary>
         /// <remarks>
         /// 
@@ -924,7 +1100,7 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task<AdminTenantGetResponse> AdminTenantGetAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get organization (tenant) profile
+        /// Get organization profile
         /// </summary>
         /// <remarks>
         /// 
@@ -935,74 +1111,80 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (AdminTenantGetResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AdminTenantGetResponse>> AdminTenantGetWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminTenantUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PatchAdminOrganizationUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PatchAdminOrganizationUpdateAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminTenantUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminTenantUpdateResponse>> PatchAdminOrganizationUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminTenantUpdateResponse>> PatchAdminOrganizationUpdateWithHttpInfoAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update authentication settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthUpdateAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update authentication settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsAuthenticationUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PatchAdminSettingsAuthUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PatchAdminSettingsAuthUpdateWithHttpInfoAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update authentication settings (alias for settings/auth)
         /// </summary>
         /// <remarks>
-        /// 
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthenticationUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthenticationUpdateAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update authentication settings (alias for settings/auth)
         /// </summary>
         /// <remarks>
-        /// 
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsAuthenticationUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PatchAdminSettingsAuthenticationUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PatchAdminSettingsAuthenticationUpdateWithHttpInfoAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update branding/login page settings
         /// </summary>
@@ -1011,9 +1193,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsBrandingUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsBrandingUpdateResponse> PatchAdminSettingsBrandingUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsBrandingUpdateResponse> PatchAdminSettingsBrandingUpdateAsync(string orgId, BrandingSettings brandingSettings, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update branding/login page settings
@@ -1023,9 +1206,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsBrandingUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsBrandingUpdateResponse>> PatchAdminSettingsBrandingUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsBrandingUpdateResponse>> PatchAdminSettingsBrandingUpdateWithHttpInfoAsync(string orgId, BrandingSettings brandingSettings, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update email settings
         /// </summary>
@@ -1084,9 +1268,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsScimUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsScimUpdateResponse> PatchAdminSettingsScimUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsScimUpdateResponse> PatchAdminSettingsScimUpdateAsync(string orgId, ScimSettings scimSettings, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update SCIM settings
@@ -1096,9 +1281,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsScimUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsScimUpdateResponse>> PatchAdminSettingsScimUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsScimUpdateResponse>> PatchAdminSettingsScimUpdateWithHttpInfoAsync(string orgId, ScimSettings scimSettings, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update security settings
         /// </summary>
@@ -1107,9 +1293,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsSecurityUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsSecurityUpdateResponse> PatchAdminSettingsSecurityUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsSecurityUpdateResponse> PatchAdminSettingsSecurityUpdateAsync(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update security settings
@@ -1119,101 +1306,110 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsSecurityUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsSecurityUpdateResponse>> PatchAdminSettingsSecurityUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsSecurityUpdateResponse>> PatchAdminSettingsSecurityUpdateWithHttpInfoAsync(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminTenantUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PatchAdminTenantUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PatchAdminTenantUpdateAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminTenantUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminTenantUpdateResponse>> PatchAdminTenantUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminTenantUpdateResponse>> PatchAdminTenantUpdateWithHttpInfoAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminTenantUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PutAdminOrganizationUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PutAdminOrganizationUpdateAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminTenantUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminTenantUpdateResponse>> PutAdminOrganizationUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminTenantUpdateResponse>> PutAdminOrganizationUpdateWithHttpInfoAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update authentication settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthUpdateAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update authentication settings
         /// </summary>
         /// <remarks>
-        /// 
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsAuthenticationUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PutAdminSettingsAuthUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PutAdminSettingsAuthUpdateWithHttpInfoAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update authentication settings (alias for settings/auth)
         /// </summary>
         /// <remarks>
-        /// 
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthenticationUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthenticationUpdateAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update authentication settings (alias for settings/auth)
         /// </summary>
         /// <remarks>
-        /// 
+        /// The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsAuthenticationUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PutAdminSettingsAuthenticationUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PutAdminSettingsAuthenticationUpdateWithHttpInfoAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update branding/login page settings
         /// </summary>
@@ -1222,9 +1418,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsBrandingUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsBrandingUpdateResponse> PutAdminSettingsBrandingUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsBrandingUpdateResponse> PutAdminSettingsBrandingUpdateAsync(string orgId, BrandingSettings brandingSettings, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update branding/login page settings
@@ -1234,9 +1431,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsBrandingUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsBrandingUpdateResponse>> PutAdminSettingsBrandingUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsBrandingUpdateResponse>> PutAdminSettingsBrandingUpdateWithHttpInfoAsync(string orgId, BrandingSettings brandingSettings, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update email settings
         /// </summary>
@@ -1295,9 +1493,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsScimUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsScimUpdateResponse> PutAdminSettingsScimUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsScimUpdateResponse> PutAdminSettingsScimUpdateAsync(string orgId, ScimSettings scimSettings, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update SCIM settings
@@ -1307,9 +1506,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsScimUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsScimUpdateResponse>> PutAdminSettingsScimUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsScimUpdateResponse>> PutAdminSettingsScimUpdateWithHttpInfoAsync(string orgId, ScimSettings scimSettings, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update security settings
         /// </summary>
@@ -1318,9 +1518,10 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsSecurityUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminSettingsSecurityUpdateResponse> PutAdminSettingsSecurityUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminSettingsSecurityUpdateResponse> PutAdminSettingsSecurityUpdateAsync(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update security settings
@@ -1330,32 +1531,35 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsSecurityUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsSecurityUpdateResponse>> PutAdminSettingsSecurityUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminSettingsSecurityUpdateResponse>> PutAdminSettingsSecurityUpdateWithHttpInfoAsync(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminTenantUpdateResponse</returns>
-        System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PutAdminTenantUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PutAdminTenantUpdateAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Update organization (tenant) name and settings
+        /// Update the organization&#39;s name and settings
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminTenantUpdateResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PutAdminTenantUpdateResponse>> PutAdminTenantUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<PutAdminTenantUpdateResponse>> PutAdminTenantUpdateWithHttpInfoAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -2005,7 +2209,432 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get organization (tenant) profile 
+        /// Create an initial access token for dynamic client registration Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>AdminInitialAccessTokensCreateResponse</returns>
+        public AdminInitialAccessTokensCreateResponse AdminInitialAccessTokensCreate(string orgId)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminInitialAccessTokensCreateResponse> localVarResponse = AdminInitialAccessTokensCreateWithHttpInfo(orgId);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Create an initial access token for dynamic client registration Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>ApiResponse of AdminInitialAccessTokensCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminInitialAccessTokensCreateResponse> AdminInitialAccessTokensCreateWithHttpInfo(string orgId)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->AdminInitialAccessTokensCreate");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<AdminInitialAccessTokensCreateResponse>("/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminInitialAccessTokensCreate", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Create an initial access token for dynamic client registration Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminInitialAccessTokensCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AdminInitialAccessTokensCreateResponse> AdminInitialAccessTokensCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminInitialAccessTokensCreateResponse> localVarResponse = await AdminInitialAccessTokensCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Create an initial access token for dynamic client registration Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminInitialAccessTokensCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminInitialAccessTokensCreateResponse>> AdminInitialAccessTokensCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->AdminInitialAccessTokensCreate");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminInitialAccessTokensCreateResponse>("/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminInitialAccessTokensCreate", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Delete an initial access token of dynamic client registration The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="tokenId"></param>
+        /// <returns>MessageResponse</returns>
+        public MessageResponse AdminInitialAccessTokensDelete(string orgId, string tokenId)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminInitialAccessTokensDeleteWithHttpInfo(orgId, tokenId);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Delete an initial access token of dynamic client registration The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="tokenId"></param>
+        /// <returns>ApiResponse of MessageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminInitialAccessTokensDeleteWithHttpInfo(string orgId, string tokenId)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->AdminInitialAccessTokensDelete");
+
+            // verify the required parameter 'tokenId' is set
+            if (tokenId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'tokenId' when calling AdminSettingsApi->AdminInitialAccessTokensDelete");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("tokenId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(tokenId)); // path parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Delete<MessageResponse>("/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId}", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminInitialAccessTokensDelete", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Delete an initial access token of dynamic client registration The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="tokenId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of MessageResponse</returns>
+        public async System.Threading.Tasks.Task<MessageResponse> AdminInitialAccessTokensDeleteAsync(string orgId, string tokenId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminInitialAccessTokensDeleteWithHttpInfoAsync(orgId, tokenId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Delete an initial access token of dynamic client registration The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="tokenId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminInitialAccessTokensDeleteWithHttpInfoAsync(string orgId, string tokenId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->AdminInitialAccessTokensDelete");
+
+            // verify the required parameter 'tokenId' is set
+            if (tokenId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'tokenId' when calling AdminSettingsApi->AdminInitialAccessTokensDelete");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("tokenId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(tokenId)); // path parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<MessageResponse>("/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminInitialAccessTokensDelete", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// List the initial access tokens of dynamic client registration Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>AdminInitialAccessTokensListResponse</returns>
+        public AdminInitialAccessTokensListResponse AdminInitialAccessTokensList(string orgId)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminInitialAccessTokensListResponse> localVarResponse = AdminInitialAccessTokensListWithHttpInfo(orgId);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// List the initial access tokens of dynamic client registration Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>ApiResponse of AdminInitialAccessTokensListResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminInitialAccessTokensListResponse> AdminInitialAccessTokensListWithHttpInfo(string orgId)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->AdminInitialAccessTokensList");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Get<AdminInitialAccessTokensListResponse>("/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminInitialAccessTokensList", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// List the initial access tokens of dynamic client registration Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminInitialAccessTokensListResponse</returns>
+        public async System.Threading.Tasks.Task<AdminInitialAccessTokensListResponse> AdminInitialAccessTokensListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminInitialAccessTokensListResponse> localVarResponse = await AdminInitialAccessTokensListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// List the initial access tokens of dynamic client registration Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminInitialAccessTokensListResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminInitialAccessTokensListResponse>> AdminInitialAccessTokensListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->AdminInitialAccessTokensList");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminInitialAccessTokensListResponse>("/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminInitialAccessTokensList", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Get organization profile 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2017,7 +2646,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get organization (tenant) profile 
+        /// Get organization profile 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2071,7 +2700,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get organization (tenant) profile 
+        /// Get organization profile 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2084,7 +2713,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get organization (tenant) profile 
+        /// Get organization profile 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3238,7 +3867,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get organization (tenant) profile 
+        /// Get organization profile 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3250,7 +3879,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get organization (tenant) profile 
+        /// Get organization profile 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3304,7 +3933,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get organization (tenant) profile 
+        /// Get organization profile 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3317,7 +3946,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get organization (tenant) profile 
+        /// Get organization profile 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3375,32 +4004,39 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>PutAdminTenantUpdateResponse</returns>
-        public PutAdminTenantUpdateResponse PatchAdminOrganizationUpdate(string orgId)
+        public PutAdminTenantUpdateResponse PatchAdminOrganizationUpdate(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = PatchAdminOrganizationUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = PatchAdminOrganizationUpdateWithHttpInfo(orgId, putAdminTenantUpdateRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminTenantUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> PatchAdminOrganizationUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> PatchAdminOrganizationUpdateWithHttpInfo(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminOrganizationUpdate");
 
+            // verify the required parameter 'putAdminTenantUpdateRequest' is set
+            if (putAdminTenantUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminTenantUpdateRequest' when calling AdminSettingsApi->PatchAdminOrganizationUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3415,6 +4051,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminTenantUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3441,35 +4078,42 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminTenantUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PatchAdminOrganizationUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PatchAdminOrganizationUpdateAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = await PatchAdminOrganizationUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = await PatchAdminOrganizationUpdateWithHttpInfoAsync(orgId, putAdminTenantUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminTenantUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse>> PatchAdminOrganizationUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse>> PatchAdminOrganizationUpdateWithHttpInfoAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminOrganizationUpdate");
 
+            // verify the required parameter 'putAdminTenantUpdateRequest' is set
+            if (putAdminTenantUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminTenantUpdateRequest' when calling AdminSettingsApi->PatchAdminOrganizationUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3485,6 +4129,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminTenantUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3512,32 +4157,39 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update authentication settings 
+        /// Update authentication settings The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>PutAdminSettingsAuthenticationUpdateResponse</returns>
-        public PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthUpdate(string orgId)
+        public PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthUpdate(string orgId, AuthenticationSettings authenticationSettings)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = PatchAdminSettingsAuthUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = PatchAdminSettingsAuthUpdateWithHttpInfo(orgId, authenticationSettings);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update authentication settings 
+        /// Update authentication settings The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthUpdateWithHttpInfo(string orgId, AuthenticationSettings authenticationSettings)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminSettingsAuthUpdate");
 
+            // verify the required parameter 'authenticationSettings' is set
+            if (authenticationSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'authenticationSettings' when calling AdminSettingsApi->PatchAdminSettingsAuthUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3552,6 +4204,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = authenticationSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3578,35 +4231,42 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update authentication settings 
+        /// Update authentication settings The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthUpdateAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = await PatchAdminSettingsAuthUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = await PatchAdminSettingsAuthUpdateWithHttpInfoAsync(orgId, authenticationSettings, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update authentication settings 
+        /// Update authentication settings The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsAuthenticationUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PatchAdminSettingsAuthUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PatchAdminSettingsAuthUpdateWithHttpInfoAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminSettingsAuthUpdate");
 
+            // verify the required parameter 'authenticationSettings' is set
+            if (authenticationSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'authenticationSettings' when calling AdminSettingsApi->PatchAdminSettingsAuthUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3622,6 +4282,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = authenticationSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3649,32 +4310,39 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update authentication settings (alias for settings/auth) 
+        /// Update authentication settings (alias for settings/auth) The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>PutAdminSettingsAuthenticationUpdateResponse</returns>
-        public PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthenticationUpdate(string orgId)
+        public PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthenticationUpdate(string orgId, AuthenticationSettings authenticationSettings)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = PatchAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = PatchAdminSettingsAuthenticationUpdateWithHttpInfo(orgId, authenticationSettings);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update authentication settings (alias for settings/auth) 
+        /// Update authentication settings (alias for settings/auth) The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthenticationUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthenticationUpdateWithHttpInfo(string orgId, AuthenticationSettings authenticationSettings)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminSettingsAuthenticationUpdate");
 
+            // verify the required parameter 'authenticationSettings' is set
+            if (authenticationSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'authenticationSettings' when calling AdminSettingsApi->PatchAdminSettingsAuthenticationUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3689,6 +4357,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = authenticationSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3715,35 +4384,42 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update authentication settings (alias for settings/auth) 
+        /// Update authentication settings (alias for settings/auth) The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthenticationUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PatchAdminSettingsAuthenticationUpdateAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = await PatchAdminSettingsAuthenticationUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = await PatchAdminSettingsAuthenticationUpdateWithHttpInfoAsync(orgId, authenticationSettings, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update authentication settings (alias for settings/auth) 
+        /// Update authentication settings (alias for settings/auth) The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsAuthenticationUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PatchAdminSettingsAuthenticationUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PatchAdminSettingsAuthenticationUpdateWithHttpInfoAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminSettingsAuthenticationUpdate");
 
+            // verify the required parameter 'authenticationSettings' is set
+            if (authenticationSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'authenticationSettings' when calling AdminSettingsApi->PatchAdminSettingsAuthenticationUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3759,6 +4435,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = authenticationSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3790,10 +4467,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <returns>PutAdminSettingsBrandingUpdateResponse</returns>
-        public PutAdminSettingsBrandingUpdateResponse PatchAdminSettingsBrandingUpdate(string orgId)
+        public PutAdminSettingsBrandingUpdateResponse PatchAdminSettingsBrandingUpdate(string orgId, BrandingSettings brandingSettings)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResponse = PatchAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResponse = PatchAdminSettingsBrandingUpdateWithHttpInfo(orgId, brandingSettings);
             return localVarResponse.Data;
         }
 
@@ -3802,16 +4480,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsBrandingUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse> PatchAdminSettingsBrandingUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse> PatchAdminSettingsBrandingUpdateWithHttpInfo(string orgId, BrandingSettings brandingSettings)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminSettingsBrandingUpdate");
 
+            // verify the required parameter 'brandingSettings' is set
+            if (brandingSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'brandingSettings' when calling AdminSettingsApi->PatchAdminSettingsBrandingUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3826,6 +4510,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = brandingSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -3856,11 +4541,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsBrandingUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsBrandingUpdateResponse> PatchAdminSettingsBrandingUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsBrandingUpdateResponse> PatchAdminSettingsBrandingUpdateAsync(string orgId, BrandingSettings brandingSettings, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResponse = await PatchAdminSettingsBrandingUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResponse = await PatchAdminSettingsBrandingUpdateWithHttpInfoAsync(orgId, brandingSettings, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -3869,18 +4555,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsBrandingUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse>> PatchAdminSettingsBrandingUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse>> PatchAdminSettingsBrandingUpdateWithHttpInfoAsync(string orgId, BrandingSettings brandingSettings, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminSettingsBrandingUpdate");
 
+            // verify the required parameter 'brandingSettings' is set
+            if (brandingSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'brandingSettings' when calling AdminSettingsApi->PatchAdminSettingsBrandingUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -3896,6 +4588,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = brandingSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4217,10 +4910,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <returns>PutAdminSettingsScimUpdateResponse</returns>
-        public PutAdminSettingsScimUpdateResponse PatchAdminSettingsScimUpdate(string orgId)
+        public PutAdminSettingsScimUpdateResponse PatchAdminSettingsScimUpdate(string orgId, ScimSettings scimSettings)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResponse = PatchAdminSettingsScimUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResponse = PatchAdminSettingsScimUpdateWithHttpInfo(orgId, scimSettings);
             return localVarResponse.Data;
         }
 
@@ -4229,16 +4923,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsScimUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse> PatchAdminSettingsScimUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse> PatchAdminSettingsScimUpdateWithHttpInfo(string orgId, ScimSettings scimSettings)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminSettingsScimUpdate");
 
+            // verify the required parameter 'scimSettings' is set
+            if (scimSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'scimSettings' when calling AdminSettingsApi->PatchAdminSettingsScimUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4253,6 +4953,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = scimSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4283,11 +4984,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsScimUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsScimUpdateResponse> PatchAdminSettingsScimUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsScimUpdateResponse> PatchAdminSettingsScimUpdateAsync(string orgId, ScimSettings scimSettings, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResponse = await PatchAdminSettingsScimUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResponse = await PatchAdminSettingsScimUpdateWithHttpInfoAsync(orgId, scimSettings, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -4296,18 +4998,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsScimUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse>> PatchAdminSettingsScimUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse>> PatchAdminSettingsScimUpdateWithHttpInfoAsync(string orgId, ScimSettings scimSettings, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminSettingsScimUpdate");
 
+            // verify the required parameter 'scimSettings' is set
+            if (scimSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'scimSettings' when calling AdminSettingsApi->PatchAdminSettingsScimUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4323,6 +5031,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = scimSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4354,10 +5063,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <returns>PutAdminSettingsSecurityUpdateResponse</returns>
-        public PutAdminSettingsSecurityUpdateResponse PatchAdminSettingsSecurityUpdate(string orgId)
+        public PutAdminSettingsSecurityUpdateResponse PatchAdminSettingsSecurityUpdate(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResponse = PatchAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResponse = PatchAdminSettingsSecurityUpdateWithHttpInfo(orgId, putAdminSettingsSecurityUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -4366,16 +5076,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <returns>ApiResponse of PutAdminSettingsSecurityUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse> PatchAdminSettingsSecurityUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse> PatchAdminSettingsSecurityUpdateWithHttpInfo(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminSettingsSecurityUpdate");
 
+            // verify the required parameter 'putAdminSettingsSecurityUpdateRequest' is set
+            if (putAdminSettingsSecurityUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminSettingsSecurityUpdateRequest' when calling AdminSettingsApi->PatchAdminSettingsSecurityUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4390,6 +5106,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminSettingsSecurityUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4420,11 +5137,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsSecurityUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsSecurityUpdateResponse> PatchAdminSettingsSecurityUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsSecurityUpdateResponse> PatchAdminSettingsSecurityUpdateAsync(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResponse = await PatchAdminSettingsSecurityUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResponse = await PatchAdminSettingsSecurityUpdateWithHttpInfoAsync(orgId, putAdminSettingsSecurityUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -4433,18 +5151,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsSecurityUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse>> PatchAdminSettingsSecurityUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse>> PatchAdminSettingsSecurityUpdateWithHttpInfoAsync(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminSettingsSecurityUpdate");
 
+            // verify the required parameter 'putAdminSettingsSecurityUpdateRequest' is set
+            if (putAdminSettingsSecurityUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminSettingsSecurityUpdateRequest' when calling AdminSettingsApi->PatchAdminSettingsSecurityUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4460,6 +5184,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminSettingsSecurityUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4487,32 +5212,39 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>PutAdminTenantUpdateResponse</returns>
-        public PutAdminTenantUpdateResponse PatchAdminTenantUpdate(string orgId)
+        public PutAdminTenantUpdateResponse PatchAdminTenantUpdate(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = PatchAdminTenantUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = PatchAdminTenantUpdateWithHttpInfo(orgId, putAdminTenantUpdateRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminTenantUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> PatchAdminTenantUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> PatchAdminTenantUpdateWithHttpInfo(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminTenantUpdate");
 
+            // verify the required parameter 'putAdminTenantUpdateRequest' is set
+            if (putAdminTenantUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminTenantUpdateRequest' when calling AdminSettingsApi->PatchAdminTenantUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4527,6 +5259,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminTenantUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4553,35 +5286,42 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminTenantUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PatchAdminTenantUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PatchAdminTenantUpdateAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = await PatchAdminTenantUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = await PatchAdminTenantUpdateWithHttpInfoAsync(orgId, putAdminTenantUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminTenantUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse>> PatchAdminTenantUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse>> PatchAdminTenantUpdateWithHttpInfoAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PatchAdminTenantUpdate");
 
+            // verify the required parameter 'putAdminTenantUpdateRequest' is set
+            if (putAdminTenantUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminTenantUpdateRequest' when calling AdminSettingsApi->PatchAdminTenantUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4597,6 +5337,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminTenantUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4624,32 +5365,39 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>PutAdminTenantUpdateResponse</returns>
-        public PutAdminTenantUpdateResponse PutAdminOrganizationUpdate(string orgId)
+        public PutAdminTenantUpdateResponse PutAdminOrganizationUpdate(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = PutAdminOrganizationUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = PutAdminOrganizationUpdateWithHttpInfo(orgId, putAdminTenantUpdateRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminTenantUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> PutAdminOrganizationUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> PutAdminOrganizationUpdateWithHttpInfo(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminOrganizationUpdate");
 
+            // verify the required parameter 'putAdminTenantUpdateRequest' is set
+            if (putAdminTenantUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminTenantUpdateRequest' when calling AdminSettingsApi->PutAdminOrganizationUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4664,6 +5412,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminTenantUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4690,35 +5439,42 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminTenantUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PutAdminOrganizationUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PutAdminOrganizationUpdateAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = await PutAdminOrganizationUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = await PutAdminOrganizationUpdateWithHttpInfoAsync(orgId, putAdminTenantUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminTenantUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse>> PutAdminOrganizationUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse>> PutAdminOrganizationUpdateWithHttpInfoAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminOrganizationUpdate");
 
+            // verify the required parameter 'putAdminTenantUpdateRequest' is set
+            if (putAdminTenantUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminTenantUpdateRequest' when calling AdminSettingsApi->PutAdminOrganizationUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4734,6 +5490,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminTenantUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4761,32 +5518,39 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update authentication settings 
+        /// Update authentication settings The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>PutAdminSettingsAuthenticationUpdateResponse</returns>
-        public PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthUpdate(string orgId)
+        public PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthUpdate(string orgId, AuthenticationSettings authenticationSettings)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = PutAdminSettingsAuthUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = PutAdminSettingsAuthUpdateWithHttpInfo(orgId, authenticationSettings);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update authentication settings 
+        /// Update authentication settings The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthUpdateWithHttpInfo(string orgId, AuthenticationSettings authenticationSettings)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminSettingsAuthUpdate");
 
+            // verify the required parameter 'authenticationSettings' is set
+            if (authenticationSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'authenticationSettings' when calling AdminSettingsApi->PutAdminSettingsAuthUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4801,6 +5565,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = authenticationSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4827,35 +5592,42 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update authentication settings 
+        /// Update authentication settings The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthUpdateAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = await PutAdminSettingsAuthUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = await PutAdminSettingsAuthUpdateWithHttpInfoAsync(orgId, authenticationSettings, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update authentication settings 
+        /// Update authentication settings The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsAuthenticationUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PutAdminSettingsAuthUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PutAdminSettingsAuthUpdateWithHttpInfoAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminSettingsAuthUpdate");
 
+            // verify the required parameter 'authenticationSettings' is set
+            if (authenticationSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'authenticationSettings' when calling AdminSettingsApi->PutAdminSettingsAuthUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4871,6 +5643,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = authenticationSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4898,32 +5671,39 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update authentication settings (alias for settings/auth) 
+        /// Update authentication settings (alias for settings/auth) The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>PutAdminSettingsAuthenticationUpdateResponse</returns>
-        public PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthenticationUpdate(string orgId)
+        public PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthenticationUpdate(string orgId, AuthenticationSettings authenticationSettings)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = PutAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = PutAdminSettingsAuthenticationUpdateWithHttpInfo(orgId, authenticationSettings);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update authentication settings (alias for settings/auth) 
+        /// Update authentication settings (alias for settings/auth) The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthenticationUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthenticationUpdateWithHttpInfo(string orgId, AuthenticationSettings authenticationSettings)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminSettingsAuthenticationUpdate");
 
+            // verify the required parameter 'authenticationSettings' is set
+            if (authenticationSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'authenticationSettings' when calling AdminSettingsApi->PutAdminSettingsAuthenticationUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -4938,6 +5718,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = authenticationSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -4964,35 +5745,42 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update authentication settings (alias for settings/auth) 
+        /// Update authentication settings (alias for settings/auth) The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsAuthenticationUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthenticationUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsAuthenticationUpdateResponse> PutAdminSettingsAuthenticationUpdateAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = await PutAdminSettingsAuthenticationUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResponse = await PutAdminSettingsAuthenticationUpdateWithHttpInfoAsync(orgId, authenticationSettings, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update authentication settings (alias for settings/auth) 
+        /// Update authentication settings (alias for settings/auth) The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="authenticationSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsAuthenticationUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PutAdminSettingsAuthenticationUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsAuthenticationUpdateResponse>> PutAdminSettingsAuthenticationUpdateWithHttpInfoAsync(string orgId, AuthenticationSettings authenticationSettings, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminSettingsAuthenticationUpdate");
 
+            // verify the required parameter 'authenticationSettings' is set
+            if (authenticationSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'authenticationSettings' when calling AdminSettingsApi->PutAdminSettingsAuthenticationUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5008,6 +5796,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = authenticationSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5039,10 +5828,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <returns>PutAdminSettingsBrandingUpdateResponse</returns>
-        public PutAdminSettingsBrandingUpdateResponse PutAdminSettingsBrandingUpdate(string orgId)
+        public PutAdminSettingsBrandingUpdateResponse PutAdminSettingsBrandingUpdate(string orgId, BrandingSettings brandingSettings)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResponse = PutAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResponse = PutAdminSettingsBrandingUpdateWithHttpInfo(orgId, brandingSettings);
             return localVarResponse.Data;
         }
 
@@ -5051,16 +5841,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsBrandingUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse> PutAdminSettingsBrandingUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse> PutAdminSettingsBrandingUpdateWithHttpInfo(string orgId, BrandingSettings brandingSettings)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminSettingsBrandingUpdate");
 
+            // verify the required parameter 'brandingSettings' is set
+            if (brandingSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'brandingSettings' when calling AdminSettingsApi->PutAdminSettingsBrandingUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5075,6 +5871,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = brandingSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5105,11 +5902,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsBrandingUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsBrandingUpdateResponse> PutAdminSettingsBrandingUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsBrandingUpdateResponse> PutAdminSettingsBrandingUpdateAsync(string orgId, BrandingSettings brandingSettings, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResponse = await PutAdminSettingsBrandingUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResponse = await PutAdminSettingsBrandingUpdateWithHttpInfoAsync(orgId, brandingSettings, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -5118,18 +5916,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="brandingSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsBrandingUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse>> PutAdminSettingsBrandingUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsBrandingUpdateResponse>> PutAdminSettingsBrandingUpdateWithHttpInfoAsync(string orgId, BrandingSettings brandingSettings, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminSettingsBrandingUpdate");
 
+            // verify the required parameter 'brandingSettings' is set
+            if (brandingSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'brandingSettings' when calling AdminSettingsApi->PutAdminSettingsBrandingUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5145,6 +5949,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = brandingSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5466,10 +6271,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <returns>PutAdminSettingsScimUpdateResponse</returns>
-        public PutAdminSettingsScimUpdateResponse PutAdminSettingsScimUpdate(string orgId)
+        public PutAdminSettingsScimUpdateResponse PutAdminSettingsScimUpdate(string orgId, ScimSettings scimSettings)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResponse = PutAdminSettingsScimUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResponse = PutAdminSettingsScimUpdateWithHttpInfo(orgId, scimSettings);
             return localVarResponse.Data;
         }
 
@@ -5478,16 +6284,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <returns>ApiResponse of PutAdminSettingsScimUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse> PutAdminSettingsScimUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse> PutAdminSettingsScimUpdateWithHttpInfo(string orgId, ScimSettings scimSettings)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminSettingsScimUpdate");
 
+            // verify the required parameter 'scimSettings' is set
+            if (scimSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'scimSettings' when calling AdminSettingsApi->PutAdminSettingsScimUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5502,6 +6314,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = scimSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5532,11 +6345,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsScimUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsScimUpdateResponse> PutAdminSettingsScimUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsScimUpdateResponse> PutAdminSettingsScimUpdateAsync(string orgId, ScimSettings scimSettings, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResponse = await PutAdminSettingsScimUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResponse = await PutAdminSettingsScimUpdateWithHttpInfoAsync(orgId, scimSettings, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -5545,18 +6359,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="scimSettings"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsScimUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse>> PutAdminSettingsScimUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsScimUpdateResponse>> PutAdminSettingsScimUpdateWithHttpInfoAsync(string orgId, ScimSettings scimSettings, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminSettingsScimUpdate");
 
+            // verify the required parameter 'scimSettings' is set
+            if (scimSettings == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'scimSettings' when calling AdminSettingsApi->PutAdminSettingsScimUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5572,6 +6392,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = scimSettings;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5603,10 +6424,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <returns>PutAdminSettingsSecurityUpdateResponse</returns>
-        public PutAdminSettingsSecurityUpdateResponse PutAdminSettingsSecurityUpdate(string orgId)
+        public PutAdminSettingsSecurityUpdateResponse PutAdminSettingsSecurityUpdate(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResponse = PutAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResponse = PutAdminSettingsSecurityUpdateWithHttpInfo(orgId, putAdminSettingsSecurityUpdateRequest);
             return localVarResponse.Data;
         }
 
@@ -5615,16 +6437,22 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <returns>ApiResponse of PutAdminSettingsSecurityUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse> PutAdminSettingsSecurityUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse> PutAdminSettingsSecurityUpdateWithHttpInfo(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminSettingsSecurityUpdate");
 
+            // verify the required parameter 'putAdminSettingsSecurityUpdateRequest' is set
+            if (putAdminSettingsSecurityUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminSettingsSecurityUpdateRequest' when calling AdminSettingsApi->PutAdminSettingsSecurityUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5639,6 +6467,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminSettingsSecurityUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5669,11 +6498,12 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminSettingsSecurityUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminSettingsSecurityUpdateResponse> PutAdminSettingsSecurityUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminSettingsSecurityUpdateResponse> PutAdminSettingsSecurityUpdateAsync(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResponse = await PutAdminSettingsSecurityUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResponse = await PutAdminSettingsSecurityUpdateWithHttpInfoAsync(orgId, putAdminSettingsSecurityUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -5682,18 +6512,24 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminSettingsSecurityUpdateRequest">Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminSettingsSecurityUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse>> PutAdminSettingsSecurityUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminSettingsSecurityUpdateResponse>> PutAdminSettingsSecurityUpdateWithHttpInfoAsync(string orgId, PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminSettingsSecurityUpdate");
 
+            // verify the required parameter 'putAdminSettingsSecurityUpdateRequest' is set
+            if (putAdminSettingsSecurityUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminSettingsSecurityUpdateRequest' when calling AdminSettingsApi->PutAdminSettingsSecurityUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5709,6 +6545,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminSettingsSecurityUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5736,32 +6573,39 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>PutAdminTenantUpdateResponse</returns>
-        public PutAdminTenantUpdateResponse PutAdminTenantUpdate(string orgId)
+        public PutAdminTenantUpdateResponse PutAdminTenantUpdate(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = PutAdminTenantUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = PutAdminTenantUpdateWithHttpInfo(orgId, putAdminTenantUpdateRequest);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <returns>ApiResponse of PutAdminTenantUpdateResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> PutAdminTenantUpdateWithHttpInfo(string orgId)
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> PutAdminTenantUpdateWithHttpInfo(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminTenantUpdate");
 
+            // verify the required parameter 'putAdminTenantUpdateRequest' is set
+            if (putAdminTenantUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminTenantUpdateRequest' when calling AdminSettingsApi->PutAdminTenantUpdate");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5776,6 +6620,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminTenantUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -5802,35 +6647,42 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PutAdminTenantUpdateResponse</returns>
-        public async System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PutAdminTenantUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<PutAdminTenantUpdateResponse> PutAdminTenantUpdateAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = await PutAdminTenantUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse> localVarResponse = await PutAdminTenantUpdateWithHttpInfoAsync(orgId, putAdminTenantUpdateRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update organization (tenant) name and settings 
+        /// Update the organization&#39;s name and settings 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="putAdminTenantUpdateRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PutAdminTenantUpdateResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse>> PutAdminTenantUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAdminTenantUpdateResponse>> PutAdminTenantUpdateWithHttpInfoAsync(string orgId, PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSettingsApi->PutAdminTenantUpdate");
 
+            // verify the required parameter 'putAdminTenantUpdateRequest' is set
+            if (putAdminTenantUpdateRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'putAdminTenantUpdateRequest' when calling AdminSettingsApi->PutAdminTenantUpdate");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
@@ -5846,6 +6698,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = putAdminTenantUpdateRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))

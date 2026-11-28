@@ -3,7 +3,7 @@
 """
     LumoAuth API
 
-    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+    LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: sdk@lumoauth.dev
@@ -28,10 +28,12 @@ from lumoauth_api_client.models.get_client_response import GetClientResponse
 from lumoauth_api_client.models.list_client_scopes_response import ListClientScopesResponse
 from lumoauth_api_client.models.list_clients_response import ListClientsResponse
 from lumoauth_api_client.models.message_response import MessageResponse
+from lumoauth_api_client.models.o_auth_client_write import OAuthClientWrite
 from lumoauth_api_client.models.patch_admin_clients_update_branding_response import PatchAdminClientsUpdateBrandingResponse
 from lumoauth_api_client.models.put_admin_clients_update_branding_request import PutAdminClientsUpdateBrandingRequest
 from lumoauth_api_client.models.put_admin_clients_update_branding_response import PutAdminClientsUpdateBrandingResponse
 from lumoauth_api_client.models.rotate_client_secret_response import RotateClientSecretResponse
+from lumoauth_api_client.models.set_client_scopes_request import SetClientScopesRequest
 from lumoauth_api_client.models.set_client_scopes_response import SetClientScopesResponse
 from lumoauth_api_client.models.update_client_response import UpdateClientResponse
 
@@ -630,6 +632,7 @@ class AdminOAuthClientsApi:
     def create_client(
         self,
         org_id: StrictStr,
+        o_auth_client_write: OAuthClientWrite,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -648,6 +651,8 @@ class AdminOAuthClientsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param o_auth_client_write: (required)
+        :type o_auth_client_write: OAuthClientWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -672,6 +677,7 @@ class AdminOAuthClientsApi:
 
         _param = self._create_client_serialize(
             org_id=org_id,
+            o_auth_client_write=o_auth_client_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -696,6 +702,7 @@ class AdminOAuthClientsApi:
     def create_client_with_http_info(
         self,
         org_id: StrictStr,
+        o_auth_client_write: OAuthClientWrite,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -714,6 +721,8 @@ class AdminOAuthClientsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param o_auth_client_write: (required)
+        :type o_auth_client_write: OAuthClientWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -738,6 +747,7 @@ class AdminOAuthClientsApi:
 
         _param = self._create_client_serialize(
             org_id=org_id,
+            o_auth_client_write=o_auth_client_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -762,6 +772,7 @@ class AdminOAuthClientsApi:
     def create_client_without_preload_content(
         self,
         org_id: StrictStr,
+        o_auth_client_write: OAuthClientWrite,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -780,6 +791,8 @@ class AdminOAuthClientsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param o_auth_client_write: (required)
+        :type o_auth_client_write: OAuthClientWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -804,6 +817,7 @@ class AdminOAuthClientsApi:
 
         _param = self._create_client_serialize(
             org_id=org_id,
+            o_auth_client_write=o_auth_client_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -823,6 +837,7 @@ class AdminOAuthClientsApi:
     def _create_client_serialize(
         self,
         org_id,
+        o_auth_client_write,
         _request_auth,
         _content_type,
         _headers,
@@ -850,6 +865,8 @@ class AdminOAuthClientsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if o_auth_client_write is not None:
+            _body_params = o_auth_client_write
 
 
         # set the HTTP header `Accept`
@@ -860,6 +877,19 @@ class AdminOAuthClientsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2857,6 +2887,7 @@ class AdminOAuthClientsApi:
         self,
         org_id: StrictStr,
         client_id: StrictStr,
+        o_auth_client_write: OAuthClientWrite,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2878,6 +2909,8 @@ class AdminOAuthClientsApi:
         :type org_id: str
         :param client_id: (required)
         :type client_id: str
+        :param o_auth_client_write: (required)
+        :type o_auth_client_write: OAuthClientWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2903,6 +2936,7 @@ class AdminOAuthClientsApi:
         _param = self._patch_client_serialize(
             org_id=org_id,
             client_id=client_id,
+            o_auth_client_write=o_auth_client_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2930,6 +2964,7 @@ class AdminOAuthClientsApi:
         self,
         org_id: StrictStr,
         client_id: StrictStr,
+        o_auth_client_write: OAuthClientWrite,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2951,6 +2986,8 @@ class AdminOAuthClientsApi:
         :type org_id: str
         :param client_id: (required)
         :type client_id: str
+        :param o_auth_client_write: (required)
+        :type o_auth_client_write: OAuthClientWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2976,6 +3013,7 @@ class AdminOAuthClientsApi:
         _param = self._patch_client_serialize(
             org_id=org_id,
             client_id=client_id,
+            o_auth_client_write=o_auth_client_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3003,6 +3041,7 @@ class AdminOAuthClientsApi:
         self,
         org_id: StrictStr,
         client_id: StrictStr,
+        o_auth_client_write: OAuthClientWrite,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3024,6 +3063,8 @@ class AdminOAuthClientsApi:
         :type org_id: str
         :param client_id: (required)
         :type client_id: str
+        :param o_auth_client_write: (required)
+        :type o_auth_client_write: OAuthClientWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3049,6 +3090,7 @@ class AdminOAuthClientsApi:
         _param = self._patch_client_serialize(
             org_id=org_id,
             client_id=client_id,
+            o_auth_client_write=o_auth_client_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3071,6 +3113,7 @@ class AdminOAuthClientsApi:
         self,
         org_id,
         client_id,
+        o_auth_client_write,
         _request_auth,
         _content_type,
         _headers,
@@ -3100,6 +3143,8 @@ class AdminOAuthClientsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if o_auth_client_write is not None:
+            _body_params = o_auth_client_write
 
 
         # set the HTTP header `Accept`
@@ -3110,6 +3155,19 @@ class AdminOAuthClientsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -3502,6 +3560,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "RotateClientSecretResponse",
+            '400': None,
             '403': None,
             '404': None,
         }
@@ -3575,6 +3634,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "RotateClientSecretResponse",
+            '400': None,
             '403': None,
             '404': None,
         }
@@ -3648,6 +3708,7 @@ class AdminOAuthClientsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "RotateClientSecretResponse",
+            '400': None,
             '403': None,
             '404': None,
         }
@@ -3731,6 +3792,7 @@ class AdminOAuthClientsApi:
         self,
         org_id: StrictStr,
         client_id: StrictStr,
+        set_client_scopes_request: SetClientScopesRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3752,6 +3814,8 @@ class AdminOAuthClientsApi:
         :type org_id: str
         :param client_id: (required)
         :type client_id: str
+        :param set_client_scopes_request: (required)
+        :type set_client_scopes_request: SetClientScopesRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3777,6 +3841,7 @@ class AdminOAuthClientsApi:
         _param = self._set_client_scopes_serialize(
             org_id=org_id,
             client_id=client_id,
+            set_client_scopes_request=set_client_scopes_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3804,6 +3869,7 @@ class AdminOAuthClientsApi:
         self,
         org_id: StrictStr,
         client_id: StrictStr,
+        set_client_scopes_request: SetClientScopesRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3825,6 +3891,8 @@ class AdminOAuthClientsApi:
         :type org_id: str
         :param client_id: (required)
         :type client_id: str
+        :param set_client_scopes_request: (required)
+        :type set_client_scopes_request: SetClientScopesRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3850,6 +3918,7 @@ class AdminOAuthClientsApi:
         _param = self._set_client_scopes_serialize(
             org_id=org_id,
             client_id=client_id,
+            set_client_scopes_request=set_client_scopes_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3877,6 +3946,7 @@ class AdminOAuthClientsApi:
         self,
         org_id: StrictStr,
         client_id: StrictStr,
+        set_client_scopes_request: SetClientScopesRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3898,6 +3968,8 @@ class AdminOAuthClientsApi:
         :type org_id: str
         :param client_id: (required)
         :type client_id: str
+        :param set_client_scopes_request: (required)
+        :type set_client_scopes_request: SetClientScopesRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3923,6 +3995,7 @@ class AdminOAuthClientsApi:
         _param = self._set_client_scopes_serialize(
             org_id=org_id,
             client_id=client_id,
+            set_client_scopes_request=set_client_scopes_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3945,6 +4018,7 @@ class AdminOAuthClientsApi:
         self,
         org_id,
         client_id,
+        set_client_scopes_request,
         _request_auth,
         _content_type,
         _headers,
@@ -3974,6 +4048,8 @@ class AdminOAuthClientsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if set_client_scopes_request is not None:
+            _body_params = set_client_scopes_request
 
 
         # set the HTTP header `Accept`
@@ -3984,6 +4060,19 @@ class AdminOAuthClientsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -4014,6 +4103,7 @@ class AdminOAuthClientsApi:
         self,
         org_id: StrictStr,
         client_id: StrictStr,
+        o_auth_client_write: OAuthClientWrite,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4035,6 +4125,8 @@ class AdminOAuthClientsApi:
         :type org_id: str
         :param client_id: (required)
         :type client_id: str
+        :param o_auth_client_write: (required)
+        :type o_auth_client_write: OAuthClientWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4060,6 +4152,7 @@ class AdminOAuthClientsApi:
         _param = self._update_client_serialize(
             org_id=org_id,
             client_id=client_id,
+            o_auth_client_write=o_auth_client_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4087,6 +4180,7 @@ class AdminOAuthClientsApi:
         self,
         org_id: StrictStr,
         client_id: StrictStr,
+        o_auth_client_write: OAuthClientWrite,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4108,6 +4202,8 @@ class AdminOAuthClientsApi:
         :type org_id: str
         :param client_id: (required)
         :type client_id: str
+        :param o_auth_client_write: (required)
+        :type o_auth_client_write: OAuthClientWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4133,6 +4229,7 @@ class AdminOAuthClientsApi:
         _param = self._update_client_serialize(
             org_id=org_id,
             client_id=client_id,
+            o_auth_client_write=o_auth_client_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4160,6 +4257,7 @@ class AdminOAuthClientsApi:
         self,
         org_id: StrictStr,
         client_id: StrictStr,
+        o_auth_client_write: OAuthClientWrite,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4181,6 +4279,8 @@ class AdminOAuthClientsApi:
         :type org_id: str
         :param client_id: (required)
         :type client_id: str
+        :param o_auth_client_write: (required)
+        :type o_auth_client_write: OAuthClientWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4206,6 +4306,7 @@ class AdminOAuthClientsApi:
         _param = self._update_client_serialize(
             org_id=org_id,
             client_id=client_id,
+            o_auth_client_write=o_auth_client_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4228,6 +4329,7 @@ class AdminOAuthClientsApi:
         self,
         org_id,
         client_id,
+        o_auth_client_write,
         _request_auth,
         _content_type,
         _headers,
@@ -4257,6 +4359,8 @@ class AdminOAuthClientsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if o_auth_client_write is not None:
+            _body_params = o_auth_client_write
 
 
         # set the HTTP header `Accept`
@@ -4267,6 +4371,19 @@ class AdminOAuthClientsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

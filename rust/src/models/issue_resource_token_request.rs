@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -13,12 +13,15 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct IssueResourceTokenRequest {
+    /// Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
+    #[serde(rename = "resource")]
+    pub resource: String,
     /// Agent identifier the resource token is bound to.
-    #[serde(rename = "agent", skip_serializing_if = "Option::is_none")]
-    pub agent: Option<String>,
+    #[serde(rename = "agent")]
+    pub agent: String,
     /// JWK thumbprint of the agent key (PoP binding).
-    #[serde(rename = "agent_jkt", skip_serializing_if = "Option::is_none")]
-    pub agent_jkt: Option<String>,
+    #[serde(rename = "agent_jkt")]
+    pub agent_jkt: String,
     /// Optional space-delimited requested scopes.
     #[serde(rename = "scope", skip_serializing_if = "Option::is_none")]
     pub scope: Option<String>,
@@ -31,10 +34,11 @@ pub struct IssueResourceTokenRequest {
 }
 
 impl IssueResourceTokenRequest {
-    pub fn new() -> IssueResourceTokenRequest {
+    pub fn new(resource: String, agent: String, agent_jkt: String) -> IssueResourceTokenRequest {
         IssueResourceTokenRequest {
-            agent: None,
-            agent_jkt: None,
+            resource,
+            agent,
+            agent_jkt,
             scope: None,
             auth_request_url: None,
             auth_server: None,

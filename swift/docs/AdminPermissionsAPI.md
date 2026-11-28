@@ -4,10 +4,10 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**adminPermissionsCreate**](AdminPermissionsAPI.md#adminpermissionscreate) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the tenant
+[**adminPermissionsCreate**](AdminPermissionsAPI.md#adminpermissionscreate) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the organization
 [**adminPermissionsDelete**](AdminPermissionsAPI.md#adminpermissionsdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Delete a custom permission
 [**adminPermissionsGet**](AdminPermissionsAPI.md#adminpermissionsget) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Get a single permission
-[**adminPermissionsList**](AdminPermissionsAPI.md#adminpermissionslist) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the tenant
+[**adminPermissionsList**](AdminPermissionsAPI.md#adminpermissionslist) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the organization
 [**adminPermissionsUpdate**](AdminPermissionsAPI.md#adminpermissionsupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Update a permission
 [**adminPermissionsUsage**](AdminPermissionsAPI.md#adminpermissionsusage) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId}/usage | Get permission usage (roles assigned to this permission)
 [**adminScopesCreate**](AdminPermissionsAPI.md#adminscopescreate) | **POST** /orgs/{orgId}/api/v1/admin/scopes | Create a custom OAuth scope
@@ -17,10 +17,10 @@ Method | HTTP request | Description
 
 # **adminPermissionsCreate**
 ```swift
-    open class func adminPermissionsCreate(orgId: String, completion: @escaping (_ data: AdminPermissionsCreateResponse?, _ error: Error?) -> Void)
+    open class func adminPermissionsCreate(orgId: String, adminPermissionsCreateRequest: AdminPermissionsCreateRequest, completion: @escaping (_ data: AdminPermissionsCreateResponse?, _ error: Error?) -> Void)
 ```
 
-Create a custom permission for the tenant
+Create a custom permission for the organization
 
 ### Example
 ```swift
@@ -28,9 +28,10 @@ Create a custom permission for the tenant
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let adminPermissionsCreateRequest = AdminPermissionsCreateRequest(name: "name_example", slug: "slug_example", description: "description_example", resource: "resource_example", action: "action_example") // AdminPermissionsCreateRequest | 
 
-// Create a custom permission for the tenant
-AdminPermissionsAPI.adminPermissionsCreate(orgId: orgId) { (response, error) in
+// Create a custom permission for the organization
+AdminPermissionsAPI.adminPermissionsCreate(orgId: orgId, adminPermissionsCreateRequest: adminPermissionsCreateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -47,6 +48,7 @@ AdminPermissionsAPI.adminPermissionsCreate(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **adminPermissionsCreateRequest** | [**AdminPermissionsCreateRequest**](AdminPermissionsCreateRequest.md) |  | 
 
 ### Return type
 
@@ -58,7 +60,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -168,7 +170,7 @@ Name | Type | Description  | Notes
     open class func adminPermissionsList(orgId: String, completion: @escaping (_ data: AdminPermissionsListResponse?, _ error: Error?) -> Void)
 ```
 
-List all available permissions for the tenant
+List all available permissions for the organization
 
 ### Example
 ```swift
@@ -177,7 +179,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// List all available permissions for the tenant
+// List all available permissions for the organization
 AdminPermissionsAPI.adminPermissionsList(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -213,7 +215,7 @@ Name | Type | Description  | Notes
 
 # **adminPermissionsUpdate**
 ```swift
-    open class func adminPermissionsUpdate(orgId: String, permissionId: String, completion: @escaping (_ data: AdminPermissionsCreateResponse?, _ error: Error?) -> Void)
+    open class func adminPermissionsUpdate(orgId: String, permissionId: String, adminPermissionsUpdateRequest: AdminPermissionsUpdateRequest, completion: @escaping (_ data: AdminPermissionsCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update a permission
@@ -225,9 +227,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let permissionId = "permissionId_example" // String | 
+let adminPermissionsUpdateRequest = AdminPermissionsUpdateRequest(name: "name_example", description: "description_example", resource: "resource_example", action: "action_example") // AdminPermissionsUpdateRequest | 
 
 // Update a permission
-AdminPermissionsAPI.adminPermissionsUpdate(orgId: orgId, permissionId: permissionId) { (response, error) in
+AdminPermissionsAPI.adminPermissionsUpdate(orgId: orgId, permissionId: permissionId, adminPermissionsUpdateRequest: adminPermissionsUpdateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -245,6 +248,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **permissionId** | **String** |  | 
+ **adminPermissionsUpdateRequest** | [**AdminPermissionsUpdateRequest**](AdminPermissionsUpdateRequest.md) |  | 
 
 ### Return type
 
@@ -256,7 +260,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -313,7 +317,7 @@ Name | Type | Description  | Notes
 
 # **adminScopesCreate**
 ```swift
-    open class func adminScopesCreate(orgId: String, completion: @escaping (_ data: AdminScopesCreateResponse?, _ error: Error?) -> Void)
+    open class func adminScopesCreate(orgId: String, adminScopesCreateRequest: AdminScopesCreateRequest, completion: @escaping (_ data: AdminScopesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Create a custom OAuth scope
@@ -324,9 +328,10 @@ Create a custom OAuth scope
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let adminScopesCreateRequest = AdminScopesCreateRequest(name: "name_example", description: "description_example") // AdminScopesCreateRequest | 
 
 // Create a custom OAuth scope
-AdminPermissionsAPI.adminScopesCreate(orgId: orgId) { (response, error) in
+AdminPermissionsAPI.adminScopesCreate(orgId: orgId, adminScopesCreateRequest: adminScopesCreateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -343,6 +348,7 @@ AdminPermissionsAPI.adminScopesCreate(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **adminScopesCreateRequest** | [**AdminScopesCreateRequest**](AdminScopesCreateRequest.md) |  | 
 
 ### Return type
 
@@ -354,7 +360,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

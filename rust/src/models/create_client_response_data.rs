@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -41,6 +41,51 @@ pub struct CreateClientResponseData {
     /// Detailed responses only. Whether the client may use CIBA (backchannel authentication).
     #[serde(rename = "cibaEnabled", skip_serializing_if = "Option::is_none")]
     pub ciba_enabled: Option<bool>,
+    /// Detailed responses only. Browser CORS origins (scheme://host[:port]).
+    #[serde(rename = "allowedOrigins", skip_serializing_if = "Option::is_none")]
+    pub allowed_origins: Option<Vec<String>>,
+    /// Detailed responses only. Addresses that the end-session endpoint may return to.
+    #[serde(rename = "postLogoutRedirectUris", skip_serializing_if = "Option::is_none")]
+    pub post_logout_redirect_uris: Option<Vec<String>>,
+    /// Detailed responses only. OIDC Front-Channel Logout address.
+    #[serde(rename = "frontchannelLogoutUri", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub frontchannel_logout_uri: Option<Option<String>>,
+    /// Detailed responses only. OIDC Back-Channel Logout address.
+    #[serde(rename = "backchannelLogoutUri", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub backchannel_logout_uri: Option<Option<String>>,
+    /// Detailed responses only. Format of the access tokens that the client receives.
+    #[serde(rename = "accessTokenFormat", skip_serializing_if = "Option::is_none")]
+    pub access_token_format: Option<AccessTokenFormat>,
+    /// Detailed responses only.
+    #[serde(rename = "tokenEndpointAuthMethod", skip_serializing_if = "Option::is_none")]
+    pub token_endpoint_auth_method: Option<TokenEndpointAuthMethod>,
+    /// Detailed responses only. https address of the client's public keys.
+    #[serde(rename = "jwksUri", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub jwks_uri: Option<Option<String>>,
+    /// Detailed responses only. The client's public keys, inline.
+    #[serde(rename = "jwks", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub jwks: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
+    /// Detailed responses only. FAPI 2.0 security profile.
+    #[serde(rename = "fapiMode", skip_serializing_if = "Option::is_none")]
+    pub fapi_mode: Option<FapiMode>,
+    /// Detailed responses only. The stored switch; a FAPI profile requires PAR whatever it says.
+    #[serde(rename = "requirePar", skip_serializing_if = "Option::is_none")]
+    pub require_par: Option<bool>,
+    /// Detailed responses only. The stored switch; a FAPI profile requires DPoP whatever it says.
+    #[serde(rename = "dpopBoundAccessTokens", skip_serializing_if = "Option::is_none")]
+    pub dpop_bound_access_tokens: Option<bool>,
+    /// Detailed responses only.
+    #[serde(rename = "attestationBasedAuthEnabled", skip_serializing_if = "Option::is_none")]
+    pub attestation_based_auth_enabled: Option<bool>,
+    /// Detailed responses only.
+    #[serde(rename = "attesterIssuer", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub attester_issuer: Option<Option<String>>,
+    /// Detailed responses only.
+    #[serde(rename = "attesterJwksUri", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub attester_jwks_uri: Option<Option<String>>,
+    /// Detailed responses only. Whether the client may use token exchange (RFC 8693).
+    #[serde(rename = "tokenExchangeEnabled", skip_serializing_if = "Option::is_none")]
+    pub token_exchange_enabled: Option<bool>,
     /// Plaintext client secret — returned only once, never retrievable again. Absent for a public client
     #[serde(rename = "secret", skip_serializing_if = "Option::is_none")]
     pub secret: Option<String>,
@@ -63,9 +108,72 @@ impl CreateClientResponseData {
             scopes: None,
             grant_types: None,
             ciba_enabled: None,
+            allowed_origins: None,
+            post_logout_redirect_uris: None,
+            frontchannel_logout_uri: None,
+            backchannel_logout_uri: None,
+            access_token_format: None,
+            token_endpoint_auth_method: None,
+            jwks_uri: None,
+            jwks: None,
+            fapi_mode: None,
+            require_par: None,
+            dpop_bound_access_tokens: None,
+            attestation_based_auth_enabled: None,
+            attester_issuer: None,
+            attester_jwks_uri: None,
+            token_exchange_enabled: None,
             secret: None,
             _note: None,
         }
+    }
+}
+/// Detailed responses only. Format of the access tokens that the client receives.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum AccessTokenFormat {
+    #[serde(rename = "opaque")]
+    Opaque,
+    #[serde(rename = "jwt")]
+    Jwt,
+}
+
+impl Default for AccessTokenFormat {
+    fn default() -> AccessTokenFormat {
+        Self::Opaque
+    }
+}
+/// Detailed responses only.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum TokenEndpointAuthMethod {
+    #[serde(rename = "client_secret_basic")]
+    ClientSecretBasic,
+    #[serde(rename = "private_key_jwt")]
+    PrivateKeyJwt,
+    #[serde(rename = "none")]
+    None,
+    #[serde(rename = "attest_jwt_client_auth")]
+    AttestJwtClientAuth,
+}
+
+impl Default for TokenEndpointAuthMethod {
+    fn default() -> TokenEndpointAuthMethod {
+        Self::ClientSecretBasic
+    }
+}
+/// Detailed responses only. FAPI 2.0 security profile.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum FapiMode {
+    #[serde(rename = "disabled")]
+    Disabled,
+    #[serde(rename = "fapi2_baseline")]
+    Fapi2Baseline,
+    #[serde(rename = "fapi2_advanced")]
+    Fapi2Advanced,
+}
+
+impl Default for FapiMode {
+    fn default() -> FapiMode {
+        Self::Disabled
     }
 }
 

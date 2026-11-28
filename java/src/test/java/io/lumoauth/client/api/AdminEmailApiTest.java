@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -15,7 +15,9 @@ package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
 import io.lumoauth.client.model.AdminEmailTemplatesListResponse;
+import io.lumoauth.client.model.AdminEmailTemplatesPreviewRequest;
 import io.lumoauth.client.model.AdminEmailTemplatesPreviewResponse;
+import io.lumoauth.client.model.AdminEmailTemplatesUpsertRequest;
 import io.lumoauth.client.model.AdminEmailTemplatesVariablesResponse;
 import io.lumoauth.client.model.EmailTemplate;
 import io.lumoauth.client.model.MessageResponse;
@@ -90,7 +92,8 @@ public class AdminEmailApiTest {
     public void adminEmailTemplatesPreviewTest() throws ApiException {
         String orgId = null;
         String type = null;
-        AdminEmailTemplatesPreviewResponse response = api.adminEmailTemplatesPreview(orgId, type);
+        AdminEmailTemplatesPreviewRequest adminEmailTemplatesPreviewRequest = null;
+        AdminEmailTemplatesPreviewResponse response = api.adminEmailTemplatesPreview(orgId, type, adminEmailTemplatesPreviewRequest);
         // TODO: test validations
     }
 
@@ -105,7 +108,8 @@ public class AdminEmailApiTest {
     public void adminEmailTemplatesUpsertTest() throws ApiException {
         String orgId = null;
         String type = null;
-        EmailTemplate response = api.adminEmailTemplatesUpsert(orgId, type);
+        AdminEmailTemplatesUpsertRequest adminEmailTemplatesUpsertRequest = null;
+        EmailTemplate response = api.adminEmailTemplatesUpsert(orgId, type, adminEmailTemplatesUpsertRequest);
         // TODO: test validations
     }
 

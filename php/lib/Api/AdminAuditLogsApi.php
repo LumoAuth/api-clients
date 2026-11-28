@@ -12,7 +12,7 @@
 /**
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`.
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -150,7 +150,7 @@ class AdminAuditLogsApi
     /**
      * Operation adminAuditLogsActions
      *
-     * List the distinct audit action types recorded for the tenant
+     * List the distinct audit action types recorded for the organization
      *
      * @param  string $orgId orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsActions'] to see the possible values for this operation
@@ -168,7 +168,7 @@ class AdminAuditLogsApi
     /**
      * Operation adminAuditLogsActionsWithHttpInfo
      *
-     * List the distinct audit action types recorded for the tenant
+     * List the distinct audit action types recorded for the organization
      *
      * @param  string $orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsActions'] to see the possible values for this operation
@@ -253,7 +253,7 @@ class AdminAuditLogsApi
     /**
      * Operation adminAuditLogsActionsAsync
      *
-     * List the distinct audit action types recorded for the tenant
+     * List the distinct audit action types recorded for the organization
      *
      * @param  string $orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsActions'] to see the possible values for this operation
@@ -274,7 +274,7 @@ class AdminAuditLogsApi
     /**
      * Operation adminAuditLogsActionsAsyncWithHttpInfo
      *
-     * List the distinct audit action types recorded for the tenant
+     * List the distinct audit action types recorded for the organization
      *
      * @param  string $orgId (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsActions'] to see the possible values for this operation
@@ -430,15 +430,28 @@ class AdminAuditLogsApi
      * Export audit logs as CSV (default) or JSON
      *
      * @param  string $orgId orgId (required)
+     * @param  string|null $format csv (default) or json. (optional, default to 'csv')
+     * @param  string|null $eventType Exact event type, for example user.login. (optional)
+     * @param  string|null $action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param  string|null $actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param  string|null $targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param  string|null $targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param  string|null $severity severity (optional)
+     * @param  string|null $status Result of the event. (optional)
+     * @param  string|null $ipAddress ipAddress (optional)
+     * @param  string|null $search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param  string|null $traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param  \DateTime|null $from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param  \DateTime|null $to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsExport'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return string
      */
-    public function adminAuditLogsExport($orgId, string $contentType = self::contentTypes['adminAuditLogsExport'][0])
+    public function adminAuditLogsExport($orgId, $format = 'csv', $eventType = null, $action = null, $actorId = null, $targetType = null, $targetId = null, $severity = null, $status = null, $ipAddress = null, $search = null, $traceId = null, $from = null, $to = null, string $contentType = self::contentTypes['adminAuditLogsExport'][0])
     {
-        list($response) = $this->adminAuditLogsExportWithHttpInfo($orgId, $contentType);
+        list($response) = $this->adminAuditLogsExportWithHttpInfo($orgId, $format, $eventType, $action, $actorId, $targetType, $targetId, $severity, $status, $ipAddress, $search, $traceId, $from, $to, $contentType);
         return $response;
     }
 
@@ -448,15 +461,28 @@ class AdminAuditLogsApi
      * Export audit logs as CSV (default) or JSON
      *
      * @param  string $orgId (required)
+     * @param  string|null $format csv (default) or json. (optional, default to 'csv')
+     * @param  string|null $eventType Exact event type, for example user.login. (optional)
+     * @param  string|null $action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param  string|null $actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param  string|null $targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param  string|null $targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param  string|null $severity (optional)
+     * @param  string|null $status Result of the event. (optional)
+     * @param  string|null $ipAddress (optional)
+     * @param  string|null $search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param  string|null $traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param  \DateTime|null $from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param  \DateTime|null $to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsExport'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of string, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminAuditLogsExportWithHttpInfo($orgId, string $contentType = self::contentTypes['adminAuditLogsExport'][0])
+    public function adminAuditLogsExportWithHttpInfo($orgId, $format = 'csv', $eventType = null, $action = null, $actorId = null, $targetType = null, $targetId = null, $severity = null, $status = null, $ipAddress = null, $search = null, $traceId = null, $from = null, $to = null, string $contentType = self::contentTypes['adminAuditLogsExport'][0])
     {
-        $request = $this->adminAuditLogsExportRequest($orgId, $contentType);
+        $request = $this->adminAuditLogsExportRequest($orgId, $format, $eventType, $action, $actorId, $targetType, $targetId, $severity, $status, $ipAddress, $search, $traceId, $from, $to, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -533,14 +559,27 @@ class AdminAuditLogsApi
      * Export audit logs as CSV (default) or JSON
      *
      * @param  string $orgId (required)
+     * @param  string|null $format csv (default) or json. (optional, default to 'csv')
+     * @param  string|null $eventType Exact event type, for example user.login. (optional)
+     * @param  string|null $action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param  string|null $actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param  string|null $targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param  string|null $targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param  string|null $severity (optional)
+     * @param  string|null $status Result of the event. (optional)
+     * @param  string|null $ipAddress (optional)
+     * @param  string|null $search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param  string|null $traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param  \DateTime|null $from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param  \DateTime|null $to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsExport'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminAuditLogsExportAsync($orgId, string $contentType = self::contentTypes['adminAuditLogsExport'][0])
+    public function adminAuditLogsExportAsync($orgId, $format = 'csv', $eventType = null, $action = null, $actorId = null, $targetType = null, $targetId = null, $severity = null, $status = null, $ipAddress = null, $search = null, $traceId = null, $from = null, $to = null, string $contentType = self::contentTypes['adminAuditLogsExport'][0])
     {
-        return $this->adminAuditLogsExportAsyncWithHttpInfo($orgId, $contentType)
+        return $this->adminAuditLogsExportAsyncWithHttpInfo($orgId, $format, $eventType, $action, $actorId, $targetType, $targetId, $severity, $status, $ipAddress, $search, $traceId, $from, $to, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -554,15 +593,28 @@ class AdminAuditLogsApi
      * Export audit logs as CSV (default) or JSON
      *
      * @param  string $orgId (required)
+     * @param  string|null $format csv (default) or json. (optional, default to 'csv')
+     * @param  string|null $eventType Exact event type, for example user.login. (optional)
+     * @param  string|null $action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param  string|null $actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param  string|null $targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param  string|null $targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param  string|null $severity (optional)
+     * @param  string|null $status Result of the event. (optional)
+     * @param  string|null $ipAddress (optional)
+     * @param  string|null $search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param  string|null $traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param  \DateTime|null $from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param  \DateTime|null $to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsExport'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminAuditLogsExportAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['adminAuditLogsExport'][0])
+    public function adminAuditLogsExportAsyncWithHttpInfo($orgId, $format = 'csv', $eventType = null, $action = null, $actorId = null, $targetType = null, $targetId = null, $severity = null, $status = null, $ipAddress = null, $search = null, $traceId = null, $from = null, $to = null, string $contentType = self::contentTypes['adminAuditLogsExport'][0])
     {
         $returnType = 'string';
-        $request = $this->adminAuditLogsExportRequest($orgId, $contentType);
+        $request = $this->adminAuditLogsExportRequest($orgId, $format, $eventType, $action, $actorId, $targetType, $targetId, $severity, $status, $ipAddress, $search, $traceId, $from, $to, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -604,12 +656,25 @@ class AdminAuditLogsApi
      * Create request for operation 'adminAuditLogsExport'
      *
      * @param  string $orgId (required)
+     * @param  string|null $format csv (default) or json. (optional, default to 'csv')
+     * @param  string|null $eventType Exact event type, for example user.login. (optional)
+     * @param  string|null $action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param  string|null $actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param  string|null $targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param  string|null $targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param  string|null $severity (optional)
+     * @param  string|null $status Result of the event. (optional)
+     * @param  string|null $ipAddress (optional)
+     * @param  string|null $search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param  string|null $traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param  \DateTime|null $from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param  \DateTime|null $to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsExport'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminAuditLogsExportRequest($orgId, string $contentType = self::contentTypes['adminAuditLogsExport'][0])
+    public function adminAuditLogsExportRequest($orgId, $format = 'csv', $eventType = null, $action = null, $actorId = null, $targetType = null, $targetId = null, $severity = null, $status = null, $ipAddress = null, $search = null, $traceId = null, $from = null, $to = null, string $contentType = self::contentTypes['adminAuditLogsExport'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -620,6 +685,22 @@ class AdminAuditLogsApi
         }
 
 
+
+
+
+
+
+
+
+
+
+        if ($traceId !== null && !preg_match("/^[0-9a-fA-F]{32}$/", $traceId)) {
+            throw new \InvalidArgumentException("invalid value for \"traceId\" when calling AdminAuditLogsApi.adminAuditLogsExport, must conform to the pattern /^[0-9a-fA-F]{32}$/.");
+        }
+        
+
+
+
         $resourcePath = '/orgs/{orgId}/api/v1/admin/audit-logs/export';
         $formParams = [];
         $queryParams = [];
@@ -627,6 +708,123 @@ class AdminAuditLogsApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $format,
+            'format', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $eventType,
+            'eventType', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $action,
+            'action', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $actorId,
+            'actorId', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $targetType,
+            'targetType', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $targetId,
+            'targetId', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $severity,
+            'severity', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $status,
+            'status', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $ipAddress,
+            'ipAddress', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $search,
+            'search', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $traceId,
+            'traceId', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $from,
+            'from', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $to,
+            'to', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
         // path params
@@ -1007,15 +1205,29 @@ class AdminAuditLogsApi
      * List audit log entries
      *
      * @param  string $orgId orgId (required)
+     * @param  int|null $page page (optional, default to 1)
+     * @param  int|null $limit limit (optional, default to 25)
+     * @param  string|null $eventType Exact event type, for example user.login. (optional)
+     * @param  string|null $action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param  string|null $actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param  string|null $targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param  string|null $targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param  string|null $severity severity (optional)
+     * @param  string|null $status Result of the event. (optional)
+     * @param  string|null $ipAddress ipAddress (optional)
+     * @param  string|null $search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param  string|null $traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param  \DateTime|null $from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param  \DateTime|null $to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsList'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminAuditLogsListResponse
      */
-    public function adminAuditLogsList($orgId, string $contentType = self::contentTypes['adminAuditLogsList'][0])
+    public function adminAuditLogsList($orgId, $page = 1, $limit = 25, $eventType = null, $action = null, $actorId = null, $targetType = null, $targetId = null, $severity = null, $status = null, $ipAddress = null, $search = null, $traceId = null, $from = null, $to = null, string $contentType = self::contentTypes['adminAuditLogsList'][0])
     {
-        list($response) = $this->adminAuditLogsListWithHttpInfo($orgId, $contentType);
+        list($response) = $this->adminAuditLogsListWithHttpInfo($orgId, $page, $limit, $eventType, $action, $actorId, $targetType, $targetId, $severity, $status, $ipAddress, $search, $traceId, $from, $to, $contentType);
         return $response;
     }
 
@@ -1025,15 +1237,29 @@ class AdminAuditLogsApi
      * List audit log entries
      *
      * @param  string $orgId (required)
+     * @param  int|null $page (optional, default to 1)
+     * @param  int|null $limit (optional, default to 25)
+     * @param  string|null $eventType Exact event type, for example user.login. (optional)
+     * @param  string|null $action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param  string|null $actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param  string|null $targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param  string|null $targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param  string|null $severity (optional)
+     * @param  string|null $status Result of the event. (optional)
+     * @param  string|null $ipAddress (optional)
+     * @param  string|null $search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param  string|null $traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param  \DateTime|null $from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param  \DateTime|null $to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsList'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminAuditLogsListResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function adminAuditLogsListWithHttpInfo($orgId, string $contentType = self::contentTypes['adminAuditLogsList'][0])
+    public function adminAuditLogsListWithHttpInfo($orgId, $page = 1, $limit = 25, $eventType = null, $action = null, $actorId = null, $targetType = null, $targetId = null, $severity = null, $status = null, $ipAddress = null, $search = null, $traceId = null, $from = null, $to = null, string $contentType = self::contentTypes['adminAuditLogsList'][0])
     {
-        $request = $this->adminAuditLogsListRequest($orgId, $contentType);
+        $request = $this->adminAuditLogsListRequest($orgId, $page, $limit, $eventType, $action, $actorId, $targetType, $targetId, $severity, $status, $ipAddress, $search, $traceId, $from, $to, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1110,14 +1336,28 @@ class AdminAuditLogsApi
      * List audit log entries
      *
      * @param  string $orgId (required)
+     * @param  int|null $page (optional, default to 1)
+     * @param  int|null $limit (optional, default to 25)
+     * @param  string|null $eventType Exact event type, for example user.login. (optional)
+     * @param  string|null $action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param  string|null $actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param  string|null $targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param  string|null $targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param  string|null $severity (optional)
+     * @param  string|null $status Result of the event. (optional)
+     * @param  string|null $ipAddress (optional)
+     * @param  string|null $search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param  string|null $traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param  \DateTime|null $from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param  \DateTime|null $to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminAuditLogsListAsync($orgId, string $contentType = self::contentTypes['adminAuditLogsList'][0])
+    public function adminAuditLogsListAsync($orgId, $page = 1, $limit = 25, $eventType = null, $action = null, $actorId = null, $targetType = null, $targetId = null, $severity = null, $status = null, $ipAddress = null, $search = null, $traceId = null, $from = null, $to = null, string $contentType = self::contentTypes['adminAuditLogsList'][0])
     {
-        return $this->adminAuditLogsListAsyncWithHttpInfo($orgId, $contentType)
+        return $this->adminAuditLogsListAsyncWithHttpInfo($orgId, $page, $limit, $eventType, $action, $actorId, $targetType, $targetId, $severity, $status, $ipAddress, $search, $traceId, $from, $to, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1131,15 +1371,29 @@ class AdminAuditLogsApi
      * List audit log entries
      *
      * @param  string $orgId (required)
+     * @param  int|null $page (optional, default to 1)
+     * @param  int|null $limit (optional, default to 25)
+     * @param  string|null $eventType Exact event type, for example user.login. (optional)
+     * @param  string|null $action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param  string|null $actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param  string|null $targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param  string|null $targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param  string|null $severity (optional)
+     * @param  string|null $status Result of the event. (optional)
+     * @param  string|null $ipAddress (optional)
+     * @param  string|null $search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param  string|null $traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param  \DateTime|null $from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param  \DateTime|null $to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function adminAuditLogsListAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['adminAuditLogsList'][0])
+    public function adminAuditLogsListAsyncWithHttpInfo($orgId, $page = 1, $limit = 25, $eventType = null, $action = null, $actorId = null, $targetType = null, $targetId = null, $severity = null, $status = null, $ipAddress = null, $search = null, $traceId = null, $from = null, $to = null, string $contentType = self::contentTypes['adminAuditLogsList'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminAuditLogsListResponse';
-        $request = $this->adminAuditLogsListRequest($orgId, $contentType);
+        $request = $this->adminAuditLogsListRequest($orgId, $page, $limit, $eventType, $action, $actorId, $targetType, $targetId, $severity, $status, $ipAddress, $search, $traceId, $from, $to, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1181,12 +1435,26 @@ class AdminAuditLogsApi
      * Create request for operation 'adminAuditLogsList'
      *
      * @param  string $orgId (required)
+     * @param  int|null $page (optional, default to 1)
+     * @param  int|null $limit (optional, default to 25)
+     * @param  string|null $eventType Exact event type, for example user.login. (optional)
+     * @param  string|null $action The short verb of the event (as GET /audit-logs/actions lists them). (optional)
+     * @param  string|null $actorId Who acted: a user, API key or agent id. Also accepted as userId. (optional)
+     * @param  string|null $targetType Kind of the subject of the event. Also accepted as resourceType. (optional)
+     * @param  string|null $targetId The subject of the event, for example the user of a login.failed entry. (optional)
+     * @param  string|null $severity (optional)
+     * @param  string|null $status Result of the event. (optional)
+     * @param  string|null $ipAddress (optional)
+     * @param  string|null $search Text in the message, error message, event type, actor id or name, target name, client id or trace ID. (optional)
+     * @param  string|null $traceId Entries written by requests of this W3C trace (the 32 hex characters of a traceparent header). (optional)
+     * @param  \DateTime|null $from Entries at or after this time (ISO 8601). Also accepted as startDate. (optional)
+     * @param  \DateTime|null $to Entries at or before this time (ISO 8601). Also accepted as endDate. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['adminAuditLogsList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function adminAuditLogsListRequest($orgId, string $contentType = self::contentTypes['adminAuditLogsList'][0])
+    public function adminAuditLogsListRequest($orgId, $page = 1, $limit = 25, $eventType = null, $action = null, $actorId = null, $targetType = null, $targetId = null, $severity = null, $status = null, $ipAddress = null, $search = null, $traceId = null, $from = null, $to = null, string $contentType = self::contentTypes['adminAuditLogsList'][0])
     {
 
         // verify the required parameter 'orgId' is set
@@ -1196,6 +1464,32 @@ class AdminAuditLogsApi
             );
         }
 
+        if ($page !== null && $page < 1) {
+            throw new \InvalidArgumentException('invalid value for "$page" when calling AdminAuditLogsApi.adminAuditLogsList, must be bigger than or equal to 1.');
+        }
+        
+        if ($limit !== null && $limit > 100) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling AdminAuditLogsApi.adminAuditLogsList, must be smaller than or equal to 100.');
+        }
+        if ($limit !== null && $limit < 1) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling AdminAuditLogsApi.adminAuditLogsList, must be bigger than or equal to 1.');
+        }
+        
+
+
+
+
+
+
+
+
+
+        if ($traceId !== null && !preg_match("/^[0-9a-fA-F]{32}$/", $traceId)) {
+            throw new \InvalidArgumentException("invalid value for \"traceId\" when calling AdminAuditLogsApi.adminAuditLogsList, must conform to the pattern /^[0-9a-fA-F]{32}$/.");
+        }
+        
+
+
 
         $resourcePath = '/orgs/{orgId}/api/v1/admin/audit-logs';
         $formParams = [];
@@ -1204,6 +1498,132 @@ class AdminAuditLogsApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $page,
+            'page', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $limit,
+            'limit', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $eventType,
+            'eventType', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $action,
+            'action', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $actorId,
+            'actorId', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $targetType,
+            'targetType', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $targetId,
+            'targetId', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $severity,
+            'severity', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $status,
+            'status', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $ipAddress,
+            'ipAddress', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $search,
+            'search', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $traceId,
+            'traceId', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $from,
+            'from', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $to,
+            'to', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
         // path params
@@ -1838,15 +2258,16 @@ class AdminAuditLogsApi
      * Update audit log retention settings
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest $putAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminAuditLogsRetentionUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminAuditLogsRetentionResponse
      */
-    public function patchAdminAuditLogsRetentionUpdate($orgId, string $contentType = self::contentTypes['patchAdminAuditLogsRetentionUpdate'][0])
+    public function patchAdminAuditLogsRetentionUpdate($orgId, $putAdminAuditLogsRetentionUpdateRequest, string $contentType = self::contentTypes['patchAdminAuditLogsRetentionUpdate'][0])
     {
-        list($response) = $this->patchAdminAuditLogsRetentionUpdateWithHttpInfo($orgId, $contentType);
+        list($response) = $this->patchAdminAuditLogsRetentionUpdateWithHttpInfo($orgId, $putAdminAuditLogsRetentionUpdateRequest, $contentType);
         return $response;
     }
 
@@ -1856,15 +2277,16 @@ class AdminAuditLogsApi
      * Update audit log retention settings
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest $putAdminAuditLogsRetentionUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminAuditLogsRetentionUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminAuditLogsRetentionResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function patchAdminAuditLogsRetentionUpdateWithHttpInfo($orgId, string $contentType = self::contentTypes['patchAdminAuditLogsRetentionUpdate'][0])
+    public function patchAdminAuditLogsRetentionUpdateWithHttpInfo($orgId, $putAdminAuditLogsRetentionUpdateRequest, string $contentType = self::contentTypes['patchAdminAuditLogsRetentionUpdate'][0])
     {
-        $request = $this->patchAdminAuditLogsRetentionUpdateRequest($orgId, $contentType);
+        $request = $this->patchAdminAuditLogsRetentionUpdateRequest($orgId, $putAdminAuditLogsRetentionUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1941,14 +2363,15 @@ class AdminAuditLogsApi
      * Update audit log retention settings
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest $putAdminAuditLogsRetentionUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminAuditLogsRetentionUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAdminAuditLogsRetentionUpdateAsync($orgId, string $contentType = self::contentTypes['patchAdminAuditLogsRetentionUpdate'][0])
+    public function patchAdminAuditLogsRetentionUpdateAsync($orgId, $putAdminAuditLogsRetentionUpdateRequest, string $contentType = self::contentTypes['patchAdminAuditLogsRetentionUpdate'][0])
     {
-        return $this->patchAdminAuditLogsRetentionUpdateAsyncWithHttpInfo($orgId, $contentType)
+        return $this->patchAdminAuditLogsRetentionUpdateAsyncWithHttpInfo($orgId, $putAdminAuditLogsRetentionUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1962,15 +2385,16 @@ class AdminAuditLogsApi
      * Update audit log retention settings
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest $putAdminAuditLogsRetentionUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminAuditLogsRetentionUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function patchAdminAuditLogsRetentionUpdateAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['patchAdminAuditLogsRetentionUpdate'][0])
+    public function patchAdminAuditLogsRetentionUpdateAsyncWithHttpInfo($orgId, $putAdminAuditLogsRetentionUpdateRequest, string $contentType = self::contentTypes['patchAdminAuditLogsRetentionUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminAuditLogsRetentionResponse';
-        $request = $this->patchAdminAuditLogsRetentionUpdateRequest($orgId, $contentType);
+        $request = $this->patchAdminAuditLogsRetentionUpdateRequest($orgId, $putAdminAuditLogsRetentionUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2012,18 +2436,26 @@ class AdminAuditLogsApi
      * Create request for operation 'patchAdminAuditLogsRetentionUpdate'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest $putAdminAuditLogsRetentionUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchAdminAuditLogsRetentionUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function patchAdminAuditLogsRetentionUpdateRequest($orgId, string $contentType = self::contentTypes['patchAdminAuditLogsRetentionUpdate'][0])
+    public function patchAdminAuditLogsRetentionUpdateRequest($orgId, $putAdminAuditLogsRetentionUpdateRequest, string $contentType = self::contentTypes['patchAdminAuditLogsRetentionUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling patchAdminAuditLogsRetentionUpdate'
+            );
+        }
+
+        // verify the required parameter 'putAdminAuditLogsRetentionUpdateRequest' is set
+        if ($putAdminAuditLogsRetentionUpdateRequest === null || (is_array($putAdminAuditLogsRetentionUpdateRequest) && count($putAdminAuditLogsRetentionUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAdminAuditLogsRetentionUpdateRequest when calling patchAdminAuditLogsRetentionUpdate'
             );
         }
 
@@ -2054,7 +2486,14 @@ class AdminAuditLogsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAdminAuditLogsRetentionUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAdminAuditLogsRetentionUpdateRequest));
+            } else {
+                $httpBody = $putAdminAuditLogsRetentionUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -2115,15 +2554,16 @@ class AdminAuditLogsApi
      * Update audit log retention settings
      *
      * @param  string $orgId orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest $putAdminAuditLogsRetentionUpdateRequest putAdminAuditLogsRetentionUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminAuditLogsRetentionUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LumoAuth\ApiClient\Model\AdminAuditLogsRetentionResponse
      */
-    public function putAdminAuditLogsRetentionUpdate($orgId, string $contentType = self::contentTypes['putAdminAuditLogsRetentionUpdate'][0])
+    public function putAdminAuditLogsRetentionUpdate($orgId, $putAdminAuditLogsRetentionUpdateRequest, string $contentType = self::contentTypes['putAdminAuditLogsRetentionUpdate'][0])
     {
-        list($response) = $this->putAdminAuditLogsRetentionUpdateWithHttpInfo($orgId, $contentType);
+        list($response) = $this->putAdminAuditLogsRetentionUpdateWithHttpInfo($orgId, $putAdminAuditLogsRetentionUpdateRequest, $contentType);
         return $response;
     }
 
@@ -2133,15 +2573,16 @@ class AdminAuditLogsApi
      * Update audit log retention settings
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest $putAdminAuditLogsRetentionUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminAuditLogsRetentionUpdate'] to see the possible values for this operation
      *
      * @throws \LumoAuth\ApiClient\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LumoAuth\ApiClient\Model\AdminAuditLogsRetentionResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function putAdminAuditLogsRetentionUpdateWithHttpInfo($orgId, string $contentType = self::contentTypes['putAdminAuditLogsRetentionUpdate'][0])
+    public function putAdminAuditLogsRetentionUpdateWithHttpInfo($orgId, $putAdminAuditLogsRetentionUpdateRequest, string $contentType = self::contentTypes['putAdminAuditLogsRetentionUpdate'][0])
     {
-        $request = $this->putAdminAuditLogsRetentionUpdateRequest($orgId, $contentType);
+        $request = $this->putAdminAuditLogsRetentionUpdateRequest($orgId, $putAdminAuditLogsRetentionUpdateRequest, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2218,14 +2659,15 @@ class AdminAuditLogsApi
      * Update audit log retention settings
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest $putAdminAuditLogsRetentionUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminAuditLogsRetentionUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAdminAuditLogsRetentionUpdateAsync($orgId, string $contentType = self::contentTypes['putAdminAuditLogsRetentionUpdate'][0])
+    public function putAdminAuditLogsRetentionUpdateAsync($orgId, $putAdminAuditLogsRetentionUpdateRequest, string $contentType = self::contentTypes['putAdminAuditLogsRetentionUpdate'][0])
     {
-        return $this->putAdminAuditLogsRetentionUpdateAsyncWithHttpInfo($orgId, $contentType)
+        return $this->putAdminAuditLogsRetentionUpdateAsyncWithHttpInfo($orgId, $putAdminAuditLogsRetentionUpdateRequest, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2239,15 +2681,16 @@ class AdminAuditLogsApi
      * Update audit log retention settings
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest $putAdminAuditLogsRetentionUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminAuditLogsRetentionUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function putAdminAuditLogsRetentionUpdateAsyncWithHttpInfo($orgId, string $contentType = self::contentTypes['putAdminAuditLogsRetentionUpdate'][0])
+    public function putAdminAuditLogsRetentionUpdateAsyncWithHttpInfo($orgId, $putAdminAuditLogsRetentionUpdateRequest, string $contentType = self::contentTypes['putAdminAuditLogsRetentionUpdate'][0])
     {
         $returnType = '\LumoAuth\ApiClient\Model\AdminAuditLogsRetentionResponse';
-        $request = $this->putAdminAuditLogsRetentionUpdateRequest($orgId, $contentType);
+        $request = $this->putAdminAuditLogsRetentionUpdateRequest($orgId, $putAdminAuditLogsRetentionUpdateRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2289,18 +2732,26 @@ class AdminAuditLogsApi
      * Create request for operation 'putAdminAuditLogsRetentionUpdate'
      *
      * @param  string $orgId (required)
+     * @param  \LumoAuth\ApiClient\Model\PutAdminAuditLogsRetentionUpdateRequest $putAdminAuditLogsRetentionUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['putAdminAuditLogsRetentionUpdate'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function putAdminAuditLogsRetentionUpdateRequest($orgId, string $contentType = self::contentTypes['putAdminAuditLogsRetentionUpdate'][0])
+    public function putAdminAuditLogsRetentionUpdateRequest($orgId, $putAdminAuditLogsRetentionUpdateRequest, string $contentType = self::contentTypes['putAdminAuditLogsRetentionUpdate'][0])
     {
 
         // verify the required parameter 'orgId' is set
         if ($orgId === null || (is_array($orgId) && count($orgId) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $orgId when calling putAdminAuditLogsRetentionUpdate'
+            );
+        }
+
+        // verify the required parameter 'putAdminAuditLogsRetentionUpdateRequest' is set
+        if ($putAdminAuditLogsRetentionUpdateRequest === null || (is_array($putAdminAuditLogsRetentionUpdateRequest) && count($putAdminAuditLogsRetentionUpdateRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $putAdminAuditLogsRetentionUpdateRequest when calling putAdminAuditLogsRetentionUpdate'
             );
         }
 
@@ -2331,7 +2782,14 @@ class AdminAuditLogsApi
         );
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($putAdminAuditLogsRetentionUpdateRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($putAdminAuditLogsRetentionUpdateRequest));
+            } else {
+                $httpBody = $putAdminAuditLogsRetentionUpdateRequest;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

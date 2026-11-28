@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -22,19 +22,21 @@ module LumoAuthApiClient
     # Add member(s) to group
     # @param org_id [String] 
     # @param group_id [String] 
+    # @param admin_groups_add_members_request [AdminGroupsAddMembersRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminGroupsCreateResponse]
-    def admin_groups_add_members(org_id, group_id, opts = {})
-      data, _status_code, _headers = admin_groups_add_members_with_http_info(org_id, group_id, opts)
+    def admin_groups_add_members(org_id, group_id, admin_groups_add_members_request, opts = {})
+      data, _status_code, _headers = admin_groups_add_members_with_http_info(org_id, group_id, admin_groups_add_members_request, opts)
       data
     end
 
     # Add member(s) to group
     # @param org_id [String] 
     # @param group_id [String] 
+    # @param admin_groups_add_members_request [AdminGroupsAddMembersRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminGroupsCreateResponse, Integer, Hash)>] AdminGroupsCreateResponse data, response status code and response headers
-    def admin_groups_add_members_with_http_info(org_id, group_id, opts = {})
+    def admin_groups_add_members_with_http_info(org_id, group_id, admin_groups_add_members_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_add_members ...'
       end
@@ -46,6 +48,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && group_id.nil?
         fail ArgumentError, "Missing the required parameter 'group_id' when calling AdminGroupsApi.admin_groups_add_members"
       end
+      # verify the required parameter 'admin_groups_add_members_request' is set
+      if @api_client.config.client_side_validation && admin_groups_add_members_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_groups_add_members_request' when calling AdminGroupsApi.admin_groups_add_members"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/groups/{groupId}/members'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'groupId' + '}', CGI.escape(group_id.to_s))
 
@@ -56,12 +62,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_groups_add_members_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminGroupsCreateResponse'
@@ -87,23 +98,25 @@ module LumoAuthApiClient
     end
 
     # Add a single role to a group
-    # A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+    # A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
     # @param org_id [String] 
     # @param group_id [String] 
+    # @param admin_groups_add_role_request [AdminGroupsAddRoleRequest] 
     # @param [Hash] opts the optional parameters
     # @return [MessageResponse]
-    def admin_groups_add_role(org_id, group_id, opts = {})
-      data, _status_code, _headers = admin_groups_add_role_with_http_info(org_id, group_id, opts)
+    def admin_groups_add_role(org_id, group_id, admin_groups_add_role_request, opts = {})
+      data, _status_code, _headers = admin_groups_add_role_with_http_info(org_id, group_id, admin_groups_add_role_request, opts)
       data
     end
 
     # Add a single role to a group
-    # A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+    # A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
     # @param org_id [String] 
     # @param group_id [String] 
+    # @param admin_groups_add_role_request [AdminGroupsAddRoleRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
-    def admin_groups_add_role_with_http_info(org_id, group_id, opts = {})
+    def admin_groups_add_role_with_http_info(org_id, group_id, admin_groups_add_role_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_add_role ...'
       end
@@ -115,6 +128,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && group_id.nil?
         fail ArgumentError, "Missing the required parameter 'group_id' when calling AdminGroupsApi.admin_groups_add_role"
       end
+      # verify the required parameter 'admin_groups_add_role_request' is set
+      if @api_client.config.client_side_validation && admin_groups_add_role_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_groups_add_role_request' when calling AdminGroupsApi.admin_groups_add_role"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'groupId' + '}', CGI.escape(group_id.to_s))
 
@@ -125,12 +142,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_groups_add_role_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'MessageResponse'
@@ -156,27 +178,33 @@ module LumoAuthApiClient
     end
 
     # Create a new group
-    # Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
+    # Optional `roles` is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left).
     # @param org_id [String] 
+    # @param admin_groups_create_request [AdminGroupsCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminGroupsCreateResponse]
-    def admin_groups_create(org_id, opts = {})
-      data, _status_code, _headers = admin_groups_create_with_http_info(org_id, opts)
+    def admin_groups_create(org_id, admin_groups_create_request, opts = {})
+      data, _status_code, _headers = admin_groups_create_with_http_info(org_id, admin_groups_create_request, opts)
       data
     end
 
     # Create a new group
-    # Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
+    # Optional &#x60;roles&#x60; is a list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left).
     # @param org_id [String] 
+    # @param admin_groups_create_request [AdminGroupsCreateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminGroupsCreateResponse, Integer, Hash)>] AdminGroupsCreateResponse data, response status code and response headers
-    def admin_groups_create_with_http_info(org_id, opts = {})
+    def admin_groups_create_with_http_info(org_id, admin_groups_create_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_create ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminGroupsApi.admin_groups_create"
+      end
+      # verify the required parameter 'admin_groups_create_request' is set
+      if @api_client.config.client_side_validation && admin_groups_create_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_groups_create_request' when calling AdminGroupsApi.admin_groups_create"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/groups'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -188,12 +216,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_groups_create_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminGroupsCreateResponse'
@@ -486,7 +519,7 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List all groups in the tenant
+    # List all groups in the organization
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [AdminGroupsListResponse]
@@ -495,7 +528,7 @@ module LumoAuthApiClient
       data
     end
 
-    # List all groups in the tenant
+    # List all groups in the organization
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminGroupsListResponse, Integer, Hash)>] AdminGroupsListResponse data, response status code and response headers
@@ -699,23 +732,25 @@ module LumoAuthApiClient
     end
 
     # Update group roles (replaces all existing roles)
-    # `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+    # `roles` is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization's own ones need `roles.assign-permissions`, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write`); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 `plan_limit_reached` when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
     # @param org_id [String] 
     # @param group_id [String] 
+    # @param admin_groups_update_roles_request [AdminGroupsUpdateRolesRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminGroupsCreateResponse]
-    def admin_groups_update_roles(org_id, group_id, opts = {})
-      data, _status_code, _headers = admin_groups_update_roles_with_http_info(org_id, group_id, opts)
+    def admin_groups_update_roles(org_id, group_id, admin_groups_update_roles_request, opts = {})
+      data, _status_code, _headers = admin_groups_update_roles_with_http_info(org_id, group_id, admin_groups_update_roles_request, opts)
       data
     end
 
     # Update group roles (replaces all existing roles)
-    # &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller holds every permission in it; otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
+    # &#x60;roles&#x60; is the full list of role slugs. An unknown slug is 400. A role can be given to a group only when it belongs to this organization and the caller may grant every permission in it (every built-in one the caller holds; the organization&#39;s own ones need &#x60;roles.assign-permissions&#x60;, and an API key or access token also needs &#x60;admin:roles:write&#x60; or &#x60;admin:permissions:write&#x60;); otherwise the answer is 403 and nothing is stored. The built-in administrator role follows the same rule. When a role opens the admin portal (the built-in one or any role with a portal permission), each active member of the group who is not an administrator yet takes an admin seat (403 &#x60;plan_limit_reached&#x60; when the plan has too few left). Roles already on the group that the caller could not grant stay on it whatever the list says.
     # @param org_id [String] 
     # @param group_id [String] 
+    # @param admin_groups_update_roles_request [AdminGroupsUpdateRolesRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminGroupsCreateResponse, Integer, Hash)>] AdminGroupsCreateResponse data, response status code and response headers
-    def admin_groups_update_roles_with_http_info(org_id, group_id, opts = {})
+    def admin_groups_update_roles_with_http_info(org_id, group_id, admin_groups_update_roles_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_update_roles ...'
       end
@@ -727,6 +762,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && group_id.nil?
         fail ArgumentError, "Missing the required parameter 'group_id' when calling AdminGroupsApi.admin_groups_update_roles"
       end
+      # verify the required parameter 'admin_groups_update_roles_request' is set
+      if @api_client.config.client_side_validation && admin_groups_update_roles_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_groups_update_roles_request' when calling AdminGroupsApi.admin_groups_update_roles"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'groupId' + '}', CGI.escape(group_id.to_s))
 
@@ -737,12 +776,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_groups_update_roles_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminGroupsCreateResponse'
@@ -770,19 +814,21 @@ module LumoAuthApiClient
     # Update an existing group
     # @param org_id [String] 
     # @param group_id [String] 
+    # @param put_admin_groups_update_request [PutAdminGroupsUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminGroupsCreateResponse]
-    def patch_admin_groups_update(org_id, group_id, opts = {})
-      data, _status_code, _headers = patch_admin_groups_update_with_http_info(org_id, group_id, opts)
+    def patch_admin_groups_update(org_id, group_id, put_admin_groups_update_request, opts = {})
+      data, _status_code, _headers = patch_admin_groups_update_with_http_info(org_id, group_id, put_admin_groups_update_request, opts)
       data
     end
 
     # Update an existing group
     # @param org_id [String] 
     # @param group_id [String] 
+    # @param put_admin_groups_update_request [PutAdminGroupsUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminGroupsCreateResponse, Integer, Hash)>] AdminGroupsCreateResponse data, response status code and response headers
-    def patch_admin_groups_update_with_http_info(org_id, group_id, opts = {})
+    def patch_admin_groups_update_with_http_info(org_id, group_id, put_admin_groups_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.patch_admin_groups_update ...'
       end
@@ -794,6 +840,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && group_id.nil?
         fail ArgumentError, "Missing the required parameter 'group_id' when calling AdminGroupsApi.patch_admin_groups_update"
       end
+      # verify the required parameter 'put_admin_groups_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_groups_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_groups_update_request' when calling AdminGroupsApi.patch_admin_groups_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/groups/{groupId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'groupId' + '}', CGI.escape(group_id.to_s))
 
@@ -804,12 +854,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_groups_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminGroupsCreateResponse'
@@ -837,19 +892,21 @@ module LumoAuthApiClient
     # Update an existing group
     # @param org_id [String] 
     # @param group_id [String] 
+    # @param put_admin_groups_update_request [PutAdminGroupsUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [AdminGroupsCreateResponse]
-    def put_admin_groups_update(org_id, group_id, opts = {})
-      data, _status_code, _headers = put_admin_groups_update_with_http_info(org_id, group_id, opts)
+    def put_admin_groups_update(org_id, group_id, put_admin_groups_update_request, opts = {})
+      data, _status_code, _headers = put_admin_groups_update_with_http_info(org_id, group_id, put_admin_groups_update_request, opts)
       data
     end
 
     # Update an existing group
     # @param org_id [String] 
     # @param group_id [String] 
+    # @param put_admin_groups_update_request [PutAdminGroupsUpdateRequest] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminGroupsCreateResponse, Integer, Hash)>] AdminGroupsCreateResponse data, response status code and response headers
-    def put_admin_groups_update_with_http_info(org_id, group_id, opts = {})
+    def put_admin_groups_update_with_http_info(org_id, group_id, put_admin_groups_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.put_admin_groups_update ...'
       end
@@ -861,6 +918,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && group_id.nil?
         fail ArgumentError, "Missing the required parameter 'group_id' when calling AdminGroupsApi.put_admin_groups_update"
       end
+      # verify the required parameter 'put_admin_groups_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_groups_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_groups_update_request' when calling AdminGroupsApi.put_admin_groups_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/groups/{groupId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'groupId' + '}', CGI.escape(group_id.to_s))
 
@@ -871,12 +932,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_groups_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminGroupsCreateResponse'

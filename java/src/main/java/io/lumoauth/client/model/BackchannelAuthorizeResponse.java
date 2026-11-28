@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * BackchannelAuthorizeResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-26T09:17:26.252888759-08:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-28T17:25:42.087818540Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class BackchannelAuthorizeResponse {
   public static final String SERIALIZED_NAME_AUTH_REQ_ID = "auth_req_id";
   @SerializedName(SERIALIZED_NAME_AUTH_REQ_ID)
@@ -93,7 +93,7 @@ public class BackchannelAuthorizeResponse {
   }
 
   /**
-   * Lifetime of the auth_req_id in seconds.
+   * Lifetime of the auth_req_id in seconds: for an application 120, or a shorter requested_expiry (at least 30); for an agent-initiated request 300, or a requested_expiry between 30 and 600.
    * @return expiresIn
    */
   @javax.annotation.Nonnull

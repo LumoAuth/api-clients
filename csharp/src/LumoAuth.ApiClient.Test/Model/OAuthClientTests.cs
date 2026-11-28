@@ -1,7 +1,7 @@
 /*
  * LumoAuth API
  *
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -161,6 +161,141 @@ namespace LumoAuth.ApiClient.Test.Model
         public void CibaEnabledTest()
         {
             // TODO unit test for the property 'CibaEnabled'
+        }
+
+        /// <summary>
+        /// Test the property 'AllowedOrigins'
+        /// </summary>
+        [Fact]
+        public void AllowedOriginsTest()
+        {
+            // TODO unit test for the property 'AllowedOrigins'
+        }
+
+        /// <summary>
+        /// Test the property 'PostLogoutRedirectUris'
+        /// </summary>
+        [Fact]
+        public void PostLogoutRedirectUrisTest()
+        {
+            // TODO unit test for the property 'PostLogoutRedirectUris'
+        }
+
+        /// <summary>
+        /// Test the property 'FrontchannelLogoutUri'
+        /// </summary>
+        [Fact]
+        public void FrontchannelLogoutUriTest()
+        {
+            // TODO unit test for the property 'FrontchannelLogoutUri'
+        }
+
+        /// <summary>
+        /// Test the property 'BackchannelLogoutUri'
+        /// </summary>
+        [Fact]
+        public void BackchannelLogoutUriTest()
+        {
+            // TODO unit test for the property 'BackchannelLogoutUri'
+        }
+
+        /// <summary>
+        /// Test the property 'AccessTokenFormat'
+        /// </summary>
+        [Fact]
+        public void AccessTokenFormatTest()
+        {
+            // TODO unit test for the property 'AccessTokenFormat'
+        }
+
+        /// <summary>
+        /// Test the property 'TokenEndpointAuthMethod'
+        /// </summary>
+        [Fact]
+        public void TokenEndpointAuthMethodTest()
+        {
+            // TODO unit test for the property 'TokenEndpointAuthMethod'
+        }
+
+        /// <summary>
+        /// Test the property 'JwksUri'
+        /// </summary>
+        [Fact]
+        public void JwksUriTest()
+        {
+            // TODO unit test for the property 'JwksUri'
+        }
+
+        /// <summary>
+        /// Test the property 'Jwks'
+        /// </summary>
+        [Fact]
+        public void JwksTest()
+        {
+            // TODO unit test for the property 'Jwks'
+        }
+
+        /// <summary>
+        /// Test the property 'FapiMode'
+        /// </summary>
+        [Fact]
+        public void FapiModeTest()
+        {
+            // TODO unit test for the property 'FapiMode'
+        }
+
+        /// <summary>
+        /// Test the property 'RequirePar'
+        /// </summary>
+        [Fact]
+        public void RequireParTest()
+        {
+            // TODO unit test for the property 'RequirePar'
+        }
+
+        /// <summary>
+        /// Test the property 'DpopBoundAccessTokens'
+        /// </summary>
+        [Fact]
+        public void DpopBoundAccessTokensTest()
+        {
+            // TODO unit test for the property 'DpopBoundAccessTokens'
+        }
+
+        /// <summary>
+        /// Test the property 'AttestationBasedAuthEnabled'
+        /// </summary>
+        [Fact]
+        public void AttestationBasedAuthEnabledTest()
+        {
+            // TODO unit test for the property 'AttestationBasedAuthEnabled'
+        }
+
+        /// <summary>
+        /// Test the property 'AttesterIssuer'
+        /// </summary>
+        [Fact]
+        public void AttesterIssuerTest()
+        {
+            // TODO unit test for the property 'AttesterIssuer'
+        }
+
+        /// <summary>
+        /// Test the property 'AttesterJwksUri'
+        /// </summary>
+        [Fact]
+        public void AttesterJwksUriTest()
+        {
+            // TODO unit test for the property 'AttesterJwksUri'
+        }
+
+        /// <summary>
+        /// Test the property 'TokenExchangeEnabled'
+        /// </summary>
+        [Fact]
+        public void TokenExchangeEnabledTest()
+        {
+            // TODO unit test for the property 'TokenExchangeEnabled'
         }
     }
 }

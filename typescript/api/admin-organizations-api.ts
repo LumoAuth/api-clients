@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -22,17 +22,25 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AdminOrgInvitationsCreateRequest } from '../models';
+// @ts-ignore
 import type { AdminOrgInvitationsCreateResponse } from '../models';
 // @ts-ignore
 import type { AdminOrgInvitationsListResponse } from '../models';
+// @ts-ignore
+import type { AdminOrgMembersAddRequest } from '../models';
 // @ts-ignore
 import type { AdminOrgMembersAddResponse } from '../models';
 // @ts-ignore
 import type { AdminOrgMembersListResponse } from '../models';
 // @ts-ignore
+import type { AdminOrgRolesCreateRequest } from '../models';
+// @ts-ignore
 import type { AdminOrgRolesCreateResponse } from '../models';
 // @ts-ignore
 import type { AdminOrgRolesListResponse } from '../models';
+// @ts-ignore
+import type { AdminOrganizationsCreateRequest } from '../models';
 // @ts-ignore
 import type { AdminOrganizationsCreateResponse } from '../models';
 // @ts-ignore
@@ -42,7 +50,13 @@ import type { AdminOrganizationsListResponse } from '../models';
 // @ts-ignore
 import type { MessageResponse } from '../models';
 // @ts-ignore
+import type { PutAdminOrgMembersUpdateRequest } from '../models';
+// @ts-ignore
 import type { PutAdminOrgMembersUpdateResponse } from '../models';
+// @ts-ignore
+import type { PutAdminOrgRolesUpdateRequest } from '../models';
+// @ts-ignore
+import type { PutAdminOrganizationsUpdateRequest } from '../models';
 /**
  * AdminOrganizationsApi - axios parameter creator
  * @export
@@ -54,14 +68,17 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
          * @summary Invite a user to an organization
          * @param {string} orgId 
          * @param {string} organizationId 
+         * @param {AdminOrgInvitationsCreateRequest} adminOrgInvitationsCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrgInvitationsCreate: async (orgId: string, organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminOrgInvitationsCreate: async (orgId: string, organizationId: string, adminOrgInvitationsCreateRequest: AdminOrgInvitationsCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminOrgInvitationsCreate', 'orgId', orgId)
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('adminOrgInvitationsCreate', 'organizationId', organizationId)
+            // verify required parameter 'adminOrgInvitationsCreateRequest' is not null or undefined
+            assertParamExists('adminOrgInvitationsCreate', 'adminOrgInvitationsCreateRequest', adminOrgInvitationsCreateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
@@ -85,9 +102,12 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminOrgInvitationsCreateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -242,14 +262,17 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
          * @summary Add a member to an organization
          * @param {string} orgId 
          * @param {string} organizationId 
+         * @param {AdminOrgMembersAddRequest} adminOrgMembersAddRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrgMembersAdd: async (orgId: string, organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminOrgMembersAdd: async (orgId: string, organizationId: string, adminOrgMembersAddRequest: AdminOrgMembersAddRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminOrgMembersAdd', 'orgId', orgId)
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('adminOrgMembersAdd', 'organizationId', organizationId)
+            // verify required parameter 'adminOrgMembersAddRequest' is not null or undefined
+            assertParamExists('adminOrgMembersAdd', 'adminOrgMembersAddRequest', adminOrgMembersAddRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
@@ -273,9 +296,12 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminOrgMembersAddRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -381,14 +407,17 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
          * @summary Create an organization role
          * @param {string} orgId 
          * @param {string} organizationId 
+         * @param {AdminOrgRolesCreateRequest} adminOrgRolesCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrgRolesCreate: async (orgId: string, organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminOrgRolesCreate: async (orgId: string, organizationId: string, adminOrgRolesCreateRequest: AdminOrgRolesCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminOrgRolesCreate', 'orgId', orgId)
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('adminOrgRolesCreate', 'organizationId', organizationId)
+            // verify required parameter 'adminOrgRolesCreateRequest' is not null or undefined
+            assertParamExists('adminOrgRolesCreate', 'adminOrgRolesCreateRequest', adminOrgRolesCreateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
@@ -412,9 +441,12 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminOrgRolesCreateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -519,12 +551,15 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
          * 
          * @summary Create an organization
          * @param {string} orgId 
+         * @param {AdminOrganizationsCreateRequest} adminOrganizationsCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrganizationsCreate: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminOrganizationsCreate: async (orgId: string, adminOrganizationsCreateRequest: AdminOrganizationsCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminOrganizationsCreate', 'orgId', orgId)
+            // verify required parameter 'adminOrganizationsCreateRequest' is not null or undefined
+            assertParamExists('adminOrganizationsCreate', 'adminOrganizationsCreateRequest', adminOrganizationsCreateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/organizations`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -547,9 +582,12 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminOrganizationsCreateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -693,16 +731,19 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} userId 
+         * @param {PutAdminOrgMembersUpdateRequest} putAdminOrgMembersUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminOrgMembersUpdate: async (orgId: string, organizationId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminOrgMembersUpdate: async (orgId: string, organizationId: string, userId: string, putAdminOrgMembersUpdateRequest: PutAdminOrgMembersUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminOrgMembersUpdate', 'orgId', orgId)
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('patchAdminOrgMembersUpdate', 'organizationId', organizationId)
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('patchAdminOrgMembersUpdate', 'userId', userId)
+            // verify required parameter 'putAdminOrgMembersUpdateRequest' is not null or undefined
+            assertParamExists('patchAdminOrgMembersUpdate', 'putAdminOrgMembersUpdateRequest', putAdminOrgMembersUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
@@ -727,9 +768,12 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminOrgMembersUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -742,16 +786,19 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} roleId 
+         * @param {PutAdminOrgRolesUpdateRequest} putAdminOrgRolesUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminOrgRolesUpdate: async (orgId: string, organizationId: string, roleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminOrgRolesUpdate: async (orgId: string, organizationId: string, roleId: string, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminOrgRolesUpdate', 'orgId', orgId)
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('patchAdminOrgRolesUpdate', 'organizationId', organizationId)
             // verify required parameter 'roleId' is not null or undefined
             assertParamExists('patchAdminOrgRolesUpdate', 'roleId', roleId)
+            // verify required parameter 'putAdminOrgRolesUpdateRequest' is not null or undefined
+            assertParamExists('patchAdminOrgRolesUpdate', 'putAdminOrgRolesUpdateRequest', putAdminOrgRolesUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
@@ -776,9 +823,12 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminOrgRolesUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -790,14 +840,17 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
          * @summary Update an organization
          * @param {string} orgId 
          * @param {string} organizationId 
+         * @param {PutAdminOrganizationsUpdateRequest} putAdminOrganizationsUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminOrganizationsUpdate: async (orgId: string, organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminOrganizationsUpdate: async (orgId: string, organizationId: string, putAdminOrganizationsUpdateRequest: PutAdminOrganizationsUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchAdminOrganizationsUpdate', 'orgId', orgId)
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('patchAdminOrganizationsUpdate', 'organizationId', organizationId)
+            // verify required parameter 'putAdminOrganizationsUpdateRequest' is not null or undefined
+            assertParamExists('patchAdminOrganizationsUpdate', 'putAdminOrganizationsUpdateRequest', putAdminOrganizationsUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/organizations/{organizationId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
@@ -821,9 +874,12 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminOrganizationsUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -836,16 +892,19 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} userId 
+         * @param {PutAdminOrgMembersUpdateRequest} putAdminOrgMembersUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminOrgMembersUpdate: async (orgId: string, organizationId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminOrgMembersUpdate: async (orgId: string, organizationId: string, userId: string, putAdminOrgMembersUpdateRequest: PutAdminOrgMembersUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminOrgMembersUpdate', 'orgId', orgId)
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('putAdminOrgMembersUpdate', 'organizationId', organizationId)
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('putAdminOrgMembersUpdate', 'userId', userId)
+            // verify required parameter 'putAdminOrgMembersUpdateRequest' is not null or undefined
+            assertParamExists('putAdminOrgMembersUpdate', 'putAdminOrgMembersUpdateRequest', putAdminOrgMembersUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
@@ -870,9 +929,12 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminOrgMembersUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -885,16 +947,19 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} roleId 
+         * @param {PutAdminOrgRolesUpdateRequest} putAdminOrgRolesUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminOrgRolesUpdate: async (orgId: string, organizationId: string, roleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminOrgRolesUpdate: async (orgId: string, organizationId: string, roleId: string, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminOrgRolesUpdate', 'orgId', orgId)
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('putAdminOrgRolesUpdate', 'organizationId', organizationId)
             // verify required parameter 'roleId' is not null or undefined
             assertParamExists('putAdminOrgRolesUpdate', 'roleId', roleId)
+            // verify required parameter 'putAdminOrgRolesUpdateRequest' is not null or undefined
+            assertParamExists('putAdminOrgRolesUpdate', 'putAdminOrgRolesUpdateRequest', putAdminOrgRolesUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
@@ -919,9 +984,12 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminOrgRolesUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -933,14 +1001,17 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
          * @summary Update an organization
          * @param {string} orgId 
          * @param {string} organizationId 
+         * @param {PutAdminOrganizationsUpdateRequest} putAdminOrganizationsUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminOrganizationsUpdate: async (orgId: string, organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminOrganizationsUpdate: async (orgId: string, organizationId: string, putAdminOrganizationsUpdateRequest: PutAdminOrganizationsUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('putAdminOrganizationsUpdate', 'orgId', orgId)
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('putAdminOrganizationsUpdate', 'organizationId', organizationId)
+            // verify required parameter 'putAdminOrganizationsUpdateRequest' is not null or undefined
+            assertParamExists('putAdminOrganizationsUpdate', 'putAdminOrganizationsUpdateRequest', putAdminOrganizationsUpdateRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/organizations/{organizationId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
@@ -964,9 +1035,12 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(putAdminOrganizationsUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -988,11 +1062,12 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
          * @summary Invite a user to an organization
          * @param {string} orgId 
          * @param {string} organizationId 
+         * @param {AdminOrgInvitationsCreateRequest} adminOrgInvitationsCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrgInvitationsCreate(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgInvitationsCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgInvitationsCreate(orgId, organizationId, options);
+        async adminOrgInvitationsCreate(orgId: string, organizationId: string, adminOrgInvitationsCreateRequest: AdminOrgInvitationsCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgInvitationsCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgInvitationsCreate(orgId, organizationId, adminOrgInvitationsCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrgInvitationsCreate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1046,11 +1121,12 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
          * @summary Add a member to an organization
          * @param {string} orgId 
          * @param {string} organizationId 
+         * @param {AdminOrgMembersAddRequest} adminOrgMembersAddRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrgMembersAdd(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgMembersAddResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgMembersAdd(orgId, organizationId, options);
+        async adminOrgMembersAdd(orgId: string, organizationId: string, adminOrgMembersAddRequest: AdminOrgMembersAddRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgMembersAddResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgMembersAdd(orgId, organizationId, adminOrgMembersAddRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrgMembersAdd']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1089,11 +1165,12 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
          * @summary Create an organization role
          * @param {string} orgId 
          * @param {string} organizationId 
+         * @param {AdminOrgRolesCreateRequest} adminOrgRolesCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrgRolesCreate(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgRolesCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgRolesCreate(orgId, organizationId, options);
+        async adminOrgRolesCreate(orgId: string, organizationId: string, adminOrgRolesCreateRequest: AdminOrgRolesCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgRolesCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgRolesCreate(orgId, organizationId, adminOrgRolesCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrgRolesCreate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1131,11 +1208,12 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Create an organization
          * @param {string} orgId 
+         * @param {AdminOrganizationsCreateRequest} adminOrganizationsCreateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrganizationsCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrganizationsCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrganizationsCreate(orgId, options);
+        async adminOrganizationsCreate(orgId: string, adminOrganizationsCreateRequest: AdminOrganizationsCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrganizationsCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrganizationsCreate(orgId, adminOrganizationsCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrganizationsCreate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1187,11 +1265,12 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} userId 
+         * @param {PutAdminOrgMembersUpdateRequest} putAdminOrgMembersUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminOrgMembersUpdate(orgId: string, organizationId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminOrgMembersUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminOrgMembersUpdate(orgId, organizationId, userId, options);
+        async patchAdminOrgMembersUpdate(orgId: string, organizationId: string, userId: string, putAdminOrgMembersUpdateRequest: PutAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminOrgMembersUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminOrgMembersUpdate(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.patchAdminOrgMembersUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1202,11 +1281,12 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} roleId 
+         * @param {PutAdminOrgRolesUpdateRequest} putAdminOrgRolesUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminOrgRolesUpdate(orgId: string, organizationId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgRolesCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminOrgRolesUpdate(orgId, organizationId, roleId, options);
+        async patchAdminOrgRolesUpdate(orgId: string, organizationId: string, roleId: string, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgRolesCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminOrgRolesUpdate(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.patchAdminOrgRolesUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1216,11 +1296,12 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
          * @summary Update an organization
          * @param {string} orgId 
          * @param {string} organizationId 
+         * @param {PutAdminOrganizationsUpdateRequest} putAdminOrganizationsUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminOrganizationsUpdate(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrganizationsGetResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminOrganizationsUpdate(orgId, organizationId, options);
+        async patchAdminOrganizationsUpdate(orgId: string, organizationId: string, putAdminOrganizationsUpdateRequest: PutAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrganizationsGetResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminOrganizationsUpdate(orgId, organizationId, putAdminOrganizationsUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.patchAdminOrganizationsUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1231,11 +1312,12 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} userId 
+         * @param {PutAdminOrgMembersUpdateRequest} putAdminOrgMembersUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminOrgMembersUpdate(orgId: string, organizationId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminOrgMembersUpdateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminOrgMembersUpdate(orgId, organizationId, userId, options);
+        async putAdminOrgMembersUpdate(orgId: string, organizationId: string, userId: string, putAdminOrgMembersUpdateRequest: PutAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminOrgMembersUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminOrgMembersUpdate(orgId, organizationId, userId, putAdminOrgMembersUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.putAdminOrgMembersUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1246,11 +1328,12 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} roleId 
+         * @param {PutAdminOrgRolesUpdateRequest} putAdminOrgRolesUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminOrgRolesUpdate(orgId: string, organizationId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgRolesCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminOrgRolesUpdate(orgId, organizationId, roleId, options);
+        async putAdminOrgRolesUpdate(orgId: string, organizationId: string, roleId: string, putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgRolesCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminOrgRolesUpdate(orgId, organizationId, roleId, putAdminOrgRolesUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.putAdminOrgRolesUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1260,11 +1343,12 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
          * @summary Update an organization
          * @param {string} orgId 
          * @param {string} organizationId 
+         * @param {PutAdminOrganizationsUpdateRequest} putAdminOrganizationsUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminOrganizationsUpdate(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrganizationsGetResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminOrganizationsUpdate(orgId, organizationId, options);
+        async putAdminOrganizationsUpdate(orgId: string, organizationId: string, putAdminOrganizationsUpdateRequest: PutAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrganizationsGetResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminOrganizationsUpdate(orgId, organizationId, putAdminOrganizationsUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.putAdminOrganizationsUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1287,7 +1371,7 @@ export const AdminOrganizationsApiFactory = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         adminOrgInvitationsCreate(requestParameters: AdminOrganizationsApiAdminOrgInvitationsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgInvitationsCreateResponse> {
-            return localVarFp.adminOrgInvitationsCreate(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminOrgInvitationsCreate(requestParameters.orgId, requestParameters.organizationId, requestParameters.adminOrgInvitationsCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1327,7 +1411,7 @@ export const AdminOrganizationsApiFactory = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         adminOrgMembersAdd(requestParameters: AdminOrganizationsApiAdminOrgMembersAddRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgMembersAddResponse> {
-            return localVarFp.adminOrgMembersAdd(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminOrgMembersAdd(requestParameters.orgId, requestParameters.organizationId, requestParameters.adminOrgMembersAddRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1357,7 +1441,7 @@ export const AdminOrganizationsApiFactory = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         adminOrgRolesCreate(requestParameters: AdminOrganizationsApiAdminOrgRolesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgRolesCreateResponse> {
-            return localVarFp.adminOrgRolesCreate(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminOrgRolesCreate(requestParameters.orgId, requestParameters.organizationId, requestParameters.adminOrgRolesCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1387,7 +1471,7 @@ export const AdminOrganizationsApiFactory = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         adminOrganizationsCreate(requestParameters: AdminOrganizationsApiAdminOrganizationsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrganizationsCreateResponse> {
-            return localVarFp.adminOrganizationsCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.adminOrganizationsCreate(requestParameters.orgId, requestParameters.adminOrganizationsCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1427,7 +1511,7 @@ export const AdminOrganizationsApiFactory = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         patchAdminOrgMembersUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminOrgMembersUpdateResponse> {
-            return localVarFp.patchAdminOrgMembersUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.userId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminOrgMembersUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.userId, requestParameters.putAdminOrgMembersUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1437,7 +1521,7 @@ export const AdminOrganizationsApiFactory = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         patchAdminOrgRolesUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgRolesCreateResponse> {
-            return localVarFp.patchAdminOrgRolesUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.roleId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminOrgRolesUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.roleId, requestParameters.putAdminOrgRolesUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1447,7 +1531,7 @@ export const AdminOrganizationsApiFactory = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         patchAdminOrganizationsUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrganizationsGetResponse> {
-            return localVarFp.patchAdminOrganizationsUpdate(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchAdminOrganizationsUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.putAdminOrganizationsUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1457,7 +1541,7 @@ export const AdminOrganizationsApiFactory = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         putAdminOrgMembersUpdate(requestParameters: AdminOrganizationsApiPutAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminOrgMembersUpdateResponse> {
-            return localVarFp.putAdminOrgMembersUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.userId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminOrgMembersUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.userId, requestParameters.putAdminOrgMembersUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1467,7 +1551,7 @@ export const AdminOrganizationsApiFactory = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         putAdminOrgRolesUpdate(requestParameters: AdminOrganizationsApiPutAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgRolesCreateResponse> {
-            return localVarFp.putAdminOrgRolesUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.roleId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminOrgRolesUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.roleId, requestParameters.putAdminOrgRolesUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1477,7 +1561,7 @@ export const AdminOrganizationsApiFactory = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         putAdminOrganizationsUpdate(requestParameters: AdminOrganizationsApiPutAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrganizationsGetResponse> {
-            return localVarFp.putAdminOrganizationsUpdate(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
+            return localVarFp.putAdminOrganizationsUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.putAdminOrganizationsUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1709,6 +1793,13 @@ export interface AdminOrganizationsApiAdminOrgInvitationsCreateRequest {
      * @memberof AdminOrganizationsApiAdminOrgInvitationsCreate
      */
     readonly organizationId: string
+
+    /**
+     * 
+     * @type {AdminOrgInvitationsCreateRequest}
+     * @memberof AdminOrganizationsApiAdminOrgInvitationsCreate
+     */
+    readonly adminOrgInvitationsCreateRequest: AdminOrgInvitationsCreateRequest
 }
 
 /**
@@ -1807,6 +1898,13 @@ export interface AdminOrganizationsApiAdminOrgMembersAddRequest {
      * @memberof AdminOrganizationsApiAdminOrgMembersAdd
      */
     readonly organizationId: string
+
+    /**
+     * 
+     * @type {AdminOrgMembersAddRequest}
+     * @memberof AdminOrganizationsApiAdminOrgMembersAdd
+     */
+    readonly adminOrgMembersAddRequest: AdminOrgMembersAddRequest
 }
 
 /**
@@ -1877,6 +1975,13 @@ export interface AdminOrganizationsApiAdminOrgRolesCreateRequest {
      * @memberof AdminOrganizationsApiAdminOrgRolesCreate
      */
     readonly organizationId: string
+
+    /**
+     * 
+     * @type {AdminOrgRolesCreateRequest}
+     * @memberof AdminOrganizationsApiAdminOrgRolesCreate
+     */
+    readonly adminOrgRolesCreateRequest: AdminOrgRolesCreateRequest
 }
 
 /**
@@ -1940,6 +2045,13 @@ export interface AdminOrganizationsApiAdminOrganizationsCreateRequest {
      * @memberof AdminOrganizationsApiAdminOrganizationsCreate
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {AdminOrganizationsCreateRequest}
+     * @memberof AdminOrganizationsApiAdminOrganizationsCreate
+     */
+    readonly adminOrganizationsCreateRequest: AdminOrganizationsCreateRequest
 }
 
 /**
@@ -2024,6 +2136,13 @@ export interface AdminOrganizationsApiPatchAdminOrgMembersUpdateRequest {
      * @memberof AdminOrganizationsApiPatchAdminOrgMembersUpdate
      */
     readonly userId: string
+
+    /**
+     * 
+     * @type {PutAdminOrgMembersUpdateRequest}
+     * @memberof AdminOrganizationsApiPatchAdminOrgMembersUpdate
+     */
+    readonly putAdminOrgMembersUpdateRequest: PutAdminOrgMembersUpdateRequest
 }
 
 /**
@@ -2052,6 +2171,13 @@ export interface AdminOrganizationsApiPatchAdminOrgRolesUpdateRequest {
      * @memberof AdminOrganizationsApiPatchAdminOrgRolesUpdate
      */
     readonly roleId: string
+
+    /**
+     * 
+     * @type {PutAdminOrgRolesUpdateRequest}
+     * @memberof AdminOrganizationsApiPatchAdminOrgRolesUpdate
+     */
+    readonly putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest
 }
 
 /**
@@ -2073,6 +2199,13 @@ export interface AdminOrganizationsApiPatchAdminOrganizationsUpdateRequest {
      * @memberof AdminOrganizationsApiPatchAdminOrganizationsUpdate
      */
     readonly organizationId: string
+
+    /**
+     * 
+     * @type {PutAdminOrganizationsUpdateRequest}
+     * @memberof AdminOrganizationsApiPatchAdminOrganizationsUpdate
+     */
+    readonly putAdminOrganizationsUpdateRequest: PutAdminOrganizationsUpdateRequest
 }
 
 /**
@@ -2101,6 +2234,13 @@ export interface AdminOrganizationsApiPutAdminOrgMembersUpdateRequest {
      * @memberof AdminOrganizationsApiPutAdminOrgMembersUpdate
      */
     readonly userId: string
+
+    /**
+     * 
+     * @type {PutAdminOrgMembersUpdateRequest}
+     * @memberof AdminOrganizationsApiPutAdminOrgMembersUpdate
+     */
+    readonly putAdminOrgMembersUpdateRequest: PutAdminOrgMembersUpdateRequest
 }
 
 /**
@@ -2129,6 +2269,13 @@ export interface AdminOrganizationsApiPutAdminOrgRolesUpdateRequest {
      * @memberof AdminOrganizationsApiPutAdminOrgRolesUpdate
      */
     readonly roleId: string
+
+    /**
+     * 
+     * @type {PutAdminOrgRolesUpdateRequest}
+     * @memberof AdminOrganizationsApiPutAdminOrgRolesUpdate
+     */
+    readonly putAdminOrgRolesUpdateRequest: PutAdminOrgRolesUpdateRequest
 }
 
 /**
@@ -2150,6 +2297,13 @@ export interface AdminOrganizationsApiPutAdminOrganizationsUpdateRequest {
      * @memberof AdminOrganizationsApiPutAdminOrganizationsUpdate
      */
     readonly organizationId: string
+
+    /**
+     * 
+     * @type {PutAdminOrganizationsUpdateRequest}
+     * @memberof AdminOrganizationsApiPutAdminOrganizationsUpdate
+     */
+    readonly putAdminOrganizationsUpdateRequest: PutAdminOrganizationsUpdateRequest
 }
 
 /**
@@ -2168,7 +2322,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
      * @memberof AdminOrganizationsApi
      */
     public adminOrgInvitationsCreate(requestParameters: AdminOrganizationsApiAdminOrgInvitationsCreateRequest, options?: RawAxiosRequestConfig) {
-        return AdminOrganizationsApiFp(this.configuration).adminOrgInvitationsCreate(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOrganizationsApiFp(this.configuration).adminOrgInvitationsCreate(requestParameters.orgId, requestParameters.organizationId, requestParameters.adminOrgInvitationsCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2216,7 +2370,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
      * @memberof AdminOrganizationsApi
      */
     public adminOrgMembersAdd(requestParameters: AdminOrganizationsApiAdminOrgMembersAddRequest, options?: RawAxiosRequestConfig) {
-        return AdminOrganizationsApiFp(this.configuration).adminOrgMembersAdd(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOrganizationsApiFp(this.configuration).adminOrgMembersAdd(requestParameters.orgId, requestParameters.organizationId, requestParameters.adminOrgMembersAddRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2252,7 +2406,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
      * @memberof AdminOrganizationsApi
      */
     public adminOrgRolesCreate(requestParameters: AdminOrganizationsApiAdminOrgRolesCreateRequest, options?: RawAxiosRequestConfig) {
-        return AdminOrganizationsApiFp(this.configuration).adminOrgRolesCreate(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOrganizationsApiFp(this.configuration).adminOrgRolesCreate(requestParameters.orgId, requestParameters.organizationId, requestParameters.adminOrgRolesCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2288,7 +2442,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
      * @memberof AdminOrganizationsApi
      */
     public adminOrganizationsCreate(requestParameters: AdminOrganizationsApiAdminOrganizationsCreateRequest, options?: RawAxiosRequestConfig) {
-        return AdminOrganizationsApiFp(this.configuration).adminOrganizationsCreate(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOrganizationsApiFp(this.configuration).adminOrganizationsCreate(requestParameters.orgId, requestParameters.adminOrganizationsCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2336,7 +2490,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
      * @memberof AdminOrganizationsApi
      */
     public patchAdminOrgMembersUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminOrganizationsApiFp(this.configuration).patchAdminOrgMembersUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOrganizationsApiFp(this.configuration).patchAdminOrgMembersUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.userId, requestParameters.putAdminOrgMembersUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2348,7 +2502,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
      * @memberof AdminOrganizationsApi
      */
     public patchAdminOrgRolesUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminOrganizationsApiFp(this.configuration).patchAdminOrgRolesUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.roleId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOrganizationsApiFp(this.configuration).patchAdminOrgRolesUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.roleId, requestParameters.putAdminOrgRolesUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2360,7 +2514,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
      * @memberof AdminOrganizationsApi
      */
     public patchAdminOrganizationsUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminOrganizationsApiFp(this.configuration).patchAdminOrganizationsUpdate(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOrganizationsApiFp(this.configuration).patchAdminOrganizationsUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.putAdminOrganizationsUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2372,7 +2526,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
      * @memberof AdminOrganizationsApi
      */
     public putAdminOrgMembersUpdate(requestParameters: AdminOrganizationsApiPutAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminOrganizationsApiFp(this.configuration).putAdminOrgMembersUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOrganizationsApiFp(this.configuration).putAdminOrgMembersUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.userId, requestParameters.putAdminOrgMembersUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2384,7 +2538,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
      * @memberof AdminOrganizationsApi
      */
     public putAdminOrgRolesUpdate(requestParameters: AdminOrganizationsApiPutAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminOrganizationsApiFp(this.configuration).putAdminOrgRolesUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.roleId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOrganizationsApiFp(this.configuration).putAdminOrgRolesUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.roleId, requestParameters.putAdminOrgRolesUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2396,7 +2550,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
      * @memberof AdminOrganizationsApi
      */
     public putAdminOrganizationsUpdate(requestParameters: AdminOrganizationsApiPutAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig) {
-        return AdminOrganizationsApiFp(this.configuration).putAdminOrganizationsUpdate(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(this.axios, this.basePath));
+        return AdminOrganizationsApiFp(this.configuration).putAdminOrganizationsUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.putAdminOrganizationsUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -24,7 +24,7 @@ Method | HTTP request | Description
 
 
 # **admin_webhooks_create**
-> AdminWebhooksCreateResponse admin_webhooks_create(org_id)
+> AdminWebhooksCreateResponse admin_webhooks_create(org_id, admin_webhooks_create_request)
 
 Create a webhook
 
@@ -37,6 +37,7 @@ Accepts `url`, `events`, `isActive` (also as `active` or `enabled`), `type` and 
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_webhooks_create_request import AdminWebhooksCreateRequest
 from lumoauth_api_client.models.admin_webhooks_create_response import AdminWebhooksCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -68,10 +69,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminWebhooksApi(api_client)
     org_id = 'org_id_example' # str | 
+    admin_webhooks_create_request = lumoauth_api_client.AdminWebhooksCreateRequest() # AdminWebhooksCreateRequest | 
 
     try:
         # Create a webhook
-        api_response = api_instance.admin_webhooks_create(org_id)
+        api_response = api_instance.admin_webhooks_create(org_id, admin_webhooks_create_request)
         print("The response of AdminWebhooksApi->admin_webhooks_create:\n")
         pprint(api_response)
     except Exception as e:
@@ -86,6 +88,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **admin_webhooks_create_request** | [**AdminWebhooksCreateRequest**](AdminWebhooksCreateRequest.md)|  | 
 
 ### Return type
 
@@ -97,7 +100,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -637,7 +640,7 @@ Name | Type | Description  | Notes
 
 List webhooks
 
-Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+Paginated list of the organization's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
 ### Example
 
@@ -899,7 +902,7 @@ Name | Type | Description  | Notes
 
 Start a webhook tunnel
 
-Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`, with its own signing secret, returned once as `signing_secret`. Deliveries are not sent: each one keeps the signed request that a real delivery sends, and the stream endpoint hands it out.
 
 ### Example
 
@@ -1150,7 +1153,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. |  -  |
+**200** | Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery, in order, whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at, body, headers}&#x60;. &#x60;payload&#x60; is the event data and &#x60;received_at&#x60; is RFC 3339. &#x60;body&#x60; is the signed request body as a string (the envelope &#x60;{event, timestamp, tenant, data}&#x60;, exactly the bytes that the signature covers: send it unchanged) and &#x60;headers&#x60; the request headers of a real delivery (&#x60;X-LumoAuth-Signature&#x60;, &#x60;X-LumoAuth-Timestamp&#x60;, &#x60;X-LumoAuth-Delivery&#x60;, &#x60;X-LumoAuth-Event&#x60;, &#x60;Content-Type&#x60;, &#x60;User-Agent&#x60;); both are null for a delivery without a stored request. A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. |  -  |
 **400** | Not a tunnel webhook |  -  |
 **404** | Webhook not found |  -  |
 
@@ -1329,7 +1332,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_webhooks_update**
-> PutAdminWebhooksUpdateResponse patch_admin_webhooks_update(org_id, webhook_id)
+> PutAdminWebhooksUpdateResponse patch_admin_webhooks_update(org_id, webhook_id, put_admin_webhooks_update_request)
 
 Partially update a webhook
 
@@ -1340,6 +1343,7 @@ Partially update a webhook
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_webhooks_update_request import PutAdminWebhooksUpdateRequest
 from lumoauth_api_client.models.put_admin_webhooks_update_response import PutAdminWebhooksUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1372,10 +1376,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminWebhooksApi(api_client)
     org_id = 'org_id_example' # str | 
     webhook_id = 'webhook_id_example' # str | 
+    put_admin_webhooks_update_request = lumoauth_api_client.PutAdminWebhooksUpdateRequest() # PutAdminWebhooksUpdateRequest | 
 
     try:
         # Partially update a webhook
-        api_response = api_instance.patch_admin_webhooks_update(org_id, webhook_id)
+        api_response = api_instance.patch_admin_webhooks_update(org_id, webhook_id, put_admin_webhooks_update_request)
         print("The response of AdminWebhooksApi->patch_admin_webhooks_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1391,6 +1396,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **webhook_id** | **str**|  | 
+ **put_admin_webhooks_update_request** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -1402,7 +1408,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1415,7 +1421,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_webhooks_update**
-> PutAdminWebhooksUpdateResponse put_admin_webhooks_update(org_id, webhook_id)
+> PutAdminWebhooksUpdateResponse put_admin_webhooks_update(org_id, webhook_id, put_admin_webhooks_update_request)
 
 Update a webhook
 
@@ -1428,6 +1434,7 @@ Changes only the fields that are sent: `url`, `events`, `isActive` (also as `act
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_webhooks_update_request import PutAdminWebhooksUpdateRequest
 from lumoauth_api_client.models.put_admin_webhooks_update_response import PutAdminWebhooksUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1460,10 +1467,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminWebhooksApi(api_client)
     org_id = 'org_id_example' # str | 
     webhook_id = 'webhook_id_example' # str | 
+    put_admin_webhooks_update_request = lumoauth_api_client.PutAdminWebhooksUpdateRequest() # PutAdminWebhooksUpdateRequest | 
 
     try:
         # Update a webhook
-        api_response = api_instance.put_admin_webhooks_update(org_id, webhook_id)
+        api_response = api_instance.put_admin_webhooks_update(org_id, webhook_id, put_admin_webhooks_update_request)
         print("The response of AdminWebhooksApi->put_admin_webhooks_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1479,6 +1487,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **webhook_id** | **str**|  | 
+ **put_admin_webhooks_update_request** | [**PutAdminWebhooksUpdateRequest**](PutAdminWebhooksUpdateRequest.md)|  | 
 
 ### Return type
 
@@ -1490,7 +1499,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

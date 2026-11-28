@@ -1,7 +1,7 @@
 /*
 LumoAuth API
 
-LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 API version: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -63,7 +63,53 @@ type AdminSettingsAPI interface {
 	AdminAnalyticsUsersExecute(r ApiAdminAnalyticsUsersRequest) (*AdminAnalyticsUsersResponse, *http.Response, error)
 
 	/*
-	AdminOrganizationGet Get organization (tenant) profile
+	AdminInitialAccessTokensCreate Create an initial access token for dynamic client registration
+
+	Generates a token and adds it to the organization's list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@return ApiAdminInitialAccessTokensCreateRequest
+	*/
+	AdminInitialAccessTokensCreate(ctx context.Context, orgId string) ApiAdminInitialAccessTokensCreateRequest
+
+	// AdminInitialAccessTokensCreateExecute executes the request
+	//  @return AdminInitialAccessTokensCreateResponse
+	AdminInitialAccessTokensCreateExecute(r ApiAdminInitialAccessTokensCreateRequest) (*AdminInitialAccessTokensCreateResponse, *http.Response, error)
+
+	/*
+	AdminInitialAccessTokensDelete Delete an initial access token of dynamic client registration
+
+	The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@param tokenId
+	@return ApiAdminInitialAccessTokensDeleteRequest
+	*/
+	AdminInitialAccessTokensDelete(ctx context.Context, orgId string, tokenId string) ApiAdminInitialAccessTokensDeleteRequest
+
+	// AdminInitialAccessTokensDeleteExecute executes the request
+	//  @return MessageResponse
+	AdminInitialAccessTokensDeleteExecute(r ApiAdminInitialAccessTokensDeleteRequest) (*MessageResponse, *http.Response, error)
+
+	/*
+	AdminInitialAccessTokensList List the initial access tokens of dynamic client registration
+
+	Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@return ApiAdminInitialAccessTokensListRequest
+	*/
+	AdminInitialAccessTokensList(ctx context.Context, orgId string) ApiAdminInitialAccessTokensListRequest
+
+	// AdminInitialAccessTokensListExecute executes the request
+	//  @return AdminInitialAccessTokensListResponse
+	AdminInitialAccessTokensListExecute(r ApiAdminInitialAccessTokensListRequest) (*AdminInitialAccessTokensListResponse, *http.Response, error)
+
+	/*
+	AdminOrganizationGet Get organization profile
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -184,7 +230,7 @@ type AdminSettingsAPI interface {
 	AdminSettingsSecurityGetExecute(r ApiAdminSettingsSecurityGetRequest) (*AdminSettingsSecurityGetResponse, *http.Response, error)
 
 	/*
-	AdminTenantGet Get organization (tenant) profile
+	AdminTenantGet Get organization profile
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -197,7 +243,7 @@ type AdminSettingsAPI interface {
 	AdminTenantGetExecute(r ApiAdminTenantGetRequest) (*AdminTenantGetResponse, *http.Response, error)
 
 	/*
-	PatchAdminOrganizationUpdate Update organization (tenant) name and settings
+	PatchAdminOrganizationUpdate Update the organization's name and settings
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -212,6 +258,8 @@ type AdminSettingsAPI interface {
 	/*
 	PatchAdminSettingsAuthUpdate Update authentication settings
 
+	The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@return ApiPatchAdminSettingsAuthUpdateRequest
@@ -224,6 +272,8 @@ type AdminSettingsAPI interface {
 
 	/*
 	PatchAdminSettingsAuthenticationUpdate Update authentication settings (alias for settings/auth)
+
+	The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -307,7 +357,7 @@ type AdminSettingsAPI interface {
 	PatchAdminSettingsSecurityUpdateExecute(r ApiPatchAdminSettingsSecurityUpdateRequest) (*PutAdminSettingsSecurityUpdateResponse, *http.Response, error)
 
 	/*
-	PatchAdminTenantUpdate Update organization (tenant) name and settings
+	PatchAdminTenantUpdate Update the organization's name and settings
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -320,7 +370,7 @@ type AdminSettingsAPI interface {
 	PatchAdminTenantUpdateExecute(r ApiPatchAdminTenantUpdateRequest) (*PutAdminTenantUpdateResponse, *http.Response, error)
 
 	/*
-	PutAdminOrganizationUpdate Update organization (tenant) name and settings
+	PutAdminOrganizationUpdate Update the organization's name and settings
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -335,6 +385,8 @@ type AdminSettingsAPI interface {
 	/*
 	PutAdminSettingsAuthUpdate Update authentication settings
 
+	The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
 	@return ApiPutAdminSettingsAuthUpdateRequest
@@ -347,6 +399,8 @@ type AdminSettingsAPI interface {
 
 	/*
 	PutAdminSettingsAuthenticationUpdate Update authentication settings (alias for settings/auth)
+
+	The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -430,7 +484,7 @@ type AdminSettingsAPI interface {
 	PutAdminSettingsSecurityUpdateExecute(r ApiPutAdminSettingsSecurityUpdateRequest) (*PutAdminSettingsSecurityUpdateResponse, *http.Response, error)
 
 	/*
-	PutAdminTenantUpdate Update organization (tenant) name and settings
+	PutAdminTenantUpdate Update the organization's name and settings
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -817,6 +871,361 @@ func (a *AdminSettingsAPIService) AdminAnalyticsUsersExecute(r ApiAdminAnalytics
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiAdminInitialAccessTokensCreateRequest struct {
+	ctx context.Context
+	ApiService AdminSettingsAPI
+	orgId string
+}
+
+func (r ApiAdminInitialAccessTokensCreateRequest) Execute() (*AdminInitialAccessTokensCreateResponse, *http.Response, error) {
+	return r.ApiService.AdminInitialAccessTokensCreateExecute(r)
+}
+
+/*
+AdminInitialAccessTokensCreate Create an initial access token for dynamic client registration
+
+Generates a token and adds it to the organization's list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as `Authorization: Bearer <token>` at the registration endpoint. Needs `settings.manage`.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @return ApiAdminInitialAccessTokensCreateRequest
+*/
+func (a *AdminSettingsAPIService) AdminInitialAccessTokensCreate(ctx context.Context, orgId string) ApiAdminInitialAccessTokensCreateRequest {
+	return ApiAdminInitialAccessTokensCreateRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+	}
+}
+
+// Execute executes the request
+//  @return AdminInitialAccessTokensCreateResponse
+func (a *AdminSettingsAPIService) AdminInitialAccessTokensCreateExecute(r ApiAdminInitialAccessTokensCreateRequest) (*AdminInitialAccessTokensCreateResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AdminInitialAccessTokensCreateResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminInitialAccessTokensCreate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiAdminInitialAccessTokensDeleteRequest struct {
+	ctx context.Context
+	ApiService AdminSettingsAPI
+	orgId string
+	tokenId string
+}
+
+func (r ApiAdminInitialAccessTokensDeleteRequest) Execute() (*MessageResponse, *http.Response, error) {
+	return r.ApiService.AdminInitialAccessTokensDeleteExecute(r)
+}
+
+/*
+AdminInitialAccessTokensDelete Delete an initial access token of dynamic client registration
+
+The token stops working at once; clients that it registered stay. Needs `settings.manage`.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @param tokenId
+ @return ApiAdminInitialAccessTokensDeleteRequest
+*/
+func (a *AdminSettingsAPIService) AdminInitialAccessTokensDelete(ctx context.Context, orgId string, tokenId string) ApiAdminInitialAccessTokensDeleteRequest {
+	return ApiAdminInitialAccessTokensDeleteRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+		tokenId: tokenId,
+	}
+}
+
+// Execute executes the request
+//  @return MessageResponse
+func (a *AdminSettingsAPIService) AdminInitialAccessTokensDeleteExecute(r ApiAdminInitialAccessTokensDeleteRequest) (*MessageResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminInitialAccessTokensDelete")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"tokenId"+"}", url.PathEscape(parameterValueToString(r.tokenId, "tokenId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiAdminInitialAccessTokensListRequest struct {
+	ctx context.Context
+	ApiService AdminSettingsAPI
+	orgId string
+}
+
+func (r ApiAdminInitialAccessTokensListRequest) Execute() (*AdminInitialAccessTokensListResponse, *http.Response, error) {
+	return r.ApiService.AdminInitialAccessTokensListExecute(r)
+}
+
+/*
+AdminInitialAccessTokensList List the initial access tokens of dynamic client registration
+
+Ids only; a token is shown once, when it is created. Needs `settings.manage`.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @return ApiAdminInitialAccessTokensListRequest
+*/
+func (a *AdminSettingsAPIService) AdminInitialAccessTokensList(ctx context.Context, orgId string) ApiAdminInitialAccessTokensListRequest {
+	return ApiAdminInitialAccessTokensListRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+	}
+}
+
+// Execute executes the request
+//  @return AdminInitialAccessTokensListResponse
+func (a *AdminSettingsAPIService) AdminInitialAccessTokensListExecute(r ApiAdminInitialAccessTokensListRequest) (*AdminInitialAccessTokensListResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AdminInitialAccessTokensListResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminInitialAccessTokensList")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiAdminOrganizationGetRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
@@ -828,7 +1237,7 @@ func (r ApiAdminOrganizationGetRequest) Execute() (*AdminTenantGetResponse, *htt
 }
 
 /*
-AdminOrganizationGet Get organization (tenant) profile
+AdminOrganizationGet Get organization profile
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1867,7 +2276,7 @@ func (r ApiAdminTenantGetRequest) Execute() (*AdminTenantGetResponse, *http.Resp
 }
 
 /*
-AdminTenantGet Get organization (tenant) profile
+AdminTenantGet Get organization profile
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1975,6 +2384,12 @@ type ApiPatchAdminOrganizationUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	putAdminTenantUpdateRequest *PutAdminTenantUpdateRequest
+}
+
+func (r ApiPatchAdminOrganizationUpdateRequest) PutAdminTenantUpdateRequest(putAdminTenantUpdateRequest PutAdminTenantUpdateRequest) ApiPatchAdminOrganizationUpdateRequest {
+	r.putAdminTenantUpdateRequest = &putAdminTenantUpdateRequest
+	return r
 }
 
 func (r ApiPatchAdminOrganizationUpdateRequest) Execute() (*PutAdminTenantUpdateResponse, *http.Response, error) {
@@ -1982,7 +2397,7 @@ func (r ApiPatchAdminOrganizationUpdateRequest) Execute() (*PutAdminTenantUpdate
 }
 
 /*
-PatchAdminOrganizationUpdate Update organization (tenant) name and settings
+PatchAdminOrganizationUpdate Update the organization's name and settings
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2017,9 +2432,12 @@ func (a *AdminSettingsAPIService) PatchAdminOrganizationUpdateExecute(r ApiPatch
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminTenantUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminTenantUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2035,6 +2453,8 @@ func (a *AdminSettingsAPIService) PatchAdminOrganizationUpdateExecute(r ApiPatch
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminTenantUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2090,6 +2510,12 @@ type ApiPatchAdminSettingsAuthUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	authenticationSettings *AuthenticationSettings
+}
+
+func (r ApiPatchAdminSettingsAuthUpdateRequest) AuthenticationSettings(authenticationSettings AuthenticationSettings) ApiPatchAdminSettingsAuthUpdateRequest {
+	r.authenticationSettings = &authenticationSettings
+	return r
 }
 
 func (r ApiPatchAdminSettingsAuthUpdateRequest) Execute() (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error) {
@@ -2098,6 +2524,8 @@ func (r ApiPatchAdminSettingsAuthUpdateRequest) Execute() (*PutAdminSettingsAuth
 
 /*
 PatchAdminSettingsAuthUpdate Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2132,9 +2560,12 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsAuthUpdateExecute(r ApiPatch
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authenticationSettings == nil {
+		return localVarReturnValue, nil, reportError("authenticationSettings is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2150,6 +2581,8 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsAuthUpdateExecute(r ApiPatch
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.authenticationSettings
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2205,6 +2638,12 @@ type ApiPatchAdminSettingsAuthenticationUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	authenticationSettings *AuthenticationSettings
+}
+
+func (r ApiPatchAdminSettingsAuthenticationUpdateRequest) AuthenticationSettings(authenticationSettings AuthenticationSettings) ApiPatchAdminSettingsAuthenticationUpdateRequest {
+	r.authenticationSettings = &authenticationSettings
+	return r
 }
 
 func (r ApiPatchAdminSettingsAuthenticationUpdateRequest) Execute() (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error) {
@@ -2213,6 +2652,8 @@ func (r ApiPatchAdminSettingsAuthenticationUpdateRequest) Execute() (*PutAdminSe
 
 /*
 PatchAdminSettingsAuthenticationUpdate Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2247,9 +2688,12 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsAuthenticationUpdateExecute(
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authenticationSettings == nil {
+		return localVarReturnValue, nil, reportError("authenticationSettings is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2265,6 +2709,8 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsAuthenticationUpdateExecute(
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.authenticationSettings
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2320,6 +2766,12 @@ type ApiPatchAdminSettingsBrandingUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	brandingSettings *BrandingSettings
+}
+
+func (r ApiPatchAdminSettingsBrandingUpdateRequest) BrandingSettings(brandingSettings BrandingSettings) ApiPatchAdminSettingsBrandingUpdateRequest {
+	r.brandingSettings = &brandingSettings
+	return r
 }
 
 func (r ApiPatchAdminSettingsBrandingUpdateRequest) Execute() (*PutAdminSettingsBrandingUpdateResponse, *http.Response, error) {
@@ -2364,9 +2816,12 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsBrandingUpdateExecute(r ApiP
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.brandingSettings == nil {
+		return localVarReturnValue, nil, reportError("brandingSettings is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2382,6 +2837,8 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsBrandingUpdateExecute(r ApiP
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.brandingSettings
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2687,6 +3144,12 @@ type ApiPatchAdminSettingsScimUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	scimSettings *ScimSettings
+}
+
+func (r ApiPatchAdminSettingsScimUpdateRequest) ScimSettings(scimSettings ScimSettings) ApiPatchAdminSettingsScimUpdateRequest {
+	r.scimSettings = &scimSettings
+	return r
 }
 
 func (r ApiPatchAdminSettingsScimUpdateRequest) Execute() (*PutAdminSettingsScimUpdateResponse, *http.Response, error) {
@@ -2729,9 +3192,12 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsScimUpdateExecute(r ApiPatch
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.scimSettings == nil {
+		return localVarReturnValue, nil, reportError("scimSettings is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2747,6 +3213,8 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsScimUpdateExecute(r ApiPatch
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.scimSettings
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2802,6 +3270,13 @@ type ApiPatchAdminSettingsSecurityUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	putAdminSettingsSecurityUpdateRequest *PutAdminSettingsSecurityUpdateRequest
+}
+
+// Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
+func (r ApiPatchAdminSettingsSecurityUpdateRequest) PutAdminSettingsSecurityUpdateRequest(putAdminSettingsSecurityUpdateRequest PutAdminSettingsSecurityUpdateRequest) ApiPatchAdminSettingsSecurityUpdateRequest {
+	r.putAdminSettingsSecurityUpdateRequest = &putAdminSettingsSecurityUpdateRequest
+	return r
 }
 
 func (r ApiPatchAdminSettingsSecurityUpdateRequest) Execute() (*PutAdminSettingsSecurityUpdateResponse, *http.Response, error) {
@@ -2844,9 +3319,12 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsSecurityUpdateExecute(r ApiP
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminSettingsSecurityUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminSettingsSecurityUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2862,6 +3340,8 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsSecurityUpdateExecute(r ApiP
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminSettingsSecurityUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2917,6 +3397,12 @@ type ApiPatchAdminTenantUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	putAdminTenantUpdateRequest *PutAdminTenantUpdateRequest
+}
+
+func (r ApiPatchAdminTenantUpdateRequest) PutAdminTenantUpdateRequest(putAdminTenantUpdateRequest PutAdminTenantUpdateRequest) ApiPatchAdminTenantUpdateRequest {
+	r.putAdminTenantUpdateRequest = &putAdminTenantUpdateRequest
+	return r
 }
 
 func (r ApiPatchAdminTenantUpdateRequest) Execute() (*PutAdminTenantUpdateResponse, *http.Response, error) {
@@ -2924,7 +3410,7 @@ func (r ApiPatchAdminTenantUpdateRequest) Execute() (*PutAdminTenantUpdateRespon
 }
 
 /*
-PatchAdminTenantUpdate Update organization (tenant) name and settings
+PatchAdminTenantUpdate Update the organization's name and settings
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2959,9 +3445,12 @@ func (a *AdminSettingsAPIService) PatchAdminTenantUpdateExecute(r ApiPatchAdminT
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminTenantUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminTenantUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2977,6 +3466,8 @@ func (a *AdminSettingsAPIService) PatchAdminTenantUpdateExecute(r ApiPatchAdminT
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminTenantUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -3032,6 +3523,12 @@ type ApiPutAdminOrganizationUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	putAdminTenantUpdateRequest *PutAdminTenantUpdateRequest
+}
+
+func (r ApiPutAdminOrganizationUpdateRequest) PutAdminTenantUpdateRequest(putAdminTenantUpdateRequest PutAdminTenantUpdateRequest) ApiPutAdminOrganizationUpdateRequest {
+	r.putAdminTenantUpdateRequest = &putAdminTenantUpdateRequest
+	return r
 }
 
 func (r ApiPutAdminOrganizationUpdateRequest) Execute() (*PutAdminTenantUpdateResponse, *http.Response, error) {
@@ -3039,7 +3536,7 @@ func (r ApiPutAdminOrganizationUpdateRequest) Execute() (*PutAdminTenantUpdateRe
 }
 
 /*
-PutAdminOrganizationUpdate Update organization (tenant) name and settings
+PutAdminOrganizationUpdate Update the organization's name and settings
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -3074,9 +3571,12 @@ func (a *AdminSettingsAPIService) PutAdminOrganizationUpdateExecute(r ApiPutAdmi
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminTenantUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminTenantUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -3092,6 +3592,8 @@ func (a *AdminSettingsAPIService) PutAdminOrganizationUpdateExecute(r ApiPutAdmi
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminTenantUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -3147,6 +3649,12 @@ type ApiPutAdminSettingsAuthUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	authenticationSettings *AuthenticationSettings
+}
+
+func (r ApiPutAdminSettingsAuthUpdateRequest) AuthenticationSettings(authenticationSettings AuthenticationSettings) ApiPutAdminSettingsAuthUpdateRequest {
+	r.authenticationSettings = &authenticationSettings
+	return r
 }
 
 func (r ApiPutAdminSettingsAuthUpdateRequest) Execute() (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error) {
@@ -3155,6 +3663,8 @@ func (r ApiPutAdminSettingsAuthUpdateRequest) Execute() (*PutAdminSettingsAuthen
 
 /*
 PutAdminSettingsAuthUpdate Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -3189,9 +3699,12 @@ func (a *AdminSettingsAPIService) PutAdminSettingsAuthUpdateExecute(r ApiPutAdmi
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authenticationSettings == nil {
+		return localVarReturnValue, nil, reportError("authenticationSettings is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -3207,6 +3720,8 @@ func (a *AdminSettingsAPIService) PutAdminSettingsAuthUpdateExecute(r ApiPutAdmi
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.authenticationSettings
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -3262,6 +3777,12 @@ type ApiPutAdminSettingsAuthenticationUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	authenticationSettings *AuthenticationSettings
+}
+
+func (r ApiPutAdminSettingsAuthenticationUpdateRequest) AuthenticationSettings(authenticationSettings AuthenticationSettings) ApiPutAdminSettingsAuthenticationUpdateRequest {
+	r.authenticationSettings = &authenticationSettings
+	return r
 }
 
 func (r ApiPutAdminSettingsAuthenticationUpdateRequest) Execute() (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error) {
@@ -3270,6 +3791,8 @@ func (r ApiPutAdminSettingsAuthenticationUpdateRequest) Execute() (*PutAdminSett
 
 /*
 PutAdminSettingsAuthenticationUpdate Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -3304,9 +3827,12 @@ func (a *AdminSettingsAPIService) PutAdminSettingsAuthenticationUpdateExecute(r 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authenticationSettings == nil {
+		return localVarReturnValue, nil, reportError("authenticationSettings is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -3322,6 +3848,8 @@ func (a *AdminSettingsAPIService) PutAdminSettingsAuthenticationUpdateExecute(r 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.authenticationSettings
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -3377,6 +3905,12 @@ type ApiPutAdminSettingsBrandingUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	brandingSettings *BrandingSettings
+}
+
+func (r ApiPutAdminSettingsBrandingUpdateRequest) BrandingSettings(brandingSettings BrandingSettings) ApiPutAdminSettingsBrandingUpdateRequest {
+	r.brandingSettings = &brandingSettings
+	return r
 }
 
 func (r ApiPutAdminSettingsBrandingUpdateRequest) Execute() (*PutAdminSettingsBrandingUpdateResponse, *http.Response, error) {
@@ -3421,9 +3955,12 @@ func (a *AdminSettingsAPIService) PutAdminSettingsBrandingUpdateExecute(r ApiPut
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.brandingSettings == nil {
+		return localVarReturnValue, nil, reportError("brandingSettings is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -3439,6 +3976,8 @@ func (a *AdminSettingsAPIService) PutAdminSettingsBrandingUpdateExecute(r ApiPut
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.brandingSettings
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -3744,6 +4283,12 @@ type ApiPutAdminSettingsScimUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	scimSettings *ScimSettings
+}
+
+func (r ApiPutAdminSettingsScimUpdateRequest) ScimSettings(scimSettings ScimSettings) ApiPutAdminSettingsScimUpdateRequest {
+	r.scimSettings = &scimSettings
+	return r
 }
 
 func (r ApiPutAdminSettingsScimUpdateRequest) Execute() (*PutAdminSettingsScimUpdateResponse, *http.Response, error) {
@@ -3786,9 +4331,12 @@ func (a *AdminSettingsAPIService) PutAdminSettingsScimUpdateExecute(r ApiPutAdmi
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.scimSettings == nil {
+		return localVarReturnValue, nil, reportError("scimSettings is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -3804,6 +4352,8 @@ func (a *AdminSettingsAPIService) PutAdminSettingsScimUpdateExecute(r ApiPutAdmi
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.scimSettings
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -3859,6 +4409,13 @@ type ApiPutAdminSettingsSecurityUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	putAdminSettingsSecurityUpdateRequest *PutAdminSettingsSecurityUpdateRequest
+}
+
+// Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
+func (r ApiPutAdminSettingsSecurityUpdateRequest) PutAdminSettingsSecurityUpdateRequest(putAdminSettingsSecurityUpdateRequest PutAdminSettingsSecurityUpdateRequest) ApiPutAdminSettingsSecurityUpdateRequest {
+	r.putAdminSettingsSecurityUpdateRequest = &putAdminSettingsSecurityUpdateRequest
+	return r
 }
 
 func (r ApiPutAdminSettingsSecurityUpdateRequest) Execute() (*PutAdminSettingsSecurityUpdateResponse, *http.Response, error) {
@@ -3901,9 +4458,12 @@ func (a *AdminSettingsAPIService) PutAdminSettingsSecurityUpdateExecute(r ApiPut
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminSettingsSecurityUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminSettingsSecurityUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -3919,6 +4479,8 @@ func (a *AdminSettingsAPIService) PutAdminSettingsSecurityUpdateExecute(r ApiPut
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminSettingsSecurityUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -3974,6 +4536,12 @@ type ApiPutAdminTenantUpdateRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	putAdminTenantUpdateRequest *PutAdminTenantUpdateRequest
+}
+
+func (r ApiPutAdminTenantUpdateRequest) PutAdminTenantUpdateRequest(putAdminTenantUpdateRequest PutAdminTenantUpdateRequest) ApiPutAdminTenantUpdateRequest {
+	r.putAdminTenantUpdateRequest = &putAdminTenantUpdateRequest
+	return r
 }
 
 func (r ApiPutAdminTenantUpdateRequest) Execute() (*PutAdminTenantUpdateResponse, *http.Response, error) {
@@ -3981,7 +4549,7 @@ func (r ApiPutAdminTenantUpdateRequest) Execute() (*PutAdminTenantUpdateResponse
 }
 
 /*
-PutAdminTenantUpdate Update organization (tenant) name and settings
+PutAdminTenantUpdate Update the organization's name and settings
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -4016,9 +4584,12 @@ func (a *AdminSettingsAPIService) PutAdminTenantUpdateExecute(r ApiPutAdminTenan
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.putAdminTenantUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("putAdminTenantUpdateRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -4034,6 +4605,8 @@ func (a *AdminSettingsAPIService) PutAdminTenantUpdateExecute(r ApiPutAdminTenan
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.putAdminTenantUpdateRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

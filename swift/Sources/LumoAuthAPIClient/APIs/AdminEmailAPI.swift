@@ -177,11 +177,12 @@ open class AdminEmailAPI {
      
      - parameter orgId: (path)  
      - parameter type: (path)  
+     - parameter adminEmailTemplatesPreviewRequest: (body)  (optional)
      - returns: AdminEmailTemplatesPreviewResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminEmailTemplatesPreview(orgId: String, type: String) async throws -> AdminEmailTemplatesPreviewResponse {
-        return try await adminEmailTemplatesPreviewWithRequestBuilder(orgId: orgId, type: type).execute().body
+    open class func adminEmailTemplatesPreview(orgId: String, type: String, adminEmailTemplatesPreviewRequest: AdminEmailTemplatesPreviewRequest? = nil) async throws -> AdminEmailTemplatesPreviewResponse {
+        return try await adminEmailTemplatesPreviewWithRequestBuilder(orgId: orgId, type: type, adminEmailTemplatesPreviewRequest: adminEmailTemplatesPreviewRequest).execute().body
     }
 
     /**
@@ -195,9 +196,10 @@ open class AdminEmailAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter type: (path)  
+     - parameter adminEmailTemplatesPreviewRequest: (body)  (optional)
      - returns: RequestBuilder<AdminEmailTemplatesPreviewResponse> 
      */
-    open class func adminEmailTemplatesPreviewWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<AdminEmailTemplatesPreviewResponse> {
+    open class func adminEmailTemplatesPreviewWithRequestBuilder(orgId: String, type: String, adminEmailTemplatesPreviewRequest: AdminEmailTemplatesPreviewRequest? = nil) -> RequestBuilder<AdminEmailTemplatesPreviewResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/email-templates/{type}/preview"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -206,12 +208,12 @@ open class AdminEmailAPI {
         let typePostEscape = typePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{type}", with: typePostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminEmailTemplatesPreviewRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -226,11 +228,12 @@ open class AdminEmailAPI {
      
      - parameter orgId: (path)  
      - parameter type: (path)  
+     - parameter adminEmailTemplatesUpsertRequest: (body)  
      - returns: EmailTemplate
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminEmailTemplatesUpsert(orgId: String, type: String) async throws -> EmailTemplate {
-        return try await adminEmailTemplatesUpsertWithRequestBuilder(orgId: orgId, type: type).execute().body
+    open class func adminEmailTemplatesUpsert(orgId: String, type: String, adminEmailTemplatesUpsertRequest: AdminEmailTemplatesUpsertRequest) async throws -> EmailTemplate {
+        return try await adminEmailTemplatesUpsertWithRequestBuilder(orgId: orgId, type: type, adminEmailTemplatesUpsertRequest: adminEmailTemplatesUpsertRequest).execute().body
     }
 
     /**
@@ -245,9 +248,10 @@ open class AdminEmailAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter type: (path)  
+     - parameter adminEmailTemplatesUpsertRequest: (body)  
      - returns: RequestBuilder<EmailTemplate> 
      */
-    open class func adminEmailTemplatesUpsertWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<EmailTemplate> {
+    open class func adminEmailTemplatesUpsertWithRequestBuilder(orgId: String, type: String, adminEmailTemplatesUpsertRequest: AdminEmailTemplatesUpsertRequest) -> RequestBuilder<EmailTemplate> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/email-templates/{type}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -256,12 +260,12 @@ open class AdminEmailAPI {
         let typePostEscape = typePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{type}", with: typePostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminEmailTemplatesUpsertRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

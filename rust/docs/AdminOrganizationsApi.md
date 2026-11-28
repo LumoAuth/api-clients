@@ -29,7 +29,7 @@ Method | HTTP request | Description
 
 ## admin_org_invitations_create
 
-> models::AdminOrgInvitationsCreateResponse admin_org_invitations_create(org_id, organization_id)
+> models::AdminOrgInvitationsCreateResponse admin_org_invitations_create(org_id, organization_id, admin_org_invitations_create_request)
 Invite a user to an organization
 
 ### Parameters
@@ -39,6 +39,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **organization_id** | **String** |  | [required] |
+**admin_org_invitations_create_request** | [**AdminOrgInvitationsCreateRequest**](AdminOrgInvitationsCreateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -50,7 +51,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -147,7 +148,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_org_members_add
 
-> models::AdminOrgMembersAddResponse admin_org_members_add(org_id, organization_id)
+> models::AdminOrgMembersAddResponse admin_org_members_add(org_id, organization_id, admin_org_members_add_request)
 Add a member to an organization
 
 ### Parameters
@@ -157,6 +158,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **organization_id** | **String** |  | [required] |
+**admin_org_members_add_request** | [**AdminOrgMembersAddRequest**](AdminOrgMembersAddRequest.md) |  | [required] |
 
 ### Return type
 
@@ -168,7 +170,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -235,7 +237,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_org_roles_create
 
-> models::AdminOrgRolesCreateResponse admin_org_roles_create(org_id, organization_id)
+> models::AdminOrgRolesCreateResponse admin_org_roles_create(org_id, organization_id, admin_org_roles_create_request)
 Create an organization role
 
 ### Parameters
@@ -245,6 +247,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **organization_id** | **String** |  | [required] |
+**admin_org_roles_create_request** | [**AdminOrgRolesCreateRequest**](AdminOrgRolesCreateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -256,7 +259,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -323,7 +326,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_organizations_create
 
-> models::AdminOrganizationsCreateResponse admin_organizations_create(org_id)
+> models::AdminOrganizationsCreateResponse admin_organizations_create(org_id, admin_organizations_create_request)
 Create an organization
 
 ### Parameters
@@ -332,6 +335,7 @@ Create an organization
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**admin_organizations_create_request** | [**AdminOrganizationsCreateRequest**](AdminOrganizationsCreateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -343,7 +347,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -437,7 +441,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_org_members_update
 
-> models::PutAdminOrgMembersUpdateResponse patch_admin_org_members_update(org_id, organization_id, user_id)
+> models::PutAdminOrgMembersUpdateResponse patch_admin_org_members_update(org_id, organization_id, user_id, put_admin_org_members_update_request)
 Update a member's role or status
 
 ### Parameters
@@ -448,6 +452,7 @@ Name | Type | Description  | Required | Notes
 **org_id** | **String** |  | [required] |
 **organization_id** | **String** |  | [required] |
 **user_id** | **String** |  | [required] |
+**put_admin_org_members_update_request** | [**PutAdminOrgMembersUpdateRequest**](PutAdminOrgMembersUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -459,7 +464,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -467,7 +472,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_org_roles_update
 
-> models::AdminOrgRolesCreateResponse patch_admin_org_roles_update(org_id, organization_id, role_id)
+> models::AdminOrgRolesCreateResponse patch_admin_org_roles_update(org_id, organization_id, role_id, put_admin_org_roles_update_request)
 Update an organization role
 
 ### Parameters
@@ -478,6 +483,7 @@ Name | Type | Description  | Required | Notes
 **org_id** | **String** |  | [required] |
 **organization_id** | **String** |  | [required] |
 **role_id** | **String** |  | [required] |
+**put_admin_org_roles_update_request** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -489,7 +495,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -497,7 +503,7 @@ Name | Type | Description  | Required | Notes
 
 ## patch_admin_organizations_update
 
-> models::AdminOrganizationsGetResponse patch_admin_organizations_update(org_id, organization_id)
+> models::AdminOrganizationsGetResponse patch_admin_organizations_update(org_id, organization_id, put_admin_organizations_update_request)
 Update an organization
 
 ### Parameters
@@ -507,6 +513,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **organization_id** | **String** |  | [required] |
+**put_admin_organizations_update_request** | [**PutAdminOrganizationsUpdateRequest**](PutAdminOrganizationsUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -518,7 +525,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -526,7 +533,7 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_org_members_update
 
-> models::PutAdminOrgMembersUpdateResponse put_admin_org_members_update(org_id, organization_id, user_id)
+> models::PutAdminOrgMembersUpdateResponse put_admin_org_members_update(org_id, organization_id, user_id, put_admin_org_members_update_request)
 Update a member's role or status
 
 ### Parameters
@@ -537,6 +544,7 @@ Name | Type | Description  | Required | Notes
 **org_id** | **String** |  | [required] |
 **organization_id** | **String** |  | [required] |
 **user_id** | **String** |  | [required] |
+**put_admin_org_members_update_request** | [**PutAdminOrgMembersUpdateRequest**](PutAdminOrgMembersUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -548,7 +556,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -556,7 +564,7 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_org_roles_update
 
-> models::AdminOrgRolesCreateResponse put_admin_org_roles_update(org_id, organization_id, role_id)
+> models::AdminOrgRolesCreateResponse put_admin_org_roles_update(org_id, organization_id, role_id, put_admin_org_roles_update_request)
 Update an organization role
 
 ### Parameters
@@ -567,6 +575,7 @@ Name | Type | Description  | Required | Notes
 **org_id** | **String** |  | [required] |
 **organization_id** | **String** |  | [required] |
 **role_id** | **String** |  | [required] |
+**put_admin_org_roles_update_request** | [**PutAdminOrgRolesUpdateRequest**](PutAdminOrgRolesUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -578,7 +587,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -586,7 +595,7 @@ Name | Type | Description  | Required | Notes
 
 ## put_admin_organizations_update
 
-> models::AdminOrganizationsGetResponse put_admin_organizations_update(org_id, organization_id)
+> models::AdminOrganizationsGetResponse put_admin_organizations_update(org_id, organization_id, put_admin_organizations_update_request)
 Update an organization
 
 ### Parameters
@@ -596,6 +605,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
 **organization_id** | **String** |  | [required] |
+**put_admin_organizations_update_request** | [**PutAdminOrganizationsUpdateRequest**](PutAdminOrganizationsUpdateRequest.md) |  | [required] |
 
 ### Return type
 
@@ -607,7 +617,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

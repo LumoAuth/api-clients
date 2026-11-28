@@ -199,7 +199,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_client**
-> CreateClientResponse create_client(org_id)
+> CreateClientResponse create_client(org_id, o_auth_client_write)
 
 Create an OAuth client
 
@@ -211,6 +211,7 @@ Create an OAuth client
 ```python
 import lumoauth_api_client
 from lumoauth_api_client.models.create_client_response import CreateClientResponse
+from lumoauth_api_client.models.o_auth_client_write import OAuthClientWrite
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -241,10 +242,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminOAuthClientsApi(api_client)
     org_id = 'org_id_example' # str | 
+    o_auth_client_write = lumoauth_api_client.OAuthClientWrite() # OAuthClientWrite | 
 
     try:
         # Create an OAuth client
-        api_response = api_instance.create_client(org_id)
+        api_response = api_instance.create_client(org_id, o_auth_client_write)
         print("The response of AdminOAuthClientsApi->create_client:\n")
         pprint(api_response)
     except Exception as e:
@@ -259,6 +261,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **o_auth_client_write** | [**OAuthClientWrite**](OAuthClientWrite.md)|  | 
 
 ### Return type
 
@@ -270,7 +273,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -893,7 +896,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_client**
-> UpdateClientResponse patch_client(org_id, client_id)
+> UpdateClientResponse patch_client(org_id, client_id, o_auth_client_write)
 
 Update an OAuth client
 
@@ -906,6 +909,7 @@ A client that can administer the organization (it carries `admin` or an `admin:`
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.o_auth_client_write import OAuthClientWrite
 from lumoauth_api_client.models.update_client_response import UpdateClientResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -938,10 +942,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminOAuthClientsApi(api_client)
     org_id = 'org_id_example' # str | 
     client_id = 'client_id_example' # str | 
+    o_auth_client_write = lumoauth_api_client.OAuthClientWrite() # OAuthClientWrite | 
 
     try:
         # Update an OAuth client
-        api_response = api_instance.patch_client(org_id, client_id)
+        api_response = api_instance.patch_client(org_id, client_id, o_auth_client_write)
         print("The response of AdminOAuthClientsApi->patch_client:\n")
         pprint(api_response)
     except Exception as e:
@@ -957,6 +962,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **client_id** | **str**|  | 
+ **o_auth_client_write** | [**OAuthClientWrite**](OAuthClientWrite.md)|  | 
 
 ### Return type
 
@@ -968,7 +974,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1156,13 +1162,14 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Rotated — the new plaintext secret is included once and never shown again |  -  |
+**400** | The client authenticates with a key (private_key_jwt, or a FAPI 2.0 profile) and has no client secret |  -  |
 **403** | The client holds a privilege that the caller may not hand out |  -  |
 **404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **set_client_scopes**
-> SetClientScopesResponse set_client_scopes(org_id, client_id)
+> SetClientScopesResponse set_client_scopes(org_id, client_id, set_client_scopes_request)
 
 Replace the scopes granted to an OAuth client
 
@@ -1175,6 +1182,7 @@ A client that can administer the organization (it carries `admin` or an `admin:`
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.set_client_scopes_request import SetClientScopesRequest
 from lumoauth_api_client.models.set_client_scopes_response import SetClientScopesResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1207,10 +1215,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminOAuthClientsApi(api_client)
     org_id = 'org_id_example' # str | 
     client_id = 'client_id_example' # str | 
+    set_client_scopes_request = lumoauth_api_client.SetClientScopesRequest() # SetClientScopesRequest | 
 
     try:
         # Replace the scopes granted to an OAuth client
-        api_response = api_instance.set_client_scopes(org_id, client_id)
+        api_response = api_instance.set_client_scopes(org_id, client_id, set_client_scopes_request)
         print("The response of AdminOAuthClientsApi->set_client_scopes:\n")
         pprint(api_response)
     except Exception as e:
@@ -1226,6 +1235,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **client_id** | **str**|  | 
+ **set_client_scopes_request** | [**SetClientScopesRequest**](SetClientScopesRequest.md)|  | 
 
 ### Return type
 
@@ -1237,7 +1247,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1251,7 +1261,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_client**
-> UpdateClientResponse update_client(org_id, client_id)
+> UpdateClientResponse update_client(org_id, client_id, o_auth_client_write)
 
 Update an OAuth client (same as PATCH: only the fields that are sent change)
 
@@ -1264,6 +1274,7 @@ A client that can administer the organization (it carries `admin` or an `admin:`
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.o_auth_client_write import OAuthClientWrite
 from lumoauth_api_client.models.update_client_response import UpdateClientResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
@@ -1296,10 +1307,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AdminOAuthClientsApi(api_client)
     org_id = 'org_id_example' # str | 
     client_id = 'client_id_example' # str | 
+    o_auth_client_write = lumoauth_api_client.OAuthClientWrite() # OAuthClientWrite | 
 
     try:
         # Update an OAuth client (same as PATCH: only the fields that are sent change)
-        api_response = api_instance.update_client(org_id, client_id)
+        api_response = api_instance.update_client(org_id, client_id, o_auth_client_write)
         print("The response of AdminOAuthClientsApi->update_client:\n")
         pprint(api_response)
     except Exception as e:
@@ -1315,6 +1327,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **client_id** | **str**|  | 
+ **o_auth_client_write** | [**OAuthClientWrite**](OAuthClientWrite.md)|  | 
 
 ### Return type
 
@@ -1326,7 +1339,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

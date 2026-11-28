@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -24,21 +24,37 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { AuthZenDecision } from '../models';
 // @ts-ignore
+import type { CheckAbacBulkRequest } from '../models';
+// @ts-ignore
 import type { CheckAbacBulkResponse } from '../models';
+// @ts-ignore
+import type { CheckAbacRequest } from '../models';
 // @ts-ignore
 import type { CheckAbacResponse } from '../models';
 // @ts-ignore
 import type { CheckAnyPermissionResponse } from '../models';
 // @ts-ignore
+import type { CheckPermissionRequest } from '../models';
+// @ts-ignore
 import type { CheckPermissionResponse } from '../models';
+// @ts-ignore
+import type { CheckPermissionsBulkRequest } from '../models';
 // @ts-ignore
 import type { CheckPermissionsBulkResponse } from '../models';
 // @ts-ignore
+import type { CheckRelationRequest } from '../models';
+// @ts-ignore
 import type { CheckRelationResponse } from '../models';
+// @ts-ignore
+import type { CheckRelationScopedRequest } from '../models';
 // @ts-ignore
 import type { CheckRelationScopedResponse } from '../models';
 // @ts-ignore
+import type { EvaluateBatchRequest } from '../models';
+// @ts-ignore
 import type { EvaluateBatchResponse } from '../models';
+// @ts-ignore
+import type { EvaluateRequest } from '../models';
 // @ts-ignore
 import type { ExpandRelationRequest } from '../models';
 // @ts-ignore
@@ -51,6 +67,8 @@ import type { GetResourceAttributesResponse } from '../models';
 import type { ListAttributeDefinitionsResponse } from '../models';
 // @ts-ignore
 import type { ListPermissionsResponse } from '../models';
+// @ts-ignore
+import type { SetResourceAttributeRequest } from '../models';
 // @ts-ignore
 import type { SetResourceAttributeResponse } from '../models';
 // @ts-ignore
@@ -65,12 +83,15 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
          * POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
          * @summary Evaluate an ABAC policy decision for the caller
          * @param {string} orgId 
+         * @param {CheckAbacRequest} checkAbacRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkAbac: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        checkAbac: async (orgId: string, checkAbacRequest: CheckAbacRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('checkAbac', 'orgId', orgId)
+            // verify required parameter 'checkAbacRequest' is not null or undefined
+            assertParamExists('checkAbac', 'checkAbacRequest', checkAbacRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/abac/check`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -90,9 +111,12 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(checkAbacRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -103,12 +127,15 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
          * POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
          * @summary Evaluate up to 100 ABAC checks for the caller in one call
          * @param {string} orgId 
+         * @param {CheckAbacBulkRequest} checkAbacBulkRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkAbacBulk: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        checkAbacBulk: async (orgId: string, checkAbacBulkRequest: CheckAbacBulkRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('checkAbacBulk', 'orgId', orgId)
+            // verify required parameter 'checkAbacBulkRequest' is not null or undefined
+            assertParamExists('checkAbacBulk', 'checkAbacBulkRequest', checkAbacBulkRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/abac/check-bulk`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -128,9 +155,12 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(checkAbacBulkRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -140,10 +170,13 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         /**
          * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check whether the subject holds all of the permissions
+         * @param {CheckPermissionsBulkRequest} checkPermissionsBulkRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkAllPermissions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        checkAllPermissions: async (checkPermissionsBulkRequest: CheckPermissionsBulkRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'checkPermissionsBulkRequest' is not null or undefined
+            assertParamExists('checkAllPermissions', 'checkPermissionsBulkRequest', checkPermissionsBulkRequest)
             const localVarPath = `/api/v1/authz/check-all`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -165,9 +198,12 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(checkPermissionsBulkRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -177,10 +213,13 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         /**
          * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check whether the subject holds any of the permissions
+         * @param {CheckPermissionsBulkRequest} checkPermissionsBulkRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkAnyPermission: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        checkAnyPermission: async (checkPermissionsBulkRequest: CheckPermissionsBulkRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'checkPermissionsBulkRequest' is not null or undefined
+            assertParamExists('checkAnyPermission', 'checkPermissionsBulkRequest', checkPermissionsBulkRequest)
             const localVarPath = `/api/v1/authz/check-any`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -202,9 +241,12 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(checkPermissionsBulkRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -214,10 +256,13 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         /**
          * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
          * @summary Check one permission
+         * @param {CheckPermissionRequest} checkPermissionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkPermission: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        checkPermission: async (checkPermissionRequest: CheckPermissionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'checkPermissionRequest' is not null or undefined
+            assertParamExists('checkPermission', 'checkPermissionRequest', checkPermissionRequest)
             const localVarPath = `/api/v1/authz/check`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -239,9 +284,12 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(checkPermissionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -251,10 +299,13 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         /**
          * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check up to 100 permissions in one call
+         * @param {CheckPermissionsBulkRequest} checkPermissionsBulkRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkPermissionsBulk: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        checkPermissionsBulk: async (checkPermissionsBulkRequest: CheckPermissionsBulkRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'checkPermissionsBulkRequest' is not null or undefined
+            assertParamExists('checkPermissionsBulk', 'checkPermissionsBulkRequest', checkPermissionsBulkRequest)
             const localVarPath = `/api/v1/authz/check-bulk`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -276,9 +327,12 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(checkPermissionsBulkRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -288,10 +342,13 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         /**
          * POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
          * @summary Zanzibar relationship check
+         * @param {CheckRelationRequest} checkRelationRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkRelation: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        checkRelation: async (checkRelationRequest: CheckRelationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'checkRelationRequest' is not null or undefined
+            assertParamExists('checkRelation', 'checkRelationRequest', checkRelationRequest)
             const localVarPath = `/api/v1/authz/zanzibar/check`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -313,9 +370,12 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(checkRelationRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -326,12 +386,15 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
          * 
          * @summary Zanzibar relationship check
          * @param {string} orgId 
+         * @param {CheckRelationScopedRequest} checkRelationScopedRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkRelationScoped: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        checkRelationScoped: async (orgId: string, checkRelationScopedRequest: CheckRelationScopedRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('checkRelationScoped', 'orgId', orgId)
+            // verify required parameter 'checkRelationScopedRequest' is not null or undefined
+            assertParamExists('checkRelationScoped', 'checkRelationScopedRequest', checkRelationScopedRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/zanzibar/check`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -354,9 +417,12 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(checkRelationScopedRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -366,10 +432,13 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         /**
          * POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
          * @summary AuthZEN 1.0 access evaluation
+         * @param {EvaluateRequest} evaluateRequest AuthZEN Authorization API 1.0 evaluation request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluate: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        evaluate: async (evaluateRequest: EvaluateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'evaluateRequest' is not null or undefined
+            assertParamExists('evaluate', 'evaluateRequest', evaluateRequest)
             const localVarPath = `/api/v1/authz/v1/evaluation`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -391,9 +460,12 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(evaluateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -403,10 +475,13 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         /**
          * POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
          * @summary AuthZEN 1.0 boxcarred access evaluations
+         * @param {EvaluateBatchRequest} evaluateBatchRequest AuthZEN Authorization API 1.0 batch evaluation request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluateBatch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        evaluateBatch: async (evaluateBatchRequest: EvaluateBatchRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'evaluateBatchRequest' is not null or undefined
+            assertParamExists('evaluateBatch', 'evaluateBatchRequest', evaluateBatchRequest)
             const localVarPath = `/api/v1/authz/v1/evaluations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -428,9 +503,12 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(evaluateBatchRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -698,10 +776,11 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
          * @param {string} resourceType 
          * @param {string} resourceId 
          * @param {string} attributeSlug 
+         * @param {SetResourceAttributeRequest} setResourceAttributeRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setResourceAttribute: async (orgId: string, resourceType: string, resourceId: string, attributeSlug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        setResourceAttribute: async (orgId: string, resourceType: string, resourceId: string, attributeSlug: string, setResourceAttributeRequest: SetResourceAttributeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('setResourceAttribute', 'orgId', orgId)
             // verify required parameter 'resourceType' is not null or undefined
@@ -710,6 +789,8 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             assertParamExists('setResourceAttribute', 'resourceId', resourceId)
             // verify required parameter 'attributeSlug' is not null or undefined
             assertParamExists('setResourceAttribute', 'attributeSlug', attributeSlug)
+            // verify required parameter 'setResourceAttributeRequest' is not null or undefined
+            assertParamExists('setResourceAttribute', 'setResourceAttributeRequest', setResourceAttributeRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"resourceType"}}`, encodeURIComponent(String(resourceType)))
@@ -732,9 +813,12 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(setResourceAttributeRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -747,16 +831,19 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
          * @param {string} orgId 
          * @param {string} userId 
          * @param {string} attributeSlug 
+         * @param {SetResourceAttributeRequest} setResourceAttributeRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setUserAttribute: async (orgId: string, userId: string, attributeSlug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        setUserAttribute: async (orgId: string, userId: string, attributeSlug: string, setResourceAttributeRequest: SetResourceAttributeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('setUserAttribute', 'orgId', orgId)
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('setUserAttribute', 'userId', userId)
             // verify required parameter 'attributeSlug' is not null or undefined
             assertParamExists('setUserAttribute', 'attributeSlug', attributeSlug)
+            // verify required parameter 'setResourceAttributeRequest' is not null or undefined
+            assertParamExists('setUserAttribute', 'setResourceAttributeRequest', setResourceAttributeRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
@@ -778,9 +865,12 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(setResourceAttributeRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -801,11 +891,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
          * POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
          * @summary Evaluate an ABAC policy decision for the caller
          * @param {string} orgId 
+         * @param {CheckAbacRequest} checkAbacRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkAbac(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckAbacResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.checkAbac(orgId, options);
+        async checkAbac(orgId: string, checkAbacRequest: CheckAbacRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckAbacResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkAbac(orgId, checkAbacRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkAbac']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -814,11 +905,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
          * POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
          * @summary Evaluate up to 100 ABAC checks for the caller in one call
          * @param {string} orgId 
+         * @param {CheckAbacBulkRequest} checkAbacBulkRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkAbacBulk(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckAbacBulkResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.checkAbacBulk(orgId, options);
+        async checkAbacBulk(orgId: string, checkAbacBulkRequest: CheckAbacBulkRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckAbacBulkResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkAbacBulk(orgId, checkAbacBulkRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkAbacBulk']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -826,11 +918,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         /**
          * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check whether the subject holds all of the permissions
+         * @param {CheckPermissionsBulkRequest} checkPermissionsBulkRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkAllPermissions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckAnyPermissionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.checkAllPermissions(options);
+        async checkAllPermissions(checkPermissionsBulkRequest: CheckPermissionsBulkRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckAnyPermissionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkAllPermissions(checkPermissionsBulkRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkAllPermissions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -838,11 +931,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         /**
          * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check whether the subject holds any of the permissions
+         * @param {CheckPermissionsBulkRequest} checkPermissionsBulkRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkAnyPermission(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckAnyPermissionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.checkAnyPermission(options);
+        async checkAnyPermission(checkPermissionsBulkRequest: CheckPermissionsBulkRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckAnyPermissionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkAnyPermission(checkPermissionsBulkRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkAnyPermission']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -850,11 +944,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         /**
          * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
          * @summary Check one permission
+         * @param {CheckPermissionRequest} checkPermissionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkPermission(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckPermissionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.checkPermission(options);
+        async checkPermission(checkPermissionRequest: CheckPermissionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckPermissionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkPermission(checkPermissionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkPermission']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -862,11 +957,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         /**
          * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check up to 100 permissions in one call
+         * @param {CheckPermissionsBulkRequest} checkPermissionsBulkRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkPermissionsBulk(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckPermissionsBulkResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.checkPermissionsBulk(options);
+        async checkPermissionsBulk(checkPermissionsBulkRequest: CheckPermissionsBulkRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckPermissionsBulkResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkPermissionsBulk(checkPermissionsBulkRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkPermissionsBulk']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -874,11 +970,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         /**
          * POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
          * @summary Zanzibar relationship check
+         * @param {CheckRelationRequest} checkRelationRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkRelation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckRelationResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.checkRelation(options);
+        async checkRelation(checkRelationRequest: CheckRelationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckRelationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkRelation(checkRelationRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkRelation']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -887,11 +984,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
          * 
          * @summary Zanzibar relationship check
          * @param {string} orgId 
+         * @param {CheckRelationScopedRequest} checkRelationScopedRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkRelationScoped(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckRelationScopedResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.checkRelationScoped(orgId, options);
+        async checkRelationScoped(orgId: string, checkRelationScopedRequest: CheckRelationScopedRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckRelationScopedResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkRelationScoped(orgId, checkRelationScopedRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkRelationScoped']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -899,11 +997,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         /**
          * POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
          * @summary AuthZEN 1.0 access evaluation
+         * @param {EvaluateRequest} evaluateRequest AuthZEN Authorization API 1.0 evaluation request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async evaluate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthZenDecision>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.evaluate(options);
+        async evaluate(evaluateRequest: EvaluateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthZenDecision>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.evaluate(evaluateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.evaluate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -911,11 +1010,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         /**
          * POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
          * @summary AuthZEN 1.0 boxcarred access evaluations
+         * @param {EvaluateBatchRequest} evaluateBatchRequest AuthZEN Authorization API 1.0 batch evaluation request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async evaluateBatch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvaluateBatchResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.evaluateBatch(options);
+        async evaluateBatch(evaluateBatchRequest: EvaluateBatchRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvaluateBatchResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.evaluateBatch(evaluateBatchRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.evaluateBatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1008,11 +1108,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
          * @param {string} resourceType 
          * @param {string} resourceId 
          * @param {string} attributeSlug 
+         * @param {SetResourceAttributeRequest} setResourceAttributeRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async setResourceAttribute(orgId: string, resourceType: string, resourceId: string, attributeSlug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetResourceAttributeResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.setResourceAttribute(orgId, resourceType, resourceId, attributeSlug, options);
+        async setResourceAttribute(orgId: string, resourceType: string, resourceId: string, attributeSlug: string, setResourceAttributeRequest: SetResourceAttributeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetResourceAttributeResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.setResourceAttribute(orgId, resourceType, resourceId, attributeSlug, setResourceAttributeRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.setResourceAttribute']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1023,11 +1124,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
          * @param {string} orgId 
          * @param {string} userId 
          * @param {string} attributeSlug 
+         * @param {SetResourceAttributeRequest} setResourceAttributeRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async setUserAttribute(orgId: string, userId: string, attributeSlug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetUserAttributeResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.setUserAttribute(orgId, userId, attributeSlug, options);
+        async setUserAttribute(orgId: string, userId: string, attributeSlug: string, setResourceAttributeRequest: SetResourceAttributeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetUserAttributeResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.setUserAttribute(orgId, userId, attributeSlug, setResourceAttributeRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.setUserAttribute']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1050,7 +1152,7 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         checkAbac(requestParameters: AuthorizationApiCheckAbacRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckAbacResponse> {
-            return localVarFp.checkAbac(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.checkAbac(requestParameters.orgId, requestParameters.checkAbacRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
@@ -1060,52 +1162,57 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         checkAbacBulk(requestParameters: AuthorizationApiCheckAbacBulkRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckAbacBulkResponse> {
-            return localVarFp.checkAbacBulk(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.checkAbacBulk(requestParameters.orgId, requestParameters.checkAbacBulkRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check whether the subject holds all of the permissions
+         * @param {AuthorizationApiCheckAllPermissionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkAllPermissions(options?: RawAxiosRequestConfig): AxiosPromise<CheckAnyPermissionResponse> {
-            return localVarFp.checkAllPermissions(options).then((request) => request(axios, basePath));
+        checkAllPermissions(requestParameters: AuthorizationApiCheckAllPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckAnyPermissionResponse> {
+            return localVarFp.checkAllPermissions(requestParameters.checkPermissionsBulkRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check whether the subject holds any of the permissions
+         * @param {AuthorizationApiCheckAnyPermissionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkAnyPermission(options?: RawAxiosRequestConfig): AxiosPromise<CheckAnyPermissionResponse> {
-            return localVarFp.checkAnyPermission(options).then((request) => request(axios, basePath));
+        checkAnyPermission(requestParameters: AuthorizationApiCheckAnyPermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckAnyPermissionResponse> {
+            return localVarFp.checkAnyPermission(requestParameters.checkPermissionsBulkRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
          * @summary Check one permission
+         * @param {AuthorizationApiCheckPermissionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkPermission(options?: RawAxiosRequestConfig): AxiosPromise<CheckPermissionResponse> {
-            return localVarFp.checkPermission(options).then((request) => request(axios, basePath));
+        checkPermission(requestParameters: AuthorizationApiCheckPermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckPermissionResponse> {
+            return localVarFp.checkPermission(requestParameters.checkPermissionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check up to 100 permissions in one call
+         * @param {AuthorizationApiCheckPermissionsBulkRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkPermissionsBulk(options?: RawAxiosRequestConfig): AxiosPromise<CheckPermissionsBulkResponse> {
-            return localVarFp.checkPermissionsBulk(options).then((request) => request(axios, basePath));
+        checkPermissionsBulk(requestParameters: AuthorizationApiCheckPermissionsBulkRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckPermissionsBulkResponse> {
+            return localVarFp.checkPermissionsBulk(requestParameters.checkPermissionsBulkRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
          * @summary Zanzibar relationship check
+         * @param {AuthorizationApiCheckRelationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkRelation(options?: RawAxiosRequestConfig): AxiosPromise<CheckRelationResponse> {
-            return localVarFp.checkRelation(options).then((request) => request(axios, basePath));
+        checkRelation(requestParameters: AuthorizationApiCheckRelationRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckRelationResponse> {
+            return localVarFp.checkRelation(requestParameters.checkRelationRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1115,25 +1222,27 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         checkRelationScoped(requestParameters: AuthorizationApiCheckRelationScopedRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckRelationScopedResponse> {
-            return localVarFp.checkRelationScoped(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.checkRelationScoped(requestParameters.orgId, requestParameters.checkRelationScopedRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
          * @summary AuthZEN 1.0 access evaluation
+         * @param {AuthorizationApiEvaluateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluate(options?: RawAxiosRequestConfig): AxiosPromise<AuthZenDecision> {
-            return localVarFp.evaluate(options).then((request) => request(axios, basePath));
+        evaluate(requestParameters: AuthorizationApiEvaluateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthZenDecision> {
+            return localVarFp.evaluate(requestParameters.evaluateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
          * @summary AuthZEN 1.0 boxcarred access evaluations
+         * @param {AuthorizationApiEvaluateBatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluateBatch(options?: RawAxiosRequestConfig): AxiosPromise<EvaluateBatchResponse> {
-            return localVarFp.evaluateBatch(options).then((request) => request(axios, basePath));
+        evaluateBatch(requestParameters: AuthorizationApiEvaluateBatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<EvaluateBatchResponse> {
+            return localVarFp.evaluateBatch(requestParameters.evaluateBatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/zanzibar/expand Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\" } Response: {   \"tree\": {     \"type\": \"union\" | \"intersection\" | \"leaf\",     \"object\": \"document:123\",     \"relation\": \"viewer\",     \"children\": [ ...nested nodes... ],     \"subjects\": [ \"user:1\", \"group:2#member\" ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope) — there is no \"self\" variant.
@@ -1202,7 +1311,7 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         setResourceAttribute(requestParameters: AuthorizationApiSetResourceAttributeRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetResourceAttributeResponse> {
-            return localVarFp.setResourceAttribute(requestParameters.orgId, requestParameters.resourceType, requestParameters.resourceId, requestParameters.attributeSlug, options).then((request) => request(axios, basePath));
+            return localVarFp.setResourceAttribute(requestParameters.orgId, requestParameters.resourceType, requestParameters.resourceId, requestParameters.attributeSlug, requestParameters.setResourceAttributeRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
@@ -1212,7 +1321,7 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         setUserAttribute(requestParameters: AuthorizationApiSetUserAttributeRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetUserAttributeResponse> {
-            return localVarFp.setUserAttribute(requestParameters.orgId, requestParameters.userId, requestParameters.attributeSlug, options).then((request) => request(axios, basePath));
+            return localVarFp.setUserAttribute(requestParameters.orgId, requestParameters.userId, requestParameters.attributeSlug, requestParameters.setResourceAttributeRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1246,47 +1355,52 @@ export interface AuthorizationApiInterface {
     /**
      * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
      * @summary Check whether the subject holds all of the permissions
+     * @param {AuthorizationApiCheckAllPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    checkAllPermissions(options?: RawAxiosRequestConfig): AxiosPromise<CheckAnyPermissionResponse>;
+    checkAllPermissions(requestParameters: AuthorizationApiCheckAllPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckAnyPermissionResponse>;
 
     /**
      * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
      * @summary Check whether the subject holds any of the permissions
+     * @param {AuthorizationApiCheckAnyPermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    checkAnyPermission(options?: RawAxiosRequestConfig): AxiosPromise<CheckAnyPermissionResponse>;
+    checkAnyPermission(requestParameters: AuthorizationApiCheckAnyPermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckAnyPermissionResponse>;
 
     /**
      * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
      * @summary Check one permission
+     * @param {AuthorizationApiCheckPermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    checkPermission(options?: RawAxiosRequestConfig): AxiosPromise<CheckPermissionResponse>;
+    checkPermission(requestParameters: AuthorizationApiCheckPermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckPermissionResponse>;
 
     /**
      * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
      * @summary Check up to 100 permissions in one call
+     * @param {AuthorizationApiCheckPermissionsBulkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    checkPermissionsBulk(options?: RawAxiosRequestConfig): AxiosPromise<CheckPermissionsBulkResponse>;
+    checkPermissionsBulk(requestParameters: AuthorizationApiCheckPermissionsBulkRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckPermissionsBulkResponse>;
 
     /**
      * POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
      * @summary Zanzibar relationship check
+     * @param {AuthorizationApiCheckRelationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    checkRelation(options?: RawAxiosRequestConfig): AxiosPromise<CheckRelationResponse>;
+    checkRelation(requestParameters: AuthorizationApiCheckRelationRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckRelationResponse>;
 
     /**
      * 
@@ -1301,20 +1415,22 @@ export interface AuthorizationApiInterface {
     /**
      * POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
      * @summary AuthZEN 1.0 access evaluation
+     * @param {AuthorizationApiEvaluateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    evaluate(options?: RawAxiosRequestConfig): AxiosPromise<AuthZenDecision>;
+    evaluate(requestParameters: AuthorizationApiEvaluateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthZenDecision>;
 
     /**
      * POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
      * @summary AuthZEN 1.0 boxcarred access evaluations
+     * @param {AuthorizationApiEvaluateBatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    evaluateBatch(options?: RawAxiosRequestConfig): AxiosPromise<EvaluateBatchResponse>;
+    evaluateBatch(requestParameters: AuthorizationApiEvaluateBatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<EvaluateBatchResponse>;
 
     /**
      * POST /api/v1/authz/zanzibar/expand Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\" } Response: {   \"tree\": {     \"type\": \"union\" | \"intersection\" | \"leaf\",     \"object\": \"document:123\",     \"relation\": \"viewer\",     \"children\": [ ...nested nodes... ],     \"subjects\": [ \"user:1\", \"group:2#member\" ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope) — there is no \"self\" variant.
@@ -1409,6 +1525,13 @@ export interface AuthorizationApiCheckAbacRequest {
      * @memberof AuthorizationApiCheckAbac
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {CheckAbacRequest}
+     * @memberof AuthorizationApiCheckAbac
+     */
+    readonly checkAbacRequest: CheckAbacRequest
 }
 
 /**
@@ -1423,6 +1546,83 @@ export interface AuthorizationApiCheckAbacBulkRequest {
      * @memberof AuthorizationApiCheckAbacBulk
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {CheckAbacBulkRequest}
+     * @memberof AuthorizationApiCheckAbacBulk
+     */
+    readonly checkAbacBulkRequest: CheckAbacBulkRequest
+}
+
+/**
+ * Request parameters for checkAllPermissions operation in AuthorizationApi.
+ * @export
+ * @interface AuthorizationApiCheckAllPermissionsRequest
+ */
+export interface AuthorizationApiCheckAllPermissionsRequest {
+    /**
+     * 
+     * @type {CheckPermissionsBulkRequest}
+     * @memberof AuthorizationApiCheckAllPermissions
+     */
+    readonly checkPermissionsBulkRequest: CheckPermissionsBulkRequest
+}
+
+/**
+ * Request parameters for checkAnyPermission operation in AuthorizationApi.
+ * @export
+ * @interface AuthorizationApiCheckAnyPermissionRequest
+ */
+export interface AuthorizationApiCheckAnyPermissionRequest {
+    /**
+     * 
+     * @type {CheckPermissionsBulkRequest}
+     * @memberof AuthorizationApiCheckAnyPermission
+     */
+    readonly checkPermissionsBulkRequest: CheckPermissionsBulkRequest
+}
+
+/**
+ * Request parameters for checkPermission operation in AuthorizationApi.
+ * @export
+ * @interface AuthorizationApiCheckPermissionRequest
+ */
+export interface AuthorizationApiCheckPermissionRequest {
+    /**
+     * 
+     * @type {CheckPermissionRequest}
+     * @memberof AuthorizationApiCheckPermission
+     */
+    readonly checkPermissionRequest: CheckPermissionRequest
+}
+
+/**
+ * Request parameters for checkPermissionsBulk operation in AuthorizationApi.
+ * @export
+ * @interface AuthorizationApiCheckPermissionsBulkRequest
+ */
+export interface AuthorizationApiCheckPermissionsBulkRequest {
+    /**
+     * 
+     * @type {CheckPermissionsBulkRequest}
+     * @memberof AuthorizationApiCheckPermissionsBulk
+     */
+    readonly checkPermissionsBulkRequest: CheckPermissionsBulkRequest
+}
+
+/**
+ * Request parameters for checkRelation operation in AuthorizationApi.
+ * @export
+ * @interface AuthorizationApiCheckRelationRequest
+ */
+export interface AuthorizationApiCheckRelationRequest {
+    /**
+     * 
+     * @type {CheckRelationRequest}
+     * @memberof AuthorizationApiCheckRelation
+     */
+    readonly checkRelationRequest: CheckRelationRequest
 }
 
 /**
@@ -1437,6 +1637,41 @@ export interface AuthorizationApiCheckRelationScopedRequest {
      * @memberof AuthorizationApiCheckRelationScoped
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {CheckRelationScopedRequest}
+     * @memberof AuthorizationApiCheckRelationScoped
+     */
+    readonly checkRelationScopedRequest: CheckRelationScopedRequest
+}
+
+/**
+ * Request parameters for evaluate operation in AuthorizationApi.
+ * @export
+ * @interface AuthorizationApiEvaluateRequest
+ */
+export interface AuthorizationApiEvaluateRequest {
+    /**
+     * AuthZEN Authorization API 1.0 evaluation request.
+     * @type {EvaluateRequest}
+     * @memberof AuthorizationApiEvaluate
+     */
+    readonly evaluateRequest: EvaluateRequest
+}
+
+/**
+ * Request parameters for evaluateBatch operation in AuthorizationApi.
+ * @export
+ * @interface AuthorizationApiEvaluateBatchRequest
+ */
+export interface AuthorizationApiEvaluateBatchRequest {
+    /**
+     * AuthZEN Authorization API 1.0 batch evaluation request.
+     * @type {EvaluateBatchRequest}
+     * @memberof AuthorizationApiEvaluateBatch
+     */
+    readonly evaluateBatchRequest: EvaluateBatchRequest
 }
 
 /**
@@ -1570,6 +1805,13 @@ export interface AuthorizationApiSetResourceAttributeRequest {
      * @memberof AuthorizationApiSetResourceAttribute
      */
     readonly attributeSlug: string
+
+    /**
+     * 
+     * @type {SetResourceAttributeRequest}
+     * @memberof AuthorizationApiSetResourceAttribute
+     */
+    readonly setResourceAttributeRequest: SetResourceAttributeRequest
 }
 
 /**
@@ -1598,6 +1840,13 @@ export interface AuthorizationApiSetUserAttributeRequest {
      * @memberof AuthorizationApiSetUserAttribute
      */
     readonly attributeSlug: string
+
+    /**
+     * 
+     * @type {SetResourceAttributeRequest}
+     * @memberof AuthorizationApiSetUserAttribute
+     */
+    readonly setResourceAttributeRequest: SetResourceAttributeRequest
 }
 
 /**
@@ -1616,7 +1865,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
      * @memberof AuthorizationApi
      */
     public checkAbac(requestParameters: AuthorizationApiCheckAbacRequest, options?: RawAxiosRequestConfig) {
-        return AuthorizationApiFp(this.configuration).checkAbac(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AuthorizationApiFp(this.configuration).checkAbac(requestParameters.orgId, requestParameters.checkAbacRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1628,62 +1877,67 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
      * @memberof AuthorizationApi
      */
     public checkAbacBulk(requestParameters: AuthorizationApiCheckAbacBulkRequest, options?: RawAxiosRequestConfig) {
-        return AuthorizationApiFp(this.configuration).checkAbacBulk(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AuthorizationApiFp(this.configuration).checkAbacBulk(requestParameters.orgId, requestParameters.checkAbacBulkRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
      * @summary Check whether the subject holds all of the permissions
+     * @param {AuthorizationApiCheckAllPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
      */
-    public checkAllPermissions(options?: RawAxiosRequestConfig) {
-        return AuthorizationApiFp(this.configuration).checkAllPermissions(options).then((request) => request(this.axios, this.basePath));
+    public checkAllPermissions(requestParameters: AuthorizationApiCheckAllPermissionsRequest, options?: RawAxiosRequestConfig) {
+        return AuthorizationApiFp(this.configuration).checkAllPermissions(requestParameters.checkPermissionsBulkRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
      * @summary Check whether the subject holds any of the permissions
+     * @param {AuthorizationApiCheckAnyPermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
      */
-    public checkAnyPermission(options?: RawAxiosRequestConfig) {
-        return AuthorizationApiFp(this.configuration).checkAnyPermission(options).then((request) => request(this.axios, this.basePath));
+    public checkAnyPermission(requestParameters: AuthorizationApiCheckAnyPermissionRequest, options?: RawAxiosRequestConfig) {
+        return AuthorizationApiFp(this.configuration).checkAnyPermission(requestParameters.checkPermissionsBulkRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"resource_id\": \"doc-123\"},        // read: resource_id + defined environment attribute slugs   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
      * @summary Check one permission
+     * @param {AuthorizationApiCheckPermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
      */
-    public checkPermission(options?: RawAxiosRequestConfig) {
-        return AuthorizationApiFp(this.configuration).checkPermission(options).then((request) => request(this.axios, this.basePath));
+    public checkPermission(requestParameters: AuthorizationApiCheckPermissionRequest, options?: RawAxiosRequestConfig) {
+        return AuthorizationApiFp(this.configuration).checkPermission(requestParameters.checkPermissionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"resource_id\": \"doc-123\"},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
      * @summary Check up to 100 permissions in one call
+     * @param {AuthorizationApiCheckPermissionsBulkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
      */
-    public checkPermissionsBulk(options?: RawAxiosRequestConfig) {
-        return AuthorizationApiFp(this.configuration).checkPermissionsBulk(options).then((request) => request(this.axios, this.basePath));
+    public checkPermissionsBulk(requestParameters: AuthorizationApiCheckPermissionsBulkRequest, options?: RawAxiosRequestConfig) {
+        return AuthorizationApiFp(this.configuration).checkPermissionsBulk(requestParameters.checkPermissionsBulkRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
      * @summary Zanzibar relationship check
+     * @param {AuthorizationApiCheckRelationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
      */
-    public checkRelation(options?: RawAxiosRequestConfig) {
-        return AuthorizationApiFp(this.configuration).checkRelation(options).then((request) => request(this.axios, this.basePath));
+    public checkRelation(requestParameters: AuthorizationApiCheckRelationRequest, options?: RawAxiosRequestConfig) {
+        return AuthorizationApiFp(this.configuration).checkRelation(requestParameters.checkRelationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1695,29 +1949,31 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
      * @memberof AuthorizationApi
      */
     public checkRelationScoped(requestParameters: AuthorizationApiCheckRelationScopedRequest, options?: RawAxiosRequestConfig) {
-        return AuthorizationApiFp(this.configuration).checkRelationScoped(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AuthorizationApiFp(this.configuration).checkRelationScoped(requestParameters.orgId, requestParameters.checkRelationScopedRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
      * @summary AuthZEN 1.0 access evaluation
+     * @param {AuthorizationApiEvaluateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
      */
-    public evaluate(options?: RawAxiosRequestConfig) {
-        return AuthorizationApiFp(this.configuration).evaluate(options).then((request) => request(this.axios, this.basePath));
+    public evaluate(requestParameters: AuthorizationApiEvaluateRequest, options?: RawAxiosRequestConfig) {
+        return AuthorizationApiFp(this.configuration).evaluate(requestParameters.evaluateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
      * @summary AuthZEN 1.0 boxcarred access evaluations
+     * @param {AuthorizationApiEvaluateBatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
      */
-    public evaluateBatch(options?: RawAxiosRequestConfig) {
-        return AuthorizationApiFp(this.configuration).evaluateBatch(options).then((request) => request(this.axios, this.basePath));
+    public evaluateBatch(requestParameters: AuthorizationApiEvaluateBatchRequest, options?: RawAxiosRequestConfig) {
+        return AuthorizationApiFp(this.configuration).evaluateBatch(requestParameters.evaluateBatchRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1800,7 +2056,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
      * @memberof AuthorizationApi
      */
     public setResourceAttribute(requestParameters: AuthorizationApiSetResourceAttributeRequest, options?: RawAxiosRequestConfig) {
-        return AuthorizationApiFp(this.configuration).setResourceAttribute(requestParameters.orgId, requestParameters.resourceType, requestParameters.resourceId, requestParameters.attributeSlug, options).then((request) => request(this.axios, this.basePath));
+        return AuthorizationApiFp(this.configuration).setResourceAttribute(requestParameters.orgId, requestParameters.resourceType, requestParameters.resourceId, requestParameters.attributeSlug, requestParameters.setResourceAttributeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1812,7 +2068,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
      * @memberof AuthorizationApi
      */
     public setUserAttribute(requestParameters: AuthorizationApiSetUserAttributeRequest, options?: RawAxiosRequestConfig) {
-        return AuthorizationApiFp(this.configuration).setUserAttribute(requestParameters.orgId, requestParameters.userId, requestParameters.attributeSlug, options).then((request) => request(this.axios, this.basePath));
+        return AuthorizationApiFp(this.configuration).setUserAttribute(requestParameters.orgId, requestParameters.userId, requestParameters.attributeSlug, requestParameters.setResourceAttributeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

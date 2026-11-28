@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -22,15 +22,23 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AddUserGroupRequest } from '../models';
+// @ts-ignore
 import type { AddUserGroupResponse } from '../models';
 // @ts-ignore
+import type { AddUserPermissionRequest } from '../models';
+// @ts-ignore
 import type { AddUserPermissionResponse } from '../models';
+// @ts-ignore
+import type { AddUserRoleRequest } from '../models';
 // @ts-ignore
 import type { AddUserRoleResponse } from '../models';
 // @ts-ignore
 import type { AdminAgentsGetResponse } from '../models';
 // @ts-ignore
 import type { AdminGroupsGroupsGetRolesResponse } from '../models';
+// @ts-ignore
+import type { AdminGroupsUpdateRolesRequest } from '../models';
 // @ts-ignore
 import type { AdminIdentitiesLegacySamlRelinkRequest } from '../models';
 // @ts-ignore
@@ -47,6 +55,8 @@ import type { AdminRolesGetPermissionsResponse } from '../models';
 import type { AdminUsersRestoreResponse } from '../models';
 // @ts-ignore
 import type { BlockUserResponse } from '../models';
+// @ts-ignore
+import type { CreateUserRequest } from '../models';
 // @ts-ignore
 import type { CreateUserResponse } from '../models';
 // @ts-ignore
@@ -66,13 +76,19 @@ import type { RemoveUserRoleResponse } from '../models';
 // @ts-ignore
 import type { SendUserVerificationEmailResponse } from '../models';
 // @ts-ignore
+import type { SetUserPasswordPostRequest } from '../models';
+// @ts-ignore
 import type { SetUserPasswordPostResponse } from '../models';
 // @ts-ignore
 import type { TriggerUserPasswordResetResponse } from '../models';
 // @ts-ignore
 import type { UnblockUserResponse } from '../models';
 // @ts-ignore
+import type { UpdateUserGroupsRequest } from '../models';
+// @ts-ignore
 import type { UpdateUserGroupsResponse } from '../models';
+// @ts-ignore
+import type { UpdateUserRequest } from '../models';
 // @ts-ignore
 import type { UpdateUserResponse } from '../models';
 // @ts-ignore
@@ -88,14 +104,17 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
          * @summary Add a user to a group
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {AddUserGroupRequest} addUserGroupRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addUserGroup: async (orgId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        addUserGroup: async (orgId: string, userId: string, addUserGroupRequest: AddUserGroupRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('addUserGroup', 'orgId', orgId)
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('addUserGroup', 'userId', userId)
+            // verify required parameter 'addUserGroupRequest' is not null or undefined
+            assertParamExists('addUserGroup', 'addUserGroupRequest', addUserGroupRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/users/{userId}/groups`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
@@ -119,9 +138,12 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(addUserGroupRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -129,18 +151,21 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+         * Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization\'s own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
          * @summary Assign a permission to a user
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {AddUserPermissionRequest} addUserPermissionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addUserPermission: async (orgId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        addUserPermission: async (orgId: string, userId: string, addUserPermissionRequest: AddUserPermissionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('addUserPermission', 'orgId', orgId)
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('addUserPermission', 'userId', userId)
+            // verify required parameter 'addUserPermissionRequest' is not null or undefined
+            assertParamExists('addUserPermission', 'addUserPermissionRequest', addUserPermissionRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/users/{userId}/permissions`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
@@ -164,9 +189,12 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(addUserPermissionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -178,14 +206,17 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
          * @summary Assign a role to a user
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {AddUserRoleRequest} addUserRoleRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addUserRole: async (orgId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        addUserRole: async (orgId: string, userId: string, addUserRoleRequest: AddUserRoleRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('addUserRole', 'orgId', orgId)
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('addUserRole', 'userId', userId)
+            // verify required parameter 'addUserRoleRequest' is not null or undefined
+            assertParamExists('addUserRole', 'addUserRoleRequest', addUserRoleRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/users/{userId}/roles`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
@@ -209,9 +240,12 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(addUserRoleRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -550,12 +584,15 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
          * 
          * @summary Create a user
          * @param {string} orgId 
+         * @param {CreateUserRequest} createUserRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUser: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createUser: async (orgId: string, createUserRequest: CreateUserRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('createUser', 'orgId', orgId)
+            // verify required parameter 'createUserRequest' is not null or undefined
+            assertParamExists('createUser', 'createUserRequest', createUserRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/users`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -578,9 +615,12 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createUserRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -963,14 +1003,17 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
          * @summary Update a user
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {UpdateUserRequest} updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchUser: async (orgId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchUser: async (orgId: string, userId: string, updateUserRequest: UpdateUserRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('patchUser', 'orgId', orgId)
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('patchUser', 'userId', userId)
+            // verify required parameter 'updateUserRequest' is not null or undefined
+            assertParamExists('patchUser', 'updateUserRequest', updateUserRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/users/{userId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
@@ -994,9 +1037,12 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateUserRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1246,14 +1292,17 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
          * @summary Set a user\'s password
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {SetUserPasswordPostRequest} setUserPasswordPostRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setUserPassword: async (orgId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        setUserPassword: async (orgId: string, userId: string, setUserPasswordPostRequest: SetUserPasswordPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('setUserPassword', 'orgId', orgId)
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('setUserPassword', 'userId', userId)
+            // verify required parameter 'setUserPasswordPostRequest' is not null or undefined
+            assertParamExists('setUserPassword', 'setUserPasswordPostRequest', setUserPasswordPostRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/users/{userId}/password`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
@@ -1277,9 +1326,12 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(setUserPasswordPostRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1291,14 +1343,17 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
          * @summary Set a user\'s password
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {SetUserPasswordPostRequest} setUserPasswordPostRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setUserPasswordPost: async (orgId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        setUserPasswordPost: async (orgId: string, userId: string, setUserPasswordPostRequest: SetUserPasswordPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('setUserPasswordPost', 'orgId', orgId)
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('setUserPasswordPost', 'userId', userId)
+            // verify required parameter 'setUserPasswordPostRequest' is not null or undefined
+            assertParamExists('setUserPasswordPost', 'setUserPasswordPostRequest', setUserPasswordPostRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/users/{userId}/password`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
@@ -1322,9 +1377,12 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(setUserPasswordPostRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1426,14 +1484,17 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
          * @summary Update a user
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {UpdateUserRequest} updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUser: async (orgId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateUser: async (orgId: string, userId: string, updateUserRequest: UpdateUserRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('updateUser', 'orgId', orgId)
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('updateUser', 'userId', userId)
+            // verify required parameter 'updateUserRequest' is not null or undefined
+            assertParamExists('updateUser', 'updateUserRequest', updateUserRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/users/{userId}`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
@@ -1457,9 +1518,12 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateUserRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1471,14 +1535,17 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
          * @summary Replace a user\'s groups
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {UpdateUserGroupsRequest} updateUserGroupsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUserGroups: async (orgId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateUserGroups: async (orgId: string, userId: string, updateUserGroupsRequest: UpdateUserGroupsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('updateUserGroups', 'orgId', orgId)
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('updateUserGroups', 'userId', userId)
+            // verify required parameter 'updateUserGroupsRequest' is not null or undefined
+            assertParamExists('updateUserGroups', 'updateUserGroupsRequest', updateUserGroupsRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/users/{userId}/groups`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
@@ -1502,9 +1569,12 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateUserGroupsRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1516,14 +1586,17 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
          * @summary Replace a user\'s roles
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {AdminGroupsUpdateRolesRequest} adminGroupsUpdateRolesRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUserRoles: async (orgId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateUserRoles: async (orgId: string, userId: string, adminGroupsUpdateRolesRequest: AdminGroupsUpdateRolesRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('updateUserRoles', 'orgId', orgId)
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('updateUserRoles', 'userId', userId)
+            // verify required parameter 'adminGroupsUpdateRolesRequest' is not null or undefined
+            assertParamExists('updateUserRoles', 'adminGroupsUpdateRolesRequest', adminGroupsUpdateRolesRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/users/{userId}/roles`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
@@ -1547,9 +1620,12 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminGroupsUpdateRolesRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1571,25 +1647,27 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
          * @summary Add a user to a group
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {AddUserGroupRequest} addUserGroupRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addUserGroup(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AddUserGroupResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addUserGroup(orgId, userId, options);
+        async addUserGroup(orgId: string, userId: string, addUserGroupRequest: AddUserGroupRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AddUserGroupResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addUserGroup(orgId, userId, addUserGroupRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.addUserGroup']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+         * Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization\'s own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
          * @summary Assign a permission to a user
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {AddUserPermissionRequest} addUserPermissionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addUserPermission(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AddUserPermissionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addUserPermission(orgId, userId, options);
+        async addUserPermission(orgId: string, userId: string, addUserPermissionRequest: AddUserPermissionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AddUserPermissionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addUserPermission(orgId, userId, addUserPermissionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.addUserPermission']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1599,11 +1677,12 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
          * @summary Assign a role to a user
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {AddUserRoleRequest} addUserRoleRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addUserRole(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AddUserRoleResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addUserRole(orgId, userId, options);
+        async addUserRole(orgId: string, userId: string, addUserRoleRequest: AddUserRoleRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AddUserRoleResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addUserRole(orgId, userId, addUserRoleRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.addUserRole']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1712,11 +1791,12 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
          * 
          * @summary Create a user
          * @param {string} orgId 
+         * @param {CreateUserRequest} createUserRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createUser(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateUserResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createUser(orgId, options);
+        async createUser(orgId: string, createUserRequest: CreateUserRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateUserResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createUser(orgId, createUserRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.createUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1835,11 +1915,12 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
          * @summary Update a user
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {UpdateUserRequest} updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateUserResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchUser(orgId, userId, options);
+        async patchUser(orgId: string, userId: string, updateUserRequest: UpdateUserRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateUserResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchUser(orgId, userId, updateUserRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.patchUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1923,11 +2004,12 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
          * @summary Set a user\'s password
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {SetUserPasswordPostRequest} setUserPasswordPostRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async setUserPassword(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetUserPasswordPostResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.setUserPassword(orgId, userId, options);
+        async setUserPassword(orgId: string, userId: string, setUserPasswordPostRequest: SetUserPasswordPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetUserPasswordPostResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.setUserPassword(orgId, userId, setUserPasswordPostRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.setUserPassword']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1937,11 +2019,12 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
          * @summary Set a user\'s password
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {SetUserPasswordPostRequest} setUserPasswordPostRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async setUserPasswordPost(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetUserPasswordPostResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.setUserPasswordPost(orgId, userId, options);
+        async setUserPasswordPost(orgId: string, userId: string, setUserPasswordPostRequest: SetUserPasswordPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetUserPasswordPostResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.setUserPasswordPost(orgId, userId, setUserPasswordPostRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.setUserPasswordPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1979,11 +2062,12 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
          * @summary Update a user
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {UpdateUserRequest} updateUserRequest Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateUserResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(orgId, userId, options);
+        async updateUser(orgId: string, userId: string, updateUserRequest: UpdateUserRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateUserResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(orgId, userId, updateUserRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.updateUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1993,11 +2077,12 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
          * @summary Replace a user\'s groups
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {UpdateUserGroupsRequest} updateUserGroupsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUserGroups(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateUserGroupsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUserGroups(orgId, userId, options);
+        async updateUserGroups(orgId: string, userId: string, updateUserGroupsRequest: UpdateUserGroupsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateUserGroupsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUserGroups(orgId, userId, updateUserGroupsRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.updateUserGroups']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2007,11 +2092,12 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
          * @summary Replace a user\'s roles
          * @param {string} orgId 
          * @param {string} userId 
+         * @param {AdminGroupsUpdateRolesRequest} adminGroupsUpdateRolesRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUserRoles(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateUserRolesResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUserRoles(orgId, userId, options);
+        async updateUserRoles(orgId: string, userId: string, adminGroupsUpdateRolesRequest: AdminGroupsUpdateRolesRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateUserRolesResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUserRoles(orgId, userId, adminGroupsUpdateRolesRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.updateUserRoles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2034,17 +2120,17 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         addUserGroup(requestParameters: AdminUsersApiAddUserGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<AddUserGroupResponse> {
-            return localVarFp.addUserGroup(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
+            return localVarFp.addUserGroup(requestParameters.orgId, requestParameters.userId, requestParameters.addUserGroupRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+         * Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization\'s own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
          * @summary Assign a permission to a user
          * @param {AdminUsersApiAddUserPermissionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         addUserPermission(requestParameters: AdminUsersApiAddUserPermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<AddUserPermissionResponse> {
-            return localVarFp.addUserPermission(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
+            return localVarFp.addUserPermission(requestParameters.orgId, requestParameters.userId, requestParameters.addUserPermissionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2054,7 +2140,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         addUserRole(requestParameters: AdminUsersApiAddUserRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<AddUserRoleResponse> {
-            return localVarFp.addUserRole(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
+            return localVarFp.addUserRole(requestParameters.orgId, requestParameters.userId, requestParameters.addUserRoleRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA. An access token must come from a sign-in within the last 10 minutes (401 insufficient_user_authentication otherwise), except for a request that sends `\"dry_run\": true`.
@@ -2134,7 +2220,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         createUser(requestParameters: AdminUsersApiCreateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreateUserResponse> {
-            return localVarFp.createUser(requestParameters.orgId, options).then((request) => request(axios, basePath));
+            return localVarFp.createUser(requestParameters.orgId, requestParameters.createUserRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2214,7 +2300,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         patchUser(requestParameters: AdminUsersApiPatchUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateUserResponse> {
-            return localVarFp.patchUser(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
+            return localVarFp.patchUser(requestParameters.orgId, requestParameters.userId, requestParameters.updateUserRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2275,7 +2361,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         setUserPassword(requestParameters: AdminUsersApiSetUserPasswordRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetUserPasswordPostResponse> {
-            return localVarFp.setUserPassword(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
+            return localVarFp.setUserPassword(requestParameters.orgId, requestParameters.userId, requestParameters.setUserPasswordPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Needs `users.edit`, and the caller must hold every permission of the user. A signed-in administrator must have signed in or passed MFA within the last 10 minutes: a Bearer token needs a fresh `auth_time` (otherwise 401 `insufficient_user_authentication`), and an administrator who holds a second factor sends `X-MFA-Challenge` with an approved step_up challenge (otherwise 403 `step_up_required`). Organization API keys are not subject to this check.
@@ -2285,7 +2371,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         setUserPasswordPost(requestParameters: AdminUsersApiSetUserPasswordPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetUserPasswordPostResponse> {
-            return localVarFp.setUserPasswordPost(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
+            return localVarFp.setUserPasswordPost(requestParameters.orgId, requestParameters.userId, requestParameters.setUserPasswordPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2315,7 +2401,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         updateUser(requestParameters: AdminUsersApiUpdateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateUserResponse> {
-            return localVarFp.updateUser(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
+            return localVarFp.updateUser(requestParameters.orgId, requestParameters.userId, requestParameters.updateUserRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2325,7 +2411,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         updateUserGroups(requestParameters: AdminUsersApiUpdateUserGroupsRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateUserGroupsResponse> {
-            return localVarFp.updateUserGroups(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
+            return localVarFp.updateUserGroups(requestParameters.orgId, requestParameters.userId, requestParameters.updateUserGroupsRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2335,7 +2421,7 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         updateUserRoles(requestParameters: AdminUsersApiUpdateUserRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateUserRolesResponse> {
-            return localVarFp.updateUserRoles(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
+            return localVarFp.updateUserRoles(requestParameters.orgId, requestParameters.userId, requestParameters.adminGroupsUpdateRolesRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2357,7 +2443,7 @@ export interface AdminUsersApiInterface {
     addUserGroup(requestParameters: AdminUsersApiAddUserGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<AddUserGroupResponse>;
 
     /**
-     * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+     * Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization\'s own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
      * @summary Assign a permission to a user
      * @param {AdminUsersApiAddUserPermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2678,6 +2764,13 @@ export interface AdminUsersApiAddUserGroupRequest {
      * @memberof AdminUsersApiAddUserGroup
      */
     readonly userId: string
+
+    /**
+     * 
+     * @type {AddUserGroupRequest}
+     * @memberof AdminUsersApiAddUserGroup
+     */
+    readonly addUserGroupRequest: AddUserGroupRequest
 }
 
 /**
@@ -2699,6 +2792,13 @@ export interface AdminUsersApiAddUserPermissionRequest {
      * @memberof AdminUsersApiAddUserPermission
      */
     readonly userId: string
+
+    /**
+     * 
+     * @type {AddUserPermissionRequest}
+     * @memberof AdminUsersApiAddUserPermission
+     */
+    readonly addUserPermissionRequest: AddUserPermissionRequest
 }
 
 /**
@@ -2720,6 +2820,13 @@ export interface AdminUsersApiAddUserRoleRequest {
      * @memberof AdminUsersApiAddUserRole
      */
     readonly userId: string
+
+    /**
+     * 
+     * @type {AddUserRoleRequest}
+     * @memberof AdminUsersApiAddUserRole
+     */
+    readonly addUserRoleRequest: AddUserRoleRequest
 }
 
 /**
@@ -2895,6 +3002,13 @@ export interface AdminUsersApiCreateUserRequest {
      * @memberof AdminUsersApiCreateUser
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {CreateUserRequest}
+     * @memberof AdminUsersApiCreateUser
+     */
+    readonly createUserRequest: CreateUserRequest
 }
 
 /**
@@ -3140,6 +3254,13 @@ export interface AdminUsersApiPatchUserRequest {
      * @memberof AdminUsersApiPatchUser
      */
     readonly userId: string
+
+    /**
+     * Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
+     * @type {UpdateUserRequest}
+     * @memberof AdminUsersApiPatchUser
+     */
+    readonly updateUserRequest: UpdateUserRequest
 }
 
 /**
@@ -3287,6 +3408,13 @@ export interface AdminUsersApiSetUserPasswordRequest {
      * @memberof AdminUsersApiSetUserPassword
      */
     readonly userId: string
+
+    /**
+     * 
+     * @type {SetUserPasswordPostRequest}
+     * @memberof AdminUsersApiSetUserPassword
+     */
+    readonly setUserPasswordPostRequest: SetUserPasswordPostRequest
 }
 
 /**
@@ -3308,6 +3436,13 @@ export interface AdminUsersApiSetUserPasswordPostRequest {
      * @memberof AdminUsersApiSetUserPasswordPost
      */
     readonly userId: string
+
+    /**
+     * 
+     * @type {SetUserPasswordPostRequest}
+     * @memberof AdminUsersApiSetUserPasswordPost
+     */
+    readonly setUserPasswordPostRequest: SetUserPasswordPostRequest
 }
 
 /**
@@ -3371,6 +3506,13 @@ export interface AdminUsersApiUpdateUserRequest {
      * @memberof AdminUsersApiUpdateUser
      */
     readonly userId: string
+
+    /**
+     * Only the fields that are sent change. The password is set with PUT /users/{userId}/password, never here.
+     * @type {UpdateUserRequest}
+     * @memberof AdminUsersApiUpdateUser
+     */
+    readonly updateUserRequest: UpdateUserRequest
 }
 
 /**
@@ -3392,6 +3534,13 @@ export interface AdminUsersApiUpdateUserGroupsRequest {
      * @memberof AdminUsersApiUpdateUserGroups
      */
     readonly userId: string
+
+    /**
+     * 
+     * @type {UpdateUserGroupsRequest}
+     * @memberof AdminUsersApiUpdateUserGroups
+     */
+    readonly updateUserGroupsRequest: UpdateUserGroupsRequest
 }
 
 /**
@@ -3413,6 +3562,13 @@ export interface AdminUsersApiUpdateUserRolesRequest {
      * @memberof AdminUsersApiUpdateUserRoles
      */
     readonly userId: string
+
+    /**
+     * 
+     * @type {AdminGroupsUpdateRolesRequest}
+     * @memberof AdminUsersApiUpdateUserRoles
+     */
+    readonly adminGroupsUpdateRolesRequest: AdminGroupsUpdateRolesRequest
 }
 
 /**
@@ -3431,11 +3587,11 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
      * @memberof AdminUsersApi
      */
     public addUserGroup(requestParameters: AdminUsersApiAddUserGroupRequest, options?: RawAxiosRequestConfig) {
-        return AdminUsersApiFp(this.configuration).addUserGroup(requestParameters.orgId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+        return AdminUsersApiFp(this.configuration).addUserGroup(requestParameters.orgId, requestParameters.userId, requestParameters.addUserGroupRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Grants one permission to the user directly. The caller must hold the permission (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
+     * Grants one permission to the user directly. The caller must hold a built-in permission; one of the organization\'s own permissions needs `roles.assign-permissions` instead, and an API key or access token also needs `admin:roles:write` or `admin:permissions:write` (403 otherwise). A permission that opens the admin portal makes an active user an administrator, who takes an admin seat: 403 `plan_limit_reached` (`limit`: `admin_seats`) when the plan has none free. On a plan with a hard monthly-active-user cap, an administrator also has a place kept inside the limit, so a user who has not been active this month needs a free place (`limit`: `mau`). A user or permission outside this organization is 404.
      * @summary Assign a permission to a user
      * @param {AdminUsersApiAddUserPermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3443,7 +3599,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
      * @memberof AdminUsersApi
      */
     public addUserPermission(requestParameters: AdminUsersApiAddUserPermissionRequest, options?: RawAxiosRequestConfig) {
-        return AdminUsersApiFp(this.configuration).addUserPermission(requestParameters.orgId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+        return AdminUsersApiFp(this.configuration).addUserPermission(requestParameters.orgId, requestParameters.userId, requestParameters.addUserPermissionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3455,7 +3611,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
      * @memberof AdminUsersApi
      */
     public addUserRole(requestParameters: AdminUsersApiAddUserRoleRequest, options?: RawAxiosRequestConfig) {
-        return AdminUsersApiFp(this.configuration).addUserRole(requestParameters.orgId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+        return AdminUsersApiFp(this.configuration).addUserRole(requestParameters.orgId, requestParameters.userId, requestParameters.addUserRoleRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3551,7 +3707,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
      * @memberof AdminUsersApi
      */
     public createUser(requestParameters: AdminUsersApiCreateUserRequest, options?: RawAxiosRequestConfig) {
-        return AdminUsersApiFp(this.configuration).createUser(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminUsersApiFp(this.configuration).createUser(requestParameters.orgId, requestParameters.createUserRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3647,7 +3803,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
      * @memberof AdminUsersApi
      */
     public patchUser(requestParameters: AdminUsersApiPatchUserRequest, options?: RawAxiosRequestConfig) {
-        return AdminUsersApiFp(this.configuration).patchUser(requestParameters.orgId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+        return AdminUsersApiFp(this.configuration).patchUser(requestParameters.orgId, requestParameters.userId, requestParameters.updateUserRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3720,7 +3876,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
      * @memberof AdminUsersApi
      */
     public setUserPassword(requestParameters: AdminUsersApiSetUserPasswordRequest, options?: RawAxiosRequestConfig) {
-        return AdminUsersApiFp(this.configuration).setUserPassword(requestParameters.orgId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+        return AdminUsersApiFp(this.configuration).setUserPassword(requestParameters.orgId, requestParameters.userId, requestParameters.setUserPasswordPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3732,7 +3888,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
      * @memberof AdminUsersApi
      */
     public setUserPasswordPost(requestParameters: AdminUsersApiSetUserPasswordPostRequest, options?: RawAxiosRequestConfig) {
-        return AdminUsersApiFp(this.configuration).setUserPasswordPost(requestParameters.orgId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+        return AdminUsersApiFp(this.configuration).setUserPasswordPost(requestParameters.orgId, requestParameters.userId, requestParameters.setUserPasswordPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3768,7 +3924,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
      * @memberof AdminUsersApi
      */
     public updateUser(requestParameters: AdminUsersApiUpdateUserRequest, options?: RawAxiosRequestConfig) {
-        return AdminUsersApiFp(this.configuration).updateUser(requestParameters.orgId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+        return AdminUsersApiFp(this.configuration).updateUser(requestParameters.orgId, requestParameters.userId, requestParameters.updateUserRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3780,7 +3936,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
      * @memberof AdminUsersApi
      */
     public updateUserGroups(requestParameters: AdminUsersApiUpdateUserGroupsRequest, options?: RawAxiosRequestConfig) {
-        return AdminUsersApiFp(this.configuration).updateUserGroups(requestParameters.orgId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+        return AdminUsersApiFp(this.configuration).updateUserGroups(requestParameters.orgId, requestParameters.userId, requestParameters.updateUserGroupsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3792,7 +3948,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
      * @memberof AdminUsersApi
      */
     public updateUserRoles(requestParameters: AdminUsersApiUpdateUserRolesRequest, options?: RawAxiosRequestConfig) {
-        return AdminUsersApiFp(this.configuration).updateUserRoles(requestParameters.orgId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+        return AdminUsersApiFp(this.configuration).updateUserRoles(requestParameters.orgId, requestParameters.userId, requestParameters.adminGroupsUpdateRolesRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

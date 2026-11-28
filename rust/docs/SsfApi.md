@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## create_stream_config
 
-> models::SsfStream create_stream_config(org_id)
+> models::SsfStream create_stream_config(org_id, create_stream_config_request)
 Create an SSF stream
 
 ### Parameters
@@ -22,6 +22,7 @@ Create an SSF stream
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**create_stream_config_request** | [**CreateStreamConfigRequest**](CreateStreamConfigRequest.md) |  | [required] |
 
 ### Return type
 
@@ -33,7 +34,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -101,7 +102,7 @@ Name | Type | Description  | Required | Notes
 
 ## verify_stream
 
-> verify_stream(org_id)
+> verify_stream(org_id, verify_stream_request)
 Request a stream verification event
 
 Needs `settings.manage`, as the portal does.
@@ -112,6 +113,7 @@ Needs `settings.manage`, as the portal does.
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**verify_stream_request** | Option<[**VerifyStreamRequest**](VerifyStreamRequest.md)> |  |  |
 
 ### Return type
 
@@ -123,7 +125,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

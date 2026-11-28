@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -30,6 +30,8 @@ import java.io.IOException;
 import io.lumoauth.client.model.AdminAnalyticsDashboardResponse;
 import io.lumoauth.client.model.AdminAnalyticsLoginsResponse;
 import io.lumoauth.client.model.AdminAnalyticsUsersResponse;
+import io.lumoauth.client.model.AdminInitialAccessTokensCreateResponse;
+import io.lumoauth.client.model.AdminInitialAccessTokensListResponse;
 import io.lumoauth.client.model.AdminSettingsAllResponse;
 import io.lumoauth.client.model.AdminSettingsAuthenticationGetResponse;
 import io.lumoauth.client.model.AdminSettingsBrandingGetResponse;
@@ -38,6 +40,9 @@ import io.lumoauth.client.model.AdminSettingsGeneralGetResponse;
 import io.lumoauth.client.model.AdminSettingsScimGetResponse;
 import io.lumoauth.client.model.AdminSettingsSecurityGetResponse;
 import io.lumoauth.client.model.AdminTenantGetResponse;
+import io.lumoauth.client.model.AuthenticationSettings;
+import io.lumoauth.client.model.BrandingSettings;
+import io.lumoauth.client.model.MessageResponse;
 import io.lumoauth.client.model.PutAdminSettingsAuthenticationUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsBrandingUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsEmailUpdateRequest;
@@ -45,8 +50,11 @@ import io.lumoauth.client.model.PutAdminSettingsEmailUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsGeneralUpdateRequest;
 import io.lumoauth.client.model.PutAdminSettingsGeneralUpdateResponse;
 import io.lumoauth.client.model.PutAdminSettingsScimUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsSecurityUpdateRequest;
 import io.lumoauth.client.model.PutAdminSettingsSecurityUpdateResponse;
+import io.lumoauth.client.model.PutAdminTenantUpdateRequest;
 import io.lumoauth.client.model.PutAdminTenantUpdateResponse;
+import io.lumoauth.client.model.ScimSettings;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -489,6 +497,401 @@ public class AdminSettingsApi {
         return localVarCall;
     }
     /**
+     * Build call for adminInitialAccessTokensCreate
+     * @param orgId  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 201 </td><td> Token created </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminInitialAccessTokensCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminInitialAccessTokensCreateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminInitialAccessTokensCreate(Async)");
+        }
+
+        return adminInitialAccessTokensCreateCall(orgId, _callback);
+
+    }
+
+    /**
+     * Create an initial access token for dynamic client registration
+     * Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+     * @param orgId  (required)
+     * @return AdminInitialAccessTokensCreateResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 201 </td><td> Token created </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminInitialAccessTokensCreateResponse adminInitialAccessTokensCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminInitialAccessTokensCreateResponse> localVarResp = adminInitialAccessTokensCreateWithHttpInfo(orgId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Create an initial access token for dynamic client registration
+     * Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+     * @param orgId  (required)
+     * @return ApiResponse&lt;AdminInitialAccessTokensCreateResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 201 </td><td> Token created </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminInitialAccessTokensCreateResponse> adminInitialAccessTokensCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+        okhttp3.Call localVarCall = adminInitialAccessTokensCreateValidateBeforeCall(orgId, null);
+        Type localVarReturnType = new TypeToken<AdminInitialAccessTokensCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Create an initial access token for dynamic client registration (asynchronously)
+     * Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+     * @param orgId  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 201 </td><td> Token created </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminInitialAccessTokensCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminInitialAccessTokensCreateResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminInitialAccessTokensCreateValidateBeforeCall(orgId, _callback);
+        Type localVarReturnType = new TypeToken<AdminInitialAccessTokensCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for adminInitialAccessTokensDelete
+     * @param orgId  (required)
+     * @param tokenId  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> No token with this id </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminInitialAccessTokensDeleteCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String tokenId, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId}"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "tokenId" + "}", localVarApiClient.escapeString(tokenId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminInitialAccessTokensDeleteValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String tokenId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminInitialAccessTokensDelete(Async)");
+        }
+
+        // verify the required parameter 'tokenId' is set
+        if (tokenId == null) {
+            throw new ApiException("Missing the required parameter 'tokenId' when calling adminInitialAccessTokensDelete(Async)");
+        }
+
+        return adminInitialAccessTokensDeleteCall(orgId, tokenId, _callback);
+
+    }
+
+    /**
+     * Delete an initial access token of dynamic client registration
+     * The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+     * @param orgId  (required)
+     * @param tokenId  (required)
+     * @return MessageResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> No token with this id </td><td>  -  </td></tr>
+     </table>
+     */
+    public MessageResponse adminInitialAccessTokensDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String tokenId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminInitialAccessTokensDeleteWithHttpInfo(orgId, tokenId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Delete an initial access token of dynamic client registration
+     * The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+     * @param orgId  (required)
+     * @param tokenId  (required)
+     * @return ApiResponse&lt;MessageResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> No token with this id </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<MessageResponse> adminInitialAccessTokensDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String tokenId) throws ApiException {
+        okhttp3.Call localVarCall = adminInitialAccessTokensDeleteValidateBeforeCall(orgId, tokenId, null);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Delete an initial access token of dynamic client registration (asynchronously)
+     * The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+     * @param orgId  (required)
+     * @param tokenId  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> No token with this id </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminInitialAccessTokensDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String tokenId, final ApiCallback<MessageResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminInitialAccessTokensDeleteValidateBeforeCall(orgId, tokenId, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for adminInitialAccessTokensList
+     * @param orgId  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Tokens </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminInitialAccessTokensListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminInitialAccessTokensListValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminInitialAccessTokensList(Async)");
+        }
+
+        return adminInitialAccessTokensListCall(orgId, _callback);
+
+    }
+
+    /**
+     * List the initial access tokens of dynamic client registration
+     * Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+     * @param orgId  (required)
+     * @return AdminInitialAccessTokensListResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Tokens </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminInitialAccessTokensListResponse adminInitialAccessTokensList(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminInitialAccessTokensListResponse> localVarResp = adminInitialAccessTokensListWithHttpInfo(orgId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * List the initial access tokens of dynamic client registration
+     * Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+     * @param orgId  (required)
+     * @return ApiResponse&lt;AdminInitialAccessTokensListResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Tokens </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminInitialAccessTokensListResponse> adminInitialAccessTokensListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+        okhttp3.Call localVarCall = adminInitialAccessTokensListValidateBeforeCall(orgId, null);
+        Type localVarReturnType = new TypeToken<AdminInitialAccessTokensListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * List the initial access tokens of dynamic client registration (asynchronously)
+     * Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+     * @param orgId  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Tokens </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminInitialAccessTokensListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminInitialAccessTokensListResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminInitialAccessTokensListValidateBeforeCall(orgId, _callback);
+        Type localVarReturnType = new TypeToken<AdminInitialAccessTokensListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for adminOrganizationGet
      * @param orgId  (required)
      * @param _callback Callback for upload/download progress
@@ -558,7 +961,7 @@ public class AdminSettingsApi {
     }
 
     /**
-     * Get organization (tenant) profile
+     * Get organization profile
      * 
      * @param orgId  (required)
      * @return AdminTenantGetResponse
@@ -576,7 +979,7 @@ public class AdminSettingsApi {
     }
 
     /**
-     * Get organization (tenant) profile
+     * Get organization profile
      * 
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminTenantGetResponse&gt;
@@ -595,7 +998,7 @@ public class AdminSettingsApi {
     }
 
     /**
-     * Get organization (tenant) profile (asynchronously)
+     * Get organization profile (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1701,7 +2104,7 @@ public class AdminSettingsApi {
     }
 
     /**
-     * Get organization (tenant) profile
+     * Get organization profile
      * 
      * @param orgId  (required)
      * @return AdminTenantGetResponse
@@ -1719,7 +2122,7 @@ public class AdminSettingsApi {
     }
 
     /**
-     * Get organization (tenant) profile
+     * Get organization profile
      * 
      * @param orgId  (required)
      * @return ApiResponse&lt;AdminTenantGetResponse&gt;
@@ -1738,7 +2141,7 @@ public class AdminSettingsApi {
     }
 
     /**
-     * Get organization (tenant) profile (asynchronously)
+     * Get organization profile (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1761,6 +2164,7 @@ public class AdminSettingsApi {
     /**
      * Build call for patchAdminOrganizationUpdate
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1772,7 +2176,7 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminOrganizationUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminOrganizationUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1786,7 +2190,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminTenantUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/organization"
@@ -1807,6 +2211,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1818,20 +2223,26 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminOrganizationUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminOrganizationUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminOrganizationUpdate(Async)");
         }
 
-        return patchAdminOrganizationUpdateCall(orgId, _callback);
+        // verify the required parameter 'putAdminTenantUpdateRequest' is set
+        if (putAdminTenantUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminTenantUpdateRequest' when calling patchAdminOrganizationUpdate(Async)");
+        }
+
+        return patchAdminOrganizationUpdateCall(orgId, putAdminTenantUpdateRequest, _callback);
 
     }
 
     /**
-     * Update organization (tenant) name and settings
+     * Update the organization&#39;s name and settings
      * 
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @return PutAdminTenantUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1842,15 +2253,16 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminTenantUpdateResponse patchAdminOrganizationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminTenantUpdateResponse> localVarResp = patchAdminOrganizationUpdateWithHttpInfo(orgId);
+    public PutAdminTenantUpdateResponse patchAdminOrganizationUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminTenantUpdateResponse> localVarResp = patchAdminOrganizationUpdateWithHttpInfo(orgId, putAdminTenantUpdateRequest);
         return localVarResp.getData();
     }
 
     /**
-     * Update organization (tenant) name and settings
+     * Update the organization&#39;s name and settings
      * 
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @return ApiResponse&lt;PutAdminTenantUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1861,16 +2273,17 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminTenantUpdateResponse> patchAdminOrganizationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminOrganizationUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminTenantUpdateResponse> patchAdminOrganizationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminOrganizationUpdateValidateBeforeCall(orgId, putAdminTenantUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update organization (tenant) name and settings (asynchronously)
+     * Update the organization&#39;s name and settings (asynchronously)
      * 
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1882,9 +2295,9 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminOrganizationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminOrganizationUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminOrganizationUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = patchAdminOrganizationUpdateValidateBeforeCall(orgId, putAdminTenantUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1892,6 +2305,7 @@ public class AdminSettingsApi {
     /**
      * Build call for patchAdminSettingsAuthUpdate
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1903,7 +2317,7 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsAuthUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsAuthUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1917,7 +2331,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = authenticationSettings;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/auth"
@@ -1938,6 +2352,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1949,20 +2364,26 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminSettingsAuthUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminSettingsAuthUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminSettingsAuthUpdate(Async)");
         }
 
-        return patchAdminSettingsAuthUpdateCall(orgId, _callback);
+        // verify the required parameter 'authenticationSettings' is set
+        if (authenticationSettings == null) {
+            throw new ApiException("Missing the required parameter 'authenticationSettings' when calling patchAdminSettingsAuthUpdate(Async)");
+        }
+
+        return patchAdminSettingsAuthUpdateCall(orgId, authenticationSettings, _callback);
 
     }
 
     /**
      * Update authentication settings
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @return PutAdminSettingsAuthenticationUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1973,15 +2394,16 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResp = patchAdminSettingsAuthUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings) throws ApiException {
+        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResp = patchAdminSettingsAuthUpdateWithHttpInfo(orgId, authenticationSettings);
         return localVarResp.getData();
     }
 
     /**
      * Update authentication settings
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @return ApiResponse&lt;PutAdminSettingsAuthenticationUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1992,16 +2414,17 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> patchAdminSettingsAuthUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminSettingsAuthUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> patchAdminSettingsAuthUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminSettingsAuthUpdateValidateBeforeCall(orgId, authenticationSettings, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Update authentication settings (asynchronously)
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2013,9 +2436,9 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsAuthUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsAuthUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminSettingsAuthUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = patchAdminSettingsAuthUpdateValidateBeforeCall(orgId, authenticationSettings, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2023,6 +2446,7 @@ public class AdminSettingsApi {
     /**
      * Build call for patchAdminSettingsAuthenticationUpdate
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2034,7 +2458,7 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsAuthenticationUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsAuthenticationUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2048,7 +2472,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = authenticationSettings;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/authentication"
@@ -2069,6 +2493,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2080,20 +2505,26 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminSettingsAuthenticationUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminSettingsAuthenticationUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminSettingsAuthenticationUpdate(Async)");
         }
 
-        return patchAdminSettingsAuthenticationUpdateCall(orgId, _callback);
+        // verify the required parameter 'authenticationSettings' is set
+        if (authenticationSettings == null) {
+            throw new ApiException("Missing the required parameter 'authenticationSettings' when calling patchAdminSettingsAuthenticationUpdate(Async)");
+        }
+
+        return patchAdminSettingsAuthenticationUpdateCall(orgId, authenticationSettings, _callback);
 
     }
 
     /**
      * Update authentication settings (alias for settings/auth)
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @return PutAdminSettingsAuthenticationUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2104,15 +2535,16 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthenticationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResp = patchAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthenticationUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings) throws ApiException {
+        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResp = patchAdminSettingsAuthenticationUpdateWithHttpInfo(orgId, authenticationSettings);
         return localVarResp.getData();
     }
 
     /**
      * Update authentication settings (alias for settings/auth)
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @return ApiResponse&lt;PutAdminSettingsAuthenticationUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2123,16 +2555,17 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> patchAdminSettingsAuthenticationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminSettingsAuthenticationUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> patchAdminSettingsAuthenticationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminSettingsAuthenticationUpdateValidateBeforeCall(orgId, authenticationSettings, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Update authentication settings (alias for settings/auth) (asynchronously)
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2144,9 +2577,9 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsAuthenticationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsAuthenticationUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminSettingsAuthenticationUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = patchAdminSettingsAuthenticationUpdateValidateBeforeCall(orgId, authenticationSettings, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2154,6 +2587,7 @@ public class AdminSettingsApi {
     /**
      * Build call for patchAdminSettingsBrandingUpdate
      * @param orgId  (required)
+     * @param brandingSettings  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2165,7 +2599,7 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsBrandingUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsBrandingUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull BrandingSettings brandingSettings, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2179,7 +2613,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = brandingSettings;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/branding"
@@ -2200,6 +2634,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2211,13 +2646,18 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminSettingsBrandingUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminSettingsBrandingUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull BrandingSettings brandingSettings, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminSettingsBrandingUpdate(Async)");
         }
 
-        return patchAdminSettingsBrandingUpdateCall(orgId, _callback);
+        // verify the required parameter 'brandingSettings' is set
+        if (brandingSettings == null) {
+            throw new ApiException("Missing the required parameter 'brandingSettings' when calling patchAdminSettingsBrandingUpdate(Async)");
+        }
+
+        return patchAdminSettingsBrandingUpdateCall(orgId, brandingSettings, _callback);
 
     }
 
@@ -2225,6 +2665,7 @@ public class AdminSettingsApi {
      * Update branding/login page settings
      * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @param orgId  (required)
+     * @param brandingSettings  (required)
      * @return PutAdminSettingsBrandingUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2235,8 +2676,8 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsBrandingUpdateResponse patchAdminSettingsBrandingUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResp = patchAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsBrandingUpdateResponse patchAdminSettingsBrandingUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull BrandingSettings brandingSettings) throws ApiException {
+        ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResp = patchAdminSettingsBrandingUpdateWithHttpInfo(orgId, brandingSettings);
         return localVarResp.getData();
     }
 
@@ -2244,6 +2685,7 @@ public class AdminSettingsApi {
      * Update branding/login page settings
      * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @param orgId  (required)
+     * @param brandingSettings  (required)
      * @return ApiResponse&lt;PutAdminSettingsBrandingUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2254,8 +2696,8 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsBrandingUpdateResponse> patchAdminSettingsBrandingUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminSettingsBrandingUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsBrandingUpdateResponse> patchAdminSettingsBrandingUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull BrandingSettings brandingSettings) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminSettingsBrandingUpdateValidateBeforeCall(orgId, brandingSettings, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsBrandingUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2264,6 +2706,7 @@ public class AdminSettingsApi {
      * Update branding/login page settings (asynchronously)
      * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @param orgId  (required)
+     * @param brandingSettings  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2275,9 +2718,9 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsBrandingUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsBrandingUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsBrandingUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull BrandingSettings brandingSettings, final ApiCallback<PutAdminSettingsBrandingUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminSettingsBrandingUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = patchAdminSettingsBrandingUpdateValidateBeforeCall(orgId, brandingSettings, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsBrandingUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2565,6 +3008,7 @@ public class AdminSettingsApi {
     /**
      * Build call for patchAdminSettingsScimUpdate
      * @param orgId  (required)
+     * @param scimSettings  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2575,7 +3019,7 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsScimUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsScimUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ScimSettings scimSettings, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2589,7 +3033,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = scimSettings;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/scim"
@@ -2610,6 +3054,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2621,13 +3066,18 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminSettingsScimUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminSettingsScimUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ScimSettings scimSettings, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminSettingsScimUpdate(Async)");
         }
 
-        return patchAdminSettingsScimUpdateCall(orgId, _callback);
+        // verify the required parameter 'scimSettings' is set
+        if (scimSettings == null) {
+            throw new ApiException("Missing the required parameter 'scimSettings' when calling patchAdminSettingsScimUpdate(Async)");
+        }
+
+        return patchAdminSettingsScimUpdateCall(orgId, scimSettings, _callback);
 
     }
 
@@ -2635,6 +3085,7 @@ public class AdminSettingsApi {
      * Update SCIM settings
      * 
      * @param orgId  (required)
+     * @param scimSettings  (required)
      * @return PutAdminSettingsScimUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2644,8 +3095,8 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsScimUpdateResponse patchAdminSettingsScimUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResp = patchAdminSettingsScimUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsScimUpdateResponse patchAdminSettingsScimUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ScimSettings scimSettings) throws ApiException {
+        ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResp = patchAdminSettingsScimUpdateWithHttpInfo(orgId, scimSettings);
         return localVarResp.getData();
     }
 
@@ -2653,6 +3104,7 @@ public class AdminSettingsApi {
      * Update SCIM settings
      * 
      * @param orgId  (required)
+     * @param scimSettings  (required)
      * @return ApiResponse&lt;PutAdminSettingsScimUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2662,8 +3114,8 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsScimUpdateResponse> patchAdminSettingsScimUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminSettingsScimUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsScimUpdateResponse> patchAdminSettingsScimUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ScimSettings scimSettings) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminSettingsScimUpdateValidateBeforeCall(orgId, scimSettings, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsScimUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2672,6 +3124,7 @@ public class AdminSettingsApi {
      * Update SCIM settings (asynchronously)
      * 
      * @param orgId  (required)
+     * @param scimSettings  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2682,9 +3135,9 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsScimUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsScimUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsScimUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ScimSettings scimSettings, final ApiCallback<PutAdminSettingsScimUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminSettingsScimUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = patchAdminSettingsScimUpdateValidateBeforeCall(orgId, scimSettings, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsScimUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2692,6 +3145,7 @@ public class AdminSettingsApi {
     /**
      * Build call for patchAdminSettingsSecurityUpdate
      * @param orgId  (required)
+     * @param putAdminSettingsSecurityUpdateRequest Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2702,7 +3156,7 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsSecurityUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsSecurityUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2716,7 +3170,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminSettingsSecurityUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/security"
@@ -2737,6 +3191,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2748,13 +3203,18 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminSettingsSecurityUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminSettingsSecurityUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminSettingsSecurityUpdate(Async)");
         }
 
-        return patchAdminSettingsSecurityUpdateCall(orgId, _callback);
+        // verify the required parameter 'putAdminSettingsSecurityUpdateRequest' is set
+        if (putAdminSettingsSecurityUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminSettingsSecurityUpdateRequest' when calling patchAdminSettingsSecurityUpdate(Async)");
+        }
+
+        return patchAdminSettingsSecurityUpdateCall(orgId, putAdminSettingsSecurityUpdateRequest, _callback);
 
     }
 
@@ -2762,6 +3222,7 @@ public class AdminSettingsApi {
      * Update security settings
      * 
      * @param orgId  (required)
+     * @param putAdminSettingsSecurityUpdateRequest Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
      * @return PutAdminSettingsSecurityUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2771,8 +3232,8 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsSecurityUpdateResponse patchAdminSettingsSecurityUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResp = patchAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsSecurityUpdateResponse patchAdminSettingsSecurityUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResp = patchAdminSettingsSecurityUpdateWithHttpInfo(orgId, putAdminSettingsSecurityUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -2780,6 +3241,7 @@ public class AdminSettingsApi {
      * Update security settings
      * 
      * @param orgId  (required)
+     * @param putAdminSettingsSecurityUpdateRequest Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
      * @return ApiResponse&lt;PutAdminSettingsSecurityUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2789,8 +3251,8 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsSecurityUpdateResponse> patchAdminSettingsSecurityUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminSettingsSecurityUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsSecurityUpdateResponse> patchAdminSettingsSecurityUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminSettingsSecurityUpdateValidateBeforeCall(orgId, putAdminSettingsSecurityUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsSecurityUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -2799,6 +3261,7 @@ public class AdminSettingsApi {
      * Update security settings (asynchronously)
      * 
      * @param orgId  (required)
+     * @param putAdminSettingsSecurityUpdateRequest Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2809,9 +3272,9 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsSecurityUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsSecurityUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsSecurityUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, final ApiCallback<PutAdminSettingsSecurityUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminSettingsSecurityUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = patchAdminSettingsSecurityUpdateValidateBeforeCall(orgId, putAdminSettingsSecurityUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsSecurityUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2819,6 +3282,7 @@ public class AdminSettingsApi {
     /**
      * Build call for patchAdminTenantUpdate
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2830,7 +3294,7 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminTenantUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call patchAdminTenantUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2844,7 +3308,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminTenantUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/tenant"
@@ -2865,6 +3329,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -2876,20 +3341,26 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchAdminTenantUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchAdminTenantUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling patchAdminTenantUpdate(Async)");
         }
 
-        return patchAdminTenantUpdateCall(orgId, _callback);
+        // verify the required parameter 'putAdminTenantUpdateRequest' is set
+        if (putAdminTenantUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminTenantUpdateRequest' when calling patchAdminTenantUpdate(Async)");
+        }
+
+        return patchAdminTenantUpdateCall(orgId, putAdminTenantUpdateRequest, _callback);
 
     }
 
     /**
-     * Update organization (tenant) name and settings
+     * Update the organization&#39;s name and settings
      * 
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @return PutAdminTenantUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2900,15 +3371,16 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminTenantUpdateResponse patchAdminTenantUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminTenantUpdateResponse> localVarResp = patchAdminTenantUpdateWithHttpInfo(orgId);
+    public PutAdminTenantUpdateResponse patchAdminTenantUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminTenantUpdateResponse> localVarResp = patchAdminTenantUpdateWithHttpInfo(orgId, putAdminTenantUpdateRequest);
         return localVarResp.getData();
     }
 
     /**
-     * Update organization (tenant) name and settings
+     * Update the organization&#39;s name and settings
      * 
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @return ApiResponse&lt;PutAdminTenantUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2919,16 +3391,17 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminTenantUpdateResponse> patchAdminTenantUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = patchAdminTenantUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminTenantUpdateResponse> patchAdminTenantUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = patchAdminTenantUpdateValidateBeforeCall(orgId, putAdminTenantUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update organization (tenant) name and settings (asynchronously)
+     * Update the organization&#39;s name and settings (asynchronously)
      * 
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2940,9 +3413,9 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminTenantUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call patchAdminTenantUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchAdminTenantUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = patchAdminTenantUpdateValidateBeforeCall(orgId, putAdminTenantUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -2950,6 +3423,7 @@ public class AdminSettingsApi {
     /**
      * Build call for putAdminOrganizationUpdate
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2961,7 +3435,7 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminOrganizationUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminOrganizationUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2975,7 +3449,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminTenantUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/organization"
@@ -2996,6 +3470,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3007,20 +3482,26 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminOrganizationUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminOrganizationUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminOrganizationUpdate(Async)");
         }
 
-        return putAdminOrganizationUpdateCall(orgId, _callback);
+        // verify the required parameter 'putAdminTenantUpdateRequest' is set
+        if (putAdminTenantUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminTenantUpdateRequest' when calling putAdminOrganizationUpdate(Async)");
+        }
+
+        return putAdminOrganizationUpdateCall(orgId, putAdminTenantUpdateRequest, _callback);
 
     }
 
     /**
-     * Update organization (tenant) name and settings
+     * Update the organization&#39;s name and settings
      * 
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @return PutAdminTenantUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3031,15 +3512,16 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminTenantUpdateResponse putAdminOrganizationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminTenantUpdateResponse> localVarResp = putAdminOrganizationUpdateWithHttpInfo(orgId);
+    public PutAdminTenantUpdateResponse putAdminOrganizationUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminTenantUpdateResponse> localVarResp = putAdminOrganizationUpdateWithHttpInfo(orgId, putAdminTenantUpdateRequest);
         return localVarResp.getData();
     }
 
     /**
-     * Update organization (tenant) name and settings
+     * Update the organization&#39;s name and settings
      * 
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @return ApiResponse&lt;PutAdminTenantUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3050,16 +3532,17 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminTenantUpdateResponse> putAdminOrganizationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminOrganizationUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminTenantUpdateResponse> putAdminOrganizationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminOrganizationUpdateValidateBeforeCall(orgId, putAdminTenantUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update organization (tenant) name and settings (asynchronously)
+     * Update the organization&#39;s name and settings (asynchronously)
      * 
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3071,9 +3554,9 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminOrganizationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminOrganizationUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminOrganizationUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = putAdminOrganizationUpdateValidateBeforeCall(orgId, putAdminTenantUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -3081,6 +3564,7 @@ public class AdminSettingsApi {
     /**
      * Build call for putAdminSettingsAuthUpdate
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3092,7 +3576,7 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsAuthUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsAuthUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -3106,7 +3590,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = authenticationSettings;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/auth"
@@ -3127,6 +3611,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3138,20 +3623,26 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminSettingsAuthUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminSettingsAuthUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminSettingsAuthUpdate(Async)");
         }
 
-        return putAdminSettingsAuthUpdateCall(orgId, _callback);
+        // verify the required parameter 'authenticationSettings' is set
+        if (authenticationSettings == null) {
+            throw new ApiException("Missing the required parameter 'authenticationSettings' when calling putAdminSettingsAuthUpdate(Async)");
+        }
+
+        return putAdminSettingsAuthUpdateCall(orgId, authenticationSettings, _callback);
 
     }
 
     /**
      * Update authentication settings
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @return PutAdminSettingsAuthenticationUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3162,15 +3653,16 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResp = putAdminSettingsAuthUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings) throws ApiException {
+        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResp = putAdminSettingsAuthUpdateWithHttpInfo(orgId, authenticationSettings);
         return localVarResp.getData();
     }
 
     /**
      * Update authentication settings
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @return ApiResponse&lt;PutAdminSettingsAuthenticationUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3181,16 +3673,17 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> putAdminSettingsAuthUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminSettingsAuthUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> putAdminSettingsAuthUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings) throws ApiException {
+        okhttp3.Call localVarCall = putAdminSettingsAuthUpdateValidateBeforeCall(orgId, authenticationSettings, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Update authentication settings (asynchronously)
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3202,9 +3695,9 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsAuthUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsAuthUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminSettingsAuthUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = putAdminSettingsAuthUpdateValidateBeforeCall(orgId, authenticationSettings, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -3212,6 +3705,7 @@ public class AdminSettingsApi {
     /**
      * Build call for putAdminSettingsAuthenticationUpdate
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3223,7 +3717,7 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsAuthenticationUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsAuthenticationUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -3237,7 +3731,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = authenticationSettings;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/authentication"
@@ -3258,6 +3752,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3269,20 +3764,26 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminSettingsAuthenticationUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminSettingsAuthenticationUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminSettingsAuthenticationUpdate(Async)");
         }
 
-        return putAdminSettingsAuthenticationUpdateCall(orgId, _callback);
+        // verify the required parameter 'authenticationSettings' is set
+        if (authenticationSettings == null) {
+            throw new ApiException("Missing the required parameter 'authenticationSettings' when calling putAdminSettingsAuthenticationUpdate(Async)");
+        }
+
+        return putAdminSettingsAuthenticationUpdateCall(orgId, authenticationSettings, _callback);
 
     }
 
     /**
      * Update authentication settings (alias for settings/auth)
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @return PutAdminSettingsAuthenticationUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3293,15 +3794,16 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthenticationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResp = putAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthenticationUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings) throws ApiException {
+        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResp = putAdminSettingsAuthenticationUpdateWithHttpInfo(orgId, authenticationSettings);
         return localVarResp.getData();
     }
 
     /**
      * Update authentication settings (alias for settings/auth)
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @return ApiResponse&lt;PutAdminSettingsAuthenticationUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3312,16 +3814,17 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> putAdminSettingsAuthenticationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminSettingsAuthenticationUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> putAdminSettingsAuthenticationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings) throws ApiException {
+        okhttp3.Call localVarCall = putAdminSettingsAuthenticationUpdateValidateBeforeCall(orgId, authenticationSettings, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Update authentication settings (alias for settings/auth) (asynchronously)
-     * 
+     * The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
      * @param orgId  (required)
+     * @param authenticationSettings  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3333,9 +3836,9 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage; or cimd_allowed_scopes gains an admin scope and the caller is not a full administrator (settings.manage and users.delete), or gains authz:check and the caller does not hold policies.view; or the change repoints a social provider that accounts the caller does not outrank are bound to. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsAuthenticationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsAuthenticationUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthenticationSettings authenticationSettings, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminSettingsAuthenticationUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = putAdminSettingsAuthenticationUpdateValidateBeforeCall(orgId, authenticationSettings, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -3343,6 +3846,7 @@ public class AdminSettingsApi {
     /**
      * Build call for putAdminSettingsBrandingUpdate
      * @param orgId  (required)
+     * @param brandingSettings  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3354,7 +3858,7 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsBrandingUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsBrandingUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull BrandingSettings brandingSettings, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -3368,7 +3872,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = brandingSettings;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/branding"
@@ -3389,6 +3893,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3400,13 +3905,18 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminSettingsBrandingUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminSettingsBrandingUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull BrandingSettings brandingSettings, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminSettingsBrandingUpdate(Async)");
         }
 
-        return putAdminSettingsBrandingUpdateCall(orgId, _callback);
+        // verify the required parameter 'brandingSettings' is set
+        if (brandingSettings == null) {
+            throw new ApiException("Missing the required parameter 'brandingSettings' when calling putAdminSettingsBrandingUpdate(Async)");
+        }
+
+        return putAdminSettingsBrandingUpdateCall(orgId, brandingSettings, _callback);
 
     }
 
@@ -3414,6 +3924,7 @@ public class AdminSettingsApi {
      * Update branding/login page settings
      * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @param orgId  (required)
+     * @param brandingSettings  (required)
      * @return PutAdminSettingsBrandingUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3424,8 +3935,8 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsBrandingUpdateResponse putAdminSettingsBrandingUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResp = putAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsBrandingUpdateResponse putAdminSettingsBrandingUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull BrandingSettings brandingSettings) throws ApiException {
+        ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResp = putAdminSettingsBrandingUpdateWithHttpInfo(orgId, brandingSettings);
         return localVarResp.getData();
     }
 
@@ -3433,6 +3944,7 @@ public class AdminSettingsApi {
      * Update branding/login page settings
      * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @param orgId  (required)
+     * @param brandingSettings  (required)
      * @return ApiResponse&lt;PutAdminSettingsBrandingUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3443,8 +3955,8 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsBrandingUpdateResponse> putAdminSettingsBrandingUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminSettingsBrandingUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsBrandingUpdateResponse> putAdminSettingsBrandingUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull BrandingSettings brandingSettings) throws ApiException {
+        okhttp3.Call localVarCall = putAdminSettingsBrandingUpdateValidateBeforeCall(orgId, brandingSettings, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsBrandingUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -3453,6 +3965,7 @@ public class AdminSettingsApi {
      * Update branding/login page settings (asynchronously)
      * Changes the login page settings that are live on the hosted pages. Values go through the same validation as the portal form; keys that the validation does not know are not stored, and the keys whose value it refused are listed in rejected. A change is kept as a published version (restorable in the portal) and recorded in the audit log as branding.login_page_updated. Setting custom_css, custom_html or show_powered_by: false needs a plan that includes it; sending back a stored value, or clearing it, is never refused. A draft that is being edited in the portal is not changed. PUT and PATCH behave the same: keys that are not sent keep their value.
      * @param orgId  (required)
+     * @param brandingSettings  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3464,9 +3977,9 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> A sign-in policy key would change without settings.manage, or custom_css, custom_html or show_powered_by: false would be set on a plan that does not include it. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsBrandingUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsBrandingUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsBrandingUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull BrandingSettings brandingSettings, final ApiCallback<PutAdminSettingsBrandingUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminSettingsBrandingUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = putAdminSettingsBrandingUpdateValidateBeforeCall(orgId, brandingSettings, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsBrandingUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -3754,6 +4267,7 @@ public class AdminSettingsApi {
     /**
      * Build call for putAdminSettingsScimUpdate
      * @param orgId  (required)
+     * @param scimSettings  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3764,7 +4278,7 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsScimUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsScimUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ScimSettings scimSettings, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -3778,7 +4292,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = scimSettings;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/scim"
@@ -3799,6 +4313,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3810,13 +4325,18 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminSettingsScimUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminSettingsScimUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ScimSettings scimSettings, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminSettingsScimUpdate(Async)");
         }
 
-        return putAdminSettingsScimUpdateCall(orgId, _callback);
+        // verify the required parameter 'scimSettings' is set
+        if (scimSettings == null) {
+            throw new ApiException("Missing the required parameter 'scimSettings' when calling putAdminSettingsScimUpdate(Async)");
+        }
+
+        return putAdminSettingsScimUpdateCall(orgId, scimSettings, _callback);
 
     }
 
@@ -3824,6 +4344,7 @@ public class AdminSettingsApi {
      * Update SCIM settings
      * 
      * @param orgId  (required)
+     * @param scimSettings  (required)
      * @return PutAdminSettingsScimUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3833,8 +4354,8 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsScimUpdateResponse putAdminSettingsScimUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResp = putAdminSettingsScimUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsScimUpdateResponse putAdminSettingsScimUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ScimSettings scimSettings) throws ApiException {
+        ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResp = putAdminSettingsScimUpdateWithHttpInfo(orgId, scimSettings);
         return localVarResp.getData();
     }
 
@@ -3842,6 +4363,7 @@ public class AdminSettingsApi {
      * Update SCIM settings
      * 
      * @param orgId  (required)
+     * @param scimSettings  (required)
      * @return ApiResponse&lt;PutAdminSettingsScimUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3851,8 +4373,8 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsScimUpdateResponse> putAdminSettingsScimUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminSettingsScimUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsScimUpdateResponse> putAdminSettingsScimUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ScimSettings scimSettings) throws ApiException {
+        okhttp3.Call localVarCall = putAdminSettingsScimUpdateValidateBeforeCall(orgId, scimSettings, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsScimUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -3861,6 +4383,7 @@ public class AdminSettingsApi {
      * Update SCIM settings (asynchronously)
      * 
      * @param orgId  (required)
+     * @param scimSettings  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3871,9 +4394,9 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsScimUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsScimUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsScimUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ScimSettings scimSettings, final ApiCallback<PutAdminSettingsScimUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminSettingsScimUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = putAdminSettingsScimUpdateValidateBeforeCall(orgId, scimSettings, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsScimUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -3881,6 +4404,7 @@ public class AdminSettingsApi {
     /**
      * Build call for putAdminSettingsSecurityUpdate
      * @param orgId  (required)
+     * @param putAdminSettingsSecurityUpdateRequest Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -3891,7 +4415,7 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsSecurityUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsSecurityUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -3905,7 +4429,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminSettingsSecurityUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/settings/security"
@@ -3926,6 +4450,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -3937,13 +4462,18 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminSettingsSecurityUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminSettingsSecurityUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminSettingsSecurityUpdate(Async)");
         }
 
-        return putAdminSettingsSecurityUpdateCall(orgId, _callback);
+        // verify the required parameter 'putAdminSettingsSecurityUpdateRequest' is set
+        if (putAdminSettingsSecurityUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminSettingsSecurityUpdateRequest' when calling putAdminSettingsSecurityUpdate(Async)");
+        }
+
+        return putAdminSettingsSecurityUpdateCall(orgId, putAdminSettingsSecurityUpdateRequest, _callback);
 
     }
 
@@ -3951,6 +4481,7 @@ public class AdminSettingsApi {
      * Update security settings
      * 
      * @param orgId  (required)
+     * @param putAdminSettingsSecurityUpdateRequest Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
      * @return PutAdminSettingsSecurityUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3960,8 +4491,8 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminSettingsSecurityUpdateResponse putAdminSettingsSecurityUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResp = putAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsSecurityUpdateResponse putAdminSettingsSecurityUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResp = putAdminSettingsSecurityUpdateWithHttpInfo(orgId, putAdminSettingsSecurityUpdateRequest);
         return localVarResp.getData();
     }
 
@@ -3969,6 +4500,7 @@ public class AdminSettingsApi {
      * Update security settings
      * 
      * @param orgId  (required)
+     * @param putAdminSettingsSecurityUpdateRequest Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
      * @return ApiResponse&lt;PutAdminSettingsSecurityUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -3978,8 +4510,8 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminSettingsSecurityUpdateResponse> putAdminSettingsSecurityUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminSettingsSecurityUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminSettingsSecurityUpdateResponse> putAdminSettingsSecurityUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminSettingsSecurityUpdateValidateBeforeCall(orgId, putAdminSettingsSecurityUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminSettingsSecurityUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -3988,6 +4520,7 @@ public class AdminSettingsApi {
      * Update security settings (asynchronously)
      * 
      * @param orgId  (required)
+     * @param putAdminSettingsSecurityUpdateRequest Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -3998,9 +4531,9 @@ public class AdminSettingsApi {
         <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsSecurityUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsSecurityUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsSecurityUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest, final ApiCallback<PutAdminSettingsSecurityUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminSettingsSecurityUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = putAdminSettingsSecurityUpdateValidateBeforeCall(orgId, putAdminSettingsSecurityUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminSettingsSecurityUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -4008,6 +4541,7 @@ public class AdminSettingsApi {
     /**
      * Build call for putAdminTenantUpdate
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -4019,7 +4553,7 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminTenantUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call putAdminTenantUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -4033,7 +4567,7 @@ public class AdminSettingsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = putAdminTenantUpdateRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/tenant"
@@ -4054,6 +4588,7 @@ public class AdminSettingsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -4065,20 +4600,26 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call putAdminTenantUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call putAdminTenantUpdateValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling putAdminTenantUpdate(Async)");
         }
 
-        return putAdminTenantUpdateCall(orgId, _callback);
+        // verify the required parameter 'putAdminTenantUpdateRequest' is set
+        if (putAdminTenantUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'putAdminTenantUpdateRequest' when calling putAdminTenantUpdate(Async)");
+        }
+
+        return putAdminTenantUpdateCall(orgId, putAdminTenantUpdateRequest, _callback);
 
     }
 
     /**
-     * Update organization (tenant) name and settings
+     * Update the organization&#39;s name and settings
      * 
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @return PutAdminTenantUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4089,15 +4630,16 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public PutAdminTenantUpdateResponse putAdminTenantUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        ApiResponse<PutAdminTenantUpdateResponse> localVarResp = putAdminTenantUpdateWithHttpInfo(orgId);
+    public PutAdminTenantUpdateResponse putAdminTenantUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest) throws ApiException {
+        ApiResponse<PutAdminTenantUpdateResponse> localVarResp = putAdminTenantUpdateWithHttpInfo(orgId, putAdminTenantUpdateRequest);
         return localVarResp.getData();
     }
 
     /**
-     * Update organization (tenant) name and settings
+     * Update the organization&#39;s name and settings
      * 
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @return ApiResponse&lt;PutAdminTenantUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -4108,16 +4650,17 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<PutAdminTenantUpdateResponse> putAdminTenantUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = putAdminTenantUpdateValidateBeforeCall(orgId, null);
+    public ApiResponse<PutAdminTenantUpdateResponse> putAdminTenantUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest) throws ApiException {
+        okhttp3.Call localVarCall = putAdminTenantUpdateValidateBeforeCall(orgId, putAdminTenantUpdateRequest, null);
         Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update organization (tenant) name and settings (asynchronously)
+     * Update the organization&#39;s name and settings (asynchronously)
      * 
      * @param orgId  (required)
+     * @param putAdminTenantUpdateRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -4129,9 +4672,9 @@ public class AdminSettingsApi {
         <tr><td> 403 </td><td> The caller does not hold settings.manage, or settings.audit_log_retention_days or settings.audit_log_auto_delete would change and the caller does not hold gdpr.manage. Nothing is stored. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminTenantUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
+    public okhttp3.Call putAdminTenantUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull PutAdminTenantUpdateRequest putAdminTenantUpdateRequest, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = putAdminTenantUpdateValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = putAdminTenantUpdateValidateBeforeCall(orgId, putAdminTenantUpdateRequest, _callback);
         Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

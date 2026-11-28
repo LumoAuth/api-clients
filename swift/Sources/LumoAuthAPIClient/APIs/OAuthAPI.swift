@@ -55,11 +55,24 @@ open class OAuthAPI {
      CIBA backchannel authentication request
      
      - parameter orgId: (path)  
+     - parameter scope: (form)  
+     - parameter loginHint: (form)  (optional)
+     - parameter loginHintToken: (form)  (optional)
+     - parameter idTokenHint: (form)  (optional)
+     - parameter bindingMessage: (form)  (optional)
+     - parameter acrValues: (form)  (optional)
+     - parameter requestedExpiry: (form) Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional)
+     - parameter clientNotificationToken: (form)  (optional)
+     - parameter authorizationDetails: (form)  (optional)
+     - parameter clientId: (form) Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     - parameter clientSecret: (form) client_secret_post (optional)
+     - parameter clientAssertionType: (form)  (optional)
+     - parameter clientAssertion: (form) private_key_jwt (RFC 7523) (optional)
      - returns: BackchannelAuthorizeResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func backchannelAuthorize(orgId: String) async throws -> BackchannelAuthorizeResponse {
-        return try await backchannelAuthorizeWithRequestBuilder(orgId: orgId).execute().body
+    open class func backchannelAuthorize(orgId: String, scope: String, loginHint: String? = nil, loginHintToken: String? = nil, idTokenHint: String? = nil, bindingMessage: String? = nil, acrValues: String? = nil, requestedExpiry: Int? = nil, clientNotificationToken: String? = nil, authorizationDetails: String? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil) async throws -> BackchannelAuthorizeResponse {
+        return try await backchannelAuthorizeWithRequestBuilder(orgId: orgId, scope: scope, loginHint: loginHint, loginHintToken: loginHintToken, idTokenHint: idTokenHint, bindingMessage: bindingMessage, acrValues: acrValues, requestedExpiry: requestedExpiry, clientNotificationToken: clientNotificationToken, authorizationDetails: authorizationDetails, clientId: clientId, clientSecret: clientSecret, clientAssertionType: clientAssertionType, clientAssertion: clientAssertion).execute().body
     }
 
     /**
@@ -70,20 +83,50 @@ open class OAuthAPI {
        - type: http
        - name: ClientAuth
      - parameter orgId: (path)  
+     - parameter scope: (form)  
+     - parameter loginHint: (form)  (optional)
+     - parameter loginHintToken: (form)  (optional)
+     - parameter idTokenHint: (form)  (optional)
+     - parameter bindingMessage: (form)  (optional)
+     - parameter acrValues: (form)  (optional)
+     - parameter requestedExpiry: (form) Seconds. An application&#39;s request: only shortens the lifetime, which is 120 s; at least 30. An agent-initiated request: 30 to 600, default 300. A value outside the range is moved into it, not refused. (optional)
+     - parameter clientNotificationToken: (form)  (optional)
+     - parameter authorizationDetails: (form)  (optional)
+     - parameter clientId: (form) Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     - parameter clientSecret: (form) client_secret_post (optional)
+     - parameter clientAssertionType: (form)  (optional)
+     - parameter clientAssertion: (form) private_key_jwt (RFC 7523) (optional)
      - returns: RequestBuilder<BackchannelAuthorizeResponse> 
      */
-    open class func backchannelAuthorizeWithRequestBuilder(orgId: String) -> RequestBuilder<BackchannelAuthorizeResponse> {
+    open class func backchannelAuthorizeWithRequestBuilder(orgId: String, scope: String, loginHint: String? = nil, loginHintToken: String? = nil, idTokenHint: String? = nil, bindingMessage: String? = nil, acrValues: String? = nil, requestedExpiry: Int? = nil, clientNotificationToken: String? = nil, authorizationDetails: String? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil) -> RequestBuilder<BackchannelAuthorizeResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/bc-authorize"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableFormParams: [String: Any?] = [
+            "scope": scope.encodeToJSON(),
+            "login_hint": loginHint?.encodeToJSON(),
+            "login_hint_token": loginHintToken?.encodeToJSON(),
+            "id_token_hint": idTokenHint?.encodeToJSON(),
+            "binding_message": bindingMessage?.encodeToJSON(),
+            "acr_values": acrValues?.encodeToJSON(),
+            "requested_expiry": requestedExpiry?.encodeToJSON(),
+            "client_notification_token": clientNotificationToken?.encodeToJSON(),
+            "authorization_details": authorizationDetails?.encodeToJSON(),
+            "client_id": clientId?.encodeToJSON(),
+            "client_secret": clientSecret?.encodeToJSON(),
+            "client_assertion_type": clientAssertionType?.encodeToJSON(),
+            "client_assertion": clientAssertion?.encodeToJSON(),
+        ]
+
+        let localVariableNonNullParameters = APIHelper.rejectNil(localVariableFormParams)
+        let localVariableParameters = APIHelper.convertBoolToString(localVariableNonNullParameters)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/x-www-form-urlencoded",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -138,35 +181,57 @@ open class OAuthAPI {
      Device authorization request (RFC 8628)
      
      - parameter orgId: (path)  
+     - parameter clientId: (form) Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     - parameter clientSecret: (form) client_secret_post (optional)
+     - parameter clientAssertionType: (form)  (optional)
+     - parameter clientAssertion: (form) private_key_jwt (RFC 7523) (optional)
+     - parameter scope: (form) Space-separated scopes. (optional)
+     - parameter resource: (form) RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional)
      - returns: DeviceAuthorizationResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func deviceAuthorization(orgId: String) async throws -> DeviceAuthorizationResponse {
-        return try await deviceAuthorizationWithRequestBuilder(orgId: orgId).execute().body
+    open class func deviceAuthorization(orgId: String, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil, scope: String? = nil, resource: String? = nil) async throws -> DeviceAuthorizationResponse {
+        return try await deviceAuthorizationWithRequestBuilder(orgId: orgId, clientId: clientId, clientSecret: clientSecret, clientAssertionType: clientAssertionType, clientAssertion: clientAssertion, scope: scope, resource: resource).execute().body
     }
 
     /**
      Device authorization request (RFC 8628)
      - POST /orgs/{orgId}/api/v1/oauth/device_authorization
-     - Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+     - Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code. RFC 9396 authorization_details is not read here, as at the authorization and pushed authorization endpoints: rich authorization requests are accepted for agents only (JIT permissions, agent-initiated CIBA); what the token may do is the scope.
      - BASIC:
        - type: http
        - name: ClientAuth
      - parameter orgId: (path)  
+     - parameter clientId: (form) Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     - parameter clientSecret: (form) client_secret_post (optional)
+     - parameter clientAssertionType: (form)  (optional)
+     - parameter clientAssertion: (form) private_key_jwt (RFC 7523) (optional)
+     - parameter scope: (form) Space-separated scopes. (optional)
+     - parameter resource: (form) RFC 8707 resource indicator (repeat the field for several): the API that the access token is for. Validated as at the authorization endpoint (absolute URI without a fragment, within the client&#39;s audience URIs; invalid_target otherwise). The access token of the device grant is issued for these resources; its token request may name a subset of them. (optional)
      - returns: RequestBuilder<DeviceAuthorizationResponse> 
      */
-    open class func deviceAuthorizationWithRequestBuilder(orgId: String) -> RequestBuilder<DeviceAuthorizationResponse> {
+    open class func deviceAuthorizationWithRequestBuilder(orgId: String, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil, scope: String? = nil, resource: String? = nil) -> RequestBuilder<DeviceAuthorizationResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/device_authorization"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableFormParams: [String: Any?] = [
+            "client_id": clientId?.encodeToJSON(),
+            "client_secret": clientSecret?.encodeToJSON(),
+            "client_assertion_type": clientAssertionType?.encodeToJSON(),
+            "client_assertion": clientAssertion?.encodeToJSON(),
+            "scope": scope?.encodeToJSON(),
+            "resource": resource?.encodeToJSON(),
+        ]
+
+        let localVariableNonNullParameters = APIHelper.rejectNil(localVariableFormParams)
+        let localVariableParameters = APIHelper.convertBoolToString(localVariableNonNullParameters)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/x-www-form-urlencoded",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -305,14 +370,28 @@ open class OAuthAPI {
     }
 
     /**
+     * enum for parameter tokenTypeHint
+     */
+    public enum TokenTypeHint_introspect: String, CaseIterable {
+        case accessToken = "access_token"
+        case refreshToken = "refresh_token"
+    }
+
+    /**
      Token introspection (RFC 7662)
      
      - parameter orgId: (path)  
+     - parameter token: (form)  
+     - parameter tokenTypeHint: (form)  (optional)
+     - parameter clientId: (form) The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional)
+     - parameter clientSecret: (form) client_secret_post (optional)
+     - parameter clientAssertionType: (form)  (optional)
+     - parameter clientAssertion: (form) private_key_jwt (RFC 7523) (optional)
      - returns: IntrospectResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func introspect(orgId: String) async throws -> IntrospectResponse {
-        return try await introspectWithRequestBuilder(orgId: orgId).execute().body
+    open class func introspect(orgId: String, token: String, tokenTypeHint: TokenTypeHint_introspect? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil) async throws -> IntrospectResponse {
+        return try await introspectWithRequestBuilder(orgId: orgId, token: token, tokenTypeHint: tokenTypeHint, clientId: clientId, clientSecret: clientSecret, clientAssertionType: clientAssertionType, clientAssertion: clientAssertion).execute().body
     }
 
     /**
@@ -323,20 +402,36 @@ open class OAuthAPI {
        - type: http
        - name: ClientAuth
      - parameter orgId: (path)  
+     - parameter token: (form)  
+     - parameter tokenTypeHint: (form)  (optional)
+     - parameter clientId: (form) The calling client, with client_secret (client_secret_post), or an agent&#39;s id with its secret or assertion. Not needed with HTTP Basic or a client assertion. A public client cannot introspect (401 invalid_client). (optional)
+     - parameter clientSecret: (form) client_secret_post (optional)
+     - parameter clientAssertionType: (form)  (optional)
+     - parameter clientAssertion: (form) private_key_jwt (RFC 7523) (optional)
      - returns: RequestBuilder<IntrospectResponse> 
      */
-    open class func introspectWithRequestBuilder(orgId: String) -> RequestBuilder<IntrospectResponse> {
+    open class func introspectWithRequestBuilder(orgId: String, token: String, tokenTypeHint: TokenTypeHint_introspect? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil) -> RequestBuilder<IntrospectResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/introspect"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableFormParams: [String: Any?] = [
+            "token": token.encodeToJSON(),
+            "token_type_hint": tokenTypeHint?.encodeToJSON(),
+            "client_id": clientId?.encodeToJSON(),
+            "client_secret": clientSecret?.encodeToJSON(),
+            "client_assertion_type": clientAssertionType?.encodeToJSON(),
+            "client_assertion": clientAssertion?.encodeToJSON(),
+        ]
+
+        let localVariableNonNullParameters = APIHelper.rejectNil(localVariableFormParams)
+        let localVariableParameters = APIHelper.convertBoolToString(localVariableNonNullParameters)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/x-www-form-urlencoded",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -350,11 +445,26 @@ open class OAuthAPI {
      Pushed authorization request (RFC 9126)
      
      - parameter orgId: (path)  
+     - parameter responseType: (form)  (optional)
+     - parameter redirectUri: (form)  (optional)
+     - parameter scope: (form)  (optional)
+     - parameter state: (form)  (optional)
+     - parameter nonce: (form)  (optional)
+     - parameter codeChallenge: (form)  (optional)
+     - parameter codeChallengeMethod: (form)  (optional)
+     - parameter request: (form) A signed request object (JAR, RFC 9101). (optional)
+     - parameter resource: (form)  (optional)
+     - parameter prompt: (form)  (optional)
+     - parameter loginHint: (form)  (optional)
+     - parameter clientId: (form) Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     - parameter clientSecret: (form) client_secret_post (optional)
+     - parameter clientAssertionType: (form)  (optional)
+     - parameter clientAssertion: (form) private_key_jwt (RFC 7523) (optional)
      - returns: ParResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func par(orgId: String) async throws -> ParResponse {
-        return try await parWithRequestBuilder(orgId: orgId).execute().body
+    open class func par(orgId: String, responseType: String? = nil, redirectUri: String? = nil, scope: String? = nil, state: String? = nil, nonce: String? = nil, codeChallenge: String? = nil, codeChallengeMethod: String? = nil, request: String? = nil, resource: String? = nil, prompt: String? = nil, loginHint: String? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil) async throws -> ParResponse {
+        return try await parWithRequestBuilder(orgId: orgId, responseType: responseType, redirectUri: redirectUri, scope: scope, state: state, nonce: nonce, codeChallenge: codeChallenge, codeChallengeMethod: codeChallengeMethod, request: request, resource: resource, prompt: prompt, loginHint: loginHint, clientId: clientId, clientSecret: clientSecret, clientAssertionType: clientAssertionType, clientAssertion: clientAssertion).execute().body
     }
 
     /**
@@ -365,20 +475,54 @@ open class OAuthAPI {
        - type: http
        - name: ClientAuth
      - parameter orgId: (path)  
+     - parameter responseType: (form)  (optional)
+     - parameter redirectUri: (form)  (optional)
+     - parameter scope: (form)  (optional)
+     - parameter state: (form)  (optional)
+     - parameter nonce: (form)  (optional)
+     - parameter codeChallenge: (form)  (optional)
+     - parameter codeChallengeMethod: (form)  (optional)
+     - parameter request: (form) A signed request object (JAR, RFC 9101). (optional)
+     - parameter resource: (form)  (optional)
+     - parameter prompt: (form)  (optional)
+     - parameter loginHint: (form)  (optional)
+     - parameter clientId: (form) Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     - parameter clientSecret: (form) client_secret_post (optional)
+     - parameter clientAssertionType: (form)  (optional)
+     - parameter clientAssertion: (form) private_key_jwt (RFC 7523) (optional)
      - returns: RequestBuilder<ParResponse> 
      */
-    open class func parWithRequestBuilder(orgId: String) -> RequestBuilder<ParResponse> {
+    open class func parWithRequestBuilder(orgId: String, responseType: String? = nil, redirectUri: String? = nil, scope: String? = nil, state: String? = nil, nonce: String? = nil, codeChallenge: String? = nil, codeChallengeMethod: String? = nil, request: String? = nil, resource: String? = nil, prompt: String? = nil, loginHint: String? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil) -> RequestBuilder<ParResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/par"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableFormParams: [String: Any?] = [
+            "response_type": responseType?.encodeToJSON(),
+            "redirect_uri": redirectUri?.encodeToJSON(),
+            "scope": scope?.encodeToJSON(),
+            "state": state?.encodeToJSON(),
+            "nonce": nonce?.encodeToJSON(),
+            "code_challenge": codeChallenge?.encodeToJSON(),
+            "code_challenge_method": codeChallengeMethod?.encodeToJSON(),
+            "request": request?.encodeToJSON(),
+            "resource": resource?.encodeToJSON(),
+            "prompt": prompt?.encodeToJSON(),
+            "login_hint": loginHint?.encodeToJSON(),
+            "client_id": clientId?.encodeToJSON(),
+            "client_secret": clientSecret?.encodeToJSON(),
+            "client_assertion_type": clientAssertionType?.encodeToJSON(),
+            "client_assertion": clientAssertion?.encodeToJSON(),
+        ]
+
+        let localVariableNonNullParameters = APIHelper.rejectNil(localVariableFormParams)
+        let localVariableParameters = APIHelper.convertBoolToString(localVariableNonNullParameters)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/x-www-form-urlencoded",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -392,11 +536,12 @@ open class OAuthAPI {
      Dynamic client registration (RFC 7591 / OIDC DCR)
      
      - parameter orgId: (path)  
+     - parameter registerClientRequest: (body) RFC 7591 client metadata. 
      - returns: RegisterClientResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func registerClient(orgId: String) async throws -> RegisterClientResponse {
-        return try await registerClientWithRequestBuilder(orgId: orgId).execute().body
+    open class func registerClient(orgId: String, registerClientRequest: RegisterClientRequest) async throws -> RegisterClientResponse {
+        return try await registerClientWithRequestBuilder(orgId: orgId, registerClientRequest: registerClientRequest).execute().body
     }
 
     /**
@@ -410,20 +555,21 @@ open class OAuthAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
+     - parameter registerClientRequest: (body) RFC 7591 client metadata. 
      - returns: RequestBuilder<RegisterClientResponse> 
      */
-    open class func registerClientWithRequestBuilder(orgId: String) -> RequestBuilder<RegisterClientResponse> {
+    open class func registerClientWithRequestBuilder(orgId: String, registerClientRequest: RegisterClientRequest) -> RequestBuilder<RegisterClientResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/connect/register"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: registerClientRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -475,14 +621,28 @@ open class OAuthAPI {
     }
 
     /**
+     * enum for parameter tokenTypeHint
+     */
+    public enum TokenTypeHint_revoke: String, CaseIterable {
+        case accessToken = "access_token"
+        case refreshToken = "refresh_token"
+    }
+
+    /**
      Token revocation (RFC 7009)
      
      - parameter orgId: (path)  
+     - parameter token: (form)  
+     - parameter tokenTypeHint: (form)  (optional)
+     - parameter clientId: (form) Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     - parameter clientSecret: (form) client_secret_post (optional)
+     - parameter clientAssertionType: (form)  (optional)
+     - parameter clientAssertion: (form) private_key_jwt (RFC 7523) (optional)
      - returns: AnyCodable
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func revoke(orgId: String) async throws -> AnyCodable {
-        return try await revokeWithRequestBuilder(orgId: orgId).execute().body
+    open class func revoke(orgId: String, token: String, tokenTypeHint: TokenTypeHint_revoke? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil) async throws -> AnyCodable {
+        return try await revokeWithRequestBuilder(orgId: orgId, token: token, tokenTypeHint: tokenTypeHint, clientId: clientId, clientSecret: clientSecret, clientAssertionType: clientAssertionType, clientAssertion: clientAssertion).execute().body
     }
 
     /**
@@ -493,20 +653,36 @@ open class OAuthAPI {
        - type: http
        - name: ClientAuth
      - parameter orgId: (path)  
+     - parameter token: (form)  
+     - parameter tokenTypeHint: (form)  (optional)
+     - parameter clientId: (form) Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     - parameter clientSecret: (form) client_secret_post (optional)
+     - parameter clientAssertionType: (form)  (optional)
+     - parameter clientAssertion: (form) private_key_jwt (RFC 7523) (optional)
      - returns: RequestBuilder<AnyCodable> 
      */
-    open class func revokeWithRequestBuilder(orgId: String) -> RequestBuilder<AnyCodable> {
+    open class func revokeWithRequestBuilder(orgId: String, token: String, tokenTypeHint: TokenTypeHint_revoke? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil) -> RequestBuilder<AnyCodable> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/revoke"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableFormParams: [String: Any?] = [
+            "token": token.encodeToJSON(),
+            "token_type_hint": tokenTypeHint?.encodeToJSON(),
+            "client_id": clientId?.encodeToJSON(),
+            "client_secret": clientSecret?.encodeToJSON(),
+            "client_assertion_type": clientAssertionType?.encodeToJSON(),
+            "client_assertion": clientAssertion?.encodeToJSON(),
+        ]
+
+        let localVariableNonNullParameters = APIHelper.rejectNil(localVariableFormParams)
+        let localVariableParameters = APIHelper.convertBoolToString(localVariableNonNullParameters)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/x-www-form-urlencoded",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -730,11 +906,12 @@ open class OAuthAPI {
      Programmatic (JSON) login for the authorization flow
      
      - parameter orgId: (path)  
+     - parameter submitLoginJsonRequest: (body)  
      - returns: SubmitLoginJsonResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func submitLoginJson(orgId: String) async throws -> SubmitLoginJsonResponse {
-        return try await submitLoginJsonWithRequestBuilder(orgId: orgId).execute().body
+    open class func submitLoginJson(orgId: String, submitLoginJsonRequest: SubmitLoginJsonRequest) async throws -> SubmitLoginJsonResponse {
+        return try await submitLoginJsonWithRequestBuilder(orgId: orgId, submitLoginJsonRequest: submitLoginJsonRequest).execute().body
     }
 
     /**
@@ -742,20 +919,21 @@ open class OAuthAPI {
      - POST /orgs/{orgId}/api/v1/oauth/login/json
      - Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
      - parameter orgId: (path)  
+     - parameter submitLoginJsonRequest: (body)  
      - returns: RequestBuilder<SubmitLoginJsonResponse> 
      */
-    open class func submitLoginJsonWithRequestBuilder(orgId: String) -> RequestBuilder<SubmitLoginJsonResponse> {
+    open class func submitLoginJsonWithRequestBuilder(orgId: String, submitLoginJsonRequest: SubmitLoginJsonRequest) -> RequestBuilder<SubmitLoginJsonResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/login/json"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: submitLoginJsonRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -808,11 +986,30 @@ open class OAuthAPI {
      OAuth 2.1 token endpoint
      
      - parameter orgId: (path)  
+     - parameter grantType: (form)  
+     - parameter code: (form)  (optional)
+     - parameter redirectUri: (form)  (optional)
+     - parameter codeVerifier: (form)  (optional)
+     - parameter refreshToken: (form)  (optional)
+     - parameter deviceCode: (form)  (optional)
+     - parameter authReqId: (form) CIBA (optional)
+     - parameter scope: (form)  (optional)
+     - parameter resource: (form)  (optional)
+     - parameter subjectToken: (form) Token exchange (RFC 8693) (optional)
+     - parameter subjectTokenType: (form)  (optional)
+     - parameter actorToken: (form)  (optional)
+     - parameter actorTokenType: (form)  (optional)
+     - parameter requestedTokenType: (form)  (optional)
+     - parameter assertion: (form) JWT bearer / ID-JAG grant (optional)
+     - parameter clientId: (form) Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     - parameter clientSecret: (form) client_secret_post (optional)
+     - parameter clientAssertionType: (form)  (optional)
+     - parameter clientAssertion: (form) private_key_jwt (RFC 7523) (optional)
      - returns: TokenResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func token(orgId: String) async throws -> TokenResponse {
-        return try await tokenWithRequestBuilder(orgId: orgId).execute().body
+    open class func token(orgId: String, grantType: String, code: String? = nil, redirectUri: String? = nil, codeVerifier: String? = nil, refreshToken: String? = nil, deviceCode: String? = nil, authReqId: String? = nil, scope: String? = nil, resource: String? = nil, subjectToken: String? = nil, subjectTokenType: String? = nil, actorToken: String? = nil, actorTokenType: String? = nil, requestedTokenType: String? = nil, assertion: String? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil) async throws -> TokenResponse {
+        return try await tokenWithRequestBuilder(orgId: orgId, grantType: grantType, code: code, redirectUri: redirectUri, codeVerifier: codeVerifier, refreshToken: refreshToken, deviceCode: deviceCode, authReqId: authReqId, scope: scope, resource: resource, subjectToken: subjectToken, subjectTokenType: subjectTokenType, actorToken: actorToken, actorTokenType: actorTokenType, requestedTokenType: requestedTokenType, assertion: assertion, clientId: clientId, clientSecret: clientSecret, clientAssertionType: clientAssertionType, clientAssertion: clientAssertion).execute().body
     }
 
     /**
@@ -824,20 +1021,62 @@ open class OAuthAPI {
        - name: ClientAuth
      - responseHeaders: [DPoP-Nonce(String)]
      - parameter orgId: (path)  
+     - parameter grantType: (form)  
+     - parameter code: (form)  (optional)
+     - parameter redirectUri: (form)  (optional)
+     - parameter codeVerifier: (form)  (optional)
+     - parameter refreshToken: (form)  (optional)
+     - parameter deviceCode: (form)  (optional)
+     - parameter authReqId: (form) CIBA (optional)
+     - parameter scope: (form)  (optional)
+     - parameter resource: (form)  (optional)
+     - parameter subjectToken: (form) Token exchange (RFC 8693) (optional)
+     - parameter subjectTokenType: (form)  (optional)
+     - parameter actorToken: (form)  (optional)
+     - parameter actorTokenType: (form)  (optional)
+     - parameter requestedTokenType: (form)  (optional)
+     - parameter assertion: (form) JWT bearer / ID-JAG grant (optional)
+     - parameter clientId: (form) Required for a public client; a confidential client may authenticate with HTTP Basic instead. (optional)
+     - parameter clientSecret: (form) client_secret_post (optional)
+     - parameter clientAssertionType: (form)  (optional)
+     - parameter clientAssertion: (form) private_key_jwt (RFC 7523) (optional)
      - returns: RequestBuilder<TokenResponse> 
      */
-    open class func tokenWithRequestBuilder(orgId: String) -> RequestBuilder<TokenResponse> {
+    open class func tokenWithRequestBuilder(orgId: String, grantType: String, code: String? = nil, redirectUri: String? = nil, codeVerifier: String? = nil, refreshToken: String? = nil, deviceCode: String? = nil, authReqId: String? = nil, scope: String? = nil, resource: String? = nil, subjectToken: String? = nil, subjectTokenType: String? = nil, actorToken: String? = nil, actorTokenType: String? = nil, requestedTokenType: String? = nil, assertion: String? = nil, clientId: String? = nil, clientSecret: String? = nil, clientAssertionType: String? = nil, clientAssertion: String? = nil) -> RequestBuilder<TokenResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/token"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableFormParams: [String: Any?] = [
+            "grant_type": grantType.encodeToJSON(),
+            "code": code?.encodeToJSON(),
+            "redirect_uri": redirectUri?.encodeToJSON(),
+            "code_verifier": codeVerifier?.encodeToJSON(),
+            "refresh_token": refreshToken?.encodeToJSON(),
+            "device_code": deviceCode?.encodeToJSON(),
+            "auth_req_id": authReqId?.encodeToJSON(),
+            "scope": scope?.encodeToJSON(),
+            "resource": resource?.encodeToJSON(),
+            "subject_token": subjectToken?.encodeToJSON(),
+            "subject_token_type": subjectTokenType?.encodeToJSON(),
+            "actor_token": actorToken?.encodeToJSON(),
+            "actor_token_type": actorTokenType?.encodeToJSON(),
+            "requested_token_type": requestedTokenType?.encodeToJSON(),
+            "assertion": assertion?.encodeToJSON(),
+            "client_id": clientId?.encodeToJSON(),
+            "client_secret": clientSecret?.encodeToJSON(),
+            "client_assertion_type": clientAssertionType?.encodeToJSON(),
+            "client_assertion": clientAssertion?.encodeToJSON(),
+        ]
+
+        let localVariableNonNullParameters = APIHelper.rejectNil(localVariableFormParams)
+        let localVariableParameters = APIHelper.convertBoolToString(localVariableNonNullParameters)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/x-www-form-urlencoded",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

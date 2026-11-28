@@ -1,6 +1,6 @@
 /*
  * LumoAuth API
- * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+ * LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: sdk@lumoauth.dev
@@ -14,15 +14,19 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AbacAttributesCreateRequest;
 import io.lumoauth.client.model.AbacAttributesCreateResponse;
 import io.lumoauth.client.model.AbacAttributesGetResponse;
 import io.lumoauth.client.model.AbacAttributesListResponse;
+import io.lumoauth.client.model.AbacPoliciesCreateRequest;
 import io.lumoauth.client.model.AbacPoliciesCreateResponse;
 import io.lumoauth.client.model.AbacPoliciesGetResponse;
 import io.lumoauth.client.model.AbacPoliciesListResponse;
 import io.lumoauth.client.model.AbacPoliciesToggleResponse;
 import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAbacAttributesUpdateRequest;
 import io.lumoauth.client.model.PutAbacAttributesUpdateResponse;
+import io.lumoauth.client.model.PutAbacPoliciesUpdateRequest;
 import io.lumoauth.client.model.PutAbacPoliciesUpdateResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -48,7 +52,8 @@ public class AdminAbacApiTest {
     @Test
     public void abacAttributesCreateTest() throws ApiException {
         String orgId = null;
-        AbacAttributesCreateResponse response = api.abacAttributesCreate(orgId);
+        AbacAttributesCreateRequest abacAttributesCreateRequest = null;
+        AbacAttributesCreateResponse response = api.abacAttributesCreate(orgId, abacAttributesCreateRequest);
         // TODO: test validations
     }
 
@@ -98,7 +103,8 @@ public class AdminAbacApiTest {
     @Test
     public void abacPoliciesCreateTest() throws ApiException {
         String orgId = null;
-        AbacPoliciesCreateResponse response = api.abacPoliciesCreate(orgId);
+        AbacPoliciesCreateRequest abacPoliciesCreateRequest = null;
+        AbacPoliciesCreateResponse response = api.abacPoliciesCreate(orgId, abacPoliciesCreateRequest);
         // TODO: test validations
     }
 
@@ -163,7 +169,8 @@ public class AdminAbacApiTest {
     public void patchAbacAttributesUpdateTest() throws ApiException {
         String orgId = null;
         String id = null;
-        PutAbacAttributesUpdateResponse response = api.patchAbacAttributesUpdate(orgId, id);
+        PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest = null;
+        PutAbacAttributesUpdateResponse response = api.patchAbacAttributesUpdate(orgId, id, putAbacAttributesUpdateRequest);
         // TODO: test validations
     }
 
@@ -176,7 +183,8 @@ public class AdminAbacApiTest {
     public void patchAbacPoliciesUpdateTest() throws ApiException {
         String orgId = null;
         String id = null;
-        PutAbacPoliciesUpdateResponse response = api.patchAbacPoliciesUpdate(orgId, id);
+        PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest = null;
+        PutAbacPoliciesUpdateResponse response = api.patchAbacPoliciesUpdate(orgId, id, putAbacPoliciesUpdateRequest);
         // TODO: test validations
     }
 
@@ -189,7 +197,8 @@ public class AdminAbacApiTest {
     public void putAbacAttributesUpdateTest() throws ApiException {
         String orgId = null;
         String id = null;
-        PutAbacAttributesUpdateResponse response = api.putAbacAttributesUpdate(orgId, id);
+        PutAbacAttributesUpdateRequest putAbacAttributesUpdateRequest = null;
+        PutAbacAttributesUpdateResponse response = api.putAbacAttributesUpdate(orgId, id, putAbacAttributesUpdateRequest);
         // TODO: test validations
     }
 
@@ -202,7 +211,8 @@ public class AdminAbacApiTest {
     public void putAbacPoliciesUpdateTest() throws ApiException {
         String orgId = null;
         String id = null;
-        PutAbacPoliciesUpdateResponse response = api.putAbacPoliciesUpdate(orgId, id);
+        PutAbacPoliciesUpdateRequest putAbacPoliciesUpdateRequest = null;
+        PutAbacPoliciesUpdateResponse response = api.putAbacPoliciesUpdate(orgId, id, putAbacPoliciesUpdateRequest);
         // TODO: test validations
     }
 

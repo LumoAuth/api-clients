@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -143,24 +143,30 @@ module LumoAuthApiClient
 
     # Create a social login provider
     # @param org_id [String] 
+    # @param admin_social_providers_create_request [AdminSocialProvidersCreateRequest] An unknown field is refused with 400.
     # @param [Hash] opts the optional parameters
     # @return [AdminSocialProvidersCreateResponse]
-    def admin_social_providers_create(org_id, opts = {})
-      data, _status_code, _headers = admin_social_providers_create_with_http_info(org_id, opts)
+    def admin_social_providers_create(org_id, admin_social_providers_create_request, opts = {})
+      data, _status_code, _headers = admin_social_providers_create_with_http_info(org_id, admin_social_providers_create_request, opts)
       data
     end
 
     # Create a social login provider
     # @param org_id [String] 
+    # @param admin_social_providers_create_request [AdminSocialProvidersCreateRequest] An unknown field is refused with 400.
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminSocialProvidersCreateResponse, Integer, Hash)>] AdminSocialProvidersCreateResponse data, response status code and response headers
-    def admin_social_providers_create_with_http_info(org_id, opts = {})
+    def admin_social_providers_create_with_http_info(org_id, admin_social_providers_create_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.admin_social_providers_create ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminIdentityProvidersApi.admin_social_providers_create"
+      end
+      # verify the required parameter 'admin_social_providers_create_request' is set
+      if @api_client.config.client_side_validation && admin_social_providers_create_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_social_providers_create_request' when calling AdminIdentityProvidersApi.admin_social_providers_create"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/social-providers'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -172,12 +178,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_social_providers_create_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminSocialProvidersCreateResponse'
@@ -595,19 +606,21 @@ module LumoAuthApiClient
     # Update a social login provider
     # @param org_id [String] 
     # @param provider_id [String] 
+    # @param put_admin_social_providers_update_request [PutAdminSocialProvidersUpdateRequest] Only the fields that are sent change. An unknown field is refused with 400.
     # @param [Hash] opts the optional parameters
     # @return [AdminSocialProvidersCreateResponse]
-    def patch_admin_social_providers_update(org_id, provider_id, opts = {})
-      data, _status_code, _headers = patch_admin_social_providers_update_with_http_info(org_id, provider_id, opts)
+    def patch_admin_social_providers_update(org_id, provider_id, put_admin_social_providers_update_request, opts = {})
+      data, _status_code, _headers = patch_admin_social_providers_update_with_http_info(org_id, provider_id, put_admin_social_providers_update_request, opts)
       data
     end
 
     # Update a social login provider
     # @param org_id [String] 
     # @param provider_id [String] 
+    # @param put_admin_social_providers_update_request [PutAdminSocialProvidersUpdateRequest] Only the fields that are sent change. An unknown field is refused with 400.
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminSocialProvidersCreateResponse, Integer, Hash)>] AdminSocialProvidersCreateResponse data, response status code and response headers
-    def patch_admin_social_providers_update_with_http_info(org_id, provider_id, opts = {})
+    def patch_admin_social_providers_update_with_http_info(org_id, provider_id, put_admin_social_providers_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.patch_admin_social_providers_update ...'
       end
@@ -619,6 +632,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && provider_id.nil?
         fail ArgumentError, "Missing the required parameter 'provider_id' when calling AdminIdentityProvidersApi.patch_admin_social_providers_update"
       end
+      # verify the required parameter 'put_admin_social_providers_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_social_providers_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_social_providers_update_request' when calling AdminIdentityProvidersApi.patch_admin_social_providers_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/social-providers/{providerId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'providerId' + '}', CGI.escape(provider_id.to_s))
 
@@ -629,12 +646,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_social_providers_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminSocialProvidersCreateResponse'
@@ -662,19 +684,21 @@ module LumoAuthApiClient
     # Create or replace a social login provider
     # @param org_id [String] 
     # @param provider_id [String] 
+    # @param put_admin_social_providers_update_request [PutAdminSocialProvidersUpdateRequest] Only the fields that are sent change. An unknown field is refused with 400.
     # @param [Hash] opts the optional parameters
     # @return [AdminSocialProvidersCreateResponse]
-    def put_admin_social_providers_update(org_id, provider_id, opts = {})
-      data, _status_code, _headers = put_admin_social_providers_update_with_http_info(org_id, provider_id, opts)
+    def put_admin_social_providers_update(org_id, provider_id, put_admin_social_providers_update_request, opts = {})
+      data, _status_code, _headers = put_admin_social_providers_update_with_http_info(org_id, provider_id, put_admin_social_providers_update_request, opts)
       data
     end
 
     # Create or replace a social login provider
     # @param org_id [String] 
     # @param provider_id [String] 
+    # @param put_admin_social_providers_update_request [PutAdminSocialProvidersUpdateRequest] Only the fields that are sent change. An unknown field is refused with 400.
     # @param [Hash] opts the optional parameters
     # @return [Array<(AdminSocialProvidersCreateResponse, Integer, Hash)>] AdminSocialProvidersCreateResponse data, response status code and response headers
-    def put_admin_social_providers_update_with_http_info(org_id, provider_id, opts = {})
+    def put_admin_social_providers_update_with_http_info(org_id, provider_id, put_admin_social_providers_update_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.put_admin_social_providers_update ...'
       end
@@ -686,6 +710,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && provider_id.nil?
         fail ArgumentError, "Missing the required parameter 'provider_id' when calling AdminIdentityProvidersApi.put_admin_social_providers_update"
       end
+      # verify the required parameter 'put_admin_social_providers_update_request' is set
+      if @api_client.config.client_side_validation && put_admin_social_providers_update_request.nil?
+        fail ArgumentError, "Missing the required parameter 'put_admin_social_providers_update_request' when calling AdminIdentityProvidersApi.put_admin_social_providers_update"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/social-providers/{providerId}'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'providerId' + '}', CGI.escape(provider_id.to_s))
 
@@ -696,12 +724,17 @@ module LumoAuthApiClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(put_admin_social_providers_update_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'AdminSocialProvidersCreateResponse'

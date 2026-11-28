@@ -85,8 +85,8 @@ public class Example {
 | **200** | Request approved. |  -  |
 | **400** | Invalid request (e.g. request not in an approvable state). |  -  |
 | **401** | Authentication required. |  -  |
-| **403** | Cross-tenant, missing jit.approve permission, or agent access denied. |  -  |
-| **404** | Tenant or request not found. |  -  |
+| **403** | The caller belongs to another organization, lacks jit.approve, or may not act on the agent. |  -  |
+| **404** | Organization or request not found. |  -  |
 
 <a id="completeTask"></a>
 # **completeTask**
@@ -156,7 +156,7 @@ public class Example {
 | **200** | Task completed and resources cleaned up. |  -  |
 | **401** | Invalid or missing agent token. |  -  |
 | **403** | Task belongs to a different agent, or a JIT token of another task was used. |  -  |
-| **404** | Tenant or task not found. |  -  |
+| **404** | Organization or task not found. |  -  |
 | **429** | Rate limit exceeded. |  -  |
 
 <a id="createTask"></a>
@@ -165,7 +165,7 @@ public class Example {
 
 Create a new ephemeral task/persona for an agent.
 
-Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: for nested agent chains   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
+Each task gets a unique sub-identity with isolated permissions. This limits the \&quot;blast radius\&quot; of any potential compromise.  Request body: {   \&quot;name\&quot;: \&quot;Research Task #123\&quot;,           // Optional: human-readable name   \&quot;type\&quot;: \&quot;research\&quot;,                     // Optional: task type for categorization   \&quot;parent_task_id\&quot;: \&quot;task_abc123\&quot;,        // Optional: an open task of this organization that the new task is a step of   \&quot;on_behalf_of\&quot;: \&quot;user@example.com\&quot;      // Optional: delegation context }
 
 ### Example
 ```java
@@ -227,10 +227,10 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Ephemeral task/persona created. |  -  |
-| **400** | Delegation user not found or not authorized. |  -  |
+| **400** | Delegation user not found or not authorized, or parent_task_id does not name an open task of this organization, or the chain of tasks is already 5 tasks deep. |  -  |
 | **401** | Invalid or missing agent token. |  -  |
 | **403** | Agent is not authorized to act on behalf of users. |  -  |
-| **404** | Tenant not found. |  -  |
+| **404** | Organization not found. |  -  |
 | **429** | Rate limit exceeded. |  -  |
 
 <a id="denyRequest"></a>
@@ -303,8 +303,8 @@ public class Example {
 | **200** | Request denied. |  -  |
 | **400** | Invalid request (e.g. request not in a deniable state). |  -  |
 | **401** | Authentication required. |  -  |
-| **403** | Cross-tenant, missing jit.approve permission, or agent access denied. |  -  |
-| **404** | Tenant or request not found. |  -  |
+| **403** | The caller belongs to another organization, lacks jit.approve, or may not act on the agent. |  -  |
+| **404** | Organization or request not found. |  -  |
 
 <a id="evaluateTask"></a>
 # **evaluateTask**
@@ -374,7 +374,7 @@ public class Example {
 | **200** | Continuous access evaluation (CAEP) result for the task. |  -  |
 | **401** | Authentication required. Agent, JIT and delegated credentials are not accepted. |  -  |
 | **403** | The caller is not a user of this organization with the &#x60;jit.approve&#x60; permission, or the access token lacks the &#x60;jit:approve&#x60; scope. |  -  |
-| **404** | Tenant or task not found. |  -  |
+| **404** | Organization or task not found. |  -  |
 | **415** | A session caller must send Content-Type: application/json or an X-CSRF-Token / X-Requested-With header. |  -  |
 
 <a id="getRequestStatus"></a>
@@ -447,7 +447,7 @@ public class Example {
 | **200** | Current status of the JIT permission request. |  -  |
 | **401** | Invalid or missing agent token. |  -  |
 | **403** | Request belongs to a different agent, or a JIT token of another task was used. |  -  |
-| **404** | Tenant or request not found. |  -  |
+| **404** | Organization or request not found. |  -  |
 | **429** | Rate limit exceeded. |  -  |
 
 <a id="getRequestToken"></a>
@@ -520,7 +520,7 @@ public class Example {
 | **200** | A downscoped JIT token (RFC 8693 token exchange). |  -  |
 | **401** | Invalid or missing agent token. |  -  |
 | **403** | Request belongs to a different agent, is not yet approved, is no longer redeemable (expired window, ended task, inactive agent/organization), or a JIT token was used. |  -  |
-| **404** | Tenant or request not found. |  -  |
+| **404** | Organization or request not found. |  -  |
 | **429** | rate_limit_exceeded, or budget_exceeded when the agent budget is spent (Retry-After holds the seconds until the spent window starts again). |  -  |
 
 <a id="listPendingRequests"></a>
@@ -588,8 +588,8 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | Pending HITL requests the caller may act on. |  -  |
 | **401** | Authentication required. |  -  |
-| **403** | Cross-tenant or missing jit.approve permission. |  -  |
-| **404** | Tenant not found. |  -  |
+| **403** | The caller belongs to another organization or lacks jit.approve. |  -  |
+| **404** | Organization not found. |  -  |
 
 <a id="requestPermission"></a>
 # **requestPermission**
@@ -662,6 +662,6 @@ public class Example {
 | **400** | Missing/invalid task_id, authorization_details, or the task is not active. |  -  |
 | **401** | Invalid or missing agent token. |  -  |
 | **403** | Task belongs to a different agent, or task_suspended: continuous access evaluation suspended the task on this request. |  -  |
-| **404** | Tenant or task not found. |  -  |
+| **404** | Organization or task not found. |  -  |
 | **429** | Rate limit exceeded. |  -  |
 

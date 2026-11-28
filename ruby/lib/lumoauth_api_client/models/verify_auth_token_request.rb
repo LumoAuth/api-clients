@@ -1,7 +1,7 @@
 =begin
 #LumoAuth API
 
-#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. 
+#LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and organization administration. Most paths are scoped to one organization under `/orgs/{orgId}/api/v1/...`. 
 
 The version of the OpenAPI document: 1.0.0
 Contact: sdk@lumoauth.dev
@@ -18,7 +18,7 @@ module LumoAuthApiClient
     # The auth token presented by the agent.
     attr_accessor :auth_token
 
-    # Resource identifier; defaults to the authenticated resource.
+    # Required. The resource identifier of the calling resource (`resource_identifier` is accepted as well). The HTTP message signature is checked with the registered keys of this resource.
     attr_accessor :resource
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -71,10 +71,14 @@ module LumoAuthApiClient
 
       if attributes.key?(:'auth_token')
         self.auth_token = attributes[:'auth_token']
+      else
+        self.auth_token = nil
       end
 
       if attributes.key?(:'resource')
         self.resource = attributes[:'resource']
+      else
+        self.resource = nil
       end
     end
 
@@ -83,6 +87,14 @@ module LumoAuthApiClient
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @auth_token.nil?
+        invalid_properties.push('invalid value for "auth_token", auth_token cannot be nil.')
+      end
+
+      if @resource.nil?
+        invalid_properties.push('invalid value for "resource", resource cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -90,7 +102,29 @@ module LumoAuthApiClient
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if @auth_token.nil?
+      return false if @resource.nil?
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] auth_token Value to be assigned
+    def auth_token=(auth_token)
+      if auth_token.nil?
+        fail ArgumentError, 'auth_token cannot be nil'
+      end
+
+      @auth_token = auth_token
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] resource Value to be assigned
+    def resource=(resource)
+      if resource.nil?
+        fail ArgumentError, 'resource cannot be nil'
+      end
+
+      @resource = resource
     end
 
     # Checks equality by comparing each attribute.

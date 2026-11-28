@@ -7,7 +7,10 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**adminAnalyticsDashboard**](AdminSettingsApi.md#adminAnalyticsDashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics |
 | [**adminAnalyticsLogins**](AdminSettingsApi.md#adminAnalyticsLogins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics |
 | [**adminAnalyticsUsers**](AdminSettingsApi.md#adminAnalyticsUsers) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics |
-| [**adminOrganizationGet**](AdminSettingsApi.md#adminOrganizationGet) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile |
+| [**adminInitialAccessTokensCreate**](AdminSettingsApi.md#adminInitialAccessTokensCreate) | **POST** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | Create an initial access token for dynamic client registration |
+| [**adminInitialAccessTokensDelete**](AdminSettingsApi.md#adminInitialAccessTokensDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens/{tokenId} | Delete an initial access token of dynamic client registration |
+| [**adminInitialAccessTokensList**](AdminSettingsApi.md#adminInitialAccessTokensList) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication/initial-access-tokens | List the initial access tokens of dynamic client registration |
+| [**adminOrganizationGet**](AdminSettingsApi.md#adminOrganizationGet) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization profile |
 | [**adminSettingsAll**](AdminSettingsApi.md#adminSettingsAll) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined) |
 | [**adminSettingsAuthGet**](AdminSettingsApi.md#adminSettingsAuthGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings |
 | [**adminSettingsAuthenticationGet**](AdminSettingsApi.md#adminSettingsAuthenticationGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth) |
@@ -16,8 +19,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**adminSettingsGeneralGet**](AdminSettingsApi.md#adminSettingsGeneralGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings |
 | [**adminSettingsScimGet**](AdminSettingsApi.md#adminSettingsScimGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings |
 | [**adminSettingsSecurityGet**](AdminSettingsApi.md#adminSettingsSecurityGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings |
-| [**adminTenantGet**](AdminSettingsApi.md#adminTenantGet) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile |
-| [**patchAdminOrganizationUpdate**](AdminSettingsApi.md#patchAdminOrganizationUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings |
+| [**adminTenantGet**](AdminSettingsApi.md#adminTenantGet) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization profile |
+| [**patchAdminOrganizationUpdate**](AdminSettingsApi.md#patchAdminOrganizationUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update the organization&#39;s name and settings |
 | [**patchAdminSettingsAuthUpdate**](AdminSettingsApi.md#patchAdminSettingsAuthUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings |
 | [**patchAdminSettingsAuthenticationUpdate**](AdminSettingsApi.md#patchAdminSettingsAuthenticationUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth) |
 | [**patchAdminSettingsBrandingUpdate**](AdminSettingsApi.md#patchAdminSettingsBrandingUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings |
@@ -25,8 +28,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**patchAdminSettingsGeneralUpdate**](AdminSettingsApi.md#patchAdminSettingsGeneralUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings |
 | [**patchAdminSettingsScimUpdate**](AdminSettingsApi.md#patchAdminSettingsScimUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings |
 | [**patchAdminSettingsSecurityUpdate**](AdminSettingsApi.md#patchAdminSettingsSecurityUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings |
-| [**patchAdminTenantUpdate**](AdminSettingsApi.md#patchAdminTenantUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings |
-| [**putAdminOrganizationUpdate**](AdminSettingsApi.md#putAdminOrganizationUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings |
+| [**patchAdminTenantUpdate**](AdminSettingsApi.md#patchAdminTenantUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update the organization&#39;s name and settings |
+| [**putAdminOrganizationUpdate**](AdminSettingsApi.md#putAdminOrganizationUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update the organization&#39;s name and settings |
 | [**putAdminSettingsAuthUpdate**](AdminSettingsApi.md#putAdminSettingsAuthUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings |
 | [**putAdminSettingsAuthenticationUpdate**](AdminSettingsApi.md#putAdminSettingsAuthenticationUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth) |
 | [**putAdminSettingsBrandingUpdate**](AdminSettingsApi.md#putAdminSettingsBrandingUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings |
@@ -34,7 +37,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**putAdminSettingsGeneralUpdate**](AdminSettingsApi.md#putAdminSettingsGeneralUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings |
 | [**putAdminSettingsScimUpdate**](AdminSettingsApi.md#putAdminSettingsScimUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings |
 | [**putAdminSettingsSecurityUpdate**](AdminSettingsApi.md#putAdminSettingsSecurityUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings |
-| [**putAdminTenantUpdate**](AdminSettingsApi.md#putAdminTenantUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings |
+| [**putAdminTenantUpdate**](AdminSettingsApi.md#putAdminTenantUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update the organization&#39;s name and settings |
 
 
 <a id="adminAnalyticsDashboard"></a>
@@ -254,11 +257,233 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | Daily registrations and user breakdowns |  -  |
 
+<a id="adminInitialAccessTokensCreate"></a>
+# **adminInitialAccessTokensCreate**
+> AdminInitialAccessTokensCreateResponse adminInitialAccessTokensCreate(orgId)
+
+Create an initial access token for dynamic client registration
+
+Generates a token and adds it to the organization&#39;s list; the other tokens stay valid. The token is returned once, in this answer. A client presents it as &#x60;Authorization: Bearer &lt;token&gt;&#x60; at the registration endpoint. Needs &#x60;settings.manage&#x60;.
+
+### Example
+```java
+// Import classes:
+import io.lumoauth.client.ApiClient;
+import io.lumoauth.client.ApiException;
+import io.lumoauth.client.Configuration;
+import io.lumoauth.client.auth.*;
+import io.lumoauth.client.models.*;
+import io.lumoauth.client.api.AdminSettingsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://app.lumoauth.dev");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
+    String orgId = "orgId_example"; // String | 
+    try {
+      AdminInitialAccessTokensCreateResponse result = apiInstance.adminInitialAccessTokensCreate(orgId);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling AdminSettingsApi#adminInitialAccessTokensCreate");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | **String**|  | |
+
+### Return type
+
+[**AdminInitialAccessTokensCreateResponse**](AdminInitialAccessTokensCreateResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | Token created |  -  |
+
+<a id="adminInitialAccessTokensDelete"></a>
+# **adminInitialAccessTokensDelete**
+> MessageResponse adminInitialAccessTokensDelete(orgId, tokenId)
+
+Delete an initial access token of dynamic client registration
+
+The token stops working at once; clients that it registered stay. Needs &#x60;settings.manage&#x60;.
+
+### Example
+```java
+// Import classes:
+import io.lumoauth.client.ApiClient;
+import io.lumoauth.client.ApiException;
+import io.lumoauth.client.Configuration;
+import io.lumoauth.client.auth.*;
+import io.lumoauth.client.models.*;
+import io.lumoauth.client.api.AdminSettingsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://app.lumoauth.dev");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
+    String orgId = "orgId_example"; // String | 
+    String tokenId = "tokenId_example"; // String | 
+    try {
+      MessageResponse result = apiInstance.adminInitialAccessTokensDelete(orgId, tokenId);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling AdminSettingsApi#adminInitialAccessTokensDelete");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | **String**|  | |
+| **tokenId** | **String**|  | |
+
+### Return type
+
+[**MessageResponse**](MessageResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Deleted |  -  |
+| **404** | No token with this id |  -  |
+
+<a id="adminInitialAccessTokensList"></a>
+# **adminInitialAccessTokensList**
+> AdminInitialAccessTokensListResponse adminInitialAccessTokensList(orgId)
+
+List the initial access tokens of dynamic client registration
+
+Ids only; a token is shown once, when it is created. Needs &#x60;settings.manage&#x60;.
+
+### Example
+```java
+// Import classes:
+import io.lumoauth.client.ApiClient;
+import io.lumoauth.client.ApiException;
+import io.lumoauth.client.Configuration;
+import io.lumoauth.client.auth.*;
+import io.lumoauth.client.models.*;
+import io.lumoauth.client.api.AdminSettingsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://app.lumoauth.dev");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
+    String orgId = "orgId_example"; // String | 
+    try {
+      AdminInitialAccessTokensListResponse result = apiInstance.adminInitialAccessTokensList(orgId);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling AdminSettingsApi#adminInitialAccessTokensList");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | **String**|  | |
+
+### Return type
+
+[**AdminInitialAccessTokensListResponse**](AdminInitialAccessTokensListResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Tokens |  -  |
+
 <a id="adminOrganizationGet"></a>
 # **adminOrganizationGet**
 > AdminTenantGetResponse adminOrganizationGet(orgId)
 
-Get organization (tenant) profile
+Get organization profile
 
 ### Example
 ```java
@@ -901,7 +1126,7 @@ public class Example {
 # **adminTenantGet**
 > AdminTenantGetResponse adminTenantGet(orgId)
 
-Get organization (tenant) profile
+Get organization profile
 
 ### Example
 ```java
@@ -970,9 +1195,9 @@ public class Example {
 
 <a id="patchAdminOrganizationUpdate"></a>
 # **patchAdminOrganizationUpdate**
-> PutAdminTenantUpdateResponse patchAdminOrganizationUpdate(orgId)
+> PutAdminTenantUpdateResponse patchAdminOrganizationUpdate(orgId, putAdminTenantUpdateRequest)
 
-Update organization (tenant) name and settings
+Update the organization&#39;s name and settings
 
 ### Example
 ```java
@@ -1001,8 +1226,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    PutAdminTenantUpdateRequest putAdminTenantUpdateRequest = new PutAdminTenantUpdateRequest(); // PutAdminTenantUpdateRequest | 
     try {
-      PutAdminTenantUpdateResponse result = apiInstance.patchAdminOrganizationUpdate(orgId);
+      PutAdminTenantUpdateResponse result = apiInstance.patchAdminOrganizationUpdate(orgId, putAdminTenantUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminOrganizationUpdate");
@@ -1020,6 +1246,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **putAdminTenantUpdateRequest** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1031,7 +1258,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1042,9 +1269,11 @@ public class Example {
 
 <a id="patchAdminSettingsAuthUpdate"></a>
 # **patchAdminSettingsAuthUpdate**
-> PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthUpdate(orgId)
+> PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthUpdate(orgId, authenticationSettings)
 
 Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 ```java
@@ -1073,8 +1302,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AuthenticationSettings authenticationSettings = new AuthenticationSettings(); // AuthenticationSettings | 
     try {
-      PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.patchAdminSettingsAuthUpdate(orgId);
+      PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.patchAdminSettingsAuthUpdate(orgId, authenticationSettings);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminSettingsAuthUpdate");
@@ -1092,6 +1322,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **authenticationSettings** | [**AuthenticationSettings**](AuthenticationSettings.md)|  | |
 
 ### Return type
 
@@ -1103,7 +1334,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1114,9 +1345,11 @@ public class Example {
 
 <a id="patchAdminSettingsAuthenticationUpdate"></a>
 # **patchAdminSettingsAuthenticationUpdate**
-> PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthenticationUpdate(orgId)
+> PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthenticationUpdate(orgId, authenticationSettings)
 
 Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 ```java
@@ -1145,8 +1378,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AuthenticationSettings authenticationSettings = new AuthenticationSettings(); // AuthenticationSettings | 
     try {
-      PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.patchAdminSettingsAuthenticationUpdate(orgId);
+      PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.patchAdminSettingsAuthenticationUpdate(orgId, authenticationSettings);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminSettingsAuthenticationUpdate");
@@ -1164,6 +1398,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **authenticationSettings** | [**AuthenticationSettings**](AuthenticationSettings.md)|  | |
 
 ### Return type
 
@@ -1175,7 +1410,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1186,7 +1421,7 @@ public class Example {
 
 <a id="patchAdminSettingsBrandingUpdate"></a>
 # **patchAdminSettingsBrandingUpdate**
-> PutAdminSettingsBrandingUpdateResponse patchAdminSettingsBrandingUpdate(orgId)
+> PutAdminSettingsBrandingUpdateResponse patchAdminSettingsBrandingUpdate(orgId, brandingSettings)
 
 Update branding/login page settings
 
@@ -1219,8 +1454,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    BrandingSettings brandingSettings = new BrandingSettings(); // BrandingSettings | 
     try {
-      PutAdminSettingsBrandingUpdateResponse result = apiInstance.patchAdminSettingsBrandingUpdate(orgId);
+      PutAdminSettingsBrandingUpdateResponse result = apiInstance.patchAdminSettingsBrandingUpdate(orgId, brandingSettings);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminSettingsBrandingUpdate");
@@ -1238,6 +1474,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **brandingSettings** | [**BrandingSettings**](BrandingSettings.md)|  | |
 
 ### Return type
 
@@ -1249,7 +1486,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1414,7 +1651,7 @@ public class Example {
 
 <a id="patchAdminSettingsScimUpdate"></a>
 # **patchAdminSettingsScimUpdate**
-> PutAdminSettingsScimUpdateResponse patchAdminSettingsScimUpdate(orgId)
+> PutAdminSettingsScimUpdateResponse patchAdminSettingsScimUpdate(orgId, scimSettings)
 
 Update SCIM settings
 
@@ -1445,8 +1682,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    ScimSettings scimSettings = new ScimSettings(); // ScimSettings | 
     try {
-      PutAdminSettingsScimUpdateResponse result = apiInstance.patchAdminSettingsScimUpdate(orgId);
+      PutAdminSettingsScimUpdateResponse result = apiInstance.patchAdminSettingsScimUpdate(orgId, scimSettings);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminSettingsScimUpdate");
@@ -1464,6 +1702,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **scimSettings** | [**ScimSettings**](ScimSettings.md)|  | |
 
 ### Return type
 
@@ -1475,7 +1714,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1485,7 +1724,7 @@ public class Example {
 
 <a id="patchAdminSettingsSecurityUpdate"></a>
 # **patchAdminSettingsSecurityUpdate**
-> PutAdminSettingsSecurityUpdateResponse patchAdminSettingsSecurityUpdate(orgId)
+> PutAdminSettingsSecurityUpdateResponse patchAdminSettingsSecurityUpdate(orgId, putAdminSettingsSecurityUpdateRequest)
 
 Update security settings
 
@@ -1516,8 +1755,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest = new PutAdminSettingsSecurityUpdateRequest(); // PutAdminSettingsSecurityUpdateRequest | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
     try {
-      PutAdminSettingsSecurityUpdateResponse result = apiInstance.patchAdminSettingsSecurityUpdate(orgId);
+      PutAdminSettingsSecurityUpdateResponse result = apiInstance.patchAdminSettingsSecurityUpdate(orgId, putAdminSettingsSecurityUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminSettingsSecurityUpdate");
@@ -1535,6 +1775,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **putAdminSettingsSecurityUpdateRequest** | [**PutAdminSettingsSecurityUpdateRequest**](PutAdminSettingsSecurityUpdateRequest.md)| Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. | |
 
 ### Return type
 
@@ -1546,7 +1787,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1556,9 +1797,9 @@ public class Example {
 
 <a id="patchAdminTenantUpdate"></a>
 # **patchAdminTenantUpdate**
-> PutAdminTenantUpdateResponse patchAdminTenantUpdate(orgId)
+> PutAdminTenantUpdateResponse patchAdminTenantUpdate(orgId, putAdminTenantUpdateRequest)
 
-Update organization (tenant) name and settings
+Update the organization&#39;s name and settings
 
 ### Example
 ```java
@@ -1587,8 +1828,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    PutAdminTenantUpdateRequest putAdminTenantUpdateRequest = new PutAdminTenantUpdateRequest(); // PutAdminTenantUpdateRequest | 
     try {
-      PutAdminTenantUpdateResponse result = apiInstance.patchAdminTenantUpdate(orgId);
+      PutAdminTenantUpdateResponse result = apiInstance.patchAdminTenantUpdate(orgId, putAdminTenantUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminTenantUpdate");
@@ -1606,6 +1848,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **putAdminTenantUpdateRequest** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1617,7 +1860,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1628,9 +1871,9 @@ public class Example {
 
 <a id="putAdminOrganizationUpdate"></a>
 # **putAdminOrganizationUpdate**
-> PutAdminTenantUpdateResponse putAdminOrganizationUpdate(orgId)
+> PutAdminTenantUpdateResponse putAdminOrganizationUpdate(orgId, putAdminTenantUpdateRequest)
 
-Update organization (tenant) name and settings
+Update the organization&#39;s name and settings
 
 ### Example
 ```java
@@ -1659,8 +1902,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    PutAdminTenantUpdateRequest putAdminTenantUpdateRequest = new PutAdminTenantUpdateRequest(); // PutAdminTenantUpdateRequest | 
     try {
-      PutAdminTenantUpdateResponse result = apiInstance.putAdminOrganizationUpdate(orgId);
+      PutAdminTenantUpdateResponse result = apiInstance.putAdminOrganizationUpdate(orgId, putAdminTenantUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminOrganizationUpdate");
@@ -1678,6 +1922,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **putAdminTenantUpdateRequest** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -1689,7 +1934,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1700,9 +1945,11 @@ public class Example {
 
 <a id="putAdminSettingsAuthUpdate"></a>
 # **putAdminSettingsAuthUpdate**
-> PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthUpdate(orgId)
+> PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthUpdate(orgId, authenticationSettings)
 
 Update authentication settings
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 ```java
@@ -1731,8 +1978,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AuthenticationSettings authenticationSettings = new AuthenticationSettings(); // AuthenticationSettings | 
     try {
-      PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.putAdminSettingsAuthUpdate(orgId);
+      PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.putAdminSettingsAuthUpdate(orgId, authenticationSettings);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminSettingsAuthUpdate");
@@ -1750,6 +1998,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **authenticationSettings** | [**AuthenticationSettings**](AuthenticationSettings.md)|  | |
 
 ### Return type
 
@@ -1761,7 +2010,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1772,9 +2021,11 @@ public class Example {
 
 <a id="putAdminSettingsAuthenticationUpdate"></a>
 # **putAdminSettingsAuthenticationUpdate**
-> PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthenticationUpdate(orgId)
+> PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthenticationUpdate(orgId, authenticationSettings)
 
 Update authentication settings (alias for settings/auth)
+
+The login flow switches of the sign-in settings page (magic_link_enabled, magic_link_only, magic_link_expiry, email_first_mode) are stored with the sign-in page settings: read and change them with GET and PUT|PATCH /admin/settings/branding.
 
 ### Example
 ```java
@@ -1803,8 +2054,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AuthenticationSettings authenticationSettings = new AuthenticationSettings(); // AuthenticationSettings | 
     try {
-      PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.putAdminSettingsAuthenticationUpdate(orgId);
+      PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.putAdminSettingsAuthenticationUpdate(orgId, authenticationSettings);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminSettingsAuthenticationUpdate");
@@ -1822,6 +2074,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **authenticationSettings** | [**AuthenticationSettings**](AuthenticationSettings.md)|  | |
 
 ### Return type
 
@@ -1833,7 +2086,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -1844,7 +2097,7 @@ public class Example {
 
 <a id="putAdminSettingsBrandingUpdate"></a>
 # **putAdminSettingsBrandingUpdate**
-> PutAdminSettingsBrandingUpdateResponse putAdminSettingsBrandingUpdate(orgId)
+> PutAdminSettingsBrandingUpdateResponse putAdminSettingsBrandingUpdate(orgId, brandingSettings)
 
 Update branding/login page settings
 
@@ -1877,8 +2130,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    BrandingSettings brandingSettings = new BrandingSettings(); // BrandingSettings | 
     try {
-      PutAdminSettingsBrandingUpdateResponse result = apiInstance.putAdminSettingsBrandingUpdate(orgId);
+      PutAdminSettingsBrandingUpdateResponse result = apiInstance.putAdminSettingsBrandingUpdate(orgId, brandingSettings);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminSettingsBrandingUpdate");
@@ -1896,6 +2150,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **brandingSettings** | [**BrandingSettings**](BrandingSettings.md)|  | |
 
 ### Return type
 
@@ -1907,7 +2162,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2072,7 +2327,7 @@ public class Example {
 
 <a id="putAdminSettingsScimUpdate"></a>
 # **putAdminSettingsScimUpdate**
-> PutAdminSettingsScimUpdateResponse putAdminSettingsScimUpdate(orgId)
+> PutAdminSettingsScimUpdateResponse putAdminSettingsScimUpdate(orgId, scimSettings)
 
 Update SCIM settings
 
@@ -2103,8 +2358,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    ScimSettings scimSettings = new ScimSettings(); // ScimSettings | 
     try {
-      PutAdminSettingsScimUpdateResponse result = apiInstance.putAdminSettingsScimUpdate(orgId);
+      PutAdminSettingsScimUpdateResponse result = apiInstance.putAdminSettingsScimUpdate(orgId, scimSettings);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminSettingsScimUpdate");
@@ -2122,6 +2378,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **scimSettings** | [**ScimSettings**](ScimSettings.md)|  | |
 
 ### Return type
 
@@ -2133,7 +2390,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2143,7 +2400,7 @@ public class Example {
 
 <a id="putAdminSettingsSecurityUpdate"></a>
 # **putAdminSettingsSecurityUpdate**
-> PutAdminSettingsSecurityUpdateResponse putAdminSettingsSecurityUpdate(orgId)
+> PutAdminSettingsSecurityUpdateResponse putAdminSettingsSecurityUpdate(orgId, putAdminSettingsSecurityUpdateRequest)
 
 Update security settings
 
@@ -2174,8 +2431,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    PutAdminSettingsSecurityUpdateRequest putAdminSettingsSecurityUpdateRequest = new PutAdminSettingsSecurityUpdateRequest(); // PutAdminSettingsSecurityUpdateRequest | Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads.
     try {
-      PutAdminSettingsSecurityUpdateResponse result = apiInstance.putAdminSettingsSecurityUpdate(orgId);
+      PutAdminSettingsSecurityUpdateResponse result = apiInstance.putAdminSettingsSecurityUpdate(orgId, putAdminSettingsSecurityUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminSettingsSecurityUpdate");
@@ -2193,6 +2451,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **putAdminSettingsSecurityUpdateRequest** | [**PutAdminSettingsSecurityUpdateRequest**](PutAdminSettingsSecurityUpdateRequest.md)| Free-form dictionary; keys merge with the stored ones. dpop_require_nonce is the only key that the server reads. | |
 
 ### Return type
 
@@ -2204,7 +2463,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
@@ -2214,9 +2473,9 @@ public class Example {
 
 <a id="putAdminTenantUpdate"></a>
 # **putAdminTenantUpdate**
-> PutAdminTenantUpdateResponse putAdminTenantUpdate(orgId)
+> PutAdminTenantUpdateResponse putAdminTenantUpdate(orgId, putAdminTenantUpdateRequest)
 
-Update organization (tenant) name and settings
+Update the organization&#39;s name and settings
 
 ### Example
 ```java
@@ -2245,8 +2504,9 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    PutAdminTenantUpdateRequest putAdminTenantUpdateRequest = new PutAdminTenantUpdateRequest(); // PutAdminTenantUpdateRequest | 
     try {
-      PutAdminTenantUpdateResponse result = apiInstance.putAdminTenantUpdate(orgId);
+      PutAdminTenantUpdateResponse result = apiInstance.putAdminTenantUpdate(orgId, putAdminTenantUpdateRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminTenantUpdate");
@@ -2264,6 +2524,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **putAdminTenantUpdateRequest** | [**PutAdminTenantUpdateRequest**](PutAdminTenantUpdateRequest.md)|  | |
 
 ### Return type
 
@@ -2275,7 +2536,7 @@ public class Example {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
